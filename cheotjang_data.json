@@ -1,0 +1,623 @@
+[
+  {
+    "source": "CHEOTJANG",
+    "name": "용인봉안당",
+    "address": "경기 용인시",
+    "priceMin": 3000000,
+    "imageUrl": "https://img.cheotjang.com/20230710/aws_eRywXopBjASuWJs.jpg",
+    "tags": [
+      "봉안당"
+    ]
+  },
+  {
+    "source": "CHEOTJANG",
+    "name": "분당판교봉안당",
+    "address": "경기 성남시",
+    "priceMin": 2000000,
+    "imageUrl": "https://img.cheotjang.com/20250526/aws_bBIAtXDuMdVxJ5O.webp",
+    "tags": [
+      "봉안당"
+    ]
+  },
+  {
+    "source": "CHEOTJANG",
+    "name": "동두천공원묘지",
+    "address": "경기 동두천시",
+    "priceMin": 4500000,
+    "imageUrl": "https://img.cheotjang.com/20250526/aws_8gjEFlH3k0AsYW5.webp",
+    "tags": [
+      "수목장",
+      "봉안당",
+      "공원묘지"
+    ]
+  },
+  {
+    "source": "CHEOTJANG",
+    "name": "분당추모공원",
+    "address": "경기 광주시",
+    "priceMin": 1500000,
+    "imageUrl": "https://img.cheotjang.com/20250526/aws_pW8KfU7eig0kZCE.webp",
+    "tags": [
+      "수목장",
+      "봉안당"
+    ]
+  },
+  {
+    "source": "CHEOTJANG",
+    "name": "분당공원묘지",
+    "address": "경기 광주시",
+    "priceMin": 2000000,
+    "imageUrl": "https://img.cheotjang.com/20250526/aws_H4gKzIuUslriDtX.webp",
+    "tags": [
+      "봉안당",
+      "공원묘지"
+    ]
+  },
+  {
+    "source": "CHEOTJANG",
+    "name": "파주광탄봉안당",
+    "address": "경기 파주시",
+    "priceMin": 2000000,
+    "imageUrl": "https://img.cheotjang.com/20230710/aws_7c6p0wWcI2MUIMq.jpg",
+    "tags": [
+      "봉안당"
+    ]
+  },
+  {
+    "source": "CHEOTJANG",
+    "name": "안성추모공원",
+    "address": "경기 안성시",
+    "priceMin": 1500000,
+    "imageUrl": "https://img.cheotjang.com/20250526/aws_7OFcMIQskuRzNyZ.webp",
+    "tags": [
+      "수목장",
+      "봉안당"
+    ]
+  },
+  {
+    "source": "CHEOTJANG",
+    "name": "용인공원묘지",
+    "address": "경기 용인시",
+    "priceMin": 3500000,
+    "imageUrl": "https://img.cheotjang.com/20230710/aws_ekKWbAPkuscU9AL.jpg",
+    "tags": [
+      "수목장",
+      "봉안당",
+      "공원묘지"
+    ]
+  },
+  {
+    "source": "CHEOTJANG",
+    "name": "고양시수목장",
+    "address": "경기 고양시",
+    "priceMin": 1500000,
+    "imageUrl": "https://img.cheotjang.com/20250526/aws_54nRo2PibmL7dCc.webp",
+    "tags": [
+      "수목장"
+    ]
+  },
+  {
+    "source": "CHEOTJANG",
+    "name": "평택봉안당",
+    "address": "경기 평택시",
+    "priceMin": 1700000,
+    "imageUrl": "https://img.cheotjang.com/20230710/aws_hNA2gIibfPpS70m.jpg",
+    "tags": [
+      "수목장",
+      "봉안당"
+    ]
+  },
+  {
+    "source": "CHEOTJANG",
+    "name": "일산수목장",
+    "address": "경기 고양시",
+    "priceMin": 4000000,
+    "imageUrl": "https://img.cheotjang.com/20250526/aws_zRP3GpC5uZY8XIw.webp",
+    "tags": [
+      "수목장"
+    ]
+  },
+  {
+    "source": "CHEOTJANG",
+    "name": "일산공원묘지",
+    "address": "경기 고양시",
+    "priceMin": 1500000,
+    "imageUrl": "https://img.cheotjang.com/20250526/aws_VAsYX0gwLy9N3j2.webp",
+    "tags": [
+      "봉안당",
+      "공원묘지"
+    ]
+  },
+  {
+    "source": "CHEOTJANG",
+    "name": "용인수목장림",
+    "address": "경기 용인시",
+    "priceMin": 2500000,
+    "imageUrl": "https://img.cheotjang.com/20230710/aws_oXBxiSU6XBF99EL.jpg",
+    "tags": [
+      "수목장"
+    ]
+  },
+  {
+    "source": "CHEOTJANG",
+    "name": "인천송도봉안당",
+    "address": "인천 연수구",
+    "priceMin": 3000000,
+    "imageUrl": "https://img.cheotjang.com/20230710/aws_XVUCc4ODJEA7Owc.jpg",
+    "tags": [
+      "봉안당"
+    ]
+  },
+  {
+    "source": "CHEOTJANG",
+    "name": "장흥공원묘지",
+    "address": "경기 양주시",
+    "priceMin": 5000000,
+    "imageUrl": "https://img.cheotjang.com/20250526/aws_20e7OKtQTaoyd3Z.webp",
+    "tags": [
+      "수목장",
+      "공원묘지"
+    ]
+  },
+  {
+    "source": "CHEOTJANG",
+    "name": "양평봉안당",
+    "address": "경기 양평군",
+    "priceMin": 2000000,
+    "imageUrl": "https://img.cheotjang.com/20230710/aws_vEjHlhXRVQAPdkM.jpg",
+    "tags": [
+      "봉안당"
+    ]
+  },
+  {
+    "source": "CHEOTJANG",
+    "name": "양주수목장림",
+    "address": "경기 양주시",
+    "priceMin": 3000000,
+    "imageUrl": "https://img.cheotjang.com/20250526/aws_Gm3UWVir4nuPaEl.webp",
+    "tags": [
+      "수목장"
+    ]
+  },
+  {
+    "source": "CHEOTJANG",
+    "name": "용인수목장",
+    "address": "경기 용인시",
+    "priceMin": 1500000,
+    "imageUrl": "https://img.cheotjang.com/20230710/aws_2VR2cEdGTqEwqXp.jpg",
+    "tags": [
+      "수목장"
+    ]
+  },
+  {
+    "source": "CHEOTJANG",
+    "name": "양수리공원묘지",
+    "address": "경기 양평군",
+    "priceMin": 2500000,
+    "imageUrl": "https://img.cheotjang.com/20250526/aws_Z6CLVgtbsIvR3au.webp",
+    "tags": [
+      "봉안당",
+      "공원묘지"
+    ]
+  },
+  {
+    "source": "CHEOTJANG",
+    "name": "서초구봉안당",
+    "address": "서울 서초구",
+    "priceMin": 2000000,
+    "imageUrl": "https://img.cheotjang.com/20230710/aws_XOEX1h1W3zWiGZz.jpg",
+    "tags": [
+      "봉안당"
+    ]
+  },
+  {
+    "source": "CHEOTJANG",
+    "name": "남양주봉안당",
+    "address": "경기 남양주시",
+    "priceMin": 1200000,
+    "imageUrl": "https://img.cheotjang.com/20250526/aws_dR3eJO1uDBXLwhP.webp",
+    "tags": [
+      "봉안당"
+    ]
+  },
+  {
+    "source": "CHEOTJANG",
+    "name": "포천납골당",
+    "address": "경기 포천시",
+    "priceMin": 1000000,
+    "imageUrl": "https://img.cheotjang.com/20230710/aws_IL6J2akpRnTMG0B.jpg",
+    "tags": [
+      "봉안당"
+    ]
+  },
+  {
+    "source": "CHEOTJANG",
+    "name": "강화봉안당",
+    "address": "인천 강화군",
+    "priceMin": 3500000,
+    "imageUrl": "https://img.cheotjang.com/20230710/aws_O1PtUSGlAtQGXIf.jpg",
+    "tags": [
+      "봉안당"
+    ]
+  },
+  {
+    "source": "CHEOTJANG",
+    "name": "분당봉안당",
+    "address": "경기 광주시",
+    "priceMin": 1900000,
+    "imageUrl": "https://img.cheotjang.com/20250526/aws_wBmr8nTvRADKYfu.webp",
+    "tags": [
+      "봉안당"
+    ]
+  },
+  {
+    "source": "CHEOTJANG",
+    "name": "포천공원묘지",
+    "address": "경기 포천시",
+    "priceMin": 8500000,
+    "imageUrl": "https://img.cheotjang.com/20230710/aws_26UJwdYhkx2x149.jpg",
+    "tags": [
+      "공원묘지"
+    ]
+  },
+  {
+    "source": "CHEOTJANG",
+    "name": "가평봉안당",
+    "address": "경기 가평군",
+    "priceMin": 1500000,
+    "imageUrl": "https://img.cheotjang.com/20250526/aws_EUASgFGZjiTLuRn.webp",
+    "tags": [
+      "봉안당"
+    ]
+  },
+  {
+    "source": "CHEOTJANG",
+    "name": "광주공원묘지",
+    "address": "경기 광주시",
+    "priceMin": 14850000,
+    "imageUrl": "https://img.cheotjang.com/20250526/aws_y3wCZNXaEvgtSY5.webp",
+    "tags": [
+      "공원묘지"
+    ]
+  },
+  {
+    "source": "CHEOTJANG",
+    "name": "양평군봉안당",
+    "address": "경기 양평군",
+    "priceMin": 1500000,
+    "imageUrl": "https://img.cheotjang.com/20250526/aws_X29gxk8tEUZbvMR.webp",
+    "tags": [
+      "봉안당"
+    ]
+  },
+  {
+    "source": "CHEOTJANG",
+    "name": "여주봉안당",
+    "address": "경기 여주시",
+    "priceMin": 2000000,
+    "imageUrl": "https://img.cheotjang.com/20230710/aws_74MoaWKJk1RME5s.jpg",
+    "tags": [
+      "수목장",
+      "봉안당"
+    ]
+  },
+  {
+    "source": "CHEOTJANG",
+    "name": "양주봉안당",
+    "address": "경기 양주시",
+    "priceMin": 2500000,
+    "imageUrl": "https://img.cheotjang.com/20250526/aws_pTBOA5haH2sxijV.webp",
+    "tags": [
+      "봉안당"
+    ]
+  },
+  {
+    "source": "CHEOTJANG",
+    "name": "김포수목장",
+    "address": "경기 김포시",
+    "priceMin": 1500000,
+    "imageUrl": "https://img.cheotjang.com/20250526/aws_goWcECQRKy659uN.webp",
+    "tags": [
+      "수목장"
+    ]
+  },
+  {
+    "source": "CHEOTJANG",
+    "name": "의왕봉안당",
+    "address": "경기 의왕시",
+    "priceMin": 2000000,
+    "imageUrl": "https://img.cheotjang.com/20230710/aws_CWzFiObICffLm9y.jpg",
+    "tags": [
+      "봉안당"
+    ]
+  },
+  {
+    "source": "CHEOTJANG",
+    "name": "포천추모공원",
+    "address": "경기 포천시",
+    "priceMin": 6500000,
+    "imageUrl": "https://img.cheotjang.com/20230710/aws_cxLJJX3gZpIw24k.jpg",
+    "tags": [
+      "수목장"
+    ]
+  },
+  {
+    "source": "CHEOTJANG",
+    "name": "인천 해양장",
+    "address": "인천 중구",
+    "priceMin": 500000,
+    "imageUrl": "https://img.cheotjang.com/20230710/aws_hV1Se9XyBDwyS7A.jpg",
+    "tags": [
+      "해양장"
+    ]
+  },
+  {
+    "source": "CHEOTJANG",
+    "name": "연천추모공원",
+    "address": "경기 연천군",
+    "priceMin": 1000000,
+    "imageUrl": "https://img.cheotjang.com/20230710/aws_axZyMAxfPaWe7ny.jpg",
+    "tags": [
+      "수목장",
+      "봉안당"
+    ]
+  },
+  {
+    "source": "CHEOTJANG",
+    "name": "양평공원묘지",
+    "address": "경기 양평군",
+    "priceMin": 2000000,
+    "imageUrl": "https://img.cheotjang.com/20250526/aws_DXqGSZnlBHz8P2t.webp",
+    "tags": [
+      "수목장",
+      "봉안당",
+      "공원묘지"
+    ]
+  },
+  {
+    "source": "CHEOTJANG",
+    "name": "용인기흥봉안당",
+    "address": "경기 용인시",
+    "priceMin": 400000,
+    "imageUrl": "https://img.cheotjang.com/20230710/aws_sqNhK9vSkoK6HbM.jpg",
+    "tags": [
+      "수목장",
+      "봉안당"
+    ]
+  },
+  {
+    "source": "CHEOTJANG",
+    "name": "홍천불교수목장",
+    "address": "강원 홍천군",
+    "priceMin": 1500000,
+    "imageUrl": "https://img.cheotjang.com/20250526/aws_AZ12SBjgnQIPWrt.webp",
+    "tags": [
+      "수목장",
+      "봉안당"
+    ]
+  },
+  {
+    "source": "CHEOTJANG",
+    "name": "양평불교수목장",
+    "address": "경기 양평군",
+    "priceMin": 2000000,
+    "imageUrl": "https://img.cheotjang.com/20250526/aws_VfE5aYgcr3mF2WG.webp",
+    "tags": [
+      "수목장",
+      "봉안당"
+    ]
+  },
+  {
+    "source": "CHEOTJANG",
+    "name": "일산불교봉안당",
+    "address": "경기 고양시",
+    "priceMin": 2000000,
+    "imageUrl": "https://img.cheotjang.com/20250526/aws_VTKdyf8cI97tFex.webp",
+    "tags": [
+      "봉안당"
+    ]
+  },
+  {
+    "source": "CHEOTJANG",
+    "name": "양주불교봉안당",
+    "address": "경기 양주시",
+    "priceMin": 2500000,
+    "imageUrl": "https://img.cheotjang.com/20250526/aws_YG8epcDiZREIT4k.webp",
+    "tags": [
+      "수목장",
+      "봉안당"
+    ]
+  },
+  {
+    "source": "CHEOTJANG",
+    "name": "광주봉안당",
+    "address": "경기 광주시",
+    "priceMin": 2000000,
+    "imageUrl": "https://img.cheotjang.com/20250526/aws_v9yETukLQeNraMP.webp",
+    "tags": [
+      "봉안당"
+    ]
+  },
+  {
+    "source": "CHEOTJANG",
+    "name": "벽제봉안당",
+    "address": "경기 고양시",
+    "priceMin": 2300000,
+    "imageUrl": "https://img.cheotjang.com/20250526/aws_6iDvKquWwlrxG4s.webp",
+    "tags": [
+      "봉안당"
+    ]
+  },
+  {
+    "source": "CHEOTJANG",
+    "name": "곤지암추모공원",
+    "address": "경기 광주시",
+    "priceMin": 2000000,
+    "imageUrl": "https://img.cheotjang.com/20250526/aws_Kr63mqujnfPNBxt.webp",
+    "tags": [
+      "수목장",
+      "봉안당"
+    ]
+  },
+  {
+    "source": "CHEOTJANG",
+    "name": "양주수목장",
+    "address": "경기 양주시",
+    "priceMin": 1500000,
+    "imageUrl": "https://img.cheotjang.com/20250526/aws_3NvexOT5iGPY9FX.webp",
+    "tags": [
+      "수목장"
+    ]
+  },
+  {
+    "source": "CHEOTJANG",
+    "name": "파주약수봉안당",
+    "address": "경기 파주시",
+    "priceMin": 1500000,
+    "imageUrl": "https://img.cheotjang.com/20230710/aws_QYpvazyuS26WOa3.jpg",
+    "tags": [
+      "봉안당"
+    ]
+  },
+  {
+    "source": "CHEOTJANG",
+    "name": "원주추모공원",
+    "address": "강원 원주시",
+    "priceMin": 1300000,
+    "imageUrl": "https://img.cheotjang.com/20250526/aws_vrcedSFXl2o9mBP.webp",
+    "tags": [
+      "봉안당"
+    ]
+  },
+  {
+    "source": "CHEOTJANG",
+    "name": "천안추모공원",
+    "address": "충남 공주시",
+    "priceMin": 2000000,
+    "imageUrl": "https://img.cheotjang.com/20230710/aws_4wHZYEJSM8gCNgD.jpg",
+    "tags": [
+      "봉안당"
+    ]
+  },
+  {
+    "source": "CHEOTJANG",
+    "name": "양주공원묘지",
+    "address": "경기 양주시",
+    "priceMin": 14850000,
+    "imageUrl": "https://img.cheotjang.com/20250526/aws_5eoHhJ74TOrgEcK.webp",
+    "tags": [
+      "공원묘지"
+    ]
+  },
+  {
+    "source": "CHEOTJANG",
+    "name": "연천봉안당",
+    "address": "경기 연천군",
+    "priceMin": 1500000,
+    "imageUrl": "https://img.cheotjang.com/20230710/aws_DEQLUQWTi5s5JbN.jpg",
+    "tags": [
+      "봉안당"
+    ]
+  },
+  {
+    "source": "CHEOTJANG",
+    "name": "일산봉안당",
+    "address": "경기 고양시",
+    "priceMin": 1500000,
+    "imageUrl": "https://img.cheotjang.com/20250526/aws_g9BJpzMfRDijxF1.webp",
+    "tags": [
+      "봉안당"
+    ]
+  },
+  {
+    "source": "CHEOTJANG",
+    "name": "팔당공원묘지",
+    "address": "경기 양평군",
+    "priceMin": 6000000,
+    "imageUrl": "https://img.cheotjang.com/20250526/aws_E74UNXail8LW02H.webp",
+    "tags": [
+      "공원묘지"
+    ]
+  },
+  {
+    "source": "CHEOTJANG",
+    "name": "고양덕양봉안당",
+    "address": "경기 고양시",
+    "priceMin": 1500000,
+    "imageUrl": "https://img.cheotjang.com/20250526/aws_fqnT8O2MvsUzRSm.webp",
+    "tags": [
+      "봉안당"
+    ]
+  },
+  {
+    "source": "CHEOTJANG",
+    "name": "서안성수목장",
+    "address": "경기 안성시",
+    "priceMin": 1500000,
+    "imageUrl": "https://img.cheotjang.com/20250526/aws_9hs7bHozev25Ypm.webp",
+    "tags": [
+      "수목장"
+    ]
+  },
+  {
+    "source": "CHEOTJANG",
+    "name": "화성수목장림",
+    "address": "경기 화성시",
+    "priceMin": 1000000,
+    "imageUrl": "https://img.cheotjang.com/20250423/aws_piuZlrDRsBNXbth.webp",
+    "tags": [
+      "수목장"
+    ]
+  },
+  {
+    "source": "CHEOTJANG",
+    "name": "양수리봉안당",
+    "address": "경기 양평군",
+    "priceMin": 2500000,
+    "imageUrl": "https://img.cheotjang.com/20250526/aws_9MC7ubXjRmSFyes.webp",
+    "tags": [
+      "봉안당"
+    ]
+  },
+  {
+    "source": "CHEOTJANG",
+    "name": "인천불교봉안당",
+    "address": "인천 남동구",
+    "priceMin": 4000000,
+    "imageUrl": "https://img.cheotjang.com/20230710/aws_2275T946US19wK8.jpg",
+    "tags": [
+      "봉안당"
+    ]
+  },
+  {
+    "source": "CHEOTJANG",
+    "name": "화성수목장",
+    "address": "경기 화성시",
+    "priceMin": 3000000,
+    "imageUrl": "https://img.cheotjang.com/20230710/aws_ZFgwmp3xrxhi9yk.jpg",
+    "tags": [
+      "수목장"
+    ]
+  },
+  {
+    "source": "CHEOTJANG",
+    "name": "광주공원묘원",
+    "address": "경기 광주시",
+    "priceMin": 13000000,
+    "imageUrl": "https://img.cheotjang.com/20250526/aws_8D0xRFsOS9ZCTHY.webp",
+    "tags": [
+      "공원묘지"
+    ]
+  },
+  {
+    "source": "CHEOTJANG",
+    "name": "처인구공원묘지",
+    "address": "경기 용인시",
+    "priceMin": 2000000,
+    "imageUrl": "https://img.cheotjang.com/20230710/aws_jsBGpjz0u09AY9U.jpg",
+    "tags": [
+      "봉안당",
+      "공원묘지"
+    ]
+  }
+]

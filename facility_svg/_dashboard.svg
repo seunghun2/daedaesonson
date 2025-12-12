@@ -1,0 +1,819 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1260" height="2180" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#f7fafc;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#edf2f7;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- 배경 -->
+  <rect width="1260" height="2180" fill="url(#bgGradient)"/>
+  
+  <!-- 제목 -->
+  <text x="630" y="40" font-family="Arial, sans-serif" font-size="28" 
+        font-weight="bold" fill="#2d3748" text-anchor="middle">
+    장사시설 정보 대시보드
+  </text>
+  
+  <!-- 개별 카드들 -->
+<g transform="translate(20, 80)">
+  <defs>
+    <linearGradient id="cardGradient1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#667eea;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#764ba2;stop-opacity:1" />
+    </linearGradient>
+    <filter id="shadow">
+      <feDropShadow dx="0" dy="4" stdDeviation="4" flood-opacity="0.3"/>
+    </filter>
+  </defs>
+  
+  <!-- 배경 카드 -->
+  <rect x="10" y="10" width="580" height="380" rx="15" 
+        fill="url(#cardGradient1)" filter="url(#shadow)"/>
+  
+  <!-- 헤더 섹션 -->
+  <rect x="20" y="20" width="560" height="80" rx="10" fill="rgba(255,255,255,0.95)"/>
+  
+  <!-- 번호 배지 -->
+  <circle cx="50" cy="60" r="25" fill="#FF6B6B"/>
+  <text x="50" y="68" font-family="Arial, sans-serif" font-size="18" font-weight="bold" 
+        fill="white" text-anchor="middle">1</text>
+  
+  <!-- 타입 아이콘 -->
+  <text x="90" y="50" font-size="24">🏢</text>
+  
+  <!-- 시설명 -->
+  <text x="90" y="75" font-family="Arial, sans-serif" font-size="20" font-weight="bold" 
+        fill="#2d3748">(재)낙원추모공원</text>
+  
+  <!-- 타입 라벨 -->
+  <rect x="480" y="30" width="80" height="25" rx="12" fill="#4ECDC4"/>
+  <text x="520" y="48" font-family="Arial, sans-serif" font-size="12" 
+        fill="white" text-anchor="middle">사설</text>
+  
+  <!-- 정보 섹션 배경 -->
+  <rect x="20" y="110" width="560" height="260" rx="10" fill="rgba(255,255,255,0.9)"/>
+  
+  <!-- 주소 -->
+  <text x="35" y="135" font-family="Arial, sans-serif" font-size="14" fill="#4a5568">
+    <tspan font-weight="bold">📍 주소:</tspan>
+  </text>
+  <text x="35" y="155" font-family="Arial, sans-serif" font-size="12" fill="#718096">
+    경상남도 김해시 한림면 김해대로1402번길 148 (신천리)
+  </text>
+  
+  <!-- 전화번호 -->
+  <text x="35" y="185" font-family="Arial, sans-serif" font-size="14" fill="#4a5568">
+    <tspan font-weight="bold">📞 전화:</tspan>
+    <tspan x="100" font-size="13" fill="#2d3748">055-343-0656</tspan>
+  </text>
+  
+  <!-- 팩스 -->
+  
+  <text x="35" y="210" font-family="Arial, sans-serif" font-size="14" fill="#4a5568">
+    <tspan font-weight="bold">📠 팩스:</tspan>
+    <tspan x="100" font-size="13" fill="#2d3748">055-343-0650</tspan>
+  </text>
+  
+  
+  <!-- 총매장능력 -->
+  
+  <text x="35" y="235" font-family="Arial, sans-serif" font-size="14" fill="#4a5568">
+    <tspan font-weight="bold">📊 매장능력:</tspan>
+    <tspan x="145" font-size="13" fill="#2d3748" font-weight="bold">30,000개</tspan>
+  </text>
+  
+  
+  <!-- 웹사이트 -->
+  
+  
+  <!-- 편의시설 아이콘 -->
+  
+  <text x="35" y="340" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#4a5568">
+    편의시설:
+  </text>
+  
+    <text x="120" y="340" font-size="20">🍴</text>
+  
+  
+  
+  <!-- 업데이트 정보 -->
+  <text x="570" y="375" font-family="Arial, sans-serif" font-size="10" 
+        fill="#a0aec0" text-anchor="end">
+    업데이트: 3개월전
+  </text>
+</g>
+<g transform="translate(640, 80)">
+  <defs>
+    <linearGradient id="cardGradient10" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#667eea;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#764ba2;stop-opacity:1" />
+    </linearGradient>
+    <filter id="shadow">
+      <feDropShadow dx="0" dy="4" stdDeviation="4" flood-opacity="0.3"/>
+    </filter>
+  </defs>
+  
+  <!-- 배경 카드 -->
+  <rect x="10" y="10" width="580" height="380" rx="15" 
+        fill="url(#cardGradient10)" filter="url(#shadow)"/>
+  
+  <!-- 헤더 섹션 -->
+  <rect x="20" y="20" width="560" height="80" rx="10" fill="rgba(255,255,255,0.95)"/>
+  
+  <!-- 번호 배지 -->
+  <circle cx="50" cy="60" r="25" fill="#FF6B6B"/>
+  <text x="50" y="68" font-family="Arial, sans-serif" font-size="18" font-weight="bold" 
+        fill="white" text-anchor="middle">10</text>
+  
+  <!-- 타입 아이콘 -->
+  <text x="90" y="50" font-size="24">🏢</text>
+  
+  <!-- 시설명 -->
+  <text x="90" y="75" font-family="Arial, sans-serif" font-size="20" font-weight="bold" 
+        fill="#2d3748">재단법인 솥발산공원묘원</text>
+  
+  <!-- 타입 라벨 -->
+  <rect x="480" y="30" width="80" height="25" rx="12" fill="#4ECDC4"/>
+  <text x="520" y="48" font-family="Arial, sans-serif" font-size="12" 
+        fill="white" text-anchor="middle">사설</text>
+  
+  <!-- 정보 섹션 배경 -->
+  <rect x="20" y="110" width="560" height="260" rx="10" fill="rgba(255,255,255,0.9)"/>
+  
+  <!-- 주소 -->
+  <text x="35" y="135" font-family="Arial, sans-serif" font-size="14" fill="#4a5568">
+    <tspan font-weight="bold">📍 주소:</tspan>
+  </text>
+  <text x="35" y="155" font-family="Arial, sans-serif" font-size="12" fill="#718096">
+    경상남도 양산시 하북면 삼덕로 288 (답곡리)
+  </text>
+  
+  <!-- 전화번호 -->
+  <text x="35" y="185" font-family="Arial, sans-serif" font-size="14" fill="#4a5568">
+    <tspan font-weight="bold">📞 전화:</tspan>
+    <tspan x="100" font-size="13" fill="#2d3748">055-382-7714</tspan>
+  </text>
+  
+  <!-- 팩스 -->
+  
+  
+  <!-- 총매장능력 -->
+  
+  <text x="35" y="210" font-family="Arial, sans-serif" font-size="14" fill="#4a5568">
+    <tspan font-weight="bold">📊 매장능력:</tspan>
+    <tspan x="145" font-size="13" fill="#2d3748" font-weight="bold">23,000개</tspan>
+  </text>
+  
+  
+  <!-- 웹사이트 -->
+  
+  
+  <!-- 편의시설 아이콘 -->
+  
+  <text x="35" y="340" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#4a5568">
+    편의시설:
+  </text>
+  
+    <text x="120" y="340" font-size="20">🍴</text>
+  
+    <text x="155" y="340" font-size="20">🅿️</text>
+  
+  
+  
+  <!-- 업데이트 정보 -->
+  <text x="570" y="375" font-family="Arial, sans-serif" font-size="10" 
+        fill="#a0aec0" text-anchor="end">
+    업데이트: 8개월전
+  </text>
+</g>
+<g transform="translate(20, 500)">
+  <defs>
+    <linearGradient id="cardGradient100" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#667eea;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#764ba2;stop-opacity:1" />
+    </linearGradient>
+    <filter id="shadow">
+      <feDropShadow dx="0" dy="4" stdDeviation="4" flood-opacity="0.3"/>
+    </filter>
+  </defs>
+  
+  <!-- 배경 카드 -->
+  <rect x="10" y="10" width="580" height="380" rx="15" 
+        fill="url(#cardGradient100)" filter="url(#shadow)"/>
+  
+  <!-- 헤더 섹션 -->
+  <rect x="20" y="20" width="560" height="80" rx="10" fill="rgba(255,255,255,0.95)"/>
+  
+  <!-- 번호 배지 -->
+  <circle cx="50" cy="60" r="25" fill="#FF6B6B"/>
+  <text x="50" y="68" font-family="Arial, sans-serif" font-size="18" font-weight="bold" 
+        fill="white" text-anchor="middle">100</text>
+  
+  <!-- 타입 아이콘 -->
+  <text x="90" y="50" font-size="24">🏢</text>
+  
+  <!-- 시설명 -->
+  <text x="90" y="75" font-family="Arial, sans-serif" font-size="20" font-weight="bold" 
+        fill="#2d3748">천자봉공원묘원</text>
+  
+  <!-- 타입 라벨 -->
+  <rect x="480" y="30" width="80" height="25" rx="12" fill="#4ECDC4"/>
+  <text x="520" y="48" font-family="Arial, sans-serif" font-size="12" 
+        fill="white" text-anchor="middle">사설</text>
+  
+  <!-- 정보 섹션 배경 -->
+  <rect x="20" y="110" width="560" height="260" rx="10" fill="rgba(255,255,255,0.9)"/>
+  
+  <!-- 주소 -->
+  <text x="35" y="135" font-family="Arial, sans-serif" font-size="14" fill="#4a5568">
+    <tspan font-weight="bold">📍 주소:</tspan>
+  </text>
+  <text x="35" y="155" font-family="Arial, sans-serif" font-size="12" fill="#718096">
+    경상남도 창원시 진해구 진해대로 1426-48 (서중동, 천자봉공원묘원관...
+  </text>
+  
+  <!-- 전화번호 -->
+  <text x="35" y="185" font-family="Arial, sans-serif" font-size="14" fill="#4a5568">
+    <tspan font-weight="bold">📞 전화:</tspan>
+    <tspan x="100" font-size="13" fill="#2d3748">055-545-8200</tspan>
+  </text>
+  
+  <!-- 팩스 -->
+  
+  
+  <!-- 총매장능력 -->
+  
+  <text x="35" y="210" font-family="Arial, sans-serif" font-size="14" fill="#4a5568">
+    <tspan font-weight="bold">📊 매장능력:</tspan>
+    <tspan x="145" font-size="13" fill="#2d3748" font-weight="bold">35,000개</tspan>
+  </text>
+  
+  
+  <!-- 웹사이트 -->
+  
+  
+  <!-- 편의시설 아이콘 -->
+  
+  <text x="35" y="340" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#4a5568">
+    편의시설:
+  </text>
+  
+    <text x="120" y="340" font-size="20">🍴</text>
+  
+  
+  
+  <!-- 업데이트 정보 -->
+  <text x="570" y="375" font-family="Arial, sans-serif" font-size="10" 
+        fill="#a0aec0" text-anchor="end">
+    업데이트: 23개월전
+  </text>
+</g>
+<g transform="translate(640, 500)">
+  <defs>
+    <linearGradient id="cardGradient1000" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#667eea;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#764ba2;stop-opacity:1" />
+    </linearGradient>
+    <filter id="shadow">
+      <feDropShadow dx="0" dy="4" stdDeviation="4" flood-opacity="0.3"/>
+    </filter>
+  </defs>
+  
+  <!-- 배경 카드 -->
+  <rect x="10" y="10" width="580" height="380" rx="15" 
+        fill="url(#cardGradient1000)" filter="url(#shadow)"/>
+  
+  <!-- 헤더 섹션 -->
+  <rect x="20" y="20" width="560" height="80" rx="10" fill="rgba(255,255,255,0.95)"/>
+  
+  <!-- 번호 배지 -->
+  <circle cx="50" cy="60" r="25" fill="#FF6B6B"/>
+  <text x="50" y="68" font-family="Arial, sans-serif" font-size="18" font-weight="bold" 
+        fill="white" text-anchor="middle">1000</text>
+  
+  <!-- 타입 아이콘 -->
+  <text x="90" y="50" font-size="24">🏢</text>
+  
+  <!-- 시설명 -->
+  <text x="90" y="75" font-family="Arial, sans-serif" font-size="20" font-weight="bold" 
+        fill="#2d3748">성 라자로마을</text>
+  
+  <!-- 타입 라벨 -->
+  <rect x="480" y="30" width="80" height="25" rx="12" fill="#4ECDC4"/>
+  <text x="520" y="48" font-family="Arial, sans-serif" font-size="12" 
+        fill="white" text-anchor="middle">사설</text>
+  
+  <!-- 정보 섹션 배경 -->
+  <rect x="20" y="110" width="560" height="260" rx="10" fill="rgba(255,255,255,0.9)"/>
+  
+  <!-- 주소 -->
+  <text x="35" y="135" font-family="Arial, sans-serif" font-size="14" fill="#4a5568">
+    <tspan font-weight="bold">📍 주소:</tspan>
+  </text>
+  <text x="35" y="155" font-family="Arial, sans-serif" font-size="12" fill="#718096">
+    경기도 의왕시 원골로 66 (오전동, 성라자로마)
+  </text>
+  
+  <!-- 전화번호 -->
+  <text x="35" y="185" font-family="Arial, sans-serif" font-size="14" fill="#4a5568">
+    <tspan font-weight="bold">📞 전화:</tspan>
+    <tspan x="100" font-size="13" fill="#2d3748">031-452-5655</tspan>
+  </text>
+  
+  <!-- 팩스 -->
+  
+  
+  <!-- 총매장능력 -->
+  
+  
+  <!-- 웹사이트 -->
+  
+  
+  <!-- 편의시설 아이콘 -->
+  
+  <text x="35" y="340" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#4a5568">
+    편의시설:
+  </text>
+  
+    <text x="120" y="340" font-size="20">🍴</text>
+  
+  
+  
+  <!-- 업데이트 정보 -->
+  <text x="570" y="375" font-family="Arial, sans-serif" font-size="10" 
+        fill="#a0aec0" text-anchor="end">
+    업데이트: 681개월전
+  </text>
+</g>
+<g transform="translate(20, 920)">
+  <defs>
+    <linearGradient id="cardGradient1001" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#667eea;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#764ba2;stop-opacity:1" />
+    </linearGradient>
+    <filter id="shadow">
+      <feDropShadow dx="0" dy="4" stdDeviation="4" flood-opacity="0.3"/>
+    </filter>
+  </defs>
+  
+  <!-- 배경 카드 -->
+  <rect x="10" y="10" width="580" height="380" rx="15" 
+        fill="url(#cardGradient1001)" filter="url(#shadow)"/>
+  
+  <!-- 헤더 섹션 -->
+  <rect x="20" y="20" width="560" height="80" rx="10" fill="rgba(255,255,255,0.95)"/>
+  
+  <!-- 번호 배지 -->
+  <circle cx="50" cy="60" r="25" fill="#FF6B6B"/>
+  <text x="50" y="68" font-family="Arial, sans-serif" font-size="18" font-weight="bold" 
+        fill="white" text-anchor="middle">1001</text>
+  
+  <!-- 타입 아이콘 -->
+  <text x="90" y="50" font-size="24">🏢</text>
+  
+  <!-- 시설명 -->
+  <text x="90" y="75" font-family="Arial, sans-serif" font-size="20" font-weight="bold" 
+        fill="#2d3748">용흥사 봉안묘</text>
+  
+  <!-- 타입 라벨 -->
+  <rect x="480" y="30" width="80" height="25" rx="12" fill="#4ECDC4"/>
+  <text x="520" y="48" font-family="Arial, sans-serif" font-size="12" 
+        fill="white" text-anchor="middle">사설</text>
+  
+  <!-- 정보 섹션 배경 -->
+  <rect x="20" y="110" width="560" height="260" rx="10" fill="rgba(255,255,255,0.9)"/>
+  
+  <!-- 주소 -->
+  <text x="35" y="135" font-family="Arial, sans-serif" font-size="14" fill="#4a5568">
+    <tspan font-weight="bold">📍 주소:</tspan>
+  </text>
+  <text x="35" y="155" font-family="Arial, sans-serif" font-size="12" fill="#718096">
+    충청북도 음성군 금왕읍 용계리 183-21
+  </text>
+  
+  <!-- 전화번호 -->
+  <text x="35" y="185" font-family="Arial, sans-serif" font-size="14" fill="#4a5568">
+    <tspan font-weight="bold">📞 전화:</tspan>
+    <tspan x="100" font-size="13" fill="#2d3748">043-877-0943</tspan>
+  </text>
+  
+  <!-- 팩스 -->
+  
+  
+  <!-- 총매장능력 -->
+  
+  
+  <!-- 웹사이트 -->
+  
+  
+  <!-- 편의시설 아이콘 -->
+  
+  <text x="35" y="340" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#4a5568">
+    편의시설:
+  </text>
+  
+    <text x="120" y="340" font-size="20">🍴</text>
+  
+  
+  
+  <!-- 업데이트 정보 -->
+  <text x="570" y="375" font-family="Arial, sans-serif" font-size="10" 
+        fill="#a0aec0" text-anchor="end">
+    업데이트: 681개월전
+  </text>
+</g>
+<g transform="translate(640, 920)">
+  <defs>
+    <linearGradient id="cardGradient1002" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#667eea;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#764ba2;stop-opacity:1" />
+    </linearGradient>
+    <filter id="shadow">
+      <feDropShadow dx="0" dy="4" stdDeviation="4" flood-opacity="0.3"/>
+    </filter>
+  </defs>
+  
+  <!-- 배경 카드 -->
+  <rect x="10" y="10" width="580" height="380" rx="15" 
+        fill="url(#cardGradient1002)" filter="url(#shadow)"/>
+  
+  <!-- 헤더 섹션 -->
+  <rect x="20" y="20" width="560" height="80" rx="10" fill="rgba(255,255,255,0.95)"/>
+  
+  <!-- 번호 배지 -->
+  <circle cx="50" cy="60" r="25" fill="#FF6B6B"/>
+  <text x="50" y="68" font-family="Arial, sans-serif" font-size="18" font-weight="bold" 
+        fill="white" text-anchor="middle">1002</text>
+  
+  <!-- 타입 아이콘 -->
+  <text x="90" y="50" font-size="24">🏢</text>
+  
+  <!-- 시설명 -->
+  <text x="90" y="75" font-family="Arial, sans-serif" font-size="20" font-weight="bold" 
+        fill="#2d3748">파주추모공원 봉안탑</text>
+  
+  <!-- 타입 라벨 -->
+  <rect x="480" y="30" width="80" height="25" rx="12" fill="#4ECDC4"/>
+  <text x="520" y="48" font-family="Arial, sans-serif" font-size="12" 
+        fill="white" text-anchor="middle">사설</text>
+  
+  <!-- 정보 섹션 배경 -->
+  <rect x="20" y="110" width="560" height="260" rx="10" fill="rgba(255,255,255,0.9)"/>
+  
+  <!-- 주소 -->
+  <text x="35" y="135" font-family="Arial, sans-serif" font-size="14" fill="#4a5568">
+    <tspan font-weight="bold">📍 주소:</tspan>
+  </text>
+  <text x="35" y="155" font-family="Arial, sans-serif" font-size="12" fill="#718096">
+    경기도 파주시 파주읍 약수골길 86 (연풍리)
+  </text>
+  
+  <!-- 전화번호 -->
+  <text x="35" y="185" font-family="Arial, sans-serif" font-size="14" fill="#4a5568">
+    <tspan font-weight="bold">📞 전화:</tspan>
+    <tspan x="100" font-size="13" fill="#2d3748">031-952-4801</tspan>
+  </text>
+  
+  <!-- 팩스 -->
+  
+  
+  <!-- 총매장능력 -->
+  
+  
+  <!-- 웹사이트 -->
+  
+  
+  <!-- 편의시설 아이콘 -->
+  
+  <text x="35" y="340" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#4a5568">
+    편의시설:
+  </text>
+  
+    <text x="120" y="340" font-size="20">🍴</text>
+  
+  
+  
+  <!-- 업데이트 정보 -->
+  <text x="570" y="375" font-family="Arial, sans-serif" font-size="10" 
+        fill="#a0aec0" text-anchor="end">
+    업데이트: 681개월전
+  </text>
+</g>
+<g transform="translate(20, 1340)">
+  <defs>
+    <linearGradient id="cardGradient1003" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#667eea;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#764ba2;stop-opacity:1" />
+    </linearGradient>
+    <filter id="shadow">
+      <feDropShadow dx="0" dy="4" stdDeviation="4" flood-opacity="0.3"/>
+    </filter>
+  </defs>
+  
+  <!-- 배경 카드 -->
+  <rect x="10" y="10" width="580" height="380" rx="15" 
+        fill="url(#cardGradient1003)" filter="url(#shadow)"/>
+  
+  <!-- 헤더 섹션 -->
+  <rect x="20" y="20" width="560" height="80" rx="10" fill="rgba(255,255,255,0.95)"/>
+  
+  <!-- 번호 배지 -->
+  <circle cx="50" cy="60" r="25" fill="#FF6B6B"/>
+  <text x="50" y="68" font-family="Arial, sans-serif" font-size="18" font-weight="bold" 
+        fill="white" text-anchor="middle">1003</text>
+  
+  <!-- 타입 아이콘 -->
+  <text x="90" y="50" font-size="24">🏢</text>
+  
+  <!-- 시설명 -->
+  <text x="90" y="75" font-family="Arial, sans-serif" font-size="20" font-weight="bold" 
+        fill="#2d3748">갑산공원묘원</text>
+  
+  <!-- 타입 라벨 -->
+  <rect x="480" y="30" width="80" height="25" rx="12" fill="#4ECDC4"/>
+  <text x="520" y="48" font-family="Arial, sans-serif" font-size="12" 
+        fill="white" text-anchor="middle">사설</text>
+  
+  <!-- 정보 섹션 배경 -->
+  <rect x="20" y="110" width="560" height="260" rx="10" fill="rgba(255,255,255,0.9)"/>
+  
+  <!-- 주소 -->
+  <text x="35" y="135" font-family="Arial, sans-serif" font-size="14" fill="#4a5568">
+    <tspan font-weight="bold">📍 주소:</tspan>
+  </text>
+  <text x="35" y="155" font-family="Arial, sans-serif" font-size="12" fill="#718096">
+    경기도 양평군 양서면 건지미길 5 (양수리, 갑산공원묘원)
+  </text>
+  
+  <!-- 전화번호 -->
+  <text x="35" y="185" font-family="Arial, sans-serif" font-size="14" fill="#4a5568">
+    <tspan font-weight="bold">📞 전화:</tspan>
+    <tspan x="100" font-size="13" fill="#2d3748">031-774-9348</tspan>
+  </text>
+  
+  <!-- 팩스 -->
+  
+  
+  <!-- 총매장능력 -->
+  
+  <text x="35" y="210" font-family="Arial, sans-serif" font-size="14" fill="#4a5568">
+    <tspan font-weight="bold">📊 매장능력:</tspan>
+    <tspan x="145" font-size="13" fill="#2d3748" font-weight="bold">13,074개</tspan>
+  </text>
+  
+  
+  <!-- 웹사이트 -->
+  
+  
+  <!-- 편의시설 아이콘 -->
+  
+  <text x="35" y="340" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#4a5568">
+    편의시설:
+  </text>
+  
+    <text x="120" y="340" font-size="20">🍴</text>
+  
+    <text x="155" y="340" font-size="20">🅿️</text>
+  
+  
+  
+  <!-- 업데이트 정보 -->
+  <text x="570" y="375" font-family="Arial, sans-serif" font-size="10" 
+        fill="#a0aec0" text-anchor="end">
+    업데이트: 681개월전
+  </text>
+</g>
+<g transform="translate(640, 1340)">
+  <defs>
+    <linearGradient id="cardGradient1004" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#667eea;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#764ba2;stop-opacity:1" />
+    </linearGradient>
+    <filter id="shadow">
+      <feDropShadow dx="0" dy="4" stdDeviation="4" flood-opacity="0.3"/>
+    </filter>
+  </defs>
+  
+  <!-- 배경 카드 -->
+  <rect x="10" y="10" width="580" height="380" rx="15" 
+        fill="url(#cardGradient1004)" filter="url(#shadow)"/>
+  
+  <!-- 헤더 섹션 -->
+  <rect x="20" y="20" width="560" height="80" rx="10" fill="rgba(255,255,255,0.95)"/>
+  
+  <!-- 번호 배지 -->
+  <circle cx="50" cy="60" r="25" fill="#FF6B6B"/>
+  <text x="50" y="68" font-family="Arial, sans-serif" font-size="18" font-weight="bold" 
+        fill="white" text-anchor="middle">1004</text>
+  
+  <!-- 타입 아이콘 -->
+  <text x="90" y="50" font-size="24">🏢</text>
+  
+  <!-- 시설명 -->
+  <text x="90" y="75" font-family="Arial, sans-serif" font-size="20" font-weight="bold" 
+        fill="#2d3748">대덕사 봉안당</text>
+  
+  <!-- 타입 라벨 -->
+  <rect x="480" y="30" width="80" height="25" rx="12" fill="#4ECDC4"/>
+  <text x="520" y="48" font-family="Arial, sans-serif" font-size="12" 
+        fill="white" text-anchor="middle">사설</text>
+  
+  <!-- 정보 섹션 배경 -->
+  <rect x="20" y="110" width="560" height="260" rx="10" fill="rgba(255,255,255,0.9)"/>
+  
+  <!-- 주소 -->
+  <text x="35" y="135" font-family="Arial, sans-serif" font-size="14" fill="#4a5568">
+    <tspan font-weight="bold">📍 주소:</tspan>
+  </text>
+  <text x="35" y="155" font-family="Arial, sans-serif" font-size="12" fill="#718096">
+    전라남도 나주시 율정길 121 (대호동)
+  </text>
+  
+  <!-- 전화번호 -->
+  <text x="35" y="185" font-family="Arial, sans-serif" font-size="14" fill="#4a5568">
+    <tspan font-weight="bold">📞 전화:</tspan>
+    <tspan x="100" font-size="13" fill="#2d3748">062-361-9191</tspan>
+  </text>
+  
+  <!-- 팩스 -->
+  
+  
+  <!-- 총매장능력 -->
+  
+  
+  <!-- 웹사이트 -->
+  
+  
+  <!-- 편의시설 아이콘 -->
+  
+  <text x="35" y="340" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#4a5568">
+    편의시설:
+  </text>
+  
+    <text x="120" y="340" font-size="20">🍴</text>
+  
+  
+  
+  <!-- 업데이트 정보 -->
+  <text x="570" y="375" font-family="Arial, sans-serif" font-size="10" 
+        fill="#a0aec0" text-anchor="end">
+    업데이트: 681개월전
+  </text>
+</g>
+<g transform="translate(20, 1760)">
+  <defs>
+    <linearGradient id="cardGradient1005" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#667eea;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#764ba2;stop-opacity:1" />
+    </linearGradient>
+    <filter id="shadow">
+      <feDropShadow dx="0" dy="4" stdDeviation="4" flood-opacity="0.3"/>
+    </filter>
+  </defs>
+  
+  <!-- 배경 카드 -->
+  <rect x="10" y="10" width="580" height="380" rx="15" 
+        fill="url(#cardGradient1005)" filter="url(#shadow)"/>
+  
+  <!-- 헤더 섹션 -->
+  <rect x="20" y="20" width="560" height="80" rx="10" fill="rgba(255,255,255,0.95)"/>
+  
+  <!-- 번호 배지 -->
+  <circle cx="50" cy="60" r="25" fill="#FF6B6B"/>
+  <text x="50" y="68" font-family="Arial, sans-serif" font-size="18" font-weight="bold" 
+        fill="white" text-anchor="middle">1005</text>
+  
+  <!-- 타입 아이콘 -->
+  <text x="90" y="50" font-size="24">🏢</text>
+  
+  <!-- 시설명 -->
+  <text x="90" y="75" font-family="Arial, sans-serif" font-size="20" font-weight="bold" 
+        fill="#2d3748">비봉사 봉안탑</text>
+  
+  <!-- 타입 라벨 -->
+  <rect x="480" y="30" width="80" height="25" rx="12" fill="#4ECDC4"/>
+  <text x="520" y="48" font-family="Arial, sans-serif" font-size="12" 
+        fill="white" text-anchor="middle">사설</text>
+  
+  <!-- 정보 섹션 배경 -->
+  <rect x="20" y="110" width="560" height="260" rx="10" fill="rgba(255,255,255,0.9)"/>
+  
+  <!-- 주소 -->
+  <text x="35" y="135" font-family="Arial, sans-serif" font-size="14" fill="#4a5568">
+    <tspan font-weight="bold">📍 주소:</tspan>
+  </text>
+  <text x="35" y="155" font-family="Arial, sans-serif" font-size="12" fill="#718096">
+    전라남도 고흥군 도양읍 차경구렁목길 237-46 (용정리, 비봉사)
+  </text>
+  
+  <!-- 전화번호 -->
+  <text x="35" y="185" font-family="Arial, sans-serif" font-size="14" fill="#4a5568">
+    <tspan font-weight="bold">📞 전화:</tspan>
+    <tspan x="100" font-size="13" fill="#2d3748">061-842-3362</tspan>
+  </text>
+  
+  <!-- 팩스 -->
+  
+  
+  <!-- 총매장능력 -->
+  
+  
+  <!-- 웹사이트 -->
+  
+  
+  <!-- 편의시설 아이콘 -->
+  
+  <text x="35" y="340" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#4a5568">
+    편의시설:
+  </text>
+  
+    <text x="120" y="340" font-size="20">🍴</text>
+  
+  
+  
+  <!-- 업데이트 정보 -->
+  <text x="570" y="375" font-family="Arial, sans-serif" font-size="10" 
+        fill="#a0aec0" text-anchor="end">
+    업데이트: 681개월전
+  </text>
+</g>
+<g transform="translate(640, 1760)">
+  <defs>
+    <linearGradient id="cardGradient1006" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#667eea;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#764ba2;stop-opacity:1" />
+    </linearGradient>
+    <filter id="shadow">
+      <feDropShadow dx="0" dy="4" stdDeviation="4" flood-opacity="0.3"/>
+    </filter>
+  </defs>
+  
+  <!-- 배경 카드 -->
+  <rect x="10" y="10" width="580" height="380" rx="15" 
+        fill="url(#cardGradient1006)" filter="url(#shadow)"/>
+  
+  <!-- 헤더 섹션 -->
+  <rect x="20" y="20" width="560" height="80" rx="10" fill="rgba(255,255,255,0.95)"/>
+  
+  <!-- 번호 배지 -->
+  <circle cx="50" cy="60" r="25" fill="#FF6B6B"/>
+  <text x="50" y="68" font-family="Arial, sans-serif" font-size="18" font-weight="bold" 
+        fill="white" text-anchor="middle">1006</text>
+  
+  <!-- 타입 아이콘 -->
+  <text x="90" y="50" font-size="24">🏢</text>
+  
+  <!-- 시설명 -->
+  <text x="90" y="75" font-family="Arial, sans-serif" font-size="20" font-weight="bold" 
+        fill="#2d3748">영락원 봉안당</text>
+  
+  <!-- 타입 라벨 -->
+  <rect x="480" y="30" width="80" height="25" rx="12" fill="#4ECDC4"/>
+  <text x="520" y="48" font-family="Arial, sans-serif" font-size="12" 
+        fill="white" text-anchor="middle">사설</text>
+  
+  <!-- 정보 섹션 배경 -->
+  <rect x="20" y="110" width="560" height="260" rx="10" fill="rgba(255,255,255,0.9)"/>
+  
+  <!-- 주소 -->
+  <text x="35" y="135" font-family="Arial, sans-serif" font-size="14" fill="#4a5568">
+    <tspan font-weight="bold">📍 주소:</tspan>
+  </text>
+  <text x="35" y="155" font-family="Arial, sans-serif" font-size="12" fill="#718096">
+    제주특별자치도 제주시 산록북로 660 (아라일동)
+  </text>
+  
+  <!-- 전화번호 -->
+  <text x="35" y="185" font-family="Arial, sans-serif" font-size="14" fill="#4a5568">
+    <tspan font-weight="bold">📞 전화:</tspan>
+    <tspan x="100" font-size="13" fill="#2d3748">064-759-6666</tspan>
+  </text>
+  
+  <!-- 팩스 -->
+  
+  
+  <!-- 총매장능력 -->
+  
+  
+  <!-- 웹사이트 -->
+  
+  
+  <!-- 편의시설 아이콘 -->
+  
+  <text x="35" y="340" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#4a5568">
+    편의시설:
+  </text>
+  
+    <text x="120" y="340" font-size="20">🍴</text>
+  
+  
+  
+  <!-- 업데이트 정보 -->
+  <text x="570" y="375" font-family="Arial, sans-serif" font-size="10" 
+        fill="#a0aec0" text-anchor="end">
+    업데이트: 681개월전
+  </text>
+</g>
+</svg>

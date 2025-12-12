@@ -1,0 +1,125 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model Facility {
+  id          String   @id @default(uuid())
+  name        String
+  category    String   // CHARNEL_HOUSE, NATURAL_BURIAL 등
+  address     String
+  
+  // 좌표 (위도, 경도)
+  lat         Float
+  lng         Float
+  
+  // 가격 범위
+  minPrice    BigInt
+  maxPrice    BigInt
+  
+  description String?
+  rating      Float    @default(0.0)
+  reviewCount Int      @default(0)
+  isPublic    Boolean  @default(false)
+  
+  // 이미지 URL (쉼표로 구분하거나 별도 테이블, 여기선 간단히 텍스트나 JSON으로 처리 가능하지만 SQLite라 쉼표 구분 문자열 추천)
+  images      String?  // "url1,url2,url3"
+  
+  // 시설 편의정보 (e하늘 데이터)
+  hasParking  Boolean  @default(false)  // 주차장
+  hasRestaurant Boolean @default(false) // 식당
+  hasStore    Boolean  @default(false)  // 매점
+  hasAccessibility Boolean @default(false) // 장애인 편의시설
+  
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  // Relations
+  priceCategories PriceCategory[]
+  priceItems      PriceItem[]
+}
+
+// 가격 카테고리 (PDF 탭 구조)
+model PriceCategory {
+  id              String   @id @default(uuid())
+  facilityId      String
+  facility        Facility @relation(fields: [facilityId], references: [id], onDelete: Cascade)
+  
+  name            String   // PDF 원본 이름 (예: "석물류")
+  normalizedName  String   // 표준화된 이름 (예: "매장묘")
+  orderNo         Int      @default(0)
+  
+  createdAt       DateTime @default(now())
+  
+  // Relations
+  priceItems      PriceItem[]
+  
+  @@index([facilityId])
+}
+
+// 가격 항목 (핵심 테이블)
+model PriceItem {
+  id                  String         @id @default(uuid())
+  categoryId          String
+  category            PriceCategory  @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  facilityId          String
+  facility            Facility       @relation(fields: [facilityId], references: [id], onDelete: Cascade)
+  
+  // 항목 정보
+  itemName            String         // 항목명 원문
+  normalizedItemType  String?        // 표준화된 타입
+  groupType           String?        // 단장/합장/개인단/부부단 등
+  description         String?        // 추가 설명
+  raw                 String?        // PDF 원문
+  
+  // 가격 정보
+  price               BigInt
+  unit                String         @default("1기")
+  
+  // 크기 정보
+  sizeValue           Float?
+  sizeUnit            String?
+  
+  // 포함 사항
+  hasInstallation     Boolean        @default(false)
+  hasManagementFee    Boolean        @default(false)
+  includedYear        Int?
+  
+  // 할인 정보
+  discountAvailable   Boolean        @default(false)
+  discountTargets     String?        // JSON string
+  
+  // 환불 규정
+  refundRule          String?
+  
+  // 수량 제한
+  minQty              Int            @default(1)
+  maxQty              Int?
+  
+  createdAt           DateTime       @default(now())
+  
+  @@index([facilityId])
+  @@index([categoryId])
+  @@index([normalizedItemType])
+  @@index([groupType])
+}
+
+// 표준화 사전
+model MappingDictionary {
+  id               String   @id @default(uuid())
+  rawName          String   @unique
+  normalizedType   String
+  normalizedGroup  String?
+  
+  createdAt        DateTime @default(now())
+  
+  @@index([rawName])
+}

@@ -1,0 +1,26 @@
+[
+  {
+    "rno": 22,
+    "name": "무궁화추모공원",
+    "reason": "Navigation timeout of 30000 ms exceeded",
+    "time": "2025-12-08T07:59:06.396Z"
+  },
+  {
+    "rno": 290,
+    "name": "경남영묘원",
+    "reason": "Navigation timeout of 30000 ms exceeded",
+    "time": "2025-12-08T10:06:08.376Z"
+  },
+  {
+    "rno": 412,
+    "name": "(재)아름다운 청계공원 봉안시설",
+    "reason": "Navigating frame was detached",
+    "time": "2025-12-08T23:42:01.175Z"
+  },
+  {
+    "rno": 424,
+    "name": "창원무량사 납골당 ",
+    "reason": "Attempted to use detached Frame '0F9D0B0B250D434D7EDA022AB8B12719'.",
+    "time": "2025-12-08T23:42:04.730Z"
+  }
+]

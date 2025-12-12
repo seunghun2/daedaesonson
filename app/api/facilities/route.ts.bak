@@ -1,0 +1,45 @@
+import { NextResponse } from 'next/server';
+import { prisma } from '@/lib/prisma';
+
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+
+// GET: 시설 목록 조회 (DB 조회 최적화)
+export async function GET() {
+    try {
+        console.log('Fetching facilities from DB...');
+        const facilities = await prisma.facility.findMany({
+            orderBy: { name: 'asc' },
+            select: {
+                id: true,
+                name: true,
+                category: true,
+                address: true,
+                isPublic: true,
+                minPrice: true,
+                maxPrice: true,
+                _count: {
+                    select: { priceCategories: true }
+                }
+            }
+        });
+
+        // BigInt 직렬화 및 최적화
+        const formatted = facilities.map(f => ({
+            id: f.id,
+            name: f.name,
+            category: f.category,
+            address: f.address,
+            isPublic: f.isPublic,
+            minPrice: f.minPrice.toString(),
+            maxPrice: f.maxPrice.toString(),
+            _hasDetailedPrices: f._count.priceCategories > 0
+        }));
+
+        console.log(`Returned ${formatted.length} facilities`);
+        return NextResponse.json(formatted);
+    } catch (e) {
+        console.error('API Error:', e);
+        return NextResponse.json({ error: 'Failed to load data', details: String(e) }, { status: 500 });
+    }
+}

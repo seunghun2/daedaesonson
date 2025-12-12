@@ -1,0 +1,63 @@
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependencies
+/node_modules
+/.pnp
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/versions
+
+# testing
+/coverage
+/test-results
+/testsprite_tests
+
+# next.js
+/.next/
+/out/
+
+# production
+/build
+
+# misc
+.DS_Store
+*.pem
+
+# debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# env files (can opt-in for committing if needed)
+.env*
+
+# vercel
+.vercel
+
+# typescript
+*.tsbuildinfo
+next-env.d.ts
+
+/lib/generated/prisma
+
+# Archives (Too large for Git)
+/archive
+/archive2
+/archive3
+/대대손손 파일리스트
+
+# Public Assets (Too large for Git/Vercel)
+/public/images/facilities
+/public/uploads
+
+# Large Data Dumps
+dump*.json
+crawled_*.json
+full_data.json
+
+# Database (Binary file often locks)
+*.db

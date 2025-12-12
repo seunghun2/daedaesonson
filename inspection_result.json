@@ -1,0 +1,447 @@
+Checking Tab: 묘지
+Checking Tab: 봉안시설
+Found and clicked in 봉안시설
+On detail page. Clicking Photo tab...
+Image structure: [
+  {
+    "src": "https://15774129.go.kr/img/loading.png",
+    "parentClass": "",
+    "grandParentClass": "",
+    "containerId": "loading",
+    "containerClass": null
+  },
+  {
+    "src": "https://15774129.go.kr/img/portal/chatbot/chatbot.png",
+    "parentClass": "side_open",
+    "grandParentClass": "",
+    "containerId": "right_menu",
+    "containerClass": null
+  },
+  {
+    "src": "https://15774129.go.kr/img/btn_close.png",
+    "parentClass": "",
+    "grandParentClass": "btn_close",
+    "containerId": "popup_package",
+    "containerClass": "pop_header"
+  },
+  {
+    "src": "https://15774129.go.kr/BCUser/facilitypic/1689493896382.JPG",
+    "parentClass": "facimg_box",
+    "grandParentClass": "facimg_wrap",
+    "containerId": "loc1",
+    "containerClass": "facimg_box"
+  },
+  {
+    "src": "https://15774129.go.kr/BCUser/facilitypic/1689493896382.JPG",
+    "parentClass": "",
+    "grandParentClass": "",
+    "containerId": "loc1",
+    "containerClass": "facimg_list"
+  },
+  {
+    "src": "https://15774129.go.kr/BCUser/facilitypic/1689494168649.jpg",
+    "parentClass": "",
+    "grandParentClass": "",
+    "containerId": "loc1",
+    "containerClass": "facimg_list"
+  },
+  {
+    "src": "https://15774129.go.kr/BCUser/facilitypic/1689494176874.jpg",
+    "parentClass": "",
+    "grandParentClass": "",
+    "containerId": "loc1",
+    "containerClass": "facimg_list"
+  },
+  {
+    "src": "https://15774129.go.kr/BCUser/facilitypic/1689494204006.jpg",
+    "parentClass": "",
+    "grandParentClass": "",
+    "containerId": "loc1",
+    "containerClass": "facimg_list"
+  },
+  {
+    "src": "https://15774129.go.kr/BCUser/facilitypic/1689494137303.jpg",
+    "parentClass": "",
+    "grandParentClass": "",
+    "containerId": "loc1",
+    "containerClass": "facimg_list"
+  },
+  {
+    "src": "https://15774129.go.kr/BCUser/facilitypic/1689494146984.jpg",
+    "parentClass": "",
+    "grandParentClass": "",
+    "containerId": "loc1",
+    "containerClass": "facimg_list"
+  },
+  {
+    "src": "https://15774129.go.kr/BCUser/facilitypic/1689494160684.jpg",
+    "parentClass": "",
+    "grandParentClass": "",
+    "containerId": "loc1",
+    "containerClass": "facimg_list"
+  },
+  {
+    "src": "https://15774129.go.kr/BCUser/facilitypic/1689494195826.jpg",
+    "parentClass": "",
+    "grandParentClass": "",
+    "containerId": "loc1",
+    "containerClass": "facimg_list"
+  },
+  {
+    "src": "https://15774129.go.kr/BCUser/facilitypic/1689494211253.jpg",
+    "parentClass": "",
+    "grandParentClass": "",
+    "containerId": "loc1",
+    "containerClass": "facimg_list"
+  },
+  {
+    "src": "https://15774129.go.kr/BCUser/facilitypic/1689494234812.jpg",
+    "parentClass": "",
+    "grandParentClass": "",
+    "containerId": "loc1",
+    "containerClass": "facimg_list"
+  },
+  {
+    "src": "https://15774129.go.kr/BCUser/facilitypic/1689494218695.jpg",
+    "parentClass": "",
+    "grandParentClass": "",
+    "containerId": "loc1",
+    "containerClass": "facimg_list"
+  },
+  {
+    "src": "https://15774129.go.kr/BCUser/facilitypic/1689494229048.jpg",
+    "parentClass": "",
+    "grandParentClass": "",
+    "containerId": "loc1",
+    "containerClass": "facimg_list"
+  },
+  {
+    "src": "https://15774129.go.kr/img/portal/sub/mark1.png",
+    "parentClass": "",
+    "grandParentClass": "convenient",
+    "containerId": "loc1",
+    "containerClass": "info_item"
+  },
+  {
+    "src": "https://15774129.go.kr/img/portal/sub/mark2.png",
+    "parentClass": "",
+    "grandParentClass": "convenient",
+    "containerId": "loc1",
+    "containerClass": "info_item"
+  },
+  {
+    "src": "https://15774129.go.kr/img/portal/sub/mark3.png",
+    "parentClass": "",
+    "grandParentClass": "convenient",
+    "containerId": "loc1",
+    "containerClass": "info_item"
+  },
+  {
+    "src": "https://15774129.go.kr/img/portal/sub/mark4.png",
+    "parentClass": "",
+    "grandParentClass": "convenient",
+    "containerId": "loc1",
+    "containerClass": "info_item"
+  },
+  {
+    "src": "https://15774129.go.kr/img/portal/sub/mark5.png",
+    "parentClass": "",
+    "grandParentClass": "convenient",
+    "containerId": "loc1",
+    "containerClass": "info_item"
+  },
+  {
+    "src": "https://15774129.go.kr/img/portal/sub/mark1.png",
+    "parentClass": "",
+    "grandParentClass": "convenient",
+    "containerId": "sub_container",
+    "containerClass": "info_item"
+  },
+  {
+    "src": "https://15774129.go.kr/img/portal/sub/mark2.png",
+    "parentClass": "",
+    "grandParentClass": "convenient",
+    "containerId": "sub_container",
+    "containerClass": "info_item"
+  },
+  {
+    "src": "https://15774129.go.kr/img/portal/sub/mark3.png",
+    "parentClass": "",
+    "grandParentClass": "convenient",
+    "containerId": "sub_container",
+    "containerClass": "info_item"
+  },
+  {
+    "src": "https://15774129.go.kr/img/portal/sub/mark4.png",
+    "parentClass": "",
+    "grandParentClass": "convenient",
+    "containerId": "sub_container",
+    "containerClass": "info_item"
+  },
+  {
+    "src": "https://15774129.go.kr/img/portal/sub/mark5.png",
+    "parentClass": "",
+    "grandParentClass": "convenient",
+    "containerId": "sub_container",
+    "containerClass": "info_item"
+  },
+  {
+    "src": "https://15774129.go.kr/img/portal/sub/btn_print.png",
+    "parentClass": "",
+    "grandParentClass": "slt_print",
+    "containerId": "sub_container",
+    "containerClass": "total_pay_info"
+  },
+  {
+    "src": "https://15774129.go.kr/BCUser/facilitypic/1689493896382.JPG",
+    "parentClass": "",
+    "grandParentClass": "",
+    "containerId": "sub_container",
+    "containerClass": "fac_photo_list"
+  },
+  {
+    "src": "https://15774129.go.kr/BCUser/facilitypic/1689494168649.jpg",
+    "parentClass": "",
+    "grandParentClass": "",
+    "containerId": "sub_container",
+    "containerClass": "fac_photo_list"
+  },
+  {
+    "src": "https://15774129.go.kr/BCUser/facilitypic/1689494176874.jpg",
+    "parentClass": "",
+    "grandParentClass": "",
+    "containerId": "sub_container",
+    "containerClass": "fac_photo_list"
+  },
+  {
+    "src": "https://15774129.go.kr/BCUser/facilitypic/1689494204006.jpg",
+    "parentClass": "",
+    "grandParentClass": "",
+    "containerId": "sub_container",
+    "containerClass": "fac_photo_list"
+  },
+  {
+    "src": "https://15774129.go.kr/BCUser/facilitypic/1689494137303.jpg",
+    "parentClass": "",
+    "grandParentClass": "",
+    "containerId": "sub_container",
+    "containerClass": "fac_photo_list"
+  },
+  {
+    "src": "https://15774129.go.kr/BCUser/facilitypic/1689494146984.jpg",
+    "parentClass": "",
+    "grandParentClass": "",
+    "containerId": "sub_container",
+    "containerClass": "fac_photo_list"
+  },
+  {
+    "src": "https://15774129.go.kr/BCUser/facilitypic/1689494160684.jpg",
+    "parentClass": "",
+    "grandParentClass": "",
+    "containerId": "sub_container",
+    "containerClass": "fac_photo_list"
+  },
+  {
+    "src": "https://15774129.go.kr/BCUser/facilitypic/1689494195826.jpg",
+    "parentClass": "",
+    "grandParentClass": "",
+    "containerId": "sub_container",
+    "containerClass": "fac_photo_list"
+  },
+  {
+    "src": "https://15774129.go.kr/BCUser/facilitypic/1689494211253.jpg",
+    "parentClass": "",
+    "grandParentClass": "",
+    "containerId": "sub_container",
+    "containerClass": "fac_photo_list"
+  },
+  {
+    "src": "https://15774129.go.kr/BCUser/facilitypic/1689494234812.jpg",
+    "parentClass": "",
+    "grandParentClass": "",
+    "containerId": "sub_container",
+    "containerClass": "fac_photo_list"
+  },
+  {
+    "src": "https://15774129.go.kr/BCUser/facilitypic/1689494218695.jpg",
+    "parentClass": "",
+    "grandParentClass": "",
+    "containerId": "sub_container",
+    "containerClass": "fac_photo_list"
+  },
+  {
+    "src": "https://15774129.go.kr/BCUser/facilitypic/1689494229048.jpg",
+    "parentClass": "",
+    "grandParentClass": "",
+    "containerId": "sub_container",
+    "containerClass": "fac_photo_list"
+  },
+  {
+    "src": "https://15774129.go.kr/BCUser/facilitypic/1626668281913.jpg",
+    "parentClass": "fac_thumb",
+    "grandParentClass": "",
+    "containerId": "facility_list",
+    "containerClass": "fac_thumb"
+  },
+  {
+    "src": "https://15774129.go.kr/img/portal/sub/mark1.png",
+    "parentClass": "",
+    "grandParentClass": "convenient",
+    "containerId": "facility_list",
+    "containerClass": "fac_info"
+  },
+  {
+    "src": "https://15774129.go.kr/img/portal/sub/mark4.png",
+    "parentClass": "",
+    "grandParentClass": "convenient",
+    "containerId": "facility_list",
+    "containerClass": "fac_info"
+  },
+  {
+    "src": "https://15774129.go.kr/img/portal/sub/mark5.png",
+    "parentClass": "",
+    "grandParentClass": "convenient",
+    "containerId": "facility_list",
+    "containerClass": "fac_info"
+  },
+  {
+    "src": "https://15774129.go.kr/BCUser/facilitypic/1689493896382.JPG",
+    "parentClass": "fac_thumb",
+    "grandParentClass": "",
+    "containerId": "facility_list",
+    "containerClass": "fac_thumb"
+  },
+  {
+    "src": "https://15774129.go.kr/img/portal/sub/mark1.png",
+    "parentClass": "",
+    "grandParentClass": "convenient",
+    "containerId": "facility_list",
+    "containerClass": "fac_info"
+  },
+  {
+    "src": "https://15774129.go.kr/img/portal/sub/mark2.png",
+    "parentClass": "",
+    "grandParentClass": "convenient",
+    "containerId": "facility_list",
+    "containerClass": "fac_info"
+  },
+  {
+    "src": "https://15774129.go.kr/img/portal/sub/mark3.png",
+    "parentClass": "",
+    "grandParentClass": "convenient",
+    "containerId": "facility_list",
+    "containerClass": "fac_info"
+  },
+  {
+    "src": "https://15774129.go.kr/img/portal/sub/mark4.png",
+    "parentClass": "",
+    "grandParentClass": "convenient",
+    "containerId": "facility_list",
+    "containerClass": "fac_info"
+  },
+  {
+    "src": "https://15774129.go.kr/img/portal/sub/mark5.png",
+    "parentClass": "",
+    "grandParentClass": "convenient",
+    "containerId": "facility_list",
+    "containerClass": "fac_info"
+  },
+  {
+    "src": "https://15774129.go.kr/BCUser/link/2023/11/16/81f39a14-ebeb-410d-9f7e-b215d74ae3cc.jpg",
+    "parentClass": "",
+    "grandParentClass": "",
+    "containerId": "footer",
+    "containerClass": "banner_right"
+  },
+  {
+    "src": "https://15774129.go.kr/BCUser/link/2023/11/16/5ab7a4c6-1e9b-45af-a8cf-e192f52aeb93.jpg",
+    "parentClass": "",
+    "grandParentClass": "",
+    "containerId": "footer",
+    "containerClass": "banner_right"
+  },
+  {
+    "src": "https://15774129.go.kr/BCUser/link/2024/01/18/02c54704-429f-4eb9-bbc1-aa49f507dd8d.jpg",
+    "parentClass": "",
+    "grandParentClass": "",
+    "containerId": "footer",
+    "containerClass": "banner_right"
+  },
+  {
+    "src": "https://15774129.go.kr/BCUser/link/2024/01/18/faef6aa6-1fb6-4f08-ac52-f3856177857a.jpg",
+    "parentClass": "",
+    "grandParentClass": "",
+    "containerId": "footer",
+    "containerClass": "banner_right"
+  },
+  {
+    "src": "https://15774129.go.kr/BCUser/link/2024/01/18/f8b0662d-1eb0-43e2-88e2-988d31f02fd4.jpg",
+    "parentClass": "",
+    "grandParentClass": "",
+    "containerId": "footer",
+    "containerClass": "banner_right"
+  },
+  {
+    "src": "https://15774129.go.kr/BCUser/link/2024/01/18/8499f21f-7e41-4b62-8a39-d828bcd45b70.jpg",
+    "parentClass": "",
+    "grandParentClass": "",
+    "containerId": "footer",
+    "containerClass": "banner_right"
+  },
+  {
+    "src": "https://15774129.go.kr/BCUser/link/2024/01/18/01eaa028-15c9-4383-ab6b-f381e14bbdac.jpg",
+    "parentClass": "",
+    "grandParentClass": "",
+    "containerId": "footer",
+    "containerClass": "banner_right"
+  },
+  {
+    "src": "https://15774129.go.kr/BCUser/link/2024/01/18/d0a4131d-1930-4025-910a-2937d863e589.jpg",
+    "parentClass": "",
+    "grandParentClass": "",
+    "containerId": "footer",
+    "containerClass": "banner_right"
+  },
+  {
+    "src": "https://15774129.go.kr/BCUser/link/2024/01/18/fcae28dc-f1bb-4f2c-b8df-2b440b30ca76.jpg",
+    "parentClass": "",
+    "grandParentClass": "",
+    "containerId": "footer",
+    "containerClass": "banner_right"
+  },
+  {
+    "src": "https://15774129.go.kr/BCUser/link/2024/01/18/7d4e39f5-0c09-4a99-8041-812ec13c2ed8.jpg",
+    "parentClass": "",
+    "grandParentClass": "",
+    "containerId": "footer",
+    "containerClass": "banner_right"
+  },
+  {
+    "src": "https://15774129.go.kr/BCUser/link/2023/11/16/7506fccd-42fa-458d-8927-78586f40f933.jpg",
+    "parentClass": "",
+    "grandParentClass": "",
+    "containerId": "footer",
+    "containerClass": "banner_right"
+  },
+  {
+    "src": "https://15774129.go.kr/BCUser/link/2023/11/16/566d27a6-0ccf-479e-b5bb-a34570fa6443.jpg",
+    "parentClass": "",
+    "grandParentClass": "",
+    "containerId": "footer",
+    "containerClass": "banner_right"
+  },
+  {
+    "src": "https://15774129.go.kr/img/portal/common/ft_mark_wa.png",
+    "parentClass": "",
+    "grandParentClass": "",
+    "containerId": "footer",
+    "containerClass": "ft_mark"
+  },
+  {
+    "src": "https://15774129.go.kr/img/portal/common/ft_mark_qr.png",
+    "parentClass": "",
+    "grandParentClass": "",
+    "containerId": "footer",
+    "containerClass": "ft_mark"
+  }
+]
