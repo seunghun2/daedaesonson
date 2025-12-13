@@ -88,8 +88,11 @@ export default function FacilitiesPage() {
             let valA, valB;
 
             if (sortBy === 'id') {
-                valA = a.id;
-                valB = b.id;
+                // 숫자 ID 추출하여 정렬 (park-0001 -> 1)
+                const numA = parseInt(a.id.replace(/[^0-9]/g, '')) || 0;
+                const numB = parseInt(b.id.replace(/[^0-9]/g, '')) || 0;
+                valA = numA;
+                valB = numB;
             } else if (sortBy === 'name') {
                 valA = a.name;
                 valB = b.name;
@@ -214,8 +217,8 @@ export default function FacilitiesPage() {
                     </Table.Thead>
                     <Table.Tbody>
                         {paginatedData.length > 0 ? (
-                            paginatedData.map((item) => (
-                                <Table.Tr key={item.id}>
+                            paginatedData.map((item, index) => (
+                                <Table.Tr key={`${item.id}-${index}`}>
                                     <Table.Td>
                                         <Text size="xs" c="dimmed">#{item.id}</Text>
                                     </Table.Td>
