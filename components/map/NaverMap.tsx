@@ -578,7 +578,7 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
         let minLat = 0, maxLat = 0, minLng = 0, maxLng = 0;
 
         // Bounds가 유효한지 체크 (초기 로딩 시 Bounds가 없거나 0일 수 있음)
-        if (mapBounds && mapBounds instanceof window.naver.maps.LatLngBounds && mapBounds.isValid()) {
+        if (mapBounds && mapBounds instanceof window.naver.maps.LatLngBounds) {
             const sw = mapBounds.getSW();
             const ne = mapBounds.getNE();
             minLat = sw.lat(); maxLat = ne.lat();
