@@ -717,12 +717,46 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
         }
     }, [facilities, onMarkerClick]); // Add onMarkerClick to dependencies
 
-    // 🚀 Effect: 데이터 변경 시 업데이트
+    const initialCenterSet = useRef(false);
+
+    // 🚀 Effect: 데이터 변경 시 업데이트 및 초기 중심 설정
     useEffect(() => {
-        if (isMapLoaded) {
-            updateVisibleMarkers();
+        if (!isMapLoaded || !mapInstanceRef.current) return;
+
+        // 1. 초기 로드 시 시설이 있는 곳으로 중심 이동 (최초 1회)
+        if (facilities.length > 0 && !initialCenterSet.current) {
+            let sumLat = 0;
+            let sumLng = 0;
+            let count = 0;
+
+            // 전체 다 돌면 느릴 수 있으니 최대 50개만 샘플링
+            const limit = Math.min(facilities.length, 50);
+            for (let i = 0; i < limit; i++) {
+                const fac = facilities[i];
+                if (fac.coordinates) {
+                    sumLat += fac.coordinates.lat;
+                    sumLng += fac.coordinates.lng;
+                    count++;
+                }
+            }
+
+            if (count > 0) {
+                const avgLat = sumLat / count;
+                const avgLng = sumLng / count;
+                const newCenter = new window.naver.maps.LatLng(avgLat, avgLng);
+
+                // 부드럽게 이동하거나 바로 설정
+                mapInstanceRef.current.setCenter(newCenter);
+                // 줌 레벨도 적절히 조정 (너무 서울만 보이지 않게)
+                mapInstanceRef.current.setZoom(10);
+
+                initialCenterSet.current = true;
+            }
         }
-    }, [facilities, isMapLoaded, updateVisibleMarkers]); // Add updateVisibleMarkers to dependencies
+
+        // 2. 마커 업데이트
+        updateVisibleMarkers();
+    }, [facilities, isMapLoaded, updateVisibleMarkers]);
 
     const initMap = () => {
         if (!window.naver || !window.naver.maps) {
