@@ -532,7 +532,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose }: F
     return (
         <Box
             style={{ backgroundColor: '#f8f9fa', height: '100%', position: 'relative', overflowY: 'auto', touchAction: 'pan-y' }}
-            onTouchStart={(e) => e.stopPropagation()} // 🚀 지도 터치 간섭 방지
+            onTouchStart={(e) => e.stopPropagation()} // 🚀 지도 터치 간섭 방지 (재적용)
         >
             {/* 1. 호갱노노 스타일 헤더 (Brand Color - Deep Indigo) */}
             <Box bg="brand.8" p="md" style={{ position: 'sticky', top: 0, zIndex: 1000 }}>
@@ -801,277 +801,445 @@ export default function FacilityDetail({ facility: initialFacility, onClose }: F
 
 
             {/* 9. 위치 및 교통 (홈페이지 바로가기 버튼 추가됨) */}
-            <Box bg="white" p="md" pb={100} style={{ borderBottom: '8px solid #f8f9fa' }}>
-                <Group justify="space-between" mb="md">
-                    <Text size="sm" fw={700}>위치 및 교통</Text>
-                    {/* 홈페이지 버튼 (우측 상단) */}
-                    {facility.homepageUrl && (
+            <Box bg="white" p="md" style={{ borderBottom: '8px solid #f8f9fa' }}>
+                <Text size="sm" fw={700} mb="sm">위치</Text>
+                <Text size="sm" mb="md" c="dark.7">{facility.address}</Text>
+
+                <Group grow>
+                    <Button
+                        variant="outline"
+                        color="brand"
+                        size="sm"
+                        component="a"
+                        href={facility.transportInfo?.naverMapUrl || `https://map.naver.com/v5/search/${encodeURIComponent(facility.address)}`}
+                        target="_blank"
+                        leftSection={<Navigation size={16} />}
+                        styles={{ root: { borderColor: 'var(--mantine-color-brand-3)' } }}
+                    >
+                        길찾기
+                    </Button>
+                    {facility.websiteUrl && (
                         <Button
-                            component="a"
-                            href={facility.homepageUrl}
-                            target="_blank"
-                            rel="noopener noreferrer"
                             variant="outline"
                             color="gray"
-                            size="xs"
-                            radius="xl"
-                            leftSection={<Globe size={14} />}
-                            styles={{
-                                root: { height: 28, borderColor: '#dee2e6' },
-                                label: { color: '#495057', fontWeight: 600 }
-                            }}
+                            size="sm"
+                            component="a"
+                            href={facility.websiteUrl}
+                            target="_blank"
+                            leftSection={<Globe size={16} />}
                         >
                             홈페이지
                         </Button>
                     )}
                 </Group>
-
-                <Box style={{ borderRadius: 12, overflow: 'hidden', border: '1px solid #e9ecef', height: 200, marginBottom: 16, position: 'relative' }}>
-                    <Image
-                        src={`https://naveropenapi.apigw.ntruss.com/map-static/v2/raster?w=600&h=400&center=${facility.coordinates.lng},${facility.coordinates.lat}&level=15&scale=2&markers=type:d|size:mid|pos:${facility.coordinates.lng} ${facility.coordinates.lat}&clientID=${process.env.NEXT_PUBLIC_NAVER_MAP_CLIENT_ID}`}
-                        h="100%"
-                        w="100%"
-                        fit="cover"
-                        alt="Map"
-                    />
-                    <Box
-                        style={{
-                            position: 'absolute',
-                            bottom: 0,
-                            left: 0,
-                            right: 0,
-                            padding: '12px',
-                            background: 'linear-gradient(transparent, rgba(0,0,0,0.7))',
-                            display: 'flex',
-                            justifyContent: 'flex-end'
-                        }}
-                    >
-                        <Button
-                            size="xs"
-                            variant="white"
-                            color="dark"
-                            leftSection={<Navigation size={14} />}
-                            onClick={() => {
-                                const url = `nmap://route/car?dlat=${facility.coordinates.lat}&dlng=${facility.coordinates.lng}&dname=${encodeURIComponent(facility.name)}&appname=com.daedaesonson.app`;
-                                window.location.href = url;
-                            }}
-                        >
-                            길찾기
-                        </Button>
-                    </Box>
-                </Box>
-
-                <Group align="flex-start" gap="xs">
-                    <Box mt={4}><Navigation size={16} color="#868e96" /></Box>
-                    <Box>
-                        <Text size="sm" fw={600} c="dark.9">{facility.address}</Text>
-                        <Text size="xs" c="dimmed" mt={2}>지번: {facility.address}</Text>
-                        {/* 지번 데이터가 없으므로 도로명과 동일하게 표시하거나 생략 */}
-                    </Box>
-                </Group>
             </Box>
 
-            {/* 하단 고정 버튼 (문의하기) */}
-            <Paper
-                shadow="sm"
-                p="md"
-                style={{
-                    position: 'absolute',
-                    bottom: 0,
-                    left: 0,
-                    right: 0,
-                    zIndex: 100,
-                    borderTop: '1px solid #e9ecef'
+            {/* 10. 전화 상담 */}
+
+
+
+
+            {/* 전화상담 */}
+            <Box bg="white" p="md" style={{ borderBottom: '8px solid #f8f9fa' }}>
+                <Text size="sm" fw={700} mb="md">전화상담</Text>
+                <Text size="lg" fw={700} c="dark.9">
+                    {facility.phone || '문의 필요'}
+                </Text>
+            </Box>
+
+            {/* 시설 정보 */}
+            <Box bg="white" p="md" style={{ borderBottom: '8px solid #f8f9fa' }}>
+                <Text size="sm" fw={700} mb="md">시설 정보</Text>
+                <Stack gap="sm">
+                    <Group justify="space-between">
+                        <Text size="sm" c="gray.6">운영형태</Text>
+                        <Text size="sm" fw={500} c="dark.9">
+                            {facility.isPublic ? '공설' : '사설'}
+                        </Text>
+                    </Group>
+                    <Group justify="space-between">
+                        <Text size="sm" c="gray.6">시설종류</Text>
+                        <Text size="sm" fw={500} c="dark.9">
+                            {facility.category ? FACILITY_CATEGORY_LABELS[facility.category] || facility.category : '정보 없음'}
+                        </Text>
+                    </Group>
+
+                    <Group justify="space-between">
+                        <Text size="sm" c="gray.6">업데이트</Text>
+                        <Text size="sm" fw={500} c="dark.9">
+                            {facility.lastUpdated || '정보 없음'}
+                        </Text>
+                    </Group>
+                </Stack>
+            </Box>
+
+            {/* 13. 이용자 리뷰 */}
+            <Box bg="white" p="md" pb={100}>
+                <Group justify="space-between" mb="md" align="center">
+                    <Group justify="space-between">
+                        <Text size="lg" fw={700} style={{ cursor: 'pointer' }} onClick={() => setStoryOpen(true)}>방문자 리뷰</Text>
+                        <ChevronRight size={20} style={{ cursor: 'pointer' }} onClick={() => setStoryOpen(true)} />
+                    </Group>
+                    <Group gap={4} style={{ cursor: 'pointer' }} onClick={() => setStoryOpen(true)}>
+                        <Text size="xs" c="dimmed">사진 전체</Text>
+                        <ChevronRight size={14} color="gray" />
+                    </Group>
+                </Group>
+
+
+                {/* Photo Strip (Simulated for now) - If reviews have photos, show here */}
+                {/* <Box mb="lg" ... /> */}
+
+                {/* Review List */}
+                {/* Inline Write Box (HogangNono Style) - Moved to Top */}
+                <Paper
+                    withBorder radius="md" p="md" mb="lg"
+                    onClick={openReviewModal}
+                    style={{ cursor: 'pointer', borderColor: '#e9ecef', backgroundColor: '#f8f9fa' }}
+                >
+                    <Group justify="space-between">
+                        <Text c="gray.5" size="sm">
+                            궁금한 점이나 솔직한 후기를 남겨주세요.
+                        </Text>
+                        <Group gap={12}>
+                            <Camera size={20} color="#5c7cfa" />
+                            <Pencil size={20} color="#5c7cfa" />
+                        </Group>
+                    </Group>
+                </Paper>
+
+                {/* Review List */}
+                <Stack gap="md" mb="xl">
+                    {reviews.length > 0 ? (
+                        reviews.map((review) => (
+                            <Box key={review.id} style={{ borderBottom: '1px solid #f1f3f5' }} pb="md">
+                                <Group justify="space-between" mb={4}>
+                                    <Group gap="xs">
+                                        <Box w={24} h={24} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                                            <span className="material-symbols-outlined" style={{ fontSize: '24px', color: '#adb5bd' }}>account_circle</span>
+                                        </Box>
+                                        <Text size="sm" fw={600} c="dark.8">{review.author}</Text>
+                                        <Text size="xs" c="dimmed">· {review.date}</Text>
+                                    </Group>
+                                    <ActionIcon variant="transparent" color="gray" size="sm" onClick={() => handleDeleteReview(review.id)}>
+                                        <Trash size={14} />
+                                    </ActionIcon>
+                                </Group>
+                                <Text size="md" mb="xs" style={{ whiteSpace: 'pre-wrap', lineHeight: 1.5, color: '#343a40' }}>
+                                    {review.content}
+                                </Text>
+                                {/* Review Photos */}
+                                {review.photos && review.photos.length > 0 && (
+                                    <Group gap="xs" mb="sm">
+                                        {review.photos.map((photo, idx) => (
+                                            <Image key={idx} src={photo} w={100} h={100} radius="md" style={{ objectFit: 'cover', border: '1px solid #f1f3f5' }} />
+                                        ))}
+                                    </Group>
+                                )}
+
+                                <Group gap="lg">
+                                    <Group gap={4} style={{ cursor: 'pointer' }} onClick={() => handleLike(review.id)}>
+                                        <span
+                                            className="material-symbols-outlined"
+                                            style={{
+                                                fontSize: '18px',
+                                                color: likedReviews.has(review.id) ? '#fa5252' : '#adb5bd',
+                                                fontVariationSettings: likedReviews.has(review.id) ? "'FILL' 1" : "'FILL' 0"
+                                            }}
+                                        >
+                                            favorite
+                                        </span>
+                                        <Text size="xs" c={likedReviews.has(review.id) ? 'red.6' : 'dimmed'} fw={likedReviews.has(review.id) ? 600 : 400}>
+                                            좋아요 {review.likes || 0}
+                                        </Text>
+                                    </Group>
+                                    <Group gap={4} style={{ cursor: 'pointer' }} onClick={() => {
+                                        setReplyingTo(replyingTo === review.id ? null : review.id);
+                                        setReplyContent('');
+                                    }}>
+                                        <span className="material-symbols-outlined" style={{ fontSize: '18px', color: '#adb5bd' }}>chat_bubble</span>
+                                        <Text size="xs" c="dimmed">답글달기</Text>
+                                    </Group>
+                                </Group>
+
+                                {/* Reply Input */}
+                                {replyingTo === review.id && (
+                                    <Box mt="sm" p="sm" bg="gray.0" radius="md">
+                                        <Group gap="xs" mb="sm">
+                                            <TextInput
+                                                placeholder="답글을 입력하세요"
+                                                style={{ flex: 1 }}
+                                                size="sm"
+                                                variant="unstyled"
+                                                value={replyContent}
+                                                onChange={(e) => setReplyContent(e.currentTarget.value)}
+                                            />
+                                        </Group>
+                                        <Group justify="flex-end">
+                                            <Button size="xs" variant="text" c="dimmed" onClick={() => setReplyingTo(null)}>취소</Button>
+                                            <Button size="xs" variant="filled" color="brand" radius="xl" onClick={() => handleSubmitReply(review.id)}>등록</Button>
+                                        </Group>
+                                    </Box>
+                                )}
+
+                                {/* Reply List */}
+                                {review.replies && review.replies.length > 0 && (
+                                    <Box mt="md" bg="gray.0" p="sm" radius="md">
+                                        {review.replies.map(reply => (
+                                            <Box key={reply.id} mb="sm" last={{ mb: 0 }}>
+                                                <Group gap="xs" mb={4}>
+                                                    <Text size="sm" fw={700} c="dark.8">{reply.author}</Text>
+                                                    <Text size="xs" c="dimmed">{reply.date}</Text>
+                                                    <ActionIcon variant="transparent" color="gray" size="xs" onClick={() => handleDeleteReply(review.id, reply.id)} ml="auto">
+                                                        <X size={12} />
+                                                    </ActionIcon>
+                                                </Group>
+                                                <Text size="sm" c="dark.7">{reply.content}</Text>
+                                            </Box>
+                                        ))}
+                                    </Box>
+                                )}
+                            </Box>
+                        ))
+                    ) : (
+                        <Box ta="center" py="xl">
+                            <Text size="sm" c="dimmed">아직 작성된 리뷰가 없습니다.<br />첫 번째 리뷰를 남겨보세요!</Text>
+                        </Box>
+                    )}
+                </Stack>
+
+
+                {/* 'Current Reviews' Count Button - Open Story Panel */}
+                {reviews.length > 0 && (
+                    <Button
+                        variant="filled" color="gray.0" fullWidth size="lg" radius="md"
+                        styles={{ root: { color: '#495057', height: '52px' } }}
+                        onClick={() => setStoryOpen(true)}
+                    >
+                        방문자 리뷰 {reviews.length}개 더보기
+                    </Button>
+                )}
+                {/* 14. 면책 조항 (법적 보호) */}
+                <Box mt="xl" pt="xl" style={{ borderTop: '1px solid #f1f3f5' }}>
+                    <Text size="xs" c="dimmed" ta="center" lh={1.6}>
+                        [면책 공고]<br />
+                        대대손손은 정보 제공 플랫폼이며, 해당 시설과의 계약 및 서비스 이용에 대한 책임은 각 시설 제공자에게 있습니다.<br />
+                        실제 가격과 정보는 시기에 따라 변동될 수 있으므로, 방문 전 반드시 해당 시설에 확인하시기 바랍니다.
+                    </Text>
+                </Box>
+
+                {/* 하단 여백 */}
+                <Box h={100} />
+            </Box>
+
+
+            {/* Story Panel Overlay */}
+            <StoryPanel facility={facility} isOpen={storyOpen} onClose={() => setStoryOpen(false)} />
+
+            {/* Floating Button Removed */}
+
+            {/* Image Modal Lightbox */}
+            <Modal
+                opened={opened}
+                onClose={() => setOpened(false)}
+                size="xl"
+                padding={0}
+                centered
+                withCloseButton={false}
+                styles={{
+                    content: { backgroundColor: 'transparent', boxShadow: 'none' },
+                    body: { padding: 0 }
                 }}
             >
-                <Group grow>
+                <div style={{ position: 'relative', width: '100%', aspectRatio: '16/9', backgroundColor: 'black', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    <Image
+                        src={galleryImages[selectedImageIndex]}
+                        fit="contain"
+                        h="100%"
+                        w="100%"
+                        alt="Gallery Image"
+                    />
                     <Button
-                        size="lg"
-                        color="brand.8" // Deep Indigo
-                        component="a"
-                        href={`tel:${phoneNumber.replace(/[^0-9]/g, '')}`}
-                        leftSection={<span className="material-symbols-outlined">call</span>}
-                        styles={{
-                            root: { height: 52 },
-                            label: { fontSize: '17px', fontWeight: 700 }
-                        }}
+                        variant="subtle"
+                        color="gray"
+                        style={{ position: 'absolute', top: 10, right: 10, color: 'white' }}
+                        onClick={() => setOpened(false)}
                     >
-                        전화 상담하기
+                        닫기
                     </Button>
-                </Group>
-            </Paper>
 
-            {/* 🖼️ [호갱노노 스타일] 프리미엄 이미지 뷰어 */}
-            {opened && (
-                <Box
-                    style={{
-                        position: 'fixed',
-                        top: 0,
-                        left: 0,
-                        right: 0,
-                        bottom: 0,
-                        zIndex: 9999,
-                        backgroundColor: 'rgba(0, 0, 0, 0.95)', // 더 짙은 검정 (사진 집중)
-                        display: 'flex',
-                        flexDirection: 'column',
-                        backdropFilter: 'blur(5px)' // 고급스러운 블러 처리
-                    }}
-                >
-                    {/* 뷰어 헤더 (우측 상단 아이콘) */}
-                    <Group justify="space-between" align="center" style={{ position: 'absolute', top: 0, left: 0, right: 0, padding: '16px 20px', zIndex: 10000 }}>
-                        {/* 페이지 카운터 */}
-                        <Text c="white" size="sm" fw={500}>
-                            {selectedImageIndex + 1} / {galleryImages.length}
-                        </Text>
-
-                        <Group gap="xs">
-                            <ActionIcon variant="transparent" color="white" size="lg" onClick={() => alert('확대/축소 기능 준비중')}>
-                                <span className="material-symbols-outlined" style={{ fontSize: '28px' }}>search</span>
-                            </ActionIcon>
-                            <ActionIcon variant="transparent" color="white" size="lg" onClick={() => setOpened(false)}>
-                                <span className="material-symbols-outlined" style={{ fontSize: '28px' }}>close</span>
-                            </ActionIcon>
-                        </Group>
-                    </Group>
-
-                    {/* 메인 이미지 영역 (Pinch Zoom & Drag 지원 예정) */}
-                    <Box
-                        style={{
-                            flex: 1,
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            position: 'relative',
-                            width: '100%',
-                            height: '100%'
-                        }}
-                        onClick={() => setOpened(false)} // 배경 클릭 시 닫기
-                    >
-                        <Image
-                            src={getSingleFacilityImageUrl(galleryImages[selectedImageIndex])}
-                            alt="Full View"
-                            style={{
-                                maxWidth: '100%',
-                                maxHeight: '100%',
-                                width: 'auto',
-                                height: 'auto',
-                                boxShadow: '0 10px 40px rgba(0,0,0,0.5)',
-                                transition: 'transform 0.2s ease'
-                            }}
-                            onClick={(e) => {
-                                e.stopPropagation(); // 이미지 클릭 시 닫기 방지 (확대 등 동작 위해)
-                            }}
-                        />
-
-                        {/* 좌우 네비게이션 (데스크탑용, 모바일은 스와이프) */}
-                        {!isMobile && selectedImageIndex > 0 && (
-                            <ActionIcon
-                                variant="transparent" color="white" size="xl"
-                                style={{ position: 'absolute', left: 20, top: '50%', transform: 'translateY(-50%)' }}
-                                onClick={(e) => { e.stopPropagation(); setSelectedImageIndex(prev => prev - 1); }}
+                    {/* Navigation Buttons */}
+                    {galleryImages.length > 1 && (
+                        <>
+                            <Button
+                                variant="subtle"
+                                color="gray"
+                                style={{ position: 'absolute', left: 10, top: '50%', transform: 'translateY(-50%)', color: 'white' }}
+                                onClick={(e) => {
+                                    e.stopPropagation();
+                                    setSelectedImageIndex((prev) => (prev > 0 ? prev - 1 : galleryImages.length - 1));
+                                }}
                             >
-                                <ChevronLeft size={48} />
-                            </ActionIcon>
-                        )}
-                        {!isMobile && selectedImageIndex < galleryImages.length - 1 && (
-                            <ActionIcon
-                                variant="transparent" color="white" size="xl"
-                                style={{ position: 'absolute', right: 20, top: '50%', transform: 'translateY(-50%)' }}
-                                onClick={(e) => { e.stopPropagation(); setSelectedImageIndex(prev => prev + 1); }}
+                                <ChevronLeft size={32} />
+                            </Button>
+                            <Button
+                                variant="subtle"
+                                color="gray"
+                                style={{ position: 'absolute', right: 10, top: '50%', transform: 'translateY(-50%)', color: 'white' }}
+                                onClick={(e) => {
+                                    e.stopPropagation();
+                                    setSelectedImageIndex((prev) => (prev < galleryImages.length - 1 ? prev + 1 : 0));
+                                }}
                             >
-                                <ChevronRight size={48} />
-                            </ActionIcon>
-                        )}
-                    </Box>
-
-                    {/* 하단 썸네일 스트립 (선택사항, 깔끔함을 위해 제외 가능) */}
-                </Box>
-            )}
-
-            {/* 리뷰 작성 모달 */}
-            <Modal opened={reviewModalOpened} onClose={closeReviewModal} title="리뷰 작성" centered zIndex={2000}>
-                <Box>
-                    <Group mb="md">
-                        <Text fw={700}>별점</Text>
-                        <Rating value={reviewForm.rating} onChange={(v) => setReviewForm({ ...reviewForm, rating: v })} size="lg" />
-                    </Group>
-
-                    <TextInput
-                        label="작성자"
-                        placeholder="이름 (익명 가능)"
-                        mb="sm"
-                        value={reviewForm.author}
-                        onChange={(e) => setReviewForm({ ...reviewForm, author: e.target.value })}
-                    />
-                    <TextInput
-                        label="비밀번호"
-                        type="password"
-                        placeholder="나중에 수정/삭제할 때 필요해요"
-                        mb="md"
-                        value={reviewForm.password}
-                        onChange={(e) => setReviewForm({ ...reviewForm, password: e.target.value })}
-                    />
-
-                    <Group mb="xs" justify="space-between">
-                        <Text fw={700}>사진 첨부 (최대 5장)</Text>
-                        <Group>
-                            <input
-                                type="file"
-                                accept="image/*"
-                                multiple
-                                style={{ display: 'none' }}
-                                ref={fileInputRef}
-                                onChange={handlePhotoChange}
-                            />
-                            <ActionIcon variant="subtle" color="gray" onClick={() => fileInputRef.current?.click()}>
-                                <Camera size={20} />
-                            </ActionIcon>
-                        </Group>
-                    </Group>
-
-                    {/* Photo Previews */}
-                    <Box mb="md" style={{ overflowX: 'auto', whiteSpace: 'nowrap' }}>
-                        <Group gap="xs">
-                            {reviewForm.photos.map((photo, idx) => (
-                                <Box key={idx} style={{ position: 'relative', display: 'inline-block' }}>
-                                    <Image
-                                        src={photo}
-                                        w={80}
-                                        h={80}
-                                        radius="md"
-                                        style={{ objectFit: 'cover' }}
-                                    />
-                                    <ActionIcon
-                                        size="xs" radius="xl" color="dark" variant="filled"
-                                        style={{ position: 'absolute', top: -6, right: -6 }}
-                                        onClick={() => removePhoto(idx)}
-                                    >
-                                        <X size={10} />
-                                    </ActionIcon>
-                                </Box>
-                            ))}
-                        </Group>
-                    </Box>
-
-                    {/* Text Input */}
-                    <Textarea
-                        placeholder="솔직한 후기를 남겨주세요."
-                        variant="default" // unstyled -> default for better visibility
-                        size="md"
-                        autosize
-                        minRows={4}
-                        value={reviewForm.content}
-                        onChange={(e) => setReviewForm({ ...reviewForm, content: e.target.value })}
-                    />
-
-                    <Group justify="flex-end" mt="xl">
-                        <Button variant="default" onClick={closeReviewModal}>취소</Button>
-                        <Button color="brand" loading={isSubmitting} onClick={handleSubmitReview}>
-                            등록하기
-                        </Button>
-                    </Group>
-                </Box>
+                                <ChevronRight size={32} />
+                            </Button>
+                        </>
+                    )}
+                </div>
             </Modal>
-        </Box>
+            {/* Review Write Panel (HogangNono Style - Slide Panel) */}
+            {
+                reviewModalOpened && (
+                    <Paper
+                        shadow="xl"
+                        radius={0}
+                        style={{
+                            position: 'fixed', // Fixed to escape parent overflow
+                            top: 0,
+                            left: isMobile ? 0 : 400, // Desktop: Start after the 400px sidebar
+                            width: isMobile ? '100%' : '400px',
+                            height: '100dvh', // Use dynamic viewport height for mobile
+                            zIndex: 9999, // Above map and other elements
+                            backgroundColor: 'white',
+                            borderLeft: isMobile ? 'none' : '1px solid #e9ecef',
+                            display: 'flex',
+                            flexDirection: 'column',
+                            transition: 'left 0.3s ease' // Smooth transition
+                        }}
+                    >
+                        <LoadingOverlay visible={isSubmitting} />
+
+                        {/* Header */}
+                        <Box px="md" h={56} style={{ borderBottom: '1px solid #f1f3f5', display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexShrink: 0, position: 'relative' }}>
+                            <ActionIcon variant="transparent" c="black" onClick={closeReviewModal} style={{ zIndex: 1 }}>
+                                <X size={24} />
+                            </ActionIcon>
+
+                            <Text size="md" fw={700} style={{ position: 'absolute', left: '50%', transform: 'translateX(-50%)', zIndex: 0 }}>
+                                글쓰기
+                            </Text>
+
+                            <Button
+                                variant="light"
+                                color="brand"
+                                c="brand.8"
+                                size="sm"
+                                radius="md"
+                                fw={700}
+                                onClick={handleSubmitReview}
+                                disabled={!reviewForm.content.trim()}
+                                style={{ zIndex: 1, backgroundColor: 'var(--mantine-color-brand-0)', border: 'none' }}
+                            >
+                                등록
+                            </Button>
+                        </Box>
+
+                        {/* Content */}
+                        <Box p="md" style={{ flex: 1, overflowY: 'auto' }}>
+                            {/* Disclaimer Box */}
+                            <Paper p="sm" radius="md" mb="lg" bg="#f1f3f5">
+                                <Text size="xs" c="gray.7" style={{ lineHeight: 1.5, wordBreak: 'keep-all' }}>
+                                    다른 사람을 비방하거나, 타인에게 불쾌감을 유발하는 부적절한 표현, 영리 목적의 광고는 삼가해주세요.
+                                </Text>
+                                <Text size="xs" c="dimmed" style={{ textDecoration: 'underline', marginTop: 6, cursor: 'pointer' }}>
+                                    운영 정책 보기
+                                </Text>
+                            </Paper>
+
+                            {/* Facility Name Dropdown */}
+                            <Group justify="space-between" mb="xl" style={{ cursor: 'pointer' }}>
+                                <Text fw={600} size="md">시설: {facility.name}</Text>
+                                <ChevronDown size={20} color="#adb5bd" />
+                            </Group>
+
+                            {/* Hidden Rating Field */}
+                            <Box mb="lg" style={{ display: 'none' }}>
+                                <Rating value={reviewForm.rating} onChange={(v) => setReviewForm({ ...reviewForm, rating: v })} />
+                            </Box>
+
+                            {/* Photo Add Button (Square with border) */}
+                            <Box mb="lg">
+                                <input
+                                    type="file"
+                                    multiple
+                                    accept="image/*"
+                                    ref={fileInputRef}
+                                    style={{ display: 'none' }}
+                                    onChange={handlePhotoChange}
+                                />
+                                <Group gap="xs" align="flex-start">
+                                    <Button
+                                        variant="outline"
+                                        color="gray.4"
+                                        w={80} h={80}
+                                        radius="md"
+                                        bg="white"
+                                        style={{
+                                            border: '1px solid #dee2e6',
+                                            flexDirection: 'column',
+                                            gap: 4,
+                                            height: '80px',
+                                            padding: 0,
+                                            flexShrink: 0,
+                                            color: '#868e96'
+                                        }}
+                                        onClick={() => fileInputRef.current?.click()}
+                                    >
+                                        <Camera size={24} strokeWidth={1.5} />
+                                        <Text size="xs" fw={400}>
+                                            {reviewForm.photos.length}/5
+                                        </Text>
+                                    </Button>
+
+                                    {/* Photo Previews */}
+                                    {reviewForm.photos.map((photo, idx) => (
+                                        <Box key={idx} pos="relative" w={80} h={80}>
+                                            <Image src={photo} w={80} h={80} radius="md" style={{ objectFit: 'cover', border: '1px solid #dee2e6' }} />
+                                            <ActionIcon
+                                                size="xs" radius="xl" color="dark" variant="filled"
+                                                style={{ position: 'absolute', top: -6, right: -6 }}
+                                                onClick={() => removePhoto(idx)}
+                                            >
+                                                <X size={10} />
+                                            </ActionIcon>
+                                        </Box>
+                                    ))}
+                                </Group>
+                            </Box>
+
+                            {/* Text Input */}
+                            <Textarea
+                                placeholder="솔직한 후기를 남겨주세요."
+                                variant="unstyled"
+                                size="md"
+                                autosize
+                                minRows={10}
+                                value={reviewForm.content}
+                                onChange={(e) => setReviewForm({ ...reviewForm, content: e.target.value })}
+                                styles={{
+                                    input: {
+                                        padding: 0,
+                                        fontSize: '16px',
+                                        color: '#343a40',
+                                        '::placeholder': { color: '#adb5bd' }
+                                    }
+                                }}
+                            />
+                        </Box>
+                    </Paper>
+                )
+            }
+        </Box >
     );
 }
+
