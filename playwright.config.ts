@@ -9,7 +9,7 @@ export default defineConfig({
     workers: 1, // Avoid port collision
     reporter: 'list',
     use: {
-        baseURL: 'http://localhost:3001',
+        baseURL: 'http://localhost:3000',
         trace: 'on-first-retry',
         screenshot: 'only-on-failure',
     },

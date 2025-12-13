@@ -46,9 +46,9 @@ test.describe('Map Functionality', () => {
         await page.waitForTimeout(3000);
 
         const renderLogs = consoleLogs
-            .filter(log => log.includes('NaverMap - Rendering markers'))
+            .filter(log => log.includes('Viewport 필터링'))
             .map(log => {
-                const match = log.match(/Rendering markers: (\d+)/);
+                const match = log.match(/전체 (\d+)개/);
                 return match ? parseInt(match[1]) : 0;
             });
 
