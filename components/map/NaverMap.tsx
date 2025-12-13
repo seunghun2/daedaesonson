@@ -504,10 +504,25 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
         });
     };
 
+    // 🚀 [초기 로딩 최적화] 처음엔 30개만 렌더링하고, 잠시 후 전체 렌더링
+    const [renderLimit, setRenderLimit] = useState(30);
+
+    useEffect(() => {
+        // 0.5초 뒤에 제한 해제 (사용자가 지도 보고 있을 때 스윽 로딩)
+        const timer = setTimeout(() => {
+            setRenderLimit(facilities.length); // 전체 로딩
+        }, 500);
+        return () => clearTimeout(timer);
+    }, [facilities.length]);
+
     // 🚀 [핵심 수정] 시설 데이터가 변경될 때마다 좌표 오프셋을 **영구 고정** (Global Registry)
     // 화면에 누가 보이고 안 보이고, 필터링이 되든 말든, 한 번 자리를 잡은 놈은 절대 안 움직임.
     const processedFacilities = useMemo<Array<Facility & { fixedCoordinates: { lat: number; lng: number } }>>(() => {
-        return facilities.map(fac => {
+        // 초기 로딩 시엔 앞부분(renderLimit)만 계산해서 빠르게 리턴
+        // 사용자가 "30개"만 보겠다고 했으므로, 무거운 루프를 30번만 돕니다.
+        const targetFacilities = facilities.slice(0, renderLimit);
+
+        return targetFacilities.map(fac => {
             if (!fac.coordinates || !fac.coordinates.lat || !fac.coordinates.lng) {
                 return { ...fac, fixedCoordinates: { lat: 0, lng: 0 } };
             }
@@ -526,20 +541,15 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
             }
 
             // 2. 고정적이고 결정적인(deterministic) 오프셋 계산
-            // 인덱스 0: 정중앙
-            // 인덱스 1~8: 10m 원형
-            // 인덱스 9~16: 20m 원형 ...
             let offsetLat = 0;
             let offsetLng = 0;
 
             if (index > 0) {
-                // index가 0이면 오프셋 없음 (제일 윗놈은 정위치)
-                // 겹치는 놈들(index 1부터)만 옆으로 뺌
-                const ringIndex = Math.floor((index - 1) / 8); // 0, 0, 0... 1, 1, 1...
-                const slotIndex = (index - 1) % 8; // 0~7
+                const ringIndex = Math.floor((index - 1) / 8);
+                const slotIndex = (index - 1) % 8;
 
-                const radius = 0.0001 * (ringIndex + 1); // 10m, 20m, ...
-                const angle = slotIndex * (Math.PI / 4); // 45도 간격
+                const radius = 0.0001 * (ringIndex + 1);
+                const angle = slotIndex * (Math.PI / 4);
 
                 offsetLat = Math.sin(angle) * radius;
                 offsetLng = Math.cos(angle) * radius;
@@ -553,8 +563,7 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
                 }
             };
         });
-    }, [facilities]);
-
+    }, [facilities, renderLimit]);
 
     // 🚀 마커 업데이트 함수 (화면 내 시설만 필터링하여 렌더링)
     const updateVisibleMarkers = useCallback(() => {
@@ -574,7 +583,7 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
             return bounds.hasLatLng(pos);
         });
 
-        // 안전장치: 최대 500개
+        // 안전장치: 최대 500개 (모바일 성능 보호)
         const renderFacilities = visibleFacilities.slice(0, 500);
         console.log(`🎯 Viewport 필터링: 전체 ${facilities.length}개 중 ${renderFacilities.length}개 렌더링`);
 
@@ -665,7 +674,7 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
                 averageCenter: true,
                 icons: [{
                     content: `
-                         <div style="cursor:pointer; min-width:64px; padding: 6px 10px; background:#35469C; color:white; border-radius:6px; box-shadow:0 3px 8px rgba(0,0,0,0.3); display:flex; flex-direction:column; align-items:center; justify-content:center; font-family:-apple-system, sans-serif;">
+                         <div style="cursor:pointer; min-width:64px; padding: 6px 10px; background:#35469C; color:white; border-radius:6px; box-shadow:0 2px 6px rgba(0,0,0,0.15); display:flex; flex-direction:column; align-items:center; justify-content:center; font-family:-apple-system, sans-serif;">
                              <div class="cluster-region" style="font-size:11px; opacity:0.8; margin-bottom:2px; line-height:1;"></div>
                              <div class="cluster-count" style="font-size:14px; font-weight:800; line-height:1;"></div>
                          </div>

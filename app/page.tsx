@@ -542,8 +542,10 @@ function HomeContent() {
               display: 'flex',
               flexDirection: 'column',
               overflow: 'hidden',
-              // 🎬 스르륵 애니메이션
-              animation: 'slideInRight 0.3s ease-out',
+              touchAction: 'pan-y', // 🚀 스크롤 개선
+              overscrollBehavior: 'contain', // 🚀 스크롤 개선
+              // 🎬 스르륵 애니메이션 (0.2s로 단축하여 더 빠르게)
+              animation: 'slideInRight 0.2s ease-out',
             }}
           >
             <style jsx>{`
