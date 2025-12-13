@@ -572,15 +572,32 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
 
         console.log('NaverMap - Updating visible markers...');
 
-        const bounds = map.getBounds();
+        const mapBounds = map.getBounds();
+
+        // 지도 영역(Bounds) 좌표 준비
+        let minLat = 0, maxLat = 0, minLng = 0, maxLng = 0;
+
+        // Bounds가 유효한지 체크 (초기 로딩 시 Bounds가 없거나 0일 수 있음)
+        if (mapBounds && mapBounds instanceof window.naver.maps.LatLngBounds && mapBounds.isValid()) {
+            const sw = mapBounds.getSW();
+            const ne = mapBounds.getNE();
+            minLat = sw.lat(); maxLat = ne.lat();
+            minLng = sw.lng(); maxLng = ne.lng();
+        } else {
+            // 🚀 초기 로딩 Fallback: 사당/관악(37.4760, 126.9810) 중심으로 강제 계산 (반경 약 5km)
+            // 사용자가 "가만히 있어도 나와야 한다"고 요청함 -> Bounds 대기 없이 즉시 렌더링
+            minLat = 37.4760 - 0.06; maxLat = 37.4760 + 0.06;
+            minLng = 126.9810 - 0.06; maxLng = 126.9810 + 0.06;
+        }
 
         // 1. 화면(Bounds) 내 시설만 필터링 (미리 계산된 processedFacilities 사용)
         const visibleFacilities = processedFacilities.filter(fac => {
             if (!fac.fixedCoordinates || !fac.fixedCoordinates.lat || !fac.fixedCoordinates.lng) return false;
-            // Original pos check or Fixed pos check? 
-            // fixedCoordinates 기준으로 화면 안에 있는지 체크하는 것이 정확함
-            const pos = new window.naver.maps.LatLng(fac.fixedCoordinates.lat, fac.fixedCoordinates.lng);
-            return bounds.hasLatLng(pos);
+            const lat = fac.fixedCoordinates.lat;
+            const lng = fac.fixedCoordinates.lng;
+
+            // 단순 좌표 범위 비교 (map.getBounds()가 없어도 작동하도록 직접 비교)
+            return lat >= minLat && lat <= maxLat && lng >= minLng && lng <= maxLng;
         });
 
         // 안전장치: 최대 500개 (모바일 성능 보호)
