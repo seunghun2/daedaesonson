@@ -505,7 +505,7 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
     };
 
     // 🚀 [초기 로딩 최적화] 처음엔 30개만 렌더링하고, 잠시 후 전체 렌더링
-    const [renderLimit, setRenderLimit] = useState(30);
+    const [renderLimit, setRenderLimit] = useState(100);
 
     useEffect(() => {
         // 0.5초 뒤에 제한 해제 (사용자가 지도 보고 있을 때 스윽 로딩)
@@ -717,45 +717,11 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
         }
     }, [facilities, onMarkerClick]); // Add onMarkerClick to dependencies
 
-    const initialCenterSet = useRef(false);
-
-    // 🚀 Effect: 데이터 변경 시 업데이트 및 초기 중심 설정
+    // 🚀 Effect: 데이터 변경 시 업데이트
     useEffect(() => {
-        if (!isMapLoaded || !mapInstanceRef.current) return;
-
-        // 1. 초기 로드 시 시설이 있는 곳으로 중심 이동 (최초 1회)
-        if (facilities.length > 0 && !initialCenterSet.current) {
-            let sumLat = 0;
-            let sumLng = 0;
-            let count = 0;
-
-            // 전체 다 돌면 느릴 수 있으니 최대 50개만 샘플링
-            const limit = Math.min(facilities.length, 50);
-            for (let i = 0; i < limit; i++) {
-                const fac = facilities[i];
-                if (fac.coordinates) {
-                    sumLat += fac.coordinates.lat;
-                    sumLng += fac.coordinates.lng;
-                    count++;
-                }
-            }
-
-            if (count > 0) {
-                const avgLat = sumLat / count;
-                const avgLng = sumLng / count;
-                const newCenter = new window.naver.maps.LatLng(avgLat, avgLng);
-
-                // 부드럽게 이동하거나 바로 설정
-                mapInstanceRef.current.setCenter(newCenter);
-                // 줌 레벨도 적절히 조정 (너무 서울만 보이지 않게)
-                mapInstanceRef.current.setZoom(10);
-
-                initialCenterSet.current = true;
-            }
+        if (isMapLoaded) {
+            updateVisibleMarkers();
         }
-
-        // 2. 마커 업데이트
-        updateVisibleMarkers();
     }, [facilities, isMapLoaded, updateVisibleMarkers]);
 
     const initMap = () => {
@@ -769,10 +735,11 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
         }
 
         try {
-            const location = new window.naver.maps.LatLng(37.5665, 126.9780);
+            // 사용자 요청: 사당/관악(서울 남부) 인근을 중심으로 시작
+            const location = new window.naver.maps.LatLng(37.4760, 126.9810);
             const map = new window.naver.maps.Map(mapRef.current, {
                 center: location,
-                zoom: 12,
+                zoom: 12, // 11~12 정도가 적당
                 minZoom: 6,
                 scaleControl: false,
                 logoControl: false,
