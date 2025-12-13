@@ -578,12 +578,19 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
         let minLat = 0, maxLat = 0, minLng = 0, maxLng = 0;
 
         // Bounds가 유효한지 체크 (초기 로딩 시 Bounds가 없거나 0일 수 있음)
+        let useFallback = true;
         if (mapBounds && mapBounds instanceof window.naver.maps.LatLngBounds) {
             const sw = mapBounds.getSW();
             const ne = mapBounds.getNE();
-            minLat = sw.lat(); maxLat = ne.lat();
-            minLng = sw.lng(); maxLng = ne.lng();
-        } else {
+            // 영역 크기가 0.0001 이상이어야 실제로 지도가 보이는 상태임
+            if ((ne.lat() - sw.lat()) > 0.0001) {
+                useFallback = false;
+                minLat = sw.lat(); maxLat = ne.lat();
+                minLng = sw.lng(); maxLng = ne.lng();
+            }
+        }
+
+        if (useFallback) {
             // 🚀 초기 로딩 Fallback: 사당/관악(37.4760, 126.9810) 중심으로 강제 계산 (반경 약 5km)
             // 사용자가 "가만히 있어도 나와야 한다"고 요청함 -> Bounds 대기 없이 즉시 렌더링
             minLat = 37.4760 - 0.06; maxLat = 37.4760 + 0.06;
