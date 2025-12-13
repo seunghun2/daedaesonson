@@ -869,7 +869,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose }: F
                         <Group justify="space-between">
                             <Text size="sm" c="gray.6">총매장능력</Text>
                             <Text size="sm" fw={500} c="dark.9">
-                                {facility.capacity.toLocaleString()} 기
+                                {facility.capacity.toLocaleString()}기
                             </Text>
                         </Group>
                     )}
