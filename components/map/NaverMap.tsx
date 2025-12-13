@@ -720,7 +720,15 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
     // 🚀 Effect: 데이터 변경 시 업데이트
     useEffect(() => {
         if (isMapLoaded) {
+            // 1. 즉시 업데이트
             updateVisibleMarkers();
+
+            // 2. 안전장치: 지도가 완전히 자리를 잡은 뒤(300ms) 한 번 더 강제 업데이트
+            // (초기 로드 시 마커가 안 뜨는 현상 방지)
+            const timer = setTimeout(() => {
+                updateVisibleMarkers();
+            }, 300);
+            return () => clearTimeout(timer);
         }
     }, [facilities, isMapLoaded, updateVisibleMarkers]);
 
