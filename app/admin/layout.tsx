@@ -9,7 +9,8 @@ import {
     Upload as IconUpload,
     Settings as IconSettings,
     LogOut as IconLogout,
-    MapPin
+    MapPin,
+    ReceiptText as IconPricing
 } from 'lucide-react';
 
 import { usePathname, useRouter } from 'next/navigation';
@@ -23,6 +24,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         { label: '대시보드', icon: IconDashboard, link: '/admin' },
         // { label: '시설 데이터 관리', icon: IconDatabase, link: '/admin/facilities' }, // Deprecated
         { label: '시설 데이터 관리', icon: IconDatabase, link: '/admin/upload' }, // Now the main management page
+        { label: '가격 데이터 관리', icon: IconPricing, link: '/admin/pricing' },
         { label: '설정', icon: IconSettings, link: '/admin/settings' },
     ];
 

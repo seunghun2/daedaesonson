@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>Gemini Image Analysis Test</title>
+    <style>
+        body { font-family: sans-serif; padding: 20px; max-width: 800px; margin: 0 auto; }
+        .box { border: 1px solid #ccc; padding: 20px; margin-bottom: 20px; border-radius: 8px; }
+        label { display: block; margin-bottom: 5px; font-weight: bold; }
+        input[type="text"], input[type="file"] { width: 100%; padding: 8px; margin-bottom: 10px; }
+        button { padding: 10px 20px; background: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 16px; }
+        button:hover { background: #0056b3; }
+        #result { background: #f4f4f4; padding: 15px; border-radius: 4px; white-space: pre-wrap; font-family: monospace; min-height: 100px; }
+        img { max-width: 100%; margin-top: 10px; border-radius: 4px; }
+    </style>
+</head>
+<body>
+    <h1>🤖 Gemini 비전 분석 테스트</h1>
+    
+    <div class="box">
+        <label>API Key (여기에 새 키를 붙여넣으세요):</label>
+        <input type="text" id="apiKey" placeholder="AIza..." value="">
+        
+        <label>모델 선택:</label>
+        <select id="modelSelect" style="width:100%; padding:8px; margin-bottom: 10px;">
+            <option value="gemini-1.5-flash">gemini-1.5-flash (표준)</option>
+            <option value="gemini-3-pro-image-preview">gemini-3-pro-image-preview (사용자 발견)</option>
+            <option value="gemini-1.5-pro">gemini-1.5-pro (고성능)</option>
+        </select>
+
+        <label>이미지 선택 (1장):</label>
+        <input type="file" id="fileInput" accept="image/*">
+        <div id="previewContainer"></div>
+
+        <button onclick="analyzeImage()">분석 시작 🚀</button>
+    </div>
+
+    <div class="box">
+        <h3>분석 결과:</h3>
+        <div id="result">결과가 여기 표시됩니다...</div>
+    </div>
+
+    <script type="module">
+        import { GoogleGenerativeAI } from "https://esm.run/@google/generative-ai";
+
+        // Image Preview
+        document.getElementById('fileInput').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById('previewContainer').innerHTML = `<img src="${e.target.result}" style="max-height: 200px;">`;
+                }
+                reader.readAsDataURL(file);
+            }
+        });
+
+        window.analyzeImage = async function() {
+            const apiKey = document.getElementById('apiKey').value.trim();
+            const modelName = document.getElementById('modelSelect').value;
+            const fileInput = document.getElementById('fileInput');
+            const resultDiv = document.getElementById('result');
+
+            if (!apiKey) {
+                alert('API Key를 입력해주세요!');
+                return;
+            }
+            if (fileInput.files.length === 0) {
+                alert('이미지를 선택해주세요!');
+                return;
+            }
+
+            resultDiv.innerText = "⏳ 분석 중입니다... 잠시만 기다려주세요.";
+
+            try {
+                const genAI = new GoogleGenerativeAI(apiKey);
+                const model = genAI.getGenerativeModel({ model: modelName });
+
+                const file = fileInput.files[0];
+                const base64Data = await fileToGenerativePart(file);
+
+                const prompt = `
+                이 사진은 한국의 장사시설(장례식장, 묘지 등)입니다.
+                사진을 보고 다음 중 어떤 유형인지 하나만 골라주세요:
+                - "공원묘지" (야외 매장묘)
+                - "봉안당" (실내 납골당)
+                - "수목장" (자연장/나무)
+                - "복합" (여러 유형 혼합)
+
+                답변 형식: "유형: [유형이름]\n이유: [간단한 이유]"
+                `;
+
+                const result = await model.generateContent([prompt, base64Data]);
+                const response = await result.response;
+                const text = response.text();
+
+                resultDiv.innerText = text;
+
+            } catch (error) {
+                console.error(error);
+                resultDiv.innerText = "❌ 에러 발생:\n" + error.message;
+            }
+        };
+
+        async function fileToGenerativePart(file) {
+            const base64EncodedDataPromise = new Promise((resolve) => {
+                const reader = new FileReader();
+                reader.onloadend = () => resolve(reader.result.split(',')[1]);
+                reader.readAsDataURL(file);
+            });
+            return {
+                inlineData: { data: await base64EncodedDataPromise, mimeType: file.type },
+            };
+        }
+    </script>
+</body>
+</html>
