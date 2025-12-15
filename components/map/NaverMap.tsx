@@ -88,6 +88,9 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
     // ♻️ 마커 풀링 (재사용)
     const markerPoolRef = useRef<any[]>([]);
 
+    // 🔒 시설별 고정 좌표 캐시 (한 번 계산되면 영구 고정)
+    const fixedCoordsCache = useRef<Map<string, { lat: number; lng: number }>>(new Map());
+
     // props를 ref에 저장 (이벤트 리스너 내부에서 최신 값 참조 위함)
     const propsRef = useRef({ facilities, onMarkerClick, onBoundsChanged });
 
@@ -524,16 +527,21 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
 
     // 🚀 [핵심 수정] 시설 데이터가 변경될 때마다 좌표 오프셋을 **영구 고정** (Global Registry)
     // 화면에 누가 보이고 안 보이고, 필터링이 되든 말든, 한 번 자리를 잡은 놈은 절대 안 움직임.
-    // 🚀 [핵심 수정] 시설 데이터가 변경될 때마다 좌표 오프셋을 **영구 고정** (Global Registry)
-    // 화면에 누가 보이고 안 보이고, 필터링이 되든 말든, 한 번 자리를 잡은 놈은 절대 안 움직임.
+    // 🚀 [핵심 수정] 시설별 고정 좌표를 **캐시**하여 절대 변경되지 않도록 함
     const processedFacilities = useMemo<Array<Facility & { fixedCoordinates: { lat: number; lng: number } }>>(() => {
-        // [수정] renderLimit 제거 -> 전체 시설을 대상으로 오프셋 계산 (화면 렌더링은 updateVisibleMarkers에서 어차피 필터링됨)
-        // 기존에는 데이터 앞부분만 잘라서 처리하느라, 사당 지역 데이터가 뒤에 있으면 안 보이는 문제가 있었음.
         const targetFacilities = facilities;
 
         return targetFacilities.map(fac => {
             if (!fac.coordinates || !fac.coordinates.lat || !fac.coordinates.lng) {
                 return { ...fac, fixedCoordinates: { lat: 0, lng: 0 } };
+            }
+
+            // 🔒 캐시에 이미 있으면 캐시 값 사용 (절대 재계산 안 함)
+            if (fixedCoordsCache.current.has(fac.id)) {
+                return {
+                    ...fac,
+                    fixedCoordinates: fixedCoordsCache.current.get(fac.id)!
+                };
             }
 
             const key = `${fac.coordinates.lat.toFixed(5)},${fac.coordinates.lng.toFixed(5)}`;
@@ -564,12 +572,17 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
                 offsetLng = Math.cos(angle) * radius;
             }
 
+            const fixedCoords = {
+                lat: fac.coordinates.lat + offsetLat,
+                lng: fac.coordinates.lng + offsetLng
+            };
+
+            // 🔒 캐시에 저장 (이후 절대 재계산 안 함)
+            fixedCoordsCache.current.set(fac.id, fixedCoords);
+
             return {
                 ...fac,
-                fixedCoordinates: {
-                    lat: fac.coordinates.lat + offsetLat,
-                    lng: fac.coordinates.lng + offsetLng
-                }
+                fixedCoordinates: fixedCoords
             };
         });
     }, [facilities]);
