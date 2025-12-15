@@ -109,16 +109,14 @@ function HomeContent() {
     }
   }, [searchParams, dbFacilities, pathname, router]);
 
-  // Debounced Search Handler
-  const handleSearchDebounced = useDebouncedCallback((value: string) => {
-    setSubmittedQuery(value); // This triggers the search effect
-  }, 500); // 500ms debounce for mobile stability
+  // Debounced handler - 자동완성용 (지역 이동은 엔터/클릭에서만!)
+  // Note: 이제 여기서는 submittedQuery 설정 안 함
 
   const handleSearchInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setSearchQuery(value); // Input UI updates immediately
     setIsRegionSelected(false); // Typing means not a region selection
-    handleSearchDebounced(value); // Debounced search logic
+    // submittedQuery는 엔터 치거나 자동완성 클릭할 때만 설정!
   };
 
   // 자동완성 로직
@@ -345,7 +343,6 @@ function HomeContent() {
                     <ActionIcon variant="transparent" c="gray.5" onClick={() => {
                       setSearchQuery('');
                       setSubmittedQuery(''); // Clear submitted query immediately
-                      handleSearchDebounced.cancel(); // Cancel any pending debounced calls
                     }}>
                       <Search size={16} /> {/* Using Search icon for clear, could be X */}
                     </ActionIcon>
