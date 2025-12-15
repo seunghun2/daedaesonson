@@ -811,12 +811,20 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
             // 1. 즉시 업데이트
             updateVisibleMarkers();
 
-            // 2. 안전장치: 지도가 완전히 자리를 잡은 뒤(300ms) 한 번 더 강제 업데이트
-            // (초기 로드 시 마커가 안 뜨는 현상 방지)
-            const timer = setTimeout(() => {
+            // 2. 빠른 재시도 (50ms)
+            const timer1 = setTimeout(() => {
                 updateVisibleMarkers();
-            }, 300);
-            return () => clearTimeout(timer);
+            }, 50);
+
+            // 3. 안전장치 (150ms)
+            const timer2 = setTimeout(() => {
+                updateVisibleMarkers();
+            }, 150);
+
+            return () => {
+                clearTimeout(timer1);
+                clearTimeout(timer2);
+            };
         }
     }, [facilities, isMapLoaded, updateVisibleMarkers]);
 

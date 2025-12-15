@@ -26422,7 +26422,29 @@
     "phone": "02-816-2919",
     "capacity": null,
     "lastUpdated": "97개월전",
-    "originalName": "730.흑석동성당 평화의쉼터_price_info.png"
+    "originalName": "730.흑석동성당 평화의쉼터_price_info.png",
+    "reviews": [
+      {
+        "id": "rev-1765811327764-i6265ruol",
+        "author": "익명",
+        "date": "2025-12-15",
+        "rating": 5,
+        "content": "오우 나이스",
+        "likes": 0,
+        "photos": [],
+        "replies": [
+          {
+            "id": "rep-1765811337603",
+            "author": "관리자",
+            "content": "응?",
+            "date": "2025-12-15"
+          }
+        ],
+        "tags": []
+      }
+    ],
+    "rating": 5,
+    "reviewCount": 1
   },
   {
     "id": "park-0731",
