@@ -42,10 +42,32 @@ export default function RootLayout({
     <html lang="ko" suppressHydrationWarning>
       <head>
         <ColorSchemeScript />
+        {/* 🚫 모바일 더블탭 확대 완전 차단 */}
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
         {/* Google Material Symbols Outlined */}
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
         {/* 네이버 지도 API 스크립트 (클라이언트 ID는 환경변수에서 로드) */}
         {/* 실제 운영 시에는 strategy="beforeInteractive" 등을 고려 */}
+        {/* 🚫 더블탭/dblclick 이벤트 기본 동작 차단 스크립트 */}
+        <script dangerouslySetInnerHTML={{
+          __html: `
+          (function() {
+            var lastTouchEnd = 0;
+            // touchend 기반 더블탭 감지 및 차단 (iOS Safari / Android WebView)
+            document.addEventListener('touchend', function(e) {
+              var now = Date.now();
+              if (now - lastTouchEnd <= 300) {
+                e.preventDefault();
+              }
+              lastTouchEnd = now;
+            }, { passive: false });
+            
+            // dblclick 이벤트 기본 동작 방지
+            document.addEventListener('dblclick', function(e) {
+              e.preventDefault();
+            }, { passive: false });
+          })();
+        ` }} />
       </head>
       <body className={inter.className}>
         <MantineProvider theme={theme}>

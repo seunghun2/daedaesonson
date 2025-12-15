@@ -10,4 +10,14 @@
 
 body {
   /* Mantine handles basic body styles, but we keep tailwind base */
+  /* 🚫 더블탭 확대 방지 */
+  touch-action: pan-x pan-y;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+/* 지도 영역은 핀치줌 허용 */
+.naver-map-container {
+  touch-action: auto;
 }
