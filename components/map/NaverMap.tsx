@@ -88,6 +88,9 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
     // ♻️ 마커 풀링 (재사용)
     const markerPoolRef = useRef<any[]>([]);
 
+    // 🔒 시설별 마커 캐시 (ID -> 마커 인스턴스) - 한 번 생성된 마커는 재사용
+    const markerCacheRef = useRef<Map<string, any>>(new Map());
+
     // 🔒 시설별 고정 좌표 캐시 (한 번 계산되면 영구 고정)
     const fixedCoordsCache = useRef<Map<string, { lat: number; lng: number }>>(new Map());
 
@@ -633,22 +636,35 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
         const renderFacilities = visibleFacilities.slice(0, 500);
         console.log(`🎯 Viewport 필터링: 전체 ${facilities.length}개 중 ${renderFacilities.length}개 렌더링`);
 
-        // 2. 기존 마커/클러스터 제거
+        // 2. 현재 화면에 있어야 할 시설 ID 집합
+        const visibleIds = new Set(renderFacilities.map(f => f.id));
+
+        // 3. 화면에서 벗어난 마커만 제거 (캐시에서도 제거)
+        markersRef.current = markersRef.current.filter(marker => {
+            const facId = (marker as any).__facilityId;
+            if (!visibleIds.has(facId)) {
+                marker.setMap(null);
+                markerCacheRef.current.delete(facId);
+                return false;
+            }
+            return true;
+        });
+
+        // 클러스터러 제거 (재구성 필요)
         if (clustererRef.current) {
             clustererRef.current.setMap(null);
             clustererRef.current = null;
         }
 
-        markersRef.current.forEach(marker => {
-            marker.setMap(null);
-            markerPoolRef.current.push(marker); // 풀 반환
-        });
-        markersRef.current = [];
+        const createdMarkers: any[] = [...markersRef.current]; // 기존 유지 마커 포함
 
-        const createdMarkers: any[] = [];
-
-        // 3. 마커 생성 (이미 고정된 좌표 사용)
+        // 4. 마커 생성 (이미 고정된 좌표 사용 + 캐시 활용)
         for (const fac of renderFacilities) {
+            // 🔒 이미 캐시에 있으면 건너뛰기 (위치 변경 없음)
+            if (markerCacheRef.current.has(fac.id)) {
+                continue;
+            }
+
             const { lat, lng } = fac.fixedCoordinates;
 
             // [Price Logic] Check for Representative Price first
@@ -732,9 +748,14 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
             }
 
             (marker as any).__facilityData = fac;
+            (marker as any).__facilityId = fac.id; // 캐시 조회용 ID
             window.naver.maps.Event.addListener(marker, 'click', () => {
                 onMarkerClick(fac);
             });
+
+            // 🔒 캐시에 저장
+            markerCacheRef.current.set(fac.id, marker);
+
             createdMarkers.push(marker);
         }
 
