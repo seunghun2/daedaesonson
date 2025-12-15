@@ -536,6 +536,24 @@ export default function FacilityDetail({ facility: initialFacility, onClose }: F
         setOpened(true);
     };
 
+    // 🎹 키보드 이벤트 (ESC 닫기 + 좌우 화살표)
+    useEffect(() => {
+        const handleKeyDown = (e: KeyboardEvent) => {
+            if (!opened) return;
+
+            if (e.key === 'Escape') {
+                setOpened(false);
+            } else if (e.key === 'ArrowLeft') {
+                setSelectedImageIndex(prev => prev > 0 ? prev - 1 : galleryImages.length - 1);
+            } else if (e.key === 'ArrowRight') {
+                setSelectedImageIndex(prev => prev < galleryImages.length - 1 ? prev + 1 : 0);
+            }
+        };
+
+        window.addEventListener('keydown', handleKeyDown);
+        return () => window.removeEventListener('keydown', handleKeyDown);
+    }, [opened, galleryImages.length]);
+
     return (
         <Box
             style={{ backgroundColor: '#f8f9fa', height: '100%', position: 'relative', overflowY: 'auto', touchAction: 'pan-y' }}
