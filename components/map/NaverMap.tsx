@@ -770,7 +770,7 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
                 map: map,
                 markers: createdMarkers,
                 disableClickZoom: false,
-                gridSize: 250,
+                gridSize: 500, // 🔒 같은 지역은 하나로 묶이도록 크게 설정
                 averageCenter: false, // 🔒 첫 번째 마커 기준으로 위치 고정
                 icons: [{
                     content: `
