@@ -1,0 +1,157 @@
+{
+  "title": "모든 장지 정보 한눈에 | 맞춤 상담 & 명당 구매 시 최대 300만원 환급",
+  "url": "https://myungdangga.co.kr/",
+  "links": [
+    {
+      "text": "홈",
+      "href": "https://myungdangga.co.kr/",
+      "class": ""
+    },
+    {
+      "text": "상담·견적",
+      "href": "https://myungdangga.co.kr/service",
+      "class": ""
+    },
+    {
+      "text": "명당존",
+      "href": "https://myungdangga.co.kr/zone",
+      "class": ""
+    },
+    {
+      "text": "명당가 이야기",
+      "href": "https://myungdangga.co.kr/news/story",
+      "class": ""
+    },
+    {
+      "text": "고객센터",
+      "href": "https://myungdangga.co.kr/cs",
+      "class": ""
+    },
+    {
+      "text": "경기도봉안･자연유토피아 추모공원150만원",
+      "href": "https://myungdangga.co.kr/mourning/4",
+      "class": ""
+    },
+    {
+      "text": "경기도자연화성하늘공원수목장림300만원",
+      "href": "https://myungdangga.co.kr/mourning/5",
+      "class": ""
+    },
+    {
+      "text": "경기도자연에버그린수목장150만원",
+      "href": "https://myungdangga.co.kr/mourning/8",
+      "class": ""
+    },
+    {
+      "text": "경기도봉안･자연용인추모원40만원",
+      "href": "https://myungdangga.co.kr/mourning/10",
+      "class": ""
+    },
+    {
+      "text": "전체보기",
+      "href": "https://myungdangga.co.kr/news/story",
+      "class": ""
+    },
+    {
+      "text": "회사소개",
+      "href": "https://myungdangga.co.kr/intro",
+      "class": ""
+    },
+    {
+      "text": "고객센터",
+      "href": "https://myungdangga.co.kr/cs",
+      "class": ""
+    },
+    {
+      "text": "이용약관",
+      "href": "https://myungdangga.co.kr/cs/trms/0",
+      "class": ""
+    },
+    {
+      "text": "개인정보처리방침",
+      "href": "https://myungdangga.co.kr/cs/trms/1",
+      "class": ""
+    },
+    {
+      "text": "위치기반 서비스 이용약관",
+      "href": "https://myungdangga.co.kr/cs/trms/2",
+      "class": ""
+    },
+    {
+      "text": "유튜브",
+      "href": "https://www.youtube.com/channel/UCdYOnal33bf9HS0YXIpJ6Ow",
+      "class": ""
+    },
+    {
+      "text": "페이스북",
+      "href": "https://www.facebook.com/myungdangga",
+      "class": ""
+    },
+    {
+      "text": "블로그",
+      "href": "https://blog.naver.com/myungdangga",
+      "class": ""
+    },
+    {
+      "text": "회사소개",
+      "href": "https://myungdangga.co.kr/intro",
+      "class": ""
+    },
+    {
+      "text": "고객센터",
+      "href": "https://myungdangga.co.kr/cs",
+      "class": ""
+    },
+    {
+      "text": "이용약관",
+      "href": "https://myungdangga.co.kr/cs/trms/0",
+      "class": ""
+    },
+    {
+      "text": "개인정보처리방침",
+      "href": "https://myungdangga.co.kr/cs/trms/1",
+      "class": ""
+    },
+    {
+      "text": "위치기반 서비스 이용약관",
+      "href": "https://myungdangga.co.kr/cs/trms/2",
+      "class": ""
+    }
+  ],
+  "possibleCards": {
+    ".card": 0,
+    ".item": 0,
+    ".list-item": 0,
+    ".facility": 0,
+    "article": 0,
+    "[data-id]": 0
+  },
+  "textPatterns": {
+    "hasPrice": true,
+    "hasAddress": true,
+    "hasPhone": true
+  },
+  "forms": [],
+  "buttons": [
+    "검색어 입력",
+    "로그인",
+    "서울",
+    "서울",
+    "부산",
+    "대구",
+    "인천",
+    "광주",
+    "대전",
+    "울산",
+    "세종",
+    "경기 북부",
+    "경기 남부",
+    "강원",
+    "충북",
+    "충남",
+    "전북",
+    "전남",
+    "경북",
+    "경남"
+  ]
+}

@@ -1,0 +1,465 @@
+[
+  {
+    "number": 1,
+    "folderName": "1.(재)낙원추모공원",
+    "facilityName": "낙원추모공원",
+    "categories": [
+      {
+        "name": "시설사용료",
+        "itemCount": 4,
+        "commonItems": [
+          "사용료",
+          "관리비",
+          "사용료 반환",
+          "관리비 반환"
+        ],
+        "pricePattern": "단일가"
+      },
+      {
+        "name": "서비스 항목",
+        "itemCount": 86,
+        "commonItems": [
+          "걸방석",
+          "상석",
+          "비석",
+          "와비",
+          "가족표석",
+          "수목형 표석",
+          "식당이용료",
+          "매장작업비",
+          "봉분 설치비",
+          "평장작업비",
+          "개장작업비",
+          "개장정리비",
+          "봉분수선",
+          "분묘수선",
+          "각자대",
+          "조경유지비",
+          "천막대여",
+          "추가각자대",
+          "나무제거",
+          "나무식재",
+          "메탈포토",
+          "봉분",
+          "청여",
+          "정원형 평장",
+          "플라타너스",
+          "다알리아",
+          "클로버",
+          "아이리스",
+          "경계석",
+          "담장석",
+          "구판",
+          "석곽",
+          "석봉분",
+          "갓",
+          "석실",
+          "삼향로",
+          "석화분",
+          "석등",
+          "판석",
+          "야간 작업비",
+          "매장묘",
+          "수목형 평장묘",
+          "평장묘",
+          "바닥 잔디",
+          "월석 각자대",
+          "철쭉식재",
+          "담장형 평장묘",
+          "평장",
+          "청여"
+        ],
+        "pricePattern": "단일가 | 범위"
+      },
+      {
+        "name": "장사용품",
+        "itemCount": 8,
+        "commonItems": [
+          "유골함(한지)",
+          "의전 서비스",
+          "유골함(봉안당전용)",
+          "개토제 또는 산신제",
+          "식사(일반식)",
+          "식사(갈비탕)",
+          "장례진행비",
+          "팔각 유골함(한지)"
+        ],
+        "pricePattern": "단일가"
+      }
+    ],
+    "hasBasicFee": true,
+    "hasManagementFee": true,
+    "hasInstallationFee": false,
+    "totalItemsCount": 98
+  },
+  {
+    "number": 2,
+    "folderName": "2.(재)실로암공원묘원",
+    "facilityName": "실로암공원묘원",
+    "categories": [
+      {
+        "name": "시설사용료",
+        "itemCount": 4,
+        "commonItems": [
+          "묘지사용료",
+          "시설사용료",
+          "관리비"
+        ],
+        "pricePattern": "단일가"
+      },
+      {
+        "name": "서비스 항목",
+        "itemCount": 45,
+        "commonItems": [
+          "상석애석",
+          "비석",
+          "와비",
+          "갓석",
+          "좌대",
+          "둘레석",
+          "월석",
+          "북석",
+          "화병",
+          "석관",
+          "성경책",
+          "각자대",
+          "봉분설치비",
+          "봉분수선비",
+          "개장정리비",
+          "개장작업비",
+          "매장묘",
+          "봉안묘",
+          "경계석비",
+          "천판",
+          "비석좌대",
+          "평장",
+          "함"
+        ],
+        "pricePattern": "범위"
+      },
+      {
+        "name": "장사용품",
+        "itemCount": 1,
+        "commonItems": [],
+        "pricePattern": "단일가"
+      }
+    ],
+    "hasBasicFee": true,
+    "hasManagementFee": true,
+    "hasInstallationFee": false,
+    "totalItemsCount": 50
+  },
+  {
+    "number": 3,
+    "folderName": "3.(재)삼덕공원묘원",
+    "facilityName": "삼덕공원묘원",
+    "categories": [
+      {
+        "name": "시설사용료",
+        "itemCount": 3,
+        "commonItems": [
+          "묘지사용료",
+          "관리비"
+        ],
+        "pricePattern": "단일가"
+      },
+      {
+        "name": "서비스 항목",
+        "itemCount": 43,
+        "commonItems": [
+          "상석",
+          "비석",
+          "둘레석"
+        ],
+        "pricePattern": "단일가 | 범위"
+      }
+    ],
+    "hasBasicFee": true,
+    "hasManagementFee": true,
+    "hasInstallationFee": true,
+    "totalItemsCount": 46
+  },
+  {
+    "number": 4,
+    "folderName": "4.재단법인울산공원묘원",
+    "facilityName": "재단법인울산공원묘원",
+    "categories": [
+      {
+        "name": "시설사용료",
+        "itemCount": 3,
+        "commonItems": [
+          "1평/30년 기준",
+          "1평/1년 기준",
+          "사용료 반환",
+          "관리비 반환"
+        ],
+        "pricePattern": "단일가"
+      },
+      {
+        "name": "서비스 항목",
+        "itemCount": 34,
+        "commonItems": [
+          "혼유석(상석)",
+          "신도비",
+          "와비",
+          "개석",
+          "매장작업비",
+          "봉분작업비",
+          "안치작업비",
+          "석곽/석관",
+          "경계석 설치비",
+          "(매장) 둘레석",
+          "봉안묘(리모델링)",
+          "평장묘(리모델링)",
+          "향로석",
+          "화병",
+          "일반매장묘",
+          "부부매장묘",
+          "고급매장묘",
+          "봉안/평장묘",
+          "개장비",
+          "개장정리비"
+        ],
+        "pricePattern": "단일가"
+      }
+    ],
+    "hasBasicFee": true,
+    "hasManagementFee": true,
+    "hasInstallationFee": true,
+    "totalItemsCount": 37
+  },
+  {
+    "number": 5,
+    "folderName": "5.진주내동공원묘원",
+    "facilityName": "진주내동공원묘원",
+    "categories": [
+      {
+        "name": "시설사용료",
+        "itemCount": 41,
+        "commonItems": [
+          "묘지 사용료",
+          "묘지 관리비",
+          "시설물 (상석, 거비, 와비, 향로석세트, 걸방석, 북석, 화병, 경계석)",
+          "둘레석",
+          "봉안당 (일반실, 특별실)"
+        ],
+        "pricePattern": "등급별"
+      }
+    ],
+    "hasBasicFee": true,
+    "hasManagementFee": true,
+    "hasInstallationFee": true,
+    "totalItemsCount": 41
+  },
+  {
+    "number": 6,
+    "folderName": "6.신불산공원묘원",
+    "facilityName": "신불산공원묘원",
+    "categories": [
+      {
+        "name": "시설사용료",
+        "itemCount": 8,
+        "commonItems": [
+          "묘지 임대사용료",
+          "묘지 공동관리비",
+          "봉분작업비",
+          "평토작업비",
+          "개장정리비"
+        ],
+        "pricePattern": "단일가"
+      },
+      {
+        "name": "서비스 항목",
+        "itemCount": 21,
+        "commonItems": [
+          "조각묘테석 3단",
+          "사각묘테석 3단",
+          "사각묘테석 2단",
+          "월석",
+          "화강상석"
+        ],
+        "pricePattern": "단일가"
+      },
+      {
+        "name": "각자 비용",
+        "itemCount": 5,
+        "commonItems": [
+          "합비",
+          "외비",
+          "별세일 추가",
+          "이름 추가",
+          "봉안묘 뚜껑"
+        ],
+        "pricePattern": "단일가"
+      }
+    ],
+    "hasBasicFee": true,
+    "hasManagementFee": true,
+    "hasInstallationFee": false,
+    "totalItemsCount": 34
+  },
+  {
+    "number": 7,
+    "folderName": "7.예산군추모공원",
+    "facilityName": "예산군추모공원",
+    "categories": [
+      {
+        "name": "시설사용료",
+        "itemCount": 23,
+        "commonItems": [
+          "단장묘 사용료",
+          "단장묘 관리비",
+          "단장묘 조경비"
+        ],
+        "pricePattern": "등급별"
+      },
+      {
+        "name": "서비스 항목",
+        "itemCount": 1,
+        "commonItems": [
+          "판매(사용)가격"
+        ],
+        "pricePattern": "단일가"
+      }
+    ],
+    "hasBasicFee": true,
+    "hasManagementFee": true,
+    "hasInstallationFee": false,
+    "totalItemsCount": 24
+  },
+  {
+    "number": 8,
+    "folderName": "8.(재)대지공원묘원",
+    "facilityName": "재단법인 대지공원묘원",
+    "categories": [
+      {
+        "name": "시설사용료",
+        "itemCount": 2,
+        "commonItems": [
+          "묘지사용료",
+          "묘지관리비"
+        ],
+        "pricePattern": "단일가"
+      },
+      {
+        "name": "서비스 항목",
+        "itemCount": 17,
+        "commonItems": [
+          "상석",
+          "비석",
+          "묘테"
+        ],
+        "pricePattern": "단일가"
+      },
+      {
+        "name": "장사용품 분류",
+        "itemCount": 16,
+        "commonItems": [
+          "석물(301형)",
+          "석물(503형)",
+          "석물(602형)"
+        ],
+        "pricePattern": "단일가"
+      }
+    ],
+    "hasBasicFee": true,
+    "hasManagementFee": true,
+    "hasInstallationFee": false,
+    "totalItemsCount": 35
+  },
+  {
+    "number": 9,
+    "folderName": "9.재단법인선산공원묘원",
+    "facilityName": "선산공원묘원",
+    "categories": [
+      {
+        "name": "시설사용료",
+        "itemCount": 15,
+        "commonItems": [
+          "묘지사용료",
+          "묘지관리비",
+          "분묘설치비",
+          "납골묘 장례비",
+          "자연장 장례비",
+          "선산납골당 사용료"
+        ],
+        "pricePattern": "단일가"
+      },
+      {
+        "name": "석물비",
+        "itemCount": 15,
+        "commonItems": [
+          "기본형set (비석, 상석, 향로석, 화병1)",
+          "A형둘레석",
+          "B형둘레석",
+          "C형둘레석",
+          "상석",
+          "비석",
+          "석등",
+          "경계석",
+          "화병",
+          "해미석",
+          "와비",
+          "납골묘",
+          "각자비"
+        ],
+        "pricePattern": "단일가"
+      },
+      {
+        "name": "설치공사비",
+        "itemCount": 2,
+        "commonItems": [
+          "1위용 납골묘 설치공사비",
+          "2위용 납골묘 설치공사비"
+        ],
+        "pricePattern": "단일가"
+      }
+    ],
+    "hasBasicFee": true,
+    "hasManagementFee": true,
+    "hasInstallationFee": true,
+    "totalItemsCount": 32
+  },
+  {
+    "number": 10,
+    "folderName": "10.재단법인 솥발산공원묘원",
+    "facilityName": "솥발산공원묘원",
+    "categories": [
+      {
+        "name": "시설사용료",
+        "itemCount": 5,
+        "commonItems": [
+          "묘지임대사용료",
+          "묘지공동관리비",
+          "사용료 환불 규정",
+          "묘지공동관리비 환불 규정",
+          "장례작업비(인건비)",
+          "개장정리비(폐기물처리비)"
+        ],
+        "pricePattern": "단일가"
+      },
+      {
+        "name": "서비스 항목",
+        "itemCount": 23,
+        "commonItems": [
+          "상석 고흥석 A급",
+          "상석 애석(영주석)",
+          "상석 오석(중국산)",
+          "혼유, 북석, 받침 set",
+          "비석석각인비"
+        ],
+        "pricePattern": "단일가"
+      },
+      {
+        "name": "장사용품 분류",
+        "itemCount": 0,
+        "commonItems": [],
+        "pricePattern": "단일가"
+      }
+    ],
+    "hasBasicFee": true,
+    "hasManagementFee": true,
+    "hasInstallationFee": true,
+    "totalItemsCount": 28
+  }
+]

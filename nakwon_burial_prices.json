@@ -1,0 +1,22 @@
+{
+  "burialGraves": [
+    {
+      "name": "개인 매장묘",
+      "size": "3평형",
+      "price": 20275000,
+      "description": "부터~"
+    },
+    {
+      "name": "부부 매장묘",
+      "size": "6평형",
+      "price": 31150000,
+      "description": "부터~"
+    },
+    {
+      "name": "프리미엄 부부 매장묘",
+      "size": "6~12평형(담장시설)",
+      "price": 64650000,
+      "description": "부터~"
+    }
+  ]
+}

@@ -1,0 +1,157 @@
+'use client';
+
+import { useState, useEffect } from 'react';
+import { Title, TextInput, Group, Button, Table, Badge, ActionIcon, Paper, Pagination, Text, LoadingOverlay } from '@mantine/core';
+import { Search, Edit, Trash, Plus } from 'lucide-react';
+import { FACILITY_CATEGORY_LABELS, Facility } from '@/types';
+
+export default function FacilitiesPage() {
+    const [search, setSearch] = useState('');
+    const [page, setPage] = useState(1);
+    const itemsPerPage = 15;
+
+    const [data, setData] = useState<Facility[]>([]);
+    const [loading, setLoading] = useState(true);
+
+    // 데이터 불러오기
+    const fetchFacilities = async () => {
+        setLoading(true);
+        try {
+            const res = await fetch('/api/facilities');
+            if (res.ok) {
+                const json = await res.json();
+                setData(json);
+            }
+        } catch (e) {
+            console.error(e);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    useEffect(() => {
+        fetchFacilities();
+    }, []);
+
+    // 시설 삭제 핸들러
+    const handleDelete = async (id: string) => {
+        if (!confirm('정말 이 시설을 삭제하시겠습니까?')) return;
+
+        try {
+            const res = await fetch(`/api/facilities/${id}`, { method: 'DELETE' });
+            if (res.ok) {
+                alert('삭제되었습니다.');
+                // UI에서 즉시 제거 (API 재호출보다 빠름)
+                setData(prev => prev.filter(item => item.id !== id));
+            } else {
+                alert('삭제 실패');
+            }
+        } catch (e) {
+            console.error(e);
+            alert('삭제 중 오류가 발생했습니다.');
+        }
+    };
+
+    // 필터링
+    const filteredData = data.filter(item =>
+        item.name.toLowerCase().includes(search.toLowerCase()) ||
+        item.address.toLowerCase().includes(search.toLowerCase())
+    );
+
+    // 페이지네이션
+    const totalPages = Math.ceil(filteredData.length / itemsPerPage);
+    const paginatedData = filteredData.slice((page - 1) * itemsPerPage, page * itemsPerPage);
+
+    return (
+        <div>
+            <Group justify="space-between" mb="lg">
+                <Title order={2}>시설 데이터 관리</Title>
+                <Button leftSection={<Plus size={16} />} color="blue" onClick={() => alert('업로드 페이지나 추가 모달을 이용해주세요!')}>
+                    시설 추가
+                </Button>
+            </Group>
+
+            <Paper p="md" radius="md" withBorder mb="lg">
+                <Group>
+                    <TextInput
+                        placeholder="시설명 또는 주소 검색"
+                        leftSection={<Search size={16} />}
+                        value={search}
+                        onChange={(e) => setSearch(e.currentTarget.value)}
+                        style={{ flex: 1 }}
+                    />
+                </Group>
+            </Paper>
+
+            <Paper radius="md" withBorder style={{ overflow: 'hidden', position: 'relative' }}>
+                <LoadingOverlay visible={loading} zIndex={1000} overlayProps={{ radius: "sm", blur: 2 }} />
+                <Table verticalSpacing="sm" striped highlightOnHover>
+                    <Table.Thead bg="gray.1">
+                        <Table.Tr>
+                            <Table.Th>ID</Table.Th>
+                            <Table.Th>시설명</Table.Th>
+                            <Table.Th>카테고리</Table.Th>
+                            <Table.Th>구분</Table.Th>
+                            <Table.Th>주소</Table.Th>
+                            <Table.Th style={{ textAlign: 'right' }}>관리</Table.Th>
+                        </Table.Tr>
+                    </Table.Thead>
+                    <Table.Tbody>
+                        {paginatedData.length > 0 ? (
+                            paginatedData.map((item) => (
+                                <Table.Tr key={item.id}>
+                                    <Table.Td>
+                                        <Text size="xs" c="dimmed">#{item.id.slice(0, 6)}</Text>
+                                    </Table.Td>
+                                    <Table.Td fw={500}>{item.name}</Table.Td>
+                                    <Table.Td>
+                                        <Badge variant="light" color="blue">
+                                            {FACILITY_CATEGORY_LABELS[item.category] || item.category}
+                                        </Badge>
+                                    </Table.Td>
+                                    <Table.Td>
+                                        <Badge
+                                            variant="dot"
+                                            color={item.isPublic ? 'teal' : 'gray'}
+                                            size="sm"
+                                        >
+                                            {item.isPublic ? '공설' : '사설'}
+                                        </Badge>
+                                    </Table.Td>
+                                    <Table.Td>
+                                        <Text size="sm" lineClamp={1} w={300}>
+                                            {item.address}
+                                        </Text>
+                                    </Table.Td>
+                                    <Table.Td align="right">
+                                        <Group gap="xs" justify="flex-end">
+                                            <ActionIcon variant="subtle" color="blue" onClick={() => alert('상세/수정 기능 준비 중')}>
+                                                <Edit size={16} />
+                                            </ActionIcon>
+                                            <ActionIcon variant="subtle" color="red" onClick={() => handleDelete(item.id)}>
+                                                <Trash size={16} />
+                                            </ActionIcon>
+                                        </Group>
+                                    </Table.Td>
+                                </Table.Tr>
+                            ))
+                        ) : (
+                            <Table.Tr>
+                                <Table.Td colSpan={6} align="center" py="xl">
+                                    {!loading && <Text c="dimmed">데이터가 없습니다.</Text>}
+                                </Table.Td>
+                            </Table.Tr>
+                        )}
+                    </Table.Tbody>
+                </Table>
+
+                {/* 페이지네이션 */}
+                {totalPages > 1 && (
+                    <Group justify="center" p="md" style={{ borderTop: '1px solid #dee2e6' }}>
+                        <Pagination total={totalPages} value={page} onChange={setPage} />
+                    </Group>
+                )}
+            </Paper>
+        </div>
+    );
+}

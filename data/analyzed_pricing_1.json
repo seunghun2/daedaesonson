@@ -1,0 +1,686 @@
+{
+  "facility": "(재)낙원추모공원",
+  "categories": [
+    {
+      "name": "시설사용료",
+      "items": [
+        {
+          "name": "1평형 기준",
+          "price": 3000000,
+          "isRepresentative": true,
+          "description": "1평형 기준"
+        },
+        {
+          "name": "건관리",
+          "price": 25000,
+          "isRepresentative": false,
+          "description": "1평형/7년 기준"
+        },
+        {
+          "name": "사용료 반환",
+          "price": 0,
+          "isRepresentative": false,
+          "description": "미사용 후 만기 반환시 남부사용료 감액환불"
+        },
+        {
+          "name": "관리비 반환",
+          "price": 0,
+          "isRepresentative": false,
+          "description": "남은 기간 월단위 계산 환불"
+        }
+      ]
+    },
+    {
+      "name": "서비스 항목",
+      "items": [
+        {
+          "name": "결방석 2.3/2.5자",
+          "price": 100000,
+          "isRepresentative": true,
+          "description": "고흥석"
+        },
+        {
+          "name": "상석 2.3세트",
+          "price": 800000,
+          "isRepresentative": false,
+          "description": "고흥석"
+        },
+        {
+          "name": "상석 2.5세트",
+          "price": 1100000,
+          "isRepresentative": false,
+          "description": "거창석, 고흥석"
+        },
+        {
+          "name": "상석 2.7세트",
+          "price": 1300000,
+          "isRepresentative": false,
+          "description": "검방석 350,000원 포함"
+        },
+        {
+          "name": "명동방석 2.5자",
+          "price": 700000,
+          "isRepresentative": false,
+          "description": "겉창석 외"
+        },
+        {
+          "name": "성경책",
+          "price": 600000,
+          "isRepresentative": false,
+          "description": ""
+        },
+        {
+          "name": "비석 3자(오석)",
+          "price": 800000,
+          "isRepresentative": false,
+          "description": ""
+        },
+        {
+          "name": "비석 3.5자(오석)",
+          "price": 1500000,
+          "isRepresentative": false,
+          "description": ""
+        },
+        {
+          "name": "외비 2자(오석)",
+          "price": 900000,
+          "isRepresentative": false,
+          "description": ""
+        },
+        {
+          "name": "외비 2.3자 (오석)",
+          "price": 1100000,
+          "isRepresentative": false,
+          "description": ""
+        },
+        {
+          "name": "외비 2.5자 (오석)",
+          "price": 1300000,
+          "isRepresentative": false,
+          "description": ""
+        },
+        {
+          "name": "부부와비",
+          "price": 800000,
+          "isRepresentative": false,
+          "description": ""
+        },
+        {
+          "name": "가축표식",
+          "price": 400000,
+          "isRepresentative": false,
+          "description": ""
+        },
+        {
+          "name": "수목형 표석",
+          "price": 800000,
+          "isRepresentative": false,
+          "description": "아이리스, 젤리아, 플라타너스, 낙엽송,대리석,자작나무,자연형 (내부는 형태), 부부표식"
+        },
+        {
+          "name": "부부표석",
+          "price": 800000,
+          "isRepresentative": false,
+          "description": ""
+        },
+        {
+          "name": "카멜리아 표석",
+          "price": 400000,
+          "isRepresentative": false,
+          "description": "비석 교체 시 사용"
+        },
+        {
+          "name": "정려 표석",
+          "price": 500000,
+          "isRepresentative": false,
+          "description": "비석 교체 시 사용"
+        },
+        {
+          "name": "카멜리아 표석",
+          "price": 400000,
+          "isRepresentative": false,
+          "description": "비석 교체 시 사용"
+        },
+        {
+          "name": "정려 표석",
+          "price": 400000,
+          "isRepresentative": false,
+          "description": "비석 교체 시 사용"
+        },
+        {
+          "name": "식당이용료(일반)",
+          "price": 15000,
+          "isRepresentative": false,
+          "description": "1인 기준"
+        },
+        {
+          "name": "식당이용료(특식)",
+          "price": 18000,
+          "isRepresentative": false,
+          "description": "1인 기준"
+        },
+        {
+          "name": "매장작업비",
+          "price": 1500000,
+          "isRepresentative": false,
+          "description": "유골함일 경우 1,000,000원"
+        },
+        {
+          "name": "봉분 설치비",
+          "price": 500000,
+          "isRepresentative": false,
+          "description": ""
+        },
+        {
+          "name": "처음 농장작업비",
+          "price": 1000000,
+          "isRepresentative": false,
+          "description": ""
+        },
+        {
+          "name": "추가 농장작업비",
+          "price": 400000,
+          "isRepresentative": false,
+          "description": ""
+        },
+        {
+          "name": "리모양림 작업비(1인)",
+          "price": 500000,
+          "isRepresentative": false,
+          "description": "작업비 300,000원 + 대금비 200,000원"
+        },
+        {
+          "name": "리모양림 작업비(12인)",
+          "price": 2700000,
+          "isRepresentative": false,
+          "description": ""
+        },
+        {
+          "name": "개봉분 작업비A",
+          "price": 4200000,
+          "isRepresentative": false,
+          "description": "일반형분"
+        },
+        {
+          "name": "개봉분 작업비B",
+          "price": 1500000,
+          "isRepresentative": false,
+          "description": "일반 조각분 이상"
+        },
+        {
+          "name": "개봉분 작업비C",
+          "price": 1800000,
+          "isRepresentative": false,
+          "description": "원형분"
+        },
+        {
+          "name": "매장 개장 작업비",
+          "price": 2000000,
+          "isRepresentative": false,
+          "description": "화장 제외 시 -100,000원"
+        },
+        {
+          "name": "화장 개장 작업비",
+          "price": 1000000,
+          "isRepresentative": false,
+          "description": ""
+        },
+        {
+          "name": "개장처리(소)",
+          "price": 150000,
+          "isRepresentative": false,
+          "description": "150,000(공과금) + 50,000(기회표식)/유골함 별도 볼도"
+        },
+        {
+          "name": "제장정리(특수 A/E 이상)",
+          "price": 200000,
+          "isRepresentative": false,
+          "description": ""
+        },
+        {
+          "name": "봉분수선",
+          "price": 700000,
+          "isRepresentative": false,
+          "description": ""
+        },
+        {
+          "name": "비오수선",
+          "price": 1000000,
+          "isRepresentative": false,
+          "description": "1년 1회 A/S보장"
+        },
+        {
+          "name": "외곽대",
+          "price": 500000,
+          "isRepresentative": false,
+          "description": "수선수선, 명칭변경/단순에 취급 적용"
+        },
+        {
+          "name": "조경유지비",
+          "price": 150000,
+          "isRepresentative": false,
+          "description": "매장, 광장 구분없이 통합하여 사용"
+        },
+        {
+          "name": "천막대여",
+          "price": 400000,
+          "isRepresentative": false,
+          "description": "천막분"
+        },
+        {
+          "name": "선적대여",
+          "price": 150000,
+          "isRepresentative": false,
+          "description": "묘분"
+        },
+        {
+          "name": "추가각자대여",
+          "price": 55000,
+          "isRepresentative": false,
+          "description": "1대/1일"
+        },
+        {
+          "name": "나무메거/전지",
+          "price": 110000,
+          "isRepresentative": false,
+          "description": "1인 추가시 제 마다 55,000원"
+        },
+        {
+          "name": "나무사래",
+          "price": 55000,
+          "isRepresentative": false,
+          "description": "나무에 따라 차등 적용"
+        },
+        {
+          "name": "나무사대",
+          "price": 60000,
+          "isRepresentative": false,
+          "description": "나무에 따라 차등 적용"
+        },
+        {
+          "name": "메탈포토(일반형)",
+          "price": 330000,
+          "isRepresentative": false,
+          "description": ""
+        },
+        {
+          "name": "메탈포토(자동)",
+          "price": 330000,
+          "isRepresentative": false,
+          "description": ""
+        },
+        {
+          "name": "메탈포토(디자인형)",
+          "price": 440000,
+          "isRepresentative": false,
+          "description": ""
+        },
+        {
+          "name": "1단형볼록(일반형) 추가",
+          "price": 1500000,
+          "isRepresentative": false,
+          "description": ""
+        },
+        {
+          "name": "1단형볼록(디자인형) 추가",
+          "price": 1500000,
+          "isRepresentative": false,
+          "description": ""
+        },
+        {
+          "name": "1단형볼록(X)건축외) 추가",
+          "price": 3000000,
+          "isRepresentative": false,
+          "description": ""
+        },
+        {
+          "name": "2단형볼록(2.3평형 기준) 1기 추가",
+          "price": 4500000,
+          "isRepresentative": false,
+          "description": ""
+        },
+        {
+          "name": "3단형볼록 1기 추가",
+          "price": 6000000,
+          "isRepresentative": false,
+          "description": ""
+        },
+        {
+          "name": "4단형볼록(3평형 기준)1기 추가",
+          "price": 7000000,
+          "isRepresentative": false,
+          "description": ""
+        },
+        {
+          "name": "일반 조각볼록(A단위) 1기 추가",
+          "price": 8000000,
+          "isRepresentative": false,
+          "description": ""
+        },
+        {
+          "name": "일반 조각볼록(B단위) 1기 추가",
+          "price": 11000000,
+          "isRepresentative": false,
+          "description": ""
+        },
+        {
+          "name": "일반 조각볼록(C단위) 1기 추가",
+          "price": 12000000,
+          "isRepresentative": false,
+          "description": "사바히타 않는 모델"
+        },
+        {
+          "name": "일반 조각볼록(MD(4E위) 1기 추가",
+          "price": 17200000,
+          "isRepresentative": false,
+          "description": "신설"
+        },
+        {
+          "name": "정려(4~8위)",
+          "price": 20200000,
+          "isRepresentative": false,
+          "description": "신설"
+        },
+        {
+          "name": "정려(8~12위)",
+          "price": 23200000,
+          "isRepresentative": false,
+          "description": "신설"
+        },
+        {
+          "name": "정려(18~16위)",
+          "price": 17500000,
+          "isRepresentative": false,
+          "description": ""
+        },
+        {
+          "name": "정원형 평장(2위 단독)",
+          "price": 5100000,
+          "isRepresentative": false,
+          "description": ""
+        },
+        {
+          "name": "플라타너스단독)",
+          "price": 3500000,
+          "isRepresentative": false,
+          "description": ""
+        },
+        {
+          "name": "다알리아단독)",
+          "price": 3500000,
+          "isRepresentative": false,
+          "description": ""
+        },
+        {
+          "name": "클로버(단독)",
+          "price": 4100000,
+          "isRepresentative": false,
+          "description": ""
+        },
+        {
+          "name": "아이리스(단독) - 대, 소",
+          "price": 500000,
+          "isRepresentative": false,
+          "description": ""
+        },
+        {
+          "name": "경계석 15찬",
+          "price": 300000,
+          "isRepresentative": false,
+          "description": ""
+        },
+        {
+          "name": "리모양링 추가설치(경계석)",
+          "price": 1800000,
+          "isRepresentative": false,
+          "description": ""
+        },
+        {
+          "name": "리모양링 추가설치(경계석)",
+          "price": 300000,
+          "isRepresentative": false,
+          "description": ""
+        },
+        {
+          "name": "구단(3자, 외12자)",
+          "price": 700000,
+          "isRepresentative": false,
+          "description": ""
+        },
+        {
+          "name": "구단(3.5자, 외지 2.3자)",
+          "price": 1400000,
+          "isRepresentative": false,
+          "description": ""
+        },
+        {
+          "name": "구단(3.5자 쪽, 2.5자 외",
+          "price": 1800000,
+          "isRepresentative": false,
+          "description": ""
+        },
+        {
+          "name": "족탁 / 식탁",
+          "price": 1100000,
+          "isRepresentative": false,
+          "description": ""
+        },
+        {
+          "name": "석물볼(2/3월/기타희",
+          "price": 400000,
+          "isRepresentative": false,
+          "description": ""
+        },
+        {
+          "name": "상차림",
+          "price": 400000,
+          "isRepresentative": false,
+          "description": ""
+        },
+        {
+          "name": "특상차림",
+          "price": 500000,
+          "isRepresentative": false,
+          "description": ""
+        },
+        {
+          "name": "석물",
+          "price": 100000,
+          "isRepresentative": false,
+          "description": ""
+        },
+        {
+          "name": "석등",
+          "price": 2000000,
+          "isRepresentative": false,
+          "description": ""
+        },
+        {
+          "name": "비석",
+          "price": 1500000,
+          "isRepresentative": false,
+          "description": ""
+        },
+        {
+          "name": "개인 매장묘(3평형)",
+          "price": 20275000,
+          "isRepresentative": false,
+          "description": "기존 작업비에 추가"
+        },
+        {
+          "name": "개인 매장묘(3평형)",
+          "price": 20275000,
+          "isRepresentative": false,
+          "description": "20,275,000원 부터~"
+        },
+        {
+          "name": "부부 매장묘(5평형)",
+          "price": 31150000,
+          "isRepresentative": false,
+          "description": "31,150,000원 부터~"
+        },
+        {
+          "name": "프리미엄 부부 평장묘(6~12평형 담당자)",
+          "price": 64850000,
+          "isRepresentative": false,
+          "description": "64,850,000원 부터~"
+        },
+        {
+          "name": "부부 수목형 평장묘",
+          "price": 8500000,
+          "isRepresentative": false,
+          "description": "8,500,000원 부터~"
+        },
+        {
+          "name": "프리미엄 부부 평장묘(담당시설)",
+          "price": 21800000,
+          "isRepresentative": false,
+          "description": "21,800,000원 부터~"
+        },
+        {
+          "name": "프리미엄 가족 평장묘(담당시설)",
+          "price": 28950000,
+          "isRepresentative": false,
+          "description": "28.950.000원부터-"
+        },
+        {
+          "name": "바닥 현",
+          "price": 100000,
+          "isRepresentative": false,
+          "description": ""
+        },
+        {
+          "name": "철쭉 각대",
+          "price": 200000,
+          "isRepresentative": false,
+          "description": ""
+        },
+        {
+          "name": "철쭉 16A",
+          "price": 20000,
+          "isRepresentative": false,
+          "description": "철쭉 1개당 20,000원"
+        },
+        {
+          "name": "참회형 평장묘(2위)",
+          "price": 9500000,
+          "isRepresentative": false,
+          "description": ""
+        },
+        {
+          "name": "다정형 평장묘(3위)",
+          "price": 12500000,
+          "isRepresentative": false,
+          "description": ""
+        },
+        {
+          "name": "다정형 철쭉묘( 철쭉묘) 최대 4위",
+          "price": 14000000,
+          "isRepresentative": false,
+          "description": ""
+        },
+        {
+          "name": "다정형 철쭉묘( 철쭉묘) 최대 6위",
+          "price": 15000000,
+          "isRepresentative": false,
+          "description": ""
+        },
+        {
+          "name": "정원형 꽃잔디(티백3기)",
+          "price": 25000000,
+          "isRepresentative": false,
+          "description": ""
+        },
+        {
+          "name": "정원형 고품격(티백3기)",
+          "price": 30000000,
+          "isRepresentative": false,
+          "description": ""
+        },
+        {
+          "name": "평장2위",
+          "price": 15000000,
+          "isRepresentative": false,
+          "description": ""
+        },
+        {
+          "name": "봉안2(2~4위)",
+          "price": 18000000,
+          "isRepresentative": false,
+          "description": "동백 148만 판매"
+        },
+        {
+          "name": "봉안2(4~8위)",
+          "price": 11900000,
+          "isRepresentative": false,
+          "description": ""
+        },
+        {
+          "name": "봉안2(8~12위)",
+          "price": 14900000,
+          "isRepresentative": false,
+          "description": ""
+        },
+        {
+          "name": "정여2(5~12위)",
+          "price": 17900000,
+          "isRepresentative": false,
+          "description": ""
+        }
+      ]
+    },
+    {
+      "name": "장사용품",
+      "items": [
+        {
+          "name": "유골함(한지)",
+          "price": 110000,
+          "isRepresentative": true,
+          "description": "규격 (18-18-18)"
+        },
+        {
+          "name": "외전 서비스",
+          "price": 300000,
+          "isRepresentative": false,
+          "description": "1회기준"
+        },
+        {
+          "name": "유골 영안당",
+          "price": 1520000,
+          "isRepresentative": false,
+          "description": "규격(21.5-15.5)"
+        },
+        {
+          "name": "개당제 또는 산신제",
+          "price": 150000,
+          "isRepresentative": false,
+          "description": "1회기준"
+        },
+        {
+          "name": "식사일반",
+          "price": 15000,
+          "isRepresentative": false,
+          "description": "1인기준"
+        },
+        {
+          "name": "식사 갈비탕",
+          "price": 18000,
+          "isRepresentative": false,
+          "description": "1인 기준"
+        },
+        {
+          "name": "장례 진행비",
+          "price": 700000,
+          "isRepresentative": false,
+          "description": "각지대, 화장신고대행, 의한 진행 포함"
+        },
+        {
+          "name": "각 유골",
+          "price": 220000,
+          "isRepresentative": false,
+          "description": "규격(18-10-190/항균기능"
+        }
+      ]
+    }
+  ]
+}

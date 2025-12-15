@@ -1,0 +1,393 @@
+{
+  "facility": "(재)실로암공원묘원",
+  "categories": [
+    {
+      "name": "시설사용료",
+      "items": [
+        {
+          "name": "묘지사용료",
+          "price": 2160000,
+          "isRepresentative": true,
+          "description": "1평"
+        },
+        {
+          "name": "관리비",
+          "price": 16000,
+          "isRepresentative": false,
+          "description": "1평/1년"
+        },
+        {
+          "name": "반환기준과 방법",
+          "price": 0,
+          "isRepresentative": false,
+          "description": "묘지사용료: (설묘 후)반환하지 않음"
+        },
+        {
+          "name": "반환기준과 방법",
+          "price": 0,
+          "isRepresentative": false,
+          "description": "관리비 : (설묘 후)년수로 계산하여 환급"
+        }
+      ]
+    },
+    {
+      "name": "서비스 항목",
+      "items": [
+        {
+          "name": "상석매석(2.3)",
+          "price": 500500,
+          "isRepresentative": false,
+          "description": ""
+        },
+        {
+          "name": "상석애석(2.5)",
+          "price": 643500,
+          "isRepresentative": false,
+          "description": ""
+        },
+        {
+          "name": "상석애석(3.0)",
+          "price": 822250,
+          "isRepresentative": false,
+          "description": ""
+        },
+        {
+          "name": "상석오석(3.0)",
+          "price": 1287000,
+          "isRepresentative": false,
+          "description": ""
+        },
+        {
+          "name": "상석오석(3.3)",
+          "price": 1430000,
+          "isRepresentative": false,
+          "description": ""
+        },
+        {
+          "name": "상석청석(2.5)",
+          "price": 1100000,
+          "isRepresentative": false,
+          "description": ""
+        },
+        {
+          "name": "비석(3.0)",
+          "price": 822250,
+          "isRepresentative": false,
+          "description": ""
+        },
+        {
+          "name": "비석(3.7)",
+          "price": 1144000,
+          "isRepresentative": false,
+          "description": ""
+        },
+        {
+          "name": "비석(4.0)",
+          "price": 1430000,
+          "isRepresentative": false,
+          "description": ""
+        },
+        {
+          "name": "와비(2.3)",
+          "price": 822250,
+          "isRepresentative": false,
+          "description": ""
+        },
+        {
+          "name": "와비(2.5)",
+          "price": 1001000,
+          "isRepresentative": false,
+          "description": ""
+        },
+        {
+          "name": "6기 구형 비석",
+          "price": 1001000,
+          "isRepresentative": false,
+          "description": ""
+        },
+        {
+          "name": "9기 구형 비석",
+          "price": 858000,
+          "isRepresentative": false,
+          "description": ""
+        },
+        {
+          "name": "4기 비석(신형)",
+          "price": 736000,
+          "isRepresentative": false,
+          "description": ""
+        },
+        {
+          "name": "9기 비석(신형)",
+          "price": 786500,
+          "isRepresentative": false,
+          "description": ""
+        },
+        {
+          "name": "소형평장와비",
+          "price": 341000,
+          "isRepresentative": false,
+          "description": ""
+        },
+        {
+          "name": "갓석(소)",
+          "price": 672100,
+          "isRepresentative": false,
+          "description": ""
+        },
+        {
+          "name": "갓석(대)",
+          "price": 757900,
+          "isRepresentative": false,
+          "description": ""
+        },
+        {
+          "name": "좌대(소)",
+          "price": 246675,
+          "isRepresentative": false,
+          "description": ""
+        },
+        {
+          "name": "좌대(대)",
+          "price": 286000,
+          "isRepresentative": false,
+          "description": ""
+        },
+        {
+          "name": "와비좌대",
+          "price": 286000,
+          "isRepresentative": false,
+          "description": ""
+        },
+        {
+          "name": "둘레석(소)",
+          "price": 1001000,
+          "isRepresentative": false,
+          "description": ""
+        },
+        {
+          "name": "둘레석 1단",
+          "price": 1480050,
+          "isRepresentative": false,
+          "description": ""
+        },
+        {
+          "name": "둘레석 2단",
+          "price": 2631200,
+          "isRepresentative": false,
+          "description": ""
+        },
+        {
+          "name": "둘레석 청3단 소",
+          "price": 5005000,
+          "isRepresentative": false,
+          "description": ""
+        },
+        {
+          "name": "둘레석 청3단 대",
+          "price": 5434000,
+          "isRepresentative": false,
+          "description": ""
+        },
+        {
+          "name": "원형둘레석",
+          "price": 5720000,
+          "isRepresentative": false,
+          "description": ""
+        },
+        {
+          "name": "월석(소)",
+          "price": 328900,
+          "isRepresentative": false,
+          "description": ""
+        },
+        {
+          "name": "월석(대)",
+          "price": 429000,
+          "isRepresentative": false,
+          "description": ""
+        },
+        {
+          "name": "북석",
+          "price": 572000,
+          "isRepresentative": false,
+          "description": ""
+        },
+        {
+          "name": "화병(소)",
+          "price": 328900,
+          "isRepresentative": false,
+          "description": ""
+        },
+        {
+          "name": "화병(대)",
+          "price": 429000,
+          "isRepresentative": false,
+          "description": ""
+        },
+        {
+          "name": "석관",
+          "price": 1155000,
+          "isRepresentative": false,
+          "description": ""
+        },
+        {
+          "name": "성경책",
+          "price": 572000,
+          "isRepresentative": false,
+          "description": ""
+        },
+        {
+          "name": "삼향로",
+          "price": 429000,
+          "isRepresentative": false,
+          "description": ""
+        },
+        {
+          "name": "각자대",
+          "price": 330000,
+          "isRepresentative": false,
+          "description": "특수마크 금액추가"
+        },
+        {
+          "name": "봉분설치비",
+          "price": 600000,
+          "isRepresentative": false,
+          "description": "일반"
+        },
+        {
+          "name": "봉분설치비",
+          "price": 1100000,
+          "isRepresentative": false,
+          "description": "특수"
+        },
+        {
+          "name": "봉분수선비",
+          "price": 500000,
+          "isRepresentative": false,
+          "description": ""
+        },
+        {
+          "name": "개장정리비",
+          "price": 400000,
+          "isRepresentative": false,
+          "description": ""
+        },
+        {
+          "name": "개장작업비",
+          "price": 800000,
+          "isRepresentative": false,
+          "description": ""
+        },
+        {
+          "name": "매장묘(2.5평형/단봉)",
+          "price": 12000000,
+          "isRepresentative": false,
+          "description": "사용료, 5년관리비, 매장작업비, 봉분설치비, 1인석물비용 1회 각자대포함 총계 11,131,000~"
+        },
+        {
+          "name": "매장묘(2.5평형/쌍봉)",
+          "price": 18000000,
+          "isRepresentative": false,
+          "description": "사용료, 5년관리비, 매장작업비, 봉분설치비, 1인석물비용 1회 각자대포함 총계 16,559,000~"
+        },
+        {
+          "name": "매장묘(4평형/단봉)",
+          "price": 15339000,
+          "isRepresentative": false,
+          "description": "사용료, 5년관리비, 매장작업비, 봉분설치비, 1인석물비용 1회 각자대포함 총계 15,339,000~"
+        },
+        {
+          "name": "매장묘(4평형/쌍동)",
+          "price": 23823000,
+          "isRepresentative": false,
+          "description": "사용료, 5년관리비, 매장작업비, 봉분설치비, 1인석물비용 1회 각자대포함 총계 23,823,000~"
+        },
+        {
+          "name": "봉안묘(6위 세트)신형",
+          "price": 24000000,
+          "isRepresentative": false,
+          "description": ""
+        },
+        {
+          "name": "봉안묘(16위 세트)",
+          "price": 35000000,
+          "isRepresentative": false,
+          "description": ""
+        },
+        {
+          "name": "평장(2.5평형)2위세트",
+          "price": 5273180,
+          "isRepresentative": false,
+          "description": ""
+        },
+        {
+          "name": "매장작업비",
+          "price": 800000,
+          "isRepresentative": false,
+          "description": ""
+        },
+        {
+          "name": "안치료",
+          "price": 400000,
+          "isRepresentative": false,
+          "description": ""
+        },
+        {
+          "name": "봉안묘(4위 세트)신형",
+          "price": 19200000,
+          "isRepresentative": false,
+          "description": ""
+        },
+        {
+          "name": "봉안묘(9위 세트)신형",
+          "price": 28000000,
+          "isRepresentative": false,
+          "description": ""
+        },
+        {
+          "name": "봉안묘(2위 세트)신형",
+          "price": 15200000,
+          "isRepresentative": false,
+          "description": ""
+        },
+        {
+          "name": "경계석비",
+          "price": 145000,
+          "isRepresentative": false,
+          "description": "1m"
+        },
+        {
+          "name": "천판",
+          "price": 150000,
+          "isRepresentative": false,
+          "description": ""
+        },
+        {
+          "name": "4기, 9기 비석좌대",
+          "price": 185000,
+          "isRepresentative": false,
+          "description": ""
+        },
+        {
+          "name": "개장작업비",
+          "price": 200000,
+          "isRepresentative": false,
+          "description": "평장(소형,석도홍]"
+        },
+        {
+          "name": "입주비",
+          "price": 620000,
+          "isRepresentative": false,
+          "description": "석도총 평장"
+        },
+        {
+          "name": "매장작업비",
+          "price": 400000,
+          "isRepresentative": false,
+          "description": "함"
+        }
+      ]
+    }
+  ]
+}

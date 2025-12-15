@@ -1,0 +1,29 @@
+# Vercel Ignore File
+node_modules/
+.next/
+.git/
+.venv/
+.gemini/
+
+# Large Archives (Photos)
+archive/
+archive2/
+archive3/
+archive*/
+public/images/facilities/
+public/uploads/
+대대손손 파일리스트/
+
+# Large Data Dumps
+dump*.json
+crawled_*.json
+full_data.json
+*.db
+*.sqlite
+*.sqlite3
+*.log
+
+# Misc
+.DS_Store
+test-results/
+playwright-report/

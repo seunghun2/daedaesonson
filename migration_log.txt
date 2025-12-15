@@ -1,0 +1,1095 @@
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  묘원 시설 마이그레이션 (총 508개)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+❌ [1/508] (재)낙원추모공원 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [2/508] (재)실로암공원묘원 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [3/508] (재)삼덕공원묘원 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [4/508] 재단법인울산공원묘원 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [5/508] 진주내동공원묘원 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [6/508] 신불산공원묘원 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [7/508] 예산군추모공원 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [8/508] (재)대지공원묘원 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [9/508] 재단법인선산공원묘원 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [10/508] 재단법인 솥발산공원묘원 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [11/508] 재단법인 로엠(묘지) 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [12/508] (재)화산추모공원(묘지) 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [13/508] (재)서울공원묘원 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [14/508] (재)자하연 일산(묘지) 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [15/508] (재)이화공원묘원 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [16/508] 김해공원묘원 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [17/508] 파주하늘나라공원 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [18/508] 보령시모란공원 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [19/508] (재)남양공원묘원 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [20/508] 목련공원묘원 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [21/508] 물미묘원 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [22/508] 천주교안성추모공원(묘원) 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [23/508] 함양하늘공원(묘지) 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [24/508] (재)하늘나라공원 포천묘원 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [25/508] 금릉공원묘원 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [26/508] (재)경춘공원묘원 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [27/508] 우성공원묘원 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [28/508] (재)화신공원묘원 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [29/508] 청파동성당 청파묘원 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [30/508] (재)풍산공원묘원 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [31/508] 청파동성당 평화묘원 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [32/508] (재)호정공원(묘지) 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [33/508] (주)광림공원 동산공원묘원(묘지) 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [34/508] 삼척시추모공원 묘지 제1단지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [35/508] (재)동산공원묘원 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [36/508] 유달공원묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [37/508] (재)지평선전북공원묘원(묘지) 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [38/508] (재)진달래문화재단 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [39/508] (재)석계공원묘원 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [40/508] 영락공원묘원 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [41/508] (재)자하연포천(묘지) 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [42/508] 별그리다(THE HILL) 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [43/508] (재)경맥백합공원 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [44/508] (재)한남공원묘원 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [45/508] 충주공원묘원 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [46/508] 동화경모공원(묘지) 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [47/508] 양양군공설묘원 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [48/508] 대정공원묘원 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [49/508] 천주교혜화동성당 포천묘원 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [50/508] 광주공원묘원 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [51/508] 영모묘원 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [52/508] 칠량자연공원묘원 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [53/508] (재)봉황공원묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [54/508] (재)우성공원묘원 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [55/508] 동해시하늘정원묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [56/508] (재)용인공원(묘지) 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [57/508] 함안군공설추모공원 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [58/508] (재)경주공원묘원 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [59/508] 남한강공원묘원 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [60/508] (재)조양공원 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [61/508] 고성군 공설묘원 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [62/508] 초동교회공원묘원 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [63/508] 태백공원묘원 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [64/508] 진천군공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [65/508] (재)광주구천주교공원묘원 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [66/508] (재)개나리추모공원 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [67/508] 금호동성당 천보묘원(묘지) 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [68/508] 전농동성당 평화묘원 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [69/508] (재)천주교평내공원묘원 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [70/508] 재림공원묘원 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [71/508] (재)신세계공원묘원 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [72/508] 영종공설묘지(신규매장불가) 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [73/508] 재단법인 춘천공원묘원 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [74/508] 창원공원묘원(묘지) 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [75/508] (재)학명묘원 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [76/508] 백란공원묘원 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [77/508] 애향묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [78/508] 신당동성당 소화묘원 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [79/508] 오창장미공원 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [80/508] 평창군 공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [81/508] 충현동산 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [82/508] 세종시공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [83/508] 대전추모공원 가족묘원 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [84/508] 매화공원묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [85/508] 영동공원묘원 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [86/508] (재)천주교세종로묘원 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [87/508] 서라벌공원묘원 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [88/508] 김해하늘공원(묘지) 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [89/508] 여수시공설묘지공원 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [90/508] 정선하늘공원 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [91/508] 광릉 더 크레스트 묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [92/508] (재)안동추모공원(묘지) 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [93/508] 청량리성당 다볼산묘원 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [94/508] 예래원(묘지) 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [95/508] 현대공원1묘원 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [96/508] 전주효자공원 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [97/508] 현대공원2묘원 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [98/508] (재)청구공원 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [99/508] 천주교효천공원묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [100/508] 천자봉공원묘원 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [101/508] 홍천군공설묘원 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [102/508] 이천시대월공설공원묘지(만장) 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [103/508] 진리공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [104/508] 이천시백사공설공원묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [105/508] 점봉동 공원묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [106/508] (재)자하연분당(묘지) 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [107/508] 하다리공설공원묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [108/508] (재)광주대교구 여수천주교공원묘원 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [109/508] 대구시립공원묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [110/508] 모도리공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [111/508] 안중공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [112/508] 이천시설성공설공원묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [113/508] 이천시장호원공설공원묘지(만장) 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [114/508] 선재리공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [115/508] 이작리공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [116/508] (재)예다원 묘원 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [117/508] 신도리공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [118/508] 장봉리공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [119/508] 청양군추모공원(묘지) 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [120/508] 와동꽃빛공원(공설묘지) 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [121/508] 춘천안식공원(묘지) 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [122/508] 청솔공원 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [123/508] 화도공설묘지(만장) 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [124/508] 수동공설묘지(만장) 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [125/508] 완주군 공설공원묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [126/508] 충주시공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [127/508] 청북공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [128/508] 자월리공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [129/508] 내리공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [130/508] 처리공원묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [131/508] 오산시공설공원묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [132/508] 충효공원묘원 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [133/508] 횡성군공설추모공원(묘지) 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [134/508] 송탄공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [135/508] 재단법인 아너스홈(구 대성공원묘원) 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [136/508] 인제종합장묘센터 하늘공원 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [137/508] 대청리공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [138/508] 가톨릭군위묘원 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [139/508] (재)영락교회공원묘원 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [140/508] 진촌리공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [141/508] 현수리공원묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [142/508] 연평리공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [143/508] 강릉공원묘원(묘지) 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [144/508] 남부권공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [145/508] (재)자하연팔당(묘지) 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [146/508] 중림동성당묘원 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [147/508] 은광교회 묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [148/508] 양우회 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [149/508] 인천호남향우회 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [150/508] 삼성개발공원묘원(묘지) 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [151/508] 성서공동묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [152/508] 솔뫼공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [153/508] 석문공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [154/508] 천주교용인공원묘원 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [155/508] 꽃동네 낙원묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [156/508] 낙원공원묘원 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [157/508] 남해추모누리 공설종합묘원 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [158/508] 정주동산 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [159/508] 대호지공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [160/508] 영락공원묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [161/508] 해방교회공원묘원 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [162/508] 동명가족묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [163/508] 동명공동묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [164/508] 양평군공설공원묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [165/508] 순천시립공원묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [166/508] 용미리제1묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [167/508] 용미리제2묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [168/508] 장화리공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [169/508] 운경공원묘원 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [170/508] 장정리공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [171/508] 웅양공설공원묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [172/508] (재)원주공원묘원 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [173/508] 월곳리공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [174/508] 월롱면 공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [175/508] 월평공설공원묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [176/508] 유치공설공원묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [177/508] 의령군공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [178/508] 낙원공원 의정부묘원 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [179/508] (재)시안 가족추모공원(매장묘) 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [180/508] 정왕공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [181/508] 장수동공설묘지(매장불가) 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [182/508] 황산병온공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [183/508] 수산동공설묘지(매장불가) 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [184/508] 인천가족공원 묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [185/508] 전곡읍공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [186/508] 장계공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [187/508] 장흥리공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [188/508] 인산리공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [189/508] 신림덕화공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [190/508] 외포리공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [191/508] 양구군공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [192/508] 양택공원묘지(봉안묘) 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [193/508] 진달래공원묘원 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [194/508] 안흥동공설묘지(만장) 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [195/508] 여산공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [196/508] 화산연정공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [197/508] 연천읍공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [198/508] 삼계공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [199/508] 아산주진공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [200/508] 부산영락공원묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [201/508] 죽변화성리공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [202/508] 신월공설묘지(만장) 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [203/508] 주문공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [204/508] 해남신안공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [205/508] 오룡군립묘원(묘지) 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [206/508] 오상리공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [207/508] 구미시옥계공설묘지(만장) 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [208/508] 신서면공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [209/508] 옥천군공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [210/508] 온수리공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [211/508] 왕길공설묘지(만장) 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [212/508] 양오리공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [213/508] 상주시공설묘지(만장) 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [214/508] 왕길조성묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [215/508] 송전공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [216/508] 천주교부산교구 하늘공원 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [217/508] 군산시공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [218/508] 광석리공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [219/508] 금광공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [220/508] 가납리공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [221/508] 재단법인금산공원묘원 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [222/508] 구암리공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [223/508] 신암리공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [224/508] 신산리공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [225/508] 황방리공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [226/508] 한산리공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [227/508] 김포공원법인묘지(대곶) 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [228/508] 김포공원법인묘지(풍무) 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [229/508] 입암리공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [230/508] 상수리공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [231/508] 남상공설공원묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [232/508] 두곡리공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [233/508] 도하리공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [234/508] 하패리공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [235/508] 선암리공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [236/508] 용암리공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [237/508] 복지리 공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [238/508] 방성리공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [239/508] 답곡리 공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [240/508] 군남면공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [241/508] 우고리공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [242/508] 종로성당 나자렛묘원 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [243/508] 회정동공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [244/508] (재)안양공원묘원 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [245/508] 봉양동공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [246/508] 가북공설공원묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [247/508] 가조공설공원묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [248/508] 광사동공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [249/508] 마전동공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [250/508] 갑향군립묘원(묘지) 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [251/508] 거창공설공원묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [252/508] 어둔동공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [253/508] 유양동공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [254/508] 고려공원법인묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [255/508] 장기공설공원묘원 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [256/508] 고제공설공원묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [257/508] 삼하리공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [258/508] 삼상리공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [259/508] 관인면 제1공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [260/508] 교산1리공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [261/508] 비암리공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [262/508] 석우리공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [263/508] 구리시공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [264/508] 덕도리공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [265/508] 대곡공설묘지(만장) 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [266/508] (재)대명공원묘원 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [267/508] 포내공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [268/508] 백운공원묘원 제1묘원 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [269/508] 백운공원묘원 제2묘원 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [270/508] 가톨릭 범물공원묘원 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [271/508] 익산하늘공원묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [272/508] 통일촌 공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [273/508] 탄현면 공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [274/508] 부안수동공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [275/508] 부안용산공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [276/508] 북상공설공원묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [277/508] 북양공설공원묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [278/508] 안성시공설공원묘지(사곡동) 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [279/508] 사천시공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [280/508] 상리공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [281/508] 초원지공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [282/508] 상신공원묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [283/508] 청주시목련공원묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [284/508] 선단동공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [285/508] 천주교성환공원묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [286/508] 성석동공설묘지(만장) 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [287/508] 성주군공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [288/508] 미법리공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [289/508] 문형공설묘지(만장) 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [290/508] 대전공원묘원 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [291/508] 화현면공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [292/508] 화천공원묘원 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [293/508] 화교화원 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [294/508] 영암군덕진공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [295/508] 덕포리공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [296/508] 도림동공설묘지(매장불가) 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [297/508] 동산리공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [298/508] (재)평화공원 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [299/508] 하일리공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [300/508] 장흥공설공원묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [301/508] 무궁화공원묘원 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [302/508] 망월묘지공원 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [303/508] 하늘공원(부곡동공설공원묘지) 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [304/508] 모란공원(묘지) 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [305/508] 소흘읍제3공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [306/508] 소흘읍제2공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [307/508] 천부교추모공원 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [308/508] 내촌면 제2공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [309/508] 일동면 공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [310/508] 내유동공설묘지(만장) 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [311/508] 천주교 대구대교구청 성직자묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [312/508] 신북면 제4공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [313/508] 영북면 제1공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [314/508] 영중면 제2공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [315/508] 영중면 제1공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [316/508] 내촌면 제4공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [317/508] 내촌면 제3공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [318/508] 군내면 제2공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [319/508] 군내면 제1공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [320/508] 내리공설묘지(화도면) 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [321/508] 신북면 제6공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [322/508] 신북면 제5공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [323/508] 신북면 제3공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [324/508] 신북면 제2공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [325/508] 창수면 제3공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [326/508] 창수면 제2공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [327/508] 창수면 제1공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [328/508] 영북면 제2공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [329/508] 관인면 제2공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [330/508] 가산면 제4공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [331/508] 운연동공설묘지(매장불가) 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [332/508] 가산면 제3공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [333/508] 가산면 제2공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [334/508] 가산면 제1공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [335/508] 이동공설묘지(만장) 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [336/508] 학의동공설묘지(만장) 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [337/508] 후방산 공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [338/508] 천도교 무봉공원 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [339/508] 천주교 양산동묘원 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [340/508] 표선면공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [341/508] 하늘의문(마전동) 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [342/508] 안양시청계공설묘지(만장) 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [343/508] 정읍시입암묘지공원 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [344/508] 청평면공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [345/508] 창리공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [346/508] 조천읍공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [347/508] 초지리공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [348/508] 충해공원묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [349/508] 합성동공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [350/508] 지석리공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [351/508] 하도리공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [352/508] 하늘의문(당하동) 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [353/508] 임실군공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [354/508] 혜화동성당 도봉동묘원 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [355/508] 도장리공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [356/508] 동강면공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [357/508] 동검리공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [358/508] 두운리공동묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [359/508] 말도공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [360/508] 망우역사문화공원 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [361/508] 망월리공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [362/508] 매음리공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [363/508] 문평면공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [364/508] 반남면공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [365/508] 벽제리묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [366/508] 보성공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [367/508] 볼음공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [368/508] 봉소리공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [369/508] 봉황면공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [370/508] 부근리공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [371/508] 부활동산종교재단법인 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [372/508] 북면공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [373/508] 북성리공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [374/508] 사기리공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [375/508] 산포면공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [376/508] 삼거리공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [377/508] 덕하2리공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [378/508] 덕하1리공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [379/508] 가평읍 공설묘지(구 제1공설묘지) 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [380/508] 고능리공동묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [381/508] 고천리공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [382/508] 공산면공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [383/508] 교산리공설묘지(별립산) 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [384/508] 구례군공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [385/508] 구좌읍공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [386/508] 국화리공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [387/508] 금남동공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [388/508] 길정리공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [389/508] 길직1리공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [390/508] 길직2리공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [391/508] 천주교나주성당공원묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [392/508] 남산리공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [393/508] 남원읍공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [394/508] 남평읍공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [395/508] 내곡리묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [396/508] 넙성리공동묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [397/508] 다도면공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [398/508] 다시면공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [399/508] 당산리공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [400/508] 대정읍공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [401/508] 덕성리공동묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [402/508] 삼동암공동묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [403/508] 성산읍공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [404/508] 성북동공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [405/508] 의정부시공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [406/508] 영산동공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [407/508] 세지면공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [408/508] 우도면공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [409/508] 송월교회(묘지) 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [410/508] 숭뢰리공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [411/508] 용담망향의공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [412/508] 신삼리공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [413/508] 신정리공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [414/508] 왕곡면공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [415/508] 신현리공동묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [416/508] 아차공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [417/508] 완도군추모공원 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [418/508] 안덕면공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [419/508] 애월읍공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [420/508] 어승생공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [421/508] 영강동공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [422/508] 설악면공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [423/508] 이창동공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [424/508] 삼성리공동묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [425/508] 삼흥리공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [426/508] 상면공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [427/508] 상용리공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [428/508] 색달동공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [429/508] 서검리공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [430/508] 서부공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [431/508] 서산시희망공원(묘지) 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [432/508] 석모리공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [433/508] 석포리공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [434/508] 인화리공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [435/508] 선두리공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [436/508] 예수장로회 제주교회묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [437/508] 경산공원묘원 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [438/508] 조천장로교회묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [439/508] 갑산공원묘원 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [440/508] (재)분당메모리얼파크 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [441/508] (재)대한예수교장로회 기독교공동묘원 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [442/508] (재)전주공원묘원 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [443/508] 정자공원묘원 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [444/508] 인천기독교장로회묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [445/508] 금천면공설묘지(폐쇄) 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [446/508] 조수천주교묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [447/508] (재)하늘공원 묘원 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [448/508] (재)금곡장미공원 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [449/508] 제주향교묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [450/508] 삼성공원묘원 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [451/508] 대구중부교회묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [452/508] 상전망향의공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [453/508] 천아오름공원묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [454/508] 천주교제주교구묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [455/508] 혜화동성당 방학동묘원 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [456/508] 포항공원묘원 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [457/508] 천주교용호동공원묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [458/508] 모슬포 천주교공동묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [459/508] 모슬포교회 공동묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [460/508] 천주교산내공원묘원 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [461/508] 천주교 창원공원묘원 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [462/508] 천주교가덕공원묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [463/508] 신동아교회묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [464/508] 신세계공원 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [465/508] 삼덕교회동산 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [466/508] 인천지구황해도민묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [467/508] 대구화교협회묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [468/508] 대구공원 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [469/508] 길음동성당 묘원 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [470/508] 충주천주교회 성요셉공원묘원 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [471/508] 노안면공설묘지(폐쇄) 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [472/508] 삼각지성당 하늘묘원 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [473/508] 산곡동공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [474/508] 서울노회유지재단 법인묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [475/508] 삼척시추모공원 묘지 제2단지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [476/508] 보령시마을단위공원묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [477/508] 가평추모공원(구 제2공설묘지) 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [478/508] 자일동공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [479/508] (재)성산공원(묘지) 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [480/508] (재)천주교유지재단 청주교구묘원 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [481/508] 김포성당 매괴의모후 묘원 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [482/508] 돈암동성당 광탄추모공원 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [483/508] 칠곡성당공동묘원 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [484/508] 대구중앙교회 부활의동산 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [485/508] 대구칠곡교회묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [486/508] 상효동공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [487/508] 광대리 공원묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [488/508] 광양시립영세공원 묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [489/508] 구룡공설공원묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [490/508] 서소문교회동산 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [491/508] 천주교 김천공원묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [492/508] 영암군군서공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [493/508] 영암군금정공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [494/508] 영암군시종공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [495/508] 영암군신북공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [496/508] 영암군학산공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [497/508] 안양시안산공설묘지(만장) 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [498/508] 용산성당 청계묘원 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [499/508] 구미시선산공설묘지(만장) 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [500/508] 홍성군공원묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [501/508] 대야리공설묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [502/508] 청암교회(청암동산) 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [503/508] 신현교회 묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [504/508] 오식도공설묘지(민간위탁) 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [505/508] 최자실기도원 공원묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [506/508] 불광동성당 바다의별묘원 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [507/508] 신광교회 묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+❌ [508/508] (재)동산공원묘원 묘지 실패: Cannot read properties of undefined (reading 'deleteMany')
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  마이그레이션 완료!
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✅ 성공: 0/508 (0.0분 소요)
+   총 항목: 0개
+   총 이미지: 0개
+
+❌ 실패: 508개
+  - (재)낙원추모공원: Cannot read properties of undefined (reading 'deleteMany')
+  - (재)실로암공원묘원: Cannot read properties of undefined (reading 'deleteMany')
+  - (재)삼덕공원묘원: Cannot read properties of undefined (reading 'deleteMany')
+  - 재단법인울산공원묘원: Cannot read properties of undefined (reading 'deleteMany')
+  - 진주내동공원묘원: Cannot read properties of undefined (reading 'deleteMany')
+  - 신불산공원묘원: Cannot read properties of undefined (reading 'deleteMany')
+  - 예산군추모공원: Cannot read properties of undefined (reading 'deleteMany')
+  - (재)대지공원묘원: Cannot read properties of undefined (reading 'deleteMany')
+  - 재단법인선산공원묘원: Cannot read properties of undefined (reading 'deleteMany')
+  - 재단법인 솥발산공원묘원: Cannot read properties of undefined (reading 'deleteMany')
+  ... 그 외 498개
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  묘원 시설 마이그레이션 (총 508개)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✅ [1/508] (재)낙원추모공원: 109개 항목, 5개 카테고리, 10개 이미지
+✅ [2/508] (재)실로암공원묘원: 61개 항목, 4개 카테고리, 3개 이미지
+✅ [3/508] (재)삼덕공원묘원: 58개 항목, 4개 카테고리, 0개 이미지
+✅ [4/508] 재단법인울산공원묘원: 54개 항목, 2개 카테고리, 2개 이미지
+✅ [5/508] 진주내동공원묘원: 46개 항목, 4개 카테고리, 6개 이미지
+✅ [6/508] 신불산공원묘원: 41개 항목, 3개 카테고리, 2개 이미지
+✅ [7/508] 예산군추모공원: 40개 항목, 2개 카테고리, 2개 이미지
+✅ [8/508] (재)대지공원묘원: 36개 항목, 3개 카테고리, 2개 이미지
+✅ [9/508] 재단법인선산공원묘원: 34개 항목, 4개 카테고리, 2개 이미지
+✅ [10/508] 재단법인 솥발산공원묘원: 31개 항목, 2개 카테고리, 2개 이미지
+✅ [11/508] 재단법인 로엠(묘지): 3개 항목, 1개 카테고리, 2개 이미지
+✅ [12/508] (재)화산추모공원(묘지): 3개 항목, 1개 카테고리, 2개 이미지
+✅ [13/508] (재)서울공원묘원: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [14/508] (재)자하연 일산(묘지): 3개 항목, 1개 카테고리, 2개 이미지
+✅ [15/508] (재)이화공원묘원: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [16/508] 김해공원묘원: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [17/508] 파주하늘나라공원: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [18/508] 보령시모란공원: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [19/508] (재)남양공원묘원: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [20/508] 목련공원묘원: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [21/508] 물미묘원: 2개 항목, 1개 카테고리, 2개 이미지
+✅ [22/508] 천주교안성추모공원(묘원): 3개 항목, 1개 카테고리, 2개 이미지
+✅ [23/508] 함양하늘공원(묘지): 3개 항목, 1개 카테고리, 2개 이미지
+✅ [24/508] (재)하늘나라공원 포천묘원: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [25/508] 금릉공원묘원: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [26/508] (재)경춘공원묘원: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [27/508] 우성공원묘원: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [28/508] (재)화신공원묘원: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [29/508] 청파동성당 청파묘원: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [30/508] (재)풍산공원묘원: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [31/508] 청파동성당 평화묘원: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [32/508] (재)호정공원(묘지): 3개 항목, 1개 카테고리, 2개 이미지
+✅ [33/508] (주)광림공원 동산공원묘원(묘지): 3개 항목, 1개 카테고리, 2개 이미지
+✅ [34/508] 삼척시추모공원 묘지 제1단지: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [35/508] (재)동산공원묘원: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [36/508] 유달공원묘지: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [37/508] (재)지평선전북공원묘원(묘지): 3개 항목, 1개 카테고리, 2개 이미지
+✅ [38/508] (재)진달래문화재단: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [39/508] (재)석계공원묘원: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [40/508] 영락공원묘원: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [41/508] (재)자하연포천(묘지): 3개 항목, 1개 카테고리, 2개 이미지
+✅ [42/508] 별그리다(THE HILL): 3개 항목, 1개 카테고리, 2개 이미지
+✅ [43/508] (재)경맥백합공원: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [44/508] (재)한남공원묘원: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [45/508] 충주공원묘원: 2개 항목, 1개 카테고리, 2개 이미지
+✅ [46/508] 동화경모공원(묘지): 3개 항목, 1개 카테고리, 2개 이미지
+✅ [47/508] 양양군공설묘원: 3개 항목, 1개 카테고리, 3개 이미지
+✅ [48/508] 대정공원묘원: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [49/508] 천주교혜화동성당 포천묘원: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [50/508] 광주공원묘원: 3개 항목, 1개 카테고리, 3개 이미지
+✅ [51/508] 영모묘원: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [52/508] 칠량자연공원묘원: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [53/508] (재)봉황공원묘지: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [54/508] (재)우성공원묘원: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [55/508] 동해시하늘정원묘지: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [56/508] (재)용인공원(묘지): 3개 항목, 1개 카테고리, 2개 이미지
+✅ [57/508] 함안군공설추모공원: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [58/508] (재)경주공원묘원: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [59/508] 남한강공원묘원: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [60/508] (재)조양공원: 2개 항목, 1개 카테고리, 2개 이미지
+✅ [61/508] 고성군 공설묘원: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [62/508] 초동교회공원묘원: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [63/508] 태백공원묘원: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [64/508] 진천군공설묘지: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [65/508] (재)광주구천주교공원묘원: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [66/508] (재)개나리추모공원: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [67/508] 금호동성당 천보묘원(묘지): 3개 항목, 1개 카테고리, 2개 이미지
+✅ [68/508] 전농동성당 평화묘원: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [69/508] (재)천주교평내공원묘원: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [70/508] 재림공원묘원: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [71/508] (재)신세계공원묘원: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [72/508] 영종공설묘지(신규매장불가): 3개 항목, 1개 카테고리, 2개 이미지
+✅ [73/508] 재단법인 춘천공원묘원: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [74/508] 창원공원묘원(묘지): 3개 항목, 1개 카테고리, 2개 이미지
+✅ [75/508] (재)학명묘원: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [76/508] 백란공원묘원: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [77/508] 애향묘지: 2개 항목, 1개 카테고리, 2개 이미지
+✅ [78/508] 신당동성당 소화묘원: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [79/508] 오창장미공원: 2개 항목, 1개 카테고리, 2개 이미지
+✅ [80/508] 평창군 공설묘지: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [81/508] 충현동산: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [82/508] 세종시공설묘지: 2개 항목, 1개 카테고리, 2개 이미지
+✅ [83/508] 대전추모공원 가족묘원: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [84/508] 매화공원묘지: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [85/508] 영동공원묘원: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [86/508] (재)천주교세종로묘원: 3개 항목, 1개 카테고리, 3개 이미지
+✅ [87/508] 서라벌공원묘원: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [88/508] 김해하늘공원(묘지): 3개 항목, 1개 카테고리, 2개 이미지
+✅ [89/508] 여수시공설묘지공원: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [90/508] 정선하늘공원: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [91/508] 광릉 더 크레스트 묘지: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [92/508] (재)안동추모공원(묘지): 3개 항목, 1개 카테고리, 2개 이미지
+✅ [93/508] 청량리성당 다볼산묘원: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [94/508] 예래원(묘지): 3개 항목, 1개 카테고리, 2개 이미지
+✅ [95/508] 현대공원1묘원: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [96/508] 전주효자공원: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [97/508] 현대공원2묘원: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [98/508] (재)청구공원: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [99/508] 천주교효천공원묘지: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [100/508] 천자봉공원묘원: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [101/508] 홍천군공설묘원: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [102/508] 이천시대월공설공원묘지(만장): 2개 항목, 1개 카테고리, 2개 이미지
+✅ [103/508] 진리공설묘지: 2개 항목, 1개 카테고리, 2개 이미지
+✅ [104/508] 이천시백사공설공원묘지: 2개 항목, 1개 카테고리, 2개 이미지
+✅ [105/508] 점봉동 공원묘지: 2개 항목, 1개 카테고리, 2개 이미지
+✅ [106/508] (재)자하연분당(묘지): 3개 항목, 1개 카테고리, 2개 이미지
+✅ [107/508] 하다리공설공원묘지: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [108/508] (재)광주대교구 여수천주교공원묘원: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [109/508] 대구시립공원묘지: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [110/508] 모도리공설묘지: 2개 항목, 1개 카테고리, 2개 이미지
+✅ [111/508] 안중공설묘지: 2개 항목, 1개 카테고리, 2개 이미지
+✅ [112/508] 이천시설성공설공원묘지: 2개 항목, 1개 카테고리, 2개 이미지
+✅ [113/508] 이천시장호원공설공원묘지(만장): 2개 항목, 1개 카테고리, 2개 이미지
+✅ [114/508] 선재리공설묘지: 2개 항목, 1개 카테고리, 2개 이미지
+✅ [115/508] 이작리공설묘지: 2개 항목, 1개 카테고리, 2개 이미지
+✅ [116/508] (재)예다원 묘원: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [117/508] 신도리공설묘지: 2개 항목, 1개 카테고리, 2개 이미지
+✅ [118/508] 장봉리공설묘지: 2개 항목, 1개 카테고리, 2개 이미지
+✅ [119/508] 청양군추모공원(묘지): 3개 항목, 1개 카테고리, 2개 이미지
+✅ [120/508] 와동꽃빛공원(공설묘지): 3개 항목, 1개 카테고리, 2개 이미지
+✅ [121/508] 춘천안식공원(묘지): 3개 항목, 1개 카테고리, 2개 이미지
+✅ [122/508] 청솔공원: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [123/508] 화도공설묘지(만장): 3개 항목, 1개 카테고리, 2개 이미지
+✅ [124/508] 수동공설묘지(만장): 3개 항목, 1개 카테고리, 2개 이미지
+✅ [125/508] 완주군 공설공원묘지: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [126/508] 충주시공설묘지: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [127/508] 청북공설묘지: 2개 항목, 1개 카테고리, 2개 이미지
+✅ [128/508] 자월리공설묘지: 2개 항목, 1개 카테고리, 2개 이미지
+✅ [129/508] 내리공설묘지: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [130/508] 처리공원묘지: 2개 항목, 1개 카테고리, 2개 이미지
+✅ [131/508] 오산시공설공원묘지: 2개 항목, 1개 카테고리, 2개 이미지
+✅ [132/508] 충효공원묘원: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [133/508] 횡성군공설추모공원(묘지): 3개 항목, 1개 카테고리, 2개 이미지
+✅ [134/508] 송탄공설묘지: 2개 항목, 1개 카테고리, 2개 이미지
+✅ [135/508] 재단법인 아너스홈(구 대성공원묘원): 2개 항목, 1개 카테고리, 2개 이미지
+✅ [136/508] 인제종합장묘센터 하늘공원: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [137/508] 대청리공설묘지: 2개 항목, 1개 카테고리, 2개 이미지
+✅ [138/508] 가톨릭군위묘원: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [139/508] (재)영락교회공원묘원: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [140/508] 진촌리공설묘지: 2개 항목, 1개 카테고리, 2개 이미지
+✅ [141/508] 현수리공원묘지: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [142/508] 연평리공설묘지: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [143/508] 강릉공원묘원(묘지): 3개 항목, 1개 카테고리, 2개 이미지
+✅ [144/508] 남부권공설묘지: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [145/508] (재)자하연팔당(묘지): 3개 항목, 1개 카테고리, 2개 이미지
+✅ [146/508] 중림동성당묘원: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [147/508] 은광교회 묘지: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [148/508] 양우회: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [149/508] 인천호남향우회: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [150/508] 삼성개발공원묘원(묘지): 3개 항목, 1개 카테고리, 2개 이미지
+✅ [151/508] 성서공동묘지: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [152/508] 솔뫼공설묘지: 2개 항목, 1개 카테고리, 2개 이미지
+✅ [153/508] 석문공설묘지: 2개 항목, 1개 카테고리, 2개 이미지
+✅ [154/508] 천주교용인공원묘원: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [155/508] 꽃동네 낙원묘지: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [156/508] 낙원공원묘원: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [157/508] 남해추모누리 공설종합묘원: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [158/508] 정주동산: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [159/508] 대호지공설묘지: 2개 항목, 1개 카테고리, 2개 이미지
+✅ [160/508] 영락공원묘지: 2개 항목, 1개 카테고리, 2개 이미지
+✅ [161/508] 해방교회공원묘원: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [162/508] 동명가족묘지: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [163/508] 동명공동묘지: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [164/508] 양평군공설공원묘지: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [165/508] 순천시립공원묘지: 2개 항목, 1개 카테고리, 2개 이미지
+✅ [166/508] 용미리제1묘지: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [167/508] 용미리제2묘지: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [168/508] 장화리공설묘지: 2개 항목, 1개 카테고리, 2개 이미지
+✅ [169/508] 운경공원묘원: 2개 항목, 1개 카테고리, 2개 이미지
+✅ [170/508] 장정리공설묘지: 2개 항목, 1개 카테고리, 2개 이미지
+✅ [171/508] 웅양공설공원묘지: 2개 항목, 1개 카테고리, 2개 이미지
+✅ [172/508] (재)원주공원묘원: 3개 항목, 1개 카테고리, 3개 이미지
+✅ [173/508] 월곳리공설묘지: 2개 항목, 1개 카테고리, 2개 이미지
+✅ [174/508] 월롱면 공설묘지: 2개 항목, 1개 카테고리, 2개 이미지
+✅ [175/508] 월평공설공원묘지: 2개 항목, 1개 카테고리, 2개 이미지
+✅ [176/508] 유치공설공원묘지: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [177/508] 의령군공설묘지: 2개 항목, 1개 카테고리, 2개 이미지
+✅ [178/508] 낙원공원 의정부묘원: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [179/508] (재)시안 가족추모공원(매장묘): 3개 항목, 1개 카테고리, 2개 이미지
+✅ [180/508] 정왕공설묘지: 2개 항목, 1개 카테고리, 2개 이미지
+✅ [181/508] 장수동공설묘지(매장불가): 2개 항목, 1개 카테고리, 2개 이미지
+✅ [182/508] 황산병온공설묘지: 2개 항목, 1개 카테고리, 2개 이미지
+✅ [183/508] 수산동공설묘지(매장불가): 2개 항목, 1개 카테고리, 2개 이미지
+✅ [184/508] 인천가족공원 묘지: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [185/508] 전곡읍공설묘지: 2개 항목, 1개 카테고리, 2개 이미지
+✅ [186/508] 장계공설묘지: 2개 항목, 1개 카테고리, 2개 이미지
+✅ [187/508] 장흥리공설묘지: 2개 항목, 1개 카테고리, 2개 이미지
+✅ [188/508] 인산리공설묘지: 2개 항목, 1개 카테고리, 2개 이미지
+✅ [189/508] 신림덕화공설묘지: 2개 항목, 1개 카테고리, 2개 이미지
+✅ [190/508] 외포리공설묘지: 2개 항목, 1개 카테고리, 2개 이미지
+✅ [191/508] 양구군공설묘지: 2개 항목, 1개 카테고리, 2개 이미지
+❌ [192/508] 양택공원묘지(봉안묘) 실패: 
+Invalid `prisma.priceItem.create()` invocation in
+/Users/el/Desktop/daedaesonson/scripts/migrate_all_graves_complete.js:220:36
+
+  217 });
+  218 
+  219 for (const item of items) {
+→ 220     await prisma.priceItem.create(
+Inconsistent column data: Conversion failed: Value 4875000000 does not fit in an INT column, try migrating the 'price' column type to BIGINT
+✅ [193/508] 진달래공원묘원: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [194/508] 안흥동공설묘지(만장): 2개 항목, 1개 카테고리, 2개 이미지
+✅ [195/508] 여산공설묘지: 2개 항목, 1개 카테고리, 2개 이미지
+✅ [196/508] 화산연정공설묘지: 2개 항목, 1개 카테고리, 2개 이미지
+✅ [197/508] 연천읍공설묘지: 2개 항목, 1개 카테고리, 2개 이미지
+✅ [198/508] 삼계공설묘지: 2개 항목, 1개 카테고리, 2개 이미지
+✅ [199/508] 아산주진공설묘지: 2개 항목, 1개 카테고리, 2개 이미지
+✅ [200/508] 부산영락공원묘지: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [201/508] 죽변화성리공설묘지: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [202/508] 신월공설묘지(만장): 3개 항목, 1개 카테고리, 2개 이미지
+✅ [203/508] 주문공설묘지: 2개 항목, 1개 카테고리, 2개 이미지
+✅ [204/508] 해남신안공설묘지: 2개 항목, 1개 카테고리, 2개 이미지
+✅ [205/508] 오룡군립묘원(묘지): 3개 항목, 1개 카테고리, 2개 이미지
+✅ [206/508] 오상리공설묘지: 2개 항목, 1개 카테고리, 2개 이미지
+✅ [207/508] 구미시옥계공설묘지(만장): 3개 항목, 1개 카테고리, 2개 이미지
+✅ [208/508] 신서면공설묘지: 2개 항목, 1개 카테고리, 2개 이미지
+✅ [209/508] 옥천군공설묘지: 2개 항목, 1개 카테고리, 2개 이미지
+✅ [210/508] 온수리공설묘지: 2개 항목, 1개 카테고리, 2개 이미지
+✅ [211/508] 왕길공설묘지(만장): 2개 항목, 1개 카테고리, 2개 이미지
+✅ [212/508] 양오리공설묘지: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [213/508] 상주시공설묘지(만장): 2개 항목, 1개 카테고리, 2개 이미지
+✅ [214/508] 왕길조성묘지: 2개 항목, 1개 카테고리, 2개 이미지
+✅ [215/508] 송전공설묘지: 2개 항목, 1개 카테고리, 2개 이미지
+✅ [216/508] 천주교부산교구 하늘공원: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [217/508] 군산시공설묘지: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [218/508] 광석리공설묘지: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [219/508] 금광공설묘지: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [220/508] 가납리공설묘지: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [221/508] 재단법인금산공원묘원: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [222/508] 구암리공설묘지: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [223/508] 신암리공설묘지: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [224/508] 신산리공설묘지: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [225/508] 황방리공설묘지: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [226/508] 한산리공설묘지: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [227/508] 김포공원법인묘지(대곶): 3개 항목, 1개 카테고리, 2개 이미지
+✅ [228/508] 김포공원법인묘지(풍무): 3개 항목, 1개 카테고리, 2개 이미지
+✅ [229/508] 입암리공설묘지: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [230/508] 상수리공설묘지: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [231/508] 남상공설공원묘지: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [232/508] 두곡리공설묘지: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [233/508] 도하리공설묘지: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [234/508] 하패리공설묘지: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [235/508] 선암리공설묘지: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [236/508] 용암리공설묘지: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [237/508] 복지리 공설묘지: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [238/508] 방성리공설묘지: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [239/508] 답곡리 공설묘지: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [240/508] 군남면공설묘지: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [241/508] 우고리공설묘지: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [242/508] 종로성당 나자렛묘원: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [243/508] 회정동공설묘지: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [244/508] (재)안양공원묘원: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [245/508] 봉양동공설묘지: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [246/508] 가북공설공원묘지: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [247/508] 가조공설공원묘지: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [248/508] 광사동공설묘지: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [249/508] 마전동공설묘지: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [250/508] 갑향군립묘원(묘지): 3개 항목, 1개 카테고리, 3개 이미지
+✅ [251/508] 거창공설공원묘지: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [252/508] 어둔동공설묘지: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [253/508] 유양동공설묘지: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [254/508] 고려공원법인묘지: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [255/508] 장기공설공원묘원: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [256/508] 고제공설공원묘지: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [257/508] 삼하리공설묘지: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [258/508] 삼상리공설묘지: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [259/508] 관인면 제1공설묘지: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [260/508] 교산1리공설묘지: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [261/508] 비암리공설묘지: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [262/508] 석우리공설묘지: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [263/508] 구리시공설묘지: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [264/508] 덕도리공설묘지: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [265/508] 대곡공설묘지(만장): 3개 항목, 1개 카테고리, 2개 이미지
+✅ [266/508] (재)대명공원묘원: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [267/508] 포내공설묘지: 2개 항목, 1개 카테고리, 2개 이미지
+✅ [268/508] 백운공원묘원 제1묘원: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [269/508] 백운공원묘원 제2묘원: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [270/508] 가톨릭 범물공원묘원: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [271/508] 익산하늘공원묘지: 2개 항목, 1개 카테고리, 2개 이미지
+✅ [272/508] 통일촌 공설묘지: 2개 항목, 1개 카테고리, 2개 이미지
+✅ [273/508] 탄현면 공설묘지: 2개 항목, 1개 카테고리, 2개 이미지
+✅ [274/508] 부안수동공설묘지: 2개 항목, 1개 카테고리, 2개 이미지
+✅ [275/508] 부안용산공설묘지: 2개 항목, 1개 카테고리, 2개 이미지
+✅ [276/508] 북상공설공원묘지: 2개 항목, 1개 카테고리, 2개 이미지
+✅ [277/508] 북양공설공원묘지: 2개 항목, 1개 카테고리, 2개 이미지
+✅ [278/508] 안성시공설공원묘지(사곡동): 2개 항목, 1개 카테고리, 2개 이미지
+✅ [279/508] 사천시공설묘지: 2개 항목, 1개 카테고리, 2개 이미지
+✅ [280/508] 상리공설묘지: 2개 항목, 1개 카테고리, 2개 이미지
+✅ [281/508] 초원지공설묘지: 2개 항목, 1개 카테고리, 2개 이미지
+✅ [282/508] 상신공원묘지: 2개 항목, 1개 카테고리, 2개 이미지
+✅ [283/508] 청주시목련공원묘지: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [284/508] 선단동공설묘지: 2개 항목, 1개 카테고리, 2개 이미지
+✅ [285/508] 천주교성환공원묘지: 2개 항목, 1개 카테고리, 2개 이미지
+✅ [286/508] 성석동공설묘지(만장): 2개 항목, 1개 카테고리, 2개 이미지
+✅ [287/508] 성주군공설묘지: 2개 항목, 1개 카테고리, 2개 이미지
+✅ [288/508] 미법리공설묘지: 2개 항목, 1개 카테고리, 2개 이미지
+✅ [289/508] 문형공설묘지(만장): 3개 항목, 1개 카테고리, 2개 이미지
+✅ [290/508] 대전공원묘원: 2개 항목, 1개 카테고리, 2개 이미지
+✅ [291/508] 화현면공설묘지: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [292/508] 화천공원묘원: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [293/508] 화교화원: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [294/508] 영암군덕진공설묘지: 2개 항목, 1개 카테고리, 2개 이미지
+✅ [295/508] 덕포리공설묘지: 2개 항목, 1개 카테고리, 2개 이미지
+✅ [296/508] 도림동공설묘지(매장불가): 2개 항목, 1개 카테고리, 2개 이미지
+✅ [297/508] 동산리공설묘지: 2개 항목, 1개 카테고리, 2개 이미지
+✅ [298/508] (재)평화공원: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [299/508] 하일리공설묘지: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [300/508] 장흥공설공원묘지: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [301/508] 무궁화공원묘원: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [302/508] 망월묘지공원: 2개 항목, 1개 카테고리, 2개 이미지
+✅ [303/508] 하늘공원(부곡동공설공원묘지): 3개 항목, 1개 카테고리, 2개 이미지
+✅ [304/508] 모란공원(묘지): 3개 항목, 1개 카테고리, 2개 이미지
+✅ [305/508] 소흘읍제3공설묘지: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [306/508] 소흘읍제2공설묘지: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [307/508] 천부교추모공원: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [308/508] 내촌면 제2공설묘지: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [309/508] 일동면 공설묘지: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [310/508] 내유동공설묘지(만장): 3개 항목, 1개 카테고리, 2개 이미지
+✅ [311/508] 천주교 대구대교구청 성직자묘지: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [312/508] 신북면 제4공설묘지: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [313/508] 영북면 제1공설묘지: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [314/508] 영중면 제2공설묘지: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [315/508] 영중면 제1공설묘지: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [316/508] 내촌면 제4공설묘지: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [317/508] 내촌면 제3공설묘지: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [318/508] 군내면 제2공설묘지: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [319/508] 군내면 제1공설묘지: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [320/508] 내리공설묘지(화도면): 3개 항목, 1개 카테고리, 2개 이미지
+✅ [321/508] 신북면 제6공설묘지: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [322/508] 신북면 제5공설묘지: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [323/508] 신북면 제3공설묘지: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [324/508] 신북면 제2공설묘지: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [325/508] 창수면 제3공설묘지: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [326/508] 창수면 제2공설묘지: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [327/508] 창수면 제1공설묘지: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [328/508] 영북면 제2공설묘지: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [329/508] 관인면 제2공설묘지: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [330/508] 가산면 제4공설묘지: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [331/508] 운연동공설묘지(매장불가): 2개 항목, 1개 카테고리, 2개 이미지
+✅ [332/508] 가산면 제3공설묘지: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [333/508] 가산면 제2공설묘지: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [334/508] 가산면 제1공설묘지: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [335/508] 이동공설묘지(만장): 3개 항목, 1개 카테고리, 2개 이미지
+✅ [336/508] 학의동공설묘지(만장): 3개 항목, 1개 카테고리, 2개 이미지
+✅ [337/508] 후방산 공설묘지: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [338/508] 천도교 무봉공원: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [339/508] 천주교 양산동묘원: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [340/508] 표선면공설묘지: 2개 항목, 1개 카테고리, 2개 이미지
+✅ [341/508] 하늘의문(마전동): 3개 항목, 1개 카테고리, 2개 이미지
+✅ [342/508] 안양시청계공설묘지(만장): 3개 항목, 1개 카테고리, 2개 이미지
+✅ [343/508] 정읍시입암묘지공원: 2개 항목, 1개 카테고리, 2개 이미지
+✅ [344/508] 청평면공설묘지: 2개 항목, 1개 카테고리, 2개 이미지
+✅ [345/508] 창리공설묘지: 2개 항목, 1개 카테고리, 2개 이미지
+✅ [346/508] 조천읍공설묘지: 2개 항목, 1개 카테고리, 2개 이미지
+✅ [347/508] 초지리공설묘지: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [348/508] 충해공원묘지: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [349/508] 합성동공설묘지: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [350/508] 지석리공설묘지: 2개 항목, 1개 카테고리, 2개 이미지
+✅ [351/508] 하도리공설묘지: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [352/508] 하늘의문(당하동): 3개 항목, 1개 카테고리, 2개 이미지
+✅ [353/508] 임실군공설묘지: 2개 항목, 1개 카테고리, 2개 이미지
+✅ [354/508] 혜화동성당 도봉동묘원: 2개 항목, 1개 카테고리, 2개 이미지
+✅ [355/508] 도장리공설묘지: 2개 항목, 1개 카테고리, 2개 이미지
+✅ [356/508] 동강면공설묘지: 2개 항목, 1개 카테고리, 2개 이미지
+✅ [357/508] 동검리공설묘지: 2개 항목, 1개 카테고리, 2개 이미지
+✅ [358/508] 두운리공동묘지: 2개 항목, 1개 카테고리, 2개 이미지
+✅ [359/508] 말도공설묘지: 2개 항목, 1개 카테고리, 2개 이미지
+✅ [360/508] 망우역사문화공원: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [361/508] 망월리공설묘지: 2개 항목, 1개 카테고리, 2개 이미지
+✅ [362/508] 매음리공설묘지: 2개 항목, 1개 카테고리, 2개 이미지
+✅ [363/508] 문평면공설묘지: 2개 항목, 1개 카테고리, 2개 이미지
+✅ [364/508] 반남면공설묘지: 2개 항목, 1개 카테고리, 2개 이미지
+✅ [365/508] 벽제리묘지: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [366/508] 보성공설묘지: 2개 항목, 1개 카테고리, 2개 이미지
+✅ [367/508] 볼음공설묘지: 2개 항목, 1개 카테고리, 2개 이미지
+✅ [368/508] 봉소리공설묘지: 2개 항목, 1개 카테고리, 2개 이미지
+✅ [369/508] 봉황면공설묘지: 2개 항목, 1개 카테고리, 2개 이미지
+✅ [370/508] 부근리공설묘지: 2개 항목, 1개 카테고리, 2개 이미지
+✅ [371/508] 부활동산종교재단법인: 2개 항목, 1개 카테고리, 2개 이미지
+✅ [372/508] 북면공설묘지: 2개 항목, 1개 카테고리, 2개 이미지
+❌ [373/508] 북성리공설묘지 실패: 
+Invalid `prisma.priceItem.create()` invocation in
+/Users/el/Desktop/daedaesonson/scripts/migrate_all_graves_complete.js:220:36
+
+  217 });
+  218 
+  219 for (const item of items) {
+→ 220     await prisma.priceItem.create(
+Inconsistent column data: Conversion failed: Value 2775000000 does not fit in an INT column, try migrating the 'price' column type to BIGINT
+✅ [374/508] 사기리공설묘지: 2개 항목, 1개 카테고리, 2개 이미지
+✅ [375/508] 산포면공설묘지: 2개 항목, 1개 카테고리, 2개 이미지
+✅ [376/508] 삼거리공설묘지: 2개 항목, 1개 카테고리, 2개 이미지
+✅ [377/508] 덕하2리공설묘지: 2개 항목, 1개 카테고리, 2개 이미지
+✅ [378/508] 덕하1리공설묘지: 2개 항목, 1개 카테고리, 2개 이미지
+✅ [379/508] 가평읍 공설묘지(구 제1공설묘지): 3개 항목, 1개 카테고리, 2개 이미지
+✅ [380/508] 고능리공동묘지: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [381/508] 고천리공설묘지: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [382/508] 공산면공설묘지: 2개 항목, 1개 카테고리, 2개 이미지
+✅ [383/508] 교산리공설묘지(별립산): 3개 항목, 1개 카테고리, 2개 이미지
+✅ [384/508] 구례군공설묘지: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [385/508] 구좌읍공설묘지: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [386/508] 국화리공설묘지: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [387/508] 금남동공설묘지: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [388/508] 길정리공설묘지: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [389/508] 길직1리공설묘지: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [390/508] 길직2리공설묘지: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [391/508] 천주교나주성당공원묘지: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [392/508] 남산리공설묘지: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [393/508] 남원읍공설묘지: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [394/508] 남평읍공설묘지: 2개 항목, 1개 카테고리, 2개 이미지
+✅ [395/508] 내곡리묘지: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [396/508] 넙성리공동묘지: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [397/508] 다도면공설묘지: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [398/508] 다시면공설묘지: 2개 항목, 1개 카테고리, 2개 이미지
+✅ [399/508] 당산리공설묘지: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [400/508] 대정읍공설묘지: 2개 항목, 1개 카테고리, 2개 이미지
+✅ [401/508] 덕성리공동묘지: 2개 항목, 1개 카테고리, 2개 이미지
+✅ [402/508] 삼동암공동묘지: 2개 항목, 1개 카테고리, 2개 이미지
+✅ [403/508] 성산읍공설묘지: 2개 항목, 1개 카테고리, 2개 이미지
+✅ [404/508] 성북동공설묘지: 2개 항목, 1개 카테고리, 2개 이미지
+✅ [405/508] 의정부시공설묘지: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [406/508] 영산동공설묘지: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [407/508] 세지면공설묘지: 2개 항목, 1개 카테고리, 2개 이미지
+✅ [408/508] 우도면공설묘지: 2개 항목, 1개 카테고리, 2개 이미지
+✅ [409/508] 송월교회(묘지): 3개 항목, 1개 카테고리, 2개 이미지
+✅ [410/508] 숭뢰리공설묘지: 2개 항목, 1개 카테고리, 2개 이미지
+✅ [411/508] 용담망향의공설묘지: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [412/508] 신삼리공설묘지: 2개 항목, 1개 카테고리, 2개 이미지
+✅ [413/508] 신정리공설묘지: 2개 항목, 1개 카테고리, 2개 이미지
+✅ [414/508] 왕곡면공설묘지: 2개 항목, 1개 카테고리, 2개 이미지
+✅ [415/508] 신현리공동묘지: 2개 항목, 1개 카테고리, 2개 이미지
+✅ [416/508] 아차공설묘지: 2개 항목, 1개 카테고리, 2개 이미지
+✅ [417/508] 완도군추모공원: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [418/508] 안덕면공설묘지: 2개 항목, 1개 카테고리, 2개 이미지
+✅ [419/508] 애월읍공설묘지: 2개 항목, 1개 카테고리, 2개 이미지
+✅ [420/508] 어승생공설묘지: 2개 항목, 1개 카테고리, 2개 이미지
+✅ [421/508] 영강동공설묘지: 2개 항목, 1개 카테고리, 2개 이미지
+✅ [422/508] 설악면공설묘지: 2개 항목, 1개 카테고리, 2개 이미지
+✅ [423/508] 이창동공설묘지: 2개 항목, 1개 카테고리, 2개 이미지
+✅ [424/508] 삼성리공동묘지: 2개 항목, 1개 카테고리, 2개 이미지
+✅ [425/508] 삼흥리공설묘지: 2개 항목, 1개 카테고리, 2개 이미지
+✅ [426/508] 상면공설묘지: 2개 항목, 1개 카테고리, 2개 이미지
+✅ [427/508] 상용리공설묘지: 2개 항목, 1개 카테고리, 2개 이미지
+✅ [428/508] 색달동공설묘지: 2개 항목, 1개 카테고리, 2개 이미지
+✅ [429/508] 서검리공설묘지: 2개 항목, 1개 카테고리, 2개 이미지
+✅ [430/508] 서부공설묘지: 2개 항목, 1개 카테고리, 2개 이미지
+✅ [431/508] 서산시희망공원(묘지): 3개 항목, 1개 카테고리, 2개 이미지
+✅ [432/508] 석모리공설묘지: 2개 항목, 1개 카테고리, 2개 이미지
+✅ [433/508] 석포리공설묘지: 2개 항목, 1개 카테고리, 2개 이미지
+✅ [434/508] 인화리공설묘지: 2개 항목, 1개 카테고리, 2개 이미지
+✅ [435/508] 선두리공설묘지: 2개 항목, 1개 카테고리, 2개 이미지
+✅ [436/508] 예수장로회 제주교회묘지: 2개 항목, 1개 카테고리, 2개 이미지
+✅ [437/508] 경산공원묘원: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [438/508] 조천장로교회묘지: 2개 항목, 1개 카테고리, 2개 이미지
+✅ [439/508] 갑산공원묘원: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [440/508] (재)분당메모리얼파크: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [441/508] (재)대한예수교장로회 기독교공동묘원: 2개 항목, 1개 카테고리, 2개 이미지
+✅ [442/508] (재)전주공원묘원: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [443/508] 정자공원묘원: 2개 항목, 1개 카테고리, 2개 이미지
+✅ [444/508] 인천기독교장로회묘지: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [445/508] 금천면공설묘지(폐쇄): 3개 항목, 1개 카테고리, 2개 이미지
+✅ [446/508] 조수천주교묘지: 2개 항목, 1개 카테고리, 2개 이미지
+✅ [447/508] (재)하늘공원 묘원: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [448/508] (재)금곡장미공원: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [449/508] 제주향교묘지: 2개 항목, 1개 카테고리, 2개 이미지
+✅ [450/508] 삼성공원묘원: 2개 항목, 1개 카테고리, 2개 이미지
+✅ [451/508] 대구중부교회묘지: 2개 항목, 1개 카테고리, 2개 이미지
+✅ [452/508] 상전망향의공설묘지: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [453/508] 천아오름공원묘지: 2개 항목, 1개 카테고리, 2개 이미지
+✅ [454/508] 천주교제주교구묘지: 2개 항목, 1개 카테고리, 2개 이미지
+✅ [455/508] 혜화동성당 방학동묘원: 2개 항목, 1개 카테고리, 2개 이미지
+✅ [456/508] 포항공원묘원: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [457/508] 천주교용호동공원묘지: 2개 항목, 1개 카테고리, 2개 이미지
+✅ [458/508] 모슬포 천주교공동묘지: 2개 항목, 1개 카테고리, 2개 이미지
+✅ [459/508] 모슬포교회 공동묘지: 2개 항목, 1개 카테고리, 2개 이미지
+✅ [460/508] 천주교산내공원묘원: 2개 항목, 1개 카테고리, 2개 이미지
+✅ [461/508] 천주교 창원공원묘원: 2개 항목, 1개 카테고리, 2개 이미지
+✅ [462/508] 천주교가덕공원묘지: 2개 항목, 1개 카테고리, 2개 이미지
+✅ [463/508] 신동아교회묘지: 2개 항목, 1개 카테고리, 2개 이미지
+✅ [464/508] 신세계공원: 2개 항목, 1개 카테고리, 2개 이미지
+✅ [465/508] 삼덕교회동산: 2개 항목, 1개 카테고리, 2개 이미지
+✅ [466/508] 인천지구황해도민묘지: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [467/508] 대구화교협회묘지: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [468/508] 대구공원: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [469/508] 길음동성당 묘원: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [470/508] 충주천주교회 성요셉공원묘원: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [471/508] 노안면공설묘지(폐쇄): 3개 항목, 1개 카테고리, 2개 이미지
+✅ [472/508] 삼각지성당 하늘묘원: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [473/508] 산곡동공설묘지: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [474/508] 서울노회유지재단 법인묘지: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [475/508] 삼척시추모공원 묘지 제2단지: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [476/508] 보령시마을단위공원묘지: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [477/508] 가평추모공원(구 제2공설묘지): 3개 항목, 1개 카테고리, 3개 이미지
+✅ [478/508] 자일동공설묘지: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [479/508] (재)성산공원(묘지): 3개 항목, 1개 카테고리, 2개 이미지
+✅ [480/508] (재)천주교유지재단 청주교구묘원: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [481/508] 김포성당 매괴의모후 묘원: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [482/508] 돈암동성당 광탄추모공원: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [483/508] 칠곡성당공동묘원: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [484/508] 대구중앙교회 부활의동산: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [485/508] 대구칠곡교회묘지: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [486/508] 상효동공설묘지: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [487/508] 광대리 공원묘지: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [488/508] 광양시립영세공원 묘지: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [489/508] 구룡공설공원묘지: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [490/508] 서소문교회동산: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [491/508] 천주교 김천공원묘지: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [492/508] 영암군군서공설묘지: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [493/508] 영암군금정공설묘지: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [494/508] 영암군시종공설묘지: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [495/508] 영암군신북공설묘지: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [496/508] 영암군학산공설묘지: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [497/508] 안양시안산공설묘지(만장): 3개 항목, 1개 카테고리, 2개 이미지
+✅ [498/508] 용산성당 청계묘원: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [499/508] 구미시선산공설묘지(만장): 3개 항목, 1개 카테고리, 2개 이미지
+✅ [500/508] 홍성군공원묘지: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [501/508] 대야리공설묘지: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [502/508] 청암교회(청암동산): 3개 항목, 1개 카테고리, 2개 이미지
+✅ [503/508] 신현교회 묘지: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [504/508] 오식도공설묘지(민간위탁): 3개 항목, 1개 카테고리, 2개 이미지
+✅ [505/508] 최자실기도원 공원묘지: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [506/508] 불광동성당 바다의별묘원: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [507/508] 신광교회 묘지: 3개 항목, 1개 카테고리, 2개 이미지
+✅ [508/508] (재)동산공원묘원 묘지: 3개 항목, 1개 카테고리, 2개 이미지
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  마이그레이션 완료!
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✅ 성공: 506/508 (0.1분 소요)
+   총 항목: 1825개
+   총 이미지: 1029개
+
+❌ 실패: 2개
+  - 양택공원묘지(봉안묘): 
+Invalid `prisma.priceItem.create()` invocation in
+/Users/el/Desktop/daedaesonson/scripts/migrate_all_graves_complete.js:220:36
+
+  217 });
+  218 
+  219 for (const item of items) {
+→ 220     await prisma.priceItem.create(
+Inconsistent column data: Conversion failed: Value 4875000000 does not fit in an INT column, try migrating the 'price' column type to BIGINT
+  - 북성리공설묘지: 
+Invalid `prisma.priceItem.create()` invocation in
+/Users/el/Desktop/daedaesonson/scripts/migrate_all_graves_complete.js:220:36
+
+  217 });
+  218 
+  219 for (const item of items) {
+→ 220     await prisma.priceItem.create(
+Inconsistent column data: Conversion failed: Value 2775000000 does not fit in an INT column, try migrating the 'price' column type to BIGINT
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+

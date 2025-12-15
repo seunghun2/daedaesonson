@@ -1,0 +1,478 @@
+'use client';
+
+import { useState, useMemo, useEffect, useRef } from 'react';
+import { AppShell, Box, Flex, SegmentedControl, useMantineTheme, TextInput, Tabs, Group, Text } from '@mantine/core';
+import { useMediaQuery } from '@mantine/hooks';
+import { Map as MapIcon, List as ListIcon, Search, MapPin } from 'lucide-react';
+import Link from 'next/link';
+import Image from 'next/image';
+
+import NaverMap, { NaverMapRef } from '@/components/map/NaverMap';
+import FacilityList from '@/components/list/FacilityList';
+import FilterBar from '@/components/list/FilterBar';
+import FacilityDetail from '@/components/detail/FacilityDetail';
+import { Facility, FACILITY_CATEGORY_LABELS } from '@/types';
+
+export default function Home() {
+  const theme = useMantineTheme();
+  const isMobile = useMediaQuery(`(max-width: ${theme.breakpoints.sm})`);
+
+  // 지도 컨트롤 Ref
+  const mapRef = useRef<NaverMapRef>(null);
+
+  // 상태 관리
+  const [activeCategory, setActiveCategory] = useState<string>('all');
+  const [selectedFacility, setSelectedFacility] = useState<Facility | null>(null);
+  const [mobileView, setMobileView] = useState<'map' | 'list'>('map');
+  const [sortBy, setSortBy] = useState('rating');
+
+  // 검색어 상태
+  const [searchQuery, setSearchQuery] = useState('');
+  const [submittedQuery, setSubmittedQuery] = useState(''); // 엔터 친 검색어
+  const [searchFocused, setSearchFocused] = useState(false); // 검색창 포커스 여부
+
+  // DB 데이터 상태
+  const [dbFacilities, setDbFacilities] = useState<Facility[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  // 지도 범위 내 시설 필터링 (초기엔 전체 다 보여줌)
+  const [visibleFacilities, setVisibleFacilities] = useState<Facility[]>([]);
+  // 현재 지도 좌표
+  const [currentBounds, setCurrentBounds] = useState<{ south: number, north: number, west: number, east: number } | null>(null);
+
+  // 1. 초기 데이터 로드 (API)
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const res = await fetch('/api/facilities', { cache: 'no-store', next: { revalidate: 0 } });
+        if (res.ok) {
+          const data = await res.json();
+          setDbFacilities(data);
+          setVisibleFacilities(data); // <-- 초기 데이터 설정 복구
+        }
+      } catch (e) {
+        console.error('Failed to fetch facilities', e);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+    fetchData();
+  }, []);
+
+  // 1-2. 데이터가 로드되거나 지도가 움직였을 때 리스트 업데이트
+  useEffect(() => {
+    if (dbFacilities.length > 0 && currentBounds) {
+      const inside = dbFacilities.filter(f =>
+        f.coordinates &&
+        f.coordinates.lat >= currentBounds.south &&
+        f.coordinates.lat <= currentBounds.north &&
+        f.coordinates.lng >= currentBounds.west &&
+        f.coordinates.lng <= currentBounds.east
+      );
+      setVisibleFacilities(inside);
+    }
+  }, [dbFacilities, currentBounds]);
+
+  // 검색(엔터) 시 해당 지역/시설 중심으로 지도 이동
+  useEffect(() => {
+    if (!submittedQuery.trim() || !mapRef.current) return;
+
+    const query = submittedQuery.trim().toLowerCase();
+    // 전체 데이터에서 검색 매칭 확인
+    const matches = dbFacilities.filter(f =>
+      f.name.toLowerCase().includes(query) ||
+      f.address.toLowerCase().includes(query)
+    );
+
+    if (matches.length > 0) {
+      // 좌표가 있는 시설들의 평균 위치 계산
+      const validCoords = matches
+        .filter(f => f.coordinates)
+        .map(f => f.coordinates!);
+
+      if (validCoords.length > 0) {
+        const avgLat = validCoords.reduce((sum, c) => sum + c.lat, 0) / validCoords.length;
+        const avgLng = validCoords.reduce((sum, c) => sum + c.lng, 0) / validCoords.length;
+
+        console.log(`🗺️ 검색 이동: ${submittedQuery} -> ${avgLat}, ${avgLng}`);
+
+        // 검색 결과 개수에 따라 줌 레벨 조정 (결과가 적으면 더 확대)
+        const zoomLevel = matches.length === 1 ? 16 : 13;
+
+        mapRef.current.panTo(avgLat, avgLng, zoomLevel);
+        if (isMobile) setMobileView('map');
+      }
+    }
+  }, [submittedQuery, dbFacilities, isMobile]);
+
+  // 지도 이동 핸들러 (bounds만 업데이트)
+  const handleBoundsChanged = (bounds: { south: number, north: number, west: number, east: number }) => {
+    setCurrentBounds(bounds);
+
+    // 범위 내 필터링 (DB 전체 데이터 대상)
+    // if (dbFacilities.length > 0) {
+    //   const inside = dbFacilities.filter(f =>
+    //     f.coordinates.lat >= bounds.south &&
+    //     f.coordinates.lat <= bounds.north &&
+    //     f.coordinates.lng >= bounds.west &&
+    //     f.coordinates.lng <= bounds.east
+    //   );
+    //   setVisibleFacilities(inside);
+    // }
+  };
+
+  // 최종 리스트 필터링 (지도 범위 AND 카테고리 AND 검색어 AND 정렬)
+  const finalFacilities = useMemo(() => {
+    // 검색어가 있으면 전체 시설에서 검색, 없으면 현재 보이는 범위 내에서 필터링
+    let base = searchQuery.trim() ? dbFacilities : visibleFacilities;
+
+    // 0. 장례식장 기본 제외 (사용자 요청사항)
+    if (Array.isArray(base)) {
+      base = base.filter(f => f.category !== 'FUNERAL_HOME');
+    } else {
+      base = [];
+    }
+
+    // 1. 카테고리
+    if (activeCategory !== 'all') {
+      const catMap: Record<string, string> = {
+        'charnel': 'CHARNEL_HOUSE',
+        'natural': 'NATURAL_BURIAL',
+        'park': 'FAMILY_GRAVE'
+      };
+      if (catMap[activeCategory]) {
+        base = base.filter(f => f.category === catMap[activeCategory]);
+      }
+    }
+
+    // 2. 검색어 (이름 or 주소) - 필터링 재활성화
+    if (searchQuery.trim()) {
+      const query = searchQuery.trim().toLowerCase();
+      base = base.filter(f =>
+        f.name.toLowerCase().includes(query) ||
+        f.address.toLowerCase().includes(query)
+      );
+    }
+
+    // 3. 정렬
+    return base.sort((a, b) => {
+      if (sortBy === 'price') return a.priceRange.min - b.priceRange.min;
+      if (sortBy === 'review') return (b.reviewCount || 0) - (a.reviewCount || 0);
+      return Number(b.rating) - Number(a.rating);
+    });
+    // 4. 지도 범위 내 필터링 로직은 유지하되, 검색용 데이터는 별도로 관리
+  }, [visibleFacilities, activeCategory, sortBy, searchQuery, dbFacilities]);
+
+  // 자동완성 결과 계산
+  const autoCompleteResults = useMemo(() => {
+    if (!searchQuery.trim() || dbFacilities.length === 0) return [];
+
+    const query = searchQuery.trim().toLowerCase();
+
+    // 이름 매칭과 주소 매칭을 찾음
+    const matches = dbFacilities.filter(f =>
+      f.name.toLowerCase().includes(query) ||
+      f.address.toLowerCase().includes(query)
+    );
+
+    // 최대 10개까지만 표시
+    return matches.slice(0, 10);
+  }, [searchQuery, dbFacilities]);
+
+  // 검색 결과 선택 핸들러
+  const handleSelectResult = (facility: Facility) => {
+    setSearchQuery(facility.name); // 검색어 창 업데이트
+    setSubmittedQuery(facility.name); // 검색 실행
+    // 팝업 닫기는 Popover의 opened 제어로 자동 처리됨 (searchQuery가 바뀌면 다시 계산되지만, 선택 후 엔터 효과)
+
+    // 즉시 이동
+    if (mapRef.current && facility.coordinates) {
+      console.log(`🔍 선택 이동: ${facility.name}`);
+      mapRef.current.panTo(facility.coordinates.lat, facility.coordinates.lng, 16);
+      setSelectedFacility(facility);
+      if (isMobile) setMobileView('map');
+    }
+  };
+
+  const handleMarkerClick = (facility: Facility) => {
+    setSelectedFacility(facility);
+    if (isMobile) setMobileView('map');
+  };
+
+  // 검색어 하이라이팅 컴포넌트
+  const HighlightText = ({ text, highlight }: { text: string, highlight: string }) => {
+    if (!highlight.trim()) return <>{text}</>;
+    // 특수문자 이스케이프 처리
+    const escapedHighlight = highlight.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    const parts = text.split(new RegExp(`(${escapedHighlight})`, 'gi'));
+    return (
+      <Text span size="sm">
+        {parts.map((part, i) =>
+          part.toLowerCase() === highlight.toLowerCase() ? (
+            <Text span key={i} c="blue.6" fw={700}>{part}</Text>
+          ) : (
+            <Text span key={i}>{part}</Text>
+          )
+        )}
+      </Text>
+    );
+  };
+
+  return (
+    <Flex h="100vh" direction={isMobile ? 'column' : 'row'} style={{ overflow: 'hidden' }}>
+      {/* 1. 좌측 패널 */}
+      <Flex
+        direction="column"
+        w={isMobile ? '100%' : 400}
+        h="100%"
+        bg="white"
+        style={{
+          borderRight: '1px solid #dee2e6',
+          display: isMobile && mobileView === 'map' ? 'none' : 'flex',
+          zIndex: 10,
+          boxShadow: isMobile ? 'none' : '4px 0 12px rgba(0,0,0,0.05)'
+        }}
+      >
+        {/* 좌측 패널 헤더 - UI 최적화 */}
+        <Box p="sm" pl="md" pr="md" pb={4}>
+          {/* 로고 + 검색창 한 줄 배치 */}
+          <Group gap="sm" mb="sm" align="center" wrap="nowrap">
+            {/* 로고 - 브랜드 컬러 적용 */}
+            {/* 로고 - 브랜드 컬러 적용 */}
+            <Link href="/" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center', cursor: 'pointer', minWidth: 'fit-content' }}>
+              <img
+                src="/logo-horizontal.svg"
+                alt="대대손손"
+                width={105}
+                height={30}
+                style={{ objectFit: 'contain' }}
+              />
+            </Link>
+
+            {/* 검색창 + 자동완성 드롭다운 (Flex로 나머지 공간 채움) */}
+            <Box pos="relative" style={{ flex: 1 }}>
+              <TextInput
+                placeholder="지역, 시설명 검색"
+                leftSection={<Search size={16} />}
+                radius="md"
+                size="md"
+                value={searchQuery}
+                onFocus={() => setSearchFocused(true)}
+                onBlur={() => {
+                  setTimeout(() => setSearchFocused(false), 200);
+                }}
+                onChange={(e) => setSearchQuery(e.currentTarget.value)}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') {
+                    setSubmittedQuery(searchQuery);
+                    setSearchFocused(false);
+                  }
+                }}
+                styles={{
+                  input: {
+                    backgroundColor: '#f8f9fa',
+                    border: '1px solid #e9ecef',
+                    fontSize: '15px'
+                  }
+                }}
+              />
+
+              {/* 자동완성 목록 */}
+              {searchFocused && searchQuery.trim() && autoCompleteResults.length > 0 && (
+                <Box
+                  pos="absolute"
+                  top="calc(100% + 8px)"
+                  left={0}
+                  w="100%"
+                  bg="white"
+                  style={{
+                    zIndex: 2100, // 상세 페이지 헤더(1000)보다 높게 설정하여 가림 현상 해결
+                    borderRadius: 12,
+                    boxShadow: '0 8px 30px rgba(0,0,0,0.12), 0 4px 10px rgba(0,0,0,0.05)',
+                    border: '1px solid #f1f3f5',
+                    overflow: 'hidden',
+                    maxHeight: '400px',
+                    overflowY: 'auto'
+                  }}
+                >
+                  {autoCompleteResults.map((result, index) => (
+                    <Box
+                      key={result.id}
+                      p="md"
+                      style={{
+                        cursor: 'pointer',
+                        borderBottom: index === autoCompleteResults.length - 1 ? 'none' : '1px solid #f8f9fa',
+                        transition: 'background-color 0.2s'
+                      }}
+                      className="hover:bg-gray-50"
+                      onClick={() => handleSelectResult(result)}
+                      onMouseDown={(e) => e.preventDefault()}
+                    >
+                      <Group justify="space-between" wrap="nowrap" align="flex-start">
+                        <Box style={{ flex: 1, minWidth: 0 }}>
+                          <Text size="sm" mb={2} style={{ lineHeight: 1.4 }}>
+                            <HighlightText text={result.name} highlight={searchQuery} />
+                          </Text>
+                          <Text size="xs" c="dimmed" style={{ wordBreak: 'keep-all', lineHeight: 1.3 }}>
+                            <HighlightText text={result.address} highlight={searchQuery} />
+                          </Text>
+                        </Box>
+                        <Text
+                          size="xs"
+                          c="gray.5"
+                          style={{
+                            whiteSpace: 'nowrap',
+                            backgroundColor: '#f8f9fa',
+                            padding: '2px 6px',
+                            borderRadius: 4
+                          }}
+                        >
+                          {FACILITY_CATEGORY_LABELS[result.category]}
+                        </Text>
+                      </Group>
+                    </Box>
+                  ))}
+                </Box>
+              )}
+            </Box>
+          </Group>
+
+          <Tabs
+            value={activeCategory}
+            onChange={(v) => setActiveCategory(v || 'all')}
+            variant="pills"
+            radius="xl"
+            styles={{
+              root: { marginTop: 8 },
+              list: { gap: 6 }, // 탭 간격
+              tab: {
+                fontSize: '14px',
+                fontWeight: 600,
+                border: '1px solid transparent',
+                height: '34px',
+              }
+            }}
+          >
+            <Tabs.List>
+              {[
+                { value: 'all', label: '전체' },
+                { value: 'charnel', label: '봉안당' },
+                { value: 'natural', label: '수목장' },
+                { value: 'park', label: '공원묘지' }
+              ].map(tab => {
+                const isActive = activeCategory === tab.value;
+                return (
+                  <Tabs.Tab
+                    key={tab.value}
+                    value={tab.value}
+                    style={{
+                      backgroundColor: isActive ? '#3b4896' : 'transparent', // Custom Dark Blue for Active, Transparent for Inactive
+                      color: isActive ? 'white' : '#495057', // White text for Active, Gray for Inactive
+                      borderColor: isActive ? 'transparent' : 'transparent',
+                      fontWeight: isActive ? 700 : 500
+                    }}
+                  >
+                    {tab.label}
+                  </Tabs.Tab>
+                );
+              })}
+            </Tabs.List>
+          </Tabs>
+        </Box>
+
+        {/* 상세 보기 or 리스트 */}
+        <Box flex={1} h="100%" style={{ position: 'relative', overflowY: 'auto' }}>
+          {selectedFacility && !isMobile ? (
+            <FacilityDetail
+              facility={selectedFacility}
+              onClose={() => setSelectedFacility(null)}
+            />
+          ) : (
+            <Flex direction="column" h="100%">
+              <FilterBar sortBy={sortBy} setSortBy={setSortBy} totalCount={finalFacilities.length} />
+              <FacilityList
+                facilities={finalFacilities}
+                onFacilityClick={handleMarkerClick}
+                selectedId={selectedFacility?.id}
+              />
+            </Flex>
+          )}
+        </Box>
+      </Flex>
+
+      {/* 2. 우측 지도 (PC: 나머지 꽉 채움, 모바일: 100%인데 뷰모드에 따라 숨김) */}
+      <Box
+        flex={1}
+        pos="relative"
+        h="100%"
+        style={{
+          display: isMobile && mobileView === 'list' ? 'none' : 'block'
+        }}
+      >
+        <NaverMap
+          ref={mapRef}
+          facilities={finalFacilities}
+          onMarkerClick={handleMarkerClick}
+          onBoundsChanged={handleBoundsChanged}
+        />
+
+
+
+      </Box>
+
+      {/* 모바일 상세 팝업 (Global Overlay) */}
+      {isMobile && selectedFacility && (
+        <Box
+          pos="absolute" bottom={0} left={0} w="100%" h="85%" bg="white"
+          style={{
+            zIndex: 2000, // 네비게이션바 등보다 높게
+            borderTopLeftRadius: 20,
+            borderTopRightRadius: 20,
+            boxShadow: '0 -4px 20px rgba(0,0,0,0.15)',
+            display: 'flex',
+            flexDirection: 'column',
+            overflow: 'hidden'
+          }}
+        >
+          {/* 드래그 핸들 */}
+          <Box w="100%" h={24} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexShrink: 0 }}>
+            <Box w={40} h={4} bg="gray.3" style={{ borderRadius: 2 }} />
+          </Box>
+
+          {/* 스크롤 가능한 컨텐츠 영역 */}
+          <Box style={{ flex: 1, overflowY: 'auto', paddingBottom: '20px' }}>
+            <FacilityDetail
+              facility={selectedFacility}
+              onClose={() => setSelectedFacility(null)}
+            />
+          </Box>
+        </Box>
+      )}
+      {/* Box removed */}
+
+      {/* 모바일 하단 뷰 토글 버튼 (Global Position) */}
+      {
+        isMobile && !selectedFacility && (
+          <Box pos="absolute" bottom={30} left="50%" style={{ transform: 'translateX(-50%)', zIndex: 1000 }}>
+            <SegmentedControl
+              value={mobileView}
+              onChange={(v) => setMobileView(v as 'map' | 'list')}
+              data={[
+                { label: <LabelCenter><MapIcon size={16} style={{ marginRight: 4 }} /> 지도</LabelCenter>, value: 'map' },
+                { label: <LabelCenter><ListIcon size={16} style={{ marginRight: 4 }} /> 목록</LabelCenter>, value: 'list' },
+              ]}
+              radius="xl"
+              size="md"
+              bg="white"
+              styles={{ root: { boxShadow: '0 4px 12px rgba(0,0,0,0.15)' } }}
+            />
+          </Box>
+        )
+      }
+    </Flex >
+  );
+}
+
+function LabelCenter({ children }: { children: React.ReactNode }) {
+  return <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>{children}</div>;
+}
