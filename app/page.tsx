@@ -189,6 +189,8 @@ function HomeContent() {
 
   // 지도 이동 핸들러
   const handleBoundsChanged = (bounds: { south: number, north: number, west: number, east: number }) => {
+    // 🔍 검색 자동완성 창 닫기
+    setSearchFocused(false);
     setCurrentBounds(bounds);
   };
 
@@ -304,6 +306,8 @@ function HomeContent() {
 
   // 🎯 지도 탭 핸들러 - UI 숨김/표시 토글 (호갱노노 스타일)
   const handleMapTap = () => {
+    // 🔍 검색 자동완성 창 닫기
+    setSearchFocused(false);
     // 상세페이지가 열려있으면 무시
     if (selectedFacility) return;
     // 토글: UI 숨김 ↔ 표시

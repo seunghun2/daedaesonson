@@ -1130,8 +1130,10 @@ export default function FacilityDetail({ facility: initialFacility, onClose }: F
                     left={0}
                     w="100%"
                     h="100dvh"
-                    bg="black"
-                    style={{ zIndex: 9999 }}
+                    style={{
+                        zIndex: 9999,
+                        backgroundColor: 'rgba(0, 0, 0, 0.6)', // 60% opacity로 뒤가 살짝 보이게
+                    }}
                 >
                     {/* 상단 헤더 */}
                     <Box
@@ -1142,7 +1144,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose }: F
                         p="md"
                         style={{
                             zIndex: 10000,
-                            background: 'linear-gradient(to bottom, rgba(0,0,0,0.6), transparent)',
+                            background: 'linear-gradient(to bottom, rgba(0,0,0,0.4), transparent)',
                         }}
                     >
                         <Group justify="space-between" align="center">
@@ -1160,7 +1162,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose }: F
                         </Group>
                     </Box>
 
-                    {/* 이미지 영역 (스와이프 가능) */}
+                    {/* 이미지 영역 (스와이프 + 애니메이션) */}
                     <Box
                         h="100%"
                         style={{
@@ -1168,20 +1170,61 @@ export default function FacilityDetail({ facility: initialFacility, onClose }: F
                             alignItems: 'center',
                             justifyContent: 'center',
                             touchAction: 'pan-x',
+                            overflow: 'hidden',
                         }}
                         onTouchStart={(e) => {
                             const touch = e.touches[0];
                             (e.currentTarget as any).startX = touch.clientX;
+                            (e.currentTarget as any).currentX = touch.clientX;
+                        }}
+                        onTouchMove={(e) => {
+                            const touch = e.touches[0];
+                            (e.currentTarget as any).currentX = touch.clientX;
+                            // 실시간 드래그 피드백 (선택적)
+                            const diff = (e.currentTarget as any).startX - touch.clientX;
+                            const imgEl = e.currentTarget.querySelector('img');
+                            if (imgEl) {
+                                imgEl.style.transform = `translateX(${-diff * 0.3}px)`;
+                            }
                         }}
                         onTouchEnd={(e) => {
                             const startX = (e.currentTarget as any).startX || 0;
                             const endX = e.changedTouches[0].clientX;
                             const diff = startX - endX;
+                            const imgEl = e.currentTarget.querySelector('img');
+
                             if (Math.abs(diff) > 50) {
-                                if (diff > 0 && selectedImageIndex < galleryImages.length - 1) {
-                                    setSelectedImageIndex(prev => prev + 1);
-                                } else if (diff < 0 && selectedImageIndex > 0) {
-                                    setSelectedImageIndex(prev => prev - 1);
+                                // 슬라이드 애니메이션
+                                const direction = diff > 0 ? -100 : 100;
+                                if (imgEl) {
+                                    imgEl.style.transition = 'transform 0.25s ease-out, opacity 0.25s ease-out';
+                                    imgEl.style.transform = `translateX(${direction}%)`;
+                                    imgEl.style.opacity = '0';
+                                }
+
+                                setTimeout(() => {
+                                    if (diff > 0 && selectedImageIndex < galleryImages.length - 1) {
+                                        setSelectedImageIndex(prev => prev + 1);
+                                    } else if (diff < 0 && selectedImageIndex > 0) {
+                                        setSelectedImageIndex(prev => prev - 1);
+                                    }
+                                    // 새 이미지 들어오는 애니메이션
+                                    if (imgEl) {
+                                        imgEl.style.transition = 'none';
+                                        imgEl.style.transform = `translateX(${-direction}%)`;
+                                        imgEl.style.opacity = '0';
+                                        requestAnimationFrame(() => {
+                                            imgEl.style.transition = 'transform 0.25s ease-out, opacity 0.25s ease-out';
+                                            imgEl.style.transform = 'translateX(0)';
+                                            imgEl.style.opacity = '1';
+                                        });
+                                    }
+                                }, 100);
+                            } else {
+                                // 취소: 원위치
+                                if (imgEl) {
+                                    imgEl.style.transition = 'transform 0.2s ease-out';
+                                    imgEl.style.transform = 'translateX(0)';
                                 }
                             }
                         }}
@@ -1192,6 +1235,9 @@ export default function FacilityDetail({ facility: initialFacility, onClose }: F
                             h="80vh"
                             w="100%"
                             alt={`${facility.name} 사진 ${selectedImageIndex + 1}`}
+                            style={{
+                                transition: 'transform 0.25s ease-out, opacity 0.25s ease-out',
+                            }}
                         />
                     </Box>
 
