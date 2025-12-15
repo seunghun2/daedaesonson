@@ -590,232 +590,90 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
         });
     }, [facilities]);
 
-    // 🚀 마커 업데이트 함수 (화면 내 시설만 필터링하여 렌더링)
+    // 🚀 마커 업데이트 함수 - 시/군별 그룹화 + 고정 대표 마커
     const updateVisibleMarkers = useCallback(() => {
         const map = mapInstanceRef.current;
         if (!map || !window.naver || !window.naver.maps) return;
 
-        console.log('NaverMap - Updating visible markers...');
+        console.log('NaverMap - 시/군별 대표 마커 생성...');
 
-        const mapBounds = map.getBounds();
-
-        // 지도 영역(Bounds) 좌표 준비
-        let minLat = 0, maxLat = 0, minLng = 0, maxLng = 0;
-
-        // Bounds가 유효한지 체크 (초기 로딩 시 Bounds가 없거나 0일 수 있음)
-        let useFallback = true;
-        if (mapBounds && mapBounds instanceof window.naver.maps.LatLngBounds) {
-            const sw = mapBounds.getSW();
-            const ne = mapBounds.getNE();
-            // 영역 크기가 0.0001 이상이어야 실제로 지도가 보이는 상태임
-            if ((ne.lat() - sw.lat()) > 0.0001) {
-                useFallback = false;
-                minLat = sw.lat(); maxLat = ne.lat();
-                minLng = sw.lng(); maxLng = ne.lng();
-            }
-        }
-
-        if (useFallback) {
-            // 🚀 초기 로딩 Fallback: 사당/관악(37.4760, 126.9810) 중심으로 강제 계산 (반경 약 5km)
-            // 사용자가 "가만히 있어도 나와야 한다"고 요청함 -> Bounds 대기 없이 즉시 렌더링
-            minLat = 37.4760 - 0.06; maxLat = 37.4760 + 0.06;
-            minLng = 126.9810 - 0.06; maxLng = 126.9810 + 0.06;
-        }
-
-        // 1. 화면(Bounds) 내 시설만 필터링 (미리 계산된 processedFacilities 사용)
-        const visibleFacilities = processedFacilities.filter(fac => {
-            if (!fac.fixedCoordinates || !fac.fixedCoordinates.lat || !fac.fixedCoordinates.lng) return false;
-            const lat = fac.fixedCoordinates.lat;
-            const lng = fac.fixedCoordinates.lng;
-
-            // 단순 좌표 범위 비교 (map.getBounds()가 없어도 작동하도록 직접 비교)
-            return lat >= minLat && lat <= maxLat && lng >= minLng && lng <= maxLng;
-        });
-
-        // 안전장치: 최대 500개 (모바일 성능 보호)
-        const renderFacilities = visibleFacilities.slice(0, 500);
-        console.log(`🎯 Viewport 필터링: 전체 ${facilities.length}개 중 ${renderFacilities.length}개 렌더링`);
-
-        // 2. 현재 화면에 있어야 할 시설 ID 집합
-        const visibleIds = new Set(renderFacilities.map(f => f.id));
-
-        // 3. 화면에서 벗어난 마커만 제거 (캐시에서도 제거)
-        markersRef.current = markersRef.current.filter(marker => {
-            const facId = (marker as any).__facilityId;
-            if (!visibleIds.has(facId)) {
-                marker.setMap(null);
-                markerCacheRef.current.delete(facId);
-                return false;
-            }
-            return true;
-        });
-
-        // 클러스터러 제거 (재구성 필요)
+        // 1. 기존 마커/클러스터 완전 제거
         if (clustererRef.current) {
             clustererRef.current.setMap(null);
             clustererRef.current = null;
         }
+        markersRef.current.forEach(marker => marker.setMap(null));
+        markersRef.current = [];
 
-        const createdMarkers: any[] = [...markersRef.current]; // 기존 유지 마커 포함
+        // 2. 시/군별로 시설 그룹화 (전체 데이터 기준)
+        const regionGroups: Record<string, { facilities: typeof processedFacilities; representative: typeof processedFacilities[0] }> = {};
 
-        // 4. 마커 생성 (이미 고정된 좌표 사용 + 캐시 활용)
-        for (const fac of renderFacilities) {
-            // 🔒 이미 캐시에 있으면 건너뛰기 (위치 변경 없음)
-            if (markerCacheRef.current.has(fac.id)) {
-                continue;
+        for (const fac of processedFacilities) {
+            if (!fac.fixedCoordinates?.lat || !fac.fixedCoordinates?.lng) continue;
+
+            // 주소에서 시/군 추출 (예: "경기도 용인시 처인구" -> "용인시")
+            const addr = fac.address || '';
+            const tokens = addr.split(' ');
+            const regionKey = tokens[1] || tokens[0] || '기타'; // 시/군 레벨
+
+            if (!regionGroups[regionKey]) {
+                regionGroups[regionKey] = { facilities: [], representative: fac };
+            }
+            regionGroups[regionKey].facilities.push(fac);
+        }
+
+        console.log(`📍 ${Object.keys(regionGroups).length}개 지역으로 그룹화됨`);
+
+        // 3. 각 지역별로 대표 마커 하나 생성
+        const createdMarkers: any[] = [];
+
+        for (const [regionName, group] of Object.entries(regionGroups)) {
+            const { representative, facilities: facList } = group;
+            const { lat, lng } = representative.fixedCoordinates;
+            const count = facList.length;
+
+            // 지역명 정리
+            let displayName = regionName;
+            if (displayName.endsWith('시') || displayName.endsWith('군') || displayName.endsWith('구')) {
+                displayName = displayName.slice(0, -1);
             }
 
-            const { lat, lng } = fac.fixedCoordinates;
-
-            // [Price Logic] Check for Representative Price first
-            let priceText = '문의';
-            let formattedPrice = 0;
-            let isRep = false;
-
-            // 1. Find Representative Price
-            if (fac.pricing) {
-                for (const catKey of Object.keys(fac.pricing)) {
-                    const category = fac.pricing[catKey];
-                    if (category && Array.isArray(category.rows)) {
-                        const repItem = category.rows.find((r: any) => r.isRepresentative);
-                        if (repItem && repItem.price > 0) {
-                            formattedPrice = repItem.price;
-                            isRep = true;
-                            break; // Stop at first representative
-                        }
-                    }
-                }
-            }
-
-            // 2. Fallback to Min Price
-            if (!isRep && fac.priceRange?.min) {
-                formattedPrice = fac.priceRange.min;
-            }
-
-            // 3. Format Text
-            if (formattedPrice > 0) {
-                // 대표 가격이면 '~' 생략 가능하지만, 사용자 요청 이미지('2만원~')에 따라 '~'를 붙일지 고민.
-                // 보통 대표 가격은 '딱 이거다'이므로 '~' 없이 '2만'으로 표시하거나, 
-                // 최저가 로직이면 '~'를 붙임.
-                // 일단은 깔끔하게 가격만 표시 (isRep일 경우)
-                priceText = `${formattedPrice.toLocaleString()}만${!isRep ? '' : ''}`;
-            }
-            const categoryLabel = FACILITY_CATEGORY_LABELS[fac.category as FacilityCategory] || fac.category;
-            const categoryColors: Record<string, string> = {
-                'CHARNEL_HOUSE': '#0097a7',
-                'NATURAL_BURIAL': '#43a047',
-                'FAMILY_GRAVE': '#7e57c2',
-                'CREMATORIUM': '#f57c00',
-                'FUNERAL_HOME': '#78909c',
-                'ETC': '#8d6e63'
-            };
-            const markerColor = categoryColors[fac.category as FacilityCategory] || '#0097a7';
-
-            const catWidth = categoryLabel.length * 10;
-            const prcWidth = priceText.length * 11;
-            // 봉안당 기준으로 마커 사이즈 통일 (약 58px)
-            const contentWidth = 58;
+            // 대표 마커 SVG
+            const contentWidth = 64;
             const contentHeight = 44;
-
             const svgContent = `
             <svg width="${contentWidth}" height="${contentHeight + 8}" viewBox="0 0 ${contentWidth} ${contentHeight + 8}" xmlns="http://www.w3.org/2000/svg">
-                <rect x="0" y="0" width="${contentWidth}" height="${contentHeight}" rx="6" fill="${markerColor}"/>
-                <path d="M${contentWidth / 2 - 6} ${contentHeight - 1} L${contentWidth / 2} ${contentHeight + 7} L${contentWidth / 2 + 6} ${contentHeight - 1} Z" fill="${markerColor}"/>
-                <text x="${contentWidth / 2}" y="16" font-family="-apple-system, sans-serif" font-size="10" fill="white" fill-opacity="0.9" text-anchor="middle">${categoryLabel}</text>
-                <text x="${contentWidth / 2}" y="33" font-family="-apple-system, sans-serif" font-size="13" font-weight="800" fill="white" text-anchor="middle">${priceText}</text>
+                <rect x="0" y="0" width="${contentWidth}" height="${contentHeight}" rx="6" fill="#35469C"/>
+                <path d="M${contentWidth / 2 - 6} ${contentHeight - 1} L${contentWidth / 2} ${contentHeight + 7} L${contentWidth / 2 + 6} ${contentHeight - 1} Z" fill="#35469C"/>
+                <text x="${contentWidth / 2}" y="16" font-family="-apple-system, sans-serif" font-size="11" fill="white" fill-opacity="0.9" text-anchor="middle">${displayName}</text>
+                <text x="${contentWidth / 2}" y="33" font-family="-apple-system, sans-serif" font-size="14" font-weight="800" fill="white" text-anchor="middle">${count} 곳</text>
             </svg>
             `;
 
-            // 마커 생성/재사용
-            let marker = markerPoolRef.current.pop();
-            if (marker) {
-                marker.setPosition(new window.naver.maps.LatLng(lat, lng));
-                marker.setTitle(fac.name);
-                marker.setIcon({
+            const marker = new window.naver.maps.Marker({
+                position: new window.naver.maps.LatLng(lat, lng),
+                map: map,
+                title: `${regionName} (${count}개 시설)`,
+                icon: {
                     content: svgContent,
                     anchor: new window.naver.maps.Point(contentWidth / 2, contentHeight + 7),
-                });
-                window.naver.maps.Event.clearListeners(marker, 'click');
-            } else {
-                marker = new window.naver.maps.Marker({
-                    position: new window.naver.maps.LatLng(lat, lng),
-                    title: fac.name,
-                    icon: {
-                        content: svgContent,
-                        anchor: new window.naver.maps.Point(contentWidth / 2, contentHeight + 7),
-                    }
-                });
-            }
-
-            (marker as any).__facilityData = fac;
-            (marker as any).__facilityId = fac.id; // 캐시 조회용 ID
-            window.naver.maps.Event.addListener(marker, 'click', () => {
-                onMarkerClick(fac);
+                }
             });
 
-            // 🔒 캐시에 저장
-            markerCacheRef.current.set(fac.id, marker);
+            // 클릭 시 첫 번째 시설 상세 열기
+            (marker as any).__regionFacilities = facList;
+            (marker as any).__regionName = regionName;
+            window.naver.maps.Event.addListener(marker, 'click', () => {
+                onMarkerClick(representative);
+            });
 
             createdMarkers.push(marker);
         }
 
         markersRef.current = createdMarkers;
+        console.log(`✅ ${createdMarkers.length}개 대표 마커 생성 완료`);
 
-        // 5. 클러스터링 적용
-        const ClusteringClass = window.MarkerClustering || (window.naver.maps && window.naver.maps.MarkerClustering);
-        if (ClusteringClass) {
-            clustererRef.current = new ClusteringClass({
-                minClusterSize: 1,
-                maxZoom: 12,
-                map: map,
-                markers: createdMarkers,
-                disableClickZoom: false,
-                gridSize: 500, // 🔒 같은 지역은 하나로 묶이도록 크게 설정
-                averageCenter: false, // 🔒 첫 번째 마커 기준으로 위치 고정
-                icons: [{
-                    content: `
-                         <div style="cursor:pointer; min-width:64px; padding: 6px 10px; background:#35469C; color:white; border-radius:6px; box-shadow:0 2px 6px rgba(0,0,0,0.15); display:flex; flex-direction:column; align-items:center; justify-content:center; font-family:-apple-system, sans-serif;">
-                             <div class="cluster-region" style="font-size:11px; opacity:0.8; margin-bottom:2px; line-height:1;"></div>
-                             <div class="cluster-count" style="font-size:14px; font-weight:800; line-height:1;"></div>
-                         </div>
-                     `,
-                    size: new window.naver.maps.Size(64, 40),
-                    anchor: new window.naver.maps.Point(32, 20),
-                }],
-                indexGenerator: [10, 50, 100, 500, 1000],
-                stylingFunction: (clusterMarker: any, count: number, members: any[]) => {
-                    const divRegion = clusterMarker.getElement().querySelector('.cluster-region');
-                    const divCount = clusterMarker.getElement().querySelector('.cluster-count');
-                    if (divCount) divCount.innerText = `${count} 곳`;
-
-                    if (divRegion && members.length > 0) {
-                        const fac = (members[0] as any).__facilityData;
-                        if (fac) {
-                            const addr = fac.address || '';
-                            const tokens = addr.split(' ');
-                            const currentZoom = map.getZoom();
-
-                            let name = '';
-                            if (currentZoom <= 9) {
-                                name = tokens[0] || '';
-                                if (name.includes('특별자치')) name = name.replace('특별자치', '');
-                                else if (name.endsWith('특별시') || name.endsWith('광역시')) name = name.substring(0, 2);
-                            } else if (currentZoom <= 11) {
-                                name = tokens[1] || tokens[0] || '';
-                                if (name.endsWith('시') || name.endsWith('군') || name.endsWith('구')) name = name.slice(0, -1);
-                            } else {
-                                name = tokens[2] || tokens[1] || '';
-                                if (name.endsWith('구')) name = name.slice(0, -1);
-                            }
-                            divRegion.innerText = name || '지역';
-                        }
-                    }
-                }
-            });
-        } else {
-            createdMarkers.forEach(m => m.setMap(map));
-        }
-    }, [facilities, onMarkerClick]); // Add onMarkerClick to dependencies
+    }, [processedFacilities, onMarkerClick]);
 
     // 🚀 Effect: 데이터 변경 시 업데이트
     useEffect(() => {
