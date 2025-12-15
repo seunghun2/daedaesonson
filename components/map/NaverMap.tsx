@@ -872,8 +872,8 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
                 // 중심 주소 업데이트
                 updateCenterAddress(map);
 
-                // ✅ 뷰포트 필터링 후 마커 다시 그리기
-                updateVisibleMarkers();
+                // ❌ 마커 재생성 제거 - 위치 고정을 위해 지도 이동 시 마커 업데이트 안 함
+                // updateVisibleMarkers();
             });
 
             // 🎯 빈 지도 탭 이벤트 (UI 토글용) - 드래그와 더블클릭 구분
