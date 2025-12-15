@@ -627,12 +627,22 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
     // 🔒 마커/클러스터 초기 생성 여부 (한 번만 생성)
     const isMarkersInitializedRef = useRef(false);
 
+    // 🔒 이전 facilities 개수 저장 (필터 변경 감지용)
+    const prevFacilitiesCountRef = useRef(0);
+
     const updateVisibleMarkers = useCallback(() => {
         const map = mapInstanceRef.current;
         if (!map || !window.naver || !window.naver.maps) return;
 
         const currentZoom = map.getZoom();
         console.log(`NaverMap - 줌 레벨: ${currentZoom}`);
+
+        // 🔄 필터 변경 감지 (facilities 개수가 바뀌면 마커 재생성)
+        if (isMarkersInitializedRef.current && prevFacilitiesCountRef.current !== processedFacilities.length) {
+            console.log(`🔄 필터 변경 감지: ${prevFacilitiesCountRef.current} → ${processedFacilities.length}개`);
+            isMarkersInitializedRef.current = false; // 재초기화 허용
+        }
+        prevFacilitiesCountRef.current = processedFacilities.length;
 
         // 🔒 이미 마커가 초기화되었으면 재생성하지 않음 (위치 고정)
         if (isMarkersInitializedRef.current) {

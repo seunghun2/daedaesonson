@@ -1182,7 +1182,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose }: F
                         </Group>
                     </Box>
 
-                    {/* 이미지 영역 (스와이프 + 애니메이션) */}
+                    {/* 이미지 영역 (스와이프 + 마우스 드래그 + 애니메이션) */}
                     <Box
                         h="100%"
                         onClick={(e) => e.stopPropagation()} // 이미지 영역 클릭 시 닫히지 않게
@@ -1192,7 +1192,9 @@ export default function FacilityDetail({ facility: initialFacility, onClose }: F
                             justifyContent: 'center',
                             touchAction: 'pan-x',
                             overflow: 'hidden',
+                            cursor: 'grab',
                         }}
+                        // 📱 터치 이벤트 (모바일)
                         onTouchStart={(e) => {
                             const touch = e.touches[0];
                             (e.currentTarget as any).startX = touch.clientX;
@@ -1201,7 +1203,6 @@ export default function FacilityDetail({ facility: initialFacility, onClose }: F
                         onTouchMove={(e) => {
                             const touch = e.touches[0];
                             (e.currentTarget as any).currentX = touch.clientX;
-                            // 실시간 드래그 피드백 (선택적)
                             const diff = (e.currentTarget as any).startX - touch.clientX;
                             const imgEl = e.currentTarget.querySelector('img');
                             if (imgEl) {
@@ -1215,7 +1216,6 @@ export default function FacilityDetail({ facility: initialFacility, onClose }: F
                             const imgEl = e.currentTarget.querySelector('img');
 
                             if (Math.abs(diff) > 50) {
-                                // 슬라이드 애니메이션
                                 const direction = diff > 0 ? -100 : 100;
                                 if (imgEl) {
                                     imgEl.style.transition = 'transform 0.25s ease-out, opacity 0.25s ease-out';
@@ -1224,12 +1224,13 @@ export default function FacilityDetail({ facility: initialFacility, onClose }: F
                                 }
 
                                 setTimeout(() => {
-                                    if (diff > 0 && selectedImageIndex < galleryImages.length - 1) {
-                                        setSelectedImageIndex(prev => prev + 1);
-                                    } else if (diff < 0 && selectedImageIndex > 0) {
-                                        setSelectedImageIndex(prev => prev - 1);
+                                    if (diff > 0) {
+                                        // 오른쪽 스와이프: 다음 이미지 (마지막이면 첫번째로)
+                                        setSelectedImageIndex(prev => prev < galleryImages.length - 1 ? prev + 1 : 0);
+                                    } else if (diff < 0) {
+                                        // 왼쪽 스와이프: 이전 이미지 (첫번째면 마지막으로)
+                                        setSelectedImageIndex(prev => prev > 0 ? prev - 1 : galleryImages.length - 1);
                                     }
-                                    // 새 이미지 들어오는 애니메이션
                                     if (imgEl) {
                                         imgEl.style.transition = 'none';
                                         imgEl.style.transform = `translateX(${-direction}%)`;
@@ -1242,7 +1243,73 @@ export default function FacilityDetail({ facility: initialFacility, onClose }: F
                                     }
                                 }, 100);
                             } else {
-                                // 취소: 원위치
+                                if (imgEl) {
+                                    imgEl.style.transition = 'transform 0.2s ease-out';
+                                    imgEl.style.transform = 'translateX(0)';
+                                }
+                            }
+                        }}
+                        // 🖱️ 마우스 드래그 이벤트 (PC)
+                        onMouseDown={(e) => {
+                            e.preventDefault();
+                            (e.currentTarget as any).isDragging = true;
+                            (e.currentTarget as any).startX = e.clientX;
+                            (e.currentTarget as any).style.cursor = 'grabbing';
+                        }}
+                        onMouseMove={(e) => {
+                            if (!(e.currentTarget as any).isDragging) return;
+                            const diff = (e.currentTarget as any).startX - e.clientX;
+                            const imgEl = e.currentTarget.querySelector('img');
+                            if (imgEl) {
+                                imgEl.style.transform = `translateX(${-diff * 0.3}px)`;
+                            }
+                        }}
+                        onMouseUp={(e) => {
+                            if (!(e.currentTarget as any).isDragging) return;
+                            (e.currentTarget as any).isDragging = false;
+                            (e.currentTarget as any).style.cursor = 'grab';
+
+                            const startX = (e.currentTarget as any).startX || 0;
+                            const diff = startX - e.clientX;
+                            const imgEl = e.currentTarget.querySelector('img');
+
+                            if (Math.abs(diff) > 50) {
+                                const direction = diff > 0 ? -100 : 100;
+                                if (imgEl) {
+                                    imgEl.style.transition = 'transform 0.25s ease-out, opacity 0.25s ease-out';
+                                    imgEl.style.transform = `translateX(${direction}%)`;
+                                    imgEl.style.opacity = '0';
+                                }
+
+                                setTimeout(() => {
+                                    if (diff > 0) {
+                                        setSelectedImageIndex(prev => prev < galleryImages.length - 1 ? prev + 1 : 0);
+                                    } else if (diff < 0) {
+                                        setSelectedImageIndex(prev => prev > 0 ? prev - 1 : galleryImages.length - 1);
+                                    }
+                                    if (imgEl) {
+                                        imgEl.style.transition = 'none';
+                                        imgEl.style.transform = `translateX(${-direction}%)`;
+                                        imgEl.style.opacity = '0';
+                                        requestAnimationFrame(() => {
+                                            imgEl.style.transition = 'transform 0.25s ease-out, opacity 0.25s ease-out';
+                                            imgEl.style.transform = 'translateX(0)';
+                                            imgEl.style.opacity = '1';
+                                        });
+                                    }
+                                }, 100);
+                            } else {
+                                if (imgEl) {
+                                    imgEl.style.transition = 'transform 0.2s ease-out';
+                                    imgEl.style.transform = 'translateX(0)';
+                                }
+                            }
+                        }}
+                        onMouseLeave={(e) => {
+                            if ((e.currentTarget as any).isDragging) {
+                                (e.currentTarget as any).isDragging = false;
+                                (e.currentTarget as any).style.cursor = 'grab';
+                                const imgEl = e.currentTarget.querySelector('img');
                                 if (imgEl) {
                                     imgEl.style.transition = 'transform 0.2s ease-out';
                                     imgEl.style.transform = 'translateX(0)';
@@ -1258,37 +1325,43 @@ export default function FacilityDetail({ facility: initialFacility, onClose }: F
                             alt={`${facility.name} 사진 ${selectedImageIndex + 1}`}
                             style={{
                                 transition: 'transform 0.25s ease-out, opacity 0.25s ease-out',
+                                pointerEvents: 'none', // 이미지 드래그 방지
                             }}
                         />
                     </Box>
 
-                    {/* 하단 dot indicator */}
-                    <Box
-                        pos="absolute"
-                        bottom={40}
-                        left={0}
-                        w="100%"
-                        style={{ zIndex: 10000 }}
-                    >
-                        <Group justify="center" gap={8}>
-                            {galleryImages.map((_, idx) => (
-                                <Box
-                                    key={idx}
-                                    w={idx === selectedImageIndex ? 10 : 8}
-                                    h={idx === selectedImageIndex ? 10 : 8}
-                                    style={{
-                                        borderRadius: '50%',
-                                        backgroundColor: idx === selectedImageIndex ? 'white' : 'rgba(255,255,255,0.4)',
-                                        transition: 'all 0.2s',
-                                        cursor: 'pointer',
-                                    }}
-                                    onClick={() => setSelectedImageIndex(idx)}
-                                />
-                            ))}
-                        </Group>
-                    </Box>
+                    {/* 하단 dot indicator (PC만) */}
+                    {!isMobile && (
+                        <Box
+                            pos="absolute"
+                            bottom={40}
+                            left={0}
+                            w="100%"
+                            style={{ zIndex: 10000 }}
+                        >
+                            <Group justify="center" gap={8}>
+                                {galleryImages.map((_, idx) => (
+                                    <Box
+                                        key={idx}
+                                        w={idx === selectedImageIndex ? 10 : 8}
+                                        h={idx === selectedImageIndex ? 10 : 8}
+                                        style={{
+                                            borderRadius: '50%',
+                                            backgroundColor: idx === selectedImageIndex ? 'white' : 'rgba(255,255,255,0.4)',
+                                            transition: 'all 0.2s',
+                                            cursor: 'pointer',
+                                        }}
+                                        onClick={(e) => {
+                                            e.stopPropagation();
+                                            setSelectedImageIndex(idx);
+                                        }}
+                                    />
+                                ))}
+                            </Group>
+                        </Box>
+                    )}
 
-                    {/* 좌우 네비게이션 (PC용) */}
+                    {/* 좌우 네비게이션 (PC만) */}
                     {!isMobile && galleryImages.length > 1 && (
                         <>
                             <ActionIcon
@@ -1299,7 +1372,10 @@ export default function FacilityDetail({ facility: initialFacility, onClose }: F
                                 left={20}
                                 top="50%"
                                 style={{ transform: 'translateY(-50%)', zIndex: 10000 }}
-                                onClick={() => setSelectedImageIndex(prev => prev > 0 ? prev - 1 : galleryImages.length - 1)}
+                                onClick={(e) => {
+                                    e.stopPropagation();
+                                    setSelectedImageIndex(prev => prev > 0 ? prev - 1 : galleryImages.length - 1);
+                                }}
                             >
                                 <ChevronLeft size={40} />
                             </ActionIcon>
@@ -1311,7 +1387,10 @@ export default function FacilityDetail({ facility: initialFacility, onClose }: F
                                 right={20}
                                 top="50%"
                                 style={{ transform: 'translateY(-50%)', zIndex: 10000 }}
-                                onClick={() => setSelectedImageIndex(prev => prev < galleryImages.length - 1 ? prev + 1 : 0)}
+                                onClick={(e) => {
+                                    e.stopPropagation();
+                                    setSelectedImageIndex(prev => prev < galleryImages.length - 1 ? prev + 1 : 0);
+                                }}
                             >
                                 <ChevronRight size={40} />
                             </ActionIcon>
