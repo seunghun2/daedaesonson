@@ -189,12 +189,11 @@ function HomeContent() {
 
   // 지도 이동 핸들러
   const handleBoundsChanged = (bounds: { south: number, north: number, west: number, east: number }) => {
-    // 🔍 검색 자동완성 창 닫기
-    setSearchFocused(false);
     setCurrentBounds(bounds);
   };
 
   // 1. 지도에 표시할 데이터 (Bound 변경에 영향받지 않음 -> 마커 리렌더링 방지)
+  // 🚫 검색어로 마커가 사라지지 않도록 - 카테고리만 필터링
   const filteredMapFacilities = useMemo(() => {
     let base = dbFacilities;
 
@@ -216,17 +215,10 @@ function HomeContent() {
       }
     }
 
-    // 2. 검색어 (이름 or 주소) - 타이핑 중에도 필터링 작동 (searchQuery 사용)
-    if (searchQuery.trim() && !isRegionSelected) {
-      const query = searchQuery.trim().toLowerCase().normalize('NFC');
-      base = base.filter(f =>
-        f.name.toLowerCase().normalize('NFC').includes(query) ||
-        f.address.toLowerCase().normalize('NFC').includes(query)
-      );
-    }
+    // ❌ 검색어 필터링 제거 - 마커는 항상 표시되어야 함
 
     return base;
-  }, [dbFacilities, activeCategory, searchQuery, isRegionSelected]);
+  }, [dbFacilities, activeCategory]);
 
   // 2. 리스트에 표시할 데이터 (지도 데이터 + 현재 Viewport filtering + 정렬)
   const finalFacilities = useMemo(() => {
@@ -808,6 +800,7 @@ function HomeContent() {
           isMobile={isMobile}
           onViewList={() => router.push('/list')}
           onMapTap={handleMapTap}
+          onMapDrag={() => setSearchFocused(false)}
           uiHidden={uiHidden}
         />
       </Box>

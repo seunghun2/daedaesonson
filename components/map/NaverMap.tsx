@@ -23,6 +23,7 @@ interface NaverMapProps {
     isMobile?: boolean;
     onViewList?: () => void;
     onMapTap?: () => void; // 빈 지도 탭 시 호출 (UI 토글용)
+    onMapDrag?: () => void; // 지도 드래그 시 호출 (검색창 닫기용)
     uiHidden?: boolean; // UI 숨김 상태 (호갱노노 스타일 애니메이션)
 }
 
@@ -60,7 +61,7 @@ const REGION_MAPPINGS: { [key: string]: string[] } = {
 // 좌표별 시설 ID 등록부 (전역 유지 - 필터링되어도 위치 고정)
 const LAYOUT_REGISTRY = new Map<string, string[]>();
 
-const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerClick, onBoundsChanged, isMobile, onViewList, onMapTap, uiHidden }, ref) => {
+const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerClick, onBoundsChanged, isMobile, onViewList, onMapTap, onMapDrag, uiHidden }, ref) => {
     const mapRef = useRef<HTMLDivElement>(null);
     const [isMapLoaded, setIsMapLoaded] = useState(false);
     const [isMainLoaded, setIsMainLoaded] = useState(false);
@@ -848,6 +849,8 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
 
             window.naver.maps.Event.addListener(map, 'dragstart', () => {
                 isDragging = true;
+                // 🔍 검색 자동완성 창 닫기
+                if (onMapDrag) onMapDrag();
             });
             window.naver.maps.Event.addListener(map, 'dragend', () => {
                 // 드래그 끝난 후 약간 지연 (클릭 이벤트와 분리)
