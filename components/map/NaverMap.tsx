@@ -771,7 +771,7 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
                 markers: createdMarkers,
                 disableClickZoom: false,
                 gridSize: 250,
-                averageCenter: true,
+                averageCenter: false, // 🔒 첫 번째 마커 기준으로 위치 고정
                 icons: [{
                     content: `
                          <div style="cursor:pointer; min-width:64px; padding: 6px 10px; background:#35469C; color:white; border-radius:6px; box-shadow:0 2px 6px rgba(0,0,0,0.15); display:flex; flex-direction:column; align-items:center; justify-content:center; font-family:-apple-system, sans-serif;">
