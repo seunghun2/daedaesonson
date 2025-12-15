@@ -624,41 +624,68 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
     // 🔒 구/군 마커 캐시 (한 번 생성되면 재사용)
     const regionMarkersRef = useRef<Map<string, any>>(new Map());
 
-    // 🔒 마커/클러스터 초기 생성 여부 (한 번만 생성)
+    // 🔒 개별 시설 마커 캐시
+    const facilityMarkersRef = useRef<any[]>([]);
+
+    // 🔒 마커 초기 생성 여부
     const isMarkersInitializedRef = useRef(false);
 
-    const updateVisibleMarkers = useCallback(() => {
+    // 🔒 현재 표시 모드 (region / facility)
+    const currentModeRef = useRef<'region' | 'facility'>('region');
+
+    // 🚀 마커 초기 생성 (한 번만)
+    const initializeMarkers = useCallback(() => {
         const map = mapInstanceRef.current;
         if (!map || !window.naver || !window.naver.maps) return;
+        if (isMarkersInitializedRef.current) return;
 
-        const currentZoom = map.getZoom();
-        console.log(`NaverMap - 줌 레벨: ${currentZoom}`);
+        console.log('🚀 마커 초기 생성 시작...');
 
-        // 🔒 이미 마커가 초기화되었으면 재생성하지 않음 (위치 고정)
-        if (isMarkersInitializedRef.current) {
-            console.log('🔒 마커 이미 초기화됨 - 재생성 스킵');
-            return;
+        // 1. 구/군별 대표 마커 생성
+        for (const [regionKey, group] of Object.entries(regionGroups)) {
+            const { representative, count } = group;
+            const { lat, lng } = representative.fixedCoordinates;
+
+            // 지역명 정리
+            let displayName = regionKey;
+            if (displayName.endsWith('시') || displayName.endsWith('군') || displayName.endsWith('구')) {
+                displayName = displayName.slice(0, -1);
+            }
+
+            const contentWidth = 64;
+            const contentHeight = 44;
+            const svgContent = `
+            <svg width="${contentWidth}" height="${contentHeight + 8}" viewBox="0 0 ${contentWidth} ${contentHeight + 8}" xmlns="http://www.w3.org/2000/svg">
+                <rect x="0" y="0" width="${contentWidth}" height="${contentHeight}" rx="6" fill="#35469C"/>
+                <path d="M${contentWidth / 2 - 6} ${contentHeight - 1} L${contentWidth / 2} ${contentHeight + 7} L${contentWidth / 2 + 6} ${contentHeight - 1} Z" fill="#35469C"/>
+                <text x="${contentWidth / 2}" y="16" font-family="-apple-system, sans-serif" font-size="11" fill="white" fill-opacity="0.9" text-anchor="middle">${displayName}</text>
+                <text x="${contentWidth / 2}" y="33" font-family="-apple-system, sans-serif" font-size="14" font-weight="800" fill="white" text-anchor="middle">${count} 곳</text>
+            </svg>
+            `;
+
+            const marker = new window.naver.maps.Marker({
+                position: new window.naver.maps.LatLng(lat, lng),
+                map: null, // 초기에는 숨김
+                title: `${regionKey} (${count}개 시설)`,
+                icon: {
+                    content: svgContent,
+                    anchor: new window.naver.maps.Point(contentWidth / 2, contentHeight + 7),
+                }
+            });
+
+            window.naver.maps.Event.addListener(marker, 'click', () => {
+                onMarkerClick(representative);
+            });
+
+            regionMarkersRef.current.set(regionKey, marker);
         }
 
-        console.log('🚀 마커 초기 생성...');
-
-        // 1. 기존 마커/클러스터 제거
-        if (clustererRef.current) {
-            clustererRef.current.setMap(null);
-            clustererRef.current = null;
-        }
-        markersRef.current.forEach(marker => marker.setMap(null));
-        markersRef.current = [];
-
-        const createdMarkers: any[] = [];
-
-        // 2. 모든 시설에 대해 개별 마커 생성
+        // 2. 개별 시설 마커 생성
         for (const fac of processedFacilities) {
             if (!fac.fixedCoordinates?.lat || !fac.fixedCoordinates?.lng) continue;
 
             const { lat, lng } = fac.fixedCoordinates;
 
-            // [Price Logic] Check for Representative Price first
             let priceText = '문의';
             let formattedPrice = 0;
             let isRep = false;
@@ -710,6 +737,7 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
 
             const marker = new window.naver.maps.Marker({
                 position: new window.naver.maps.LatLng(lat, lng),
+                map: null, // 초기에는 숨김
                 title: fac.name,
                 icon: {
                     content: svgContent,
@@ -717,87 +745,49 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
                 }
             });
 
-            (marker as any).__facilityData = fac;
-            (marker as any).__facilityId = fac.id;
-            (marker as any).__regionKey = (fac.address || '').split(' ')[1] || '기타';
-
             window.naver.maps.Event.addListener(marker, 'click', () => {
                 onMarkerClick(fac);
             });
 
-            createdMarkers.push(marker);
+            facilityMarkersRef.current.push(marker);
         }
 
-        markersRef.current = createdMarkers;
-
-        // 3. 클러스터링 적용 (전체 데이터 기준 카운트)
-        const ClusteringClass = window.MarkerClustering || (window.naver.maps && window.naver.maps.MarkerClustering);
-        if (ClusteringClass) {
-            clustererRef.current = new ClusteringClass({
-                minClusterSize: 1,
-                maxZoom: 12,
-                map: map,
-                markers: createdMarkers,
-                disableClickZoom: false,
-                gridSize: 500,
-                averageCenter: false, // 🔒 첫 번째 마커 기준으로 위치 고정
-                icons: [{
-                    content: `
-                         <div style="cursor:pointer; min-width:64px; padding: 6px 10px; background:#35469C; color:white; border-radius:6px; box-shadow:0 2px 6px rgba(0,0,0,0.15); display:flex; flex-direction:column; align-items:center; justify-content:center; font-family:-apple-system, sans-serif;">
-                             <div class="cluster-region" style="font-size:11px; opacity:0.8; margin-bottom:2px; line-height:1;"></div>
-                             <div class="cluster-count" style="font-size:14px; font-weight:800; line-height:1;"></div>
-                         </div>
-                     `,
-                    size: new window.naver.maps.Size(64, 40),
-                    anchor: new window.naver.maps.Point(32, 20),
-                }],
-                indexGenerator: [10, 50, 100, 500, 1000],
-                stylingFunction: (clusterMarker: any, count: number, members: any[]) => {
-                    const divRegion = clusterMarker.getElement().querySelector('.cluster-region');
-                    const divCount = clusterMarker.getElement().querySelector('.cluster-count');
-
-                    // 🔒 전체 데이터 기준 카운트 사용
-                    if (members.length > 0) {
-                        const regionKey = (members[0] as any).__regionKey;
-                        const totalCount = regionGroups[regionKey]?.count || count;
-                        if (divCount) divCount.innerText = `${totalCount} 곳`;
-                    } else {
-                        if (divCount) divCount.innerText = `${count} 곳`;
-                    }
-
-                    if (divRegion && members.length > 0) {
-                        const fac = (members[0] as any).__facilityData;
-                        if (fac) {
-                            const addr = fac.address || '';
-                            const tokens = addr.split(' ');
-                            const currentZoom = map.getZoom();
-
-                            let name = '';
-                            if (currentZoom <= 9) {
-                                name = tokens[0] || '';
-                                if (name.includes('특별자치')) name = name.replace('특별자치', '');
-                                else if (name.endsWith('특별시') || name.endsWith('광역시')) name = name.substring(0, 2);
-                            } else if (currentZoom <= 11) {
-                                name = tokens[1] || tokens[0] || '';
-                                if (name.endsWith('시') || name.endsWith('군') || name.endsWith('구')) name = name.slice(0, -1);
-                            } else {
-                                name = tokens[2] || tokens[1] || '';
-                                if (name.endsWith('구')) name = name.slice(0, -1);
-                            }
-                            divRegion.innerText = name || '지역';
-                        }
-                    }
-                }
-            });
-        } else {
-            createdMarkers.forEach(m => m.setMap(map));
-        }
-
-        // 🔒 초기화 완료 플래그
         isMarkersInitializedRef.current = true;
-        console.log(`✅ ${createdMarkers.length}개 마커 생성 완료 (위치 고정됨)`);
+        console.log(`✅ 구/군 마커 ${regionMarkersRef.current.size}개, 시설 마커 ${facilityMarkersRef.current.length}개 생성 완료`);
 
     }, [processedFacilities, regionGroups, onMarkerClick]);
+
+    // 🚀 줌 레벨에 따라 마커 visibility 토글
+    const updateMarkerVisibility = useCallback(() => {
+        const map = mapInstanceRef.current;
+        if (!map || !window.naver || !window.naver.maps) return;
+        if (!isMarkersInitializedRef.current) return;
+
+        const currentZoom = map.getZoom();
+        const shouldShowFacilities = currentZoom >= 13;
+        const newMode = shouldShowFacilities ? 'facility' : 'region';
+
+        // 모드 변경 없으면 스킵
+        if (currentModeRef.current === newMode) return;
+
+        console.log(`🔄 마커 모드 변경: ${currentModeRef.current} → ${newMode} (줌: ${currentZoom})`);
+        currentModeRef.current = newMode;
+
+        if (shouldShowFacilities) {
+            // 줌 13+: 개별 시설 마커 표시
+            regionMarkersRef.current.forEach(marker => marker.setMap(null));
+            facilityMarkersRef.current.forEach(marker => marker.setMap(map));
+        } else {
+            // 줌 12 이하: 구/군 마커 표시
+            facilityMarkersRef.current.forEach(marker => marker.setMap(null));
+            regionMarkersRef.current.forEach(marker => marker.setMap(map));
+        }
+    }, []);
+
+    const updateVisibleMarkers = useCallback(() => {
+        initializeMarkers();
+        updateMarkerVisibility();
+    }, [initializeMarkers, updateMarkerVisibility]);
 
     // 🚀 Effect: 데이터 변경 시 업데이트
     useEffect(() => {
@@ -854,8 +844,8 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
                 // 중심 주소 업데이트
                 updateCenterAddress(map);
 
-                // ❌ 마커 재생성 제거 - 위치 고정을 위해 지도 이동 시 마커 업데이트 안 함
-                // updateVisibleMarkers();
+                // 🔄 줌 변경 시 마커 visibility 토글 (위치는 변경 안 함)
+                updateMarkerVisibility();
             });
 
             // 🎯 빈 지도 탭 이벤트 (UI 토글용) - 드래그와 더블클릭 구분
