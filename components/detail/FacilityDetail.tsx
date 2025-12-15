@@ -168,7 +168,7 @@ function PriceInfoSection({ priceInfo, hasPrice }: { priceInfo: any, hasPrice: b
             <Accordion
                 variant="default"
                 radius="md"
-                defaultValue={displayGroups[0]?.label}
+                // 🔒 초기 상태: 모두 닫힘
                 styles={{
                     item: { borderBottom: '1px solid #f1f3f5' },
                     control: { padding: '20px 0', '&:hover': { backgroundColor: 'transparent' } },

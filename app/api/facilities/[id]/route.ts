@@ -120,6 +120,7 @@ export async function GET(
                 ...dbData, // Overwrite with DB data first
 
                 // RESTORE Local Data if DB data is missing/null/empty
+                address: dbData.address || merged.address,
                 phone: dbData.phone || merged.phone,
                 fax: dbData.fax || merged.fax,
                 capacity: dbData.capacity || merged.capacity,

@@ -501,7 +501,7 @@
     "category": "FAMILY_GRAVE",
     "priceRange": {
       "min": 216,
-      "max": 216
+      "max": 3500
     },
     "operatorType": "FOUNDATION",
     "hasParking": true,
@@ -521,7 +521,843 @@
     "phone": "051-721-5115",
     "capacity": null,
     "lastUpdated": "681개월전",
-    "originalName": "2.(재)실로암공원묘원_price_info.png"
+    "originalName": "2.(재)실로암공원묘원_price_info.png",
+    "representativePricing": {
+      "cemetery": {
+        "minLandFee": 145000
+      }
+    },
+    "lat": 35.2503794,
+    "lng": 129.1580144,
+    "minPrice": 216,
+    "maxPrice": 3500,
+    "description": "",
+    "rating": 0,
+    "reviewCount": 0,
+    "createdAt": "2025-12-12T00:21:56.196",
+    "updatedAt": "2025-12-15T00:03:09.274",
+    "reviews": [],
+    "priceInfo": {
+      "priceTable": {
+        "매장묘": {
+          "unit": "원",
+          "category": "grave",
+          "rows": [
+            {
+              "name": "묘지사용료 1평",
+              "price": 2160000,
+              "grade": "",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": true,
+              "raw": null
+            },
+            {
+              "name": "매장묘(2.5평형/단봉) 총계",
+              "price": 11131000,
+              "grade": "사용료, 5년관리비, 매장작업비, 봉분설치비, 1인석물비용 1회 각자대포함",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
+            },
+            {
+              "name": "매장묘(4평형/단봉) 총계",
+              "price": 15339000,
+              "grade": "사용료, 5년관리비, 매장작업비, 봉분설치비, 1인석물비용 1회 각자대포함",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
+            },
+            {
+              "name": "매장묘(2.5평형/쌍봉) 총계",
+              "price": 16559000,
+              "grade": "사용료, 5년관리비, 매장작업비, 봉분설치비, 1인석물비용 1회 각자대포함",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
+            },
+            {
+              "name": "매장묘(4평형/쌍봉) 총계",
+              "price": 23823000,
+              "grade": "사용료, 5년관리비, 매장작업비, 봉분설치비, 1인석물비용 1회 각자대포함",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
+            }
+          ]
+        },
+        "봉안당": {
+          "unit": "원",
+          "category": "charnel",
+          "rows": [
+            {
+              "name": "안치료",
+              "price": 400000,
+              "grade": "",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": true,
+              "raw": null
+            },
+            {
+              "name": "봉안묘(2위 세트)신형",
+              "price": 15200000,
+              "grade": "",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
+            },
+            {
+              "name": "봉안묘(4위 세트)신형",
+              "price": 19200000,
+              "grade": "",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
+            },
+            {
+              "name": "봉안묘(6위 세트)신형",
+              "price": 24000000,
+              "grade": "",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
+            },
+            {
+              "name": "봉안묘(9위 세트)신형",
+              "price": 28000000,
+              "grade": "",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
+            },
+            {
+              "name": "봉안묘(16위 세트)",
+              "price": 35000000,
+              "grade": "",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
+            }
+          ]
+        },
+        "수목장": {
+          "unit": "원",
+          "category": "natural",
+          "rows": [
+            {
+              "name": "평장(2.5평형)2위세트",
+              "price": 5273180,
+              "grade": "",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": true,
+              "raw": null
+            }
+          ]
+        },
+        "기타": {
+          "unit": "원",
+          "category": "other",
+          "rows": [
+            {
+              "name": "천판",
+              "price": 150000,
+              "grade": "",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
+            },
+            {
+              "name": "월석(소)",
+              "price": 328900,
+              "grade": "",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
+            },
+            {
+              "name": "화병(소)",
+              "price": 328900,
+              "grade": "",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
+            },
+            {
+              "name": "월석(대)",
+              "price": 429000,
+              "grade": "",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
+            },
+            {
+              "name": "화병(대)",
+              "price": 429000,
+              "grade": "",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
+            },
+            {
+              "name": "북석",
+              "price": 572000,
+              "grade": "",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
+            }
+          ]
+        },
+        "제외됨": {
+          "unit": "원",
+          "category": "excluded",
+          "rows": [
+            {
+              "name": "관리비 1평/1년",
+              "price": 16000,
+              "grade": "[기타] ",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
+            },
+            {
+              "name": "경계석비1m",
+              "price": 145000,
+              "grade": "[기타] ",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
+            },
+            {
+              "name": "4기, 9기 비석좌대",
+              "price": 185000,
+              "grade": "[기타] ",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
+            },
+            {
+              "name": "개장작업비평장(소형,석도홍)",
+              "price": 200000,
+              "grade": "[수목장] ",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
+            },
+            {
+              "name": "좌대(소)",
+              "price": 246675,
+              "grade": "[기타] ",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
+            },
+            {
+              "name": "좌대(대)",
+              "price": 286000,
+              "grade": "[기타] ",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
+            },
+            {
+              "name": "와비좌대",
+              "price": 286000,
+              "grade": "[기타] ",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
+            },
+            {
+              "name": "각자대특수마크 금액추가",
+              "price": 330000,
+              "grade": "[기타] ",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
+            },
+            {
+              "name": "소형평장와비",
+              "price": 341000,
+              "grade": "[수목장] ",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
+            },
+            {
+              "name": "개장정리비",
+              "price": 400000,
+              "grade": "[기타] ",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
+            },
+            {
+              "name": "매장작업비함",
+              "price": 400000,
+              "grade": "[기타] ",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
+            },
+            {
+              "name": "삼향로",
+              "price": 429000,
+              "grade": "[기타] ",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
+            },
+            {
+              "name": "봉분수선비",
+              "price": 500000,
+              "grade": "[기타] ",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
+            },
+            {
+              "name": "상석애석(2.3)",
+              "price": 500500,
+              "grade": "[기타] ",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
+            },
+            {
+              "name": "성경책",
+              "price": 572000,
+              "grade": "[기타] ",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
+            },
+            {
+              "name": "봉분설치비일반",
+              "price": 600000,
+              "grade": "[기타] ",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
+            },
+            {
+              "name": "입주비석도홍 평장",
+              "price": 620000,
+              "grade": "[수목장] ",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
+            },
+            {
+              "name": "상석애석(2.5)",
+              "price": 643500,
+              "grade": "[기타] ",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
+            },
+            {
+              "name": "갓석(소)",
+              "price": 672100,
+              "grade": "[기타] ",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
+            },
+            {
+              "name": "4기 비석(신형)",
+              "price": 736000,
+              "grade": "[기타] ",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
+            },
+            {
+              "name": "갓석(대)",
+              "price": 757900,
+              "grade": "[기타] ",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
+            },
+            {
+              "name": "9기 비석(신형)",
+              "price": 786500,
+              "grade": "[기타] ",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
+            },
+            {
+              "name": "매장작업비",
+              "price": 800000,
+              "grade": "[기타] ",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
+            },
+            {
+              "name": "상석애석(3.0)",
+              "price": 822250,
+              "grade": "[기타] ",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
+            },
+            {
+              "name": "비석(3.0)",
+              "price": 822250,
+              "grade": "[기타] ",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
+            },
+            {
+              "name": "와비(2.3)",
+              "price": 822250,
+              "grade": "[기타] ",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
+            },
+            {
+              "name": "9기 구형 비석",
+              "price": 858000,
+              "grade": "[기타] ",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
+            },
+            {
+              "name": "와비(2.5)",
+              "price": 1001000,
+              "grade": "[기타] ",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
+            },
+            {
+              "name": "6기 구형 비석",
+              "price": 1001000,
+              "grade": "[기타] ",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
+            },
+            {
+              "name": "둘레석(소)",
+              "price": 1001000,
+              "grade": "[기타] ",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
+            },
+            {
+              "name": "상석청석(2.5)",
+              "price": 1100000,
+              "grade": "[기타] ",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
+            },
+            {
+              "name": "봉분설치비특수",
+              "price": 1100000,
+              "grade": "[기타] ",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
+            },
+            {
+              "name": "비석(3.7)",
+              "price": 1144000,
+              "grade": "[기타] ",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
+            },
+            {
+              "name": "석관",
+              "price": 1155000,
+              "grade": "[기타] ",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
+            },
+            {
+              "name": "상석오석(3.0)",
+              "price": 1287000,
+              "grade": "[기타] ",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
+            },
+            {
+              "name": "상석오석(3.3)",
+              "price": 1430000,
+              "grade": "[기타] ",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
+            },
+            {
+              "name": "비석(4.0)",
+              "price": 1430000,
+              "grade": "[기타] ",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
+            },
+            {
+              "name": "둘레석 1단",
+              "price": 1480050,
+              "grade": "[기타] ",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
+            },
+            {
+              "name": "둘레석 2단",
+              "price": 2631200,
+              "grade": "[기타] ",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
+            },
+            {
+              "name": "둘레석 청3단 소",
+              "price": 5005000,
+              "grade": "[기타] ",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
+            },
+            {
+              "name": "둘레석 청3단 대",
+              "price": 5434000,
+              "grade": "[기타] ",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
+            },
+            {
+              "name": "원형둘레석",
+              "price": 5720000,
+              "grade": "[기타] ",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
+            }
+          ]
+        }
+      }
+    },
+    "_detailedSource": "prisma",
+    "_meta": {
+      "source": "supabase-js",
+      "categoryCount": 5,
+      "itemCount": 60,
+      "representativeCount": 0
+    }
   },
   {
     "id": "park-0003",
@@ -2483,7 +3319,7 @@
       "grave"
     ],
     "capacity": 8375,
-    "lastUpdated": null,
+    "lastUpdated": "2025-01-16",
     "hasParking": true,
     "hasRestaurant": false,
     "hasAccessibility": false,
@@ -5836,7 +6672,7 @@
       "grave"
     ],
     "capacity": 26500,
-    "lastUpdated": null,
+    "lastUpdated": "2018-04-16",
     "hasParking": true,
     "hasRestaurant": false,
     "hasAccessibility": true,
@@ -7127,7 +7963,7 @@
     "id": "park-0159",
     "name": "대호지공설묘지",
     "originalName": "159.대호지공설묘지_price_info.png",
-    "address": "",
+    "address": "충청남도 당진시 대호지면 봉선길 123 (장정리, 어성정공동묘지)",
     "coordinates": {
       "lat": 0,
       "lng": 0
@@ -7142,7 +7978,7 @@
       "grave"
     ],
     "capacity": 939,
-    "lastUpdated": null,
+    "lastUpdated": "2016-05-16",
     "hasParking": false,
     "hasRestaurant": false,
     "hasAccessibility": false,
@@ -10585,7 +11421,7 @@
     "id": "park-0260",
     "name": "교산1리공설묘지",
     "originalName": "260.교산1리공설묘지_price_info.png",
-    "address": "",
+    "address": "인천광역시 강화군 양사면 교산리 산307",
     "coordinates": {
       "lat": 0,
       "lng": 0
@@ -10600,7 +11436,7 @@
       "grave"
     ],
     "capacity": 71,
-    "lastUpdated": null,
+    "lastUpdated": "2016-05-16",
     "hasParking": true,
     "hasRestaurant": false,
     "hasAccessibility": true,
@@ -14382,7 +15218,7 @@
     "id": "park-0379",
     "name": "가평읍 공설묘지(구 제1공설묘지)",
     "originalName": "379.가평읍 공설묘지(구 제1공설묘지)_price_info.png",
-    "address": "",
+    "address": "경기도 가평군 가평읍 상색리 산64-3",
     "coordinates": {
       "lat": 0,
       "lng": 0
@@ -14397,7 +15233,7 @@
       "grave"
     ],
     "capacity": 84,
-    "lastUpdated": null,
+    "lastUpdated": "2016-05-16",
     "hasParking": true,
     "hasRestaurant": false,
     "hasAccessibility": true,
@@ -18601,7 +19437,7 @@
     "id": "park-0514",
     "name": "(재)성산공원 추모관",
     "originalName": "514.(재)성산공원 추모관_price_info.png",
-    "address": "",
+    "address": "전라북도 군산시 성산면 왕골로 239-29 (대명리, 성산공원)",
     "coordinates": {
       "lat": 0,
       "lng": 0
@@ -18617,7 +19453,7 @@
       "grave"
     ],
     "capacity": null,
-    "lastUpdated": null,
+    "lastUpdated": "2025-11-16",
     "hasParking": true,
     "hasRestaurant": false,
     "hasAccessibility": false,
@@ -19205,7 +20041,7 @@
     "id": "park-0529",
     "name": "(재)시안 가족추모공원(봉안)",
     "originalName": "529.(재)시안 가족추모공원(봉안)_price_info.png",
-    "address": "",
+    "address": "경기도 광주시 오포안로 17 (문형동)",
     "coordinates": {
       "lat": 0,
       "lng": 0
@@ -19790,7 +20626,7 @@
     "id": "park-0543",
     "name": "메모리얼펠리스추모관(실로암)",
     "originalName": "543.메모리얼펠리스추모관(실로암)_price_info.png",
-    "address": "",
+    "address": "부산광역시 기장군 철마면 사등길 181 (고촌리, 실로암공원묘원관리사무소)",
     "coordinates": {
       "lat": 0,
       "lng": 0
@@ -19805,7 +20641,7 @@
       "charnel"
     ],
     "capacity": null,
-    "lastUpdated": null,
+    "lastUpdated": "2019-01-16",
     "hasParking": true,
     "hasRestaurant": true,
     "hasAccessibility": true,
@@ -19948,7 +20784,7 @@
     "id": "park-0547",
     "name": "(재)자하연 일산(봉안)",
     "originalName": "547.(재)자하연 일산(봉안)_price_info.png",
-    "address": "",
+    "address": "경기도 고양시 일산동구 지영로 36-87 (지영동)",
     "coordinates": {
       "lat": 0,
       "lng": 0
@@ -19965,7 +20801,7 @@
       "grave"
     ],
     "capacity": null,
-    "lastUpdated": null,
+    "lastUpdated": "2025-01-16",
     "hasParking": null,
     "hasRestaurant": null,
     "hasAccessibility": null,
@@ -20034,7 +20870,7 @@
     "id": "park-0549",
     "name": "천주교 서울대교구 평화묘원 봉안묘",
     "originalName": "549.천주교 서울대교구 평화묘원 봉안묘_price_info.png",
-    "address": "",
+    "address": "경기도 포천시 화현면 영일로368번길 66 (지현리)",
     "coordinates": {
       "lat": 0,
       "lng": 0
@@ -20049,7 +20885,7 @@
       "grave"
     ],
     "capacity": null,
-    "lastUpdated": null,
+    "lastUpdated": "2015-05-16",
     "hasParking": true,
     "hasRestaurant": false,
     "hasAccessibility": false,
@@ -20201,7 +21037,7 @@
     "id": "park-0553",
     "name": "천주교안성추모공원(봉안)",
     "originalName": "553.천주교안성추모공원(봉안)_price_info.png",
-    "address": "",
+    "address": "경기도 안성시 보개면 보삼로 319-34 (북가현리)",
     "coordinates": {
       "lat": 0,
       "lng": 0
@@ -20216,7 +21052,7 @@
       "charnel"
     ],
     "capacity": null,
-    "lastUpdated": null,
+    "lastUpdated": "2023-08-16",
     "hasParking": true,
     "hasRestaurant": true,
     "hasAccessibility": false,
@@ -20313,7 +21149,7 @@
     "id": "park-0556",
     "name": "예래원(봉안시설)",
     "originalName": "556.예래원(봉안시설)_price_info.png",
-    "address": "",
+    "address": "경기도 동두천시 탑신로 668 (탑동동)",
     "coordinates": {
       "lat": 0,
       "lng": 0
@@ -20329,7 +21165,7 @@
       "grave"
     ],
     "capacity": null,
-    "lastUpdated": null,
+    "lastUpdated": "2025-03-16",
     "hasParking": true,
     "hasRestaurant": false,
     "hasAccessibility": false,
@@ -20354,7 +21190,7 @@
       "grave"
     ],
     "capacity": 1000,
-    "lastUpdated": null,
+    "lastUpdated": "2025-01-16",
     "hasParking": true,
     "hasRestaurant": true,
     "hasAccessibility": false,
@@ -20540,7 +21376,7 @@
       "grave"
     ],
     "capacity": null,
-    "lastUpdated": null,
+    "lastUpdated": "2025-04-16",
     "hasParking": null,
     "hasRestaurant": null,
     "hasAccessibility": null,
@@ -21227,7 +22063,7 @@
       "grave"
     ],
     "capacity": null,
-    "lastUpdated": null,
+    "lastUpdated": "2025-02-16",
     "hasParking": true,
     "hasRestaurant": false,
     "hasAccessibility": true,
@@ -21237,7 +22073,7 @@
     "id": "park-0580",
     "name": "용미리건물식추모의집",
     "originalName": "580.용미리건물식추모의집_price_info.png",
-    "address": "",
+    "address": "경기도 파주시 광탄면 진지로 151 (용미리, 추모의집)",
     "coordinates": {
       "lat": 0,
       "lng": 0
@@ -21245,7 +22081,8 @@
     "category": "F",
     "phone": "",
     "website": "",
-    "images": []
+    "images": [],
+    "lastUpdated": "2024-03-16"
   },
   {
     "id": "park-0581",
@@ -21440,7 +22277,7 @@
     "id": "park-0586",
     "name": "용미리왕릉벽식추모의집",
     "originalName": "586.용미리왕릉벽식추모의집_price_info.png",
-    "address": "",
+    "address": "경기도 파주시 광탄면 명봉산로262번길 290 (용미리, 용미1리1묘지공원안내실)",
     "coordinates": {
       "lat": 0,
       "lng": 0
@@ -21448,13 +22285,14 @@
     "category": "F",
     "phone": "",
     "website": "",
-    "images": []
+    "images": [],
+    "lastUpdated": "2024-03-16"
   },
   {
     "id": "park-0587",
     "name": "용미리분묘형추모의집",
     "originalName": "587.용미리분묘형추모의집_price_info.png",
-    "address": "",
+    "address": "경기도 파주시 광탄면 명봉산로262번길 290 (용미리, 용미1리1묘지공원안내실)",
     "coordinates": {
       "lat": 0,
       "lng": 0
@@ -21462,13 +22300,14 @@
     "category": "F",
     "phone": "",
     "website": "",
-    "images": []
+    "images": [],
+    "lastUpdated": "2024-03-16"
   },
   {
     "id": "park-0588",
     "name": "용미리벽식추모의집",
     "originalName": "588.용미리벽식추모의집_price_info.png",
-    "address": "",
+    "address": "경기도 파주시 광탄면 명봉산로262번길 290 (용미리, 용미1리1묘지공원안내실)",
     "coordinates": {
       "lat": 0,
       "lng": 0
@@ -21476,7 +22315,8 @@
     "category": "F",
     "phone": "",
     "website": "",
-    "images": []
+    "images": [],
+    "lastUpdated": "2024-03-16"
   },
   {
     "id": "park-0589",
@@ -21602,7 +22442,7 @@
     "id": "park-0592",
     "name": "(재)화산추모공원(봉안)",
     "originalName": "592.(재)화산추모공원(봉안)_price_info.png",
-    "address": "",
+    "address": "충청남도 예산군 대술면 대술로 574-57 (화산리)",
     "coordinates": {
       "lat": 0,
       "lng": 0
@@ -21610,7 +22450,8 @@
     "category": "F",
     "phone": "",
     "website": "",
-    "images": []
+    "images": [],
+    "lastUpdated": "2023-06-16"
   },
   {
     "id": "park-0593",
@@ -22250,7 +23091,7 @@
       "charnel"
     ],
     "capacity": null,
-    "lastUpdated": null,
+    "lastUpdated": "2020-11-16",
     "hasParking": false,
     "hasRestaurant": false,
     "hasAccessibility": false,
@@ -22377,7 +23218,7 @@
       "charnel"
     ],
     "capacity": null,
-    "lastUpdated": null,
+    "lastUpdated": "2020-09-16",
     "hasParking": null,
     "hasRestaurant": null,
     "hasAccessibility": null,
@@ -22439,7 +23280,7 @@
       "charnel"
     ],
     "capacity": null,
-    "lastUpdated": null,
+    "lastUpdated": "2016-05-16",
     "hasParking": true,
     "hasRestaurant": false,
     "hasAccessibility": true,
@@ -22464,7 +23305,7 @@
       "grave"
     ],
     "capacity": null,
-    "lastUpdated": null,
+    "lastUpdated": "2022-11-16",
     "hasParking": true,
     "hasRestaurant": false,
     "hasAccessibility": false,
@@ -22489,7 +23330,7 @@
       "charnel"
     ],
     "capacity": null,
-    "lastUpdated": null,
+    "lastUpdated": "2025-12-16",
     "hasParking": true,
     "hasRestaurant": true,
     "hasAccessibility": false,
@@ -22865,7 +23706,7 @@
       "charnel"
     ],
     "capacity": null,
-    "lastUpdated": null,
+    "lastUpdated": "2012-07-16",
     "hasParking": true,
     "hasRestaurant": false,
     "hasAccessibility": false,
@@ -22937,7 +23778,7 @@
       "charnel"
     ],
     "capacity": null,
-    "lastUpdated": null,
+    "lastUpdated": "2019-12-16",
     "hasParking": true,
     "hasRestaurant": null,
     "hasAccessibility": null,
@@ -23233,7 +24074,7 @@
       "charnel"
     ],
     "capacity": 2000,
-    "lastUpdated": null,
+    "lastUpdated": "2023-04-16",
     "hasParking": true,
     "hasRestaurant": false,
     "hasAccessibility": false,
@@ -23488,7 +24329,7 @@
       "charnel"
     ],
     "capacity": null,
-    "lastUpdated": null,
+    "lastUpdated": "2025-10-16",
     "hasParking": true,
     "hasRestaurant": false,
     "hasAccessibility": false,
@@ -23821,7 +24662,7 @@
       "grave"
     ],
     "capacity": 3800,
-    "lastUpdated": null,
+    "lastUpdated": "2024-07-16",
     "hasParking": true,
     "hasRestaurant": true,
     "hasAccessibility": false,
@@ -23846,7 +24687,7 @@
       "charnel"
     ],
     "capacity": null,
-    "lastUpdated": null,
+    "lastUpdated": "2023-12-16",
     "hasParking": true,
     "hasRestaurant": false,
     "hasAccessibility": true,
@@ -24481,7 +25322,7 @@
       "charnel"
     ],
     "capacity": 100,
-    "lastUpdated": null,
+    "lastUpdated": "2022-10-16",
     "hasParking": true,
     "hasRestaurant": false,
     "hasAccessibility": false,
@@ -24607,7 +25448,7 @@
       "grave"
     ],
     "capacity": 418,
-    "lastUpdated": null,
+    "lastUpdated": "2020-08-16",
     "hasParking": true,
     "hasRestaurant": false,
     "hasAccessibility": false,
@@ -24662,7 +25503,7 @@
       "grave"
     ],
     "capacity": null,
-    "lastUpdated": null,
+    "lastUpdated": "2018-01-16",
     "hasParking": true,
     "hasRestaurant": false,
     "hasAccessibility": false,
@@ -24870,7 +25711,7 @@
       "grave"
     ],
     "capacity": null,
-    "lastUpdated": null,
+    "lastUpdated": "2023-01-16",
     "hasParking": true,
     "hasRestaurant": false,
     "hasAccessibility": false,
@@ -24895,7 +25736,7 @@
       "charnel"
     ],
     "capacity": null,
-    "lastUpdated": null,
+    "lastUpdated": "2012-07-16",
     "hasParking": true,
     "hasRestaurant": false,
     "hasAccessibility": true,
@@ -25056,7 +25897,7 @@
       "grave"
     ],
     "capacity": null,
-    "lastUpdated": null,
+    "lastUpdated": "2016-05-16",
     "hasParking": true,
     "hasRestaurant": false,
     "hasAccessibility": false,
@@ -25279,7 +26120,7 @@
       "charnel"
     ],
     "capacity": null,
-    "lastUpdated": null,
+    "lastUpdated": "2022-12-16",
     "hasParking": false,
     "hasRestaurant": false,
     "hasAccessibility": false,
@@ -25304,7 +26145,7 @@
       "charnel"
     ],
     "capacity": 500,
-    "lastUpdated": null,
+    "lastUpdated": "2012-07-16",
     "hasParking": true,
     "hasRestaurant": true,
     "hasAccessibility": true,
@@ -25598,7 +26439,7 @@
       "charnel"
     ],
     "capacity": null,
-    "lastUpdated": null,
+    "lastUpdated": "2022-03-16",
     "hasParking": true,
     "hasRestaurant": false,
     "hasAccessibility": true,
@@ -25608,7 +26449,7 @@
     "id": "park-0706",
     "name": "삼성개발공원묘원(봉안)",
     "originalName": "706.삼성개발공원묘원(봉안)_price_info.png",
-    "address": "",
+    "address": "경기도 광주시 오포로 211-50 (능평동)",
     "coordinates": {
       "lat": 0,
       "lng": 0
@@ -25616,7 +26457,8 @@
     "category": "F",
     "phone": "",
     "website": "",
-    "images": []
+    "images": [],
+    "lastUpdated": "2017-10-16"
   },
   {
     "id": "park-0707",
@@ -25989,7 +26831,7 @@
     "id": "park-0717",
     "name": "구미시공설숭조당 제1관",
     "originalName": "717.구미시공설숭조당 제1관_price_info.png",
-    "address": "",
+    "address": "경상북도 구미시 옥성면 선상동로 419 (초곡리)",
     "coordinates": {
       "lat": 0,
       "lng": 0
@@ -25997,7 +26839,8 @@
     "category": "F",
     "phone": "",
     "website": "",
-    "images": []
+    "images": [],
+    "lastUpdated": "2025-11-16"
   },
   {
     "id": "park-0718",
@@ -26096,7 +26939,7 @@
     "id": "park-0721",
     "name": "목포추모공원 추모의집",
     "originalName": "721.목포추모공원 추모의집_price_info.png",
-    "address": "",
+    "address": "전라남도 목포시 고하대로 1140-41 (대양동)",
     "coordinates": {
       "lat": 0,
       "lng": 0
@@ -26104,7 +26947,8 @@
     "category": "F",
     "phone": "",
     "website": "",
-    "images": []
+    "images": [],
+    "lastUpdated": "2016-02-16"
   },
   {
     "id": "park-0722",
@@ -26528,7 +27372,7 @@
     "id": "park-0733",
     "name": "이천시립 추모의집(봉안)",
     "originalName": "733.이천시립 추모의집(봉안)_price_info.png",
-    "address": "",
+    "address": "경기도 이천시 백사면 지읍로53번길 159 (조읍리)",
     "coordinates": {
       "lat": 0,
       "lng": 0
@@ -26536,7 +27380,8 @@
     "category": "F",
     "phone": "",
     "website": "",
-    "images": []
+    "images": [],
+    "lastUpdated": "2020-11-16"
   },
   {
     "id": "park-0734",
@@ -26615,7 +27460,7 @@
     "id": "park-0736",
     "name": "광양시립영세공원 봉안당",
     "originalName": "736.광양시립영세공원 봉안당_price_info.png",
-    "address": "",
+    "address": "전라남도 광양시 광양읍 직동1길 300 (죽림리)",
     "coordinates": {
       "lat": 0,
       "lng": 0
@@ -26623,13 +27468,14 @@
     "category": "F",
     "phone": "",
     "website": "",
-    "images": []
+    "images": [],
+    "lastUpdated": "2016-08-16"
   },
   {
     "id": "park-0737",
     "name": "동대문구추모의집",
     "originalName": "737.동대문구추모의집_price_info.png",
-    "address": "",
+    "address": "충청북도 음성군 금왕읍 덕금로 936-61 (용계리)",
     "coordinates": {
       "lat": 0,
       "lng": 0
@@ -26637,7 +27483,8 @@
     "category": "F",
     "phone": "",
     "website": "",
-    "images": []
+    "images": [],
+    "lastUpdated": "2012-07-16"
   },
   {
     "id": "park-0738",
@@ -26712,7 +27559,7 @@
     "id": "park-0740",
     "name": "속초시공설봉안묘",
     "originalName": "740.속초시공설봉안묘_price_info.png",
-    "address": "",
+    "address": "강원특별자치도 속초시 이목로 196 (노학동)",
     "coordinates": {
       "lat": 0,
       "lng": 0
@@ -26720,7 +27567,8 @@
     "category": "F",
     "phone": "",
     "website": "",
-    "images": []
+    "images": [],
+    "lastUpdated": "2017-04-16"
   },
   {
     "id": "park-0741",
@@ -26866,7 +27714,7 @@
     "id": "park-0745",
     "name": "태백시납골당",
     "originalName": "745.태백시납골당_price_info.png",
-    "address": "",
+    "address": "강원도 태백시 백두대간로 844 (창죽동, 태백공동묘지)",
     "coordinates": {
       "lat": 0,
       "lng": 0
@@ -26874,7 +27722,8 @@
     "category": "F",
     "phone": "",
     "website": "",
-    "images": []
+    "images": [],
+    "lastUpdated": "2012-07-16"
   },
   {
     "id": "park-0746",
@@ -27034,7 +27883,7 @@
     "id": "park-0750",
     "name": "성남장례문화사업소 하늘누리 제2추모원",
     "originalName": "750.성남장례문화사업소 하늘누리 제2추모원_price_info.png",
-    "address": "",
+    "address": "경기도 성남시 중원구 순암로 787 (갈현동, 장례문화사업소)",
     "coordinates": {
       "lat": 0,
       "lng": 0
@@ -27042,7 +27891,8 @@
     "category": "F",
     "phone": "",
     "website": "",
-    "images": []
+    "images": [],
+    "lastUpdated": "2022-03-16"
   },
   {
     "id": "park-0751",
@@ -27178,7 +28028,7 @@
     "id": "park-0755",
     "name": "서산시 희망공원(봉안시설)",
     "originalName": "755.서산시 희망공원(봉안시설)_price_info.png",
-    "address": "",
+    "address": "충청남도 서산시 인지면 무학재2길 106 (산동리)",
     "coordinates": {
       "lat": 0,
       "lng": 0
@@ -27186,7 +28036,8 @@
     "category": "F",
     "phone": "",
     "website": "",
-    "images": []
+    "images": [],
+    "lastUpdated": "2012-07-16"
   },
   {
     "id": "park-0756",
@@ -27353,7 +28204,7 @@
     "id": "park-0760",
     "name": "남해추모누리 안락원",
     "originalName": "760.남해추모누리 안락원_price_info.png",
-    "address": "",
+    "address": "경상남도 남해군 서면 연죽로 46-77 (연죽리, 남해공설종합묘원추모누리)",
     "coordinates": {
       "lat": 0,
       "lng": 0
@@ -27361,7 +28212,8 @@
     "category": "F",
     "phone": "",
     "website": "",
-    "images": []
+    "images": [],
+    "lastUpdated": "2021-02-16"
   },
   {
     "id": "park-0761",
@@ -27693,7 +28545,7 @@
     "id": "park-0769",
     "name": "쌍용사 봉안탑",
     "originalName": "769.쌍용사 봉안탑_price_info.png",
-    "address": "",
+    "address": "경상북도 문경시 농암면 칠봉로 755 (율수리, 쌍용사)",
     "coordinates": {
       "lat": 0,
       "lng": 0
@@ -27701,7 +28553,8 @@
     "category": "F",
     "phone": "",
     "website": "",
-    "images": []
+    "images": [],
+    "lastUpdated": "2022-10-16"
   },
   {
     "id": "park-0770",
@@ -27970,7 +28823,7 @@
     "id": "park-0777",
     "name": "청양군추모공원(봉안당)",
     "originalName": "777.청양군추모공원(봉안당)_price_info.png",
-    "address": "",
+    "address": "충청남도 청양군 화성면 신수길 142-18 (수정리)",
     "coordinates": {
       "lat": 0,
       "lng": 0
@@ -27978,7 +28831,8 @@
     "category": "F",
     "phone": "",
     "website": "",
-    "images": []
+    "images": [],
+    "lastUpdated": "2020-09-16"
   },
   {
     "id": "park-0778",
@@ -28270,7 +29124,7 @@
     "id": "park-0786",
     "name": "여수시영락공원 제2봉안당",
     "originalName": "786.여수시영락공원 제2봉안당_price_info.png",
-    "address": "",
+    "address": "전라남도 여수시 소라면 의곡길 494 (봉두리, 영락공원)",
     "coordinates": {
       "lat": 0,
       "lng": 0
@@ -28278,13 +29132,14 @@
     "category": "F",
     "phone": "",
     "website": "",
-    "images": []
+    "images": [],
+    "lastUpdated": "2016-06-16"
   },
   {
     "id": "park-0787",
     "name": "안흥동공설묘지(봉안시설)",
     "originalName": "787.안흥동공설묘지(봉안시설)_price_info.png",
-    "address": "",
+    "address": "경기도 동두천시 안흥동 산62",
     "coordinates": {
       "lat": 0,
       "lng": 0
@@ -28292,7 +29147,8 @@
     "category": "F",
     "phone": "",
     "website": "",
-    "images": []
+    "images": [],
+    "lastUpdated": "2016-08-16"
   },
   {
     "id": "park-0788",
@@ -28439,7 +29295,7 @@
     "id": "park-0792",
     "name": "상락향 봉안탑",
     "originalName": "792.상락향 봉안탑_price_info.png",
-    "address": "",
+    "address": "경기도 가평군 청평면 남이터길 65 (대성리, 상락향수도원)",
     "coordinates": {
       "lat": 0,
       "lng": 0
@@ -28447,13 +29303,14 @@
     "category": "F",
     "phone": "",
     "website": "",
-    "images": []
+    "images": [],
+    "lastUpdated": "2023-10-16"
   },
   {
     "id": "park-0793",
     "name": "춘천안식공원(안식의집)",
     "originalName": "793.춘천안식공원(안식의집)_price_info.png",
-    "address": "",
+    "address": "강원특별자치도 춘천시 동산면 종자리로 331-50 (군자리, 춘천시공설묘원)",
     "coordinates": {
       "lat": 0,
       "lng": 0
@@ -28461,13 +29318,14 @@
     "category": "F",
     "phone": "",
     "website": "",
-    "images": []
+    "images": [],
+    "lastUpdated": "2018-04-16"
   },
   {
     "id": "park-0794",
     "name": "인천가족공원 평온당",
     "originalName": "794.인천가족공원 평온당_price_info.png",
-    "address": "",
+    "address": "인천광역시 부평구 평온로 61 (부평동)",
     "coordinates": {
       "lat": 0,
       "lng": 0
@@ -28475,7 +29333,8 @@
     "category": "F",
     "phone": "",
     "website": "",
-    "images": []
+    "images": [],
+    "lastUpdated": "2017-08-16"
   },
   {
     "id": "park-0795",
@@ -28541,7 +29400,7 @@
     "id": "park-0797",
     "name": "성북구추모의집",
     "originalName": "797.성북구추모의집_price_info.png",
-    "address": "",
+    "address": "경기도 화성시 향남읍 서봉로755번길 17-15 (동오리)",
     "coordinates": {
       "lat": 0,
       "lng": 0
@@ -28549,7 +29408,8 @@
     "category": "F",
     "phone": "",
     "website": "",
-    "images": []
+    "images": [],
+    "lastUpdated": "2021-03-16"
   },
   {
     "id": "park-0798",
@@ -28644,7 +29504,7 @@
     "id": "park-0800",
     "name": "예은추모공원",
     "originalName": "800.예은추모공원_price_info.png",
-    "address": "",
+    "address": "충청북도 음성군 금왕읍 덕금로 936-61 (용계리)",
     "coordinates": {
       "lat": 0,
       "lng": 0
@@ -28652,7 +29512,8 @@
     "category": "F",
     "phone": "",
     "website": "",
-    "images": []
+    "images": [],
+    "lastUpdated": "2010-11-16"
   },
   {
     "id": "park-0801",
@@ -28810,7 +29671,7 @@
       "charnel"
     ],
     "capacity": null,
-    "lastUpdated": null,
+    "lastUpdated": "2021-03-16",
     "hasParking": true,
     "hasRestaurant": false,
     "hasAccessibility": true,
@@ -28835,7 +29696,7 @@
       "charnel"
     ],
     "capacity": null,
-    "lastUpdated": null,
+    "lastUpdated": "2020-09-16",
     "hasParking": true,
     "hasRestaurant": false,
     "hasAccessibility": true,
@@ -28890,7 +29751,7 @@
       "charnel"
     ],
     "capacity": null,
-    "lastUpdated": null,
+    "lastUpdated": "2016-05-16",
     "hasParking": true,
     "hasRestaurant": false,
     "hasAccessibility": true,
@@ -28990,7 +29851,7 @@
       "charnel"
     ],
     "capacity": null,
-    "lastUpdated": null,
+    "lastUpdated": "2012-07-16",
     "hasParking": null,
     "hasRestaurant": false,
     "hasAccessibility": false,
@@ -29128,7 +29989,7 @@
       "charnel"
     ],
     "capacity": null,
-    "lastUpdated": null,
+    "lastUpdated": "2016-06-16",
     "hasParking": true,
     "hasRestaurant": false,
     "hasAccessibility": false,
@@ -29153,7 +30014,7 @@
       "charnel"
     ],
     "capacity": null,
-    "lastUpdated": null,
+    "lastUpdated": "2012-07-16",
     "hasParking": true,
     "hasRestaurant": false,
     "hasAccessibility": true,
@@ -29245,7 +30106,7 @@
       "charnel"
     ],
     "capacity": null,
-    "lastUpdated": null,
+    "lastUpdated": "2012-07-16",
     "hasParking": null,
     "hasRestaurant": null,
     "hasAccessibility": true,
@@ -29270,7 +30131,7 @@
       "charnel"
     ],
     "capacity": null,
-    "lastUpdated": null,
+    "lastUpdated": "2023-10-16",
     "hasParking": true,
     "hasRestaurant": false,
     "hasAccessibility": true,
@@ -29325,7 +30186,7 @@
       "charnel"
     ],
     "capacity": null,
-    "lastUpdated": null,
+    "lastUpdated": "2012-07-16",
     "hasParking": true,
     "hasRestaurant": false,
     "hasAccessibility": true,
@@ -29387,7 +30248,7 @@
       "grave"
     ],
     "capacity": null,
-    "lastUpdated": null,
+    "lastUpdated": "2016-05-16",
     "hasParking": false,
     "hasRestaurant": false,
     "hasAccessibility": false,
@@ -29412,7 +30273,7 @@
       "charnel"
     ],
     "capacity": null,
-    "lastUpdated": null,
+    "lastUpdated": "2012-07-16",
     "hasParking": null,
     "hasRestaurant": null,
     "hasAccessibility": null,
@@ -29463,7 +30324,7 @@
       "grave"
     ],
     "capacity": null,
-    "lastUpdated": null,
+    "lastUpdated": "2018-04-16",
     "hasParking": true,
     "hasRestaurant": false,
     "hasAccessibility": true,
@@ -29548,7 +30409,7 @@
       "charnel"
     ],
     "capacity": null,
-    "lastUpdated": null,
+    "lastUpdated": "2020-09-16",
     "hasParking": true,
     "hasRestaurant": false,
     "hasAccessibility": true,
@@ -29653,7 +30514,7 @@
       "grave"
     ],
     "capacity": null,
-    "lastUpdated": null,
+    "lastUpdated": "2012-07-16",
     "hasParking": null,
     "hasRestaurant": null,
     "hasAccessibility": null,
@@ -29834,7 +30695,7 @@
       "charnel"
     ],
     "capacity": 200,
-    "lastUpdated": null,
+    "lastUpdated": "2015-05-16",
     "hasParking": true,
     "hasRestaurant": false,
     "hasAccessibility": true,
@@ -29894,7 +30755,7 @@
     "isPublic": true,
     "categories": [],
     "capacity": null,
-    "lastUpdated": null,
+    "lastUpdated": "2016-05-16",
     "hasParking": false,
     "hasRestaurant": false,
     "hasAccessibility": false,
@@ -29919,7 +30780,7 @@
       "grave"
     ],
     "capacity": null,
-    "lastUpdated": null,
+    "lastUpdated": "2017-08-16",
     "hasParking": true,
     "hasRestaurant": false,
     "hasAccessibility": true,
@@ -29974,7 +30835,7 @@
       "charnel"
     ],
     "capacity": null,
-    "lastUpdated": null,
+    "lastUpdated": "2016-05-16",
     "hasParking": true,
     "hasRestaurant": false,
     "hasAccessibility": false,
@@ -30272,7 +31133,7 @@
       "charnel"
     ],
     "capacity": null,
-    "lastUpdated": null,
+    "lastUpdated": "2022-06-16",
     "hasParking": true,
     "hasRestaurant": false,
     "hasAccessibility": true,
@@ -30297,7 +31158,7 @@
       "charnel"
     ],
     "capacity": null,
-    "lastUpdated": null,
+    "lastUpdated": "2021-04-16",
     "hasParking": null,
     "hasRestaurant": null,
     "hasAccessibility": null,
@@ -30352,7 +31213,7 @@
       "grave"
     ],
     "capacity": null,
-    "lastUpdated": null,
+    "lastUpdated": "2016-05-16",
     "hasParking": null,
     "hasRestaurant": null,
     "hasAccessibility": null,
@@ -30377,7 +31238,7 @@
       "charnel"
     ],
     "capacity": null,
-    "lastUpdated": null,
+    "lastUpdated": "2011-11-16",
     "hasParking": null,
     "hasRestaurant": null,
     "hasAccessibility": null,
@@ -30492,7 +31353,7 @@
       "grave"
     ],
     "capacity": null,
-    "lastUpdated": null,
+    "lastUpdated": "2016-08-16",
     "hasParking": null,
     "hasRestaurant": false,
     "hasAccessibility": false,
@@ -30517,7 +31378,7 @@
       "charnel"
     ],
     "capacity": null,
-    "lastUpdated": null,
+    "lastUpdated": "2011-12-16",
     "hasParking": true,
     "hasRestaurant": false,
     "hasAccessibility": false,
@@ -30602,7 +31463,7 @@
       "charnel"
     ],
     "capacity": null,
-    "lastUpdated": null,
+    "lastUpdated": "2025-10-16",
     "hasParking": null,
     "hasRestaurant": null,
     "hasAccessibility": null,
@@ -30659,7 +31520,7 @@
       "grave"
     ],
     "capacity": 200,
-    "lastUpdated": null,
+    "lastUpdated": "2021-03-16",
     "hasParking": true,
     "hasRestaurant": false,
     "hasAccessibility": false,
@@ -30721,7 +31582,7 @@
       "charnel"
     ],
     "capacity": null,
-    "lastUpdated": null,
+    "lastUpdated": "2016-05-16",
     "hasParking": null,
     "hasRestaurant": false,
     "hasAccessibility": false,
@@ -30789,7 +31650,7 @@
       "charnel"
     ],
     "capacity": null,
-    "lastUpdated": null,
+    "lastUpdated": "2023-07-16",
     "hasParking": true,
     "hasRestaurant": false,
     "hasAccessibility": true,
@@ -30814,7 +31675,7 @@
       "charnel"
     ],
     "capacity": null,
-    "lastUpdated": null,
+    "lastUpdated": "2016-05-16",
     "hasParking": true,
     "hasRestaurant": false,
     "hasAccessibility": true,
@@ -30876,7 +31737,7 @@
       "grave"
     ],
     "capacity": 200,
-    "lastUpdated": null,
+    "lastUpdated": "2021-03-16",
     "hasParking": true,
     "hasRestaurant": false,
     "hasAccessibility": true,
@@ -30886,7 +31747,7 @@
     "id": "park-0873",
     "name": "광진구추모의집",
     "originalName": "873.광진구추모의집_price_info.png",
-    "address": "",
+    "address": "경기도 화성시 향남읍 서봉로755번길 17-15(동오리)",
     "coordinates": {
       "lat": 0,
       "lng": 0
@@ -30894,13 +31755,14 @@
     "category": "F",
     "phone": "",
     "website": "",
-    "images": []
+    "images": [],
+    "lastUpdated": "2021-03-16"
   },
   {
     "id": "park-0874",
     "name": "성동구추모의집",
     "originalName": "874.성동구추모의집_price_info.png",
-    "address": "",
+    "address": "경기도 화성시 향남읍 서봉로755번길 17-15(동오리)",
     "coordinates": {
       "lat": 0,
       "lng": 0
@@ -30908,13 +31770,14 @@
     "category": "F",
     "phone": "",
     "website": "",
-    "images": []
+    "images": [],
+    "lastUpdated": "2021-03-16"
   },
   {
     "id": "park-0875",
     "name": "중구추모의집",
     "originalName": "875.중구추모의집_price_info.png",
-    "address": "",
+    "address": "경기도 화성시 향남읍 서봉로755번길 17-15(동오리)",
     "coordinates": {
       "lat": 0,
       "lng": 0
@@ -30922,7 +31785,8 @@
     "category": "F",
     "phone": "",
     "website": "",
-    "images": []
+    "images": [],
+    "lastUpdated": "2021-03-16"
   },
   {
     "id": "park-0876",
@@ -30960,7 +31824,7 @@
     "id": "park-0877",
     "name": "대구광역시 낙산제2추모의집",
     "originalName": "877.대구광역시 낙산제2추모의집_price_info.png",
-    "address": "",
+    "address": "경상북도 칠곡군 지천면 낙산로 87 (낙산리)",
     "coordinates": {
       "lat": 0,
       "lng": 0
@@ -30968,7 +31832,8 @@
     "category": "F",
     "phone": "",
     "website": "",
-    "images": []
+    "images": [],
+    "lastUpdated": "2018-02-16"
   },
   {
     "id": "park-0878",
@@ -31010,7 +31875,7 @@
     "id": "park-0879",
     "name": "익산시 추모의집 제1관",
     "originalName": "879.익산시 추모의집 제1관_price_info.png",
-    "address": "",
+    "address": "전라북도 익산시 무왕로 1471-63 (석왕동, 익산공원묘지)",
     "coordinates": {
       "lat": 0,
       "lng": 0
@@ -31018,7 +31883,8 @@
     "category": "F",
     "phone": "",
     "website": "",
-    "images": []
+    "images": [],
+    "lastUpdated": "2016-05-16"
   },
   {
     "id": "park-0880",
@@ -31112,7 +31978,7 @@
     "id": "park-0882",
     "name": "대구광역시 낙산추모의집",
     "originalName": "882.대구광역시 낙산추모의집_price_info.png",
-    "address": "",
+    "address": "경상북도 칠곡군 지천면 낙산로 87 (낙산리)",
     "coordinates": {
       "lat": 0,
       "lng": 0
@@ -31120,7 +31986,8 @@
     "category": "F",
     "phone": "",
     "website": "",
-    "images": []
+    "images": [],
+    "lastUpdated": "2018-02-16"
   },
   {
     "id": "park-0883",
@@ -31401,7 +32268,7 @@
     "id": "park-0891",
     "name": "양지공원 제3추모의집",
     "originalName": "891.양지공원 제3추모의집_price_info.png",
-    "address": "",
+    "address": "제주특별자치도 제주시 516로 2810-31 (영평동, 양지공원)",
     "coordinates": {
       "lat": 0,
       "lng": 0
@@ -31409,7 +32276,8 @@
     "category": "F",
     "phone": "",
     "website": "",
-    "images": []
+    "images": [],
+    "lastUpdated": "1969-03-16"
   },
   {
     "id": "park-0892",
@@ -31514,7 +32382,7 @@
     "id": "park-0895",
     "name": "동화경모공원(봉안)",
     "originalName": "895.동화경모공원(봉안)_price_info.png",
-    "address": "",
+    "address": "경기도 파주시 탄현면 헤이리로 98 (법흥리, 동화경모공원)",
     "coordinates": {
       "lat": 0,
       "lng": 0
@@ -31522,7 +32390,8 @@
     "category": "F",
     "phone": "",
     "website": "",
-    "images": []
+    "images": [],
+    "lastUpdated": "1969-03-16"
   },
   {
     "id": "park-0896",
@@ -31955,7 +32824,7 @@
     "id": "park-0910",
     "name": "인천가족공원 봉안담",
     "originalName": "910.인천가족공원 봉안담_price_info.png",
-    "address": "",
+    "address": "인천광역시 부평구 평온로 61 (부평동)",
     "coordinates": {
       "lat": 0,
       "lng": 0
@@ -31963,7 +32832,8 @@
     "category": "F",
     "phone": "",
     "website": "",
-    "images": []
+    "images": [],
+    "lastUpdated": "1969-03-16"
   },
   {
     "id": "park-0911",
@@ -32089,7 +32959,7 @@
     "id": "park-0915",
     "name": "(재)우성공원 봉안당",
     "originalName": "915.(재)우성공원 봉안당_price_info.png",
-    "address": "",
+    "address": "경상북도 성주군 선남면 관용로 470-54 (용신리, 우성공원사무소)",
     "coordinates": {
       "lat": 0,
       "lng": 0
@@ -32097,7 +32967,8 @@
     "category": "F",
     "phone": "",
     "website": "",
-    "images": []
+    "images": [],
+    "lastUpdated": "1969-03-16"
   },
   {
     "id": "park-0916",
@@ -32197,7 +33068,7 @@
     "id": "park-0919",
     "name": "천주교 황사평 봉안묘",
     "originalName": "919.천주교 황사평 봉안묘_price_info.png",
-    "address": "",
+    "address": "제주특별자치도 제주시 기와5길 117-22 (화북이동)",
     "coordinates": {
       "lat": 0,
       "lng": 0
@@ -32205,7 +33076,8 @@
     "category": "F",
     "phone": "",
     "website": "",
-    "images": []
+    "images": [],
+    "lastUpdated": "1969-03-16"
   },
   {
     "id": "park-0920",
@@ -32241,7 +33113,7 @@
     "id": "park-0921",
     "name": "삼광사추모공원 아미타봉안탑",
     "originalName": "921.삼광사추모공원 아미타봉안탑_price_info.png",
-    "address": "",
+    "address": "경상북도 성주군 월항면 지산로 208 (지방리, 삼광사)",
     "coordinates": {
       "lat": 0,
       "lng": 0
@@ -32249,7 +33121,8 @@
     "category": "F",
     "phone": "",
     "website": "",
-    "images": []
+    "images": [],
+    "lastUpdated": "1969-03-16"
   },
   {
     "id": "park-0922",
@@ -32711,7 +33584,7 @@
     "id": "park-0937",
     "name": "함양하늘공원(봉안시설)",
     "originalName": "937.함양하늘공원(봉안시설)_price_info.png",
-    "address": "",
+    "address": "경상남도 함양군 지곡면 함양로 2139-2 (마산리, 하늘공원)",
     "coordinates": {
       "lat": 0,
       "lng": 0
@@ -32719,7 +33592,8 @@
     "category": "F",
     "phone": "",
     "website": "",
-    "images": []
+    "images": [],
+    "lastUpdated": "1969-03-16"
   },
   {
     "id": "park-0938",
@@ -33055,7 +33929,7 @@
     "id": "park-0949",
     "name": "(재)우성공원 추모관",
     "originalName": "949.(재)우성공원 추모관_price_info.png",
-    "address": "",
+    "address": "경상북도 성주군 선남면 관용로 470-54 (용신리, 우성공원사무소)",
     "coordinates": {
       "lat": 0,
       "lng": 0
@@ -33063,7 +33937,8 @@
     "category": "F",
     "phone": "",
     "website": "",
-    "images": []
+    "images": [],
+    "lastUpdated": "1969-03-16"
   },
   {
     "id": "park-0950",
@@ -33443,7 +34318,7 @@
     "id": "park-0962",
     "name": "도성사 봉안탑",
     "originalName": "962.도성사 봉안탑_price_info.png",
-    "address": "",
+    "address": "경기도 포천시 화현면 화동로596번길 90 (화현리)",
     "coordinates": {
       "lat": 0,
       "lng": 0
@@ -33451,13 +34326,14 @@
     "category": "F",
     "phone": "",
     "website": "",
-    "images": []
+    "images": [],
+    "lastUpdated": "1969-03-16"
   },
   {
     "id": "park-0963",
     "name": "진달래메모리얼파크",
     "originalName": "963.진달래메모리얼파크_price_info.png",
-    "address": "",
+    "address": "충청북도 충주시 앙성면 와평2길 84 (지당리)",
     "coordinates": {
       "lat": 0,
       "lng": 0
@@ -33465,7 +34341,8 @@
     "category": "F",
     "phone": "",
     "website": "",
-    "images": []
+    "images": [],
+    "lastUpdated": "1969-03-16"
   },
   {
     "id": "park-0964",
@@ -33501,7 +34378,7 @@
     "id": "park-0965",
     "name": "송월교회 봉안묘·탑",
     "originalName": "965.송월교회 봉안묘·탑_price_info.png",
-    "address": "",
+    "address": "인천광역시 서구 마전동 산72-1",
     "coordinates": {
       "lat": 0,
       "lng": 0
@@ -33509,7 +34386,8 @@
     "category": "F",
     "phone": "",
     "website": "",
-    "images": []
+    "images": [],
+    "lastUpdated": "1969-03-16"
   },
   {
     "id": "park-0966",
@@ -33575,7 +34453,7 @@
     "id": "park-0968",
     "name": "아산메모리얼파크 휴온 봉안묘",
     "originalName": "968.아산메모리얼파크 휴온 봉안묘_price_info.png",
-    "address": "",
+    "address": "충청남도 아산시 송악면 외암로 55-15 (거산리)",
     "coordinates": {
       "lat": 0,
       "lng": 0
@@ -33583,13 +34461,14 @@
     "category": "F",
     "phone": "",
     "website": "",
-    "images": []
+    "images": [],
+    "lastUpdated": "1969-03-16"
   },
   {
     "id": "park-0969",
     "name": "천안노블랜드하늘공원 봉안담",
     "originalName": "969.천안노블랜드하늘공원 봉안담_price_info.png",
-    "address": "",
+    "address": "충청남도 천안시 서북구 입장면 시장리2길 77 (시장리)",
     "coordinates": {
       "lat": 0,
       "lng": 0
@@ -33597,7 +34476,8 @@
     "category": "F",
     "phone": "",
     "website": "",
-    "images": []
+    "images": [],
+    "lastUpdated": "1969-03-16"
   },
   {
     "id": "park-0970",
@@ -33723,7 +34603,7 @@
     "id": "park-0974",
     "name": "성불사 봉안당",
     "originalName": "974.성불사 봉안당_price_info.png",
-    "address": "",
+    "address": "충청남도 논산시 상월면 상월로486번길 81 (대명리)",
     "coordinates": {
       "lat": 0,
       "lng": 0
@@ -33731,7 +34611,8 @@
     "category": "F",
     "phone": "",
     "website": "",
-    "images": []
+    "images": [],
+    "lastUpdated": "1969-03-16"
   },
   {
     "id": "park-0975",
@@ -33767,7 +34648,7 @@
     "id": "park-0976",
     "name": "(재)하늘공원 봉안당",
     "originalName": "976.(재)하늘공원 봉안당_price_info.png",
-    "address": "",
+    "address": "전라북도 무주군 적상면 방이리 산158-1",
     "coordinates": {
       "lat": 0,
       "lng": 0
@@ -33775,7 +34656,8 @@
     "category": "F",
     "phone": "",
     "website": "",
-    "images": []
+    "images": [],
+    "lastUpdated": "1969-03-16"
   },
   {
     "id": "park-0977",
@@ -33871,7 +34753,7 @@
     "id": "park-0980",
     "name": "오봉사 봉안묘",
     "originalName": "980.오봉사 봉안묘_price_info.png",
-    "address": "",
+    "address": "경기도 연천군 연천읍 현문로245번길 384 (고문리)",
     "coordinates": {
       "lat": 0,
       "lng": 0
@@ -33879,7 +34761,8 @@
     "category": "F",
     "phone": "",
     "website": "",
-    "images": []
+    "images": [],
+    "lastUpdated": "1969-03-16"
   },
   {
     "id": "park-0981",
@@ -33975,7 +34858,7 @@
     "id": "park-0984",
     "name": "무지개추모공원 봉안탑(다래원)",
     "originalName": "984.무지개추모공원 봉안탑(다래원)_price_info.png",
-    "address": "",
+    "address": "충청북도 음성군 생극면 오신로445번길 77 (신양리)",
     "coordinates": {
       "lat": 0,
       "lng": 0
@@ -33983,7 +34866,8 @@
     "category": "F",
     "phone": "",
     "website": "",
-    "images": []
+    "images": [],
+    "lastUpdated": "1969-03-16"
   },
   {
     "id": "park-0985",
@@ -34049,7 +34933,7 @@
     "id": "park-0987",
     "name": "성림사 연화납골당(봉안탑)",
     "originalName": "987.성림사 연화납골당(봉안탑)_price_info.png",
-    "address": "",
+    "address": "충청북도 진천군 덕산읍 인화길 83 (산수리, 성림사)",
     "coordinates": {
       "lat": 0,
       "lng": 0
@@ -34057,7 +34941,8 @@
     "category": "F",
     "phone": "",
     "website": "",
-    "images": []
+    "images": [],
+    "lastUpdated": "1969-03-16"
   },
   {
     "id": "park-0988",
@@ -34305,7 +35190,7 @@
     "id": "park-0996",
     "name": "오봉산추모공원 봉안당",
     "originalName": "996.오봉산추모공원 봉안당_price_info.png",
-    "address": "",
+    "address": "경기도 의왕시 안골로 44 (고천동, 오봉정사)",
     "coordinates": {
       "lat": 0,
       "lng": 0
@@ -34313,7 +35198,8 @@
     "category": "F",
     "phone": "",
     "website": "",
-    "images": []
+    "images": [],
+    "lastUpdated": "1969-03-16"
   },
   {
     "id": "park-0997",
@@ -34379,7 +35265,7 @@
     "id": "park-0999",
     "name": "(재)생활불교 봉안탑",
     "originalName": "999.(재)생활불교 봉안탑_price_info.png",
-    "address": "",
+    "address": "충청북도 충주시 엄정면 향림길 314 (용산리)",
     "coordinates": {
       "lat": 0,
       "lng": 0
@@ -34387,7 +35273,8 @@
     "category": "F",
     "phone": "",
     "website": "",
-    "images": []
+    "images": [],
+    "lastUpdated": "1969-03-16"
   },
   {
     "id": "park-1000",
@@ -34722,7 +35609,7 @@
     "id": "park-1011",
     "name": "부산추모공원 봉안묘·담",
     "originalName": "1011.부산추모공원 봉안묘·담_price_info.png",
-    "address": "",
+    "address": "부산광역시 기장군 정관읍 정관로 225 (두명리, 부산추모공원)",
     "coordinates": {
       "lat": 0,
       "lng": 0
@@ -34730,7 +35617,8 @@
     "category": "F",
     "phone": "",
     "website": "",
-    "images": []
+    "images": [],
+    "lastUpdated": "1969-03-16"
   },
   {
     "id": "park-1012",
@@ -34766,7 +35654,7 @@
     "id": "park-1013",
     "name": "인천가족공원 호국봉안담",
     "originalName": "1013.인천가족공원 호국봉안담_price_info.png",
-    "address": "",
+    "address": "인천광역시 부평구 평온로 61 (부평동, 관리사무소및홍보관)",
     "coordinates": {
       "lat": 0,
       "lng": 0
@@ -34774,13 +35662,14 @@
     "category": "F",
     "phone": "",
     "website": "",
-    "images": []
+    "images": [],
+    "lastUpdated": "1969-03-16"
   },
   {
     "id": "park-1014",
     "name": "은하수공원 달님의집(봉안담)",
     "originalName": "1014.은하수공원 달님의집(봉안담)_price_info.png",
-    "address": "",
+    "address": "세종특별자치시 정안세종로 1527 (산울동, 은하수공원)",
     "coordinates": {
       "lat": 0,
       "lng": 0
@@ -34788,13 +35677,14 @@
     "category": "F",
     "phone": "",
     "website": "",
-    "images": []
+    "images": [],
+    "lastUpdated": "1969-03-16"
   },
   {
     "id": "park-1015",
     "name": "수원시연화장 제2추모의집",
     "originalName": "1015.수원시연화장 제2추모의집_price_info.png",
-    "address": "",
+    "address": "경기도 수원시 영통구 광교호수로 278 (하동, 수원시연화장)",
     "coordinates": {
       "lat": 0,
       "lng": 0
@@ -34802,7 +35692,8 @@
     "category": "F",
     "phone": "",
     "website": "",
-    "images": []
+    "images": [],
+    "lastUpdated": "1969-03-16"
   },
   {
     "id": "park-1016",
@@ -34823,7 +35714,7 @@
       "charnel"
     ],
     "capacity": null,
-    "lastUpdated": null,
+    "lastUpdated": "1969-03-16",
     "hasParking": null,
     "hasRestaurant": null,
     "hasAccessibility": null,
@@ -34908,7 +35799,7 @@
       "charnel"
     ],
     "capacity": null,
-    "lastUpdated": null,
+    "lastUpdated": "1969-03-16",
     "hasParking": false,
     "hasRestaurant": false,
     "hasAccessibility": false,
@@ -34931,7 +35822,7 @@
     "isPublic": true,
     "categories": [],
     "capacity": null,
-    "lastUpdated": null,
+    "lastUpdated": "1969-03-16",
     "hasParking": false,
     "hasRestaurant": false,
     "hasAccessibility": false,
@@ -35006,7 +35897,7 @@
     },
     "phone": "043-270-8578",
     "capacity": null,
-    "lastUpdated": null,
+    "lastUpdated": "1969-03-16",
     "originalName": "1022.청주시목련공원 제3목련당_price_info.png",
     "institutionType": "public",
     "categories": []
@@ -35065,7 +35956,7 @@
       "charnel"
     ],
     "capacity": null,
-    "lastUpdated": null,
+    "lastUpdated": "1969-03-16",
     "hasParking": null,
     "hasRestaurant": null,
     "hasAccessibility": null,
@@ -35221,7 +36112,7 @@
       "grave"
     ],
     "capacity": null,
-    "lastUpdated": null,
+    "lastUpdated": "1969-03-16",
     "hasParking": null,
     "hasRestaurant": null,
     "hasAccessibility": null,
@@ -35276,7 +36167,7 @@
       "charnel"
     ],
     "capacity": null,
-    "lastUpdated": null,
+    "lastUpdated": "1969-03-16",
     "hasParking": true,
     "hasRestaurant": true,
     "hasAccessibility": true,
@@ -35359,7 +36250,7 @@
     "isPublic": false,
     "categories": [],
     "capacity": null,
-    "lastUpdated": null,
+    "lastUpdated": "1969-03-16",
     "hasParking": null,
     "hasRestaurant": null,
     "hasAccessibility": null,
@@ -35384,7 +36275,7 @@
       "grave"
     ],
     "capacity": null,
-    "lastUpdated": null,
+    "lastUpdated": "1969-03-16",
     "hasParking": false,
     "hasRestaurant": false,
     "hasAccessibility": false,
@@ -35409,7 +36300,7 @@
       "grave"
     ],
     "capacity": null,
-    "lastUpdated": null,
+    "lastUpdated": "1969-03-16",
     "hasParking": false,
     "hasRestaurant": false,
     "hasAccessibility": false,
@@ -35434,7 +36325,7 @@
       "charnel"
     ],
     "capacity": null,
-    "lastUpdated": null,
+    "lastUpdated": "1969-03-16",
     "hasParking": null,
     "hasRestaurant": null,
     "hasAccessibility": null,
@@ -35459,7 +36350,7 @@
       "charnel"
     ],
     "capacity": null,
-    "lastUpdated": null,
+    "lastUpdated": "1969-03-16",
     "hasParking": null,
     "hasRestaurant": null,
     "hasAccessibility": null,
@@ -35840,7 +36731,7 @@
       "charnel"
     ],
     "capacity": null,
-    "lastUpdated": null,
+    "lastUpdated": "1969-03-16",
     "hasParking": true,
     "hasRestaurant": false,
     "hasAccessibility": false,
@@ -36236,7 +37127,7 @@
       "charnel"
     ],
     "capacity": null,
-    "lastUpdated": null,
+    "lastUpdated": "1969-03-16",
     "hasParking": true,
     "hasRestaurant": false,
     "hasAccessibility": true,
@@ -36261,7 +37152,7 @@
       "charnel"
     ],
     "capacity": null,
-    "lastUpdated": null,
+    "lastUpdated": "1969-03-16",
     "hasParking": null,
     "hasRestaurant": null,
     "hasAccessibility": null,
@@ -37112,7 +38003,7 @@
       "charnel"
     ],
     "capacity": null,
-    "lastUpdated": null,
+    "lastUpdated": "1969-03-16",
     "hasParking": true,
     "hasRestaurant": true,
     "hasAccessibility": true,
@@ -37167,7 +38058,7 @@
       "charnel"
     ],
     "capacity": null,
-    "lastUpdated": null,
+    "lastUpdated": "1969-03-16",
     "hasParking": null,
     "hasRestaurant": null,
     "hasAccessibility": null,
@@ -37256,7 +38147,7 @@
       "charnel"
     ],
     "capacity": null,
-    "lastUpdated": null,
+    "lastUpdated": "1969-03-16",
     "hasParking": true,
     "hasRestaurant": true,
     "hasAccessibility": true,
@@ -37461,7 +38352,7 @@
       "charnel"
     ],
     "capacity": null,
-    "lastUpdated": null,
+    "lastUpdated": "1969-03-16",
     "hasParking": true,
     "hasRestaurant": true,
     "hasAccessibility": true,
@@ -37830,7 +38721,7 @@
       "charnel"
     ],
     "capacity": null,
-    "lastUpdated": null,
+    "lastUpdated": "1969-03-16",
     "hasParking": null,
     "hasRestaurant": null,
     "hasAccessibility": null,
@@ -38043,7 +38934,7 @@
       "grave"
     ],
     "capacity": null,
-    "lastUpdated": null,
+    "lastUpdated": "1969-03-16",
     "hasParking": true,
     "hasRestaurant": false,
     "hasAccessibility": false,
@@ -38068,7 +38959,7 @@
       "charnel"
     ],
     "capacity": null,
-    "lastUpdated": null,
+    "lastUpdated": "1969-03-16",
     "hasParking": true,
     "hasRestaurant": true,
     "hasAccessibility": true,
@@ -38091,7 +38982,7 @@
     "isPublic": true,
     "categories": [],
     "capacity": null,
-    "lastUpdated": null,
+    "lastUpdated": "1969-03-16",
     "hasParking": false,
     "hasRestaurant": false,
     "hasAccessibility": false,
@@ -38116,7 +39007,7 @@
       "charnel"
     ],
     "capacity": null,
-    "lastUpdated": null,
+    "lastUpdated": "1969-03-16",
     "hasParking": true,
     "hasRestaurant": false,
     "hasAccessibility": false,
@@ -38441,7 +39332,7 @@
       "grave"
     ],
     "capacity": null,
-    "lastUpdated": null,
+    "lastUpdated": "1969-03-16",
     "hasParking": true,
     "hasRestaurant": false,
     "hasAccessibility": false,
@@ -38526,7 +39417,7 @@
       "charnel"
     ],
     "capacity": null,
-    "lastUpdated": null,
+    "lastUpdated": "1969-03-16",
     "hasParking": null,
     "hasRestaurant": null,
     "hasAccessibility": null,
@@ -38551,7 +39442,7 @@
       "charnel"
     ],
     "capacity": null,
-    "lastUpdated": null,
+    "lastUpdated": "1969-03-16",
     "hasParking": null,
     "hasRestaurant": null,
     "hasAccessibility": null,
@@ -38606,7 +39497,7 @@
       "grave"
     ],
     "capacity": null,
-    "lastUpdated": null,
+    "lastUpdated": "1969-03-16",
     "hasParking": true,
     "hasRestaurant": true,
     "hasAccessibility": true,
@@ -38751,7 +39642,7 @@
       "grave"
     ],
     "capacity": null,
-    "lastUpdated": null,
+    "lastUpdated": "1969-03-16",
     "hasParking": true,
     "hasRestaurant": false,
     "hasAccessibility": false,
@@ -38941,7 +39832,7 @@
     "id": "park-1155",
     "name": "화성시추모공원 봉안묘",
     "originalName": "1155.화성시추모공원 봉안묘_price_info.png",
-    "address": "",
+    "address": "경기도 화성시 비봉면 주석로 545 (청요리, 화성시추모공원)",
     "coordinates": {
       "lat": 0,
       "lng": 0
@@ -38949,7 +39840,8 @@
     "category": "F",
     "phone": "",
     "website": "",
-    "images": []
+    "images": [],
+    "lastUpdated": "1969-03-16"
   },
   {
     "id": "park-1156",
@@ -39105,7 +39997,7 @@
     "id": "park-1161",
     "name": "인천가족공원 승화원 부속 봉안당",
     "originalName": "1161.인천가족공원 승화원 부속 봉안당_price_info.png",
-    "address": "",
+    "address": "인천광역시 부평구 평온로 61 (부평동, 관리사무소및홍보관)",
     "coordinates": {
       "lat": 0,
       "lng": 0
@@ -39113,13 +40005,14 @@
     "category": "F",
     "phone": "",
     "website": "",
-    "images": []
+    "images": [],
+    "lastUpdated": "1969-03-16"
   },
   {
     "id": "park-1162",
     "name": "인천가족공원 가족봉안묘",
     "originalName": "1162.인천가족공원 가족봉안묘_price_info.png",
-    "address": "",
+    "address": "인천광역시 부평구 평온로 61 (부평동, 관리사무소및홍보관)",
     "coordinates": {
       "lat": 0,
       "lng": 0
@@ -39127,13 +40020,14 @@
     "category": "F",
     "phone": "",
     "website": "",
-    "images": []
+    "images": [],
+    "lastUpdated": "1969-03-16"
   },
   {
     "id": "park-1163",
     "name": "영월군 봉안당",
     "originalName": "1163.영월군 봉안당_price_info.png",
-    "address": "",
+    "address": "강원특별자치도 영월군 주천면 솔치로 240-120 (신일리)",
     "coordinates": {
       "lat": 0,
       "lng": 0
@@ -39141,7 +40035,8 @@
     "category": "F",
     "phone": "",
     "website": "",
-    "images": []
+    "images": [],
+    "lastUpdated": "1969-03-16"
   },
   {
     "id": "park-1164",
@@ -39177,7 +40072,7 @@
     "id": "park-1165",
     "name": "천주교 인천교구 하늘의문(봉안당)",
     "originalName": "1165.천주교 인천교구 하늘의문(봉안당)_price_info.png",
-    "address": "",
+    "address": "인천광역시 서구 드림로 472 (당하동, 하늘의문묘지)",
     "coordinates": {
       "lat": 0,
       "lng": 0
@@ -39185,7 +40080,8 @@
     "category": "F",
     "phone": "",
     "website": "",
-    "images": []
+    "images": [],
+    "lastUpdated": "1969-03-16"
   },
   {
     "id": "park-1166",
@@ -39288,7 +40184,7 @@
     "id": "park-1169",
     "name": "천불사 봉안탑",
     "originalName": "1169.천불사 봉안탑_price_info.png",
-    "address": "",
+    "address": "경상남도 양산시 매곡4길 35 (매곡동)",
     "coordinates": {
       "lat": 0,
       "lng": 0
@@ -39296,13 +40192,14 @@
     "category": "F",
     "phone": "",
     "website": "",
-    "images": []
+    "images": [],
+    "lastUpdated": "1969-03-16"
   },
   {
     "id": "park-1170",
     "name": "일승종개원사 봉안당",
     "originalName": "1170.일승종개원사 봉안당_price_info.png",
-    "address": "",
+    "address": "경상북도 영천시 신녕면 장수로 2238-28 (화남리)",
     "coordinates": {
       "lat": 0,
       "lng": 0
@@ -39310,7 +40207,8 @@
     "category": "F",
     "phone": "",
     "website": "",
-    "images": []
+    "images": [],
+    "lastUpdated": "1969-03-16"
   },
   {
     "id": "park-1171",
@@ -39487,7 +40385,7 @@
     "id": "park-1177",
     "name": "은하수공원 자연장지",
     "originalName": "1177.은하수공원 자연장지_price_info.png",
-    "address": "",
+    "address": "세종특별자치시 정안세종로 1527 (산울동, 은하수공원)",
     "coordinates": {
       "lat": 0,
       "lng": 0
@@ -39495,7 +40393,8 @@
     "category": "F",
     "phone": "",
     "website": "",
-    "images": []
+    "images": [],
+    "lastUpdated": "2024-11-16"
   },
   {
     "id": "park-1178",
@@ -39579,7 +40478,7 @@
     "id": "park-1180",
     "name": "대한예수교장로회 효자수목원",
     "originalName": "1180.대한예수교장로회 효자수목원_price_info.png",
-    "address": "",
+    "address": "전라북도 전주시 완산구 콩쥐팥쥐로 1705-31 (효자동3가, 효자추모관)",
     "coordinates": {
       "lat": 0,
       "lng": 0
@@ -39587,7 +40486,8 @@
     "category": "F",
     "phone": "",
     "website": "",
-    "images": []
+    "images": [],
+    "lastUpdated": "2022-05-16"
   },
   {
     "id": "park-1181",
@@ -39727,7 +40627,7 @@
     "id": "park-1184",
     "name": "남해추모누리공원 자연장지",
     "originalName": "1184.남해추모누리공원 자연장지_price_info.png",
-    "address": "",
+    "address": "경상남도 남해군 서면 연죽로 46-77 (연죽리, 남해공설종합묘원추모누리)",
     "coordinates": {
       "lat": 0,
       "lng": 0
@@ -39735,13 +40635,14 @@
     "category": "F",
     "phone": "",
     "website": "",
-    "images": []
+    "images": [],
+    "lastUpdated": "2021-02-16"
   },
   {
     "id": "park-1185",
     "name": "불광사 양지수목장",
     "originalName": "1185.불광사 양지수목장_price_info.png",
-    "address": "",
+    "address": "경기도 용인시 처인구 백암면 박곡로208번길 24 (박곡리)",
     "coordinates": {
       "lat": 0,
       "lng": 0
@@ -39749,13 +40650,14 @@
     "category": "F",
     "phone": "",
     "website": "",
-    "images": []
+    "images": [],
+    "lastUpdated": "2025-11-16"
   },
   {
     "id": "park-1186",
     "name": "유토피아수목장",
     "originalName": "1186.유토피아수목장_price_info.png",
-    "address": "",
+    "address": "경기도 안성시 일죽면 화곡길 130 (화곡리, 유토피아추모관)",
     "coordinates": {
       "lat": 0,
       "lng": 0
@@ -39763,7 +40665,8 @@
     "category": "F",
     "phone": "",
     "website": "",
-    "images": []
+    "images": [],
+    "lastUpdated": "2021-07-16"
   },
   {
     "id": "park-1187",
@@ -39981,7 +40884,7 @@
     "id": "park-1192",
     "name": "천봉사 자연장지",
     "originalName": "1192.천봉사 자연장지_price_info.png",
-    "address": "",
+    "address": "강원특별자치도 홍천군 서면 팔봉산로 118 (대곡리)",
     "coordinates": {
       "lat": 0,
       "lng": 0
@@ -39989,7 +40892,8 @@
     "category": "F",
     "phone": "",
     "website": "",
-    "images": []
+    "images": [],
+    "lastUpdated": "2018-08-16"
   },
   {
     "id": "park-1193",
@@ -40088,7 +40992,7 @@
     "id": "park-1195",
     "name": "용인평온의숲(예정원)",
     "originalName": "1195.용인평온의숲(예정원)_price_info.png",
-    "address": "",
+    "address": "경기도 용인시 처인구 이동면 평온의숲로 77 (어비리, 용인평온의숲)",
     "coordinates": {
       "lat": 0,
       "lng": 0
@@ -40096,13 +41000,14 @@
     "category": "F",
     "phone": "",
     "website": "",
-    "images": []
+    "images": [],
+    "lastUpdated": "2016-04-16"
   },
   {
     "id": "park-1196",
     "name": "백양사 수목장",
     "originalName": "1196.백양사 수목장_price_info.png",
-    "address": "",
+    "address": "전라남도 장성군 북하면 백양로 1239 (약수리, 백양사)",
     "coordinates": {
       "lat": 0,
       "lng": 0
@@ -40110,7 +41015,8 @@
     "category": "F",
     "phone": "",
     "website": "",
-    "images": []
+    "images": [],
+    "lastUpdated": "2020-12-16"
   },
   {
     "id": "park-1197",
@@ -40153,7 +41059,7 @@
     "id": "park-1198",
     "name": "삼척시추모공원 자연장",
     "originalName": "1198.삼척시추모공원 자연장_price_info.png",
-    "address": "",
+    "address": "강원특별자치도 삼척시 강원남부로 4540 (등봉동)",
     "coordinates": {
       "lat": 0,
       "lng": 0
@@ -40161,13 +41067,14 @@
     "category": "F",
     "phone": "",
     "website": "",
-    "images": []
+    "images": [],
+    "lastUpdated": "2022-03-16"
   },
   {
     "id": "park-1199",
     "name": "화성함백산추모공원(바람마루)",
     "originalName": "1199.화성함백산추모공원(바람마루)_price_info.png",
-    "address": "",
+    "address": "경기도 화성시 매송면 서해로 2448-32 (숙곡리)",
     "coordinates": {
       "lat": 0,
       "lng": 0
@@ -40175,13 +41082,14 @@
     "category": "F",
     "phone": "",
     "website": "",
-    "images": []
+    "images": [],
+    "lastUpdated": "2022-10-16"
   },
   {
     "id": "park-1200",
     "name": "별그리다(별의숲)",
     "originalName": "1200.별그리다(별의숲)_price_info.png",
-    "address": "",
+    "address": "경기도 양평군 양동면 양동금곡1길 331 (삼산리)",
     "coordinates": {
       "lat": 0,
       "lng": 0
@@ -40189,7 +41097,8 @@
     "category": "F",
     "phone": "",
     "website": "",
-    "images": []
+    "images": [],
+    "lastUpdated": "2024-07-16"
   },
   {
     "id": "park-1201",
@@ -40337,7 +41246,7 @@
     "id": "park-1204",
     "name": "인천가족공원 자연장지",
     "originalName": "1204.인천가족공원 자연장지_price_info.png",
-    "address": "",
+    "address": "인천광역시 부평구 평온로 61 (부평동)",
     "coordinates": {
       "lat": 0,
       "lng": 0
@@ -40345,7 +41254,8 @@
     "category": "F",
     "phone": "",
     "website": "",
-    "images": []
+    "images": [],
+    "lastUpdated": "2016-04-16"
   },
   {
     "id": "park-1205",
@@ -40419,7 +41329,7 @@
     "id": "park-1207",
     "name": "(재)호정공원(자연장)",
     "originalName": "1207.(재)호정공원(자연장)_price_info.png",
-    "address": "",
+    "address": "전라북도 완주군 화산면 운곡로 381-64 (운곡리)",
     "coordinates": {
       "lat": 0,
       "lng": 0
@@ -40427,7 +41337,8 @@
     "category": "F",
     "phone": "",
     "website": "",
-    "images": []
+    "images": [],
+    "lastUpdated": "2025-02-16"
   },
   {
     "id": "park-1208",
@@ -40540,7 +41451,7 @@
     "id": "park-1210",
     "name": "서울신흥교회 하늘계단수목장",
     "originalName": "1210.서울신흥교회 하늘계단수목장_price_info.png",
-    "address": "",
+    "address": "경기도 양주시 평화로1261번길 372-146 (산북동)",
     "coordinates": {
       "lat": 0,
       "lng": 0
@@ -40548,7 +41459,8 @@
     "category": "F",
     "phone": "",
     "website": "",
-    "images": []
+    "images": [],
+    "lastUpdated": "2025-07-16"
   },
   {
     "id": "park-1211",
@@ -40589,7 +41501,7 @@
     "id": "park-1212",
     "name": "옥마기도회",
     "originalName": "1212.옥마기도회_price_info.png",
-    "address": "",
+    "address": "전라남도 보성군 노동면 평동로 877-14 (옥마리)",
     "coordinates": {
       "lat": 0,
       "lng": 0
@@ -40597,13 +41509,14 @@
     "category": "F",
     "phone": "",
     "website": "",
-    "images": []
+    "images": [],
+    "lastUpdated": "2025-11-16"
   },
   {
     "id": "park-1213",
     "name": "함양하늘공원(자연장지)",
     "originalName": "1213.함양하늘공원(자연장지)_price_info.png",
-    "address": "",
+    "address": "경상남도 함양군 지곡면 함양로 2139-2 (마산리, 하늘공원)",
     "coordinates": {
       "lat": 0,
       "lng": 0
@@ -40611,7 +41524,8 @@
     "category": "F",
     "phone": "",
     "website": "",
-    "images": []
+    "images": [],
+    "lastUpdated": "2024-08-16"
   },
   {
     "id": "park-1214",
@@ -40647,7 +41561,7 @@
     "id": "park-1215",
     "name": "서남권추모공원 자연장지",
     "originalName": "1215.서남권추모공원 자연장지_price_info.png",
-    "address": "",
+    "address": "전라북도 정읍시 감곡면 정읍북로 1850 (통석리)",
     "coordinates": {
       "lat": 0,
       "lng": 0
@@ -40655,13 +41569,14 @@
     "category": "F",
     "phone": "",
     "website": "",
-    "images": []
+    "images": [],
+    "lastUpdated": "2016-06-16"
   },
   {
     "id": "park-1216",
     "name": "보배숲추모공원(산림조합)",
     "originalName": "1216.보배숲추모공원(산림조합)_price_info.png",
-    "address": "",
+    "address": "전라남도 진도군 진도읍 진도대로 7363-110 (동외리, 관리사무소)",
     "coordinates": {
       "lat": 0,
       "lng": 0
@@ -40669,7 +41584,8 @@
     "category": "F",
     "phone": "",
     "website": "",
-    "images": []
+    "images": [],
+    "lastUpdated": "2017-08-16"
   },
   {
     "id": "park-1217",
@@ -40719,7 +41635,7 @@
     "id": "park-1218",
     "name": "(재)여주세종추모공원 자연장",
     "originalName": "1218.(재)여주세종추모공원 자연장_price_info.png",
-    "address": "",
+    "address": "경기도 여주시 흥천면 샘다리길 105 (흥천면 상대리 27-6)",
     "coordinates": {
       "lat": 0,
       "lng": 0
@@ -40727,13 +41643,14 @@
     "category": "F",
     "phone": "",
     "website": "",
-    "images": []
+    "images": [],
+    "lastUpdated": "2025-11-16"
   },
   {
     "id": "park-1219",
     "name": "천탑사 수목장(그린피아)",
     "originalName": "1219.천탑사 수목장(그린피아)_price_info.png",
-    "address": "",
+    "address": "경상남도 밀양시 삼랑진읍 화성길 13-47 (미전리)",
     "coordinates": {
       "lat": 0,
       "lng": 0
@@ -40741,7 +41658,8 @@
     "category": "F",
     "phone": "",
     "website": "",
-    "images": []
+    "images": [],
+    "lastUpdated": "2022-01-16"
   },
   {
     "id": "park-1220",
@@ -40777,7 +41695,7 @@
     "id": "park-1221",
     "name": "영광군 공설추모공원 자연장지",
     "originalName": "1221.영광군 공설추모공원 자연장지_price_info.png",
-    "address": "",
+    "address": "전라남도 영광군 군남면 광암로 174",
     "coordinates": {
       "lat": 0,
       "lng": 0
@@ -40785,7 +41703,8 @@
     "category": "F",
     "phone": "",
     "website": "",
-    "images": []
+    "images": [],
+    "lastUpdated": "2025-12-16"
   },
   {
     "id": "park-1222",
@@ -40877,7 +41796,7 @@
     "id": "park-1225",
     "name": "여주추모공원 자연장지",
     "originalName": "1225.여주추모공원 자연장지_price_info.png",
-    "address": "",
+    "address": "경기도 여주시 가남읍 여주남로 769 (본두리)",
     "coordinates": {
       "lat": 0,
       "lng": 0
@@ -40885,7 +41804,8 @@
     "category": "F",
     "phone": "",
     "website": "",
-    "images": []
+    "images": [],
+    "lastUpdated": "2018-12-16"
   },
   {
     "id": "park-1226",
@@ -40906,7 +41826,7 @@
       "natural"
     ],
     "capacity": 65690,
-    "lastUpdated": null,
+    "lastUpdated": "2023-09-16",
     "hasParking": true,
     "hasRestaurant": false,
     "hasAccessibility": false,
@@ -40967,7 +41887,7 @@
       "natural"
     ],
     "capacity": 2800,
-    "lastUpdated": null,
+    "lastUpdated": "2018-11-16",
     "hasParking": true,
     "hasRestaurant": false,
     "hasAccessibility": false,
@@ -40992,7 +41912,7 @@
       "natural"
     ],
     "capacity": 2492,
-    "lastUpdated": null,
+    "lastUpdated": "2018-02-16",
     "hasParking": true,
     "hasRestaurant": false,
     "hasAccessibility": true,
@@ -41017,7 +41937,7 @@
       "natural"
     ],
     "capacity": 60500,
-    "lastUpdated": null,
+    "lastUpdated": "2024-09-16",
     "hasParking": true,
     "hasRestaurant": false,
     "hasAccessibility": true,
@@ -41088,7 +42008,7 @@
       "natural"
     ],
     "capacity": 0,
-    "lastUpdated": null,
+    "lastUpdated": "2025-09-16",
     "hasParking": true,
     "hasRestaurant": false,
     "hasAccessibility": true,
@@ -41113,7 +42033,7 @@
       "grave"
     ],
     "capacity": 1300,
-    "lastUpdated": null,
+    "lastUpdated": "2022-11-16",
     "hasParking": true,
     "hasRestaurant": true,
     "hasAccessibility": true,
@@ -41210,7 +42130,7 @@
       "natural"
     ],
     "capacity": 12000,
-    "lastUpdated": null,
+    "lastUpdated": "2016-05-16",
     "hasParking": true,
     "hasRestaurant": false,
     "hasAccessibility": true,
@@ -41235,7 +42155,7 @@
       "natural"
     ],
     "capacity": 3656,
-    "lastUpdated": null,
+    "lastUpdated": "2021-08-16",
     "hasParking": true,
     "hasRestaurant": false,
     "hasAccessibility": true,
@@ -41378,7 +42298,7 @@
       "natural"
     ],
     "capacity": 6000,
-    "lastUpdated": null,
+    "lastUpdated": "2022-04-16",
     "hasParking": true,
     "hasRestaurant": false,
     "hasAccessibility": true,
@@ -41403,7 +42323,7 @@
       "natural"
     ],
     "capacity": 3340,
-    "lastUpdated": null,
+    "lastUpdated": "2022-01-16",
     "hasParking": true,
     "hasRestaurant": false,
     "hasAccessibility": true,
@@ -41428,7 +42348,7 @@
       "natural"
     ],
     "capacity": 20000,
-    "lastUpdated": null,
+    "lastUpdated": "2025-12-16",
     "hasParking": true,
     "hasRestaurant": false,
     "hasAccessibility": true,
@@ -41483,7 +42403,7 @@
       "natural"
     ],
     "capacity": 4200,
-    "lastUpdated": null,
+    "lastUpdated": "2018-02-16",
     "hasParking": true,
     "hasRestaurant": false,
     "hasAccessibility": true,
@@ -41578,7 +42498,7 @@
       "natural"
     ],
     "capacity": null,
-    "lastUpdated": null,
+    "lastUpdated": "2023-08-16",
     "hasParking": true,
     "hasRestaurant": false,
     "hasAccessibility": true,
@@ -41786,7 +42706,7 @@
       "natural"
     ],
     "capacity": 357,
-    "lastUpdated": null,
+    "lastUpdated": "2025-03-16",
     "hasParking": true,
     "hasRestaurant": false,
     "hasAccessibility": true,
@@ -41811,7 +42731,7 @@
       "natural"
     ],
     "capacity": 12000,
-    "lastUpdated": null,
+    "lastUpdated": "2015-05-16",
     "hasParking": true,
     "hasRestaurant": false,
     "hasAccessibility": true,
@@ -41871,7 +42791,7 @@
       "natural"
     ],
     "capacity": 1500,
-    "lastUpdated": null,
+    "lastUpdated": "2016-05-16",
     "hasParking": true,
     "hasRestaurant": false,
     "hasAccessibility": true,
@@ -41972,7 +42892,7 @@
       "natural"
     ],
     "capacity": 0,
-    "lastUpdated": null,
+    "lastUpdated": "2016-05-16",
     "hasParking": false,
     "hasRestaurant": false,
     "hasAccessibility": true,
@@ -42068,7 +42988,7 @@
       "natural"
     ],
     "capacity": 0,
-    "lastUpdated": null,
+    "lastUpdated": "2025-02-16",
     "hasParking": true,
     "hasRestaurant": false,
     "hasAccessibility": true,
@@ -42160,7 +43080,7 @@
       "natural"
     ],
     "capacity": 3000,
-    "lastUpdated": null,
+    "lastUpdated": "2016-06-16",
     "hasParking": null,
     "hasRestaurant": null,
     "hasAccessibility": null,
@@ -42276,7 +43196,7 @@
       "natural"
     ],
     "capacity": 1284,
-    "lastUpdated": null,
+    "lastUpdated": "2019-09-16",
     "hasParking": true,
     "hasRestaurant": false,
     "hasAccessibility": true,
@@ -42338,7 +43258,7 @@
       "natural"
     ],
     "capacity": 1879,
-    "lastUpdated": null,
+    "lastUpdated": "2016-09-16",
     "hasParking": true,
     "hasRestaurant": false,
     "hasAccessibility": false,
@@ -42468,7 +43388,7 @@
       "natural"
     ],
     "capacity": 800,
-    "lastUpdated": null,
+    "lastUpdated": "2020-09-16",
     "hasParking": true,
     "hasRestaurant": false,
     "hasAccessibility": true,
@@ -42493,7 +43413,7 @@
       "natural"
     ],
     "capacity": 3580,
-    "lastUpdated": null,
+    "lastUpdated": "2018-02-16",
     "hasParking": null,
     "hasRestaurant": null,
     "hasAccessibility": null,
@@ -42518,7 +43438,7 @@
       "natural"
     ],
     "capacity": 16447,
-    "lastUpdated": null,
+    "lastUpdated": "2016-05-16",
     "hasParking": true,
     "hasRestaurant": false,
     "hasAccessibility": true,
@@ -42573,7 +43493,7 @@
       "natural"
     ],
     "capacity": 3082,
-    "lastUpdated": null,
+    "lastUpdated": "2016-05-16",
     "hasParking": null,
     "hasRestaurant": null,
     "hasAccessibility": null,
@@ -42598,7 +43518,7 @@
       "natural"
     ],
     "capacity": 300,
-    "lastUpdated": null,
+    "lastUpdated": "2016-09-16",
     "hasParking": true,
     "hasRestaurant": false,
     "hasAccessibility": true,
@@ -42623,7 +43543,7 @@
       "natural"
     ],
     "capacity": 2500,
-    "lastUpdated": null,
+    "lastUpdated": "2016-05-16",
     "hasParking": true,
     "hasRestaurant": false,
     "hasAccessibility": true,
@@ -42687,7 +43607,7 @@
       "natural"
     ],
     "capacity": 2664,
-    "lastUpdated": null,
+    "lastUpdated": "2016-06-16",
     "hasParking": true,
     "hasRestaurant": false,
     "hasAccessibility": false,
@@ -42712,7 +43632,7 @@
       "natural"
     ],
     "capacity": 2015,
-    "lastUpdated": null,
+    "lastUpdated": "2017-07-16",
     "hasParking": true,
     "hasRestaurant": false,
     "hasAccessibility": true,
@@ -42737,7 +43657,7 @@
       "natural"
     ],
     "capacity": 22534,
-    "lastUpdated": null,
+    "lastUpdated": "2017-07-16",
     "hasParking": true,
     "hasRestaurant": false,
     "hasAccessibility": true,
@@ -42789,7 +43709,7 @@
     "id": "park-1288",
     "name": "동해시하늘정원자연장지",
     "originalName": "1288.동해시하늘정원자연장지_price_info.png",
-    "address": "",
+    "address": "강원도 동해시 강원남부로 4589 (단봉동)",
     "coordinates": {
       "lat": 0,
       "lng": 0
@@ -42797,7 +43717,8 @@
     "category": "F",
     "phone": "",
     "website": "",
-    "images": []
+    "images": [],
+    "lastUpdated": "2016-05-16"
   },
   {
     "id": "park-1289",
@@ -43087,7 +44008,7 @@
     "id": "park-1297",
     "name": "광주영락공원 청마루동산",
     "originalName": "1297.광주영락공원 청마루동산_price_info.png",
-    "address": "",
+    "address": "광주광역시 북구 영락공원로 170 (효령동)",
     "coordinates": {
       "lat": 0,
       "lng": 0
@@ -43095,7 +44016,8 @@
     "category": "F",
     "phone": "",
     "website": "",
-    "images": []
+    "images": [],
+    "lastUpdated": "2016-05-16"
   },
   {
     "id": "park-1298",
@@ -43248,7 +44170,7 @@
     "id": "park-1302",
     "name": "충현공원 자연장지",
     "originalName": "1302.충현공원 자연장지_price_info.png",
-    "address": "",
+    "address": "경기도 광주시 용샘길 115-25 (목현동)",
     "coordinates": {
       "lat": 0,
       "lng": 0
@@ -43256,7 +44178,8 @@
     "category": "F",
     "phone": "",
     "website": "",
-    "images": []
+    "images": [],
+    "lastUpdated": "2017-10-16"
   },
   {
     "id": "park-1303",
@@ -43628,7 +44551,7 @@
     "id": "park-1315",
     "name": "휴안추모공원",
     "originalName": "1315.휴안추모공원_price_info.png",
-    "address": "",
+    "address": "경상남도 김해시 상동면 상동로 178-54 (우계리, 불조사)",
     "coordinates": {
       "lat": 0,
       "lng": 0
@@ -43636,7 +44559,8 @@
     "category": "F",
     "phone": "",
     "website": "",
-    "images": []
+    "images": [],
+    "lastUpdated": "1969-03-16"
   },
   {
     "id": "park-1316",
@@ -43974,7 +44898,7 @@
     "id": "park-1327",
     "name": "일승종개원사 수목장림",
     "originalName": "1327.일승종개원사 수목장림_price_info.png",
-    "address": "",
+    "address": "경상북도 영천시 신녕면 장수로 2238-28 (화남리)",
     "coordinates": {
       "lat": 0,
       "lng": 0
@@ -43982,7 +44906,8 @@
     "category": "F",
     "phone": "",
     "website": "",
-    "images": []
+    "images": [],
+    "lastUpdated": "1969-03-16"
   },
   {
     "id": "park-1328",
@@ -44018,7 +44943,7 @@
     "id": "park-1329",
     "name": "일승종개원사 자연장지",
     "originalName": "1329.일승종개원사 자연장지_price_info.png",
-    "address": "",
+    "address": "경상북도 영천시 신녕면 장수로 2238-28 (화남리)",
     "coordinates": {
       "lat": 0,
       "lng": 0
@@ -44026,7 +44951,8 @@
     "category": "F",
     "phone": "",
     "website": "",
-    "images": []
+    "images": [],
+    "lastUpdated": "1969-03-16"
   },
   {
     "id": "park-1330",
@@ -44092,7 +45018,7 @@
     "id": "park-1332",
     "name": "횡성군공설자연장지",
     "originalName": "1332.횡성군공설자연장지_price_info.png",
-    "address": "",
+    "address": "강원특별자치도 횡성군 갑천면 태기로구방8길 132 (구방리)",
     "coordinates": {
       "lat": 0,
       "lng": 0
@@ -44100,7 +45026,8 @@
     "category": "F",
     "phone": "",
     "website": "",
-    "images": []
+    "images": [],
+    "lastUpdated": "1969-03-16"
   },
   {
     "id": "park-1333",
@@ -44136,7 +45063,7 @@
     "id": "park-1334",
     "name": "장흥공설자연장지",
     "originalName": "1334.장흥공설자연장지_price_info.png",
-    "address": "",
+    "address": "전라남도 장흥군 장흥읍 금산신기길 131 (금산리, 공원묘지관리실)",
     "coordinates": {
       "lat": 0,
       "lng": 0
@@ -44144,7 +45071,8 @@
     "category": "F",
     "phone": "",
     "website": "",
-    "images": []
+    "images": [],
+    "lastUpdated": "1969-03-16"
   },
   {
     "id": "park-1335",
@@ -44937,7 +45865,7 @@
     "id": "park-1361",
     "name": "남도광역추모공원(자연장)",
     "originalName": "1361.남도광역추모공원(자연장)_price_info.png",
-    "address": "",
+    "address": "전라남도 해남군 황산면 호교길 241-250 (일신리)",
     "coordinates": {
       "lat": 0,
       "lng": 0
@@ -44945,13 +45873,14 @@
     "category": "F",
     "phone": "",
     "website": "",
-    "images": []
+    "images": [],
+    "lastUpdated": "1969-03-16"
   },
   {
     "id": "park-1362",
     "name": "가평추모공원(자연장지)",
     "originalName": "1362.가평추모공원(자연장지)_price_info.png",
-    "address": "",
+    "address": "경기도 가평군 가평읍 석봉로191번길 65-84 (읍내리, 가평추모공원)",
     "coordinates": {
       "lat": 0,
       "lng": 0
@@ -44959,7 +45888,8 @@
     "category": "F",
     "phone": "",
     "website": "",
-    "images": []
+    "images": [],
+    "lastUpdated": "1969-03-16"
   },
   {
     "id": "park-1363",
@@ -45201,7 +46131,7 @@
     "id": "park-1370",
     "name": "개원추모공원 수목장림",
     "originalName": "1370.개원추모공원 수목장림_price_info.png",
-    "address": "",
+    "address": "경상북도 영천시 신녕면 장수로 2238-9 (화남리)",
     "coordinates": {
       "lat": 0,
       "lng": 0
@@ -45209,13 +46139,14 @@
     "category": "F",
     "phone": "",
     "website": "",
-    "images": []
+    "images": [],
+    "lastUpdated": "1969-03-16"
   },
   {
     "id": "park-1371",
     "name": "원진사지장회수목장",
     "originalName": "1371.원진사지장회수목장_price_info.png",
-    "address": "",
+    "address": "경상북도 포항시 남구 동해면 금광로438번길 108 (신정리)",
     "coordinates": {
       "lat": 0,
       "lng": 0
@@ -45223,7 +46154,8 @@
     "category": "F",
     "phone": "",
     "website": "",
-    "images": []
+    "images": [],
+    "lastUpdated": "1969-03-16"
   },
   {
     "id": "park-1372",
@@ -45289,7 +46221,7 @@
     "id": "park-1374",
     "name": "원주제일교회 자연장지",
     "originalName": "1374.원주제일교회 자연장지_price_info.png",
-    "address": "",
+    "address": "강원특별자치도 영월군 주천면 신일리 산253",
     "coordinates": {
       "lat": 0,
       "lng": 0
@@ -45297,7 +46229,8 @@
     "category": "F",
     "phone": "",
     "website": "",
-    "images": []
+    "images": [],
+    "lastUpdated": "1969-03-16"
   },
   {
     "id": "park-1375",
@@ -45333,7 +46266,7 @@
     "id": "park-1376",
     "name": "오봉사 수목장림",
     "originalName": "1376.오봉사 수목장림_price_info.png",
-    "address": "",
+    "address": "경기도 연천군 연천읍 현문로245번길 384 (고문리)",
     "coordinates": {
       "lat": 0,
       "lng": 0
@@ -45341,13 +46274,14 @@
     "category": "F",
     "phone": "",
     "website": "",
-    "images": []
+    "images": [],
+    "lastUpdated": "1969-03-16"
   },
   {
     "id": "park-1377",
     "name": "대원정사 자연장지",
     "originalName": "1377.대원정사 자연장지_price_info.png",
-    "address": "",
+    "address": "경기도 양주시 장흥면 권율로309번길 317-214 (석현리)",
     "coordinates": {
       "lat": 0,
       "lng": 0
@@ -45355,7 +46289,8 @@
     "category": "F",
     "phone": "",
     "website": "",
-    "images": []
+    "images": [],
+    "lastUpdated": "1969-03-16"
   },
   {
     "id": "park-1378",
@@ -45421,7 +46356,7 @@
     "id": "park-1380",
     "name": "갈월사 자연장지",
     "originalName": "1380.갈월사 자연장지_price_info.png",
-    "address": "",
+    "address": "경기도 양평군 양평읍 충신로324번길 64 (창대리, 갈월사)",
     "coordinates": {
       "lat": 0,
       "lng": 0
@@ -45429,7 +46364,8 @@
     "category": "F",
     "phone": "",
     "website": "",
-    "images": []
+    "images": [],
+    "lastUpdated": "1969-03-16"
   },
   {
     "id": "park-1381",
@@ -45551,7 +46487,7 @@
     "id": "park-1385",
     "name": "용주사 자연장지",
     "originalName": "1385.용주사 자연장지_price_info.png",
-    "address": "",
+    "address": "경상북도 경주시 서면 하늘마루길 328 (도리)",
     "coordinates": {
       "lat": 0,
       "lng": 0
@@ -45559,7 +46495,8 @@
     "category": "F",
     "phone": "",
     "website": "",
-    "images": []
+    "images": [],
+    "lastUpdated": "1969-03-16"
   },
   {
     "id": "park-1386",
@@ -45721,7 +46658,7 @@
     "id": "park-1391",
     "name": "영은교회 자연장지(수목장)",
     "originalName": "1391.영은교회 자연장지(수목장)_price_info.png",
-    "address": "",
+    "address": "경기도 가평군 설악면 설곡리 산 224-8",
     "coordinates": {
       "lat": 0,
       "lng": 0
@@ -45729,7 +46666,8 @@
     "category": "F",
     "phone": "",
     "website": "",
-    "images": []
+    "images": [],
+    "lastUpdated": "1969-03-16"
   },
   {
     "id": "park-1392",
@@ -45795,7 +46733,7 @@
     "id": "park-1394",
     "name": "대호지공설묘지(자연장)",
     "originalName": "1394.대호지공설묘지(자연장)_price_info.png",
-    "address": "",
+    "address": "충청남도 당진시 대호지면 봉선길 123 (장정리, 어성정공동묘지)",
     "coordinates": {
       "lat": 0,
       "lng": 0
@@ -45803,7 +46741,8 @@
     "category": "F",
     "phone": "",
     "website": "",
-    "images": []
+    "images": [],
+    "lastUpdated": "1969-03-16"
   },
   {
     "id": "park-1395",
@@ -45869,7 +46808,7 @@
     "id": "park-1397",
     "name": "아산시공설자연장지",
     "originalName": "1397.아산시공설자연장지_price_info.png",
-    "address": "",
+    "address": "충청남도 아산시 송악면 외암로 30-30 (거산리)",
     "coordinates": {
       "lat": 0,
       "lng": 0
@@ -45877,7 +46816,8 @@
     "category": "F",
     "phone": "",
     "website": "",
-    "images": []
+    "images": [],
+    "lastUpdated": "1969-03-16"
   },
   {
     "id": "park-1398",
@@ -45977,7 +46917,7 @@
     "id": "park-1401",
     "name": "성아우구스띠노수도회 자연장지",
     "originalName": "1401.성아우구스띠노수도회 자연장지_price_info.png",
-    "address": "",
+    "address": "경기도 연천군 왕징면 왕산로 722 (동중리)",
     "coordinates": {
       "lat": 0,
       "lng": 0
@@ -45985,7 +46925,8 @@
     "category": "F",
     "phone": "",
     "website": "",
-    "images": []
+    "images": [],
+    "lastUpdated": "1969-03-16"
   },
   {
     "id": "park-1402",
@@ -46021,7 +46962,7 @@
     "id": "park-1403",
     "name": "무일선원 수목장림",
     "originalName": "1403.무일선원 수목장림_price_info.png",
-    "address": "",
+    "address": "경상북도 경주시 감포읍 회곡길 127 (대본리, 관음사)",
     "coordinates": {
       "lat": 0,
       "lng": 0
@@ -46029,7 +46970,8 @@
     "category": "F",
     "phone": "",
     "website": "",
-    "images": []
+    "images": [],
+    "lastUpdated": "1969-03-16"
   },
   {
     "id": "park-1404",
@@ -46065,7 +47007,7 @@
     "id": "park-1405",
     "name": "옥천군공설자연장지",
     "originalName": "1405.옥천군공설자연장지_price_info.png",
-    "address": "",
+    "address": "충청북도 옥천군 군서면 월전리 산19-1",
     "coordinates": {
       "lat": 0,
       "lng": 0
@@ -46073,7 +47015,8 @@
     "category": "F",
     "phone": "",
     "website": "",
-    "images": []
+    "images": [],
+    "lastUpdated": "1969-03-16"
   },
   {
     "id": "park-1406",
@@ -46109,7 +47052,7 @@
     "id": "park-1407",
     "name": "(주)광림공원 동산공원묘원(자연장)",
     "originalName": "1407.(주)광림공원 동산공원묘원(자연장)_price_info.png",
-    "address": "",
+    "address": "강원특별자치도 춘천시 동산면 종자리로 331-50 (군자리, 춘천시공설묘원)",
     "coordinates": {
       "lat": 0,
       "lng": 0
@@ -46117,13 +47060,14 @@
     "category": "F",
     "phone": "",
     "website": "",
-    "images": []
+    "images": [],
+    "lastUpdated": "1969-03-16"
   },
   {
     "id": "park-1408",
     "name": "다래원자연장지",
     "originalName": "1408.다래원자연장지_price_info.png",
-    "address": "",
+    "address": "충청북도 음성군 생극면 오신로445번길 77 (신양리)",
     "coordinates": {
       "lat": 0,
       "lng": 0
@@ -46131,7 +47075,8 @@
     "category": "F",
     "phone": "",
     "website": "",
-    "images": []
+    "images": [],
+    "lastUpdated": "1969-03-16"
   },
   {
     "id": "park-1409",
@@ -46328,7 +47273,7 @@
     "id": "park-1415",
     "name": "(재)아름다운 청계공원 자연장지",
     "originalName": "1415.(재)아름다운 청계공원 자연장지_price_info.png",
-    "address": "",
+    "address": "전라남도 곡성군 곡성읍 청계동로 457 (신기리)",
     "coordinates": {
       "lat": 0,
       "lng": 0
@@ -46336,7 +47281,8 @@
     "category": "F",
     "phone": "",
     "website": "",
-    "images": []
+    "images": [],
+    "lastUpdated": "1969-03-16"
   },
   {
     "id": "park-1416",
@@ -46372,7 +47318,7 @@
     "id": "park-1417",
     "name": "천주교 김천공원묘원",
     "originalName": "1417.천주교 김천공원묘원_price_info.png",
-    "address": "",
+    "address": "경상북도 김천시 개령면 황계길 280-41 (황계리)",
     "coordinates": {
       "lat": 0,
       "lng": 0
@@ -46380,7 +47326,8 @@
     "category": "F",
     "phone": "",
     "website": "",
-    "images": []
+    "images": [],
+    "lastUpdated": "1969-03-16"
   },
   {
     "id": "park-1418",
@@ -46446,7 +47393,7 @@
     "id": "park-1420",
     "name": "보배숲추모공원(군립)",
     "originalName": "1420.보배숲추모공원(군립)_price_info.png",
-    "address": "",
+    "address": "전라남도 진도군 진도읍 진도대로 7363-110 (동외리, 관리사무소)",
     "coordinates": {
       "lat": 0,
       "lng": 0
@@ -46454,7 +47401,8 @@
     "category": "F",
     "phone": "",
     "website": "",
-    "images": []
+    "images": [],
+    "lastUpdated": "1969-03-16"
   },
   {
     "id": "park-1421",
@@ -47092,7 +48040,7 @@
     "id": "park-1441",
     "name": "인천가족공원 승화원",
     "originalName": "1441.인천가족공원 승화원_price_info.png",
-    "address": "",
+    "address": "인천광역시 부평구 평온로 61 (부평동)",
     "coordinates": {
       "lat": 0,
       "lng": 0
@@ -47100,7 +48048,8 @@
     "category": "F",
     "phone": "",
     "website": "",
-    "images": []
+    "images": [],
+    "lastUpdated": "2017-08-16"
   },
   {
     "id": "park-1442",
@@ -47337,7 +48286,7 @@
       "cremation"
     ],
     "capacity": null,
-    "lastUpdated": null,
+    "lastUpdated": "2024-07-16",
     "hasParking": true,
     "hasRestaurant": false,
     "hasAccessibility": false,
@@ -47646,7 +48595,7 @@
       "cremation"
     ],
     "capacity": 10,
-    "lastUpdated": null,
+    "lastUpdated": "2024-11-16",
     "hasParking": true,
     "hasRestaurant": false,
     "hasAccessibility": false,
@@ -47745,7 +48694,7 @@
       "cremation"
     ],
     "capacity": null,
-    "lastUpdated": null,
+    "lastUpdated": "2022-05-16",
     "hasParking": true,
     "hasRestaurant": true,
     "hasAccessibility": true,
@@ -47852,7 +48801,7 @@
       "cremation"
     ],
     "capacity": null,
-    "lastUpdated": null,
+    "lastUpdated": "2020-03-16",
     "hasParking": true,
     "hasRestaurant": false,
     "hasAccessibility": false,
@@ -47897,7 +48846,7 @@
     },
     "phone": "043-270-8578",
     "capacity": 11,
-    "lastUpdated": null,
+    "lastUpdated": "2025-03-16",
     "originalName": "1463.청주시목련공원_price_info.png",
     "institutionType": "public",
     "categories": [
@@ -48052,7 +49001,7 @@
       "cremation"
     ],
     "capacity": null,
-    "lastUpdated": null,
+    "lastUpdated": "2021-02-16",
     "hasParking": true,
     "hasRestaurant": false,
     "hasAccessibility": true,
@@ -48111,7 +49060,7 @@
       "charnel"
     ],
     "capacity": 50,
-    "lastUpdated": null,
+    "lastUpdated": "2016-02-16",
     "hasParking": true,
     "hasRestaurant": false,
     "hasAccessibility": true,
@@ -48194,7 +49143,7 @@
       "cremation"
     ],
     "capacity": 6,
-    "lastUpdated": null,
+    "lastUpdated": "2016-04-16",
     "hasParking": true,
     "hasRestaurant": false,
     "hasAccessibility": false,
@@ -48293,7 +49242,7 @@
       "cremation"
     ],
     "capacity": 6,
-    "lastUpdated": null,
+    "lastUpdated": "2024-01-16",
     "hasParking": true,
     "hasRestaurant": false,
     "hasAccessibility": false,
@@ -48472,7 +49421,7 @@
       "cremation"
     ],
     "capacity": 5,
-    "lastUpdated": null,
+    "lastUpdated": "2017-12-16",
     "hasParking": true,
     "hasRestaurant": false,
     "hasAccessibility": false,
@@ -48779,7 +49728,7 @@
       "cremation"
     ],
     "capacity": 12,
-    "lastUpdated": null,
+    "lastUpdated": "2016-05-16",
     "hasParking": true,
     "hasRestaurant": true,
     "hasAccessibility": true,
@@ -48878,7 +49827,7 @@
       "cremation"
     ],
     "capacity": 5,
-    "lastUpdated": null,
+    "lastUpdated": "2019-09-16",
     "hasParking": true,
     "hasRestaurant": false,
     "hasAccessibility": true,
@@ -49043,7 +49992,7 @@
       "cremation"
     ],
     "capacity": 7,
-    "lastUpdated": null,
+    "lastUpdated": "2017-11-16",
     "hasParking": true,
     "hasRestaurant": false,
     "hasAccessibility": false,
