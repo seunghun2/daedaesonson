@@ -21,6 +21,8 @@ interface NaverMapProps {
     onBoundsChanged?: (bounds: { south: number; north: number; west: number; east: number }) => void;
     isMobile?: boolean;
     onViewList?: () => void;
+    onMapTap?: () => void; // 빈 지도 탭 시 호출 (UI 토글용)
+    uiHidden?: boolean; // UI 숨김 상태 (호갱노노 스타일 애니메이션)
 }
 
 export interface NaverMapRef {
@@ -57,7 +59,7 @@ const REGION_MAPPINGS: { [key: string]: string[] } = {
 // 좌표별 시설 ID 등록부 (전역 유지 - 필터링되어도 위치 고정)
 const LAYOUT_REGISTRY = new Map<string, string[]>();
 
-const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerClick, onBoundsChanged, isMobile, onViewList }, ref) => {
+const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerClick, onBoundsChanged, isMobile, onViewList, onMapTap, uiHidden }, ref) => {
     const mapRef = useRef<HTMLDivElement>(null);
     const [isMapLoaded, setIsMapLoaded] = useState(false);
     const [isMainLoaded, setIsMainLoaded] = useState(false);
@@ -835,6 +837,22 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
                 updateVisibleMarkers();
             });
 
+            // 🎯 빈 지도 탭 이벤트 (방사형 메뉴용) - 드래그와 구분
+            let isDragging = false;
+            window.naver.maps.Event.addListener(map, 'dragstart', () => {
+                isDragging = true;
+            });
+            window.naver.maps.Event.addListener(map, 'dragend', () => {
+                // 드래그 끝난 후 약간 지연 (클릭 이벤트와 분리)
+                setTimeout(() => { isDragging = false; }, 100);
+            });
+            window.naver.maps.Event.addListener(map, 'click', (e: any) => {
+                if (isDragging) return; // 드래그 중이면 무시
+                if (onMapTap) {
+                    onMapTap();
+                }
+            });
+
             // 초기 로드 시 실행
             // updateVisibleMarkers() will be called by the useEffect when isMapLoaded becomes true
             setIsMapLoaded(true);
@@ -882,7 +900,7 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
                 <div id="map" ref={mapRef} style={{ width: '100%', height: '100%' }} />
 
 
-                {/* 커스텀 컨트롤 버튼 (우측 상단) */}
+                {/* 커스텀 컨트롤 버튼 (우측 상단), UI 숨김 시 오른쪽으로 슬라이드 아웃 */}
                 {isMapLoaded && (
                     <div style={{
                         position: 'absolute',
@@ -891,7 +909,9 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
                         zIndex: 100,
                         display: 'flex',
                         flexDirection: 'column',
-                        gap: '10px'
+                        gap: '10px',
+                        transform: uiHidden ? 'translateX(100px)' : 'translateX(0)',
+                        transition: 'transform 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
                     }}>
                         {/* 1. 내 정보 */}
                         <CustomControlBtn
@@ -925,13 +945,16 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
                     </div>
                 )}
 
-                {/* 하단 주소 버튼 (호갱노노 스타일) - 가운데 */}
+                {/* 하단 주소 버튼 (호갱노노 스타일) - 가운데, UI 숨김 시 아래로 슬라이드 아웃 */}
                 {isMapLoaded && centerAddress && (
                     <div style={{
                         position: 'absolute',
                         bottom: isMobile ? '30px' : '24px',
                         left: '50%',
-                        transform: 'translateX(-50%)',
+                        transform: uiHidden
+                            ? 'translateX(-50%) translateY(150%)'
+                            : 'translateX(-50%) translateY(0)',
+                        transition: 'transform 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
                         zIndex: 100,
                     }}>
                         <button

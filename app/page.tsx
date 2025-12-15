@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useMemo, useEffect, useRef, Suspense } from 'react';
-import { Box, Flex, useMantineTheme, TextInput, Group, Text, ThemeIcon } from '@mantine/core';
+import { Box, Flex, useMantineTheme, TextInput, Group, Text, ThemeIcon, ActionIcon } from '@mantine/core';
 import { useMediaQuery } from '@mantine/hooks';
 import { Search, MapPin, Building } from 'lucide-react';
 import Link from 'next/link';
@@ -73,6 +73,9 @@ function HomeContent() {
 
   // 현재 지도 좌표
   const [currentBounds, setCurrentBounds] = useState<{ south: number, north: number, west: number, east: number } | null>(null);
+
+  // UI 숨김 상태 (지도 탭 시 토글) - 호갱노노 스타일
+  const [uiHidden, setUiHidden] = useState(false);
 
   // 1. 초기 데이터 로드 (API)
   useEffect(() => {
@@ -297,6 +300,14 @@ function HomeContent() {
     }
     // Remove 'id' parameter from URL to close the detail view
     router.push(pathname, { scroll: false });
+  };
+
+  // 🎯 지도 탭 핸들러 - UI 숨김/표시 토글 (호갱노노 스타일)
+  const handleMapTap = () => {
+    // 상세페이지가 열려있으면 무시
+    if (selectedFacility) return;
+    // 토글: UI 숨김 ↔ 표시
+    setUiHidden(prev => !prev);
   };
 
   return (
@@ -569,9 +580,10 @@ function HomeContent() {
           display: isMobile && mobileView === 'list' ? 'none' : 'block'
         }}
       >
-        {/* 모바일 지도 모드 상단 헤더 오버레이 */}
+        {/* 모바일 지도 모드 상단 헤더 오버레이 (UI 숨김 시 슬라이드 아웃) */}
         {isMobile && mobileView === 'map' && (
           <>
+            {/* 상단 헤더 (UI 숨김 시 위로 슬라이드 아웃) */}
             <Box
               pos="absolute"
               top={0}
@@ -580,7 +592,9 @@ function HomeContent() {
               style={{
                 zIndex: 1000,
                 backgroundColor: '#3b4896', // 브랜드 컬러
-                padding: '12px 16px'
+                padding: '12px 16px',
+                transform: uiHidden ? 'translateY(-100%)' : 'translateY(0)',
+                transition: 'transform 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
               }}
             >
               <Group wrap="nowrap" align="center" gap="sm">
@@ -686,7 +700,7 @@ function HomeContent() {
               </Group>
             </Box>
 
-            {/* 필터 버튼 영역 - 흰색 배경 */}
+            {/* 필터 버튼 영역 - 흰색 배경 (UI 숨김 시 위로 슬라이드 아웃) */}
             <Box
               pos="absolute"
               top="58px"
@@ -696,7 +710,9 @@ function HomeContent() {
                 zIndex: 900,
                 backgroundColor: 'white',
                 padding: '8px 16px',
-                borderBottom: '1px solid #e9ecef'
+                borderBottom: '1px solid #e9ecef',
+                transform: uiHidden ? 'translateY(-200%)' : 'translateY(0)',
+                transition: 'transform 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
               }}
             >
               <Group gap={6} wrap="nowrap" align="center">
@@ -780,10 +796,15 @@ function HomeContent() {
         <NaverMap
           ref={mapRef}
           facilities={filteredMapFacilities}
-          onMarkerClick={handleMarkerClick}
+          onMarkerClick={(f) => {
+            setUiHidden(false); // 마커 클릭 시 UI 다시 표시
+            handleMarkerClick(f);
+          }}
           onBoundsChanged={handleBoundsChanged}
           isMobile={isMobile}
           onViewList={() => setMobileView('list')}
+          onMapTap={handleMapTap}
+          uiHidden={uiHidden}
         />
       </Box>
 
