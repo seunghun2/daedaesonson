@@ -372,7 +372,7 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
                   input: {
                     backgroundColor: '#f8f9fa',
                     border: '1px solid #e9ecef',
-                    fontSize: '15px'
+                    fontSize: '16px' // iOS 자동 확대 방지
                   }
                 }}
                 onFocus={() => setSearchFocused(true)}
@@ -612,7 +612,7 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
                       input: {
                         backgroundColor: 'rgba(255,255,255,0.15)',
                         border: 'none',
-                        fontSize: '14px',
+                        fontSize: '16px', // iOS 자동 확대 방지
                         color: 'white',
                         '::placeholder': { color: 'rgba(255,255,255,0.7)' }
                       }
