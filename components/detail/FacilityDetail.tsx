@@ -1130,9 +1130,11 @@ export default function FacilityDetail({ facility: initialFacility, onClose }: F
                     left={0}
                     w="100%"
                     h="100dvh"
+                    onClick={() => setOpened(false)} // 배경 클릭 시 닫기
                     style={{
                         zIndex: 9999,
-                        backgroundColor: 'rgba(0, 0, 0, 0.6)', // 60% opacity로 뒤가 살짝 보이게
+                        backgroundColor: 'rgba(0, 0, 0, 0.8)', // 80% opacity로 더 어둡게
+                        cursor: 'pointer',
                     }}
                 >
                     {/* 상단 헤더 */}
@@ -1165,6 +1167,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose }: F
                     {/* 이미지 영역 (스와이프 + 애니메이션) */}
                     <Box
                         h="100%"
+                        onClick={(e) => e.stopPropagation()} // 이미지 영역 클릭 시 닫히지 않게
                         style={{
                             display: 'flex',
                             alignItems: 'center',
