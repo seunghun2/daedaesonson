@@ -1122,65 +1122,136 @@ export default function FacilityDetail({ facility: initialFacility, onClose }: F
 
             {/* Floating Button Removed */}
 
-            {/* Image Modal Lightbox */}
-            <Modal
-                opened={opened}
-                onClose={() => setOpened(false)}
-                size="xl"
-                padding={0}
-                centered
-                withCloseButton={false}
-                styles={{
-                    content: { backgroundColor: 'transparent', boxShadow: 'none' },
-                    body: { padding: 0 }
-                }}
-            >
-                <div style={{ position: 'relative', width: '100%', aspectRatio: '16/9', backgroundColor: 'black', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                    <Image
-                        src={galleryImages[selectedImageIndex]}
-                        fit="contain"
-                        h="100%"
+            {/* 🖼️ 호갱노노 스타일 전체화면 이미지 갤러리 */}
+            {opened && galleryImages.length > 0 && (
+                <Box
+                    pos="fixed"
+                    top={0}
+                    left={0}
+                    w="100%"
+                    h="100dvh"
+                    bg="black"
+                    style={{ zIndex: 9999 }}
+                >
+                    {/* 상단 헤더 */}
+                    <Box
+                        pos="absolute"
+                        top={0}
+                        left={0}
                         w="100%"
-                        alt="Gallery Image"
-                    />
-                    <Button
-                        variant="subtle"
-                        color="gray"
-                        style={{ position: 'absolute', top: 10, right: 10, color: 'white' }}
-                        onClick={() => setOpened(false)}
+                        p="md"
+                        style={{
+                            zIndex: 10000,
+                            background: 'linear-gradient(to bottom, rgba(0,0,0,0.6), transparent)',
+                        }}
                     >
-                        닫기
-                    </Button>
+                        <Group justify="space-between" align="center">
+                            <Text c="white" fw={600} size="md">
+                                {selectedImageIndex + 1} / {galleryImages.length}
+                            </Text>
+                            <ActionIcon
+                                variant="transparent"
+                                c="white"
+                                size="lg"
+                                onClick={() => setOpened(false)}
+                            >
+                                <X size={28} />
+                            </ActionIcon>
+                        </Group>
+                    </Box>
 
-                    {/* Navigation Buttons */}
-                    {galleryImages.length > 1 && (
+                    {/* 이미지 영역 (스와이프 가능) */}
+                    <Box
+                        h="100%"
+                        style={{
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            touchAction: 'pan-x',
+                        }}
+                        onTouchStart={(e) => {
+                            const touch = e.touches[0];
+                            (e.currentTarget as any).startX = touch.clientX;
+                        }}
+                        onTouchEnd={(e) => {
+                            const startX = (e.currentTarget as any).startX || 0;
+                            const endX = e.changedTouches[0].clientX;
+                            const diff = startX - endX;
+                            if (Math.abs(diff) > 50) {
+                                if (diff > 0 && selectedImageIndex < galleryImages.length - 1) {
+                                    setSelectedImageIndex(prev => prev + 1);
+                                } else if (diff < 0 && selectedImageIndex > 0) {
+                                    setSelectedImageIndex(prev => prev - 1);
+                                }
+                            }
+                        }}
+                    >
+                        <Image
+                            src={getSingleFacilityImageUrl(galleryImages[selectedImageIndex])}
+                            fit="contain"
+                            h="80vh"
+                            w="100%"
+                            alt={`${facility.name} 사진 ${selectedImageIndex + 1}`}
+                        />
+                    </Box>
+
+                    {/* 하단 dot indicator */}
+                    <Box
+                        pos="absolute"
+                        bottom={40}
+                        left={0}
+                        w="100%"
+                        style={{ zIndex: 10000 }}
+                    >
+                        <Group justify="center" gap={8}>
+                            {galleryImages.map((_, idx) => (
+                                <Box
+                                    key={idx}
+                                    w={idx === selectedImageIndex ? 10 : 8}
+                                    h={idx === selectedImageIndex ? 10 : 8}
+                                    style={{
+                                        borderRadius: '50%',
+                                        backgroundColor: idx === selectedImageIndex ? 'white' : 'rgba(255,255,255,0.4)',
+                                        transition: 'all 0.2s',
+                                        cursor: 'pointer',
+                                    }}
+                                    onClick={() => setSelectedImageIndex(idx)}
+                                />
+                            ))}
+                        </Group>
+                    </Box>
+
+                    {/* 좌우 네비게이션 (PC용) */}
+                    {!isMobile && galleryImages.length > 1 && (
                         <>
-                            <Button
-                                variant="subtle"
-                                color="gray"
-                                style={{ position: 'absolute', left: 10, top: '50%', transform: 'translateY(-50%)', color: 'white' }}
-                                onClick={(e) => {
-                                    e.stopPropagation();
-                                    setSelectedImageIndex((prev) => (prev > 0 ? prev - 1 : galleryImages.length - 1));
-                                }}
+                            <ActionIcon
+                                variant="transparent"
+                                c="white"
+                                size="xl"
+                                pos="absolute"
+                                left={20}
+                                top="50%"
+                                style={{ transform: 'translateY(-50%)', zIndex: 10000 }}
+                                onClick={() => setSelectedImageIndex(prev => prev > 0 ? prev - 1 : galleryImages.length - 1)}
                             >
-                                <ChevronLeft size={32} />
-                            </Button>
-                            <Button
-                                variant="subtle"
-                                color="gray"
-                                style={{ position: 'absolute', right: 10, top: '50%', transform: 'translateY(-50%)', color: 'white' }}
-                                onClick={(e) => {
-                                    e.stopPropagation();
-                                    setSelectedImageIndex((prev) => (prev < galleryImages.length - 1 ? prev + 1 : 0));
-                                }}
+                                <ChevronLeft size={40} />
+                            </ActionIcon>
+                            <ActionIcon
+                                variant="transparent"
+                                c="white"
+                                size="xl"
+                                pos="absolute"
+                                right={20}
+                                top="50%"
+                                style={{ transform: 'translateY(-50%)', zIndex: 10000 }}
+                                onClick={() => setSelectedImageIndex(prev => prev < galleryImages.length - 1 ? prev + 1 : 0)}
                             >
-                                <ChevronRight size={32} />
-                            </Button>
+                                <ChevronRight size={40} />
+                            </ActionIcon>
                         </>
                     )}
-                </div>
-            </Modal>
+                </Box>
+            )}
             {/* Review Write Panel (HogangNono Style - Slide Panel) */}
             {
                 reviewModalOpened && (
