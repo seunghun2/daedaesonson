@@ -590,80 +590,71 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
         });
     }, [facilities]);
 
-    // 🚀 마커 업데이트 함수 (화면 내 시설만 필터링하여 렌더링)
+    // 🔒 구/군별 그룹화 (대표 좌표 고정) - 한 번 계산되면 절대 변경 안 함
+    const regionGroups = useMemo(() => {
+        const groups: Record<string, {
+            facilities: typeof processedFacilities;
+            representative: typeof processedFacilities[0];
+            count: number;
+        }> = {};
+
+        for (const fac of processedFacilities) {
+            if (!fac.fixedCoordinates?.lat || !fac.fixedCoordinates?.lng) continue;
+
+            // 주소에서 구/군 추출 (예: "경기도 용인시 처인구" -> "용인시")
+            const addr = fac.address || '';
+            const tokens = addr.split(' ');
+            const regionKey = tokens[1] || tokens[0] || '기타'; // 시/군 레벨
+
+            if (!groups[regionKey]) {
+                groups[regionKey] = {
+                    facilities: [],
+                    representative: fac, // 첫 번째 시설 = 대표 좌표 (고정)
+                    count: 0
+                };
+            }
+            groups[regionKey].facilities.push(fac);
+            groups[regionKey].count++;
+        }
+
+        console.log(`📍 구/군별 그룹화 완료: ${Object.keys(groups).length}개 지역`);
+        return groups;
+    }, [processedFacilities]);
+
+    // 🔒 구/군 마커 캐시 (한 번 생성되면 재사용)
+    const regionMarkersRef = useRef<Map<string, any>>(new Map());
+
+    // 🔒 마커/클러스터 초기 생성 여부 (한 번만 생성)
+    const isMarkersInitializedRef = useRef(false);
+
     const updateVisibleMarkers = useCallback(() => {
         const map = mapInstanceRef.current;
         if (!map || !window.naver || !window.naver.maps) return;
 
-        console.log('NaverMap - Updating visible markers...');
+        const currentZoom = map.getZoom();
+        console.log(`NaverMap - 줌 레벨: ${currentZoom}`);
 
-        const mapBounds = map.getBounds();
-
-        // 지도 영역(Bounds) 좌표 준비
-        let minLat = 0, maxLat = 0, minLng = 0, maxLng = 0;
-
-        // Bounds가 유효한지 체크 (초기 로딩 시 Bounds가 없거나 0일 수 있음)
-        let useFallback = true;
-        if (mapBounds && mapBounds instanceof window.naver.maps.LatLngBounds) {
-            const sw = mapBounds.getSW();
-            const ne = mapBounds.getNE();
-            // 영역 크기가 0.0001 이상이어야 실제로 지도가 보이는 상태임
-            if ((ne.lat() - sw.lat()) > 0.0001) {
-                useFallback = false;
-                minLat = sw.lat(); maxLat = ne.lat();
-                minLng = sw.lng(); maxLng = ne.lng();
-            }
+        // 🔒 이미 마커가 초기화되었으면 재생성하지 않음 (위치 고정)
+        if (isMarkersInitializedRef.current) {
+            console.log('🔒 마커 이미 초기화됨 - 재생성 스킵');
+            return;
         }
 
-        if (useFallback) {
-            // 🚀 초기 로딩 Fallback: 사당/관악(37.4760, 126.9810) 중심으로 강제 계산 (반경 약 5km)
-            // 사용자가 "가만히 있어도 나와야 한다"고 요청함 -> Bounds 대기 없이 즉시 렌더링
-            minLat = 37.4760 - 0.06; maxLat = 37.4760 + 0.06;
-            minLng = 126.9810 - 0.06; maxLng = 126.9810 + 0.06;
-        }
+        console.log('🚀 마커 초기 생성...');
 
-        // 1. 화면(Bounds) 내 시설만 필터링 (미리 계산된 processedFacilities 사용)
-        const visibleFacilities = processedFacilities.filter(fac => {
-            if (!fac.fixedCoordinates || !fac.fixedCoordinates.lat || !fac.fixedCoordinates.lng) return false;
-            const lat = fac.fixedCoordinates.lat;
-            const lng = fac.fixedCoordinates.lng;
-
-            // 단순 좌표 범위 비교 (map.getBounds()가 없어도 작동하도록 직접 비교)
-            return lat >= minLat && lat <= maxLat && lng >= minLng && lng <= maxLng;
-        });
-
-        // 안전장치: 최대 500개 (모바일 성능 보호)
-        const renderFacilities = visibleFacilities.slice(0, 500);
-        console.log(`🎯 Viewport 필터링: 전체 ${facilities.length}개 중 ${renderFacilities.length}개 렌더링`);
-
-        // 2. 현재 화면에 있어야 할 시설 ID 집합
-        const visibleIds = new Set(renderFacilities.map(f => f.id));
-
-        // 3. 화면에서 벗어난 마커만 제거 (캐시에서도 제거)
-        markersRef.current = markersRef.current.filter(marker => {
-            const facId = (marker as any).__facilityId;
-            if (!visibleIds.has(facId)) {
-                marker.setMap(null);
-                markerCacheRef.current.delete(facId);
-                return false;
-            }
-            return true;
-        });
-
-        // 클러스터러 제거 (재구성 필요)
+        // 1. 기존 마커/클러스터 제거
         if (clustererRef.current) {
             clustererRef.current.setMap(null);
             clustererRef.current = null;
         }
+        markersRef.current.forEach(marker => marker.setMap(null));
+        markersRef.current = [];
 
-        const createdMarkers: any[] = [...markersRef.current]; // 기존 유지 마커 포함
+        const createdMarkers: any[] = [];
 
-        // 4. 마커 생성 (이미 고정된 좌표 사용 + 캐시 활용)
-        for (const fac of renderFacilities) {
-            // 🔒 이미 캐시에 있으면 건너뛰기 (위치 변경 없음)
-            if (markerCacheRef.current.has(fac.id)) {
-                continue;
-            }
+        // 2. 모든 시설에 대해 개별 마커 생성
+        for (const fac of processedFacilities) {
+            if (!fac.fixedCoordinates?.lat || !fac.fixedCoordinates?.lng) continue;
 
             const { lat, lng } = fac.fixedCoordinates;
 
@@ -672,7 +663,6 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
             let formattedPrice = 0;
             let isRep = false;
 
-            // 1. Find Representative Price
             if (fac.pricing) {
                 for (const catKey of Object.keys(fac.pricing)) {
                     const category = fac.pricing[catKey];
@@ -681,25 +671,20 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
                         if (repItem && repItem.price > 0) {
                             formattedPrice = repItem.price;
                             isRep = true;
-                            break; // Stop at first representative
+                            break;
                         }
                     }
                 }
             }
 
-            // 2. Fallback to Min Price
             if (!isRep && fac.priceRange?.min) {
                 formattedPrice = fac.priceRange.min;
             }
 
-            // 3. Format Text
             if (formattedPrice > 0) {
-                // 대표 가격이면 '~' 생략 가능하지만, 사용자 요청 이미지('2만원~')에 따라 '~'를 붙일지 고민.
-                // 보통 대표 가격은 '딱 이거다'이므로 '~' 없이 '2만'으로 표시하거나, 
-                // 최저가 로직이면 '~'를 붙임.
-                // 일단은 깔끔하게 가격만 표시 (isRep일 경우)
-                priceText = `${formattedPrice.toLocaleString()}만${!isRep ? '' : ''}`;
+                priceText = `${formattedPrice.toLocaleString()}만`;
             }
+
             const categoryLabel = FACILITY_CATEGORY_LABELS[fac.category as FacilityCategory] || fac.category;
             const categoryColors: Record<string, string> = {
                 'CHARNEL_HOUSE': '#0097a7',
@@ -711,9 +696,6 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
             };
             const markerColor = categoryColors[fac.category as FacilityCategory] || '#0097a7';
 
-            const catWidth = categoryLabel.length * 10;
-            const prcWidth = priceText.length * 11;
-            // 봉안당 기준으로 마커 사이즈 통일 (약 58px)
             const contentWidth = 58;
             const contentHeight = 44;
 
@@ -726,42 +708,29 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
             </svg>
             `;
 
-            // 마커 생성/재사용
-            let marker = markerPoolRef.current.pop();
-            if (marker) {
-                marker.setPosition(new window.naver.maps.LatLng(lat, lng));
-                marker.setTitle(fac.name);
-                marker.setIcon({
+            const marker = new window.naver.maps.Marker({
+                position: new window.naver.maps.LatLng(lat, lng),
+                title: fac.name,
+                icon: {
                     content: svgContent,
                     anchor: new window.naver.maps.Point(contentWidth / 2, contentHeight + 7),
-                });
-                window.naver.maps.Event.clearListeners(marker, 'click');
-            } else {
-                marker = new window.naver.maps.Marker({
-                    position: new window.naver.maps.LatLng(lat, lng),
-                    title: fac.name,
-                    icon: {
-                        content: svgContent,
-                        anchor: new window.naver.maps.Point(contentWidth / 2, contentHeight + 7),
-                    }
-                });
-            }
+                }
+            });
 
             (marker as any).__facilityData = fac;
-            (marker as any).__facilityId = fac.id; // 캐시 조회용 ID
+            (marker as any).__facilityId = fac.id;
+            (marker as any).__regionKey = (fac.address || '').split(' ')[1] || '기타';
+
             window.naver.maps.Event.addListener(marker, 'click', () => {
                 onMarkerClick(fac);
             });
-
-            // 🔒 캐시에 저장
-            markerCacheRef.current.set(fac.id, marker);
 
             createdMarkers.push(marker);
         }
 
         markersRef.current = createdMarkers;
 
-        // 5. 클러스터링 적용
+        // 3. 클러스터링 적용 (전체 데이터 기준 카운트)
         const ClusteringClass = window.MarkerClustering || (window.naver.maps && window.naver.maps.MarkerClustering);
         if (ClusteringClass) {
             clustererRef.current = new ClusteringClass({
@@ -770,7 +739,7 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
                 map: map,
                 markers: createdMarkers,
                 disableClickZoom: false,
-                gridSize: 500, // 🔒 같은 지역은 하나로 묶이도록 크게 설정
+                gridSize: 500,
                 averageCenter: false, // 🔒 첫 번째 마커 기준으로 위치 고정
                 icons: [{
                     content: `
@@ -786,7 +755,15 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
                 stylingFunction: (clusterMarker: any, count: number, members: any[]) => {
                     const divRegion = clusterMarker.getElement().querySelector('.cluster-region');
                     const divCount = clusterMarker.getElement().querySelector('.cluster-count');
-                    if (divCount) divCount.innerText = `${count} 곳`;
+
+                    // 🔒 전체 데이터 기준 카운트 사용
+                    if (members.length > 0) {
+                        const regionKey = (members[0] as any).__regionKey;
+                        const totalCount = regionGroups[regionKey]?.count || count;
+                        if (divCount) divCount.innerText = `${totalCount} 곳`;
+                    } else {
+                        if (divCount) divCount.innerText = `${count} 곳`;
+                    }
 
                     if (divRegion && members.length > 0) {
                         const fac = (members[0] as any).__facilityData;
@@ -815,7 +792,12 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
         } else {
             createdMarkers.forEach(m => m.setMap(map));
         }
-    }, [facilities, onMarkerClick]); // Add onMarkerClick to dependencies
+
+        // 🔒 초기화 완료 플래그
+        isMarkersInitializedRef.current = true;
+        console.log(`✅ ${createdMarkers.length}개 마커 생성 완료 (위치 고정됨)`);
+
+    }, [processedFacilities, regionGroups, onMarkerClick]);
 
     // 🚀 Effect: 데이터 변경 시 업데이트
     useEffect(() => {
