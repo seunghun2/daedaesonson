@@ -677,7 +677,8 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
 
             const catWidth = categoryLabel.length * 10;
             const prcWidth = priceText.length * 11;
-            const contentWidth = Math.max(catWidth, prcWidth) + 16;
+            // 봉안당 기준으로 마커 사이즈 통일 (약 58px)
+            const contentWidth = 58;
             const contentHeight = 44;
 
             const svgContent = `
@@ -885,12 +886,12 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
                 {isMapLoaded && (
                     <div style={{
                         position: 'absolute',
-                        top: '20px',
-                        right: '20px',
+                        top: isMobile ? '130px' : '20px', // 모바일: 상단 헤더 아래로
+                        right: '16px',
                         zIndex: 100,
                         display: 'flex',
                         flexDirection: 'column',
-                        gap: '12px'
+                        gap: '10px'
                     }}>
                         {/* 1. 내 정보 */}
                         <CustomControlBtn
@@ -924,11 +925,11 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
                     </div>
                 )}
 
-                {/* 하단 중앙 주소 버튼 (호갱노노 스타일) - 모바일 제외 */}
-                {!isMobile && isMapLoaded && centerAddress && (
+                {/* 하단 주소 버튼 (호갱노노 스타일) - 가운데 */}
+                {isMapLoaded && centerAddress && (
                     <div style={{
                         position: 'absolute',
-                        bottom: '24px',
+                        bottom: isMobile ? '30px' : '24px',
                         left: '50%',
                         transform: 'translateX(-50%)',
                         zIndex: 100,
@@ -941,19 +942,20 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
                             style={{
                                 display: 'flex',
                                 alignItems: 'center',
-                                gap: '8px',
+                                gap: '6px',
                                 backgroundColor: '#35469C', // Brand Color
                                 color: 'white',
-                                padding: '12px 20px',
+                                padding: isMobile ? '10px 14px' : '12px 20px',
                                 borderRadius: '30px',
                                 border: 'none',
                                 boxShadow: '0 4px 12px rgba(0,0,0,0.3)',
                                 cursor: 'pointer',
-                                fontSize: '14px',
+                                fontSize: isMobile ? '12px' : '14px',
                                 fontWeight: 'bold',
+                                whiteSpace: 'nowrap',
                             }}
                         >
-                            <span className="material-symbols-outlined" style={{ fontSize: '20px' }}>menu</span>
+                            <span className="material-symbols-outlined" style={{ fontSize: isMobile ? '16px' : '20px' }}>menu</span>
                             <span>{centerAddress} 주변 시설 보기</span>
                         </button>
                     </div>

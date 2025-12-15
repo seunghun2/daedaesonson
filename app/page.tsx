@@ -48,7 +48,7 @@ function HomeContent() {
   const pathname = usePathname();
 
   // 상태 관리
-  const [activeCategory, setActiveCategory] = useState<string>('all');
+  const [activeCategory, setActiveCategory] = useState<string[]>(['all']);
   const [selectedFacility, setSelectedFacility] = useState<Facility | null>(null);
   const [mobileView, setMobileView] = useState<'map' | 'list'>('map');
   const [sortBy, setSortBy] = useState('rating');
@@ -196,21 +196,24 @@ function HomeContent() {
     // 0. 장례식장 기본 제외
     base = base.filter(f => f.category !== 'FUNERAL_HOME');
 
-    // 1. 카테고리
-    if (activeCategory !== 'all') {
+    // 1. 카테고리 (다중 선택)
+    if (!activeCategory.includes('all')) {
       const catMap: Record<string, string> = {
         'charnel': 'CHARNEL_HOUSE',
         'natural': 'NATURAL_BURIAL',
         'park': 'FAMILY_GRAVE'
       };
-      if (catMap[activeCategory]) {
-        base = base.filter(f => f.category === catMap[activeCategory]);
+      const selectedDbCategories = activeCategory
+        .filter(c => catMap[c])
+        .map(c => catMap[c]);
+      if (selectedDbCategories.length > 0) {
+        base = base.filter(f => selectedDbCategories.includes(f.category));
       }
     }
 
-    // 2. 검색어 (이름 or 주소) - 지역 선택 아닐 때만 필터링
-    if (submittedQuery.trim() && !isRegionSelected) { // Use submittedQuery for filtering
-      const query = submittedQuery.trim().toLowerCase().normalize('NFC');
+    // 2. 검색어 (이름 or 주소) - 타이핑 중에도 필터링 작동 (searchQuery 사용)
+    if (searchQuery.trim() && !isRegionSelected) {
+      const query = searchQuery.trim().toLowerCase().normalize('NFC');
       base = base.filter(f =>
         f.name.toLowerCase().normalize('NFC').includes(query) ||
         f.address.toLowerCase().normalize('NFC').includes(query)
@@ -218,7 +221,7 @@ function HomeContent() {
     }
 
     return base;
-  }, [dbFacilities, activeCategory, submittedQuery, isRegionSelected]);
+  }, [dbFacilities, activeCategory, searchQuery, isRegionSelected]);
 
   // 2. 리스트에 표시할 데이터 (지도 데이터 + 현재 Viewport filtering + 정렬)
   const finalFacilities = useMemo(() => {
@@ -288,6 +291,10 @@ function HomeContent() {
   };
 
   const handleCloseDetail = () => {
+    // 상세페이지 닫을 때 해당 시설 위치로 지도 이동
+    if (selectedFacility?.coordinates && mapRef.current) {
+      mapRef.current.panTo(selectedFacility.coordinates.lat, selectedFacility.coordinates.lng);
+    }
     // Remove 'id' parameter from URL to close the detail view
     router.push(pathname, { scroll: false });
   };
@@ -315,16 +322,35 @@ function HomeContent() {
 
 
           <Group wrap="nowrap" align="center" mb="sm">
-            <Link href="/" style={{ display: 'flex', alignItems: 'center', marginRight: 8 }}>
-              <Image
-                src="/logo-horizontal.svg?v=4"
-                alt="대대손손"
-                width={90}
-                height={26}
-                style={{ objectFit: 'contain' }}
-                priority
-              />
-            </Link>
+            {/* 모바일 목록뷰: 뒤로가기 버튼, PC/지도뷰: 로고 */}
+            {isMobile && mobileView === 'list' ? (
+              <button
+                onClick={() => setMobileView('map')}
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '4px',
+                  background: 'transparent',
+                  border: 'none',
+                  cursor: 'pointer',
+                  padding: '4px 8px',
+                  marginLeft: '-8px'
+                }}
+              >
+                <span className="material-symbols-outlined" style={{ fontSize: '24px', color: '#495057' }}>arrow_back</span>
+              </button>
+            ) : (
+              <Link href="/" style={{ display: 'flex', alignItems: 'center', marginRight: 8 }}>
+                <Image
+                  src="/logo-horizontal.svg?v=4"
+                  alt="대대손손"
+                  width={90}
+                  height={26}
+                  style={{ objectFit: 'contain' }}
+                  priority
+                />
+              </Link>
+            )}
             <Box style={{ flex: 1, position: 'relative' }}>
               <TextInput
                 placeholder="지역, 시설명 검색"
@@ -443,47 +469,75 @@ function HomeContent() {
             </Box>
           </Group>
 
-          <Tabs
-            value={activeCategory}
-            onChange={(v) => setActiveCategory(v || 'all')}
-            variant="pills"
-            radius="xl"
-            styles={{
-              root: { marginTop: 8 },
-              list: { gap: 6 }, // 탭 간격
-              tab: {
-                fontSize: '14px',
-                fontWeight: 600,
-                border: '1px solid transparent',
+          {/* PC 필터 버튼 (다중 선택) */}
+          <Group gap={6} mt="sm" align="center">
+            {/* 전체 버튼 */}
+            <button
+              onClick={() => setActiveCategory(['all'])}
+              style={{
                 height: '34px',
-              }
-            }}
-          >
-            <Tabs.List>
-              {[
-                { value: 'all', label: '전체' },
-                { value: 'charnel', label: '봉안당' },
-                { value: 'natural', label: '수목장' },
-                { value: 'park', label: '공원묘지' }
-              ].map(tab => {
-                const isActive = activeCategory === tab.value;
-                return (
-                  <Tabs.Tab
-                    key={tab.value}
-                    value={tab.value}
-                    style={{
-                      backgroundColor: isActive ? '#3b4896' : 'transparent', // Custom Dark Blue for Active, Transparent for Inactive
-                      color: isActive ? 'white' : '#495057', // White text for Active, Gray for Inactive
-                      borderColor: isActive ? 'transparent' : 'transparent',
-                      fontWeight: isActive ? 700 : 500
-                    }}
-                  >
-                    {tab.label}
-                  </Tabs.Tab>
-                );
-              })}
-            </Tabs.List>
-          </Tabs>
+                fontSize: '14px',
+                fontWeight: activeCategory.includes('all') ? 700 : 500,
+                backgroundColor: activeCategory.includes('all') ? '#3b4896' : 'white',
+                color: activeCategory.includes('all') ? 'white' : '#495057',
+                border: activeCategory.includes('all') ? 'none' : '1px solid #dee2e6',
+                borderRadius: '20px',
+                cursor: 'pointer',
+                transition: 'all 0.2s',
+                paddingLeft: '16px',
+                paddingRight: '16px'
+              }}
+            >
+              전체
+            </button>
+
+            {/* 구분선 */}
+            <div style={{ width: '1px', height: '20px', backgroundColor: '#dee2e6' }} />
+
+            {/* 개별 카테고리 버튼들 */}
+            {[
+              { value: 'charnel', label: '봉안당' },
+              { value: 'natural', label: '수목장' },
+              { value: 'park', label: '공원묘지' }
+            ].map(tab => {
+              const isSelected = activeCategory.includes(tab.value);
+              return (
+                <button
+                  key={tab.value}
+                  onClick={() => {
+                    if (activeCategory.includes('all')) {
+                      setActiveCategory([tab.value]);
+                    } else if (isSelected) {
+                      const newCats = activeCategory.filter(c => c !== tab.value);
+                      setActiveCategory(newCats.length === 0 ? ['all'] : newCats);
+                    } else {
+                      const newCats = [...activeCategory, tab.value];
+                      if (newCats.length === 3) {
+                        setActiveCategory(['all']);
+                      } else {
+                        setActiveCategory(newCats);
+                      }
+                    }
+                  }}
+                  style={{
+                    height: '34px',
+                    fontSize: '14px',
+                    fontWeight: isSelected ? 700 : 500,
+                    backgroundColor: isSelected ? '#3b4896' : 'white',
+                    color: isSelected ? 'white' : '#495057',
+                    border: isSelected ? 'none' : '1px solid #dee2e6',
+                    borderRadius: '20px',
+                    cursor: 'pointer',
+                    transition: 'all 0.2s',
+                    paddingLeft: '16px',
+                    paddingRight: '16px'
+                  }}
+                >
+                  {tab.label}
+                </button>
+              );
+            })}
+          </Group>
         </Box>
 
         {/* 상세 보기 or 리스트 */}
@@ -515,12 +569,221 @@ function HomeContent() {
           display: isMobile && mobileView === 'list' ? 'none' : 'block'
         }}
       >
+        {/* 모바일 지도 모드 상단 헤더 오버레이 */}
+        {isMobile && mobileView === 'map' && (
+          <>
+            <Box
+              pos="absolute"
+              top={0}
+              left={0}
+              w="100%"
+              style={{
+                zIndex: 1000,
+                backgroundColor: '#3b4896', // 브랜드 컬러
+                padding: '12px 16px'
+              }}
+            >
+              <Group wrap="nowrap" align="center" gap="sm">
+                <Link href="/" style={{ display: 'flex', alignItems: 'center' }}>
+                  <Image
+                    src="/logo-horizontal.svg?v=4"
+                    alt="대대손손"
+                    width={80}
+                    height={22}
+                    style={{
+                      objectFit: 'contain',
+                      filter: 'brightness(0) invert(1)' // 흰색으로 변환
+                    }}
+                    priority
+                  />
+                </Link>
+                <Box style={{ flex: 1, position: 'relative' }}>
+                  <TextInput
+                    placeholder="지역, 시설명 검색"
+                    value={searchQuery}
+                    onChange={handleSearchInput}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter') {
+                        e.preventDefault();
+                        setSubmittedQuery(searchQuery);
+                        setSearchFocused(false);
+                        (document.activeElement as HTMLElement)?.blur();
+                      }
+                    }}
+                    size="sm"
+                    styles={{
+                      input: {
+                        backgroundColor: 'rgba(255,255,255,0.15)',
+                        border: 'none',
+                        fontSize: '14px',
+                        color: 'white',
+                        '::placeholder': { color: 'rgba(255,255,255,0.7)' }
+                      }
+                    }}
+                    onFocus={() => setSearchFocused(true)}
+                    onBlur={() => setTimeout(() => setSearchFocused(false), 250)}
+                  />
+
+                  {/* 모바일 자동완성 팝업 */}
+                  {searchFocused && searchQuery.trim() && (completionResults.regions.length > 0 || completionResults.facilities.length > 0) && (
+                    <Box
+                      pos="absolute"
+                      top="calc(100% + 4px)"
+                      left={0}
+                      w="100%"
+                      bg="white"
+                      style={{
+                        zIndex: 2100,
+                        borderRadius: 8,
+                        boxShadow: '0 4px 20px rgba(0,0,0,0.15)',
+                        maxHeight: '300px',
+                        overflowY: 'auto'
+                      }}
+                    >
+                      {completionResults.regions.map((region, i) => (
+                        <Box
+                          key={`mob-reg-${i}`}
+                          px="md"
+                          py={12}
+                          style={{ cursor: 'pointer', borderBottom: '1px solid #f1f3f5' }}
+                          onClick={() => handleSelectRegion(region)}
+                          onMouseDown={(e) => e.preventDefault()}
+                        >
+                          <Text size="sm" c="dark.9">{region.fullName}</Text>
+                        </Box>
+                      ))}
+                      {completionResults.facilities.map((fac, i) => (
+                        <Box
+                          key={`mob-fac-${fac.id}-${i}`}
+                          px="md"
+                          py={12}
+                          style={{ cursor: 'pointer', borderBottom: i === completionResults.facilities.length - 1 ? 'none' : '1px solid #f1f3f5' }}
+                          onClick={() => handleSelectFacility(fac)}
+                          onMouseDown={(e) => e.preventDefault()}
+                        >
+                          <Text size="sm" fw={500} c="dark.9">{fac.name}</Text>
+                          <Text size="xs" c="dimmed" truncate>{fac.address}</Text>
+                        </Box>
+                      ))}
+                    </Box>
+                  )}
+                </Box>
+
+                {/* 내 정보 아이콘 */}
+                <button
+                  onClick={() => console.log('내 정보 클릭')}
+                  style={{
+                    background: 'transparent',
+                    border: 'none',
+                    cursor: 'pointer',
+                    padding: '4px',
+                    display: 'flex',
+                    alignItems: 'center'
+                  }}
+                >
+                  <span className="material-symbols-outlined" style={{ fontSize: '24px', color: 'white' }}>person</span>
+                </button>
+              </Group>
+            </Box>
+
+            {/* 필터 버튼 영역 - 흰색 배경 */}
+            <Box
+              pos="absolute"
+              top="58px"
+              left={0}
+              w="100%"
+              style={{
+                zIndex: 900,
+                backgroundColor: 'white',
+                padding: '8px 16px',
+                borderBottom: '1px solid #e9ecef'
+              }}
+            >
+              <Group gap={6} wrap="nowrap" align="center">
+                {/* 전체 버튼 */}
+                <button
+                  onClick={() => setActiveCategory(['all'])}
+                  style={{
+                    height: '30px',
+                    fontSize: '12px',
+                    fontWeight: activeCategory.includes('all') ? 700 : 500,
+                    backgroundColor: 'white',
+                    color: activeCategory.includes('all') ? '#3b4896' : '#495057',
+                    border: activeCategory.includes('all') ? '1.5px solid #3b4896' : '1px solid #dee2e6',
+                    borderRadius: '6px',
+                    cursor: 'pointer',
+                    transition: 'all 0.2s',
+                    paddingLeft: '14px',
+                    paddingRight: '14px',
+                    whiteSpace: 'nowrap'
+                  }}
+                >
+                  전체
+                </button>
+
+                {/* 구분선 */}
+                <div style={{ width: '1px', height: '20px', backgroundColor: '#dee2e6' }} />
+
+                {/* 개별 카테고리 버튼들 */}
+                {[
+                  { value: 'charnel', label: '봉안당' },
+                  { value: 'natural', label: '수목장' },
+                  { value: 'park', label: '공원묘지' }
+                ].map(tab => {
+                  const isSelected = activeCategory.includes(tab.value);
+                  return (
+                    <button
+                      key={tab.value}
+                      onClick={() => {
+                        if (activeCategory.includes('all')) {
+                          // 전체에서 개별 선택
+                          setActiveCategory([tab.value]);
+                        } else if (isSelected) {
+                          // 이미 선택된 거 해제
+                          const newCats = activeCategory.filter(c => c !== tab.value);
+                          setActiveCategory(newCats.length === 0 ? ['all'] : newCats);
+                        } else {
+                          // 추가 선택
+                          const newCats = [...activeCategory, tab.value];
+                          // 3개 다 선택하면 전체로
+                          if (newCats.length === 3) {
+                            setActiveCategory(['all']);
+                          } else {
+                            setActiveCategory(newCats);
+                          }
+                        }
+                      }}
+                      style={{
+                        height: '30px',
+                        fontSize: '12px',
+                        fontWeight: isSelected ? 700 : 500,
+                        backgroundColor: 'white',
+                        color: isSelected ? '#3b4896' : '#495057',
+                        border: isSelected ? '1.5px solid #3b4896' : '1px solid #dee2e6',
+                        borderRadius: '6px',
+                        cursor: 'pointer',
+                        transition: 'all 0.2s',
+                        paddingLeft: '14px',
+                        paddingRight: '14px',
+                        whiteSpace: 'nowrap'
+                      }}
+                    >
+                      {tab.label}
+                    </button>
+                  );
+                })}
+              </Group>
+            </Box>
+          </>
+        )}
+
         <NaverMap
           ref={mapRef}
           facilities={filteredMapFacilities}
           onMarkerClick={handleMarkerClick}
           onBoundsChanged={handleBoundsChanged}
           isMobile={isMobile}
+          onViewList={() => setMobileView('list')}
         />
       </Box>
 
@@ -565,26 +828,7 @@ function HomeContent() {
           </Box>
         )
       }
-
-      {/* 모바일 하단 뷰 토글 버튼 (Global Position) */}
-      {
-        isMobile && !selectedFacility && (
-          <Box pos="absolute" bottom={30} left="50%" style={{ transform: 'translateX(-50%)', zIndex: 1000 }}>
-            <SegmentedControl
-              value={mobileView}
-              onChange={(v) => setMobileView(v as 'map' | 'list')}
-              data={[
-                { label: <LabelCenter><MapIcon size={16} style={{ marginRight: 4 }} /> 지도</LabelCenter>, value: 'map' },
-                { label: <LabelCenter><ListIcon size={16} style={{ marginRight: 4 }} /> 목록</LabelCenter>, value: 'list' },
-              ]}
-              radius="xl"
-              size="md"
-              bg="white"
-              styles={{ root: { boxShadow: '0 4px 12px rgba(0,0,0,0.15)' } }}
-            />
-          </Box>
-        )
-      }
+      {/* 모바일 하단 지도/목록 전환은 "주변 시설 보기" 버튼이 대체 */}
     </Flex >
   );
 }
