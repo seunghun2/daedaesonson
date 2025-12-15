@@ -802,7 +802,7 @@ function HomeContent() {
           }}
           onBoundsChanged={handleBoundsChanged}
           isMobile={isMobile}
-          onViewList={() => setMobileView('list')}
+          onViewList={() => router.push('/list')}
           onMapTap={handleMapTap}
           uiHidden={uiHidden}
         />

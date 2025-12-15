@@ -1,7 +1,7 @@
 'use client';
 
 import { Card, Text, Badge, Group, Flex, ThemeIcon, Box, Image } from '@mantine/core';
-import { MapPin, Building, Trees, Cross, User, Star } from 'lucide-react';
+import { MapPin, Building, Trees, Cross, User } from 'lucide-react';
 import { Facility, FACILITY_CATEGORY_LABELS, FacilityCategory } from '@/types';
 import { formatKoreanCurrency } from '@/lib/format';
 import { getFacilityImageUrl } from '@/lib/supabaseImage';
@@ -25,64 +25,52 @@ export default function FacilityCard({ facility, onClick }: FacilityCardProps) {
     const config = CATEGORY_CONFIG[facility.category] || CATEGORY_CONFIG.OTHER;
     const Icon = config.icon;
 
-    // 가격 포맷팅 (representativePricing 우선 사용)
+    // 가격 포맷팅 - 상세페이지와 동일한 로직 사용
     let displayPrice = '가격문의';
-    let priceLabel = ''; // Prefix label like "관내", "개인형"
+    let priceLabel = '';
     let isRepFromPricing = false;
 
-    // 0. Check for Starred (Representative) Price in pricing table [Highest Priority]
-    // 0. Check for Starred (Representative) Price in pricing table [Highest Priority]
+    // Check for Representative Price in pricing table (상세페이지와 동일한 로직)
     if (facility.pricing) {
-        // 1. Determine Preferred Category Key based on Facility Type
-        let preferredKey = '';
-        if (facility.category === 'FAMILY_GRAVE') preferredKey = '매장묘';
-        else if (facility.category === 'CHARNEL_HOUSE') preferredKey = '봉안당';
-        else if (facility.category === 'NATURAL_BURIAL') preferredKey = '수목장';
+        // Collection for sub-items (Label, Price in Won)
+        const subRepItems: { label: string; price: number }[] = [];
 
-        // 2. Try to find representative in preferred category first
-        let foundRep = false;
+        // 1. Collect all representative items
+        Object.keys(facility.pricing).forEach(key => {
+            const cat = facility.pricing[key];
+            // Skip 'Others' or Option-like categories
+            if (key.includes('옵션') || key.includes('관리비')) return;
 
-        // Helper to process price
-        const processPrice = (item: any) => {
-            // Hybrid Unit Handling (Won vs Man-won)
-            // If price is clearly large (>10000), treat as Won. Otherwise treat as Man-won (Legacy).
-            const rawPrice = Number(item.price);
-            const finalPrice = rawPrice > 10000 ? rawPrice : rawPrice * 10000;
-            return finalPrice;
-        };
+            if (cat && Array.isArray(cat.rows)) {
+                const rep = cat.rows.find((r: any) => r.isRepresentative);
+                if (rep) {
+                    let priceVal = Number(rep.price);
+                    if (isNaN(priceVal) || priceVal <= 0) return;
 
-        if (preferredKey && facility.pricing[preferredKey]) {
-            const category = facility.pricing[preferredKey];
-            if (category && Array.isArray(category.rows)) {
-                const repItem = category.rows.find((r: any) => r.isRepresentative);
-                if (repItem && repItem.price > 0) {
-                    displayPrice = formatKoreanCurrency(processPrice(repItem));
-                    priceLabel = preferredKey; // Use key as label
-                    isRepFromPricing = true;
-                    foundRep = true;
+                    // Heuristic: Process Unit
+                    // If < 10000, assume Man-won -> Convert to Won
+                    // If >= 10000, assume Won -> Keep as Won
+                    const val = priceVal < 10000 ? priceVal * 10000 : priceVal;
+
+                    subRepItems.push({ label: key, price: val });
                 }
             }
-        }
+        });
 
-        // 3. If not found, fallback to any representative
-        if (!foundRep) {
-            for (const catKey of Object.keys(facility.pricing)) {
-                const category = facility.pricing[catKey];
-                if (category && Array.isArray(category.rows)) {
-                    const repItem = category.rows.find((r: any) => r.isRepresentative);
-                    if (repItem && repItem.price > 0) {
-                        displayPrice = formatKoreanCurrency(processPrice(repItem));
-                        // Determine simplified label from catKey
-                        if (catKey.includes('burial') || catKey.includes('매장')) priceLabel = '매장묘';
-                        else if (catKey.includes('charnel') || catKey.includes('봉안')) priceLabel = '봉안당';
-                        else if (catKey.includes('natural') || catKey.includes('수목')) priceLabel = '수목장';
-                        else priceLabel = '대표';
+        // 2. Pick Main Display Price (Preferred Category matching - 상세페이지와 동일)
+        let preferredKeywords: string[] = [];
+        if (facility.category === 'FAMILY_GRAVE') preferredKeywords = ['매장', '묘지'];
+        else if (facility.category === 'CHARNEL_HOUSE') preferredKeywords = ['봉안', '납골'];
+        else if (facility.category === 'NATURAL_BURIAL') preferredKeywords = ['수목', '자연', '잔디', '화초'];
 
-                        isRepFromPricing = true;
-                        break;
-                    }
-                }
-            }
+        // Find first item that matches ANY of the keywords
+        const mainItem = subRepItems.find(i =>
+            preferredKeywords.some(k => i.label.includes(k))
+        ) || subRepItems[0];
+
+        if (mainItem) {
+            displayPrice = formatKoreanCurrency(mainItem.price);
+            isRepFromPricing = true;
         }
     }
 
@@ -107,7 +95,8 @@ export default function FacilityCard({ facility, onClick }: FacilityCardProps) {
             const val = rp.cemetery.minLandFee;
             if (val > 0) {
                 displayPrice = formatKoreanCurrency(val);
-                priceLabel = '대지';
+                // '대지' 라벨 제거
+                priceLabel = '';
             }
         }
     }
@@ -196,21 +185,13 @@ export default function FacilityCard({ facility, onClick }: FacilityCardProps) {
                         </Text>
                     </div>
 
-                    {/* 중단: 평점 및 리뷰 */}
-                    <Group gap={8} align="center">
-                        <Flex gap={2} align="center">
-                            <Star size={12} fill="#FCC419" color="#FCC419" />
-                            <Text size="sm" fw={600} c="dark.9">{facility.rating || "-"}</Text>
-                        </Flex>
-                        <Text size="xs" c="gray.5">|</Text>
-                        <Text size="xs" c="gray.6">후기 {facility.reviewCount || 0}</Text>
-                    </Group>
+                    {/* 별점/후기 제거 */}
 
                     {/* 하단: 가격 강조 */}
                     <Group justify="space-between" align="flex-end">
                         <Group gap={2} align="flex-end">
-                            {priceLabel && <Text size="xs" c="gray.6" mb={4} fw={600} mr={2}>{priceLabel}</Text>}
-                            <Text fw={800} size="lg" c="#35469C" style={{ lineHeight: 1 }}>
+                            {priceLabel && <Text size="xs" c="gray.6" mb={3} fw={600} mr={2}>{priceLabel}</Text>}
+                            <Text fw={700} size="md" c="#35469C" style={{ lineHeight: 1 }}>
                                 {displayPrice}{showTilde ? '~' : ''}
                             </Text>
                         </Group>

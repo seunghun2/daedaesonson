@@ -4,6 +4,7 @@ import { useEffect, useRef, useState, useImperativeHandle, forwardRef, useCallba
 import { Box, Text, Center, Button } from '@mantine/core';
 import { MapPin } from 'lucide-react';
 import Script from 'next/script';
+import Link from 'next/link';
 import { Facility, FACILITY_CATEGORY_LABELS, FacilityCategory } from '@/types';
 import * as turf from '@turf/turf';
 
@@ -65,6 +66,7 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
     const [isMainLoaded, setIsMainLoaded] = useState(false);
     const [mapError, setMapError] = useState(false);
     const [centerAddress, setCenterAddress] = useState<string>('');
+    const [centerCoords, setCenterCoords] = useState<{ lat: number; lng: number } | null>(null);
 
     const N_CLIENT_ID = process.env.NEXT_PUBLIC_NAVER_MAP_CLIENT_ID || '9ynkl22koz';
 
@@ -452,6 +454,8 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
         if (!map || !window.naver || !window.naver.maps.Service) return;
 
         const center = map.getCenter();
+        // 중심 좌표 상태 업데이트
+        setCenterCoords({ lat: center.lat(), lng: center.lng() });
 
         window.naver.maps.Service.reverseGeocode({
             coords: center,
@@ -837,8 +841,11 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
                 updateVisibleMarkers();
             });
 
-            // 🎯 빈 지도 탭 이벤트 (방사형 메뉴용) - 드래그와 구분
+            // 🎯 빈 지도 탭 이벤트 (UI 토글용) - 드래그와 더블클릭 구분
             let isDragging = false;
+            let lastClickTime = 0;
+            const DOUBLE_CLICK_THRESHOLD = 300; // 300ms 이내 두 번 클릭이면 더블클릭
+
             window.naver.maps.Event.addListener(map, 'dragstart', () => {
                 isDragging = true;
             });
@@ -848,14 +855,34 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
             });
             window.naver.maps.Event.addListener(map, 'click', (e: any) => {
                 if (isDragging) return; // 드래그 중이면 무시
-                if (onMapTap) {
-                    onMapTap();
+
+                const now = Date.now();
+                const timeSinceLastClick = now - lastClickTime;
+                lastClickTime = now;
+
+                // 더블클릭이면 UI 토글 안 함 (지도 확대 기능)
+                if (timeSinceLastClick < DOUBLE_CLICK_THRESHOLD) {
+                    return;
                 }
+
+                // 싱글 클릭: 약간 지연 후 실행 (더블클릭 확인 후)
+                setTimeout(() => {
+                    // 지연 시간 내에 다시 클릭했으면 더블클릭이므로 무시
+                    if (Date.now() - lastClickTime < DOUBLE_CLICK_THRESHOLD) {
+                        return;
+                    }
+                    if (onMapTap) {
+                        onMapTap();
+                    }
+                }, DOUBLE_CLICK_THRESHOLD);
             });
 
             // 초기 로드 시 실행
             // updateVisibleMarkers() will be called by the useEffect when isMapLoaded becomes true
             setIsMapLoaded(true);
+
+            // 🎯 초기 로드 시에도 중심 주소 업데이트 (버튼 바로 표시)
+            updateCenterAddress(map);
 
         } catch (e) {
             console.error('❌ 지도 초기화 에러:', e);
@@ -955,13 +982,11 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
                             ? 'translateX(-50%) translateY(150%)'
                             : 'translateX(-50%) translateY(0)',
                         transition: 'transform 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-                        zIndex: 100,
+                        zIndex: 200,
+                        pointerEvents: 'auto',
                     }}>
-                        <button
-                            onClick={() => {
-                                console.log('Region clicked:', centerAddress);
-                                if (onViewList) onViewList();
-                            }}
+                        <Link
+                            href={`/list?region=${encodeURIComponent(centerAddress)}&lat=${centerCoords?.lat ?? ''}&lng=${centerCoords?.lng ?? ''}`}
                             style={{
                                 display: 'flex',
                                 alignItems: 'center',
@@ -970,17 +995,17 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
                                 color: 'white',
                                 padding: isMobile ? '10px 14px' : '12px 20px',
                                 borderRadius: '30px',
-                                border: 'none',
                                 boxShadow: '0 4px 12px rgba(0,0,0,0.3)',
                                 cursor: 'pointer',
                                 fontSize: isMobile ? '12px' : '14px',
                                 fontWeight: 'bold',
                                 whiteSpace: 'nowrap',
+                                textDecoration: 'none',
                             }}
                         >
                             <span className="material-symbols-outlined" style={{ fontSize: isMobile ? '16px' : '20px' }}>menu</span>
                             <span>{centerAddress} 주변 시설 보기</span>
-                        </button>
+                        </Link>
                     </div>
                 )}
 
