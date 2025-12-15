@@ -1,9 +1,9 @@
 'use client';
 
 import { useState, useMemo, useEffect, useRef, Suspense } from 'react';
-import { AppShell, Box, Flex, SegmentedControl, useMantineTheme, TextInput, Tabs, Group, Text, ThemeIcon, ActionIcon } from '@mantine/core';
+import { Box, Flex, useMantineTheme, TextInput, Group, Text, ThemeIcon } from '@mantine/core';
 import { useMediaQuery } from '@mantine/hooks';
-import { Map as MapIcon, List as ListIcon, Search, MapPin, Building } from 'lucide-react';
+import { Search, MapPin, Building } from 'lucide-react';
 import Link from 'next/link';
 import { useRouter, useSearchParams, usePathname } from 'next/navigation';
 import { useDebouncedCallback } from 'use-debounce';
@@ -240,9 +240,9 @@ function HomeContent() {
 
     // 3. 정렬
     return base.sort((a, b) => {
-      if (sortBy === 'price') return a.priceRange.min - b.priceRange.min;
+      if (sortBy === 'price') return (a.priceRange?.min ?? 9999) - (b.priceRange?.min ?? 9999);
       if (sortBy === 'review') return (b.reviewCount || 0) - (a.reviewCount || 0);
-      return Number(b.rating) - Number(a.rating);
+      return Number(b.rating || 0) - Number(a.rating || 0);
     });
   }, [filteredMapFacilities, currentBounds, sortBy]);
 
@@ -831,10 +831,6 @@ function HomeContent() {
       {/* 모바일 하단 지도/목록 전환은 "주변 시설 보기" 버튼이 대체 */}
     </Flex >
   );
-}
-
-function LabelCenter({ children }: { children: React.ReactNode }) {
-  return <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>{children}</div>;
 }
 
 export default function Home() {
