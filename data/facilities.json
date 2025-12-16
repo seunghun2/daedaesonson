@@ -83,11 +83,11 @@
     },
     "lat": 35.2674332,
     "lng": 128.8301094,
-    "minPrice": 2,
+    "minPrice": 300,
     "maxPrice": 6465,
     "description": "",
     "createdAt": "2025-12-12T00:21:56.196",
-    "updatedAt": "2025-12-16T02:57:47.222",
+    "updatedAt": "2025-12-16T03:00:08.194",
     "reviews": [],
     "priceInfo": {
       "priceTable": {
@@ -238,19 +238,6 @@
           "category": "natural",
           "rows": [
             {
-              "name": "다알리아",
-              "price": 3500000,
-              "grade": "(단품)",
-              "groupType": null,
-              "size": null,
-              "hasInstallation": false,
-              "hasManagementFee": false,
-              "includedYear": null,
-              "discount": null,
-              "isRepresentative": true,
-              "raw": null
-            },
-            {
               "name": "클로버",
               "price": 3500000,
               "grade": "(단품)",
@@ -261,6 +248,19 @@
               "includedYear": null,
               "discount": null,
               "isRepresentative": false,
+              "raw": null
+            },
+            {
+              "name": "다알리아",
+              "price": 3500000,
+              "grade": "(단품)",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": true,
               "raw": null
             },
             {
@@ -461,7 +461,7 @@
               "hasManagementFee": false,
               "includedYear": null,
               "discount": null,
-              "isRepresentative": false,
+              "isRepresentative": true,
               "raw": null
             },
             {
@@ -484,7 +484,7 @@
           "category": "excluded",
           "rows": [
             {
-              "name": "식당이용료(일반)",
+              "name": "식사(일반식)",
               "price": 15000,
               "grade": "[기타] 1인 기준",
               "groupType": null,
@@ -493,11 +493,11 @@
               "hasManagementFee": false,
               "includedYear": null,
               "discount": null,
-              "isRepresentative": false,
+              "isRepresentative": true,
               "raw": null
             },
             {
-              "name": "식사(일반식)",
+              "name": "식당이용료(일반)",
               "price": 15000,
               "grade": "[기타] 1인 기준",
               "groupType": null,
@@ -1545,7 +1545,7 @@
       "source": "supabase-js",
       "categoryCount": 5,
       "itemCount": 109,
-      "representativeCount": 0
+      "representativeCount": 6
     },
     "originalName": "1.(재)낙원추모공원_price_info.png",
     "location": {
@@ -8602,8 +8602,8 @@
     },
     "category": "FAMILY_GRAVE",
     "priceRange": {
-      "min": 1025,
-      "max": 2085
+      "min": 54,
+      "max": 82
     },
     "hasParking": true,
     "hasRestaurant": true,
@@ -8629,6 +8629,104 @@
     "location": {
       "lat": 35.0931519,
       "lng": 126.8755318
+    },
+    "lat": 35.1036046,
+    "lng": 126.8712642,
+    "minPrice": 1025,
+    "maxPrice": 2085,
+    "description": "",
+    "rating": 0,
+    "reviewCount": 0,
+    "createdAt": "2025-12-12T00:21:56.196",
+    "updatedAt": "2025-12-16T01:03:59.753",
+    "reviews": [],
+    "priceInfo": {
+      "priceTable": {
+        "매장묘": {
+          "unit": "원",
+          "category": "grave",
+          "rows": [
+            {
+              "name": "조성비 (묘지사용면적 기준)",
+              "price": 540000,
+              "grade": "",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": true,
+              "raw": null
+            },
+            {
+              "name": "매장비 (신규안장)",
+              "price": 600000,
+              "grade": "",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
+            },
+            {
+              "name": "묘지대 5.4m2",
+              "price": 820000,
+              "grade": "",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
+            }
+          ]
+        },
+        "제외됨": {
+          "unit": "원",
+          "category": "excluded",
+          "rows": [
+            {
+              "name": "관리비 (1년 관리비 및 벌초대금)",
+              "price": 50000,
+              "grade": "[매장묘]",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": true,
+              "raw": null
+            },
+            {
+              "name": "비석대(와비) 화강석 가로(72cm)세로(45cm)높이(8cm)",
+              "price": 600000,
+              "grade": "[매장묘]",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
+            }
+          ]
+        }
+      }
+    },
+    "_detailedSource": "prisma",
+    "_meta": {
+      "source": "supabase-js",
+      "categoryCount": 2,
+      "itemCount": 5,
+      "representativeCount": 2
     }
   },
   {
@@ -8641,8 +8739,8 @@
     },
     "category": "FAMILY_GRAVE",
     "priceRange": {
-      "min": 1241,
-      "max": 1867
+      "min": 140,
+      "max": 140
     },
     "hasParking": true,
     "hasRestaurant": true,
@@ -8663,6 +8761,109 @@
     "location": {
       "lat": 35.1078862,
       "lng": 128.7323578
+    },
+    "representativePricing": {
+      "cemetery": {
+        "minLandFee": 400000
+      }
+    },
+    "lat": 35.115238,
+    "lng": 128.7676476,
+    "minPrice": 1241,
+    "maxPrice": 1867,
+    "description": "",
+    "rating": 0,
+    "reviewCount": 0,
+    "createdAt": "2025-12-12T00:21:56.196",
+    "updatedAt": "2025-12-16T01:03:59.753",
+    "reviews": [],
+    "priceInfo": {
+      "priceTable": {
+        "매장묘": {
+          "unit": "원",
+          "category": "grave",
+          "rows": [
+            {
+              "name": "묘지사용료",
+              "price": 1400000,
+              "grade": "1평당",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": true,
+              "raw": null
+            }
+          ]
+        },
+        "제외됨": {
+          "unit": "원",
+          "category": "excluded",
+          "rows": [
+            {
+              "name": "관리비",
+              "price": 18000,
+              "grade": "[매장묘]",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": true,
+              "raw": null
+            },
+            {
+              "name": "석화분",
+              "price": 400000,
+              "grade": "[기타]",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
+            },
+            {
+              "name": "와비상석",
+              "price": 520000,
+              "grade": "[기타]",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
+            },
+            {
+              "name": "와비석",
+              "price": 930000,
+              "grade": "[기타]",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
+            }
+          ]
+        }
+      }
+    },
+    "_detailedSource": "prisma",
+    "_meta": {
+      "source": "supabase-js",
+      "categoryCount": 2,
+      "itemCount": 5,
+      "representativeCount": 2
     }
   },
   {
@@ -19775,8 +19976,8 @@
     },
     "category": "FAMILY_GRAVE",
     "priceRange": {
-      "min": 1139,
-      "max": 2074
+      "min": 1,
+      "max": 1
     },
     "hasParking": false,
     "hasRestaurant": false,
@@ -19802,6 +20003,46 @@
     "location": {
       "lat": 34.990291,
       "lng": 126.8227398
+    },
+    "lat": 34.990291,
+    "lng": 126.8227398,
+    "minPrice": 1139,
+    "maxPrice": 2074,
+    "description": "",
+    "rating": 0,
+    "reviewCount": 0,
+    "createdAt": "2025-12-12T00:21:56.397",
+    "updatedAt": "2025-12-16T01:03:59.754",
+    "reviews": [],
+    "priceInfo": {
+      "priceTable": {
+        "매장묘": {
+          "unit": "원",
+          "category": "grave",
+          "rows": [
+            {
+              "name": "공설묘지 사용료",
+              "price": 10000,
+              "grade": "이용자격: 나주시민 사용기간: 15년 사용료: 3.3m2당 1만원",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": true,
+              "raw": null
+            }
+          ]
+        }
+      }
+    },
+    "_detailedSource": "prisma",
+    "_meta": {
+      "source": "supabase-js",
+      "categoryCount": 1,
+      "itemCount": 1,
+      "representativeCount": 1
     }
   },
   {
@@ -19814,8 +20055,8 @@
     },
     "category": "FAMILY_GRAVE",
     "priceRange": {
-      "min": 1180,
-      "max": 1956
+      "min": 1,
+      "max": 1
     },
     "hasParking": true,
     "hasRestaurant": false,
@@ -19841,6 +20082,46 @@
     "location": {
       "lat": 34.9994854,
       "lng": 126.6610008
+    },
+    "lat": 34.9994854,
+    "lng": 126.6610008,
+    "minPrice": 1180,
+    "maxPrice": 1956,
+    "description": "",
+    "rating": 0,
+    "reviewCount": 0,
+    "createdAt": "2025-12-12T00:21:56.397",
+    "updatedAt": "2025-12-16T01:03:59.754",
+    "reviews": [],
+    "priceInfo": {
+      "priceTable": {
+        "매장묘": {
+          "unit": "원",
+          "category": "grave",
+          "rows": [
+            {
+              "name": "공설묘지 사용료",
+              "price": 10000,
+              "grade": "이용자격:나주시민 사용기간:15년 사용료:3.3m2당 1만원",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": true,
+              "raw": null
+            }
+          ]
+        }
+      }
+    },
+    "_detailedSource": "prisma",
+    "_meta": {
+      "source": "supabase-js",
+      "categoryCount": 1,
+      "itemCount": 1,
+      "representativeCount": 1
     }
   },
   {
@@ -19853,8 +20134,8 @@
     },
     "category": "FAMILY_GRAVE",
     "priceRange": {
-      "min": 1152,
-      "max": 2022
+      "min": 3,
+      "max": 3
     },
     "hasParking": true,
     "hasRestaurant": false,
@@ -19875,6 +20156,46 @@
     "location": {
       "lat": 37.8064446,
       "lng": 126.444276
+    },
+    "lat": 37.8064446,
+    "lng": 126.444276,
+    "minPrice": 1152,
+    "maxPrice": 2022,
+    "description": "",
+    "rating": 0,
+    "reviewCount": 0,
+    "createdAt": "2025-12-12T00:21:56.397",
+    "updatedAt": "2025-12-16T01:03:59.754",
+    "reviews": [],
+    "priceInfo": {
+      "priceTable": {
+        "매장묘": {
+          "unit": "원",
+          "category": "grave",
+          "rows": [
+            {
+              "name": "공설묘지 사용료",
+              "price": 30000,
+              "grade": "강화군민만 이용가능/사용료:15000원 관리비:15000원",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": true,
+              "raw": null
+            }
+          ]
+        }
+      }
+    },
+    "_detailedSource": "prisma",
+    "_meta": {
+      "source": "supabase-js",
+      "categoryCount": 1,
+      "itemCount": 1,
+      "representativeCount": 1
     }
   },
   {
@@ -19887,8 +20208,8 @@
     },
     "category": "FAMILY_GRAVE",
     "priceRange": {
-      "min": 880,
-      "max": 2137
+      "min": 5,
+      "max": 5
     },
     "hasParking": false,
     "hasRestaurant": false,
@@ -19914,6 +20235,46 @@
     "location": {
       "lat": 33.2402424,
       "lng": 126.2622377
+    },
+    "lat": 33.2402424,
+    "lng": 126.2622377,
+    "minPrice": 880,
+    "maxPrice": 2137,
+    "description": "",
+    "rating": 0,
+    "reviewCount": 0,
+    "createdAt": "2025-12-12T00:21:56.397",
+    "updatedAt": "2025-12-16T01:03:59.754",
+    "reviews": [],
+    "priceInfo": {
+      "priceTable": {
+        "매장묘": {
+          "unit": "원",
+          "category": "grave",
+          "rows": [
+            {
+              "name": "관내(1인)",
+              "price": 50000,
+              "grade": "시설사용료",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": true,
+              "raw": null
+            }
+          ]
+        }
+      }
+    },
+    "_detailedSource": "prisma",
+    "_meta": {
+      "source": "supabase-js",
+      "categoryCount": 1,
+      "itemCount": 1,
+      "representativeCount": 1
     }
   },
   {
