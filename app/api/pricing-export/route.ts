@@ -46,21 +46,20 @@ export async function GET() {
             page++;
         }
 
-        // CSV 생성
-        let csv = '시설ID,시설명,가격카테고리,상품명,설명,가격,대표가격\n';
-        allItems.forEach(item => {
-            const name = (nameMap[item.facilityId] || '').replace(/,/g, ' ');
-            const priceCat = catMap[item.categoryId] || '미분류';
-            const itemName = (item.itemName || '').replace(/,/g, ' ');
-            const desc = (item.description || '').replace(/,/g, ' ');
-            csv += `${item.facilityId},${name},${priceCat},${itemName},${desc},${item.price || 0},${item.isRepresentative ? 'Y' : ''}\n`;
-        });
+        // JSON 배열 생성
+        const result = allItems.map(item => ([
+            item.facilityId,
+            nameMap[item.facilityId] || '',
+            catMap[item.categoryId] || '미분류',
+            item.itemName || '',
+            item.description || '',
+            item.price || 0,
+            item.isRepresentative ? 'Y' : ''
+        ]));
 
-        return new NextResponse(csv, {
-            headers: {
-                'Content-Type': 'text/csv; charset=utf-8',
-                'Content-Disposition': 'attachment; filename="pricing_data.csv"'
-            }
+        return NextResponse.json({
+            headers: ['시설ID', '시설명', '가격카테고리', '상품명', '설명', '가격', '대표가격'],
+            data: result
         });
     } catch (error) {
         console.error('Export error:', error);
