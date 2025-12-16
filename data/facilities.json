@@ -7164,10 +7164,10 @@
     "originalName": "121.춘천안식공원(묘지)_price_info.png",
     "address": "강원특별자치도 춘천시 동산면 종자리로 331-50 (군자리, 춘천시공설묘원)",
     "coordinates": {
-      "lat": 0,
-      "lng": 0
+      "lat": 37.7484504,
+      "lng": 127.7218424
     },
-    "category": "F",
+    "category": "FAMILY_GRAVE",
     "phone": "033-263-6454",
     "website": "",
     "images": [],
@@ -7181,7 +7181,97 @@
     "hasParking": true,
     "hasRestaurant": false,
     "hasAccessibility": true,
-    "hasStore": false
+    "hasStore": false,
+    "priceRange": {
+      "min": 362,
+      "max": 532
+    },
+    "hasDetailedPrices": true,
+    "imageGallery": [],
+    "representativePricing": {
+      "cemetery": {
+        "minLandFee": 3619280
+      }
+    },
+    "lat": 37.7608085,
+    "lng": 127.7565698,
+    "minPrice": 0,
+    "maxPrice": 0,
+    "description": "",
+    "rating": 0,
+    "reviewCount": 0,
+    "createdAt": "2025-12-12T00:21:56.255",
+    "updatedAt": "2025-12-16T01:03:59.753",
+    "reviews": [],
+    "priceInfo": {
+      "priceTable": {
+        "매장묘": {
+          "unit": "원",
+          "category": "grave",
+          "rows": [
+            {
+              "name": "묘지단장1단",
+              "price": 3619280,
+              "grade": "1단",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": true,
+              "raw": null
+            },
+            {
+              "name": "묘지단장2단",
+              "price": 3919280,
+              "grade": "2단",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
+            },
+            {
+              "name": "묘지합장1단",
+              "price": 4878420,
+              "grade": "1단",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
+            },
+            {
+              "name": "묘지합장2단",
+              "price": 5318420,
+              "grade": "2단",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
+            }
+          ]
+        }
+      }
+    },
+    "_detailedSource": "prisma",
+    "_meta": {
+      "source": "supabase-js",
+      "categoryCount": 1,
+      "itemCount": 4,
+      "representativeCount": 0
+    }
   },
   {
     "id": "park-0122",
@@ -8473,7 +8563,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "FAMILY_GRAVE",
     "phone": "041-353-3044",
     "website": "",
     "images": [],
@@ -11931,7 +12021,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "FAMILY_GRAVE",
     "phone": "032-934-2183",
     "website": "",
     "images": [],
@@ -15728,7 +15818,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "FAMILY_GRAVE",
     "phone": "031-580-4010",
     "website": "",
     "images": [],
@@ -19947,7 +20037,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "CHARNEL_HOUSE",
     "phone": "063-453-5510",
     "website": "",
     "images": [],
@@ -20551,7 +20641,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "CHARNEL_HOUSE",
     "phone": "031-766-2894",
     "website": "",
     "images": [],
@@ -21136,7 +21226,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "CHARNEL_HOUSE",
     "phone": "051-722-5115",
     "website": "",
     "images": [],
@@ -21294,7 +21384,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "CHARNEL_HOUSE",
     "phone": "031-977-8351",
     "website": "",
     "images": [],
@@ -21380,7 +21470,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "FAMILY_GRAVE",
     "phone": "031-532-9723",
     "website": "",
     "images": [],
@@ -21547,7 +21637,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "CHARNEL_HOUSE",
     "phone": "031-672-4276",
     "website": "",
     "images": [],
@@ -21659,7 +21749,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "CHARNEL_HOUSE",
     "phone": "031-867-8707",
     "website": "",
     "images": [],
@@ -21685,7 +21775,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "FAMILY_GRAVE",
     "phone": "1544-4471",
     "website": "",
     "images": [],
@@ -21871,7 +21961,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "FAMILY_GRAVE",
     "phone": "1577-9446",
     "website": "",
     "images": [],
@@ -22557,7 +22647,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "CHARNEL_HOUSE",
     "phone": "063-214-1009",
     "website": "",
     "images": [],
@@ -22583,7 +22673,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "ETC",
     "phone": "",
     "website": "",
     "images": [],
@@ -22787,7 +22877,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "ETC",
     "phone": "",
     "website": "",
     "images": [],
@@ -22802,7 +22892,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "ETC",
     "phone": "",
     "website": "",
     "images": [],
@@ -22817,7 +22907,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "ETC",
     "phone": "",
     "website": "",
     "images": [],
@@ -22952,7 +23042,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "ETC",
     "phone": "",
     "website": "",
     "images": [],
@@ -23586,7 +23676,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "CHARNEL_HOUSE",
     "phone": "055-374-8733",
     "website": "",
     "images": [],
@@ -23713,7 +23803,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "CHARNEL_HOUSE",
     "phone": "041-339-8252",
     "website": "",
     "images": [],
@@ -23775,7 +23865,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "CHARNEL_HOUSE",
     "phone": "033-480-2577",
     "website": "",
     "images": [],
@@ -23800,7 +23890,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "FAMILY_GRAVE",
     "phone": "063-546-5011",
     "website": "",
     "images": [],
@@ -23825,7 +23915,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "CHARNEL_HOUSE",
     "phone": "055-343-0656",
     "website": "",
     "images": [],
@@ -24201,7 +24291,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "CHARNEL_HOUSE",
     "phone": "064-710-6622",
     "website": "",
     "images": [],
@@ -24273,7 +24363,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "CHARNEL_HOUSE",
     "phone": "054-843-7023",
     "website": "",
     "images": [],
@@ -24569,7 +24659,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "CHARNEL_HOUSE",
     "phone": "031-334-3484",
     "website": "",
     "images": [],
@@ -24824,7 +24914,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "CHARNEL_HOUSE",
     "phone": "054-743-1944",
     "website": "",
     "images": [],
@@ -25156,7 +25246,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "CHARNEL_HOUSE",
     "phone": "055-271-1700",
     "website": "",
     "images": [],
@@ -25182,7 +25272,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "CHARNEL_HOUSE",
     "phone": "080-231-4444",
     "website": "",
     "images": [],
@@ -25817,7 +25907,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "CHARNEL_HOUSE",
     "phone": "031-527-5678",
     "website": "",
     "images": [],
@@ -25942,7 +26032,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "CHARNEL_HOUSE",
     "phone": "042-602-2500",
     "website": "",
     "images": [],
@@ -25998,7 +26088,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "FAMILY_GRAVE",
     "phone": "043-539-3868",
     "website": "",
     "images": [],
@@ -26206,7 +26296,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "FAMILY_GRAVE",
     "phone": "031-772-7102",
     "website": "",
     "images": [],
@@ -26231,7 +26321,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "CHARNEL_HOUSE",
     "phone": "033-560-3437",
     "website": "",
     "images": [],
@@ -26392,7 +26482,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "FAMILY_GRAVE",
     "phone": "062-227-7124",
     "website": "",
     "images": [],
@@ -26615,7 +26705,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "CHARNEL_HOUSE",
     "phone": "031-532-6534",
     "website": "",
     "images": [],
@@ -26640,7 +26730,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "CHARNEL_HOUSE",
     "phone": "043-881-4700",
     "website": "",
     "images": [],
@@ -26934,7 +27024,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "CHARNEL_HOUSE",
     "phone": "033-574-7912",
     "website": "",
     "images": [],
@@ -26959,7 +27049,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "ETC",
     "phone": "",
     "website": "",
     "images": [],
@@ -27341,7 +27431,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "ETC",
     "phone": "",
     "website": "",
     "images": [],
@@ -27449,7 +27539,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "ETC",
     "phone": "",
     "website": "",
     "images": [],
@@ -27882,7 +27972,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "ETC",
     "phone": "",
     "website": "",
     "images": [],
@@ -27970,7 +28060,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "ETC",
     "phone": "",
     "website": "",
     "images": [],
@@ -27985,7 +28075,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "ETC",
     "phone": "",
     "website": "",
     "images": [],
@@ -28069,7 +28159,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "ETC",
     "phone": "",
     "website": "",
     "images": [],
@@ -28224,7 +28314,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "ETC",
     "phone": "",
     "website": "",
     "images": [],
@@ -28393,7 +28483,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "ETC",
     "phone": "",
     "website": "",
     "images": [],
@@ -28538,7 +28628,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "ETC",
     "phone": "",
     "website": "",
     "images": [],
@@ -28714,7 +28804,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "ETC",
     "phone": "",
     "website": "",
     "images": [],
@@ -29055,7 +29145,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "ETC",
     "phone": "",
     "website": "",
     "images": [],
@@ -29333,7 +29423,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "ETC",
     "phone": "",
     "website": "",
     "images": [],
@@ -29634,7 +29724,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "ETC",
     "phone": "",
     "website": "",
     "images": [],
@@ -29649,7 +29739,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "ETC",
     "phone": "",
     "website": "",
     "images": [],
@@ -29805,7 +29895,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "ETC",
     "phone": "",
     "website": "",
     "images": [],
@@ -29820,7 +29910,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "ETC",
     "phone": "",
     "website": "",
     "images": [],
@@ -29835,7 +29925,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "ETC",
     "phone": "",
     "website": "",
     "images": [],
@@ -29910,7 +30000,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "ETC",
     "phone": "",
     "website": "",
     "images": [],
@@ -30014,7 +30104,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "ETC",
     "phone": "",
     "website": "",
     "images": [],
@@ -30166,7 +30256,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "CHARNEL_HOUSE",
     "phone": "031-354-2325",
     "website": "",
     "images": [],
@@ -30191,7 +30281,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "CHARNEL_HOUSE",
     "phone": "061-380-3384",
     "website": "",
     "images": [],
@@ -30246,7 +30336,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "CHARNEL_HOUSE",
     "phone": "032-456-2320",
     "website": "",
     "images": [],
@@ -30346,7 +30436,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "CHARNEL_HOUSE",
     "phone": "055-574-0694",
     "website": "",
     "images": [],
@@ -30484,7 +30574,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "CHARNEL_HOUSE",
     "phone": "042-630-7732",
     "website": "",
     "images": [],
@@ -30509,7 +30599,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "CHARNEL_HOUSE",
     "phone": "043-251-3164",
     "website": "",
     "images": [],
@@ -30601,7 +30691,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "CHARNEL_HOUSE",
     "phone": "043-270-8578",
     "website": "",
     "images": [],
@@ -30626,7 +30716,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "CHARNEL_HOUSE",
     "phone": "033-339-9026",
     "website": "",
     "images": [],
@@ -30681,7 +30771,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "CHARNEL_HOUSE",
     "phone": "033-340-2904",
     "website": "",
     "images": [],
@@ -30743,7 +30833,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "FAMILY_GRAVE",
     "phone": "033-460-2056",
     "website": "",
     "images": [],
@@ -30768,7 +30858,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "CHARNEL_HOUSE",
     "phone": "063-290-2208",
     "website": "",
     "images": [],
@@ -30819,7 +30909,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "FAMILY_GRAVE",
     "phone": "033-263-6454",
     "website": "",
     "images": [],
@@ -30904,7 +30994,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "CHARNEL_HOUSE",
     "phone": "061-380-3383",
     "website": "",
     "images": [],
@@ -31009,7 +31099,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "FAMILY_GRAVE",
     "phone": "043-251-3560",
     "website": "",
     "images": [],
@@ -31190,7 +31280,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "CHARNEL_HOUSE",
     "phone": "031-532-2520",
     "website": "",
     "images": [],
@@ -31252,7 +31342,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "ETC",
     "phone": "033-460-2056",
     "website": "",
     "images": [],
@@ -31275,7 +31365,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "FAMILY_GRAVE",
     "phone": "032-456-2320",
     "website": "",
     "images": [],
@@ -31330,7 +31420,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "CHARNEL_HOUSE",
     "phone": "032-456-2320",
     "website": "",
     "images": [],
@@ -31628,7 +31718,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "CHARNEL_HOUSE",
     "phone": "032-456-8950",
     "website": "",
     "images": [],
@@ -31653,7 +31743,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "CHARNEL_HOUSE",
     "phone": "043-872-0101",
     "website": "",
     "images": [],
@@ -31708,7 +31798,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "FAMILY_GRAVE",
     "phone": "041-353-3044",
     "website": "",
     "images": [],
@@ -31733,7 +31823,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "CHARNEL_HOUSE",
     "phone": "043-881-4700",
     "website": "",
     "images": [],
@@ -31848,7 +31938,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "FAMILY_GRAVE",
     "phone": "041-353-3044",
     "website": "",
     "images": [],
@@ -31873,7 +31963,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "CHARNEL_HOUSE",
     "phone": "064-760-4234",
     "website": "",
     "images": [],
@@ -31958,7 +32048,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "CHARNEL_HOUSE",
     "phone": "031-594-6362",
     "website": "",
     "images": [],
@@ -32015,7 +32105,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "FAMILY_GRAVE",
     "phone": "031-354-2325",
     "website": "",
     "images": [],
@@ -32077,7 +32167,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "CHARNEL_HOUSE",
     "phone": "064-760-4431",
     "website": "",
     "images": [],
@@ -32145,7 +32235,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "CHARNEL_HOUSE",
     "phone": "031-541-0098",
     "website": "",
     "images": [],
@@ -32170,7 +32260,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "CHARNEL_HOUSE",
     "phone": "063-859-3847",
     "website": "",
     "images": [],
@@ -32232,7 +32322,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "FAMILY_GRAVE",
     "phone": "031-354-2325",
     "website": "",
     "images": [],
@@ -32257,7 +32347,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "ETC",
     "phone": "",
     "website": "",
     "images": [],
@@ -32272,7 +32362,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "ETC",
     "phone": "",
     "website": "",
     "images": [],
@@ -32287,7 +32377,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "ETC",
     "phone": "",
     "website": "",
     "images": [],
@@ -32334,7 +32424,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "ETC",
     "phone": "",
     "website": "",
     "images": [],
@@ -32385,7 +32475,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "ETC",
     "phone": "",
     "website": "",
     "images": [],
@@ -32488,7 +32578,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "ETC",
     "phone": "",
     "website": "",
     "images": [],
@@ -32778,7 +32868,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "ETC",
     "phone": "",
     "website": "",
     "images": [],
@@ -32892,7 +32982,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "ETC",
     "phone": "",
     "website": "",
     "images": [],
@@ -33334,7 +33424,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "ETC",
     "phone": "",
     "website": "",
     "images": [],
@@ -33469,7 +33559,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "ETC",
     "phone": "",
     "website": "",
     "images": [],
@@ -33578,7 +33668,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "ETC",
     "phone": "",
     "website": "",
     "images": [],
@@ -33623,7 +33713,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "ETC",
     "phone": "",
     "website": "",
     "images": [],
@@ -34094,7 +34184,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "ETC",
     "phone": "",
     "website": "",
     "images": [],
@@ -34439,7 +34529,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "ETC",
     "phone": "",
     "website": "",
     "images": [],
@@ -34828,7 +34918,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "ETC",
     "phone": "",
     "website": "",
     "images": [],
@@ -34843,7 +34933,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "ETC",
     "phone": "",
     "website": "",
     "images": [],
@@ -34888,7 +34978,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "ETC",
     "phone": "",
     "website": "",
     "images": [],
@@ -34963,7 +35053,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "ETC",
     "phone": "",
     "website": "",
     "images": [],
@@ -34978,7 +35068,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "ETC",
     "phone": "",
     "website": "",
     "images": [],
@@ -35113,7 +35203,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "ETC",
     "phone": "",
     "website": "",
     "images": [],
@@ -35158,7 +35248,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "ETC",
     "phone": "",
     "website": "",
     "images": [],
@@ -35263,7 +35353,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "ETC",
     "phone": "",
     "website": "",
     "images": [],
@@ -35368,7 +35458,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "ETC",
     "phone": "",
     "website": "",
     "images": [],
@@ -35443,7 +35533,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "ETC",
     "phone": "",
     "website": "",
     "images": [],
@@ -35700,7 +35790,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "ETC",
     "phone": "",
     "website": "",
     "images": [],
@@ -35775,7 +35865,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "ETC",
     "phone": "",
     "website": "",
     "images": [],
@@ -36119,7 +36209,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "ETC",
     "phone": "",
     "website": "",
     "images": [],
@@ -36164,7 +36254,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "ETC",
     "phone": "",
     "website": "",
     "images": [],
@@ -36179,7 +36269,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "ETC",
     "phone": "",
     "website": "",
     "images": [],
@@ -36194,7 +36284,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "ETC",
     "phone": "",
     "website": "",
     "images": [],
@@ -36209,7 +36299,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "CHARNEL_HOUSE",
     "phone": "031-218-6524",
     "website": "",
     "images": [],
@@ -36294,7 +36384,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "CHARNEL_HOUSE",
     "phone": "033-460-2056",
     "website": "",
     "images": [],
@@ -36319,7 +36409,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "ETC",
     "phone": "033-460-2056",
     "website": "",
     "images": [],
@@ -36451,7 +36541,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "CHARNEL_HOUSE",
     "phone": "041-339-8252",
     "website": "",
     "images": [],
@@ -36607,7 +36697,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "FAMILY_GRAVE",
     "phone": "055-973-2491",
     "website": "",
     "images": [],
@@ -36662,7 +36752,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "CHARNEL_HOUSE",
     "phone": "061-246-1001",
     "website": "",
     "images": [],
@@ -36747,7 +36837,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "ETC",
     "phone": "055-585-5114",
     "website": "",
     "images": [],
@@ -36770,7 +36860,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "FAMILY_GRAVE",
     "phone": "054-336-9004",
     "website": "",
     "images": [],
@@ -36795,7 +36885,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "FAMILY_GRAVE",
     "phone": "054-933-4774",
     "website": "",
     "images": [],
@@ -36820,7 +36910,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "CHARNEL_HOUSE",
     "phone": "054-788-9790",
     "website": "",
     "images": [],
@@ -36845,7 +36935,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "CHARNEL_HOUSE",
     "phone": "054-933-4774",
     "website": "",
     "images": [],
@@ -37226,7 +37316,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "CHARNEL_HOUSE",
     "phone": "054-971-5669",
     "website": "",
     "images": [],
@@ -37622,7 +37712,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "CHARNEL_HOUSE",
     "phone": "054-972-6375",
     "website": "",
     "images": [],
@@ -37647,7 +37737,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "CHARNEL_HOUSE",
     "phone": "031-879-4691",
     "website": "",
     "images": [],
@@ -38498,7 +38588,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "CHARNEL_HOUSE",
     "phone": "031-855-5501",
     "website": "",
     "images": [],
@@ -38553,7 +38643,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "CHARNEL_HOUSE",
     "phone": "031-770-3027",
     "website": "",
     "images": [],
@@ -38642,7 +38732,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "CHARNEL_HOUSE",
     "phone": "043-879-0100",
     "website": "",
     "images": [],
@@ -38847,7 +38937,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "CHARNEL_HOUSE",
     "phone": "054-481-0409",
     "website": "",
     "images": [],
@@ -39216,7 +39306,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "CHARNEL_HOUSE",
     "phone": "061-762-4449",
     "website": "",
     "images": [],
@@ -39283,7 +39373,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "CHARNEL_HOUSE",
     "phone": "031-532-2520",
     "website": "",
     "images": [],
@@ -39429,7 +39519,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "FAMILY_GRAVE",
     "phone": "042-630-7732",
     "website": "",
     "images": [],
@@ -39454,7 +39544,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "CHARNEL_HOUSE",
     "phone": "055-834-4010",
     "website": "",
     "images": [],
@@ -39479,7 +39569,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "CHARNEL_HOUSE",
     "phone": "063-859-3847",
     "website": "",
     "images": [],
@@ -39491,7 +39581,75 @@
     "hasParking": false,
     "hasRestaurant": false,
     "hasAccessibility": false,
-    "hasStore": false
+    "hasStore": false,
+    "hasDetailedPrices": false,
+    "imageGallery": [],
+    "lat": 0,
+    "lng": 0,
+    "minPrice": 0,
+    "maxPrice": 0,
+    "description": "",
+    "rating": 0,
+    "reviewCount": 0,
+    "createdAt": "2025-12-12T00:21:56.951",
+    "updatedAt": "2025-12-16T01:03:59.755",
+    "reviews": [],
+    "priceInfo": {
+      "priceTable": {
+        "기타": {
+          "unit": "원",
+          "category": "other",
+          "rows": [
+            {
+              "name": "시설사용료",
+              "price": 0,
+              "grade": "시설사용료 항목에 대한 요금 정보가 있으나, 구체적인 가격 정보는 텍스트에 명시되어 있지 않음",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
+            },
+            {
+              "name": "서비스 항목",
+              "price": 0,
+              "grade": "서비스 항목에 대한 요금 정보가 있으나, 구체적인 가격 정보는 텍스트에 명시되어 있지 않음",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
+            },
+            {
+              "name": "장사용품",
+              "price": 0,
+              "grade": "장사용품에 대한 판매(사용) 가격 정보가 있으나, 구체적인 가격 정보는 텍스트에 명시되어 있지 않음",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
+            }
+          ]
+        }
+      }
+    },
+    "_detailedSource": "prisma",
+    "_meta": {
+      "source": "supabase-js",
+      "categoryCount": 1,
+      "itemCount": 3,
+      "representativeCount": 0
+    }
   },
   {
     "id": "park-1126",
@@ -39502,7 +39660,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "CHARNEL_HOUSE",
     "phone": "064-728-4331",
     "website": "",
     "images": [],
@@ -39516,7 +39674,53 @@
     "hasParking": true,
     "hasRestaurant": false,
     "hasAccessibility": false,
-    "hasStore": false
+    "hasStore": false,
+    "hasDetailedPrices": false,
+    "imageGallery": [],
+    "lat": 0,
+    "lng": 0,
+    "minPrice": 110,
+    "maxPrice": 110,
+    "description": "",
+    "rating": 0,
+    "reviewCount": 0,
+    "createdAt": "2025-12-12T00:21:56.951",
+    "updatedAt": "2025-12-16T01:22:29.858",
+    "reviews": [],
+    "priceInfo": {
+      "priceTable": {
+        "봉안당": {
+          "unit": "원",
+          "category": "봉안당",
+          "rows": [
+            {
+              "name": "00",
+              "price": 0,
+              "grade": "",
+              "groupType": "새 그룹 1",
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
+            }
+          ]
+        }
+      }
+    },
+    "_detailedSource": "prisma",
+    "_meta": {
+      "source": "supabase-js",
+      "categoryCount": 1,
+      "itemCount": 1,
+      "representativeCount": 0
+    },
+    "priceRange": {
+      "min": 110,
+      "max": 110
+    }
   },
   {
     "id": "park-1127",
@@ -39827,7 +40031,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "FAMILY_GRAVE",
     "phone": "064-728-7723",
     "website": "",
     "images": [],
@@ -39912,7 +40116,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "CHARNEL_HOUSE",
     "phone": "033-339-9026",
     "website": "",
     "images": [],
@@ -39937,7 +40141,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "CHARNEL_HOUSE",
     "phone": "033-480-2577",
     "website": "",
     "images": [],
@@ -39992,7 +40196,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "FAMILY_GRAVE",
     "phone": "053-374-8733",
     "website": "",
     "images": [],
@@ -40137,7 +40341,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "FAMILY_GRAVE",
     "phone": "041-853-3355",
     "website": "",
     "images": [],
@@ -40342,7 +40546,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "ETC",
     "phone": "",
     "website": "",
     "images": [],
@@ -40507,7 +40711,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "ETC",
     "phone": "",
     "website": "",
     "images": [],
@@ -40522,7 +40726,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "ETC",
     "phone": "",
     "website": "",
     "images": [],
@@ -40537,7 +40741,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "ETC",
     "phone": "",
     "website": "",
     "images": [],
@@ -40582,7 +40786,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "ETC",
     "phone": "",
     "website": "",
     "images": [],
@@ -40694,7 +40898,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "ETC",
     "phone": "",
     "website": "",
     "images": [],
@@ -40709,7 +40913,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "ETC",
     "phone": "",
     "website": "",
     "images": [],
@@ -40840,7 +41044,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "ETC",
     "phone": "",
     "website": "",
     "images": []
@@ -40895,7 +41099,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "ETC",
     "phone": "",
     "website": "",
     "images": [],
@@ -40988,7 +41192,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "ETC",
     "phone": "",
     "website": "",
     "images": [],
@@ -41137,7 +41341,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "ETC",
     "phone": "",
     "website": "",
     "images": [],
@@ -41152,7 +41356,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "ETC",
     "phone": "",
     "website": "",
     "images": [],
@@ -41167,7 +41371,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "ETC",
     "phone": "",
     "website": "",
     "images": [],
@@ -41394,7 +41598,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "ETC",
     "phone": "",
     "website": "",
     "images": [],
@@ -41502,7 +41706,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "ETC",
     "phone": "",
     "website": "",
     "images": [],
@@ -41517,7 +41721,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "ETC",
     "phone": "",
     "website": "",
     "images": [],
@@ -41569,7 +41773,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "ETC",
     "phone": "",
     "website": "",
     "images": [],
@@ -41584,7 +41788,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "ETC",
     "phone": "",
     "website": "",
     "images": [],
@@ -41599,7 +41803,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "ETC",
     "phone": "",
     "website": "",
     "images": [],
@@ -41756,7 +41960,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "ETC",
     "phone": "",
     "website": "",
     "images": [],
@@ -41839,7 +42043,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "ETC",
     "phone": "",
     "website": "",
     "images": [],
@@ -41961,7 +42165,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "ETC",
     "phone": "",
     "website": "",
     "images": [],
@@ -42011,7 +42215,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "ETC",
     "phone": "",
     "website": "",
     "images": [],
@@ -42026,7 +42230,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "ETC",
     "phone": "",
     "website": "",
     "images": [],
@@ -42071,7 +42275,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "ETC",
     "phone": "",
     "website": "",
     "images": [],
@@ -42086,7 +42290,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "ETC",
     "phone": "",
     "website": "",
     "images": [],
@@ -42145,7 +42349,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "ETC",
     "phone": "",
     "website": "",
     "images": [],
@@ -42160,7 +42364,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "ETC",
     "phone": "",
     "website": "",
     "images": [],
@@ -42205,7 +42409,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "ETC",
     "phone": "",
     "website": "",
     "images": [],
@@ -42306,7 +42510,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "ETC",
     "phone": "",
     "website": "",
     "images": [],
@@ -42321,7 +42525,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "NATURAL_BURIAL",
     "phone": "031-334-3484",
     "website": "",
     "images": [],
@@ -42382,7 +42586,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "NATURAL_BURIAL",
     "phone": "031-345-2831",
     "website": "",
     "images": [],
@@ -42407,7 +42611,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "NATURAL_BURIAL",
     "phone": "031-481-3359",
     "website": "",
     "images": [],
@@ -42432,7 +42636,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "NATURAL_BURIAL",
     "phone": "052-255-3800",
     "website": "",
     "images": [],
@@ -42503,7 +42707,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "NATURAL_BURIAL",
     "phone": "055-356-4979",
     "website": "",
     "images": [],
@@ -42528,7 +42732,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "FAMILY_GRAVE",
     "phone": "063-546-5011",
     "website": "",
     "images": [],
@@ -42625,7 +42829,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "NATURAL_BURIAL",
     "phone": "061-762-4449",
     "website": "",
     "images": [],
@@ -42650,7 +42854,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "NATURAL_BURIAL",
     "phone": "042-602-2500",
     "website": "",
     "images": [],
@@ -42793,7 +42997,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "NATURAL_BURIAL",
     "phone": "031-218-6500",
     "website": "",
     "images": [],
@@ -42818,7 +43022,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "NATURAL_BURIAL",
     "phone": "041-840-8980",
     "website": "",
     "images": [],
@@ -42843,7 +43047,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "NATURAL_BURIAL",
     "phone": "055-831-4590",
     "website": "",
     "images": [],
@@ -42898,7 +43102,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "NATURAL_BURIAL",
     "phone": "063-239-2690",
     "website": "",
     "images": [],
@@ -42993,7 +43197,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "NATURAL_BURIAL",
     "phone": "031-677-9944",
     "website": "",
     "images": [],
@@ -43201,7 +43405,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "NATURAL_BURIAL",
     "phone": "031-867-8707",
     "website": "",
     "images": [],
@@ -43226,7 +43430,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "NATURAL_BURIAL",
     "phone": "031-532-2520",
     "website": "",
     "images": [],
@@ -43286,7 +43490,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "NATURAL_BURIAL",
     "phone": "033-480-2577",
     "website": "",
     "images": [],
@@ -43387,7 +43591,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "NATURAL_BURIAL",
     "phone": "033-243-3654",
     "website": "",
     "images": [],
@@ -43483,7 +43687,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "NATURAL_BURIAL",
     "phone": "054-743-1945",
     "website": "",
     "images": [],
@@ -43575,7 +43779,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "NATURAL_BURIAL",
     "phone": "061-749-4520",
     "website": "",
     "images": [],
@@ -43691,7 +43895,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "NATURAL_BURIAL",
     "phone": "032-934-0003",
     "website": "",
     "images": [],
@@ -43753,7 +43957,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "NATURAL_BURIAL",
     "phone": "063-290-2207",
     "website": "",
     "images": [],
@@ -43883,7 +44087,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "NATURAL_BURIAL",
     "phone": "061-380-3384",
     "website": "",
     "images": [],
@@ -43908,7 +44112,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "NATURAL_BURIAL",
     "phone": "063-620-5730",
     "website": "",
     "images": [],
@@ -43933,7 +44137,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "NATURAL_BURIAL",
     "phone": "033-261-7314",
     "website": "",
     "images": [],
@@ -43988,7 +44192,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "NATURAL_BURIAL",
     "phone": "063-322-2302",
     "website": "",
     "images": [],
@@ -44013,7 +44217,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "NATURAL_BURIAL",
     "phone": "054-971-5669",
     "website": "",
     "images": [],
@@ -44038,7 +44242,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "NATURAL_BURIAL",
     "phone": "031-861-5716",
     "website": "",
     "images": [],
@@ -44102,7 +44306,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "NATURAL_BURIAL",
     "phone": "061-659-1795",
     "website": "",
     "images": [],
@@ -44127,7 +44331,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "NATURAL_BURIAL",
     "phone": "031-310-2264",
     "website": "",
     "images": [],
@@ -44152,7 +44356,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "NATURAL_BURIAL",
     "phone": "041-660-2719",
     "website": "",
     "images": [],
@@ -44219,7 +44423,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "ETC",
     "phone": "",
     "website": "",
     "images": [],
@@ -44518,7 +44722,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "ETC",
     "phone": "",
     "website": "",
     "images": [],
@@ -44680,7 +44884,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "ETC",
     "phone": "",
     "website": "",
     "images": [],
@@ -45061,7 +45265,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "ETC",
     "phone": "",
     "website": "",
     "images": [],
@@ -45408,7 +45612,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "ETC",
     "phone": "",
     "website": "",
     "images": [],
@@ -45453,7 +45657,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "ETC",
     "phone": "",
     "website": "",
     "images": [],
@@ -45528,7 +45732,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "ETC",
     "phone": "",
     "website": "",
     "images": [],
@@ -45573,7 +45777,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "ETC",
     "phone": "",
     "website": "",
     "images": [],
@@ -46375,7 +46579,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "ETC",
     "phone": "",
     "website": "",
     "images": [],
@@ -46390,7 +46594,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "ETC",
     "phone": "",
     "website": "",
     "images": [],
@@ -46641,7 +46845,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "ETC",
     "phone": "",
     "website": "",
     "images": [],
@@ -46656,7 +46860,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "ETC",
     "phone": "",
     "website": "",
     "images": [],
@@ -46731,7 +46935,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "ETC",
     "phone": "",
     "website": "",
     "images": [],
@@ -46776,7 +46980,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "ETC",
     "phone": "",
     "website": "",
     "images": [],
@@ -46791,7 +46995,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "ETC",
     "phone": "",
     "website": "",
     "images": [],
@@ -46866,7 +47070,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "ETC",
     "phone": "",
     "website": "",
     "images": [],
@@ -46997,7 +47201,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "ETC",
     "phone": "",
     "website": "",
     "images": [],
@@ -47168,7 +47372,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "ETC",
     "phone": "",
     "website": "",
     "images": [],
@@ -47243,7 +47447,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "ETC",
     "phone": "",
     "website": "",
     "images": [],
@@ -47318,7 +47522,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "ETC",
     "phone": "",
     "website": "",
     "images": [],
@@ -47427,7 +47631,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "ETC",
     "phone": "",
     "website": "",
     "images": [],
@@ -47472,7 +47676,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "ETC",
     "phone": "",
     "website": "",
     "images": [],
@@ -47517,7 +47721,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "ETC",
     "phone": "",
     "website": "",
     "images": [],
@@ -47562,7 +47766,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "ETC",
     "phone": "",
     "website": "",
     "images": [],
@@ -47577,7 +47781,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "ETC",
     "phone": "",
     "website": "",
     "images": [],
@@ -47783,7 +47987,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "ETC",
     "phone": "",
     "website": "",
     "images": [],
@@ -47828,7 +48032,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "ETC",
     "phone": "",
     "website": "",
     "images": [],
@@ -47903,7 +48107,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "ETC",
     "phone": "",
     "website": "",
     "images": [],
@@ -48550,7 +48754,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "ETC",
     "phone": "",
     "website": "",
     "images": [],
@@ -48781,7 +48985,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "CREMATORIUM",
     "phone": "063-239-2690",
     "website": "",
     "images": [],
@@ -49090,7 +49294,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "CREMATORIUM",
     "phone": "044-850-1330",
     "website": "",
     "images": [],
@@ -49189,7 +49393,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "CREMATORIUM",
     "phone": "031-218-6500",
     "website": "",
     "images": [],
@@ -49296,7 +49500,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "CREMATORIUM",
     "phone": "054-833-1103",
     "website": "",
     "images": [],
@@ -49367,7 +49571,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "CREMATORIUM",
     "phone": "033-522-1451",
     "website": "",
     "images": [],
@@ -49496,7 +49700,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "CREMATORIUM",
     "phone": "055-860-3681",
     "website": "",
     "images": [],
@@ -49555,7 +49759,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "CHARNEL_HOUSE",
     "phone": "061-270-8723",
     "website": "",
     "images": [],
@@ -49638,7 +49842,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "CREMATORIUM",
     "phone": "055-337-3946",
     "website": "",
     "images": [],
@@ -49737,7 +49941,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "CREMATORIUM",
     "phone": "043-830-9444",
     "website": "",
     "images": [],
@@ -49916,7 +50120,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "CREMATORIUM",
     "phone": "063-454-7950",
     "website": "",
     "images": [],
@@ -50223,7 +50427,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "CREMATORIUM",
     "phone": "031-329-5900",
     "website": "",
     "images": [],
@@ -50322,7 +50526,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "CREMATORIUM",
     "phone": "061-762-4449",
     "website": "",
     "images": [],
@@ -50487,7 +50691,7 @@
       "lat": 0,
       "lng": 0
     },
-    "category": "F",
+    "category": "CREMATORIUM",
     "phone": "055-759-3672",
     "website": "",
     "images": [],
@@ -50501,7 +50705,157 @@
     "hasParking": true,
     "hasRestaurant": false,
     "hasAccessibility": false,
-    "hasStore": false
+    "hasStore": false,
+    "hasDetailedPrices": false,
+    "imageGallery": [],
+    "representativePricing": {
+      "cremation": {
+        "resident": 70000,
+        "nonResident": 352000
+      }
+    },
+    "lat": 0,
+    "lng": 0,
+    "minPrice": 6,
+    "maxPrice": 35,
+    "description": "",
+    "rating": 0,
+    "reviewCount": 0,
+    "createdAt": "2025-12-12T00:21:57.421",
+    "updatedAt": "2025-12-16T01:15:20.522",
+    "reviews": [],
+    "priceInfo": {
+      "priceTable": {
+        "기타": {
+          "unit": "원",
+          "category": "other",
+          "rows": [
+            {
+              "name": "화장장이용료죽은태아(관내)",
+              "price": 38000,
+              "grade": "화장장이용료 죽은태아 (관내)",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
+            },
+            {
+              "name": "화장장이용료일반소인(관내)",
+              "price": 56000,
+              "grade": "화장장이용료 일반소인 (관내)",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": true,
+              "raw": null
+            },
+            {
+              "name": "화장장이용료일반대인(관내)",
+              "price": 70000,
+              "grade": "화장장이용료 일반대인 (관내)",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
+            },
+            {
+              "name": "화장장이용료죽은태아(관외)",
+              "price": 154000,
+              "grade": "화장장이용료 죽은태아 (관외)",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
+            },
+            {
+              "name": "화장장이용료일반소인(관외)",
+              "price": 286000,
+              "grade": "화장장이용료 일반소인 (관외)",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
+            },
+            {
+              "name": "화장장이용료일반대인(관외)",
+              "price": 352000,
+              "grade": "화장장이용료 일반대인 (관외)",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
+            }
+          ]
+        },
+        "제외됨": {
+          "unit": "원",
+          "category": "excluded",
+          "rows": [
+            {
+              "name": "화장장이용료개장유골(관내)",
+              "price": 42000,
+              "grade": "[기타] 화장장이용료 개장유골 (관내)",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
+            },
+            {
+              "name": "화장장이용료개장유골(관외)",
+              "price": 198000,
+              "grade": "[기타] 화장장이용료 개장유골 (관외)",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
+            }
+          ]
+        }
+      }
+    },
+    "_detailedSource": "prisma",
+    "_meta": {
+      "source": "supabase-js",
+      "categoryCount": 2,
+      "itemCount": 8,
+      "representativeCount": 1
+    },
+    "priceRange": {
+      "min": 6,
+      "max": 35
+    },
+    "operatorType": "OTHER"
   },
   {
     "id": "park-1496",

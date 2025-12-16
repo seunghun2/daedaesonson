@@ -617,7 +617,6 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
             groups[regionKey].count++;
         }
 
-        console.log(`📍 구/군별 그룹화 완료: ${Object.keys(groups).length}개 지역`);
         return groups;
     }, [processedFacilities]);
 
