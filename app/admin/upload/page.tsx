@@ -145,7 +145,7 @@ export default function AdminPage() {
     const [cropping, setCropping] = useState(false);
     const [useOcr] = useState(false); // Force OCR Checkbox -- MOVED HERE
 
-    const ITEMS_PER_PAGE = 10;
+    const ITEMS_PER_PAGE = 1500;
 
     // Load Data from API
     useEffect(() => {

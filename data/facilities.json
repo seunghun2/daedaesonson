@@ -83,11 +83,11 @@
     },
     "lat": 35.2674332,
     "lng": 128.8301094,
-    "minPrice": 2028,
+    "minPrice": 2,
     "maxPrice": 6465,
     "description": "",
     "createdAt": "2025-12-12T00:21:56.196",
-    "updatedAt": "2025-12-15T01:07:08.689",
+    "updatedAt": "2025-12-16T02:57:47.222",
     "reviews": [],
     "priceInfo": {
       "priceTable": {
@@ -96,9 +96,9 @@
           "category": "grave",
           "rows": [
             {
-              "name": "사용료 1평형 기준",
+              "name": "사용료",
               "price": 3000000,
-              "grade": "",
+              "grade": "1평형 기준",
               "groupType": null,
               "size": null,
               "hasInstallation": false,
@@ -109,9 +109,9 @@
               "raw": null
             },
             {
-              "name": "개인 매장묘 (3평형)",
+              "name": "개인 매장묘",
               "price": 20275000,
-              "grade": "부터 ~20,275,000",
+              "grade": "(3평형) 부터 ~",
               "groupType": null,
               "size": null,
               "hasInstallation": false,
@@ -122,9 +122,9 @@
               "raw": null
             },
             {
-              "name": "부부 매장묘 (6평형)",
+              "name": "부부 매장묘",
               "price": 31150000,
-              "grade": "부터 ~31,150,000",
+              "grade": "(6평형) 부터 ~",
               "groupType": null,
               "size": null,
               "hasInstallation": false,
@@ -135,9 +135,9 @@
               "raw": null
             },
             {
-              "name": "프리미엄 부부 매장묘 (6~12평형)(담장시설)",
+              "name": "프리미엄 부부 매장묘",
               "price": 64650000,
-              "grade": "부터 ~64,650,000",
+              "grade": "(6~12평형)(담장시설) 부터 ~",
               "groupType": null,
               "size": null,
               "hasInstallation": false,
@@ -154,9 +154,9 @@
           "category": "charnel",
           "rows": [
             {
-              "name": "청여2 (2~4위)",
+              "name": "청여2",
               "price": 11900000,
-              "grade": "",
+              "grade": "(2~4위)",
               "groupType": null,
               "size": null,
               "hasInstallation": false,
@@ -167,9 +167,9 @@
               "raw": null
             },
             {
-              "name": "청여2 (4~8위)",
+              "name": "청여2",
               "price": 14900000,
-              "grade": "",
+              "grade": "(4~8위)",
               "groupType": null,
               "size": null,
               "hasInstallation": false,
@@ -180,9 +180,9 @@
               "raw": null
             },
             {
-              "name": "청여1 (4~8위)",
+              "name": "청여1",
               "price": 17200000,
-              "grade": "신설",
+              "grade": "(4~8위)신설",
               "groupType": null,
               "size": null,
               "hasInstallation": false,
@@ -193,9 +193,9 @@
               "raw": null
             },
             {
-              "name": "청여2 (6~12위)",
+              "name": "청여2",
               "price": 17900000,
-              "grade": "",
+              "grade": "(6~12위)",
               "groupType": null,
               "size": null,
               "hasInstallation": false,
@@ -206,9 +206,9 @@
               "raw": null
             },
             {
-              "name": "청여1 (6~12위)",
+              "name": "청여1",
               "price": 20200000,
-              "grade": "신설",
+              "grade": "(6~12위)신설",
               "groupType": null,
               "size": null,
               "hasInstallation": false,
@@ -219,9 +219,9 @@
               "raw": null
             },
             {
-              "name": "청여1 (8~16위)",
+              "name": "청여1",
               "price": 23200000,
-              "grade": "신설",
+              "grade": "(8~16위)신설",
               "groupType": null,
               "size": null,
               "hasInstallation": false,
@@ -238,9 +238,9 @@
           "category": "natural",
           "rows": [
             {
-              "name": "다알리아(단품)",
+              "name": "다알리아",
               "price": 3500000,
-              "grade": "",
+              "grade": "(단품)",
               "groupType": null,
               "size": null,
               "hasInstallation": false,
@@ -251,9 +251,9 @@
               "raw": null
             },
             {
-              "name": "클로버(단품)",
+              "name": "클로버",
               "price": 3500000,
-              "grade": "",
+              "grade": "(단품)",
               "groupType": null,
               "size": null,
               "hasInstallation": false,
@@ -264,9 +264,9 @@
               "raw": null
             },
             {
-              "name": "아이리스(단품) - 대, 소",
+              "name": "아이리스",
               "price": 4100000,
-              "grade": "",
+              "grade": "(단품) - 대, 소",
               "groupType": null,
               "size": null,
               "hasInstallation": false,
@@ -277,9 +277,9 @@
               "raw": null
             },
             {
-              "name": "플라타너스(단품)",
+              "name": "플라타너스",
               "price": 5100000,
-              "grade": "",
+              "grade": "(단품)",
               "groupType": null,
               "size": null,
               "hasInstallation": false,
@@ -292,7 +292,7 @@
             {
               "name": "부부 수목형 평장묘",
               "price": 8500000,
-              "grade": "부터 ~8,500,000",
+              "grade": "부터 ~",
               "groupType": null,
               "size": null,
               "hasInstallation": false,
@@ -303,9 +303,9 @@
               "raw": null
             },
             {
-              "name": "정원형 평장2위(추)",
+              "name": "정원형 평장",
               "price": 9500000,
-              "grade": "",
+              "grade": "2위(추)",
               "groupType": null,
               "size": null,
               "hasInstallation": false,
@@ -316,9 +316,9 @@
               "raw": null
             },
             {
-              "name": "담장형 평장묘 (동백4)",
+              "name": "담장형 평장묘",
               "price": 12500000,
-              "grade": "",
+              "grade": "(동백4)",
               "groupType": null,
               "size": null,
               "hasInstallation": false,
@@ -329,9 +329,9 @@
               "raw": null
             },
             {
-              "name": "담장형 월석평장묘 (동백6) 최대 4위",
+              "name": "담장형 월석평장묘",
               "price": 14000000,
-              "grade": "",
+              "grade": "(동백6) 최대 4위",
               "groupType": null,
               "size": null,
               "hasInstallation": false,
@@ -342,9 +342,9 @@
               "raw": null
             },
             {
-              "name": "담장형 월석평장묘 (동백6) 최대 6위",
+              "name": "담장형 월석평장묘",
               "price": 15000000,
-              "grade": "",
+              "grade": "(동백6) 최대 6위",
               "groupType": null,
               "size": null,
               "hasInstallation": false,
@@ -355,9 +355,9 @@
               "raw": null
             },
             {
-              "name": "평장E",
+              "name": "평장",
               "price": 15000000,
-              "grade": "",
+              "grade": "E",
               "groupType": null,
               "size": null,
               "hasInstallation": false,
@@ -368,9 +368,9 @@
               "raw": null
             },
             {
-              "name": "정원형 평장2위(단품)",
+              "name": "정원형 평장",
               "price": 17500000,
-              "grade": "",
+              "grade": "2위(단품)",
               "groupType": null,
               "size": null,
               "hasInstallation": false,
@@ -381,9 +381,9 @@
               "raw": null
             },
             {
-              "name": "평장2위",
+              "name": "평장",
               "price": 18000000,
-              "grade": "동백14에만 판매",
+              "grade": "2위동백14에만 판매",
               "groupType": null,
               "size": null,
               "hasInstallation": false,
@@ -394,9 +394,9 @@
               "raw": null
             },
             {
-              "name": "프리미엄 부부 평장묘 ( 담장시설 )",
+              "name": "프리미엄 부부 평장묘",
               "price": 21800000,
-              "grade": "부터 ~21,800,000",
+              "grade": "( 담장시설 ) 부터 ~",
               "groupType": null,
               "size": null,
               "hasInstallation": false,
@@ -407,9 +407,9 @@
               "raw": null
             },
             {
-              "name": "정원형 평장E(백합3가)",
+              "name": "정원형 평장",
               "price": 25000000,
-              "grade": "",
+              "grade": "E(백합3가)",
               "groupType": null,
               "size": null,
               "hasInstallation": false,
@@ -420,9 +420,9 @@
               "raw": null
             },
             {
-              "name": "프리미엄 가족 평장묘 ( 담장시설 )",
+              "name": "프리미엄 가족 평장묘",
               "price": 28950000,
-              "grade": "부터 ~28,950,000",
+              "grade": "( 담장시설 ) 부터 ~",
               "groupType": null,
               "size": null,
               "hasInstallation": false,
@@ -433,9 +433,9 @@
               "raw": null
             },
             {
-              "name": "정원형 고흥6위(백합3가)",
+              "name": "정원형 고흥",
               "price": 30000000,
-              "grade": "",
+              "grade": "6위(백합3가)",
               "groupType": null,
               "size": null,
               "hasInstallation": false,
@@ -452,9 +452,9 @@
           "category": "other",
           "rows": [
             {
-              "name": "월석(거창)",
+              "name": "월석",
               "price": 400000,
-              "grade": "비석 교체 시 사용",
+              "grade": "(거창)비석 교체 시 사용",
               "groupType": null,
               "size": null,
               "hasInstallation": false,
@@ -465,9 +465,1068 @@
               "raw": null
             },
             {
-              "name": "월석(고흥)",
+              "name": "월석",
               "price": 500000,
-              "grade": "비석 교체 시 사용",
+              "grade": "(고흥)비석 교체 시 사용",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
+            }
+          ]
+        },
+        "제외됨": {
+          "unit": "원",
+          "category": "excluded",
+          "rows": [
+            {
+              "name": "식당이용료(일반)",
+              "price": 15000,
+              "grade": "[기타] 1인 기준",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
+            },
+            {
+              "name": "식사(일반식)",
+              "price": 15000,
+              "grade": "[기타] 1인 기준",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
+            },
+            {
+              "name": "식당이용료(특식)",
+              "price": 18000,
+              "grade": "[기타] 1인 기준",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
+            },
+            {
+              "name": "식사(갈비탕)",
+              "price": 18000,
+              "grade": "[기타] 1인 기준",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
+            },
+            {
+              "name": "철쭉식재",
+              "price": 20000,
+              "grade": "[기타] (1EA)철쭉 1개당 20,000원",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
+            },
+            {
+              "name": "관리비",
+              "price": 25000,
+              "grade": "[매장묘] 1평형/1년 기준",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
+            },
+            {
+              "name": "천막대여",
+              "price": 55000,
+              "grade": "[기타] 1동/1일",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
+            },
+            {
+              "name": "나무제거 / 전지",
+              "price": 55000,
+              "grade": "[기타] 나무에 따라 차등 적용",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
+            },
+            {
+              "name": "나무식재",
+              "price": 66000,
+              "grade": "[기타] 나무에 따라 차등 적용",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
+            },
+            {
+              "name": "걸방석",
+              "price": 100000,
+              "grade": "[기타] 2.3/2.5자",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
+            },
+            {
+              "name": "석화분",
+              "price": 100000,
+              "grade": "[기타] 2EA",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
+            },
+            {
+              "name": "바닥 잔디(평형)",
+              "price": 100000,
+              "grade": "[기타] ",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
+            },
+            {
+              "name": "추가각자대",
+              "price": 110000,
+              "grade": "[기타] 1인 추가/삭제 마다 33,000원",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
+            },
+            {
+              "name": "유골함(한지)",
+              "price": 110000,
+              "grade": "[기타] 규격 (18*18*18)",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
+            },
+            {
+              "name": "분묘수선",
+              "price": 150000,
+              "grade": "[기타] 석물수선, 명칭변경 / 단수에 따라 적용",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
+            },
+            {
+              "name": "조경유지비",
+              "price": 150000,
+              "grade": "[기타] 5년분",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
+            },
+            {
+              "name": "개토제 또는 산신제 (택1)",
+              "price": 150000,
+              "grade": "[기타] 1회 기준",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
+            },
+            {
+              "name": "평장묘 개장작업비",
+              "price": 200000,
+              "grade": "[기타] 150,000(공임)+50,000(1명당)/유골함 비용 별도",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
+            },
+            {
+              "name": "월석 각자대",
+              "price": 200000,
+              "grade": "[기타] ",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
+            },
+            {
+              "name": "팔각 유골함(한지)",
+              "price": 220000,
+              "grade": "[기타] 규격(18*18*19) / 향균 기능",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
+            },
+            {
+              "name": "리모델링, 추가설치(경계석)",
+              "price": 300000,
+              "grade": "[기타] ",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
+            },
+            {
+              "name": "구판(3자, 와비2자)",
+              "price": 300000,
+              "grade": "[기타] ",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
+            },
+            {
+              "name": "야간 작업비",
+              "price": 300000,
+              "grade": "[기타] 기존 작업비에 추가",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
+            },
+            {
+              "name": "의전 서비스",
+              "price": 300000,
+              "grade": "[기타] 1회 기준",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
+            },
+            {
+              "name": "메탈포토",
+              "price": 330000,
+              "grade": "[기타] A(일반형)",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
+            },
+            {
+              "name": "메탈포토",
+              "price": 330000,
+              "grade": "[기타] B(L자형)",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
+            },
+            {
+              "name": "가족표석",
+              "price": 400000,
+              "grade": "[기타] ",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
+            },
+            {
+              "name": "카멜리아 표석",
+              "price": 400000,
+              "grade": "[기타] 비석 교체 시 사용",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
+            },
+            {
+              "name": "청여 표석",
+              "price": 400000,
+              "grade": "[기타] 비석 교체 시 사용",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
+            },
+            {
+              "name": "추가 평장작업비",
+              "price": 400000,
+              "grade": "[기타] ",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
+            },
+            {
+              "name": "각자대",
+              "price": 400000,
+              "grade": "[기타] 매장, 평장 구분없이 통합하여 사용",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
+            },
+            {
+              "name": "구판(3.5자, 와지 2.3자)",
+              "price": 400000,
+              "grade": "[기타] ",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
+            },
+            {
+              "name": "사각, 원형석실(부부)",
+              "price": 400000,
+              "grade": "[기타] 1인 석실(200,000원)",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
+            },
+            {
+              "name": "삼향로",
+              "price": 400000,
+              "grade": "[기타] ",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
+            },
+            {
+              "name": "메탈포토",
+              "price": 440000,
+              "grade": "[기타] C(다각형)",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
+            },
+            {
+              "name": "봉분 설치비",
+              "price": 500000,
+              "grade": "[기타] ",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
+            },
+            {
+              "name": "충곽/탈관비",
+              "price": 500000,
+              "grade": "[기타] 작업비 300,000원 + 재료비 200,000원",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
+            },
+            {
+              "name": "봉분수선",
+              "price": 500000,
+              "grade": "[기타] 1년 1회 A/S 보장",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
+            },
+            {
+              "name": "경계석(15전)",
+              "price": 500000,
+              "grade": "[기타] ",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
+            },
+            {
+              "name": "특삼향로",
+              "price": 500000,
+              "grade": "[기타] ",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
+            },
+            {
+              "name": "성경책",
+              "price": 600000,
+              "grade": "[기타] ",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
+            },
+            {
+              "name": "평장상석",
+              "price": 700000,
+              "grade": "[기타] 2.5자걸방석 제외",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
+            },
+            {
+              "name": "개장정리비",
+              "price": 700000,
+              "grade": "[기타] (소)",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
+            },
+            {
+              "name": "구판(3.5자 특, 2.5자 와비)",
+              "price": 700000,
+              "grade": "[기타] ",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
+            },
+            {
+              "name": "장례진행비",
+              "price": 700000,
+              "grade": "[기타] 각자대, 매장신고대행, 의전 진행 포함",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
+            },
+            {
+              "name": "상석",
+              "price": 800000,
+              "grade": "[기타] 2.3 세트고흥석",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
+            },
+            {
+              "name": "비석",
+              "price": 800000,
+              "grade": "[기타] 3자 (오석)",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
+            },
+            {
+              "name": "부부와비",
+              "price": 800000,
+              "grade": "[기타] ",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
+            },
+            {
+              "name": "수목형 표석",
+              "price": 800000,
+              "grade": "[기타] 아이리스,카멜리아,플라타너스,낙원평장,다알리아추억/사랑/하늘 정원(세우는 형태), 부부표석,",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
+            },
+            {
+              "name": "부부표석",
+              "price": 800000,
+              "grade": "[기타] ",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
+            },
+            {
+              "name": "와비",
+              "price": 900000,
+              "grade": "[기타] 2자 (오석)",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
+            },
+            {
+              "name": "처음 평장작업비",
+              "price": 1000000,
+              "grade": "[기타] ",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
+            },
+            {
+              "name": "매장묘 개장작업비",
+              "price": 1000000,
+              "grade": "[기타] 화장 제외 시 -100,000원",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
+            },
+            {
+              "name": "개장정리비",
+              "price": 1000000,
+              "grade": "[기타] (특수,4단형 이상)",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
+            },
+            {
+              "name": "상석",
+              "price": 1100000,
+              "grade": "[기타] 2.5 세트거창석, 고흥석",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
+            },
+            {
+              "name": "와비",
+              "price": 1100000,
+              "grade": "[기타] 2.3자 (오석)",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
+            },
+            {
+              "name": "갓(3.5자)",
+              "price": 1100000,
+              "grade": "[기타] ",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
+            },
+            {
+              "name": "상석",
+              "price": 1300000,
+              "grade": "[기타] 2.7 세트걸방석 330,000원 포함",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
+            },
+            {
+              "name": "와비",
+              "price": 1300000,
+              "grade": "[기타] 2.5자(오석)",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
+            },
+            {
+              "name": "유골함(봉안당전용)",
+              "price": 1320000,
+              "grade": "[기타] 규격 (21.5 * 15.5)",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
+            },
+            {
+              "name": "석곽 / 석관",
+              "price": 1400000,
+              "grade": "[기타] ",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
+            },
+            {
+              "name": "비석",
+              "price": 1500000,
+              "grade": "[기타] 3.5자 (오석)",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
+            },
+            {
+              "name": "매장작업비",
+              "price": 1500000,
+              "grade": "[기타] 유골함일 경우 1,000,000원",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
+            },
+            {
+              "name": "가봉분 작업비",
+              "price": 1500000,
+              "grade": "[기타] A일반봉분",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
+            },
+            {
+              "name": "1단형봉분(15전묘테) 추가",
+              "price": 1500000,
+              "grade": "[기타] ",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
+            },
+            {
+              "name": "1단형봉분(30전묘테) 추가",
+              "price": 1500000,
+              "grade": "[기타] ",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
+            },
+            {
+              "name": "판석",
+              "price": 1500000,
+              "grade": "[기타] ",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
+            },
+            {
+              "name": "가봉분 작업비",
+              "price": 1800000,
+              "grade": "[기타] B앞면조각봉분 이상",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
+            },
+            {
+              "name": "리모델링, 추가설치(담장석)",
+              "price": 1800000,
+              "grade": "[기타] ",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
+            },
+            {
+              "name": "석봉분(2/3평형/자바라형)",
+              "price": 1800000,
+              "grade": "[기타] ",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
+            },
+            {
+              "name": "가봉분 작업비",
+              "price": 2000000,
+              "grade": "[기타] C원형봉분",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
+            },
+            {
+              "name": "석등",
+              "price": 2000000,
+              "grade": "[기타] ",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
+            },
+            {
+              "name": "리모델링 작업비",
+              "price": 2700000,
+              "grade": "[기타] (1인)",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
+            },
+            {
+              "name": "2단형봉분(2,3평기초) 1기 추가",
+              "price": 3000000,
+              "grade": "[기타] ",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
+            },
+            {
+              "name": "리모델링 작업비",
+              "price": 4200000,
+              "grade": "[기타] (2인)",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
+            },
+            {
+              "name": "3단형봉분(2,3평기초) 1기 추가",
+              "price": 4500000,
+              "grade": "[기타] ",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
+            },
+            {
+              "name": "4단형봉분(3평기초판석) 1기 추가",
+              "price": 6000000,
+              "grade": "[기타] ",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
+            },
+            {
+              "name": "앞면조각봉분A(3단형) 1기 추가",
+              "price": 7000000,
+              "grade": "[기타] ",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
+            },
+            {
+              "name": "앞면조각봉분B(4단형) 1기 추가",
+              "price": 8000000,
+              "grade": "[기타] ",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
+            },
+            {
+              "name": "앞면조각봉분C(3단형) 1기 추가",
+              "price": 11000000,
+              "grade": "[기타] ",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
+            },
+            {
+              "name": "앞면조각봉분D(4단형) 1기 추가",
+              "price": 12000000,
+              "grade": "[기타] 사용하지 않는 모델",
               "groupType": null,
               "size": null,
               "hasInstallation": false,
@@ -484,9 +1543,9 @@
     "_detailedSource": "prisma",
     "_meta": {
       "source": "supabase-js",
-      "categoryCount": 4,
-      "itemCount": 28,
-      "representativeCount": 2
+      "categoryCount": 5,
+      "itemCount": 109,
+      "representativeCount": 0
     },
     "originalName": "1.(재)낙원추모공원_price_info.png",
     "location": {
@@ -533,13 +1592,13 @@
     },
     "lat": 35.2503794,
     "lng": 129.1580144,
-    "minPrice": 216,
+    "minPrice": 40,
     "maxPrice": 3500,
     "description": "",
     "rating": 0,
     "reviewCount": 0,
     "createdAt": "2025-12-12T00:21:56.196",
-    "updatedAt": "2025-12-15T00:03:09.274",
+    "updatedAt": "2025-12-16T02:57:59.137",
     "reviews": [],
     "priceInfo": {
       "priceTable": {
@@ -1360,7 +2419,7 @@
       "source": "supabase-js",
       "categoryCount": 5,
       "itemCount": 60,
-      "representativeCount": 0
+      "representativeCount": 2
     },
     "location": {
       "lat": 35.2503794,
@@ -2240,8 +3299,8 @@
     },
     "category": "FAMILY_GRAVE",
     "priceRange": {
-      "min": 3,
-      "max": 3
+      "min": 495,
+      "max": 16270
     },
     "operatorType": "FOUNDATION",
     "hasParking": true,
@@ -2264,26 +3323,747 @@
     "phone": "052-994-4004",
     "capacity": 14992,
     "lastUpdated": "9개월전",
-    "lat": 35.5411417,
-    "lng": 129.2780664,
-    "minPrice": 2323,
-    "maxPrice": 2323,
+    "lat": 35.5428186,
+    "lng": 129.2780742,
+    "minPrice": 3,
+    "maxPrice": 3,
     "description": "",
     "rating": 0,
     "reviewCount": 0,
     "createdAt": "2025-12-12T00:21:56.196",
-    "updatedAt": "2025-12-14T14:23:23.679",
+    "updatedAt": "2025-12-16T01:03:59.753",
     "reviews": [],
     "priceInfo": {
       "priceTable": {
         "매장묘": {
           "unit": "원",
+          "category": "grave",
           "rows": [
             {
-              "name": "123123",
-              "price": 30003,
-              "groupType": "새 그룹 1",
-              "isRepresentative": true
+              "name": "1평/30년 기준",
+              "price": 4950000,
+              "grade": "묘지 사용료",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": true,
+              "raw": null
+            },
+            {
+              "name": "일반매장묘(1.5평)",
+              "price": 22520000,
+              "grade": "묘지사용료, 5년 관리비, 매장작업비, 봉분작업비, 석물비용 포함(위치에 따라 추가금 발생), 부가세 포함",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
+            },
+            {
+              "name": "일반매장묘(2평)",
+              "price": 32400000,
+              "grade": "묘지사용료, 5년 관리비, 매장작업비, 봉분작업비, 석물비용 포함(위치에 따라 추가금 발생), 부가세 포함",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
+            },
+            {
+              "name": "일반매장묘(3평)",
+              "price": 40500000,
+              "grade": "묘지사용료, 5년 관리비, 매장작업비, 봉분작업비, 석물비용 포함(위치에 따라 추가금 발생), 부가세 포함",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
+            },
+            {
+              "name": "부부매장묘(4평)",
+              "price": 75440000,
+              "grade": "묘지사용료, 5년 관리비, 매장작업비, 봉분작업비, 석물비용 포함(위치에 따라 추가금 발생), 부가세 포함",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
+            },
+            {
+              "name": "고급매장묘(4평)",
+              "price": 88860000,
+              "grade": "묘지사용료, 5년 관리비, 매장작업비, 봉분작업비, 석물비용 포함(위치에 따라 추가금 발생), 부가세 포함",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
+            },
+            {
+              "name": "부부매장묘(5평)",
+              "price": 105760000,
+              "grade": "묘지사용료, 5년 관리비, 매장작업비, 봉분작업비, 석물비용 포함(위치에 따라 추가금 발생), 부가세 포함",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
+            },
+            {
+              "name": "부부매장묘(6평)",
+              "price": 121560000,
+              "grade": "묘지사용료, 5년 관리비, 매장작업비, 봉분작업비, 석물비용 포함(위치에 따라 추가금 발생), 부가세 포함",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
+            },
+            {
+              "name": "고급매장묘(5평)",
+              "price": 140300000,
+              "grade": "묘지사용료, 5년 관리비, 매장작업비, 봉분작업비, 석물비용 포함(위치에 따라 추가금 발생), 부가세 포함",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
+            },
+            {
+              "name": "고급매장묘(6평)",
+              "price": 162700000,
+              "grade": "묘지사용료, 5년 관리비, 매장작업비, 봉분작업비, 석물비용 포함(위치에 따라 추가금 발생), 부가세 포함",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
+            }
+          ]
+        },
+        "봉안당": {
+          "unit": "원",
+          "category": "charnel",
+          "rows": [
+            {
+              "name": "2위형 봉안묘(리모델링)",
+              "price": 14000000,
+              "grade": "화장비용 별도, 석물비용 및 설치비용 포함, 부가세 포함",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": true,
+              "raw": null
+            },
+            {
+              "name": "4위형 봉안묘(리모델링)",
+              "price": 16200000,
+              "grade": "화장비용 별도, 석물비용 및 설치비용 포함, 부가세 포함",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
+            },
+            {
+              "name": "6위형 봉안묘(리모델링)",
+              "price": 18400000,
+              "grade": "화장비용 별도, 석물비용 및 설치비용 포함, 부가세 포함",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
+            },
+            {
+              "name": "8위형 봉안묘(리모델링)",
+              "price": 21700000,
+              "grade": "화장비용 별도, 석물비용 및 설치비용 포함, 부가세 포함",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
+            },
+            {
+              "name": "12위형 봉안묘(리모델링)",
+              "price": 25000000,
+              "grade": "화장비용 별도, 석물비용 및 설치비용 포함, 부가세 포함",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
+            },
+            {
+              "name": "24위형 봉안묘(리모델링)",
+              "price": 36000000,
+              "grade": "화장비용 별도, 석물비용 및 설치비용 포함, 부가세 포함",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
+            },
+            {
+              "name": "48위형 봉안묘(리모델링)",
+              "price": 47000000,
+              "grade": "화장비용 별도, 석물비용 및 설치비용 포함, 부가세 포함",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
+            }
+          ]
+        },
+        "수목장": {
+          "unit": "원",
+          "category": "natural",
+          "rows": [
+            {
+              "name": "2위형 평장묘(리모델링)",
+              "price": 11800000,
+              "grade": "화장비용 별도, 석물비용 및 설치비용 포함, 부가세 포함",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": true,
+              "raw": null
+            },
+            {
+              "name": "4위형 평장묘(리모델링)",
+              "price": 14000000,
+              "grade": "화장비용 별도, 석물비용 및 설치비용 포함, 부가세 포함",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
+            },
+            {
+              "name": "6위형 평장묘(리모델링)",
+              "price": 16200000,
+              "grade": "화장비용 별도, 석물비용 및 설치비용 포함, 부가세 포함",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
+            },
+            {
+              "name": "8위형 평장묘(리모델링)",
+              "price": 18400000,
+              "grade": "화장비용 별도, 석물비용 및 설치비용 포함, 부가세 포함",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
+            },
+            {
+              "name": "봉안/평장묘(1평)",
+              "price": 23200000,
+              "grade": "묘지사용료, 5년 관리비, 매장작업비, 봉분작업비, 석물비용 포함(위치에 따라 추가금 발생), 부가세 포함",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
+            },
+            {
+              "name": "봉안/평장묘(1.5평)",
+              "price": 25600000,
+              "grade": "묘지사용료, 5년 관리비, 매장작업비, 봉분작업비, 석물비용 포함(위치에 따라 추가금 발생), 부가세 포함",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
+            },
+            {
+              "name": "봉안/평장묘(2평)",
+              "price": 32400000,
+              "grade": "묘지사용료, 5년 관리비, 매장작업비, 봉분작업비, 석물비용 포함(위치에 따라 추가금 발생), 부가세 포함",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
+            },
+            {
+              "name": "봉안/평장묘(3평)",
+              "price": 40500000,
+              "grade": "묘지사용료, 5년 관리비, 매장작업비, 봉분작업비, 석물비용 포함(위치에 따라 추가금 발생), 부가세 포함",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
+            },
+            {
+              "name": "봉안/평장묘(4평)",
+              "price": 66640000,
+              "grade": "묘지사용료, 5년 관리비, 매장작업비, 봉분작업비, 석물비용 포함(위치에 따라 추가금 발생), 부가세 포함",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
+            },
+            {
+              "name": "봉안/평장묘(5평)",
+              "price": 96960000,
+              "grade": "묘지사용료, 5년 관리비, 매장작업비, 봉분작업비, 석물비용 포함(위치에 따라 추가금 발생), 부가세 포함",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
+            },
+            {
+              "name": "봉안/평장묘(6평)",
+              "price": 112760000,
+              "grade": "묘지사용료, 5년 관리비, 매장작업비, 봉분작업비, 석물비용 포함(위치에 따라 추가금 발생), 부가세 포함",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
+            }
+          ]
+        },
+        "기타": {
+          "unit": "원",
+          "category": "other",
+          "rows": [
+            {
+              "name": "향로석 1개",
+              "price": 330000,
+              "grade": "운반 및 설치비용 포함, 부가세 포함",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": true,
+              "raw": null
+            },
+            {
+              "name": "개석 3尺",
+              "price": 440000,
+              "grade": "운반 및 설치비용 포함, 부가세 포함",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
+            },
+            {
+              "name": "화병 1조(2개)",
+              "price": 440000,
+              "grade": "운반 및 설치비용 포함, 부가세 포함",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
+            },
+            {
+              "name": "신도비 2.5尺",
+              "price": 2200000,
+              "grade": "각자비 별도, 운반 및 설치비용 포함, 부가세 포함",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
+            },
+            {
+              "name": "신도비 2.7尺",
+              "price": 3300000,
+              "grade": "각자비 별도, 운반 및 설치비용 포함, 부가세 포함",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
+            }
+          ]
+        },
+        "제외됨": {
+          "unit": "원",
+          "category": "excluded",
+          "rows": [
+            {
+              "name": "관리비",
+              "price": 46000,
+              "grade": "[기타]",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": true,
+              "raw": null
+            },
+            {
+              "name": "경계석 설치비(1M당)",
+              "price": 110000,
+              "grade": "[기타]",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
+            },
+            {
+              "name": "안치작업비(평장.봉안)",
+              "price": 900000,
+              "grade": "[기타]",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
+            },
+            {
+              "name": "개장정리비",
+              "price": 1100000,
+              "grade": "[기타]",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
+            },
+            {
+              "name": "봉분작업비/봉수선(1평~2평)",
+              "price": 1150000,
+              "grade": "[기타]",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
+            },
+            {
+              "name": "개장비",
+              "price": 1200000,
+              "grade": "[기타]",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
+            },
+            {
+              "name": "봉분작업비/봉수선(3평~4평)",
+              "price": 1300000,
+              "grade": "[기타]",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
+            },
+            {
+              "name": "매장작업비",
+              "price": 1450000,
+              "grade": "[기타]",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
+            },
+            {
+              "name": "봉분작업비/봉수선(5평~6평)",
+              "price": 1450000,
+              "grade": "[기타]",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
+            },
+            {
+              "name": "혼유석(상석)(2.3尺)",
+              "price": 2200000,
+              "grade": "[기타]",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
+            },
+            {
+              "name": "석곽/석관",
+              "price": 2200000,
+              "grade": "[기타]",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
+            },
+            {
+              "name": "혼유석(상석)(2.5尺)",
+              "price": 2750000,
+              "grade": "[기타]",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
+            },
+            {
+              "name": "오석혼유석(상석)(2.3尺)",
+              "price": 2750000,
+              "grade": "[기타]",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
+            },
+            {
+              "name": "와비 2.5尺",
+              "price": 2750000,
+              "grade": "[기타]",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
+            },
+            {
+              "name": "혼유석(상석)(2.7尺)",
+              "price": 3300000,
+              "grade": "[기타]",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
+            },
+            {
+              "name": "오석혼유석(상석)(2.5尺)",
+              "price": 3300000,
+              "grade": "[기타]",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
+            },
+            {
+              "name": "와비 2.7尺",
+              "price": 3300000,
+              "grade": "[기타]",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
+            },
+            {
+              "name": "오석혼유석(상석)(2.7尺)",
+              "price": 3960000,
+              "grade": "[기타]",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
+            },
+            {
+              "name": "(매장)1단묘 둘레석(리모델링)",
+              "price": 4400000,
+              "grade": "[기타]",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
+            },
+            {
+              "name": "(매장)3단묘 일반 둘레석(리모델링)",
+              "price": 8800000,
+              "grade": "[기타]",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
+            },
+            {
+              "name": "(매장)3단묘 고급 둘레석(리모델링)",
+              "price": 16500000,
+              "grade": "[기타]",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": false,
+              "raw": null
             }
           ]
         }
@@ -2291,8 +4071,10 @@
     },
     "_detailedSource": "prisma",
     "_meta": {
-      "source": "local-json",
-      "categoryCount": 1
+      "source": "supabase-js",
+      "categoryCount": 5,
+      "itemCount": 54,
+      "representativeCount": 5
     },
     "originalName": "4.재단법인울산공원묘원_price_info.png",
     "location": {
@@ -23299,7 +25081,7 @@
       "lat": 36.0030106,
       "lng": 127.0924364
     },
-    "category": "FAMILY_GRAVE",
+    "category": "CHARNEL_HOUSE",
     "priceRange": {
       "min": 822,
       "max": 1453
@@ -23658,7 +25440,7 @@
       "lat": 37.94139,
       "lng": 127.2563091
     },
-    "category": "FAMILY_GRAVE",
+    "category": "CHARNEL_HOUSE",
     "phone": "031-532-9723",
     "website": "",
     "images": [],
@@ -23995,7 +25777,7 @@
       "lat": 36.6845648,
       "lng": 127.1429646
     },
-    "category": "FAMILY_GRAVE",
+    "category": "CHARNEL_HOUSE",
     "phone": "1544-4471",
     "website": "",
     "images": [],
@@ -24110,7 +25892,7 @@
       "lat": 37.4034318,
       "lng": 127.1639352
     },
-    "category": "FAMILY_GRAVE",
+    "category": "CHARNEL_HOUSE",
     "priceRange": {
       "min": 1219,
       "max": 2155
@@ -24166,7 +25948,7 @@
       "lat": 36.1903566,
       "lng": 127.9922784
     },
-    "category": "FAMILY_GRAVE",
+    "category": "CHARNEL_HOUSE",
     "priceRange": {
       "min": 844,
       "max": 1602
@@ -24201,7 +25983,7 @@
       "lat": 37.7611131,
       "lng": 127.7451416
     },
-    "category": "FAMILY_GRAVE",
+    "category": "CHARNEL_HOUSE",
     "phone": "1577-9446",
     "website": "",
     "images": [],
@@ -24985,7 +26767,7 @@
       "lat": 37.7444898,
       "lng": 126.8956846
     },
-    "category": "ETC",
+    "category": "CHARNEL_HOUSE",
     "phone": "",
     "website": "",
     "images": [],
@@ -25213,7 +26995,7 @@
       "lat": 37.7375656,
       "lng": 126.8620458
     },
-    "category": "ETC",
+    "category": "CHARNEL_HOUSE",
     "phone": "",
     "website": "",
     "images": [],
@@ -25232,7 +27014,7 @@
       "lat": 37.7375656,
       "lng": 126.8620458
     },
-    "category": "ETC",
+    "category": "CHARNEL_HOUSE",
     "phone": "",
     "website": "",
     "images": [],
@@ -25251,7 +27033,7 @@
       "lat": 37.7375656,
       "lng": 126.8620458
     },
-    "category": "ETC",
+    "category": "CHARNEL_HOUSE",
     "phone": "",
     "website": "",
     "images": [],
@@ -25402,7 +27184,7 @@
       "lat": 36.6897969,
       "lng": 126.922377
     },
-    "category": "ETC",
+    "category": "CHARNEL_HOUSE",
     "phone": "",
     "website": "",
     "images": [],
@@ -25903,7 +27685,7 @@
       "lat": 37.8497895,
       "lng": 127.5913675
     },
-    "category": "FAMILY_GRAVE",
+    "category": "CHARNEL_HOUSE",
     "priceRange": {
       "min": 1155,
       "max": 2060
@@ -25937,7 +27719,7 @@
       "lat": 37.1947727,
       "lng": 127.6231534
     },
-    "category": "FAMILY_GRAVE",
+    "category": "CHARNEL_HOUSE",
     "priceRange": {
       "min": 1200,
       "max": 1876
@@ -26342,7 +28124,7 @@
       "lat": 35.7517959,
       "lng": 127.0203168
     },
-    "category": "FAMILY_GRAVE",
+    "category": "CHARNEL_HOUSE",
     "phone": "063-546-5011",
     "website": "",
     "images": [],
@@ -28784,7 +30566,7 @@
       "lat": 36.8741198,
       "lng": 127.4160485
     },
-    "category": "FAMILY_GRAVE",
+    "category": "CHARNEL_HOUSE",
     "phone": "043-539-3868",
     "website": "",
     "images": [],
@@ -28812,7 +30594,7 @@
       "lat": 37.6789276,
       "lng": 127.8449573
     },
-    "category": "FAMILY_GRAVE",
+    "category": "CHARNEL_HOUSE",
     "priceRange": {
       "min": 1180,
       "max": 2502
@@ -28897,7 +30679,7 @@
       "lat": 36.2111481,
       "lng": 128.5997464
     },
-    "category": "FAMILY_GRAVE",
+    "category": "CHARNEL_HOUSE",
     "priceRange": {
       "min": 1243,
       "max": 1824
@@ -29016,7 +30798,7 @@
       "lat": 37.5641417,
       "lng": 127.393032
     },
-    "category": "FAMILY_GRAVE",
+    "category": "CHARNEL_HOUSE",
     "phone": "031-772-7102",
     "website": "",
     "images": [],
@@ -29226,7 +31008,7 @@
       "lat": 35.3707644,
       "lng": 126.9656343
     },
-    "category": "FAMILY_GRAVE",
+    "category": "CHARNEL_HOUSE",
     "phone": "062-227-7124",
     "website": "",
     "images": [],
@@ -29861,7 +31643,7 @@
       "lat": 37.3545388,
       "lng": 127.1841621
     },
-    "category": "ETC",
+    "category": "CHARNEL_HOUSE",
     "phone": "",
     "website": "",
     "images": [],
@@ -30041,7 +31823,7 @@
       "lat": 35.4837103,
       "lng": 127.6854309
     },
-    "category": "FAMILY_GRAVE",
+    "category": "CHARNEL_HOUSE",
     "priceRange": {
       "min": 1110,
       "max": 2119
@@ -30287,7 +32069,7 @@
       "lat": 36.2882679,
       "lng": 128.3132371
     },
-    "category": "ETC",
+    "category": "CHARNEL_HOUSE",
     "phone": "",
     "website": "",
     "images": [],
@@ -30346,7 +32128,7 @@
       "lat": 37.3465301,
       "lng": 126.8701909
     },
-    "category": "FAMILY_GRAVE",
+    "category": "CHARNEL_HOUSE",
     "priceRange": {
       "min": 1090,
       "max": 2577
@@ -30376,7 +32158,7 @@
       "lat": 36.2111481,
       "lng": 128.5997464
     },
-    "category": "FAMILY_GRAVE",
+    "category": "CHARNEL_HOUSE",
     "priceRange": {
       "min": 1243,
       "max": 1824
@@ -30411,7 +32193,7 @@
       "lat": 34.8407976,
       "lng": 126.4044594
     },
-    "category": "ETC",
+    "category": "CHARNEL_HOUSE",
     "phone": "",
     "website": "",
     "images": [],
@@ -30429,7 +32211,7 @@
       "lat": 34.3532824,
       "lng": 126.6461537
     },
-    "category": "FAMILY_GRAVE",
+    "category": "CHARNEL_HOUSE",
     "priceRange": {
       "min": 911,
       "max": 1916
@@ -30892,7 +32674,7 @@
       "lat": 37.3161425,
       "lng": 127.475454
     },
-    "category": "ETC",
+    "category": "CHARNEL_HOUSE",
     "phone": "",
     "website": "",
     "images": [],
@@ -30951,7 +32733,7 @@
       "lat": 37.8292567,
       "lng": 128.81914
     },
-    "category": "FAMILY_GRAVE",
+    "category": "CHARNEL_HOUSE",
     "priceRange": {
       "min": 929,
       "max": 2309
@@ -30992,7 +32774,7 @@
       "lat": 34.9931101,
       "lng": 127.6430595
     },
-    "category": "ETC",
+    "category": "CHARNEL_HOUSE",
     "phone": "",
     "website": "",
     "images": [],
@@ -31011,7 +32793,7 @@
       "lat": 36.9662845,
       "lng": 127.5893747
     },
-    "category": "ETC",
+    "category": "CHARNEL_HOUSE",
     "phone": "",
     "website": "",
     "images": [],
@@ -31107,7 +32889,7 @@
       "lat": 38.2031589,
       "lng": 128.5478544
     },
-    "category": "ETC",
+    "category": "CHARNEL_HOUSE",
     "phone": "",
     "website": "",
     "images": [],
@@ -31125,7 +32907,7 @@
       "lat": 35.8243987,
       "lng": 127.0889933
     },
-    "category": "FAMILY_GRAVE",
+    "category": "CHARNEL_HOUSE",
     "priceRange": {
       "min": 1053,
       "max": 1996
@@ -31282,7 +33064,7 @@
       "lat": 37.2357802,
       "lng": 128.9894371
     },
-    "category": "ETC",
+    "category": "CHARNEL_HOUSE",
     "phone": "",
     "website": "",
     "images": [],
@@ -31471,7 +33253,7 @@
       "lat": 37.4187308,
       "lng": 127.1835153
     },
-    "category": "ETC",
+    "category": "CHARNEL_HOUSE",
     "phone": "",
     "website": "",
     "images": [],
@@ -31636,7 +33418,7 @@
       "lat": 36.7180181,
       "lng": 126.4115754
     },
-    "category": "ETC",
+    "category": "CHARNEL_HOUSE",
     "phone": "",
     "website": "",
     "images": [],
@@ -31832,7 +33614,7 @@
       "lat": 34.8253893,
       "lng": 127.8696982
     },
-    "category": "ETC",
+    "category": "CHARNEL_HOUSE",
     "phone": "",
     "website": "",
     "images": [],
@@ -32209,7 +33991,7 @@
       "lat": 36.5514424,
       "lng": 128.0001121
     },
-    "category": "ETC",
+    "category": "CHARNEL_HOUSE",
     "phone": "",
     "website": "",
     "images": [],
@@ -32519,7 +34301,7 @@
       "lat": 36.4624369,
       "lng": 126.721681
     },
-    "category": "ETC",
+    "category": "CHARNEL_HOUSE",
     "phone": "",
     "website": "",
     "images": [],
@@ -32623,7 +34405,7 @@
       "lat": 37.3592766,
       "lng": 127.1707984
     },
-    "category": "FAMILY_GRAVE",
+    "category": "CHARNEL_HOUSE",
     "priceRange": {
       "min": 933,
       "max": 1676
@@ -32856,7 +34638,7 @@
       "lat": 34.8316712,
       "lng": 127.5805465
     },
-    "category": "ETC",
+    "category": "CHARNEL_HOUSE",
     "phone": "",
     "website": "",
     "images": [],
@@ -32875,7 +34657,7 @@
       "lat": 37.9244162,
       "lng": 127.0409808
     },
-    "category": "ETC",
+    "category": "CHARNEL_HOUSE",
     "phone": "",
     "website": "",
     "images": [],
@@ -33051,7 +34833,7 @@
       "lat": 37.6903021,
       "lng": 127.3722685
     },
-    "category": "ETC",
+    "category": "CHARNEL_HOUSE",
     "phone": "",
     "website": "",
     "images": [],
@@ -33070,7 +34852,7 @@
       "lat": 37.7611131,
       "lng": 127.7451416
     },
-    "category": "ETC",
+    "category": "CHARNEL_HOUSE",
     "phone": "",
     "website": "",
     "images": [],
@@ -33089,7 +34871,7 @@
       "lat": 37.4751911,
       "lng": 126.7247019
     },
-    "category": "ETC",
+    "category": "CHARNEL_HOUSE",
     "phone": "",
     "website": "",
     "images": [],
@@ -33107,7 +34889,7 @@
       "lat": 36.139847,
       "lng": 128.5621191
     },
-    "category": "FAMILY_GRAVE",
+    "category": "CHARNEL_HOUSE",
     "priceRange": {
       "min": 948,
       "max": 2013
@@ -33141,7 +34923,7 @@
       "lat": 35.7110618,
       "lng": 128.0369602
     },
-    "category": "FAMILY_GRAVE",
+    "category": "CHARNEL_HOUSE",
     "priceRange": {
       "min": 1260,
       "max": 2600
@@ -33176,7 +34958,7 @@
       "lat": 37.1432864,
       "lng": 126.9549804
     },
-    "category": "ETC",
+    "category": "CHARNEL_HOUSE",
     "phone": "",
     "website": "",
     "images": [],
@@ -33292,7 +35074,7 @@
       "lat": 36.9662845,
       "lng": 127.5893747
     },
-    "category": "ETC",
+    "category": "CHARNEL_HOUSE",
     "phone": "",
     "website": "",
     "images": [],
@@ -33310,7 +35092,7 @@
       "lat": 36.003109,
       "lng": 128.4744174
     },
-    "category": "FAMILY_GRAVE",
+    "category": "CHARNEL_HOUSE",
     "priceRange": {
       "min": 1228,
       "max": 1826
@@ -34117,7 +35899,7 @@
       "lat": 38.0013943,
       "lng": 128.1624356
     },
-    "category": "FAMILY_GRAVE",
+    "category": "CHARNEL_HOUSE",
     "phone": "033-460-2056",
     "website": "",
     "images": [],
@@ -34205,7 +35987,7 @@
       "lat": 37.7611131,
       "lng": 127.7451416
     },
-    "category": "FAMILY_GRAVE",
+    "category": "CHARNEL_HOUSE",
     "phone": "033-263-6454",
     "website": "",
     "images": [],
@@ -34419,7 +36201,7 @@
       "lat": 36.5437123,
       "lng": 127.5477313
     },
-    "category": "FAMILY_GRAVE",
+    "category": "CHARNEL_HOUSE",
     "phone": "043-251-3560",
     "website": "",
     "images": [],
@@ -34690,7 +36472,7 @@
       "lat": 38.0013943,
       "lng": 128.1624356
     },
-    "category": "ETC",
+    "category": "CHARNEL_HOUSE",
     "phone": "033-460-2056",
     "website": "",
     "images": [],
@@ -34717,7 +36499,7 @@
       "lat": 37.4751911,
       "lng": 126.7247019
     },
-    "category": "FAMILY_GRAVE",
+    "category": "CHARNEL_HOUSE",
     "phone": "032-456-2320",
     "website": "",
     "images": [],
@@ -35202,7 +36984,7 @@
       "lat": 36.9005434,
       "lng": 126.5185692
     },
-    "category": "FAMILY_GRAVE",
+    "category": "CHARNEL_HOUSE",
     "phone": "041-353-3044",
     "website": "",
     "images": [],
@@ -35259,7 +37041,7 @@
       "lat": 36.9713571,
       "lng": 126.6031935
     },
-    "category": "FAMILY_GRAVE",
+    "category": "CHARNEL_HOUSE",
     "priceRange": {
       "min": 1051,
       "max": 2059
@@ -35362,7 +37144,7 @@
       "lat": 36.9005434,
       "lng": 126.5185692
     },
-    "category": "FAMILY_GRAVE",
+    "category": "CHARNEL_HOUSE",
     "phone": "041-353-3044",
     "website": "",
     "images": [],
@@ -35419,7 +37201,7 @@
       "lat": 36.8240006,
       "lng": 126.7761282
     },
-    "category": "FAMILY_GRAVE",
+    "category": "CHARNEL_HOUSE",
     "priceRange": {
       "min": 1293,
       "max": 2652
@@ -35453,7 +37235,7 @@
       "lat": 36.8240006,
       "lng": 126.7761282
     },
-    "category": "FAMILY_GRAVE",
+    "category": "CHARNEL_HOUSE",
     "priceRange": {
       "min": 1293,
       "max": 2652
@@ -35553,7 +37335,7 @@
       "lat": 37.1432864,
       "lng": 126.9549804
     },
-    "category": "FAMILY_GRAVE",
+    "category": "CHARNEL_HOUSE",
     "phone": "031-354-2325",
     "website": "",
     "images": [],
@@ -35798,7 +37580,7 @@
       "lat": 37.1432864,
       "lng": 126.9549804
     },
-    "category": "FAMILY_GRAVE",
+    "category": "CHARNEL_HOUSE",
     "phone": "031-354-2325",
     "website": "",
     "images": [],
@@ -35827,7 +37609,7 @@
       "lat": 37.1432864,
       "lng": 126.9549804
     },
-    "category": "ETC",
+    "category": "CHARNEL_HOUSE",
     "phone": "",
     "website": "",
     "images": [],
@@ -35846,7 +37628,7 @@
       "lat": 37.1432864,
       "lng": 126.9549804
     },
-    "category": "ETC",
+    "category": "CHARNEL_HOUSE",
     "phone": "",
     "website": "",
     "images": [],
@@ -35865,7 +37647,7 @@
       "lat": 37.1432864,
       "lng": 126.9549804
     },
-    "category": "ETC",
+    "category": "CHARNEL_HOUSE",
     "phone": "",
     "website": "",
     "images": [],
@@ -35920,7 +37702,7 @@
       "lat": 35.9340173,
       "lng": 128.5286111
     },
-    "category": "ETC",
+    "category": "CHARNEL_HOUSE",
     "phone": "",
     "website": "",
     "images": [],
@@ -35979,7 +37761,7 @@
       "lat": 35.972566,
       "lng": 127.0171861
     },
-    "category": "ETC",
+    "category": "CHARNEL_HOUSE",
     "phone": "",
     "website": "",
     "images": [],
@@ -36094,7 +37876,7 @@
       "lat": 35.9340173,
       "lng": 128.5286111
     },
-    "category": "ETC",
+    "category": "CHARNEL_HOUSE",
     "phone": "",
     "website": "",
     "images": [],
@@ -36112,7 +37894,7 @@
       "lat": 38.0715835,
       "lng": 127.6778562
     },
-    "category": "FAMILY_GRAVE",
+    "category": "CHARNEL_HOUSE",
     "priceRange": {
       "min": 1245,
       "max": 1805
@@ -36420,7 +38202,7 @@
       "lat": 33.4404709,
       "lng": 126.5789045
     },
-    "category": "ETC",
+    "category": "CHARNEL_HOUSE",
     "phone": "",
     "website": "",
     "images": [],
@@ -36438,7 +38220,7 @@
       "lat": 35.3525656,
       "lng": 129.1581761
     },
-    "category": "FAMILY_GRAVE",
+    "category": "CHARNEL_HOUSE",
     "priceRange": {
       "min": 922,
       "max": 1561
@@ -36476,7 +38258,7 @@
       "lat": 35.9986275,
       "lng": 129.4872456
     },
-    "category": "FAMILY_GRAVE",
+    "category": "CHARNEL_HOUSE",
     "priceRange": {
       "min": 1010,
       "max": 2238
@@ -36550,7 +38332,7 @@
       "lat": 37.7957356,
       "lng": 126.6989172
     },
-    "category": "ETC",
+    "category": "CHARNEL_HOUSE",
     "phone": "",
     "website": "",
     "images": [],
@@ -36568,7 +38350,7 @@
       "lat": 35.3314445,
       "lng": 129.1619843
     },
-    "category": "FAMILY_GRAVE",
+    "category": "CHARNEL_HOUSE",
     "priceRange": {
       "min": 1287,
       "max": 1918
@@ -36742,7 +38524,7 @@
       "lat": 37.5315537,
       "lng": 127.2792565
     },
-    "category": "FAMILY_GRAVE",
+    "category": "CHARNEL_HOUSE",
     "priceRange": {
       "min": 1088,
       "max": 1646
@@ -36840,7 +38622,7 @@
       "lat": 35.9294018,
       "lng": 128.3630834
     },
-    "category": "FAMILY_GRAVE",
+    "category": "CHARNEL_HOUSE",
     "priceRange": {
       "min": 1177,
       "max": 1694
@@ -36874,7 +38656,7 @@
       "lat": 37.037576,
       "lng": 127.6236985
     },
-    "category": "FAMILY_GRAVE",
+    "category": "CHARNEL_HOUSE",
     "priceRange": {
       "min": 120,
       "max": 120
@@ -36943,7 +38725,7 @@
       "lat": 34.8050327,
       "lng": 127.5908488
     },
-    "category": "FAMILY_GRAVE",
+    "category": "CHARNEL_HOUSE",
     "priceRange": {
       "min": 898,
       "max": 2191
@@ -36977,7 +38759,7 @@
       "lat": 35.329076,
       "lng": 129.1584694
     },
-    "category": "FAMILY_GRAVE",
+    "category": "CHARNEL_HOUSE",
     "priceRange": {
       "min": 952,
       "max": 1515
@@ -37052,7 +38834,7 @@
       "lat": 37.4751911,
       "lng": 126.7247019
     },
-    "category": "ETC",
+    "category": "CHARNEL_HOUSE",
     "phone": "",
     "website": "",
     "images": [],
@@ -37207,7 +38989,7 @@
       "lat": 35.92744,
       "lng": 128.3741988
     },
-    "category": "ETC",
+    "category": "CHARNEL_HOUSE",
     "phone": "",
     "website": "",
     "images": [],
@@ -37225,7 +39007,7 @@
       "lat": 35.7535064,
       "lng": 128.7473808
     },
-    "category": "FAMILY_GRAVE",
+    "category": "CHARNEL_HOUSE",
     "priceRange": {
       "min": 842,
       "max": 1916
@@ -37332,7 +39114,7 @@
       "lat": 33.4904973,
       "lng": 126.559877
     },
-    "category": "ETC",
+    "category": "CHARNEL_HOUSE",
     "phone": "",
     "website": "",
     "images": [],
@@ -37385,7 +39167,7 @@
       "lat": 35.9937699,
       "lng": 128.3127231
     },
-    "category": "ETC",
+    "category": "CHARNEL_HOUSE",
     "phone": "",
     "website": "",
     "images": [],
@@ -37883,7 +39665,7 @@
       "lat": 35.8243987,
       "lng": 127.0889933
     },
-    "category": "FAMILY_GRAVE",
+    "category": "CHARNEL_HOUSE",
     "priceRange": {
       "min": 1053,
       "max": 1996
@@ -37920,7 +39702,7 @@
       "lat": 35.5953877,
       "lng": 127.7516752
     },
-    "category": "ETC",
+    "category": "CHARNEL_HOUSE",
     "phone": "",
     "website": "",
     "images": [],
@@ -38309,7 +40091,7 @@
       "lat": 35.92744,
       "lng": 128.3741988
     },
-    "category": "ETC",
+    "category": "CHARNEL_HOUSE",
     "phone": "",
     "website": "",
     "images": [],
@@ -38429,7 +40211,7 @@
       "lat": 37.6789276,
       "lng": 127.8449573
     },
-    "category": "FAMILY_GRAVE",
+    "category": "CHARNEL_HOUSE",
     "priceRange": {
       "min": 1180,
       "max": 2502
@@ -38531,7 +40313,7 @@
       "lat": 37.3470603,
       "lng": 127.2686644
     },
-    "category": "FAMILY_GRAVE",
+    "category": "CHARNEL_HOUSE",
     "priceRange": {
       "min": 200,
       "max": 300
@@ -38750,7 +40532,7 @@
       "lat": 37.9141278,
       "lng": 127.316492
     },
-    "category": "ETC",
+    "category": "CHARNEL_HOUSE",
     "phone": "",
     "website": "",
     "images": [],
@@ -38769,7 +40551,7 @@
       "lat": 37.1010318,
       "lng": 127.7231686
     },
-    "category": "ETC",
+    "category": "CHARNEL_HOUSE",
     "phone": "",
     "website": "",
     "images": [],
@@ -38822,7 +40604,7 @@
       "lat": 37.6142131,
       "lng": 126.6522048
     },
-    "category": "ETC",
+    "category": "CHARNEL_HOUSE",
     "phone": "",
     "website": "",
     "images": [],
@@ -38840,7 +40622,7 @@
       "lat": 37.1781301,
       "lng": 128.226149
     },
-    "category": "FAMILY_GRAVE",
+    "category": "CHARNEL_HOUSE",
     "priceRange": {
       "min": 1279,
       "max": 2381
@@ -38909,7 +40691,7 @@
       "lat": 36.6561931,
       "lng": 126.9866994
     },
-    "category": "ETC",
+    "category": "CHARNEL_HOUSE",
     "phone": "",
     "website": "",
     "images": [],
@@ -38928,7 +40710,7 @@
       "lat": 36.8981511,
       "lng": 127.2291905
     },
-    "category": "ETC",
+    "category": "CHARNEL_HOUSE",
     "phone": "",
     "website": "",
     "images": [],
@@ -39083,7 +40865,7 @@
       "lat": 36.3023159,
       "lng": 127.1963944
     },
-    "category": "ETC",
+    "category": "CHARNEL_HOUSE",
     "phone": "",
     "website": "",
     "images": [],
@@ -39136,7 +40918,7 @@
       "lat": 35.9570826,
       "lng": 127.5865606
     },
-    "category": "ETC",
+    "category": "CHARNEL_HOUSE",
     "phone": "",
     "website": "",
     "images": [],
@@ -39257,7 +41039,7 @@
       "lat": 38.0753271,
       "lng": 127.1129359
     },
-    "category": "ETC",
+    "category": "CHARNEL_HOUSE",
     "phone": "",
     "website": "",
     "images": [],
@@ -39378,7 +41160,7 @@
       "lat": 37.0218359,
       "lng": 127.6167069
     },
-    "category": "ETC",
+    "category": "CHARNEL_HOUSE",
     "phone": "",
     "website": "",
     "images": [],
@@ -39465,7 +41247,7 @@
       "lat": 36.8814033,
       "lng": 127.4887344
     },
-    "category": "ETC",
+    "category": "CHARNEL_HOUSE",
     "phone": "",
     "website": "",
     "images": [],
@@ -39754,7 +41536,7 @@
       "lat": 37.3445,
       "lng": 126.9682
     },
-    "category": "ETC",
+    "category": "CHARNEL_HOUSE",
     "phone": "031-452-4814",
     "website": "",
     "images": [],
@@ -39837,7 +41619,7 @@
       "lat": 37.1076348,
       "lng": 127.9189836
     },
-    "category": "ETC",
+    "category": "CHARNEL_HOUSE",
     "phone": "",
     "website": "",
     "images": [],
@@ -39957,7 +41739,7 @@
       "lat": 37.5764581,
       "lng": 127.3373317
     },
-    "category": "FAMILY_GRAVE",
+    "category": "CHARNEL_HOUSE",
     "priceRange": {
       "min": 1054,
       "max": 2484
@@ -40123,7 +41905,7 @@
       "lat": 35.2503794,
       "lng": 129.1580144
     },
-    "category": "FAMILY_GRAVE",
+    "category": "CHARNEL_HOUSE",
     "priceRange": {
       "min": 216,
       "max": 216
@@ -40229,7 +42011,7 @@
       "lat": 35.3480321,
       "lng": 129.160675
     },
-    "category": "ETC",
+    "category": "CHARNEL_HOUSE",
     "phone": "",
     "website": "",
     "images": [],
@@ -40282,7 +42064,7 @@
       "lat": 37.4751911,
       "lng": 126.7247019
     },
-    "category": "ETC",
+    "category": "CHARNEL_HOUSE",
     "phone": "",
     "website": "",
     "images": [],
@@ -40301,7 +42083,7 @@
       "lat": 36.5348289,
       "lng": 127.2435771
     },
-    "category": "ETC",
+    "category": "CHARNEL_HOUSE",
     "phone": "",
     "website": "",
     "images": [],
@@ -40320,7 +42102,7 @@
       "lat": 37.2899404,
       "lng": 127.08417
     },
-    "category": "ETC",
+    "category": "CHARNEL_HOUSE",
     "phone": "",
     "website": "",
     "images": [],
@@ -40465,7 +42247,7 @@
       "lat": 38.0013943,
       "lng": 128.1624356
     },
-    "category": "ETC",
+    "category": "CHARNEL_HOUSE",
     "phone": "033-460-2056",
     "website": "",
     "images": [],
@@ -40525,7 +42307,7 @@
       "lat": 36.6428099,
       "lng": 127.5453191
     },
-    "category": "CREMATORIUM",
+    "category": "CHARNEL_HOUSE",
     "priceRange": {
       "min": 10,
       "max": 100
@@ -40573,7 +42355,7 @@
       "lat": 36.2875089,
       "lng": 126.6331848
     },
-    "category": "FAMILY_GRAVE",
+    "category": "CHARNEL_HOUSE",
     "priceRange": {
       "min": 1086,
       "max": 2212
@@ -40641,7 +42423,7 @@
       "lat": 36.640962,
       "lng": 126.7755598
     },
-    "category": "FAMILY_GRAVE",
+    "category": "CHARNEL_HOUSE",
     "priceRange": {
       "min": 142,
       "max": 142
@@ -40676,7 +42458,7 @@
       "lat": 35.1918571,
       "lng": 128.6636187
     },
-    "category": "CREMATORIUM",
+    "category": "CHARNEL_HOUSE",
     "priceRange": {
       "min": 10,
       "max": 100
@@ -40730,7 +42512,7 @@
       "lat": 35.1918571,
       "lng": 128.6636187
     },
-    "category": "CREMATORIUM",
+    "category": "CHARNEL_HOUSE",
     "priceRange": {
       "min": 10,
       "max": 100
@@ -40785,7 +42567,7 @@
       "lat": 35.4024754,
       "lng": 128.0249614
     },
-    "category": "FAMILY_GRAVE",
+    "category": "CHARNEL_HOUSE",
     "phone": "055-973-2491",
     "website": "",
     "images": [],
@@ -40945,7 +42727,7 @@
       "lat": 35.2443148,
       "lng": 128.3026714
     },
-    "category": "ETC",
+    "category": "CHARNEL_HOUSE",
     "phone": "055-585-5114",
     "website": "",
     "images": [],
@@ -40972,7 +42754,7 @@
       "lat": 35.909166,
       "lng": 129.032443
     },
-    "category": "FAMILY_GRAVE",
+    "category": "CHARNEL_HOUSE",
     "phone": "054-336-9004",
     "website": "",
     "images": [],
@@ -41001,7 +42783,7 @@
       "lat": 35.92744,
       "lng": 128.3741988
     },
-    "category": "FAMILY_GRAVE",
+    "category": "CHARNEL_HOUSE",
     "phone": "054-933-4774",
     "website": "",
     "images": [],
@@ -41588,7 +43370,7 @@
       "lat": 35.119684,
       "lng": 128.0036808
     },
-    "category": "FAMILY_GRAVE",
+    "category": "CHARNEL_HOUSE",
     "priceRange": {
       "min": 85,
       "max": 85
@@ -42517,7 +44299,7 @@
       "lat": 36.2466715,
       "lng": 127.2715453
     },
-    "category": "FAMILY_GRAVE",
+    "category": "CHARNEL_HOUSE",
     "priceRange": {
       "min": 1277,
       "max": 2453
@@ -43057,7 +44839,7 @@
       "lat": 36.8283303,
       "lng": 127.3082362
     },
-    "category": "FAMILY_GRAVE",
+    "category": "CHARNEL_HOUSE",
     "priceRange": {
       "min": 1220,
       "max": 2038
@@ -43357,7 +45139,7 @@
       "lat": 37.3521309,
       "lng": 126.8419418
     },
-    "category": "FAMILY_GRAVE",
+    "category": "CHARNEL_HOUSE",
     "priceRange": {
       "min": 930,
       "max": 1715
@@ -43849,7 +45631,7 @@
       "lat": 37.8497895,
       "lng": 127.5913675
     },
-    "category": "FAMILY_GRAVE",
+    "category": "CHARNEL_HOUSE",
     "priceRange": {
       "min": 1155,
       "max": 2060
@@ -43917,7 +45699,7 @@
       "lat": 37.037576,
       "lng": 127.6236985
     },
-    "category": "FAMILY_GRAVE",
+    "category": "CHARNEL_HOUSE",
     "priceRange": {
       "min": 120,
       "max": 120
@@ -43987,7 +45769,7 @@
       "lat": 36.8752702,
       "lng": 127.0598189
     },
-    "category": "FAMILY_GRAVE",
+    "category": "CHARNEL_HOUSE",
     "phone": "042-630-7732",
     "website": "",
     "images": [],
@@ -44350,7 +46132,7 @@
       "lat": 35.6193664,
       "lng": 127.9182728
     },
-    "category": "FAMILY_GRAVE",
+    "category": "CHARNEL_HOUSE",
     "priceRange": {
       "min": 850,
       "max": 1683
@@ -44384,7 +46166,7 @@
       "lat": 35.6548551,
       "lng": 127.9229134
     },
-    "category": "FAMILY_GRAVE",
+    "category": "CHARNEL_HOUSE",
     "priceRange": {
       "min": 1186,
       "max": 2014
@@ -44418,7 +46200,7 @@
       "lat": 35.8154608,
       "lng": 128.0588802
     },
-    "category": "FAMILY_GRAVE",
+    "category": "CHARNEL_HOUSE",
     "priceRange": {
       "min": 1060,
       "max": 2519
@@ -44555,7 +46337,7 @@
       "lat": 33.4551321,
       "lng": 126.7978491
     },
-    "category": "FAMILY_GRAVE",
+    "category": "CHARNEL_HOUSE",
     "phone": "064-728-7723",
     "website": "",
     "images": [],
@@ -44617,7 +46399,7 @@
       "lat": 36.267668,
       "lng": 126.6200553
     },
-    "category": "FAMILY_GRAVE",
+    "category": "CHARNEL_HOUSE",
     "priceRange": {
       "min": 1216,
       "max": 2444
@@ -44744,7 +46526,7 @@
       "lat": 35.4243023,
       "lng": 129.0451388
     },
-    "category": "FAMILY_GRAVE",
+    "category": "CHARNEL_HOUSE",
     "phone": "053-374-8733",
     "website": "",
     "images": [],
@@ -44772,7 +46554,7 @@
       "lat": 35.1078862,
       "lng": 128.7323578
     },
-    "category": "FAMILY_GRAVE",
+    "category": "CHARNEL_HOUSE",
     "priceRange": {
       "min": 1241,
       "max": 1867
@@ -44909,7 +46691,7 @@
       "lat": 36.5044229,
       "lng": 127.0658315
     },
-    "category": "FAMILY_GRAVE",
+    "category": "CHARNEL_HOUSE",
     "phone": "041-853-3355",
     "website": "",
     "images": [],
@@ -45142,7 +46924,7 @@
       "lat": 37.1997795,
       "lng": 126.8816981
     },
-    "category": "ETC",
+    "category": "CHARNEL_HOUSE",
     "phone": "",
     "website": "",
     "images": [],
@@ -45194,7 +46976,7 @@
       "lat": 37.6279824,
       "lng": 127.1314122
     },
-    "category": "FAMILY_GRAVE",
+    "category": "CHARNEL_HOUSE",
     "priceRange": {
       "min": 1270,
       "max": 2549
@@ -45228,7 +47010,7 @@
       "lat": 37.6279824,
       "lng": 127.1314122
     },
-    "category": "FAMILY_GRAVE",
+    "category": "CHARNEL_HOUSE",
     "priceRange": {
       "min": 1270,
       "max": 2549
@@ -45331,7 +47113,7 @@
       "lat": 37.4751911,
       "lng": 126.7247019
     },
-    "category": "ETC",
+    "category": "CHARNEL_HOUSE",
     "phone": "",
     "website": "",
     "images": [],
@@ -45350,7 +47132,7 @@
       "lat": 37.4751911,
       "lng": 126.7247019
     },
-    "category": "ETC",
+    "category": "CHARNEL_HOUSE",
     "phone": "",
     "website": "",
     "images": [],
@@ -45369,7 +47151,7 @@
       "lat": 37.259588,
       "lng": 128.2137028
     },
-    "category": "ETC",
+    "category": "CHARNEL_HOUSE",
     "phone": "",
     "website": "",
     "images": [],
@@ -45422,7 +47204,7 @@
       "lat": 37.5862957,
       "lng": 126.6903766
     },
-    "category": "ETC",
+    "category": "CHARNEL_HOUSE",
     "phone": "",
     "website": "",
     "images": [],
@@ -45550,7 +47332,7 @@
       "lat": 35.3694918,
       "lng": 129.1710843
     },
-    "category": "ETC",
+    "category": "CHARNEL_HOUSE",
     "phone": "",
     "website": "",
     "images": [],
@@ -45569,7 +47351,7 @@
       "lat": 36.0825124,
       "lng": 128.7545392
     },
-    "category": "ETC",
+    "category": "CHARNEL_HOUSE",
     "phone": "",
     "website": "",
     "images": [],
@@ -45587,7 +47369,7 @@
       "lat": 37.2266171,
       "lng": 127.8554222
     },
-    "category": "FAMILY_GRAVE",
+    "category": "CHARNEL_HOUSE",
     "priceRange": {
       "min": 130,
       "max": 195
@@ -45720,7 +47502,7 @@
       "lat": 37.1168402,
       "lng": 127.4630561
     },
-    "category": "ETC",
+    "category": "NATURAL_BURIAL",
     "phone": "031-673-7904",
     "website": "",
     "images": []
@@ -45779,7 +47561,7 @@
       "lat": 36.5348289,
       "lng": 127.2435771
     },
-    "category": "ETC",
+    "category": "NATURAL_BURIAL",
     "phone": "",
     "website": "",
     "images": [],
@@ -45797,7 +47579,7 @@
       "lat": 38.0423539,
       "lng": 126.9739153
     },
-    "category": "CHARNEL_HOUSE",
+    "category": "NATURAL_BURIAL",
     "priceRange": {
       "min": 372,
       "max": 1085
@@ -45884,7 +47666,7 @@
       "lat": 35.8246568,
       "lng": 127.0843512
     },
-    "category": "ETC",
+    "category": "NATURAL_BURIAL",
     "phone": "",
     "website": "",
     "images": [],
@@ -45902,7 +47684,7 @@
       "lat": 36.627318,
       "lng": 127.1173211
     },
-    "category": "CHARNEL_HOUSE",
+    "category": "NATURAL_BURIAL",
     "priceRange": {
       "min": 281,
       "max": 1076
@@ -46049,7 +47831,7 @@
       "lat": 34.8253893,
       "lng": 127.8696982
     },
-    "category": "ETC",
+    "category": "NATURAL_BURIAL",
     "phone": "",
     "website": "",
     "images": [],
@@ -46068,7 +47850,7 @@
       "lat": 37.1720583,
       "lng": 127.3970101
     },
-    "category": "ETC",
+    "category": "NATURAL_BURIAL",
     "phone": "",
     "website": "",
     "images": [],
@@ -46087,7 +47869,7 @@
       "lat": 37.1191189,
       "lng": 127.4605107
     },
-    "category": "ETC",
+    "category": "NATURAL_BURIAL",
     "phone": "",
     "website": "",
     "images": [],
@@ -46303,7 +48085,7 @@
       "lat": 37.1211384,
       "lng": 127.4591339
     },
-    "category": "FAMILY_GRAVE",
+    "category": "NATURAL_BURIAL",
     "priceRange": {
       "min": 1139,
       "max": 2576
@@ -46338,7 +48120,7 @@
       "lat": 37.6529003,
       "lng": 127.6544793
     },
-    "category": "ETC",
+    "category": "NATURAL_BURIAL",
     "phone": "",
     "website": "",
     "images": [],
@@ -46356,7 +48138,7 @@
       "lat": 37.2492117,
       "lng": 127.1553678
     },
-    "category": "CHARNEL_HOUSE",
+    "category": "NATURAL_BURIAL",
     "priceRange": {
       "min": 249,
       "max": 964
@@ -46458,7 +48240,7 @@
       "lat": 37.1190337,
       "lng": 127.2226316
     },
-    "category": "ETC",
+    "category": "NATURAL_BURIAL",
     "phone": "",
     "website": "",
     "images": [],
@@ -46477,7 +48259,7 @@
       "lat": 35.4400306,
       "lng": 126.8828123
     },
-    "category": "ETC",
+    "category": "NATURAL_BURIAL",
     "phone": "",
     "website": "",
     "images": [],
@@ -46537,7 +48319,7 @@
       "lat": 37.4593531,
       "lng": 129.1186688
     },
-    "category": "ETC",
+    "category": "NATURAL_BURIAL",
     "phone": "",
     "website": "",
     "images": [],
@@ -46556,7 +48338,7 @@
       "lat": 37.2705839,
       "lng": 126.9100819
     },
-    "category": "ETC",
+    "category": "NATURAL_BURIAL",
     "phone": "",
     "website": "",
     "images": [],
@@ -46575,7 +48357,7 @@
       "lat": 37.4208869,
       "lng": 127.7882411
     },
-    "category": "ETC",
+    "category": "NATURAL_BURIAL",
     "phone": "",
     "website": "",
     "images": [],
@@ -46748,7 +48530,7 @@
       "lat": 37.4751911,
       "lng": 126.7247019
     },
-    "category": "ETC",
+    "category": "NATURAL_BURIAL",
     "phone": "",
     "website": "",
     "images": [],
@@ -46843,7 +48625,7 @@
       "lat": 36.071058,
       "lng": 127.1780957
     },
-    "category": "ETC",
+    "category": "NATURAL_BURIAL",
     "phone": "",
     "website": "",
     "images": [],
@@ -46977,7 +48759,7 @@
       "lat": 37.810099,
       "lng": 127.0231085
     },
-    "category": "ETC",
+    "category": "NATURAL_BURIAL",
     "phone": "",
     "website": "",
     "images": [],
@@ -47035,7 +48817,7 @@
       "lat": 34.8011599,
       "lng": 127.0342155
     },
-    "category": "ETC",
+    "category": "NATURAL_BURIAL",
     "phone": "",
     "website": "",
     "images": [],
@@ -47054,7 +48836,7 @@
       "lat": 35.5953877,
       "lng": 127.7516752
     },
-    "category": "ETC",
+    "category": "NATURAL_BURIAL",
     "phone": "",
     "website": "",
     "images": [],
@@ -47107,7 +48889,7 @@
       "lat": 35.6888607,
       "lng": 126.9783892
     },
-    "category": "ETC",
+    "category": "NATURAL_BURIAL",
     "phone": "",
     "website": "",
     "images": [],
@@ -47126,7 +48908,7 @@
       "lat": 34.4936508,
       "lng": 126.2811766
     },
-    "category": "ETC",
+    "category": "NATURAL_BURIAL",
     "phone": "",
     "website": "",
     "images": [],
@@ -47193,7 +48975,7 @@
       "lat": 37.3517194,
       "lng": 127.511628
     },
-    "category": "ETC",
+    "category": "NATURAL_BURIAL",
     "phone": "",
     "website": "",
     "images": [],
@@ -47212,7 +48994,7 @@
       "lat": 35.4106192,
       "lng": 128.8016754
     },
-    "category": "ETC",
+    "category": "NATURAL_BURIAL",
     "phone": "",
     "website": "",
     "images": [],
@@ -47265,7 +49047,7 @@
       "lat": 35.1986843,
       "lng": 126.4665292
     },
-    "category": "ETC",
+    "category": "NATURAL_BURIAL",
     "phone": "",
     "website": "",
     "images": [],
@@ -47283,7 +49065,7 @@
       "lat": 38.0417681,
       "lng": 127.0893065
     },
-    "category": "CHARNEL_HOUSE",
+    "category": "NATURAL_BURIAL",
     "priceRange": {
       "min": 235,
       "max": 1007
@@ -47382,7 +49164,7 @@
       "lat": 37.2336175,
       "lng": 127.5737999
     },
-    "category": "ETC",
+    "category": "NATURAL_BURIAL",
     "phone": "",
     "website": "",
     "images": [],
@@ -47556,7 +49338,7 @@
       "lat": 37.062017,
       "lng": 126.9327124
     },
-    "category": "CHARNEL_HOUSE",
+    "category": "NATURAL_BURIAL",
     "priceRange": {
       "min": 367,
       "max": 719
@@ -47636,7 +49418,7 @@
       "lat": 35.7517959,
       "lng": 127.0203168
     },
-    "category": "FAMILY_GRAVE",
+    "category": "NATURAL_BURIAL",
     "phone": "063-546-5011",
     "website": "",
     "images": [],
@@ -48019,7 +49801,7 @@
       "lat": 37.2357802,
       "lng": 128.9894371
     },
-    "category": "FAMILY_GRAVE",
+    "category": "NATURAL_BURIAL",
     "priceRange": {
       "min": 815,
       "max": 1688
@@ -48280,7 +50062,7 @@
       "lat": 37.1947727,
       "lng": 127.6231534
     },
-    "category": "FAMILY_GRAVE",
+    "category": "NATURAL_BURIAL",
     "priceRange": {
       "min": 1200,
       "max": 1876
@@ -48318,7 +50100,7 @@
       "lat": 34.3532824,
       "lng": 126.6461537
     },
-    "category": "FAMILY_GRAVE",
+    "category": "NATURAL_BURIAL",
     "priceRange": {
       "min": 911,
       "max": 1916
@@ -48877,7 +50659,7 @@
       "lat": 37.2341317,
       "lng": 127.2738747
     },
-    "category": "CHARNEL_HOUSE",
+    "category": "NATURAL_BURIAL",
     "priceRange": {
       "min": 273,
       "max": 594
@@ -49500,7 +51282,7 @@
       "lat": 37.1432864,
       "lng": 126.9549804
     },
-    "category": "CHARNEL_HOUSE",
+    "category": "NATURAL_BURIAL",
     "priceRange": {
       "min": 281,
       "max": 964
@@ -49547,7 +51329,7 @@
       "lat": 37.4599207,
       "lng": 129.1145233
     },
-    "category": "ETC",
+    "category": "NATURAL_BURIAL",
     "phone": "",
     "website": "",
     "images": [],
@@ -49604,7 +51386,7 @@
       "lat": 36.0030106,
       "lng": 127.0924364
     },
-    "category": "FAMILY_GRAVE",
+    "category": "NATURAL_BURIAL",
     "priceRange": {
       "min": 822,
       "max": 1453
@@ -49817,7 +51599,7 @@
       "lat": 35.790327,
       "lng": 127.9057349
     },
-    "category": "FAMILY_GRAVE",
+    "category": "NATURAL_BURIAL",
     "priceRange": {
       "min": 1128,
       "max": 2243
@@ -49882,7 +51664,7 @@
       "lat": 35.2309385,
       "lng": 126.9163576
     },
-    "category": "ETC",
+    "category": "NATURAL_BURIAL",
     "phone": "",
     "website": "",
     "images": [],
@@ -49934,7 +51716,7 @@
       "lat": 37.8292567,
       "lng": 128.81914
     },
-    "category": "FAMILY_GRAVE",
+    "category": "NATURAL_BURIAL",
     "priceRange": {
       "min": 929,
       "max": 2309
@@ -50064,7 +51846,7 @@
       "lat": 37.4272886,
       "lng": 127.2252482
     },
-    "category": "ETC",
+    "category": "NATURAL_BURIAL",
     "phone": "",
     "website": "",
     "images": [],
@@ -50190,7 +51972,7 @@
       "lat": 37.1211384,
       "lng": 127.4591339
     },
-    "category": "FAMILY_GRAVE",
+    "category": "NATURAL_BURIAL",
     "priceRange": {
       "min": 1139,
       "max": 2576
@@ -50497,7 +52279,7 @@
       "lat": 35.3000168,
       "lng": 128.8929548
     },
-    "category": "ETC",
+    "category": "NATURAL_BURIAL",
     "phone": "",
     "website": "",
     "images": [],
@@ -50892,7 +52674,7 @@
       "lat": 36.0825124,
       "lng": 128.7545392
     },
-    "category": "ETC",
+    "category": "NATURAL_BURIAL",
     "phone": "",
     "website": "",
     "images": [],
@@ -50945,7 +52727,7 @@
       "lat": 36.0825124,
       "lng": 128.7545392
     },
-    "category": "ETC",
+    "category": "NATURAL_BURIAL",
     "phone": "",
     "website": "",
     "images": [],
@@ -51032,7 +52814,7 @@
       "lat": 37.5291392,
       "lng": 128.0806856
     },
-    "category": "ETC",
+    "category": "NATURAL_BURIAL",
     "phone": "",
     "website": "",
     "images": [],
@@ -51085,7 +52867,7 @@
       "lat": 34.6990438,
       "lng": 126.9581696
     },
-    "category": "ETC",
+    "category": "NATURAL_BURIAL",
     "phone": "",
     "website": "",
     "images": [],
@@ -51171,7 +52953,7 @@
       "lat": 37.6842054,
       "lng": 127.3591241
     },
-    "category": "CHARNEL_HOUSE",
+    "category": "NATURAL_BURIAL",
     "priceRange": {
       "min": 253,
       "max": 640
@@ -51375,7 +53157,7 @@
       "lat": 36.4926319,
       "lng": 127.7574104
     },
-    "category": "CHARNEL_HOUSE",
+    "category": "NATURAL_BURIAL",
     "priceRange": {
       "min": 324,
       "max": 1066
@@ -51511,7 +53293,7 @@
       "lat": 37.7249069,
       "lng": 126.9383924
     },
-    "category": "FAMILY_GRAVE",
+    "category": "NATURAL_BURIAL",
     "priceRange": {
       "min": 1047,
       "max": 2532
@@ -51720,7 +53502,7 @@
       "lat": 36.2466715,
       "lng": 127.2715453
     },
-    "category": "FAMILY_GRAVE",
+    "category": "NATURAL_BURIAL",
     "priceRange": {
       "min": 1277,
       "max": 2453
@@ -51995,7 +53777,7 @@
       "lat": 34.5625734,
       "lng": 126.5194406
     },
-    "category": "ETC",
+    "category": "NATURAL_BURIAL",
     "phone": "",
     "website": "",
     "images": [],
@@ -52014,7 +53796,7 @@
       "lat": 37.8311363,
       "lng": 127.4982052
     },
-    "category": "ETC",
+    "category": "NATURAL_BURIAL",
     "phone": "",
     "website": "",
     "images": [],
@@ -52066,7 +53848,7 @@
       "lat": 38.162936,
       "lng": 127.3834581
     },
-    "category": "FAMILY_GRAVE",
+    "category": "NATURAL_BURIAL",
     "priceRange": {
       "min": 1108,
       "max": 1941
@@ -52122,7 +53904,7 @@
       "lat": 35.9294018,
       "lng": 128.3630834
     },
-    "category": "FAMILY_GRAVE",
+    "category": "NATURAL_BURIAL",
     "priceRange": {
       "min": 1177,
       "max": 1694
@@ -52156,7 +53938,7 @@
       "lat": 36.1858356,
       "lng": 126.9142379
     },
-    "category": "CHARNEL_HOUSE",
+    "category": "NATURAL_BURIAL",
     "priceRange": {
       "min": 373,
       "max": 824
@@ -52297,7 +54079,7 @@
       "lat": 36.0812587,
       "lng": 128.7537535
     },
-    "category": "ETC",
+    "category": "NATURAL_BURIAL",
     "phone": "",
     "website": "",
     "images": [],
@@ -52316,7 +54098,7 @@
       "lat": 35.9829054,
       "lng": 129.4626281
     },
-    "category": "ETC",
+    "category": "NATURAL_BURIAL",
     "phone": "",
     "website": "",
     "images": [],
@@ -52403,7 +54185,7 @@
       "lat": 37.2620032,
       "lng": 128.2151103
     },
-    "category": "ETC",
+    "category": "NATURAL_BURIAL",
     "phone": "",
     "website": "",
     "images": [],
@@ -52456,7 +54238,7 @@
       "lat": 38.0753271,
       "lng": 127.1129359
     },
-    "category": "ETC",
+    "category": "NATURAL_BURIAL",
     "phone": "",
     "website": "",
     "images": [],
@@ -52475,7 +54257,7 @@
       "lat": 37.7494215,
       "lng": 126.9361723
     },
-    "category": "ETC",
+    "category": "NATURAL_BURIAL",
     "phone": "",
     "website": "",
     "images": [],
@@ -52562,7 +54344,7 @@
       "lat": 37.4721935,
       "lng": 127.512838
     },
-    "category": "ETC",
+    "category": "NATURAL_BURIAL",
     "phone": "",
     "website": "",
     "images": [],
@@ -52648,7 +54430,7 @@
       "lat": 37.0988198,
       "lng": 127.40094
     },
-    "category": "CHARNEL_HOUSE",
+    "category": "NATURAL_BURIAL",
     "priceRange": {
       "min": 227,
       "max": 660
@@ -52713,7 +54495,7 @@
       "lat": 35.8958265,
       "lng": 129.0973541
     },
-    "category": "ETC",
+    "category": "NATURAL_BURIAL",
     "phone": "",
     "website": "",
     "images": [],
@@ -52731,7 +54513,7 @@
       "lat": 37.6119187,
       "lng": 127.3891231
     },
-    "category": "FAMILY_GRAVE",
+    "category": "NATURAL_BURIAL",
     "priceRange": {
       "min": 866,
       "max": 1826
@@ -52908,7 +54690,7 @@
       "lat": 37.6300493,
       "lng": 127.5151978
     },
-    "category": "ETC",
+    "category": "NATURAL_BURIAL",
     "phone": "",
     "website": "",
     "images": [],
@@ -52995,7 +54777,7 @@
       "lat": 36.9005434,
       "lng": 126.5185692
     },
-    "category": "ETC",
+    "category": "NATURAL_BURIAL",
     "phone": "",
     "website": "",
     "images": [],
@@ -53013,7 +54795,7 @@
       "lat": 35.9340173,
       "lng": 128.5286111
     },
-    "category": "FAMILY_GRAVE",
+    "category": "NATURAL_BURIAL",
     "priceRange": {
       "min": 1061,
       "max": 2011
@@ -53082,7 +54864,7 @@
       "lat": 36.6534801,
       "lng": 126.9893739
     },
-    "category": "ETC",
+    "category": "NATURAL_BURIAL",
     "phone": "",
     "website": "",
     "images": [],
@@ -53207,7 +54989,7 @@
       "lat": 38.0698373,
       "lng": 126.9592921
     },
-    "category": "ETC",
+    "category": "NATURAL_BURIAL",
     "phone": "",
     "website": "",
     "images": [],
@@ -53260,7 +55042,7 @@
       "lat": 35.7559122,
       "lng": 129.4779729
     },
-    "category": "ETC",
+    "category": "NATURAL_BURIAL",
     "phone": "",
     "website": "",
     "images": [],
@@ -53313,7 +55095,7 @@
       "lat": 36.3045641,
       "lng": 127.5501343
     },
-    "category": "ETC",
+    "category": "NATURAL_BURIAL",
     "phone": "",
     "website": "",
     "images": [],
@@ -53366,7 +55148,7 @@
       "lat": 37.7611131,
       "lng": 127.7451416
     },
-    "category": "ETC",
+    "category": "NATURAL_BURIAL",
     "phone": "",
     "website": "",
     "images": [],
@@ -53385,7 +55167,7 @@
       "lat": 37.0218359,
       "lng": 127.6167069
     },
-    "category": "ETC",
+    "category": "NATURAL_BURIAL",
     "phone": "",
     "website": "",
     "images": [],
@@ -53403,7 +55185,7 @@
       "lat": 35.4139136,
       "lng": 128.8105924
     },
-    "category": "CHARNEL_HOUSE",
+    "category": "NATURAL_BURIAL",
     "priceRange": {
       "min": 237,
       "max": 635
@@ -53511,7 +55293,7 @@
       "lat": 36.2875089,
       "lng": 126.6331848
     },
-    "category": "FAMILY_GRAVE",
+    "category": "NATURAL_BURIAL",
     "priceRange": {
       "min": 1086,
       "max": 2212
@@ -53619,7 +55401,7 @@
       "lat": 35.3101316,
       "lng": 127.2577997
     },
-    "category": "ETC",
+    "category": "NATURAL_BURIAL",
     "phone": "",
     "website": "",
     "images": [],
@@ -53672,7 +55454,7 @@
       "lat": 36.1551263,
       "lng": 128.15553
     },
-    "category": "ETC",
+    "category": "NATURAL_BURIAL",
     "phone": "",
     "website": "",
     "images": [],
@@ -53759,7 +55541,7 @@
       "lat": 34.4936508,
       "lng": 126.2811766
     },
-    "category": "ETC",
+    "category": "NATURAL_BURIAL",
     "phone": "",
     "website": "",
     "images": [],
@@ -54015,7 +55797,7 @@
       "lat": 37.7375361,
       "lng": 126.599215
     },
-    "category": "CHARNEL_HOUSE",
+    "category": "NATURAL_BURIAL",
     "priceRange": {
       "min": 389,
       "max": 776
@@ -54181,7 +55963,7 @@
       "lat": 36.139847,
       "lng": 128.5621191
     },
-    "category": "FAMILY_GRAVE",
+    "category": "NATURAL_BURIAL",
     "priceRange": {
       "min": 948,
       "max": 2013
@@ -54399,7 +56181,7 @@
       "lat": 37.2302834,
       "lng": 128.8393291
     },
-    "category": "CHARNEL_HOUSE",
+    "category": "CREMATORIUM",
     "priceRange": {
       "min": 365,
       "max": 975
@@ -54490,7 +56272,7 @@
       "lat": 37.4751911,
       "lng": 126.7247019
     },
-    "category": "ETC",
+    "category": "CREMATORIUM",
     "phone": "",
     "website": "",
     "images": [],
@@ -54508,7 +56290,7 @@
       "lat": 35.2309385,
       "lng": 126.9163576
     },
-    "category": "CHARNEL_HOUSE",
+    "category": "CREMATORIUM",
     "priceRange": {
       "min": 306,
       "max": 773
@@ -54668,7 +56450,7 @@
       "lat": 35.6888607,
       "lng": 126.9783892
     },
-    "category": "CHARNEL_HOUSE",
+    "category": "CREMATORIUM",
     "priceRange": {
       "min": 367,
       "max": 878
@@ -55009,7 +56791,7 @@
       "lat": 36.3966039,
       "lng": 127.0420042
     },
-    "category": "CHARNEL_HOUSE",
+    "category": "CREMATORIUM",
     "priceRange": {
       "min": 337,
       "max": 672
@@ -55164,7 +56946,7 @@
       "lat": 37.1916122,
       "lng": 128.2298233
     },
-    "category": "CHARNEL_HOUSE",
+    "category": "CREMATORIUM",
     "priceRange": {
       "min": 277,
       "max": 611
@@ -55229,7 +57011,7 @@
       "lat": 35.8969633,
       "lng": 129.099638
     },
-    "category": "CHARNEL_HOUSE",
+    "category": "CREMATORIUM",
     "priceRange": {
       "min": 272,
       "max": 712
@@ -55503,7 +57285,7 @@
       "lat": 34.5625734,
       "lng": 126.5194406
     },
-    "category": "CHARNEL_HOUSE",
+    "category": "CREMATORIUM",
     "priceRange": {
       "min": 228,
       "max": 808
@@ -55572,7 +57354,7 @@
       "lat": 36.1731212,
       "lng": 128.0204817
     },
-    "category": "CHARNEL_HOUSE",
+    "category": "CREMATORIUM",
     "priceRange": {
       "min": 331,
       "max": 1102
@@ -55611,7 +57393,7 @@
       "lat": 34.8407976,
       "lng": 126.4044594
     },
-    "category": "CHARNEL_HOUSE",
+    "category": "CREMATORIUM",
     "phone": "061-270-8723",
     "website": "",
     "images": [],
@@ -55778,7 +57560,7 @@
       "lat": 36.6646902,
       "lng": 127.1177875
     },
-    "category": "CHARNEL_HOUSE",
+    "category": "CREMATORIUM",
     "priceRange": {
       "min": 200,
       "max": 300
@@ -55903,7 +57685,7 @@
       "lat": 37.4860076,
       "lng": 130.8233913
     },
-    "category": "CHARNEL_HOUSE",
+    "category": "CREMATORIUM",
     "priceRange": {
       "min": 241,
       "max": 902
@@ -55973,7 +57755,7 @@
       "lat": 37.6752085,
       "lng": 126.8895797
     },
-    "category": "CHARNEL_HOUSE",
+    "category": "CREMATORIUM",
     "priceRange": {
       "min": 250,
       "max": 616
@@ -56090,7 +57872,7 @@
       "lat": 35.2737679,
       "lng": 129.1042206
     },
-    "category": "FAMILY_GRAVE",
+    "category": "CREMATORIUM",
     "priceRange": {
       "min": 816,
       "max": 2246
@@ -56170,7 +57952,7 @@
       "lat": 34.9094952,
       "lng": 127.4803451
     },
-    "category": "CHARNEL_HOUSE",
+    "category": "CREMATORIUM",
     "priceRange": {
       "min": 227,
       "max": 659
@@ -56379,7 +58161,7 @@
       "lat": 36.9938241,
       "lng": 129.3515108
     },
-    "category": "CHARNEL_HOUSE",
+    "category": "CREMATORIUM",
     "priceRange": {
       "min": 209,
       "max": 970
@@ -56606,7 +58388,7 @@
       "lat": 33.4404709,
       "lng": 126.5789045
     },
-    "category": "CHARNEL_HOUSE",
+    "category": "CREMATORIUM",
     "priceRange": {
       "min": 336,
       "max": 719
