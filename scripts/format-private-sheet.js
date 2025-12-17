@@ -2,7 +2,7 @@ const { google } = require('googleapis');
 const fs = require('fs');
 
 const SPREADSHEET_ID = '1FkeYv-T5eL0oRR4EYNq8LwwP3NaXFxClZaCX7b_hnRY';
-const creds = JSON.parse(fs.readFileSync('data/구글 api/sonson-481412-0514ba9d773f.json'));
+const creds = JSON.parse(fs.readFileSync('data/구글 api/sonson-481412-701902a77d89.json'));
 
 async function formatSheet() {
     const auth = new google.auth.GoogleAuth({ credentials: creds, scopes: ['https://www.googleapis.com/auth/spreadsheets'] });

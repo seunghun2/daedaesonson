@@ -2,7 +2,7 @@ const { google } = require('googleapis');
 const fs = require('fs');
 
 const SPREADSHEET_ID = '1FkeYv-T5eL0oRR4EYNq8LwwP3NaXFxClZaCX7b_hnRY';
-const creds = JSON.parse(fs.readFileSync('data/구글 api/sonson-481412-0514ba9d773f.json'));
+const creds = JSON.parse(fs.readFileSync('data/구글 api/sonson-481412-701902a77d89.json'));
 
 // 삭제할 키워드
 const deleteKeywords = [
@@ -28,7 +28,16 @@ const deleteKeywords = [
     '차', '녹차', '홍차', '우유', '주스', '물', '생수',
     '사과', '배', '포도', '귤', '바나나', '수박', '딸기',
     '상차림', '밥상', '제수', '메', '잔', '접시', '그릇', '식기',
-    '장사용품'
+    '장사용품',
+    // 서비스 항목 (NEW)
+    '염습', '운구', '입관', '안치', '습염', '수시', '화장예약',
+    '장례', '장의', '영결식', '빈소', '조문', '봉사', '위령', '추도',
+    '수의', '관', '꽃', '리본', '영정', '상복', '완장', '머리띠',
+    '발인', '제례', '시신보관', '냉동', '영안실', '안치실', '유가족',
+    '임종', '부고', '헌화', '분향', '조의금', '근조', '화환',
+    // 장사용품 (NEW)
+    '골분함', '유골함', '유골', '분골', '골회', '습골', '세골',
+    '위패함', '명패함', '탈관', '관대', '병풍', '휘장', '천막대여'
 ];
 
 async function deleteRows() {
