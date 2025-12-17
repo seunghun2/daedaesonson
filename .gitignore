@@ -73,3 +73,4 @@ full_data.json
 # Database (Binary file often locks)
 *.db
 data/verify_*.json
+data/구글 api/

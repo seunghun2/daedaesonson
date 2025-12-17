@@ -162,7 +162,7 @@ function PriceInfoSection({ priceInfo, hasPrice }: { priceInfo: any, hasPrice: b
     return (
         <Box bg="white" p="md" pb="xl" style={{ borderBottom: '8px solid #f8f9fa' }}>
             <Text size="xl" fw={800} mb="xl" style={{ letterSpacing: '-1px' }}>
-                이 명당의 시설사용료
+                사용료
             </Text>
 
             <Accordion
@@ -280,8 +280,8 @@ function PriceInfoSection({ priceInfo, hasPrice }: { priceInfo: any, hasPrice: b
 
             <Box mt="xl" p="lg" bg="gray.0" style={{ borderRadius: 8 }}>
                 <Text size="xs" c="dimmed" style={{ lineHeight: 1.6 }}>
-                    시설사용료는 <b>e하늘 장사정보 시스템</b>에 등록되어 있는 가격정보를 바탕으로 안내해드리고 있어 상이할 수 있습니다.<br />
-                    사용료 정보가 안내되지 않은 시설은 <b>명당에 직접 문의</b>바랍니다.
+                    사용료는 <b>e하늘 장사정보 시스템</b>에 등록되어 있는 가격정보를 바탕으로 안내해드리고 있어 상이할 수 있습니다.<br />
+                    사용료 정보가 안내되지 않은 시설은 <b>해당 시설에 직접 문의</b>바랍니다.
                 </Text>
             </Box>
         </Box>

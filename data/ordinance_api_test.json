@@ -1,0 +1,27 @@
+[
+  {
+    "region": "보은군",
+    "status": "error",
+    "error": "Unexpected token '<', \"<!DOCTYPE \"... is not valid JSON"
+  },
+  {
+    "region": "가평군",
+    "status": "error",
+    "error": "Unexpected token '<', \"<!DOCTYPE \"... is not valid JSON"
+  },
+  {
+    "region": "강릉시",
+    "status": "error",
+    "error": "Unexpected token '<', \"<!DOCTYPE \"... is not valid JSON"
+  },
+  {
+    "region": "거제시",
+    "status": "error",
+    "error": "Unexpected token '<', \"<!DOCTYPE \"... is not valid JSON"
+  },
+  {
+    "region": "논산시",
+    "status": "error",
+    "error": "Unexpected token '<', \"<!DOCTYPE \"... is not valid JSON"
+  }
+]

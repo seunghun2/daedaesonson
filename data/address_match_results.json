@@ -1,0 +1,4068 @@
+{
+  "matched": [
+    {
+      "facilityId": "park-0034",
+      "facilityName": "삼척시추모공원 묘지 제1단지",
+      "facilityAddress": "강원특별자치도 삼척시 강원남부로 4541 (등봉동, 삼척시공원묘지)",
+      "ordRegion": "삼척시",
+      "ordAddress": "삼척시 강원남부로 4541(등봉동)",
+      "ordFacilityName": "삼척시 추모공원 1단지"
+    },
+    {
+      "facilityId": "park-0057",
+      "facilityName": "함안군공설추모공원",
+      "facilityAddress": "경상남도 함안군 가야읍 봉수로 609 (도항리, 함안군공설추모공원)",
+      "ordRegion": "함안군",
+      "ordAddress": "함안군 가야읍 봉수로 609",
+      "ordFacilityName": "함안군 공설추모공원"
+    },
+    {
+      "facilityId": "park-0064",
+      "facilityName": "진천군공설묘지",
+      "facilityAddress": "충청북도 진천군 진천읍 백곡로 1465-34 (장관리, 진천군공설묘지)",
+      "ordRegion": "진천군",
+      "ordAddress": "충청북도 진천군 진천읍 백곡로 1465-34 일원",
+      "ordFacilityName": "진천군 공설묘지"
+    },
+    {
+      "facilityId": "park-0077",
+      "facilityName": "애향묘지",
+      "facilityAddress": "제주특별자치도 제주시 노형동 산18-1",
+      "ordRegion": "제주시",
+      "ordAddress": "제주특별자치도 제주시 우도면",
+      "ordFacilityName": "제주시 우도면 봉안당"
+    },
+    {
+      "facilityId": "park-0079",
+      "facilityName": "오창장미공원",
+      "facilityAddress": "충청북도 청주시 청원구 오창읍 양청3길 88 (양청리)",
+      "ordRegion": "청주시",
+      "ordAddress": "청주시 청원구 오창읍 양청리 산85번지 일원",
+      "ordFacilityName": "오창장미공원"
+    },
+    {
+      "facilityId": "park-0080",
+      "facilityName": "평창군 공설묘지",
+      "facilityAddress": "강원특별자치도 평창군 방림면 서동로 1741-36 (방림리, 평창공원묘지)",
+      "ordRegion": "평창군",
+      "ordAddress": "평창군 방림면 서동로 1741-36",
+      "ordFacilityName": "평창군공설묘지"
+    },
+    {
+      "facilityId": "park-0082",
+      "facilityName": "세종시공설묘지",
+      "facilityAddress": "세종특별자치시 전동면 전동로 539 (봉대리)",
+      "ordRegion": "세종특별자치시",
+      "ordAddress": "세종특별자치시 전동면 송곡리 산2-2, 산2-3, 산2-4, 산2-5, 산2-6, 산2-11번지",
+      "ordFacilityName": "송곡 공동묘지"
+    },
+    {
+      "facilityId": "park-0084",
+      "facilityName": "매화공원묘지",
+      "facilityAddress": "충청북도 청주시 상당구 가덕면 상장인차로 460 (청용리)",
+      "ordRegion": "청주시",
+      "ordAddress": "청주시 상당구 가덕면 상장인차로 460",
+      "ordFacilityName": "매화원"
+    },
+    {
+      "facilityId": "park-0126",
+      "facilityName": "충주시공설묘지",
+      "facilityAddress": "충청북도 충주시 주덕읍 화곡1길 430 (화곡리)",
+      "ordRegion": "충주시",
+      "ordAddress": "충주시 주덕읍 화곡1길 430",
+      "ordFacilityName": "충주시 공설묘지"
+    },
+    {
+      "facilityId": "park-0131",
+      "facilityName": "오산시공설공원묘지",
+      "facilityAddress": "경기도 오산시 가장동 산72-2",
+      "ordRegion": "오산시",
+      "ordAddress": "오산시 가장동 산 72-2, 가장동 121-2",
+      "ordFacilityName": "오산시 공설․공원묘지"
+    },
+    {
+      "facilityId": "park-0136",
+      "facilityName": "인제종합장묘센터 하늘공원",
+      "facilityAddress": "강원특별자치도 인제군 남면 자작나무숲길 56 (남전리)",
+      "ordRegion": "인제군",
+      "ordAddress": "강원특별자치도 인제군 남면 원남로444-62",
+      "ordFacilityName": "하늘내린 도리안"
+    },
+    {
+      "facilityId": "park-0171",
+      "facilityName": "웅양공설공원묘지",
+      "facilityAddress": "경상남도 거창군 웅양면 죽림리 산108",
+      "ordRegion": "거창군",
+      "ordAddress": "죽림리 산 108",
+      "ordFacilityName": "웅양공설공원묘지"
+    },
+    {
+      "facilityId": "park-0175",
+      "facilityName": "월평공설공원묘지",
+      "facilityAddress": "경상남도 거창군 남상면 월평리 산201",
+      "ordRegion": "거창군",
+      "ordAddress": "월평리 산 201",
+      "ordFacilityName": "월평공설공원묘지"
+    },
+    {
+      "facilityId": "park-0180",
+      "facilityName": "정왕공설묘지",
+      "facilityAddress": "경기도 시흥시 정왕동 산2-1",
+      "ordRegion": "시흥시",
+      "ordAddress": "시흥시 정왕동 산 2-1, 산 3",
+      "ordFacilityName": "시흥시 정왕 공설공원묘지"
+    },
+    {
+      "facilityId": "park-0194",
+      "facilityName": "안흥동공설묘지(만장)",
+      "facilityAddress": "경기도 동두천시 안흥동 산62",
+      "ordRegion": "동두천시",
+      "ordAddress": "동두천시 안흥동 산62번지",
+      "ordFacilityName": "동두천시 안흥동 공설묘지"
+    },
+    {
+      "facilityId": "park-0199",
+      "facilityName": "아산주진공설묘지",
+      "facilityAddress": "전라북도 고창군 아산면 주진리 산16",
+      "ordRegion": "고창군",
+      "ordAddress": "고창군 아산면 주진리 산 16번지",
+      "ordFacilityName": "고창군 공설묘지"
+    },
+    {
+      "facilityId": "park-0200",
+      "facilityName": "부산영락공원묘지",
+      "facilityAddress": "부산광역시 금정구 금정도서관로 108 (두구동, 영락공원)",
+      "ordRegion": "부산광역시",
+      "ordAddress": "부산광역시 금정구 금정도서관로 108(두구동)",
+      "ordFacilityName": "부산영락공원"
+    },
+    {
+      "facilityId": "park-0207",
+      "facilityName": "구미시옥계공설묘지(만장)",
+      "facilityAddress": "경상북도 구미시 옥계동 산5-1",
+      "ordRegion": "구미시",
+      "ordAddress": "구미시 옥계동 산 5-1번지",
+      "ordFacilityName": "구미시 옥계공설묘지"
+    },
+    {
+      "facilityId": "park-0219",
+      "facilityName": "금광공설묘지",
+      "facilityAddress": "경기도 안성시 금광면 금광리 산29",
+      "ordRegion": "안성시",
+      "ordAddress": "안성시 금광면 금광리 산29",
+      "ordFacilityName": "금광 공설묘지"
+    },
+    {
+      "facilityId": "park-0231",
+      "facilityName": "남상공설공원묘지",
+      "facilityAddress": "경상남도 거창군 남상면 무촌리 산253",
+      "ordRegion": "거창군",
+      "ordAddress": "무촌리 산 253",
+      "ordFacilityName": "남상공설공원묘지"
+    },
+    {
+      "facilityId": "park-0246",
+      "facilityName": "가북공설공원묘지",
+      "facilityAddress": "경상남도 거창군 가북면 용암리 산125",
+      "ordRegion": "거창군",
+      "ordAddress": "용암리 산 125",
+      "ordFacilityName": "가북공설공원묘지"
+    },
+    {
+      "facilityId": "park-0247",
+      "facilityName": "가조공설공원묘지",
+      "facilityAddress": "경상남도 거창군 가조면 일부리 산5",
+      "ordRegion": "거창군",
+      "ordAddress": "일부리 산 5",
+      "ordFacilityName": "가조공설공원묘지"
+    },
+    {
+      "facilityId": "park-0251",
+      "facilityName": "거창공설공원묘지",
+      "facilityAddress": "경상남도 거창군 거창읍 가지리 산170",
+      "ordRegion": "거창군",
+      "ordAddress": "가지리 산 170",
+      "ordFacilityName": "거창공설공원묘지"
+    },
+    {
+      "facilityId": "park-0255",
+      "facilityName": "장기공설공원묘원",
+      "facilityAddress": "경상남도 고성군 동해면 장기리 산209-2",
+      "ordRegion": "고성군",
+      "ordAddress": "고성군 동해면 장기리 산209-2번지",
+      "ordFacilityName": "장기공설봉안묘"
+    },
+    {
+      "facilityId": "park-0267",
+      "facilityName": "포내공설묘지",
+      "facilityAddress": "경기도 김포시 월곶면 포내리 산36",
+      "ordRegion": "김포시",
+      "ordAddress": "김포시 월곶면 포내리 산36번지",
+      "ordFacilityName": "포내공설묘지"
+    },
+    {
+      "facilityId": "park-0274",
+      "facilityName": "부안수동공설묘지",
+      "facilityAddress": "전라북도 고창군 부안면 수동리 산51-10",
+      "ordRegion": "고창군",
+      "ordAddress": "고창군 부안면 수동리 산 51-10번지",
+      "ordFacilityName": "고창군 공설묘지"
+    },
+    {
+      "facilityId": "park-0276",
+      "facilityName": "북상공설공원묘지",
+      "facilityAddress": "경상남도 거창군 북상면 월성리 산150",
+      "ordRegion": "거창군",
+      "ordAddress": "월성리 산 150",
+      "ordFacilityName": "북상공설공원묘지"
+    },
+    {
+      "facilityId": "park-0281",
+      "facilityName": "초원지공설묘지",
+      "facilityAddress": "경기도 김포시 대곶면 초원지리 산14",
+      "ordRegion": "김포시",
+      "ordAddress": "김포시 대곶면 초원지리 산14번지",
+      "ordFacilityName": "초원지공설묘지"
+    },
+    {
+      "facilityId": "park-0283",
+      "facilityName": "청주시목련공원묘지",
+      "facilityAddress": "충청북도 청주시 상당구 목련로 731 (월오동)",
+      "ordRegion": "청주시",
+      "ordAddress": "청주시 상당구 목련로 731(월오동) 일원",
+      "ordFacilityName": "목련공원"
+    },
+    {
+      "facilityId": "park-0286",
+      "facilityName": "성석동공설묘지(만장)",
+      "facilityAddress": "경기도 고양시 일산동구 성석동 973-23",
+      "ordRegion": "고양시",
+      "ordAddress": "고양시 일산동구 성석동 산153",
+      "ordFacilityName": "성석동 공설묘지"
+    },
+    {
+      "facilityId": "park-0287",
+      "facilityName": "성주군공설묘지",
+      "facilityAddress": "경상북도 성주군 선남면 관화리 산31-1",
+      "ordRegion": "성주군",
+      "ordAddress": "성주군 선남면 관화리 산 31-1",
+      "ordFacilityName": "성주군공설묘지"
+    },
+    {
+      "facilityId": "park-0294",
+      "facilityName": "영암군덕진공설묘지",
+      "facilityAddress": "전라남도 영암군 덕진면 영보리 산24",
+      "ordRegion": "영암군",
+      "ordAddress": "영암군 덕진면 영보리 산 24",
+      "ordFacilityName": "덕진공설묘지"
+    },
+    {
+      "facilityId": "park-0310",
+      "facilityName": "내유동공설묘지(만장)",
+      "facilityAddress": "경기도 고양시 덕양구 내유동  산82",
+      "ordRegion": "고양시",
+      "ordAddress": "고양시 덕양구 내유동 산82, 142-4",
+      "ordFacilityName": "내유동 공설묘지"
+    },
+    {
+      "facilityId": "park-0343",
+      "facilityName": "정읍시입암묘지공원",
+      "facilityAddress": "전라북도 정읍시 입암면 연월리 산159",
+      "ordRegion": "정읍시",
+      "ordAddress": "정읍시 입암면 연월리 산159, 산160",
+      "ordFacilityName": "정읍시립묘지"
+    },
+    {
+      "facilityId": "park-0346",
+      "facilityName": "조천읍공설묘지",
+      "facilityAddress": "제주특별자치도 제주시 조천읍 선흘리 4116",
+      "ordRegion": "제주시",
+      "ordAddress": "제주특별자치도 제주시 우도면",
+      "ordFacilityName": "제주시 우도면 봉안당"
+    },
+    {
+      "facilityId": "park-0349",
+      "facilityName": "합성동공설묘지",
+      "facilityAddress": "경상남도 창원시 마산회원구 합성동 산61-4",
+      "ordRegion": "창원시",
+      "ordAddress": "창원시 마산회원구 합성동 산59-1번지, 산59-3번지, 산60번지, 산61-4번지, 산62-1번지",
+      "ordFacilityName": "시립 제1 공설묘지"
+    },
+    {
+      "facilityId": "park-0385",
+      "facilityName": "구좌읍공설묘지",
+      "facilityAddress": "제주특별자치도 제주시 구좌읍 송당리 54-1",
+      "ordRegion": "제주시",
+      "ordAddress": "제주특별자치도 제주시 우도면",
+      "ordFacilityName": "제주시 우도면 봉안당"
+    },
+    {
+      "facilityId": "park-0408",
+      "facilityName": "우도면공설묘지",
+      "facilityAddress": "제주특별자치도 제주시 우도면 연평리 394",
+      "ordRegion": "제주시",
+      "ordAddress": "제주특별자치도 제주시 우도면",
+      "ordFacilityName": "제주시 우도면 봉안당"
+    },
+    {
+      "facilityId": "park-0419",
+      "facilityName": "애월읍공설묘지",
+      "facilityAddress": "제주특별자치도 제주시 애월읍 광령리 산157",
+      "ordRegion": "제주시",
+      "ordAddress": "제주특별자치도 제주시 우도면",
+      "ordFacilityName": "제주시 우도면 봉안당"
+    },
+    {
+      "facilityId": "park-0420",
+      "facilityName": "어승생공설묘지",
+      "facilityAddress": "제주특별자치도 제주시 연동 2488-1",
+      "ordRegion": "제주시",
+      "ordAddress": "제주특별자치도 제주시 우도면",
+      "ordFacilityName": "제주시 우도면 봉안당"
+    },
+    {
+      "facilityId": "park-0430",
+      "facilityName": "서부공설묘지",
+      "facilityAddress": "제주특별자치도 제주시 연동 1203",
+      "ordRegion": "제주시",
+      "ordAddress": "제주특별자치도 제주시 우도면",
+      "ordFacilityName": "제주시 우도면 봉안당"
+    },
+    {
+      "facilityId": "park-0473",
+      "facilityName": "산곡동공설묘지",
+      "facilityAddress": "경기도 의정부시 산곡동  산74",
+      "ordRegion": "의정부시",
+      "ordAddress": "의정부시 산곡동 산74, 산76, 산77, 479-4, 479-5, 489-3",
+      "ordFacilityName": "산곡동공설묘지"
+    },
+    {
+      "facilityId": "park-0475",
+      "facilityName": "삼척시추모공원 묘지 제2단지",
+      "facilityAddress": "강원특별자치도 삼척시 강원남부로 4540 (등봉동)",
+      "ordRegion": "삼척시",
+      "ordAddress": "삼척시 강원남부로 4541(등봉동)",
+      "ordFacilityName": "삼척시 추모공원 1단지"
+    },
+    {
+      "facilityId": "park-0492",
+      "facilityName": "영암군군서공설묘지",
+      "facilityAddress": "전라남도 영암군 군서면 동구림리 산42",
+      "ordRegion": "영암군",
+      "ordAddress": "영암군 군서면 동구림리 산 42",
+      "ordFacilityName": "군서공설묘지"
+    },
+    {
+      "facilityId": "park-0493",
+      "facilityName": "영암군금정공설묘지",
+      "facilityAddress": "전라남도 영암군 금정면 용흥리 산227",
+      "ordRegion": "영암군",
+      "ordAddress": "영암군 금정면 용흥리 산 227",
+      "ordFacilityName": "금정공설묘지"
+    },
+    {
+      "facilityId": "park-0494",
+      "facilityName": "영암군시종공설묘지",
+      "facilityAddress": "전라남도 영암군 시종면 월송리 산1",
+      "ordRegion": "영암군",
+      "ordAddress": "영암군 시종면 월송리 산 1, 태간리 산 95",
+      "ordFacilityName": "시종공설묘지"
+    },
+    {
+      "facilityId": "park-0495",
+      "facilityName": "영암군신북공설묘지",
+      "facilityAddress": "전라남도 영암군 신북면 월평리 산35",
+      "ordRegion": "영암군",
+      "ordAddress": "영암군 신북면 월평리 산 35",
+      "ordFacilityName": "신북공설묘지"
+    },
+    {
+      "facilityId": "park-0496",
+      "facilityName": "영암군학산공설묘지",
+      "facilityAddress": "전라남도 영암군 학산면 상월리 산139-13",
+      "ordRegion": "영암군",
+      "ordAddress": "영암군 학산면 상월리 산 132",
+      "ordFacilityName": "학산공설묘지"
+    },
+    {
+      "facilityId": "park-0499",
+      "facilityName": "구미시선산공설묘지(만장)",
+      "facilityAddress": "경상북도 구미시 선산읍 봉곡리 산41",
+      "ordRegion": "구미시",
+      "ordAddress": "구미시 선산읍 봉곡리 산41번지",
+      "ordFacilityName": "구미시 선산공설묘지"
+    },
+    {
+      "facilityId": "park-0542",
+      "facilityName": "부산추모공원 봉안당",
+      "facilityAddress": "부산광역시 기장군 정관읍 정관로 225 (두명리, 부산추모공원)",
+      "ordRegion": "부산광역시",
+      "ordAddress": "부산광역시 기장군 정관읍 정관로 225",
+      "ordFacilityName": "부산추모공원"
+    },
+    {
+      "facilityId": "park-0544",
+      "facilityName": "목포추모관 휴",
+      "facilityAddress": "전라남도 목포시 고하대로 1140-41 (대양동)",
+      "ordRegion": "목포시",
+      "ordAddress": "목포시 고하대로 1140-41",
+      "ordFacilityName": "목포 추모공원 봉안당(추모의집)"
+    },
+    {
+      "facilityId": "park-0596",
+      "facilityName": "홍성추모공원봉안당",
+      "facilityAddress": "충남 홍성군 금마면 금마로516번길 85",
+      "ordRegion": "홍성군",
+      "ordAddress": "충남 홍성군 금마면 금마로 516번길 85",
+      "ordFacilityName": "홍성추모공원 화장장"
+    },
+    {
+      "facilityId": "park-0626",
+      "facilityName": "양지공원 제1추모의집",
+      "facilityAddress": "제주특별자치도 제주시 516로 2810-31 (영평동, 양지공원)",
+      "ordRegion": "제주시",
+      "ordAddress": "제주특별자치도 제주시 우도면",
+      "ordFacilityName": "제주시 우도면 봉안당"
+    },
+    {
+      "facilityId": "park-0627",
+      "facilityName": "양지공원 제2추모의집",
+      "facilityAddress": "제주특별자치도 제주시 516로 2810-31 (영평동, 양지공원)",
+      "ordRegion": "제주시",
+      "ordAddress": "제주특별자치도 제주시 우도면",
+      "ordFacilityName": "제주시 우도면 봉안당"
+    },
+    {
+      "facilityId": "park-0644",
+      "facilityName": "충주시 천상원",
+      "facilityAddress": "충청북도 충주시 목벌길 256 (목벌동)",
+      "ordRegion": "충주시",
+      "ordAddress": "충주시 목벌길 256(목벌동)",
+      "ordFacilityName": "하늘나라"
+    },
+    {
+      "facilityId": "park-0646",
+      "facilityName": "구미시공설숭조당 제2관",
+      "facilityAddress": "경상북도 구미시 옥성면 선상동로 419-1 (초곡리)",
+      "ordRegion": "구미시",
+      "ordAddress": "구미시 옥성면 선상동로 419",
+      "ordFacilityName": "구미시 공설숭조당"
+    },
+    {
+      "facilityId": "park-0665",
+      "facilityName": "부산영락공원 봉안당",
+      "facilityAddress": "부산광역시 금정구 금정도서관로 108 (두구동)",
+      "ordRegion": "부산광역시",
+      "ordAddress": "부산광역시 금정구 금정도서관로 108(두구동)",
+      "ordFacilityName": "부산영락공원"
+    },
+    {
+      "facilityId": "park-0673",
+      "facilityName": "오산시립쉼터공원",
+      "facilityAddress": "경기도 오산시 가장산업동로 69-21 (가장동)",
+      "ordRegion": "오산시",
+      "ordAddress": "오산시 가장산업동로 69-21",
+      "ordFacilityName": "쉼터공원"
+    },
+    {
+      "facilityId": "park-0677",
+      "facilityName": "진천군 추모의집",
+      "facilityAddress": "충청북도 진천군 진천읍 백곡로 1465-34 (장관리, 진천군공설묘지)",
+      "ordRegion": "진천군",
+      "ordAddress": "충청북도 진천군 진천읍 백곡로 1465-34 일원",
+      "ordFacilityName": "진천군 공설묘지"
+    },
+    {
+      "facilityId": "park-0693",
+      "facilityName": "창원시립상복공원 제1봉안당",
+      "facilityAddress": "경상남도 창원시 성산구 공단로474번길 160 (상복동, 창원시립상복공원)",
+      "ordRegion": "창원시",
+      "ordAddress": "창원시 성산구 공단로474번길 160(상복동)",
+      "ordFacilityName": "시립상복공원"
+    },
+    {
+      "facilityId": "park-0702",
+      "facilityName": "계룡시 정명각",
+      "facilityAddress": "충청남도 계룡시 두마면 제1산단로 132 (입암리)",
+      "ordRegion": "계룡시",
+      "ordAddress": "충청남도 계룡시 두마면 제1산단로 132",
+      "ordFacilityName": "정명각"
+    },
+    {
+      "facilityId": "park-0705",
+      "facilityName": "삼척시추모공원 봉안당",
+      "facilityAddress": "강원특별자치도 삼척시 강원남부로 4541 (등봉동, 삼척시공원묘지)",
+      "ordRegion": "삼척시",
+      "ordAddress": "삼척시 강원남부로 4541(등봉동)",
+      "ordFacilityName": "삼척시 추모공원 1단지"
+    },
+    {
+      "facilityId": "park-0734",
+      "facilityName": "창원시립마산영생원",
+      "facilityAddress": "경상남도 창원시 마산합포구 진동면 공원묘원로 136-106 (인곡리, 영생원)",
+      "ordRegion": "창원시",
+      "ordAddress": "창원시 마산합포구 진동면 인곡리 산117번지, 산192-1번지, 산201번지, 산207번지, 산219번지",
+      "ordFacilityName": "시립 제2 공설묘지"
+    },
+    {
+      "facilityId": "park-0742",
+      "facilityName": "창원시립진해천자원",
+      "facilityAddress": "경상남도 창원시 진해구 진해대로 1426-51 (제덕동)",
+      "ordRegion": "창원시",
+      "ordAddress": "창원시 진해구 진해대로 1426-48(서중동)",
+      "ordFacilityName": "시립천자원봉안시설"
+    },
+    {
+      "facilityId": "park-0744",
+      "facilityName": "세종시추모의집",
+      "facilityAddress": "세종특별자치시 전동면 전동로 538 (봉대리)",
+      "ordRegion": "세종특별자치시",
+      "ordAddress": "세종특별자치시 전동면 송곡리 산2-2, 산2-3, 산2-4, 산2-5, 산2-6, 산2-11번지",
+      "ordFacilityName": "송곡 공동묘지"
+    },
+    {
+      "facilityId": "park-0754",
+      "facilityName": "남원시승화당",
+      "facilityAddress": "전라북도 남원시 솔터길 40-36 (광치동, 승화원)",
+      "ordRegion": "남원시",
+      "ordAddress": "남원시 솔터길 40-36 (광치동 690-1번지)",
+      "ordFacilityName": "남원시 승화원"
+    },
+    {
+      "facilityId": "park-0770",
+      "facilityName": "고성군공설봉안당",
+      "facilityAddress": "경상남도 고성군 상리면 장치로 220-163 (자은리)",
+      "ordRegion": "고성군",
+      "ordAddress": "고성군 상리면 장치로 220-163",
+      "ordFacilityName": "고성군공설화장장"
+    },
+    {
+      "facilityId": "park-0796",
+      "facilityName": "가조공설공원묘지",
+      "facilityAddress": "경상남도 거창군 가조면 일부리 산5",
+      "ordRegion": "거창군",
+      "ordAddress": "일부리 산 5",
+      "ordFacilityName": "가조공설공원묘지"
+    },
+    {
+      "facilityId": "park-0807",
+      "facilityName": "하늘내린 휴공원(개인단)",
+      "facilityAddress": "강원특별자치도 인제군 남면 자작나무숲길 444-62 (남전리)",
+      "ordRegion": "인제군",
+      "ordAddress": "강원특별자치도 인제군 남면 원남로444-62",
+      "ordFacilityName": "하늘내린 도리안"
+    },
+    {
+      "facilityId": "park-0816",
+      "facilityName": "장미원",
+      "facilityAddress": "충청북도 청주시 청원구 오창읍 양청3길 88 (양청리)",
+      "ordRegion": "청주시",
+      "ordAddress": "청주시 청원구 오창읍 양청리 산85번지 일원",
+      "ordFacilityName": "오창장미공원"
+    },
+    {
+      "facilityId": "park-0819",
+      "facilityName": "청주시목련원목련당",
+      "facilityAddress": "충청북도 청주시 상당구 목련로 731 (월오동)",
+      "ordRegion": "청주시",
+      "ordAddress": "청주시 상당구 목련로 731(월오동) 일원",
+      "ordFacilityName": "목련공원"
+    },
+    {
+      "facilityId": "park-0820",
+      "facilityName": "평창군 공설봉안당",
+      "facilityAddress": "강원특별자치도 평창군 방림면 서동로 1741-36 (방림리, 평창공원묘지)",
+      "ordRegion": "평창군",
+      "ordAddress": "평창군 방림면 서동로 1741-36",
+      "ordFacilityName": "평창군공설묘지"
+    },
+    {
+      "facilityId": "park-0824",
+      "facilityName": "하늘내린 보금자리(가족8위)",
+      "facilityAddress": "강원특별자치도 인제군 남면 자작나무숲길 444-62 (남전리)",
+      "ordRegion": "인제군",
+      "ordAddress": "강원특별자치도 인제군 남면 원남로444-62",
+      "ordFacilityName": "하늘내린 도리안"
+    },
+    {
+      "facilityId": "park-0833",
+      "facilityName": "매화원",
+      "facilityAddress": "충청북도 청주시 상당구 가덕면 상장인차로 460 (청용리)",
+      "ordRegion": "청주시",
+      "ordAddress": "청주시 상당구 가덕면 상장인차로 460",
+      "ordFacilityName": "매화원"
+    },
+    {
+      "facilityId": "park-0840",
+      "facilityName": "하늘내린 휴공원(부부단)",
+      "facilityAddress": "강원특별자치도 인제군 남면 자작나무숲길 444-62 (남전리)",
+      "ordRegion": "인제군",
+      "ordAddress": "강원특별자치도 인제군 남면 원남로444-62",
+      "ordFacilityName": "하늘내린 도리안"
+    },
+    {
+      "facilityId": "park-1019",
+      "facilityName": "하늘내린 휴공원(무연단)",
+      "facilityAddress": "강원특별자치도 인제군 남면 자작나무숲길 444-62 (남전리)",
+      "ordRegion": "인제군",
+      "ordAddress": "강원특별자치도 인제군 남면 원남로444-62",
+      "ordFacilityName": "하늘내린 도리안"
+    },
+    {
+      "facilityId": "park-1020",
+      "facilityName": "하늘내린 보금자리(가족12위)",
+      "facilityAddress": "강원특별자치도 인제군 남면 자작나무숲길 444-62 (남전리)",
+      "ordRegion": "인제군",
+      "ordAddress": "강원특별자치도 인제군 남면 원남로444-62",
+      "ordFacilityName": "하늘내린 도리안"
+    },
+    {
+      "facilityId": "park-1021",
+      "facilityName": "청주시목련공원 제2목련당",
+      "facilityAddress": "충청북도 청주시 상당구 목련로 731 (월오동, 목련장례식장)",
+      "ordRegion": "청주시",
+      "ordAddress": "청주시 상당구 목련로 731(월오동) 일원",
+      "ordFacilityName": "목련공원"
+    },
+    {
+      "facilityId": "park-1022",
+      "facilityName": "청주시목련공원",
+      "facilityAddress": "충청북도 청주시 상당구 목련로 731 (월오동, 목련장례식장)",
+      "ordRegion": "청주시",
+      "ordAddress": "청주시 상당구 목련로 731(월오동) 일원",
+      "ordFacilityName": "목련공원"
+    },
+    {
+      "facilityId": "park-1026",
+      "facilityName": "창원시립상복공원",
+      "facilityAddress": "경상남도 창원시 성산구 공단로474번길 160 ",
+      "ordRegion": "창원시",
+      "ordAddress": "창원시 성산구 공단로474번길 160(상복동)",
+      "ordFacilityName": "시립상복공원"
+    },
+    {
+      "facilityId": "park-1027",
+      "facilityName": "창원시립상복공원",
+      "facilityAddress": "경상남도 창원시 성산구 공단로474번길 160 ",
+      "ordRegion": "창원시",
+      "ordAddress": "창원시 성산구 공단로474번길 160(상복동)",
+      "ordFacilityName": "시립상복공원"
+    },
+    {
+      "facilityId": "park-1030",
+      "facilityName": "신안1004추모관",
+      "facilityAddress": "전라남도 목포시 고하대로 1140-41 (대양동)",
+      "ordRegion": "목포시",
+      "ordAddress": "목포시 고하대로 1140-41",
+      "ordFacilityName": "목포 추모공원 봉안당(추모의집)"
+    },
+    {
+      "facilityId": "park-1060",
+      "facilityName": "우도면 공설봉안묘",
+      "facilityAddress": "제주특별자치도 제주시 우도면 영일길 80-10 (연평리, 우도장례식장)",
+      "ordRegion": "제주시",
+      "ordAddress": "제주특별자치도 제주시 우도면",
+      "ordFacilityName": "제주시 우도면 봉안당"
+    },
+    {
+      "facilityId": "park-1061",
+      "facilityName": "한경면 공설봉안묘(만장)",
+      "facilityAddress": "제주특별자치도 제주시 한경면 저지리 산52",
+      "ordRegion": "제주시",
+      "ordAddress": "제주특별자치도 제주시 우도면",
+      "ordFacilityName": "제주시 우도면 봉안당"
+    },
+    {
+      "facilityId": "park-1126",
+      "facilityName": "우도면 봉안당",
+      "facilityAddress": "제주특별자치도 제주시 우도면 영일길 80-10 (연평리, 우도장례식장)",
+      "ordRegion": "제주시",
+      "ordAddress": "제주특별자치도 제주시 우도면",
+      "ordFacilityName": "제주시 우도면 봉안당"
+    },
+    {
+      "facilityId": "park-1130",
+      "facilityName": "고제공설공원묘지 봉안당",
+      "facilityAddress": "경상남도 거창군 고제면 봉산리 1309",
+      "ordRegion": "거창군",
+      "ordAddress": "봉산리 1309",
+      "ordFacilityName": "고제공설공원묘지"
+    },
+    {
+      "facilityId": "park-1131",
+      "facilityName": "남상공설공원묘지",
+      "facilityAddress": "경상남도 거창군 남상면 무촌리 산253",
+      "ordRegion": "거창군",
+      "ordAddress": "무촌리 산 253",
+      "ordFacilityName": "남상공설공원묘지"
+    },
+    {
+      "facilityId": "park-1132",
+      "facilityName": "월평공설공원묘지",
+      "facilityAddress": "경상남도 거창군 남상면 월평리 산201",
+      "ordRegion": "거창군",
+      "ordAddress": "월평리 산 201",
+      "ordFacilityName": "월평공설공원묘지"
+    },
+    {
+      "facilityId": "park-1133",
+      "facilityName": "가북공설공원묘지",
+      "facilityAddress": "경상남도 거창군 가북면 용암리 산125",
+      "ordRegion": "거창군",
+      "ordAddress": "용암리 산 125",
+      "ordFacilityName": "가북공설공원묘지"
+    },
+    {
+      "facilityId": "park-1134",
+      "facilityName": "충혼각",
+      "facilityAddress": "제주특별자치도 제주시 1100로 2576-10 (노형동, 충혼각)",
+      "ordRegion": "제주시",
+      "ordAddress": "제주특별자치도 제주시 우도면",
+      "ordFacilityName": "제주시 우도면 봉안당"
+    },
+    {
+      "facilityId": "park-1135",
+      "facilityName": "한림읍 공설봉안묘(만장)",
+      "facilityAddress": "제주특별자치도 제주시 한림읍 금악리 8-124",
+      "ordRegion": "제주시",
+      "ordAddress": "제주특별자치도 제주시 우도면",
+      "ordFacilityName": "제주시 우도면 봉안당"
+    },
+    {
+      "facilityId": "park-1136",
+      "facilityName": "애월읍 공설봉안묘(만장)",
+      "facilityAddress": "제주특별자치도 제주시 애월읍 고성리 산103",
+      "ordRegion": "제주시",
+      "ordAddress": "제주특별자치도 제주시 우도면",
+      "ordFacilityName": "제주시 우도면 봉안당"
+    },
+    {
+      "facilityId": "park-1137",
+      "facilityName": "구좌읍 공설봉안묘(만장)",
+      "facilityAddress": "제주특별자치도 제주시 구좌읍 송당리 54-1",
+      "ordRegion": "제주시",
+      "ordAddress": "제주특별자치도 제주시 우도면",
+      "ordFacilityName": "제주시 우도면 봉안당"
+    },
+    {
+      "facilityId": "park-1138",
+      "facilityName": "조천읍 공설봉안묘(만장)",
+      "facilityAddress": "제주특별자치도 제주시 조천읍 선흘리 4117",
+      "ordRegion": "제주시",
+      "ordAddress": "제주특별자치도 제주시 우도면",
+      "ordFacilityName": "제주시 우도면 봉안당"
+    },
+    {
+      "facilityId": "park-1140",
+      "facilityName": "평창군 공설봉안담",
+      "facilityAddress": "강원특별자치도 평창군 방림면 서동로 1741-36 (방림리, 평창공원묘지)",
+      "ordRegion": "평창군",
+      "ordAddress": "평창군 방림면 서동로 1741-36",
+      "ordFacilityName": "평창군공설묘지"
+    },
+    {
+      "facilityId": "park-1176",
+      "facilityName": "함안하늘공원(자연장지)",
+      "facilityAddress": "경상남도 함안군 가야읍 함마대로 1145 (사내리, 함안하늘공원)",
+      "ordRegion": "함안군",
+      "ordAddress": "함안군 가야읍 함마대로 1145",
+      "ordFacilityName": "함안하늘공원"
+    },
+    {
+      "facilityId": "park-1249",
+      "facilityName": "제주시어승생한울누리공원",
+      "facilityAddress": "제주특별자치도 제주시 산록북로 70 (연동, 어승생한울누리공원)",
+      "ordRegion": "제주시",
+      "ordAddress": "제주특별자치도 제주시 우도면",
+      "ordFacilityName": "제주시 우도면 봉안당"
+    },
+    {
+      "facilityId": "park-1250",
+      "facilityName": "청주시목련공원자연장",
+      "facilityAddress": "충청북도 청주시 상당구 목련로 731 (월오동, 목련공원)",
+      "ordRegion": "청주시",
+      "ordAddress": "청주시 상당구 목련로 731(월오동) 일원",
+      "ordFacilityName": "목련공원"
+    },
+    {
+      "facilityId": "park-1265",
+      "facilityName": "고창푸른숲자연장",
+      "facilityAddress": "전라북도 고창군 신림면 왕림로 94-54 (세곡리, 고창푸른숲자연장관리사무소)",
+      "ordRegion": "고창군",
+      "ordAddress": "고창군 신림면 왕림로 94-54",
+      "ordFacilityName": "고창군 자연장시설"
+    },
+    {
+      "facilityId": "park-1277",
+      "facilityName": "남원시추모공원(자연장지)",
+      "facilityAddress": "전라북도 남원시 솔터길 40-36 (광치동, 승화원)",
+      "ordRegion": "남원시",
+      "ordAddress": "남원시 솔터길 40-36 (광치동 690-1번지)",
+      "ordFacilityName": "남원시 승화원"
+    },
+    {
+      "facilityId": "park-1279",
+      "facilityName": "무장녹두숲자연장",
+      "facilityAddress": "전라북도 고창군 무장면 반송길 12 (고라리)",
+      "ordRegion": "고창군",
+      "ordAddress": "고창군 무장면 반송길 12",
+      "ordFacilityName": "고창군 자연장시설"
+    },
+    {
+      "facilityId": "park-1285",
+      "facilityName": "정왕공설자연장지",
+      "facilityAddress": "경기도 시흥시 정왕동 산2-1",
+      "ordRegion": "시흥시",
+      "ordAddress": "시흥시 정왕동 산 2-1, 산 3",
+      "ordFacilityName": "시흥시 정왕 공설공원묘지"
+    },
+    {
+      "facilityId": "park-1295",
+      "facilityName": "웅양공설공원묘지",
+      "facilityAddress": "경상남도 거창군 웅양면 죽림리 산108",
+      "ordRegion": "거창군",
+      "ordAddress": "죽림리 산 108",
+      "ordFacilityName": "웅양공설공원묘지"
+    },
+    {
+      "facilityId": "park-1340",
+      "facilityName": "용강별숲공원(구 동부공설묘지)",
+      "facilityAddress": "제주특별자치도 제주시 용강6길 366-1 (용강동)",
+      "ordRegion": "제주시",
+      "ordAddress": "제주특별자치도 제주시 우도면",
+      "ordFacilityName": "제주시 우도면 봉안당"
+    },
+    {
+      "facilityId": "park-1359",
+      "facilityName": "진천군 자연장지",
+      "facilityAddress": "충청북도 진천군 진천읍 장관리 758-3번지 일원",
+      "ordRegion": "진천군",
+      "ordAddress": "충청북도 진천군 진천읍 백곡로 1465-34 일원",
+      "ordFacilityName": "진천군 공설묘지"
+    },
+    {
+      "facilityId": "park-1438",
+      "facilityName": "익산하늘공원정수원",
+      "facilityAddress": "전북 익산시 석왕동 235-13",
+      "ordRegion": "익산시",
+      "ordAddress": "익산시 석왕동 235-13번지",
+      "ordFacilityName": "정수원"
+    },
+    {
+      "facilityId": "park-1453",
+      "facilityName": "대구명복공원",
+      "facilityAddress": "대구광역시 수성구 달구벌대로541길 47 (고모동)",
+      "ordRegion": "대구광역시",
+      "ordAddress": "대구광역시 수성구 달구벌대로541길 47(고모동)",
+      "ordFacilityName": "대구명복공원"
+    },
+    {
+      "facilityId": "park-1455",
+      "facilityName": "함안하늘공원(화장시설)",
+      "facilityAddress": "경상남도 함안군 가야읍 함마대로 1145  함안하늘공원",
+      "ordRegion": "함안군",
+      "ordAddress": "함안군 가야읍 함마대로 1145",
+      "ordFacilityName": "함안하늘공원"
+    },
+    {
+      "facilityId": "park-1461",
+      "facilityName": "속초시승화원",
+      "facilityAddress": "강원도 속초시 이목로 194 (노학동)",
+      "ordRegion": "속초시",
+      "ordAddress": "강원도 속초시 이목로 194",
+      "ordFacilityName": "속초시 승화원"
+    },
+    {
+      "facilityId": "park-1463",
+      "facilityName": "청주시목련공원",
+      "facilityAddress": "충청북도 청주시 상당구 목련로 731 (월오동, 목련공원)",
+      "ordRegion": "청주시",
+      "ordAddress": "청주시 상당구 목련로 731(월오동) 일원",
+      "ordFacilityName": "목련공원"
+    },
+    {
+      "facilityId": "park-1470",
+      "facilityName": "목포추모공원",
+      "facilityAddress": "전라남도 목포시 고하대로 1140-41 (대양동)",
+      "ordRegion": "목포시",
+      "ordAddress": "목포시 고하대로 1140-41",
+      "ordFacilityName": "목포 추모공원 봉안당(추모의집)"
+    },
+    {
+      "facilityId": "park-1475",
+      "facilityName": "충주시시설관리공단",
+      "facilityAddress": "충청북도 충주시 목벌길 256 (목벌동)",
+      "ordRegion": "충주시",
+      "ordAddress": "충주시 목벌길 256(목벌동)",
+      "ordFacilityName": "하늘나라"
+    },
+    {
+      "facilityId": "park-1478",
+      "facilityName": "창원시립마산화장장",
+      "facilityAddress": "경남 창원시 마산합포구 진동면  공원묘원로 232 마산화장장",
+      "ordRegion": "창원시",
+      "ordAddress": "창원시 마산합포구 진동면 인곡리 산117번지, 산192-1번지, 산201번지, 산207번지, 산219번지",
+      "ordFacilityName": "시립 제2 공설묘지"
+    },
+    {
+      "facilityId": "park-1482",
+      "facilityName": "부산영락공원묘지",
+      "facilityAddress": "부산광역시 금정구 금정도서관로 108 (두구동, 영락공원)",
+      "ordRegion": "부산광역시",
+      "ordAddress": "부산광역시 금정구 금정도서관로 108(두구동)",
+      "ordFacilityName": "부산영락공원"
+    },
+    {
+      "facilityId": "park-1492",
+      "facilityName": "창원시립상복공원",
+      "facilityAddress": "경상남도 창원시 성산구 공단로474번길 160 ",
+      "ordRegion": "창원시",
+      "ordAddress": "창원시 성산구 공단로474번길 160(상복동)",
+      "ordFacilityName": "시립상복공원"
+    },
+    {
+      "facilityId": "park-1493",
+      "facilityName": "구미시추모공원",
+      "facilityAddress": "경상북도 구미시 옥성면 추모공원로 81 (농소리)",
+      "ordRegion": "구미시",
+      "ordAddress": "구미시 옥성면 추모공원로 81",
+      "ordFacilityName": "구미시 추모공원"
+    },
+    {
+      "facilityId": "park-1494",
+      "facilityName": "양지공원 제1추모의집",
+      "facilityAddress": "제주특별자치도 제주시 516로 2810-31 (영평동, 양지공원)",
+      "ordRegion": "제주시",
+      "ordAddress": "제주특별자치도 제주시 우도면",
+      "ordFacilityName": "제주시 우도면 봉안당"
+    }
+  ],
+  "unmatched": [
+    {
+      "id": "park-0007",
+      "name": "예산군추모공원",
+      "address": "충청남도 예산군 응봉면 예당로 1345-12 (평촌리, 예산군추모공원)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0018",
+      "name": "보령시모란공원",
+      "address": "충청남도 보령시 성주면 만수로 693 (개화리)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0021",
+      "name": "물미묘원",
+      "address": "강원특별자치도 영월군 주천면 솔치로 240-120 (신일리)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0047",
+      "name": "양양군공설묘원",
+      "address": "강원특별자치도 양양군 양양읍 남대천로 251-121 (월리, 양양군공설묘원)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0055",
+      "name": "동해시하늘정원묘지",
+      "address": "강원도 동해시 강원남부로 4589 (단봉동)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0061",
+      "name": "고성군 공설묘원",
+      "address": "강원특별자치도 고성군 죽왕면 공설묘원길 32 (가진리)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0063",
+      "name": "태백공원묘원",
+      "address": "강원도 태백시 백두대간로 844 (창죽동, 태백공동묘지)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0072",
+      "name": "영종공설묘지(신규매장불가)",
+      "address": "인천광역시 중구 운북동 132-80",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0083",
+      "name": "대전추모공원 가족묘원",
+      "address": "대전광역시 서구 상보안윗길 160 (괴곡동)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0089",
+      "name": "여수시공설묘지공원",
+      "address": "전라남도 여수시 소라면 봉두리 산190 ",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0090",
+      "name": "정선하늘공원",
+      "address": "강원특별자치도 정선군 여량면 서동로 3867-26 (남곡리, 정선하늘공원)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0096",
+      "name": "전주효자공원",
+      "address": "전라북도 전주시 완산구 콩쥐팥쥐로 1705-138 (효자동3가, 전주승화원)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0101",
+      "name": "홍천군공설묘원",
+      "address": "강원특별자치도 홍천군 홍천읍 느리울길 141-22 (하오안리)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0102",
+      "name": "이천시대월공설공원묘지(만장)",
+      "address": "경기도 이천시 대월면 초지리 산107-1",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0103",
+      "name": "진리공설묘지",
+      "address": "인천광역시 옹진군 덕적면 진리 산340",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0104",
+      "name": "이천시백사공설공원묘지",
+      "address": "경기도 이천시 백사면 지읍로53번길 159 (조읍리)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0105",
+      "name": "점봉동 공원묘지",
+      "address": "경기도 여주시 점봉동 산11-3",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0107",
+      "name": "하다리공설공원묘지",
+      "address": "경기도 여주시 흥천면 하다리 78-3",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0109",
+      "name": "대구시립공원묘지",
+      "address": "경상북도 칠곡군 지천면 낙산로 87 (낙산리)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0110",
+      "name": "모도리공설묘지",
+      "address": "인천광역시 옹진군 북도면 모도리 산41",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0111",
+      "name": "안중공설묘지",
+      "address": "경기도 평택시 안중읍 학현리 산12-1",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0112",
+      "name": "이천시설성공설공원묘지",
+      "address": "경기도 이천시 설성면 수산리 82-2",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0113",
+      "name": "이천시장호원공설공원묘지(만장)",
+      "address": "경기도 이천시 장호원읍 방추리 산64-7",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0114",
+      "name": "선재리공설묘지",
+      "address": "인천광역시 옹진군 영흥면 선재로226번길 85 (선재리)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0115",
+      "name": "이작리공설묘지",
+      "address": "인천광역시 옹진군 자월면 대이작로42번길 90 (이작리, 이작리공설묘지공원)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0117",
+      "name": "신도리공설묘지",
+      "address": "인천광역시 옹진군 북도면 신도리 산153-1",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0118",
+      "name": "장봉리공설묘지",
+      "address": "인천광역시 옹진군 북도면 장봉로582번길 103 (장봉리, 장봉리공설묘지공원)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0119",
+      "name": "청양군추모공원(묘지)",
+      "address": "충청남도 청양군 화성면 신수길 142-18 (수정리)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0120",
+      "name": "와동꽃빛공원(공설묘지)",
+      "address": "경기도 안산시 단원구 순환로 390 (와동)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0121",
+      "name": "춘천안식공원(묘지)",
+      "address": "강원특별자치도 춘천시 동산면 종자리로 331-50 (군자리, 춘천시공설묘원)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0122",
+      "name": "청솔공원",
+      "address": "강원특별자치도 강릉시 사천면 청솔공원길 334 (석교리, 청솔공원관리사무소)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0123",
+      "name": "화도공설묘지(만장)",
+      "address": "경기도 남양주시 화도읍 묵현리 산151",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0124",
+      "name": "수동공설묘지(만장)",
+      "address": "경기도 남양주시 수동면 운수리 400-1",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0125",
+      "name": "완주군 공설공원묘지",
+      "address": "전라북도 완주군 봉동읍 우주로 270-68 (구암리)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0127",
+      "name": "청북공설묘지",
+      "address": "경기도 평택시 청북면 청북로 457-6 (율북리)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0128",
+      "name": "자월리공설묘지",
+      "address": "인천광역시 옹진군 자월면 자월리 산308",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0129",
+      "name": "내리공설묘지",
+      "address": "인천광역시 옹진군 영흥면 내리 산258",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0130",
+      "name": "처리공원묘지",
+      "address": "경기도 여주시 점동면 처리 산6",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0133",
+      "name": "횡성군공설추모공원(묘지)",
+      "address": "강원특별자치도 횡성군 갑천면 태기로구방8길 132 (구방리)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0134",
+      "name": "송탄공설묘지",
+      "address": "경기도 평택시 가재동 산64-1",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0137",
+      "name": "대청리공설묘지",
+      "address": "인천광역시 옹진군 대청면 대청리 산299",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0140",
+      "name": "진촌리공설묘지",
+      "address": "인천광역시 옹진군 백령면 진촌리 산128-1",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0141",
+      "name": "현수리공원묘지",
+      "address": "경기도 여주시 점동면 소피아그린길 62 (현수리)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0142",
+      "name": "연평리공설묘지",
+      "address": "인천광역시 옹진군 연평면 연평리 산10-113",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0144",
+      "name": "남부권공설묘지",
+      "address": "충청남도 당진시 대호지면 봉선길 123 (장정리, 어성정공동묘지)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0151",
+      "name": "성서공동묘지",
+      "address": "대구광역시 달서구 달구벌대로276길 122 (장동)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0152",
+      "name": "솔뫼공설묘지",
+      "address": "충청남도 당진시 우강면 우강송산로 64 (송산리)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0153",
+      "name": "석문공설묘지",
+      "address": "충청남도 당진시 석문면 통정1길 86-38 (삼화리, 공설묘지관리사)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0157",
+      "name": "남해추모누리 공설종합묘원",
+      "address": "경상남도 남해군 서면 연죽로 46-77 (연죽리, 남해공설종합묘원추모누리)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0159",
+      "name": "대호지공설묘지",
+      "address": "충청남도 당진시 대호지면 봉선길 123 (장정리, 어성정공동묘지)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0160",
+      "name": "영락공원묘지",
+      "address": "광주광역시 북구 영락공원로 170 (효령동)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0162",
+      "name": "동명가족묘지",
+      "address": "경상북도 칠곡군 동명면 경북대로 456-6 (금암리)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0163",
+      "name": "동명공동묘지",
+      "address": "경상북도 칠곡군 동명면 학명리 산145-1",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0164",
+      "name": "양평군공설공원묘지",
+      "address": "경기도 양평군 양평읍 중앙로111번길 54 (공흥리, 쉼터공원관리사무실)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0165",
+      "name": "순천시립공원묘지",
+      "address": "전라남도 순천시 용수동길 920 (삼거동)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0166",
+      "name": "용미리제1묘지",
+      "address": "경기도 파주시 광탄면 명봉산로262번길 290 (용미리, 용미1리1묘지공원안내실)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0167",
+      "name": "용미리제2묘지",
+      "address": "경기도 파주시 광탄면 진지로 151 (용미리, 추모의집)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0168",
+      "name": "장화리공설묘지",
+      "address": "인천광역시 강화군 화도면 장화리 산354",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0170",
+      "name": "장정리공설묘지",
+      "address": "인천광역시 강화군 하점면 장정리 산188",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0173",
+      "name": "월곳리공설묘지",
+      "address": "인천광역시 강화군 강화읍 월곳리 산8",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0174",
+      "name": "월롱면 공설묘지",
+      "address": "경기도 파주시 월롱면 덕은리 169-3",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0176",
+      "name": "유치공설공원묘지",
+      "address": "전라남도 장흥군 유치면 대리 산105-1",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0177",
+      "name": "의령군공설묘지",
+      "address": "경상남도 의령군 정곡면 법정로 580-9 (예둔리, 공설묘원)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0181",
+      "name": "장수동공설묘지(매장불가)",
+      "address": "인천광역시 남동구 장수동 산133",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0182",
+      "name": "황산병온공설묘지",
+      "address": "전라남도 해남군 황산면 송호리 890",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0183",
+      "name": "수산동공설묘지(매장불가)",
+      "address": "인천광역시 남동구 수산동 산14",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0184",
+      "name": "인천가족공원 묘지",
+      "address": "인천광역시 부평구 평온로 61 (부평동)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0185",
+      "name": "전곡읍공설묘지",
+      "address": "경기도 연천군 전곡읍 고능리 산21-1",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0186",
+      "name": "장계공설묘지",
+      "address": "전라북도 장수군 장계면 금덕리 산74-1",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0187",
+      "name": "장흥리공설묘지",
+      "address": "인천광역시 강화군 길상면 장흥리 산69-1",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0188",
+      "name": "인산리공설묘지",
+      "address": "인천광역시 강화군 양도면 인산리 산225",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0189",
+      "name": "신림덕화공설묘지",
+      "address": "전라북도 고창군 신림면 가평로 576 (덕화리)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0190",
+      "name": "외포리공설묘지",
+      "address": "인천광역시 강화군 내가면 외포리 산98-1",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0191",
+      "name": "양구군공설묘지",
+      "address": "강원특별자치도 양구군 양구읍 금강산로 518-40 (하리)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0192",
+      "name": "양택공원묘지(봉안묘)",
+      "address": "경기도 김포시 하성면 애기봉로681번길 87-30 (양택리, 양택공원묘지)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0195",
+      "name": "여산공설묘지",
+      "address": "전라북도 익산시 여산면 가람로 515-50 (두여리, 국군유공자위령공원묘지)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0196",
+      "name": "화산연정공설묘지",
+      "address": "전라남도 해남군 화산면 연정리 산61",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0197",
+      "name": "연천읍공설묘지",
+      "address": "경기도 연천군 연천읍 현가리 산16-1",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0198",
+      "name": "삼계공설묘지",
+      "address": "경상북도 영덕군 영덕읍 삼계리 산66",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0201",
+      "name": "죽변화성리공설묘지",
+      "address": "경상북도 울진군 죽변면 성내길 116-9 (화성리, 울진공설묘지관리사무소)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0202",
+      "name": "신월공설묘지(만장)",
+      "address": "경기도 광주시 초월읍 신월리 산68",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0203",
+      "name": "주문공설묘지",
+      "address": "인천광역시 강화군 서도면 주문도리 산33",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0204",
+      "name": "해남신안공설묘지",
+      "address": "전라남도 해남군 해남읍 신안리 467-3",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0205",
+      "name": "오룡군립묘원(묘지)",
+      "address": "전라남도 담양군 무정면 오룡리 산29",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0206",
+      "name": "오상리공설묘지",
+      "address": "인천광역시 강화군 내가면 오상리 산91-2",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0208",
+      "name": "신서면공설묘지",
+      "address": "경기도 연천군 신서면 도신리 산37-1",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0209",
+      "name": "옥천군공설묘지",
+      "address": "충청북도 옥천군 군서면 월전리 산19-1",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0210",
+      "name": "온수리공설묘지",
+      "address": "인천광역시 강화군 길상면 온수리 산21-16",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0211",
+      "name": "왕길공설묘지(만장)",
+      "address": "인천광역시 서구 왕길동 산120",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0212",
+      "name": "양오리공설묘지",
+      "address": "인천광역시 강화군 송해면 양오리 산184",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0213",
+      "name": "상주시공설묘지(만장)",
+      "address": "경상북도 상주시 낙동면 신상리 산8-1",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0214",
+      "name": "왕길조성묘지",
+      "address": "인천광역시 서구 왕길동 산116",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0215",
+      "name": "송전공설묘지",
+      "address": "경기도 용인시 처인구 이동읍 경기동로 793 (송전리, 용인시공설공원묘지)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0217",
+      "name": "군산시공설묘지",
+      "address": "전라북도 군산시 임피면 서원석곡로 436-34 (보석리, 승화원)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0218",
+      "name": "광석리공설묘지",
+      "address": "경기도 양주시 광적면 광석리 산1",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0220",
+      "name": "가납리공설묘지",
+      "address": "경기도 양주시 광적면 가납리 산14",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0222",
+      "name": "구암리공설묘지",
+      "address": "경기도 양주시 남면 구암리 산16",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0223",
+      "name": "신암리공설묘지",
+      "address": "경기도 양주시 남면 신암리 산69",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0224",
+      "name": "신산리공설묘지",
+      "address": "경기도 양주시 남면 신산리 산13",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0225",
+      "name": "황방리공설묘지",
+      "address": "경기도 양주시 남면 황방리 산8",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0226",
+      "name": "한산리공설묘지",
+      "address": "경기도 양주시 남면 한산리 220",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0229",
+      "name": "입암리공설묘지",
+      "address": "경기도 양주시 남면 입암리 352-11",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0230",
+      "name": "상수리공설묘지",
+      "address": "경기도 양주시 남면 상수리 산21",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0232",
+      "name": "두곡리공설묘지",
+      "address": "경기도 양주시 남면 두곡리 산44",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0233",
+      "name": "도하리공설묘지",
+      "address": "경기도 양주시 은현면 도하리 산47",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0234",
+      "name": "하패리공설묘지",
+      "address": "경기도 양주시 은현면 하패리 산77",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0235",
+      "name": "선암리공설묘지",
+      "address": "경기도 양주시 은현면 선암리 산66-1",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0236",
+      "name": "용암리공설묘지",
+      "address": "경기도 양주시 은현면 용암리 산65-1",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0237",
+      "name": "복지리 공설묘지",
+      "address": "경기도 양주시 백석읍 복지리 산21",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0238",
+      "name": "방성리공설묘지",
+      "address": "경기도 양주시 백석읍 방성리 산41",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0239",
+      "name": "답곡리 공설묘지",
+      "address": "경기도 연천군 신서면 답곡리 산269",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0240",
+      "name": "군남면공설묘지",
+      "address": "경기도 연천군 군남면 선곡리 산193",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0241",
+      "name": "우고리공설묘지",
+      "address": "경기도 양주시 광적면 우고리 산1",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0243",
+      "name": "회정동공설묘지",
+      "address": "경기도 양주시 회정동 산13",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0245",
+      "name": "봉양동공설묘지",
+      "address": "경기도 양주시 봉양동 산87",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0248",
+      "name": "광사동공설묘지",
+      "address": "경기도 양주시 광사동 산137-1",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0249",
+      "name": "마전동공설묘지",
+      "address": "경기도 양주시 마전동 산3",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0250",
+      "name": "갑향군립묘원(묘지)",
+      "address": "전라남도 담양군 대전면 추성로 468 (갑향리, 갑향공원)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0252",
+      "name": "어둔동공설묘지",
+      "address": "경기도 양주시 어둔동 산102",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0253",
+      "name": "유양동공설묘지",
+      "address": "경기도 양주시 유양동 산99",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0256",
+      "name": "고제공설공원묘지",
+      "address": "경상남도 거창군 고제면 봉산리 1314",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0257",
+      "name": "삼하리공설묘지",
+      "address": "경기도 양주시 장흥면 삼하리 산35",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0258",
+      "name": "삼상리공설묘지",
+      "address": "경기도 양주시 장흥면 삼상리 산34-1",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0259",
+      "name": "관인면 제1공설묘지",
+      "address": "경기도 포천시 관인면 사정리 산11",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0260",
+      "name": "교산1리공설묘지",
+      "address": "인천광역시 강화군 양사면 교산리 산307",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0261",
+      "name": "비암리공설묘지",
+      "address": "경기도 양주시 광적면 비암리 산18",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0262",
+      "name": "석우리공설묘지",
+      "address": "경기도 양주시 광적면 광적로156번길 27-6 (석우리)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0263",
+      "name": "구리시공설묘지",
+      "address": "경기도 구리시 사노동 산175-20",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0264",
+      "name": "덕도리공설묘지",
+      "address": "경기도 양주시 광적면 덕도리 산27",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0265",
+      "name": "대곡공설묘지(만장)",
+      "address": "인천광역시 서구 대곡동 산202",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0271",
+      "name": "익산하늘공원묘지",
+      "address": "전라북도 익산시 무왕로 1471-63 (석왕동, 익산공원묘지)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0272",
+      "name": "통일촌 공설묘지",
+      "address": "경기도 파주시 군내면 백연리 산27",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0273",
+      "name": "탄현면 공설묘지",
+      "address": "경기도 파주시 탄현면 금승리 산22",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0275",
+      "name": "부안용산공설묘지",
+      "address": "전라북도 고창군 부안면 복분자로 567-2 (용산리)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0277",
+      "name": "북양공설공원묘지",
+      "address": "경기도 화성시 남양읍 북양리 산109-14",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0278",
+      "name": "안성시공설공원묘지(사곡동)",
+      "address": "경기도 안성시 안성맞춤대로 1423-19 (사곡동)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0279",
+      "name": "사천시공설묘지",
+      "address": "경상남도 사천시 사천읍 구암리 산15-2",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0280",
+      "name": "상리공설묘지",
+      "address": "인천광역시 강화군 삼산면 상리 산177",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0282",
+      "name": "상신공원묘지",
+      "address": "경기도 화성시 향남읍 상신리 산96",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0284",
+      "name": "선단동공설묘지",
+      "address": "경기도 포천시 원동교길 259 (동교동)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0288",
+      "name": "미법리공설묘지",
+      "address": "인천광역시 강화군 삼산면 미법리 산12",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0289",
+      "name": "문형공설묘지(만장)",
+      "address": "경기도 광주시 문형동 산65",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0291",
+      "name": "화현면공설묘지",
+      "address": "경기도 포천시 화현면 지현리 산24",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0292",
+      "name": "화천공원묘원",
+      "address": "강원특별자치도 화천군 하남면 원천리 9-13",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0295",
+      "name": "덕포리공설묘지",
+      "address": "인천광역시 강화군 화도면 덕포리 산83",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0296",
+      "name": "도림동공설묘지(매장불가)",
+      "address": "인천광역시 남동구 도림동 산33",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0297",
+      "name": "동산리공설묘지",
+      "address": "인천광역시 강화군 교동면 동산리 산5",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0299",
+      "name": "하일리공설묘지",
+      "address": "인천광역시 강화군 양도면 하일리 산21",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0300",
+      "name": "장흥공설공원묘지",
+      "address": "전라남도 장흥군 장흥읍 금산신기길 131 (금산리, 공원묘지관리실)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0302",
+      "name": "망월묘지공원",
+      "address": "광주광역시 북구 민주로 285 (운정동)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0303",
+      "name": "하늘공원(부곡동공설공원묘지)",
+      "address": "경기도 안산시 상록구 수인로 1824 (부곡동)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0305",
+      "name": "소흘읍제3공설묘지",
+      "address": "경기도 포천시 소흘읍 고모리 산 99번지",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0306",
+      "name": "소흘읍제2공설묘지",
+      "address": "경기도 포천시 소흘읍 무림리 산41번지",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0308",
+      "name": "내촌면 제2공설묘지",
+      "address": "경기도 포천시 내촌면 진목리 산292",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0309",
+      "name": "일동면 공설묘지",
+      "address": "경기도 포천시 일동면 사직리 산141",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0312",
+      "name": "신북면 제4공설묘지",
+      "address": "경기도 포천시 신북면 고일리 산83",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0313",
+      "name": "영북면 제1공설묘지",
+      "address": "경기도 포천시 영북면 운천리 산25",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0314",
+      "name": "영중면 제2공설묘지",
+      "address": "경기도 포천시 영중면 거사리 산151",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0315",
+      "name": "영중면 제1공설묘지",
+      "address": "경기도 포천시 영중면 금주리 산180",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0316",
+      "name": "내촌면 제4공설묘지",
+      "address": "경기도 포천시 내촌면 신팔리 산167",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0317",
+      "name": "내촌면 제3공설묘지",
+      "address": "경기도 포천시 내촌면 마명리 산38",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0318",
+      "name": "군내면 제2공설묘지",
+      "address": "경기도 포천시 군내면 구읍리 131-14",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0319",
+      "name": "군내면 제1공설묘지",
+      "address": "경기도 포천시 군내면 구읍리 산2-1",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0320",
+      "name": "내리공설묘지(화도면)",
+      "address": "인천광역시 강화군 화도면 안골길 27-40 (내리)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0321",
+      "name": "신북면 제6공설묘지",
+      "address": "경기도 포천시 신북면 삼정리 산179",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0322",
+      "name": "신북면 제5공설묘지",
+      "address": "경기도 포천시 신북면 삼정리 산181",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0323",
+      "name": "신북면 제3공설묘지",
+      "address": "경기도 포천시 신북면 삼성당리 산83",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0324",
+      "name": "신북면 제2공설묘지",
+      "address": "경기도 포천시 신북면 갈월리 산222",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0325",
+      "name": "창수면 제3공설묘지",
+      "address": "경기도 포천시 창수면 가양리 산208",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0326",
+      "name": "창수면 제2공설묘지",
+      "address": "경기도 포천시 창수면 주원리 산128",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0327",
+      "name": "창수면 제1공설묘지",
+      "address": "경기도 포천시 창수면 추동리 산20",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0328",
+      "name": "영북면 제2공설묘지",
+      "address": "경기도 포천시 영북면 자일리 산7",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0329",
+      "name": "관인면 제2공설묘지",
+      "address": "경기도 포천시 관인면 냉정리 산149-1",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0330",
+      "name": "가산면 제4공설묘지",
+      "address": "경기도 포천시 가산면 우금리 산6-1",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0331",
+      "name": "운연동공설묘지(매장불가)",
+      "address": "인천광역시 남동구 운연동 산45, 산89",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0332",
+      "name": "가산면 제3공설묘지",
+      "address": "경기도 포천시 가산면 금현리 740",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0333",
+      "name": "가산면 제2공설묘지",
+      "address": "경기도 포천시 가산면 가산리 산72",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0334",
+      "name": "가산면 제1공설묘지",
+      "address": "경기도 포천시 가산면 감암리 산12",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0335",
+      "name": "이동공설묘지(만장)",
+      "address": "경기도 의왕시 이동 산57",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0336",
+      "name": "학의동공설묘지(만장)",
+      "address": "경기도 의왕시 학의동 산14",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0337",
+      "name": "후방산 공설묘지",
+      "address": "전라북도 진안군 진안읍 중앙로 67 (군하리, 진안군청)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0340",
+      "name": "표선면공설묘지",
+      "address": "제주특별자치도 서귀포시 표선면 서성일로189번길 313 (성읍리)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0342",
+      "name": "안양시청계공설묘지(만장)",
+      "address": "경기도 의왕시 청계동 산8-5",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0344",
+      "name": "청평면공설묘지",
+      "address": "경기도 가평군 가평읍 상색리 산64-3",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0345",
+      "name": "창리공설묘지",
+      "address": "인천광역시 강화군 선원면 창리 산84",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0347",
+      "name": "초지리공설묘지",
+      "address": "인천광역시 강화군 길상면 초지리 산20",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0348",
+      "name": "충해공원묘지",
+      "address": "경상남도 거제시 연초면 천곡리 산71",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0350",
+      "name": "지석리공설묘지",
+      "address": "인천광역시 강화군 교동면 지석리 산155",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0351",
+      "name": "하도리공설묘지",
+      "address": "인천광역시 강화군 송해면 하도리 산13",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0353",
+      "name": "임실군공설묘지",
+      "address": "전라북도 임실군 성수면 월평리 산193",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0355",
+      "name": "도장리공설묘지",
+      "address": "인천광역시 강화군 양도면 도장리 산121",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0356",
+      "name": "동강면공설묘지",
+      "address": "전라남도 나주시 동강면 월양리 15-11",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0357",
+      "name": "동검리공설묘지",
+      "address": "인천광역시 강화군 길상면 동검리 산122",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0358",
+      "name": "두운리공동묘지",
+      "address": "인천광역시 강화군 불은면 두운리 산243",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0359",
+      "name": "말도공설묘지",
+      "address": "인천광역시 강화군 서도면 말도리 산21",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0361",
+      "name": "망월리공설묘지",
+      "address": "인천광역시 강화군 하점면 망월리 산 44",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0362",
+      "name": "매음리공설묘지",
+      "address": "인천광역시 강화군 삼산면 매음리 산296",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0363",
+      "name": "문평면공설묘지",
+      "address": "전라남도 나주시 문평면 북동리 산119-3",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0364",
+      "name": "반남면공설묘지",
+      "address": "전라남도 나주시 반남면 흥덕리 302-33",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0365",
+      "name": "벽제리묘지",
+      "address": "경기도 고양시 덕양구 보광로 193-2 (벽제동)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0366",
+      "name": "보성공설묘지",
+      "address": "전라남도 보성군 보성읍 대야리 1644-1",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0367",
+      "name": "볼음공설묘지",
+      "address": "인천광역시 강화군 서도면 볼음도리 산82",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0368",
+      "name": "봉소리공설묘지",
+      "address": "인천광역시 강화군 교동면 봉소리 180-1",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0369",
+      "name": "봉황면공설묘지",
+      "address": "전라남도 나주시 봉황면 철천리 산132",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0370",
+      "name": "부근리공설묘지",
+      "address": "인천광역시 강화군 하점면 부근리 산148",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0372",
+      "name": "북면공설묘지",
+      "address": "경기도 가평군 북면 제령리 산78-3",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0373",
+      "name": "북성리공설묘지",
+      "address": "인천광역시 강화군 양사면 북성리 산179",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0374",
+      "name": "사기리공설묘지",
+      "address": "인천광역시 강화군 화도면 사기리 산116",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0375",
+      "name": "산포면공설묘지",
+      "address": "전라남도 나주시 산포면 신도리 산24-1",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0376",
+      "name": "삼거리공설묘지",
+      "address": "인천광역시 강화군 하점면 삼거리 산256",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0377",
+      "name": "덕하2리공설묘지",
+      "address": "인천광역시 강화군 양사면 덕하리 산352",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0378",
+      "name": "덕하1리공설묘지",
+      "address": "인천광역시 강화군 양사면 덕하리 산304",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0379",
+      "name": "가평읍 공설묘지(구 제1공설묘지)",
+      "address": "경기도 가평군 가평읍 상색리 산64-3",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0380",
+      "name": "고능리공동묘지",
+      "address": "인천광역시 강화군 불은면 고능리 172",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0381",
+      "name": "고천리공설묘지",
+      "address": "인천광역시 강화군 내가면 고천리 산11",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0382",
+      "name": "공산면공설묘지",
+      "address": "전라남도 나주시 공산면 금곡리 317-3",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0383",
+      "name": "교산리공설묘지(별립산)",
+      "address": "인천광역시 강화군 양사면 교산리 산355-1",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0384",
+      "name": "구례군공설묘지",
+      "address": "전라남도 구례군 마산면 사도리 산34",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0386",
+      "name": "국화리공설묘지",
+      "address": "인천광역시 강화군 강화읍 국화리 산291",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0387",
+      "name": "금남동공설묘지",
+      "address": "전라남도 나주시 보산동 산3",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0388",
+      "name": "길정리공설묘지",
+      "address": "인천광역시 강화군 양도면 길정리 산228-1",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0389",
+      "name": "길직1리공설묘지",
+      "address": "인천광역시 강화군 길상면 길직리 산247",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0390",
+      "name": "길직2리공설묘지",
+      "address": "인천광역시 강화군 길상면 길직리 1164-2",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0392",
+      "name": "남산리공설묘지",
+      "address": "인천광역시 강화군 강화읍 남산리 산50",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0393",
+      "name": "남원읍공설묘지",
+      "address": "제주특별자치도 서귀포시 남원읍 서성로 955-24 (수망리, 공동장례식장)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0394",
+      "name": "남평읍공설묘지",
+      "address": "전라남도 나주시 남평읍 교원리 산10-1",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0395",
+      "name": "내곡리묘지",
+      "address": "경기도 남양주시 진접읍 내곡리 558-3",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0396",
+      "name": "넙성리공동묘지",
+      "address": "인천광역시 강화군 불은면 넙성리 산5",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0397",
+      "name": "다도면공설묘지",
+      "address": "전라남도 나주시 다도면 풍산리 산26",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0398",
+      "name": "다시면공설묘지",
+      "address": "전라남도 나주시 다시면 회진리 산35",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0399",
+      "name": "당산리공설묘지",
+      "address": "인천광역시 강화군 송해면 당산리 산58",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0400",
+      "name": "대정읍공설묘지",
+      "address": "제주특별자치도 서귀포시 대정읍 보성리 2135",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0401",
+      "name": "덕성리공동묘지",
+      "address": "인천광역시 강화군 불은면 덕성리 737-8",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0402",
+      "name": "삼동암공동묘지",
+      "address": "인천광역시 강화군 불은면 삼동암리 산217",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0403",
+      "name": "성산읍공설묘지",
+      "address": "제주특별자치도 서귀포시 성산읍 금백조로 548 (수산리)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0404",
+      "name": "성북동공설묘지",
+      "address": "전라남도 나주시 대호동 산161",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0405",
+      "name": "의정부시공설묘지",
+      "address": "경기도 양주시 광적면 석우리 산19",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0406",
+      "name": "영산동공설묘지",
+      "address": "전라남도 나주시 평산동 산65-4",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0407",
+      "name": "세지면공설묘지",
+      "address": "전라남도 나주시 세지면 대산리 산108",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0410",
+      "name": "숭뢰리공설묘지",
+      "address": "인천광역시 강화군 송해면 숭뢰리 산63",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0411",
+      "name": "용담망향의공설묘지",
+      "address": "전라북도 진안군 용담면 송풍리 산101-1",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0412",
+      "name": "신삼리공설묘지",
+      "address": "인천광역시 강화군 하점면 신삼리 산107",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0413",
+      "name": "신정리공설묘지",
+      "address": "인천광역시 강화군 선원면 신정리 산63",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0414",
+      "name": "왕곡면공설묘지",
+      "address": "전라남도 나주시 왕곡면 덕산리 산74",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0415",
+      "name": "신현리공동묘지",
+      "address": "인천광역시 강화군 불은면 신현리 산59",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0416",
+      "name": "아차공설묘지",
+      "address": "인천광역시 강화군 서도면 아차도리 산13",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0417",
+      "name": "완도군추모공원",
+      "address": "전라남도 완도군 군외면 청해진서로 1702 (삼두리)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0418",
+      "name": "안덕면공설묘지",
+      "address": "제주특별자치도 서귀포시 안덕면 상창리 1119",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0421",
+      "name": "영강동공설묘지",
+      "address": "전라남도 나주시 안창동 97",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0422",
+      "name": "설악면공설묘지",
+      "address": "경기도 가평군 설악면 선촌리 산50",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0423",
+      "name": "이창동공설묘지",
+      "address": "전라남도 나주시 이창동 산19-1",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0424",
+      "name": "삼성리공동묘지",
+      "address": "인천광역시 강화군 불은면 삼성리 산77-2",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0425",
+      "name": "삼흥리공설묘지",
+      "address": "인천광역시 강화군 양도면 삼흥리 산171",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0426",
+      "name": "상면공설묘지",
+      "address": "경기도 가평군 상면 연하리 산88-6",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0427",
+      "name": "상용리공설묘지",
+      "address": "인천광역시 강화군 교동면 상용리 산215",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0428",
+      "name": "색달동공설묘지",
+      "address": "제주특별자치도 서귀포시 색달동 산2-1",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0429",
+      "name": "서검리공설묘지",
+      "address": "인천광역시 강화군 삼산면 서검리 산50",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0432",
+      "name": "석모리공설묘지",
+      "address": "인천광역시 강화군 삼산면 석모리 산308",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0433",
+      "name": "석포리공설묘지",
+      "address": "인천광역시 강화군 삼산면 석포리 산83",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0434",
+      "name": "인화리공설묘지",
+      "address": "인천광역시 강화군 양사면 인화리 산336",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0435",
+      "name": "선두리공설묘지",
+      "address": "인천광역시 강화군 길상면 선두리 산204",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0445",
+      "name": "금천면공설묘지(폐쇄)",
+      "address": "전라남도 나주시 금천면 오강리 산33",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0452",
+      "name": "상전망향의공설묘지",
+      "address": "전라북도 진안군 상전면 갈현리 367",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0471",
+      "name": "노안면공설묘지(폐쇄)",
+      "address": "전라남도 나주시 노안면 유곡리 산163",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0476",
+      "name": "보령시마을단위공원묘지",
+      "address": "충청남도 보령시 웅천읍 수부리 산33-1",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0477",
+      "name": "가평추모공원(구 제2공설묘지)",
+      "address": "경기도 가평군 가평읍 읍내리 산125",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0478",
+      "name": "자일동공설묘지",
+      "address": "경기도 의정부시 호국로1694번길 30-70 (자일동)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0486",
+      "name": "상효동공설묘지",
+      "address": "제주특별자치도 서귀포시 상효동 1927",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0487",
+      "name": "광대리 공원묘지",
+      "address": "경기도 여주시 세종대왕면 광대리 198-18",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0488",
+      "name": "광양시립영세공원 묘지",
+      "address": "전라남도 광양시 광양읍 직동1길 300 (죽림리)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0489",
+      "name": "구룡공설공원묘지",
+      "address": "경상남도 함양군 함양읍 구룡리 산11",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0497",
+      "name": "안양시안산공설묘지(만장)",
+      "address": "경기도 안산시 단원구 화정동 산116-1",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0500",
+      "name": "홍성군공원묘지",
+      "address": "충청남도 홍성군 갈산면 부기리 3",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0501",
+      "name": "대야리공설묘지",
+      "address": "강원특별자치도 영월군 김삿갓면 대야리 산56",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0504",
+      "name": "오식도공설묘지(민간위탁)",
+      "address": "전라북도 군산시 오식도동 503-2",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0536",
+      "name": "서남권추모공원 봉안당",
+      "address": "전라북도 정읍시 감곡면 정읍북로 1850 (통석리)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0573",
+      "name": "보령시모란공원 봉안당",
+      "address": "충청남도 보령시 성주면 만수로 695-14 (개화리, 모란공원사무실)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0584",
+      "name": "서울시립승화원 추모의집",
+      "address": "경기도 고양시 덕양구 통일로 504 (대자동)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0611",
+      "name": "은하수공원 달님의집(봉안당)",
+      "address": "세종특별자치시 정안세종로 1527 (산울동, 은하수공원)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0612",
+      "name": "속초시추모의집",
+      "address": "강원특별자치도 속초시 이목로 196 (노학동)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0613",
+      "name": "예산군추모의집 제1관",
+      "address": "충청남도 예산군 응봉면 예당로 1345-12 (평촌리, 예산군추모공원)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0615",
+      "name": "양구봉안공원 봉안당",
+      "address": "강원특별자치도 양구군 양구읍 금강산로 518-40 (하리)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0647",
+      "name": "하남시 마루공원(봉안시설)",
+      "address": "경기도 하남시 하남대로545번길 22-30 (천현동)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0650",
+      "name": "화성함백산추모공원(별빛쉼터)",
+      "address": "경기도 화성시 매송면 서해로 2448-32 (숙곡리)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0658",
+      "name": "금오영당",
+      "address": "경상남도 하동군 진교면 달구지길 95-5 (술상리)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0667",
+      "name": "여주추모공원 봉안담",
+      "address": "경기도 여주시 가남읍 여주남로 769 (본두리)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0669",
+      "name": "안동하늘공원",
+      "address": "경상북도 안동시 임하면 고곡길 327 (고곡리, 안동하늘공원)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0670",
+      "name": "금산군공설봉안당",
+      "address": "충청남도 금산군 복수면 복수로 1015-71 (신대리)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0674",
+      "name": "제천시영원한쉼터봉안당",
+      "address": "충청북도 제천시 송학면 포전리 373번지 외",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0675",
+      "name": "대전추모공원 영락원",
+      "address": "대전광역시 서구 상보안윗길 160 (괴곡동)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0678",
+      "name": "홍천군공설묘원",
+      "address": "강원특별자치도 홍천군 홍천읍 느리울길 141-22 (하오안리)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0684",
+      "name": "정선하늘원",
+      "address": "강원특별자치도 정선군 여량면 서동로 3867-26 (남곡리, 정선하늘공원)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0685",
+      "name": "강남구추모의집",
+      "address": "충청북도 음성군 금왕읍 덕금로 936-61 (용계리)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0687",
+      "name": "영광군 공설추모공원 봉안당",
+      "address": "전라남도 영광군 군남면 광암로 174",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0690",
+      "name": "광명메모리얼파크",
+      "address": "경기도 광명시 자경로 153 (일직동)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0691",
+      "name": "공주나래원 봉안당",
+      "address": "충청남도 공주시 이인면 삼배실길 70 (운암리, 나래원)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0696",
+      "name": "서대문구추모의집",
+      "address": "충청북도 음성군 금왕읍 덕금로 936-61 (용계리)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0699",
+      "name": "사천시누리원(봉안시설)",
+      "address": "경상남도 사천시 해안관광로 208-66 (송포동, 사천공설화장장)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0707",
+      "name": "용인평온의숲(평온마루 봉안당)",
+      "address": "경기도 용인시 처인구 이동면 평온의숲로 77 (어비리, 용인평온의숲)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0708",
+      "name": "논산시양지추모원",
+      "address": "충청남도 논산시 양촌면 중산길 165-11 (중산리)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0709",
+      "name": "울진군립추모원(봉안시설)",
+      "address": "경상북도 울진군 울진읍 대흥신림로 1046-261 (신림리)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0711",
+      "name": "구룡공설공원묘지",
+      "address": "경상남도 함양군 함양읍 구룡리 산11",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0716",
+      "name": "김포시추모공원(봉안담)",
+      "address": "경기도 김포시 통진읍 애기봉로571번길 165 (귀전리83-4)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0719",
+      "name": "하늘공원(부곡동공설공원묘지)",
+      "address": "경기도 안산시 상록구 수인로 1824 (부곡동)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0722",
+      "name": "완도군추모공원",
+      "address": "전라남도 완도군 군외면 청해진서로 1702 (삼두리)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0725",
+      "name": "아산시공설봉안당",
+      "address": "충청남도 아산시 송악면 외암로 30-30 (거산리)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0729",
+      "name": "울산하늘공원 추모의집",
+      "address": "울산광역시 울주군 삼동면 보삼길 550 (조일리)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0733",
+      "name": "이천시립 추모의집(봉안)",
+      "address": "경기도 이천시 백사면 지읍로53번길 159 (조읍리)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0735",
+      "name": "청솔공원",
+      "address": "강원특별자치도 강릉시 사천면 청솔공원길 334 (석교리, 청솔공원관리사무소)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0736",
+      "name": "광양시립영세공원 봉안당",
+      "address": "전라남도 광양시 광양읍 직동1길 300 (죽림리)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0737",
+      "name": "동대문구추모의집",
+      "address": "충청북도 음성군 금왕읍 덕금로 936-61 (용계리)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0739",
+      "name": "의왕하늘쉼터(봉안담)",
+      "address": "경기도 의왕시 오매기백운산길 41-57 (오전동)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0741",
+      "name": "전주효자공원",
+      "address": "전라북도 전주시 완산구 콩쥐팥쥐로 1705-138 (효자동3가, 전주승화원)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0743",
+      "name": "경신하늘뜰공원 봉안당",
+      "address": "경기도 양주시 남면 화합로430번길 98(경신리, 경신하늘뜰공원)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0745",
+      "name": "태백시납골당",
+      "address": "강원도 태백시 백두대간로 844 (창죽동, 태백공동묘지)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0747",
+      "name": "평택시립추모공원",
+      "address": "경기도 평택시 청북읍 청북로 457-6 (율북리)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0748",
+      "name": "화성시추모공원 봉안당",
+      "address": "경기도 화성시 비봉면 주석로 545 (청요리, 화성시추모공원)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0749",
+      "name": "성남장례문화사업소 하늘누리 제1추모원",
+      "address": "경기도 성남시 중원구 순암로 787 (갈현동, 장례문화사업소)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0750",
+      "name": "성남장례문화사업소 하늘누리 제2추모원",
+      "address": "경기도 성남시 중원구 순암로 787 (갈현동, 장례문화사업소)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0751",
+      "name": "천안추모공원 봉안당",
+      "address": "충청남도 천안시 동남구 광덕면 밤나무골길 38 (원덕리)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0752",
+      "name": "경주하늘마루봉안당",
+      "address": "경상북도 경주시 서면 하늘마루길 330 (도리)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0753",
+      "name": "옥천군봉안당 선화원",
+      "address": "충청북도 옥천군 군서면 성왕로 982 (월전리)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0755",
+      "name": "서산시 희망공원(봉안시설)",
+      "address": "충청남도 서산시 인지면 무학재2길 106 (산동리)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0756",
+      "name": "고성군추모의집",
+      "address": "강원도 고성군 죽왕면 공설묘원길 47 (가진리, 추모의집)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0758",
+      "name": "무주추모의집(봉안)",
+      "address": "전라북도 무주군 무주읍 괴목로 1359-72 (당산리)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0759",
+      "name": "수원시연화장 추모의집",
+      "address": "경기도 수원시 영통구 광교호수로 278 (하동, 수원시연화장)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0761",
+      "name": "양양군공설묘원 봉안당",
+      "address": "강원특별자치도 양양군 양양읍 남대천로 251-123 (월리)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0762",
+      "name": "여수시영락공원 제1봉안당",
+      "address": "전라남도 여수시 소라면 의곡길 494 (봉두리, 영락공원)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0763",
+      "name": "무지개 뜨는 언덕",
+      "address": "경기도 김포시 김포한강4로 419-39 (마산동, 무지개뜨는언덕)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0771",
+      "name": "고창군추모의집",
+      "address": "전라북도 고창군 부안면 복분자로 559 (용산리, 고창군추모의집)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0772",
+      "name": "통영시공설봉안당",
+      "address": "경상남도 통영시 장대길 144 (정량동)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0776",
+      "name": "순천시립추모공원 제1·2봉안당",
+      "address": "전라남도 순천시 양율길 132 (야흥동)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0777",
+      "name": "청양군추모공원(봉안당)",
+      "address": "충청남도 청양군 화성면 신수길 142-18 (수정리)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0779",
+      "name": "서귀포추모공원",
+      "address": "제주특별자치도 서귀포시 돈내코로 295-28 (상효동, 공설봉안당)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0781",
+      "name": "광주영락공원 제2추모관",
+      "address": "광주광역시 북구 영락공원로 171 (효령동, 영락공원)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0784",
+      "name": "광주영락공원 제1추모관",
+      "address": "광주광역시 북구 영락공원로 170 (효령동, 영락공원)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0785",
+      "name": "창녕추모공원",
+      "address": "경상남도 창녕군 창녕읍 탐하로 203 (술정리, 창녕군추모공원)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0786",
+      "name": "여수시영락공원 제2봉안당",
+      "address": "전라남도 여수시 소라면 의곡길 494 (봉두리, 영락공원)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0788",
+      "name": "거제시추모의집",
+      "address": "경상남도 거제시 사등면 지석로 219-38 (지석리)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0793",
+      "name": "춘천안식공원(안식의집)",
+      "address": "강원특별자치도 춘천시 동산면 종자리로 331-50 (군자리, 춘천시공설묘원)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0797",
+      "name": "성북구추모의집",
+      "address": "경기도 화성시 향남읍 서봉로755번길 17-15 (동오리)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0799",
+      "name": "진주안락공원 추모당",
+      "address": "경상남도 진주시 진산로 141-42 (장재동, 진주시안락공원)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0805",
+      "name": "종로구추모의집",
+      "address": "경기도 화성시 향남읍 서봉로755번길 17-15(동오리)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0806",
+      "name": "오룡군립묘원(봉안)",
+      "address": "전라남도 담양군 무정면 오룡리 산29",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0808",
+      "name": "인천가족공원 만월당",
+      "address": "인천광역시 부평구 평온로 61 (부평동)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0809",
+      "name": "가평군공설봉안묘",
+      "address": "경기도 가평군 북면 이곡리 산7",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0811",
+      "name": "의령군공설납골묘",
+      "address": "경상남도 의령군 정곡면 법정로 580-9 (예둔리, 공설묘원)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0812",
+      "name": "서천군영명각",
+      "address": "충청남도 서천군 판교면 심동리 산 73-1번지",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0813",
+      "name": "휴마루",
+      "address": "강원특별자치도 원주시 흥업면 복술길 33 (사제리, 원주추모공원하늘나래원)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0822",
+      "name": "횡성군공설추모공원 추모관",
+      "address": "강원특별자치도 횡성군 갑천면 태기로구방8길 132 (구방리)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0825",
+      "name": "완주군 추모의집",
+      "address": "전라북도 완주군 봉동읍 우주로 270-68 (구암리)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0826",
+      "name": "울릉하늘섬공원",
+      "address": "경상북도 울릉군 서면 태하령길 314 (남서리)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0827",
+      "name": "춘천안식공원(봉안묘)",
+      "address": "강원특별자치도 춘천시 동산면 종자리로 331-50 (군자리, 춘천시공설묘원)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0829",
+      "name": "동해시하늘정원봉안당",
+      "address": "강원특별자치도 동해시 강원남부로 4589 (단봉동, 동해시하늘정원)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0830",
+      "name": "갑향군립묘원(봉안)",
+      "address": "전라남도 담양군 대전면 추성로 468 (갑향리, 갑향공원)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0832",
+      "name": "합천군공설봉안담",
+      "address": "경상남도 합천군 율곡면 제내리 산45",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0839",
+      "name": "칠곡군공설봉안당",
+      "address": "경상북도 칠곡군 지천면 낙산로1길 127-33 (낙산리)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0841",
+      "name": "인천가족공원 금마총",
+      "address": "인천광역시 부평구 평온로 61 (부평동)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0842",
+      "name": "김해추모의집 제1·2봉안당",
+      "address": "경상남도 김해시 주촌면 서부로1637번길 574 (덕암리)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0843",
+      "name": "인천가족공원 추모의집",
+      "address": "인천광역시 부평구 평온로 61 (부평동)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0844",
+      "name": "거창공설공원묘지 봉안당",
+      "address": "경상남도 거창군 거창읍 거열로4길 523-23 (가지리)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0846",
+      "name": "증평군 추모의집 ",
+      "address": "충청북도 음성군 금왕읍 덕금로 936-61, 예은추모공원 내 (용계리)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0849",
+      "name": "안성시추모공원(봉안담)",
+      "address": "경기도 안성시 미양면 보촌4길 70 (고지리)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0850",
+      "name": "산청군공설묘지 본향원",
+      "address": "경상남도 산청군 신등면 신등가회로 357-17 (가술리, 본향원)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0851",
+      "name": "인천가족공원 별빛당",
+      "address": "인천광역시 부평구 평온로 61 (부평동)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0854",
+      "name": "대호지공설묘지 봉안묘(개인·가족·평장)",
+      "address": "충청남도 당진시 대호지면 봉선길 123 (장정리, 어성정공동묘지)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0855",
+      "name": "강동구추모의집",
+      "address": "충청북도 음성군 금왕읍 덕금로 936-61 (용계리)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0856",
+      "name": "석문공설묘지",
+      "address": "충청남도 당진시 석문면 통정1길 86-38 (삼화리, 공설묘지관리사)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0858",
+      "name": "대정읍봉안당(만장)",
+      "address": "제주특별자치도 서귀포시 대정읍 일주서로2498번길 133-45 (보성리)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0859",
+      "name": "대호지공설묘지 어성정",
+      "address": "충청남도 당진시 대호지면 봉선길 123 (장정리, 어성정공동묘지)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0860",
+      "name": "성산읍공설봉안당",
+      "address": "제주특별자치도 서귀포시 성산읍 금백조로 548 (수산리)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0861",
+      "name": "솔뫼공설묘지",
+      "address": "충청남도 당진시 우강면 우강송산로 64 (송산리)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0862",
+      "name": "솔뫼공설묘지",
+      "address": "충청남도 당진시 우강면 우강송산로 64 (송산리)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0864",
+      "name": "청솔공원 봉안묘",
+      "address": "강원특별자치도 강릉시 사천면 석교리 산162",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0865",
+      "name": "노들하늘공원(동작구추모의집)",
+      "address": "경기도 화성시 향남읍 서봉로755번길 17-15(동오리)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0866",
+      "name": "군산시추모관",
+      "address": "전북 군산시 서원석곡로 436-34 (승화원)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0867",
+      "name": "표선면봉안당",
+      "address": "제주특별자치도 서귀포시 표선면 서성일로 189번길 313 (성읍리)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0868",
+      "name": "태안군 영묘전",
+      "address": "충청남도 태안군 남면 저드래길 116-304 (당암리, 태안군공설영묘)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0870",
+      "name": "익산시 추모의집 제2관",
+      "address": "전라북도 익산시 무왕로 1471-63 (석왕동, 익산공원묘지)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0872",
+      "name": "도봉구추모의집",
+      "address": "경기도 화성시 향남읍 서봉로755번길 17-15(동오리)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0873",
+      "name": "광진구추모의집",
+      "address": "경기도 화성시 향남읍 서봉로755번길 17-15(동오리)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0874",
+      "name": "성동구추모의집",
+      "address": "경기도 화성시 향남읍 서봉로755번길 17-15(동오리)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0875",
+      "name": "중구추모의집",
+      "address": "경기도 화성시 향남읍 서봉로755번길 17-15(동오리)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0877",
+      "name": "대구광역시 낙산제2추모의집",
+      "address": "경상북도 칠곡군 지천면 낙산로 87 (낙산리)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0878",
+      "name": "장성군추모공원",
+      "address": "전라남도 장성군 삼계면 영장로 900 (부성리)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0879",
+      "name": "익산시 추모의집 제1관",
+      "address": "전라북도 익산시 무왕로 1471-63 (석왕동, 익산공원묘지)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0882",
+      "name": "대구광역시 낙산추모의집",
+      "address": "경상북도 칠곡군 지천면 낙산로 87 (낙산리)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0909",
+      "name": "가평추모공원(봉안시설)",
+      "address": "경기도 가평군 가평읍 석봉로191번길 65-84 (읍내리, 가평추모공원)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0924",
+      "name": "화원관광단지공설봉안당",
+      "address": "전라남도 해남군 화원면 신덕리 산250",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0936",
+      "name": "전주효자공원",
+      "address": "전라북도 전주시 완산구 콩쥐팥쥐로 1705-138 (효자동3가, 전주승화원)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0951",
+      "name": "장기공설봉안묘",
+      "address": "경상남도 고성군 동해면 동해로 1236 (장기리)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-0953",
+      "name": "홍천군공설묘원",
+      "address": "강원특별자치도 홍천군 홍천읍 느리울길 141-22 (하오안리)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-1012",
+      "name": "인천가족공원 가족봉안담",
+      "address": "인천광역시 부평구 평온로 61 (부평동, 관리사무소및홍보관)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-1016",
+      "name": "수원시연화장 봉안담",
+      "address": "경기도 수원시 영통구 광교호수로 278 (하동, 수원시연화장)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-1017",
+      "name": "화천공원묘원 봉안묘",
+      "address": "강원특별자치도 화천군 하남면 영서로 5697-69 (원천리, 화천공원묘원)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-1018",
+      "name": "태백시납골묘",
+      "address": "강원특별자치도 태백시 백두대간로 844 (창죽동, 태백공동묘지)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-1023",
+      "name": "보령시모란공원",
+      "address": "충청남도 보령시 성주면 만수로 693 (개화리)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-1024",
+      "name": "예산군추모의집 제2관",
+      "address": "충청남도 예산군 응봉면 예당로 1345-12 (평촌리, 예산군추모공원)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-1025",
+      "name": "예산군추모공원",
+      "address": "충청남도 예산군 응봉면 예당로 1345-12 (평촌리, 예산군추모공원)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-1028",
+      "name": "산청군공설묘지 봉안묘",
+      "address": "경상남도 산청군 신등면 신등가회로 357-17 (가술리, 본향원)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-1029",
+      "name": "용인평온의숲(평온마루 봉안묘)",
+      "address": "경기도 용인시 처인구 이동읍 평온의숲로 77 (어비리, 용인평온의숲)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-1081",
+      "name": "김천시립추모공원(봉안당)",
+      "address": "경상북도 김천시 봉산면 영남대로 431 (신암리)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-1089",
+      "name": "남도광역추모공원(봉안당)",
+      "address": "전라남도 해남군 황산면 호교길 241-250 (일신리)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-1094",
+      "name": "양평군공설봉안시설",
+      "address": "경기도 양평군 양평읍 중앙로111번길 54 (공흥리, 쉼터공원관리사무실)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-1108",
+      "name": "정선하늘터",
+      "address": "강원특별자치도 정선군 사북읍 소금강로 3500-34 (사북리)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-1111",
+      "name": "국립소록도병원 만령당",
+      "address": "전라남도 고흥군 도양읍 소록해안길 65 (소록리, 국립소록도병원)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-1115",
+      "name": "홍성군공원묘지 가족봉안묘",
+      "address": "충청남도 홍성군 갈산면 갈산서길170번길 109-47 (부기리)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-1116",
+      "name": "광양시립영세공원 봉안담",
+      "address": "전라남도 광양시 광양읍 직동1길 300 (죽림리)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-1125",
+      "name": "익산시 추모의집 제3관",
+      "address": "전라북도 익산시 무왕로 1471-63 (석왕동, 익산공원묘지)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-1127",
+      "name": "결초보은 추모공원",
+      "address": "충청북도 보은군 보은읍 속리산로 37 (누청리)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-1128",
+      "name": "영동군 공설봉안묘",
+      "address": "충청북도 영동군 영동읍 오탄리 산45",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-1139",
+      "name": "보령시마을단위공원묘지",
+      "address": "충청남도 보령시 웅천읍 수부리 산33-1",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-1141",
+      "name": "양구봉안공원 봉안담",
+      "address": "강원특별자치도 양구군 양구읍 금강산로 518-40 (하리)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-1156",
+      "name": "자일동공설묘지 무연고 봉안당",
+      "address": "경기도 의정부시 호국로1694번길 30-70 (자일동, 의정부시자일동공설묘지)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-1157",
+      "name": "구리시공설묘지",
+      "address": "경기도 구리시 사노동 산175-20",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-1158",
+      "name": "구리시공설묘지",
+      "address": "경기도 구리시 사노동 산175-20",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-1159",
+      "name": "광주영락공원 봉안담",
+      "address": "광주광역시 북구 효령동 100-2",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-1160",
+      "name": "광주영락공원 봉안묘",
+      "address": "광주광역시 북구 효령동 산47-1",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-1163",
+      "name": "영월군 봉안당",
+      "address": "강원특별자치도 영월군 주천면 솔치로 240-120 (신일리)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-1206",
+      "name": "의성군 천제공원(수목·잔디)",
+      "address": "경상북도 의성군 의성읍 의성길안로 287-29 (중리리)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-1220",
+      "name": "국립하늘숲추모원",
+      "address": "경기도 양평군 양동면 양서동로 372 (계정리)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-1223",
+      "name": "제천시영원한쉼터 자연장지",
+      "address": "충청북도 제천시 송학면 송학주천로9길 122 (포전리)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-1224",
+      "name": "울진군립추모원(자연장지)",
+      "address": "경상북도 울진군 울진읍 대흥신림로 1046-280 (신림리)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-1228",
+      "name": "의왕하늘쉼터(자연장)",
+      "address": "경기도 의왕시 오매기백운산길 41-57 (오전동)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-1229",
+      "name": "와동꽃빛공원 자연장지",
+      "address": "경기도 안산시 단원구 순환로 390 (와동)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-1230",
+      "name": "울산하늘공원 자연장지",
+      "address": "울산광역시 울주군 삼동면 보삼길 550 (조일리)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-1236",
+      "name": "광양시립영세공원 자연장지",
+      "address": "전라남도 광양시 광양읍 직동1길 300 (죽림리)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-1237",
+      "name": "대전추모공원 자연장지",
+      "address": "대전광역시 서구 상보안윗길 160 (괴곡동)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-1240",
+      "name": "김포시추모공원(자연장지)",
+      "address": "경기도 김포시 통진읍 애기봉로571번길 165 (귀전리)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-1241",
+      "name": "수원시연화장 자연장지",
+      "address": "경기도 수원시 영통구 광교호수로 278 (하동, 수원시연화장)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-1242",
+      "name": "공주나래원 자연장지",
+      "address": "충청남도 공주시 이인면 삼배실길 70 (운암리, 나래원)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-1243",
+      "name": "사천시 누리원(자연장지)",
+      "address": "경상남도 사천시 해안관광로 208-66 (송포동, 사천공설화장장)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-1244",
+      "name": "태백공원묘원",
+      "address": "강원도 태백시 백두대간로 844 (창죽동, 태백공동묘지)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-1245",
+      "name": "전주효자자연장",
+      "address": "전라북도 전주시 완산구 콩쥐팥쥐로 1705-138(효자동3가, 전주승화원)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-1248",
+      "name": "안성시추모공원(자연장지)",
+      "address": "경기도 안성시 미양면 보촌4길 70 (고지리)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-1252",
+      "name": "완도군추모공원",
+      "address": "전라남도 완도군 군외면 청해진서로 1702 (삼두리)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-1257",
+      "name": "양구봉안공원 자연장지",
+      "address": "강원특별자치도 양구군 양구읍 금강산로 518-40 (하리)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-1258",
+      "name": "홍천군추모공원 자연장지",
+      "address": "강원특별자치도 홍천군 홍천읍 하오안리 산130-1",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-1261",
+      "name": "중대공원자연장지",
+      "address": "경기도 광주시 순암로 192 (중대동)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-1266",
+      "name": "순천시립자연장지",
+      "address": "전라남도 순천시 용수동길 920 (삼거동)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-1270",
+      "name": "월곳리 공설자연장지",
+      "address": "인천광역시 강화군 강화읍 월곳리 산8",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-1271",
+      "name": "서귀포추모공원 자연장지",
+      "address": "제주특별자치도 서귀포시 돈내코로 295-28 (상효동)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-1272",
+      "name": "완주군 자연추모동산",
+      "address": "전라북도 완주군 봉동읍 우주로 270-68 (구암리)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-1273",
+      "name": "이작리공설묘지 자연장지",
+      "address": "인천광역시 옹진군 자월면 이작리 산289",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-1274",
+      "name": "선재리공설묘지 자연장지",
+      "address": "인천광역시 옹진군 영흥면 선재리 산32",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-1275",
+      "name": "장봉리공설묘지 자연장지",
+      "address": "인천광역시 옹진군 북도면 장봉리 산177",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-1276",
+      "name": "오룡군립묘원 자연장지",
+      "address": "전라남도 담양군 무정면 오룡리 산29",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-1278",
+      "name": "춘천안식공원 잔디장",
+      "address": "강원특별자치도 춘천시 동산면 종자리로 331-50 (군자리, 춘천시공설묘원)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-1280",
+      "name": "무주추모의집(자연장)",
+      "address": "전라북도 무주군 무주읍 괴목로 1359-72 (당산리)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-1282",
+      "name": "경신하늘뜰공원 자연장지",
+      "address": "경기도 양주시 남면 화합로430번길 98 (경신리, 경신하늘뜰공원)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-1283",
+      "name": "이천시립 자연장지",
+      "address": "경기도 이천시 부발읍 황무로1719번길 189 (죽당리)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-1284",
+      "name": "여수시영락공원 자연장지(수목·잔디)",
+      "address": "전라남도 여수시 소라면 의곡길 494 (봉두리, 영락공원)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-1286",
+      "name": "서산시 희망공원(자연장지)",
+      "address": "충청남도 서산시 인지면 무학재2길 106 (산동리)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-1289",
+      "name": "연평리공설묘지 자연장지",
+      "address": "인천광역시 옹진군 연평면 연평리 661-5",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-1291",
+      "name": "화천공원묘원 자연장지",
+      "address": "강원특별자치도 화천군 하남면 영서로 5697-66 (원천리, 화천장례식장)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-1292",
+      "name": "구례군 공설자연장지",
+      "address": "전라남도 구례군 마산면 당몰샘로 129-49 (사도리, 구례군자연장지관리사무소)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-1293",
+      "name": "익산하늘공원자연장지",
+      "address": "전라북도 익산시 무왕로 1471-63 (석왕동)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-1299",
+      "name": "청솔공원",
+      "address": "강원특별자치도 강릉시 사천면 청솔공원길 334 (석교리, 청솔공원관리사무소)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-1300",
+      "name": "남부권공설묘지자연장지",
+      "address": "충청남도 당진시 신평면 상오로 31 (상오리)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-1303",
+      "name": "내촌공설자연장지",
+      "address": "경기도 포천시 내촌면 작은넙고개길 153 (진목리)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-1308",
+      "name": "신월공설자연장지",
+      "address": "경기도 광주시 초월읍 신월길 36-18 (신월리)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-1324",
+      "name": "고사자연장지",
+      "address": "경상남도 남해군 설천면 진목리 산78-2",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-1325",
+      "name": "이동무림삼자자연장지",
+      "address": "경상남도 남해군 이동면 무림리 산206",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-1328",
+      "name": "용미리 제1묘지 자연장지",
+      "address": "경기도 파주시 광탄면 용미리 산107",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-1343",
+      "name": "결초보은 추모공원",
+      "address": "충청북도 보은군 보은읍 속리산로 37 (누청리)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-1358",
+      "name": "강화해누리공원",
+      "address": "인천광역시 강화군 내가면 황청리 산170-1 일원",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-1362",
+      "name": "가평추모공원(자연장지)",
+      "address": "경기도 가평군 가평읍 석봉로191번길 65-84 (읍내리, 가평추모공원)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-1363",
+      "name": "성산읍공설자연장지",
+      "address": "제주특별자치도 서귀포시 성산읍 수산리 4711",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-1395",
+      "name": "대구시립공원묘지",
+      "address": "경상북도 칠곡군 지천면 낙산로 87 (낙산리)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-1396",
+      "name": "망월묘지공원(자연장)",
+      "address": "광주광역시 북구 민주로 285 (운정동, 망월동묘지공원관리사무소)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-1400",
+      "name": "국립기억의숲",
+      "address": "충청남도 보령시 성주면 개화리 산41",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-1412",
+      "name": "보령시모란공원",
+      "address": "충청남도 보령시 성주면 만수로 693 (개화리)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-1435",
+      "name": "함양공설자연장지",
+      "address": "경상남도 함양군 함양읍 구룡리  749번지",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-1437",
+      "name": "포항시우현화장장",
+      "address": "포항시 북구 소티재로 69-12(우현동)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-1439",
+      "name": "정선하늘터",
+      "address": "강원특별자치도 정선군 사북읍 소금강로 3500-34 (사북리)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-1440",
+      "name": "포항시립구룡포화장장",
+      "address": "경상북도 포항시 남구 구룡포읍 구룡포길39번길 64 (구룡포리, 구룡포화장장)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-1442",
+      "name": "광주영락공원 제2추모관",
+      "address": "광주광역시 북구 영락공원로 171 (효령동, 영락공원)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-1443",
+      "name": "사천시 누리원(화장시설)",
+      "address": "경상남도 사천시 해안관광로 208-66 (송포동) ",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-1444",
+      "name": "영주시화장장",
+      "address": "경상북도 영주시 조와로 48-186 (고현동, 영주시립화장장)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-1445",
+      "name": "상주시승천원",
+      "address": "경상북도 상주시 병성천2길 560 (병성동)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-1446",
+      "name": "서남권추모공원 봉안당",
+      "address": "전라북도 정읍시 감곡면 정읍북로 1850 (통석리)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-1447",
+      "name": "성남시장례문화사업소",
+      "address": "경기 성남시 중원구 순암로 787 (갈현동112)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-1448",
+      "name": "전주시승화원",
+      "address": "전라북도 전주시 완산구 콩쥐팥쥐로 1705-138(효자동3가, 전주승화원)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-1449",
+      "name": "대전시정수원",
+      "address": "대전광역시 서구 계백로1249번길 174-82 (정림동)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-1450",
+      "name": "울산하늘공원 승화원",
+      "address": "울산 울주군 삼동면 보삼길 550                               ",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-1451",
+      "name": "원주추모공원 화장장",
+      "address": "강원도 원주시 흥업면 복술길 33 (사제리)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-1452",
+      "name": "통영시추모공원",
+      "address": "경상남도 통영시 장대길 115 (정량동)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-1454",
+      "name": "공주나래원 봉안당",
+      "address": "충청남도 공주시 이인면 삼배실길 70 (운암리, 나래원)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-1456",
+      "name": "은하수공원 해님의집(화장장)",
+      "address": "세종특별자치시 정안세종로 1527 (산울동, 은하수공원)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-1457",
+      "name": "홍성추모공원",
+      "address": "충청남도 홍성군 금마면 금마로516번길 85 (봉서리, 화장장)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-1458",
+      "name": "제천시영원한쉼터봉안당",
+      "address": "충청북도 제천시 송학면 포전리 373번지 외",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-1459",
+      "name": "수원시연화장 승화원",
+      "address": "경기도 수원시 영통구 광교호수로 278 (하동, 수원시연화장)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-1460",
+      "name": "경주하늘마루봉안당",
+      "address": "경상북도 경주시 서면 하늘마루길 330 (도리)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-1462",
+      "name": "의성군공설화장장",
+      "address": "경상북도 의성군 의성읍 의성길안로 287-29 (중리리)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-1464",
+      "name": "동해삼척 공동화장장(승화원)",
+      "address": "강원도 동해시 강원남부로 4589 (단봉동)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-1465",
+      "name": "인제 하늘내린도리안",
+      "address": "강원도 인제군 남면 자작나무숲길 444-62 (남전리, 하늘내린도리안공원)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-1466",
+      "name": "태백시화장장",
+      "address": "강원 태백시 백두대간로 844 (창죽동 26-5) ",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-1467",
+      "name": "남도광역추모공원(봉안당)",
+      "address": "전라남도 해남군 황산면 호교길 241-250 (일신리)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-1468",
+      "name": "남해추모누리 영화원",
+      "address": "경상남도 남해군 서면 연죽로 46-77 (연죽리, 남해공설종합묘원추모누리)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-1469",
+      "name": "김천시립추모공원(봉안당)",
+      "address": "경상북도 김천시 봉산면 영남대로 431 (신암리)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-1471",
+      "name": "서울추모공원",
+      "address": "서울특별시 서초구 양재대로12길 74 (원지동)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-1472",
+      "name": "김해추모의공원",
+      "address": "경상남도 김해시 주촌면 서부로 1637번길 574 (덕암리)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-1473",
+      "name": "밀양시공설화장시설",
+      "address": "경상남도 밀양시 북성로7길 59 (교동 476-1번지)  ",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-1474",
+      "name": "천안추모공원 봉안당",
+      "address": "충청남도 천안시 동남구 광덕면 밤나무골길 38 (원덕리)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-1476",
+      "name": "솔향하늘길",
+      "address": "강원특별자치도 강릉시 사천면 청솔공원길 292-55 (석교리)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-1477",
+      "name": "울릉하늘섬공원",
+      "address": "경상북도 울릉군 서면 태하령길 314 (남서리)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-1479",
+      "name": "서울시립승화원 추모의집",
+      "address": "경기도 고양시 덕양구 통일로 504 (대자동)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-1480",
+      "name": "군산시승화원",
+      "address": "전라북도 군산시 임피면 서원석곡로 436-34 (보석리, 승화원)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-1481",
+      "name": "남원시승화원",
+      "address": "전북 남원시 광치동 690-1 ",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-1483",
+      "name": "고성군공설화장장",
+      "address": "경남 고성군 상리면 자은리 산85-1",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-1484",
+      "name": "순천시립추모공원 제1·2봉안당",
+      "address": "전라남도 순천시 양율길 132 (야흥동)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-1485",
+      "name": "춘천안식원",
+      "address": "강원도 춘천시 동산면 종자리로 331-21 (군자리)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-1486",
+      "name": "안동장사문화공원",
+      "address": "경상북도 안동시 풍천면 운골길 205 (도양리)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-1487",
+      "name": "승화원(화장장)",
+      "address": "전라남도 여수시 소라면 의곡길 494",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-1488",
+      "name": "용인 평온의 숲(나래원)",
+      "address": "경기도 용인시 처인구 이동읍 평온의숲로 77 (어비리, 용인평온의숲)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-1489",
+      "name": "울진군립추모원(봉안시설)",
+      "address": "경상북도 울진군 울진읍 대흥신림로 1046-261 (신림리)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-1490",
+      "name": "문경예송원",
+      "address": "경상북도 문경시 유곡불정로 239-39 (불정동)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-1491",
+      "name": "광양시화장장",
+      "address": "전라남도 광양시 광양읍 직동1길 300 (죽림리)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-1495",
+      "name": "진주시안락공원",
+      "address": "경상남도 진주시 진산로 141-42 (장재동, 진주시안락공원)",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-1496",
+      "name": "화성함백산추모공원(화장)",
+      "address": "경기도 화성시 매송면 서해로 2448-32, 화성 함백산추모공원 ",
+      "reason": "매칭 실패"
+    },
+    {
+      "id": "park-1498",
+      "name": "국립소록도병원화장장",
+      "address": "전남 고흥군 도양읍 소록리 1번지",
+      "reason": "매칭 실패"
+    }
+  ]
+}

@@ -1,0 +1,101 @@
+[
+  {
+    "region": "강릉시",
+    "fileName": "[별표 2] 공설화장시설 사용료(강릉시 장사시설 설치 및 운영 조례).hwpx",
+    "facilityType": "화장시설",
+    "category": "일반사체 (15세이상)",
+    "residency": "관내",
+    "period": "-",
+    "usageFee": 150000,
+    "managementFee": 0,
+    "total": 150000
+  },
+  {
+    "region": "강릉시",
+    "fileName": "[별표 2] 공설화장시설 사용료(강릉시 장사시설 설치 및 운영 조례).hwpx",
+    "facilityType": "화장시설",
+    "category": "일반사체 (15세이상)",
+    "residency": "관외",
+    "period": "-",
+    "usageFee": 700000,
+    "managementFee": 0,
+    "total": 700000
+  },
+  {
+    "region": "강릉시",
+    "fileName": "[별표 2] 공설화장시설 사용료(강릉시 장사시설 설치 및 운영 조례).hwpx",
+    "facilityType": "화장시설",
+    "category": "일반사체 (15세미만)",
+    "residency": "관내",
+    "period": "-",
+    "usageFee": 100000,
+    "managementFee": 0,
+    "total": 100000
+  },
+  {
+    "region": "강릉시",
+    "fileName": "[별표 2] 공설화장시설 사용료(강릉시 장사시설 설치 및 운영 조례).hwpx",
+    "facilityType": "화장시설",
+    "category": "일반사체 (15세미만)",
+    "residency": "관외",
+    "period": "-",
+    "usageFee": 400000,
+    "managementFee": 0,
+    "total": 400000
+  },
+  {
+    "region": "강릉시",
+    "fileName": "[별표 2] 공설화장시설 사용료(강릉시 장사시설 설치 및 운영 조례).hwpx",
+    "facilityType": "화장시설",
+    "category": "죽은태아",
+    "residency": "관내",
+    "period": "-",
+    "usageFee": 50000,
+    "managementFee": 0,
+    "total": 50000
+  },
+  {
+    "region": "강릉시",
+    "fileName": "[별표 2] 공설화장시설 사용료(강릉시 장사시설 설치 및 운영 조례).hwpx",
+    "facilityType": "화장시설",
+    "category": "죽은태아",
+    "residency": "관외",
+    "period": "-",
+    "usageFee": 200000,
+    "managementFee": 0,
+    "total": 200000
+  },
+  {
+    "region": "강릉시",
+    "fileName": "[별표 2] 공설화장시설 사용료(강릉시 장사시설 설치 및 운영 조례).hwpx",
+    "facilityType": "화장시설",
+    "category": "개장유골",
+    "residency": "관내",
+    "period": "-",
+    "usageFee": 100000,
+    "managementFee": 0,
+    "total": 100000
+  },
+  {
+    "region": "강릉시",
+    "fileName": "[별표 2] 공설화장시설 사용료(강릉시 장사시설 설치 및 운영 조례).hwpx",
+    "facilityType": "화장시설",
+    "category": "개장유골",
+    "residency": "관외",
+    "period": "-",
+    "usageFee": 400000,
+    "managementFee": 0,
+    "total": 400000
+  },
+  {
+    "region": "강릉시",
+    "fileName": "[별표 2] 공설화장시설 사용료(강릉시 장사시설 설치 및 운영 조례).hwpx",
+    "facilityType": "화장시설",
+    "category": "유택동산",
+    "residency": "-",
+    "period": "-",
+    "usageFee": 10000,
+    "managementFee": 0,
+    "total": 10000
+  }
+]

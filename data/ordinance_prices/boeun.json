@@ -1,0 +1,198 @@
+{
+    "region": "보은군",
+    "ordinanceName": "보은군 장사시설 설치 및 운영 조례",
+    "lastUpdated": "2025.3.7",
+    "facilities": [
+        {
+            "facilityType": "공설봉안담",
+            "usagePeriod": "30년",
+            "unit": "원",
+            "prices": [
+                {
+                    "residency": "관내",
+                    "reference": "제7조제1항제1호",
+                    "options": [
+                        {
+                            "type": "단장",
+                            "total": 800000,
+                            "usageFee": 450000,
+                            "managementFee": 350000
+                        },
+                        {
+                            "type": "합장",
+                            "total": 1600000,
+                            "usageFee": 900000,
+                            "managementFee": 700000
+                        }
+                    ],
+                    "surcharge": null
+                },
+                {
+                    "residency": "관외",
+                    "reference": "제7조제1항제2호",
+                    "options": [
+                        {
+                            "type": "단장",
+                            "total": 960000,
+                            "usageFee": 540000,
+                            "managementFee": 420000
+                        },
+                        {
+                            "type": "합장",
+                            "total": 1920000,
+                            "usageFee": 1080000,
+                            "managementFee": 840000
+                        }
+                    ],
+                    "surcharge": "20%"
+                },
+                {
+                    "residency": "유연고 개장유골",
+                    "reference": "제7조제2항제2호",
+                    "options": [
+                        {
+                            "type": "단장",
+                            "total": 960000,
+                            "usageFee": 540000,
+                            "managementFee": 420000
+                        },
+                        {
+                            "type": "합장",
+                            "total": 1920000,
+                            "usageFee": 1080000,
+                            "managementFee": 840000
+                        }
+                    ],
+                    "surcharge": "20%"
+                }
+            ],
+            "notes": "사용 신고 시 사용료 및 관리비 일시불 선납(1회 기준이며, 연장 시 동일적용)"
+        },
+        {
+            "facilityType": "공설자연장지(잔디형)",
+            "usagePeriod": "30년",
+            "unit": "원",
+            "prices": [
+                {
+                    "residency": "관내",
+                    "reference": "제7조제1항제1호",
+                    "options": [
+                        {
+                            "type": "단장",
+                            "total": 500000,
+                            "usageFee": 300000,
+                            "managementFee": 300000
+                        },
+                        {
+                            "type": "합장",
+                            "total": 1000000,
+                            "usageFee": 400000,
+                            "managementFee": 600000
+                        },
+                        {
+                            "type": "가족장(4기)",
+                            "total": 2000000,
+                            "usageFee": 800000,
+                            "managementFee": 1200000
+                        }
+                    ],
+                    "surcharge": null
+                },
+                {
+                    "residency": "관외",
+                    "reference": "제7조제1항제2호",
+                    "options": [
+                        {
+                            "type": "단장",
+                            "total": 600000,
+                            "usageFee": 480000,
+                            "managementFee": 720000
+                        },
+                        {
+                            "type": "합장",
+                            "total": 1200000,
+                            "usageFee": 480000,
+                            "managementFee": 720000
+                        },
+                        {
+                            "type": "가족장(4기)",
+                            "total": 2400000,
+                            "usageFee": 960000,
+                            "managementFee": 1440000
+                        }
+                    ],
+                    "surcharge": "20%"
+                }
+            ],
+            "notes": "사용 신고 시 사용료 및 관리비 일시불 선납(1회 기준이며, 연장 시 동일적용)"
+        },
+        {
+            "facilityType": "공설자연장지(공동수목형)",
+            "usagePeriod": "30년",
+            "unit": "원",
+            "prices": [
+                {
+                    "residency": "관내",
+                    "reference": "제7조제1항제1호",
+                    "options": [
+                        {
+                            "type": "1기당",
+                            "total": 800000,
+                            "usageFee": 300000,
+                            "managementFee": 300000
+                        }
+                    ],
+                    "surcharge": null
+                },
+                {
+                    "residency": "관외",
+                    "reference": "제7조제1항제2호",
+                    "options": [
+                        {
+                            "type": "1기당",
+                            "total": 720000,
+                            "usageFee": 360000,
+                            "managementFee": 360000
+                        }
+                    ],
+                    "surcharge": "20%"
+                }
+            ],
+            "notes": "사용 신고 시 사용료 및 관리비 일시불 선납(1회 기준이며, 연장 시 동일적용)"
+        },
+        {
+            "facilityType": "공설자연장지(가족수목형)",
+            "usagePeriod": "30년",
+            "unit": "원",
+            "prices": [
+                {
+                    "residency": "관내",
+                    "reference": "제7조제1항제1호",
+                    "options": [
+                        {
+                            "type": "6기",
+                            "total": 3600000,
+                            "usageFee": 1800000,
+                            "managementFee": 1800000
+                        }
+                    ],
+                    "surcharge": null
+                },
+                {
+                    "residency": "관외",
+                    "reference": "제7조제1항제2호",
+                    "options": [
+                        {
+                            "type": "6기",
+                            "total": 4320000,
+                            "usageFee": 2160000,
+                            "managementFee": 2160000
+                        }
+                    ],
+                    "surcharge": "20%"
+                }
+            ],
+            "notes": "사용 신고 시 사용료 및 관리비 일시불 선납(1회 기준이며, 연장 시 동일적용)"
+        }
+    ]
+}
