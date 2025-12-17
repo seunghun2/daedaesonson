@@ -29,13 +29,14 @@ async function formatSheet() {
 
     // 가격카테고리별 색상 매핑
     const categoryColors = {
-        '매장묘': { red: 0.91, green: 0.96, blue: 0.91 },     // 연한 초록
-        '봉안당': { red: 0.91, green: 0.95, blue: 1 },        // 연한 파랑
-        '봉안담': { red: 0.91, green: 0.95, blue: 1 },        // 연한 파랑 (봉안당과 동일)
-        '수목장': { red: 0.98, green: 0.96, blue: 0.91 },     // 연한 베이지
-        '자연장': { red: 0.98, green: 0.96, blue: 0.91 },     // 연한 베이지
-        '기타': { red: 1, green: 0.99, blue: 0.91 },          // 연한 노랑
-        '제외함': { red: 0.95, green: 0.95, blue: 0.95 },     // 연한 회색
+        '매장묘': { red: 0.85, green: 0.93, blue: 0.85 },     // 연한 초록
+        '봉안당': { red: 0.85, green: 0.92, blue: 1 },        // 연한 파랑
+        '봉안담': { red: 0.85, green: 0.92, blue: 1 },        // 연한 파랑 (봉안당과 동일)
+        '수목장': { red: 0.96, green: 0.92, blue: 0.85 },     // 연한 베이지
+        '자연장': { red: 0.96, green: 0.92, blue: 0.85 },     // 연한 베이지
+        '기타': { red: 1, green: 0.97, blue: 0.85 },          // 연한 노랑
+        '제외됨': { red: 0.9, green: 0.9, blue: 0.9 },        // 연한 회색
+        '제외함': { red: 0.9, green: 0.9, blue: 0.9 },        // 연한 회색
         '': { red: 1, green: 1, blue: 1 }                     // 흰색
     };
 
