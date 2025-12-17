@@ -74,3 +74,7 @@ full_data.json
 *.db
 data/verify_*.json
 data/구글 api/
+
+# Sensitive API Keys (NEVER commit these!)
+google-vision-key.json
+credentials*.json
