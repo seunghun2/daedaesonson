@@ -21,6 +21,22 @@ export default function sitemap(): MetadataRoute.Sitemap {
         },
     ];
 
+    // 지역별 랜딩페이지 (프로그래매틱 SEO)
+    const REGIONS = ['서울', '경기', '인천', '부산', '대구', '광주', '대전', '울산', '세종', '강원', '충북', '충남', '전북', '전남', '경북', '경남', '제주'];
+    const CATEGORIES = ['봉안당', '수목장', '공원묘지'];
+
+    const regionPages: MetadataRoute.Sitemap = [];
+    for (const region of REGIONS) {
+        for (const category of CATEGORIES) {
+            regionPages.push({
+                url: `${baseUrl}/지역/${region}-${category}`,
+                lastModified: new Date(),
+                changeFrequency: 'weekly' as const,
+                priority: 0.85,
+            });
+        }
+    }
+
     // 시설 상세 페이지
     let facilityPages: MetadataRoute.Sitemap = [];
 
@@ -50,5 +66,5 @@ export default function sitemap(): MetadataRoute.Sitemap {
         console.error('Sitemap: Failed to load facilities', e);
     }
 
-    return [...staticPages, ...facilityPages];
+    return [...staticPages, ...regionPages, ...facilityPages];
 }
