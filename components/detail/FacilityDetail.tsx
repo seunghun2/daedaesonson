@@ -1237,15 +1237,16 @@ export default function FacilityDetail({ facility: initialFacility, onClose }: F
 
                                 setTimeout(() => {
                                     if (diff > 0) {
-                                        // 오른쪽 스와이프: 다음 이미지 (마지막이면 첫번째로)
+                                        // 왼쪽으로 스와이프(손가락 왼쪽): 다음 이미지
                                         setSelectedImageIndex(prev => prev < galleryImages.length - 1 ? prev + 1 : 0);
                                     } else if (diff < 0) {
-                                        // 왼쪽 스와이프: 이전 이미지 (첫번째면 마지막으로)
+                                        // 오른쪽으로 스와이프(손가락 오른쪽): 이전 이미지
                                         setSelectedImageIndex(prev => prev > 0 ? prev - 1 : galleryImages.length - 1);
                                     }
                                     if (imgEl) {
                                         imgEl.style.transition = 'none';
-                                        imgEl.style.transform = `translateX(${-direction}%)`;
+                                        // 새 이미지가 반대편에서 들어옴
+                                        imgEl.style.transform = `translateX(${direction}%)`;
                                         imgEl.style.opacity = '0';
                                         requestAnimationFrame(() => {
                                             imgEl.style.transition = 'transform 0.25s ease-out, opacity 0.25s ease-out';
@@ -1301,7 +1302,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose }: F
                                     }
                                     if (imgEl) {
                                         imgEl.style.transition = 'none';
-                                        imgEl.style.transform = `translateX(${-direction}%)`;
+                                        imgEl.style.transform = `translateX(${direction}%)`;
                                         imgEl.style.opacity = '0';
                                         requestAnimationFrame(() => {
                                             imgEl.style.transition = 'transform 0.25s ease-out, opacity 0.25s ease-out';
