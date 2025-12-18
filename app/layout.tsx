@@ -75,6 +75,18 @@ export default function RootLayout({
     <html lang="ko" suppressHydrationWarning>
       <head>
         <ColorSchemeScript />
+        {/* Google Analytics GA4 */}
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-XHCFVSDRDY"></script>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', 'G-XHCFVSDRDY');
+            `,
+          }}
+        />
         {/* JSON-LD 구조화 데이터 (검색 엔진 최적화) */}
         <script
           type="application/ld+json"
