@@ -407,7 +407,7 @@ export default function AdminPage() {
                 let absoluteMin = Infinity;
                 let absoluteMax = -Infinity;
                 let hasPrice = false;
-                let representativePrice = null;
+                let representativePrice: number | null = null;
 
                 // Preferred Category Keywords
                 let preferredKeywords: string[] = [];
@@ -1028,8 +1028,8 @@ export default function AdminPage() {
                                 {(() => {
                                     const valid = facilities.filter(f => f.priceRange?.min != null);
                                     if (valid.length === 0) return '-';
-                                    const max = Math.max(...valid.map(f => f.priceRange.min));
-                                    const f = valid.find(f => f.priceRange.min === max);
+                                    const max = Math.max(...valid.map(f => f.priceRange?.min ?? 0));
+                                    const f = valid.find(f => f.priceRange?.min === max);
                                     return f ? `${f.name} (${max.toLocaleString()}만)` : '-';
                                 })()}
                             </Text>
@@ -1045,8 +1045,8 @@ export default function AdminPage() {
                                 {(() => {
                                     const valid = facilities.filter(f => f.priceRange?.min != null && f.priceRange.min > 0);
                                     if (valid.length === 0) return '-';
-                                    const min = Math.min(...valid.map(f => f.priceRange.min));
-                                    const f = valid.find(f => f.priceRange.min === min);
+                                    const min = Math.min(...valid.map(f => f.priceRange?.min ?? Infinity));
+                                    const f = valid.find(f => f.priceRange?.min === min);
                                     return f ? `${f.name} (${min.toLocaleString()}만)` : '-';
                                 })()}
                             </Text>

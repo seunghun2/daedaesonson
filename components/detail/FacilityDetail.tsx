@@ -1066,7 +1066,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose }: F
 
                                 {/* Reply Input */}
                                 {replyingTo === review.id && (
-                                    <Box mt="sm" p="sm" bg="gray.0" radius="md">
+                                    <Box mt="sm" p="sm" bg="gray.0" style={{ borderRadius: 'var(--mantine-radius-md)' }}>
                                         <Group gap="xs" mb="sm">
                                             <TextInput
                                                 placeholder="답글을 입력하세요"
@@ -1086,9 +1086,9 @@ export default function FacilityDetail({ facility: initialFacility, onClose }: F
 
                                 {/* Reply List */}
                                 {review.replies && review.replies.length > 0 && (
-                                    <Box mt="md" bg="gray.0" p="sm" radius="md">
+                                    <Box mt="md" bg="gray.0" p="sm" style={{ borderRadius: 'var(--mantine-radius-md)' }}>
                                         {review.replies.map(reply => (
-                                            <Box key={reply.id} mb="sm" last={{ mb: 0 }}>
+                                            <Box key={reply.id} mb="sm">
                                                 <Group gap="xs" mb={4}>
                                                     <Text size="sm" fw={700} c="dark.8">{reply.author}</Text>
                                                     <Text size="xs" c="dimmed">{reply.date}</Text>

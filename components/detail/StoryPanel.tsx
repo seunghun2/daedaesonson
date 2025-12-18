@@ -181,7 +181,7 @@ export default function StoryPanel({ facility, isOpen, onClose }: StoryPanelProp
 
                                 {/* Replies */}
                                 {review.replies?.map(reply => (
-                                    <Box key={reply.id} bg="gray.1" p="sm" radius="md" mb="xs">
+                                    <Box key={reply.id} bg="gray.1" p="sm" mb="xs" style={{ borderRadius: 'var(--mantine-radius-md)' }}>
                                         <Group justify="space-between" mb={2}>
                                             <Group gap="xs">
                                                 <Text size="xs" fw={700}>{reply.author}</Text>

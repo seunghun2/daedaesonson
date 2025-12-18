@@ -17,6 +17,8 @@ export interface PriceRow {
     managementFee?: number; // 관리비
     count?: number;
     price: number; // 합계
+    description?: string; // 상세 설명
+    isRepresentative?: boolean; // 대표 가격 여부
 }
 
 export interface PriceTable {

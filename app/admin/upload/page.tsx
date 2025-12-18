@@ -259,9 +259,9 @@ export default function AdminPage() {
                     priceInfo: {
                         priceTable: detailedData.priceTable
                     },
-                    _detailedSource: 'prisma',
-                    _meta: detailedData._meta
-                };
+                } as any;
+                (mergedFacility as any)._detailedSource = 'prisma';
+                (mergedFacility as any)._meta = detailedData._meta;
                 console.log('✅ Loaded detailed prices:', detailedData._meta);
             }
 
@@ -1009,8 +1009,8 @@ export default function AdminPage() {
                                 {(() => {
                                     const valid = facilities.filter(f => f.priceRange?.min != null);
                                     if (valid.length === 0) return '-';
-                                    const max = Math.max(...valid.map(f => f.priceRange.min));
-                                    const f = valid.find(f => f.priceRange.min === max);
+                                    const max = Math.max(...valid.map(f => f.priceRange?.min ?? 0));
+                                    const f = valid.find(f => f.priceRange?.min === max);
                                     return f ? `${f.name} (${max.toLocaleString()}만)` : '-';
                                 })()}
                             </Text>
@@ -1026,8 +1026,8 @@ export default function AdminPage() {
                                 {(() => {
                                     const valid = facilities.filter(f => f.priceRange?.min != null && f.priceRange.min > 0);
                                     if (valid.length === 0) return '-';
-                                    const min = Math.min(...valid.map(f => f.priceRange.min));
-                                    const f = valid.find(f => f.priceRange.min === min);
+                                    const min = Math.min(...valid.map(f => f.priceRange?.min ?? Infinity));
+                                    const f = valid.find(f => f.priceRange?.min === min);
                                     return f ? `${f.name} (${min.toLocaleString()}만)` : '-';
                                 })()}
                             </Text>
@@ -1372,7 +1372,7 @@ export default function AdminPage() {
                                     label="총매장능력"
                                     value={editForm.capacity || ''}
                                     placeholder="예: 10,000기"
-                                    onChange={(e) => setEditForm(prev => ({ ...prev, capacity: e.target.value }))}
+                                    onChange={(e) => setEditForm(prev => ({ ...prev, capacity: parseInt(e.target.value) || 0 }))}
                                 />
                                 <TextInput
                                     label="데이터 업데이트"
@@ -1598,7 +1598,7 @@ export default function AdminPage() {
                                                                                             priceInfo: {
                                                                                                 ...editForm.priceInfo,
                                                                                                 priceTable: {
-                                                                                                    ...editForm.priceInfo.priceTable,
+                                                                                                    ...(editForm.priceInfo?.priceTable || {}),
                                                                                                     [catName]: { ...catData, rows: newRows }
                                                                                                 }
                                                                                             }
@@ -1784,7 +1784,7 @@ export default function AdminPage() {
                                                                                                     priceInfo: {
                                                                                                         ...editForm.priceInfo,
                                                                                                         priceTable: {
-                                                                                                            ...editForm.priceInfo.priceTable,
+                                                                                                            ...(editForm.priceInfo?.priceTable || {}),
                                                                                                             [catName]: { ...catData, rows: newRows }
                                                                                                         }
                                                                                                     }
@@ -1821,7 +1821,7 @@ export default function AdminPage() {
                                                                                         priceInfo: {
                                                                                             ...editForm.priceInfo,
                                                                                             priceTable: {
-                                                                                                ...editForm.priceInfo.priceTable,
+                                                                                                ...(editForm.priceInfo?.priceTable || {}),
                                                                                                 [catName]: {
                                                                                                     ...catData,
                                                                                                     rows: (catData.rows || []).map((r: any) =>
@@ -1842,7 +1842,7 @@ export default function AdminPage() {
                                                                                         priceInfo: {
                                                                                             ...editForm.priceInfo,
                                                                                             priceTable: {
-                                                                                                ...editForm.priceInfo.priceTable,
+                                                                                                ...(editForm.priceInfo?.priceTable || {}),
                                                                                                 [catName]: { ...catData, rows: [...currentRows, newRow] }
                                                                                             }
                                                                                         }
@@ -1874,7 +1874,7 @@ export default function AdminPage() {
                                                                         priceInfo: {
                                                                             ...editForm.priceInfo,
                                                                             priceTable: {
-                                                                                ...editForm.priceInfo.priceTable,
+                                                                                ...(editForm.priceInfo?.priceTable || {}),
                                                                                 [catName]: { ...catData, rows: [...(catData.rows || []), newRow] }
                                                                             }
                                                                         }
