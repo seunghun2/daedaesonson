@@ -1066,11 +1066,12 @@ export default function AdminPage() {
                         <Table striped highlightOnHover>
                             <Table.Thead>
                                 <Table.Tr>
-                                    <Table.Th style={{ width: 60 }}>No.</Table.Th>
+                                    <Table.Th style={{ width: 50 }}>No.</Table.Th>
+                                    <Table.Th style={{ width: 60 }}>구분</Table.Th>
                                     <Table.Th>시설명</Table.Th>
                                     <Table.Th>카테고리</Table.Th>
                                     <Table.Th>주소</Table.Th>
-                                    <Table.Th>가격대 (Min)</Table.Th>
+                                    <Table.Th>대표가격</Table.Th>
                                     <Table.Th>상세 상태</Table.Th>
                                     <Table.Th>관리</Table.Th>
                                 </Table.Tr>
@@ -1078,7 +1079,7 @@ export default function AdminPage() {
                             <Table.Tbody>
                                 {isLoadingData ? (
                                     <Table.Tr>
-                                        <Table.Td colSpan={7} align="center">데이터 로딩 중...</Table.Td>
+                                        <Table.Td colSpan={8} align="center">데이터 로딩 중...</Table.Td>
                                     </Table.Tr>
                                 ) : paginatedData.map((item, index) => (
                                     <Table.Tr key={item.id}>
@@ -1086,6 +1087,11 @@ export default function AdminPage() {
                                             <Text c="dimmed" size="sm">
                                                 {(activePage - 1) * ITEMS_PER_PAGE + index + 1}
                                             </Text>
+                                        </Table.Td>
+                                        <Table.Td>
+                                            <Badge size="xs" color={item.isPublic ? 'blue' : 'pink'} variant="light">
+                                                {item.isPublic ? '공설' : '사설'}
+                                            </Badge>
                                         </Table.Td>
                                         <Table.Td fw={500}>
                                             <Group gap="xs">
@@ -1107,7 +1113,7 @@ export default function AdminPage() {
                                             </Badge>
                                         </Table.Td>
                                         <Table.Td style={{ maxWidth: 200 }}><Text truncate>{item.address}</Text></Table.Td>
-                                        <Table.Td>{item.priceRange?.min ? item.priceRange.min.toLocaleString() + '만원' : '-'}</Table.Td>
+                                        <Table.Td>{item.priceRange?.min ? item.priceRange.min.toLocaleString() + '만원' : '0원'}</Table.Td>
                                         <Table.Td>
                                             {item.imageGallery && item.imageGallery.length > 0 ? (
                                                 <Badge size="sm" variant="dot" color="teal">이미지 {item.imageGallery.length}</Badge>
