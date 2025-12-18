@@ -31,12 +31,21 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
         facilityPages = facilities
             .filter((f: any) => f.category !== 'FUNERAL_HOME' && f.category !== 'CREMATORIUM' && f.priceRange?.min > 0)
-            .map((f: any) => ({
-                url: `${baseUrl}/facilities/${f.id}`,
-                lastModified: f.lastUpdated ? new Date(f.lastUpdated) : new Date(),
-                changeFrequency: 'weekly' as const,
-                priority: 0.8,
-            }));
+            .map((f: any) => {
+                let lastMod = new Date();
+                if (f.lastUpdated) {
+                    const parsed = new Date(f.lastUpdated);
+                    if (!isNaN(parsed.getTime())) {
+                        lastMod = parsed;
+                    }
+                }
+                return {
+                    url: `${baseUrl}/facilities/${f.id}`,
+                    lastModified: lastMod,
+                    changeFrequency: 'weekly' as const,
+                    priority: 0.8,
+                };
+            });
     } catch (e) {
         console.error('Sitemap: Failed to load facilities', e);
     }
