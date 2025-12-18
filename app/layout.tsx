@@ -40,7 +40,7 @@ export const metadata: Metadata = {
     },
   },
   verification: {
-    google: '', // 구글 서치콘솔 인증 코드
+    google: 'x6XjVw34T66ZPgblW66kZmrgaujSCCr2TMJXUYp8_Mk',
     // other: { 'naver-site-verification': '' }, // 네이버 웹마스터 인증 코드
   },
 };
