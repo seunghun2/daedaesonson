@@ -19,31 +19,29 @@ async function main() {
     });
 
     const rows = response.data.values || [];
-    let changedF = 0;
-    let changedG = 0;
+    let changed = 0;
 
+    // 상품명(F열, index 5)에서 변환
     for (let i = 1; i < rows.length; i++) {
-        // F열 (상품명, index 5)
-        const f = rows[i][5] || '';
-        const fTrimmed = f.trim().replace(/\s+/g, ' '); // 연속 공백 → 단일 공백
-        if (fTrimmed !== f) {
-            rows[i][5] = fTrimmed;
-            changedF++;
-        }
+        const product = rows[i][5] || '';
 
-        // G열 (설명, index 6)
-        const g = rows[i][6] || '';
-        const gTrimmed = g.trim().replace(/\s+/g, ' '); // 연속 공백 → 단일 공백
-        if (gTrimmed !== g) {
-            rows[i][6] = gTrimmed;
-            changedG++;
+        // 시설 사용료, 시설이용료 → 시설사용료
+        if (product.includes('시설 사용료') || product.includes('시설이용료')) {
+            const newProduct = product
+                .replace(/시설 사용료/g, '시설사용료')
+                .replace(/시설이용료/g, '시설사용료');
+
+            if (newProduct !== product) {
+                rows[i][5] = newProduct;
+                changed++;
+                console.log(`  ${rows[i][0]}: "${product}" → "${newProduct}"`);
+            }
         }
     }
 
-    console.log(`🔄 F열(상품명): ${changedF}개 정리`);
-    console.log(`🔄 G열(설명): ${changedG}개 정리`);
+    console.log(`\n🔄 ${changed}개 변경됨`);
 
-    if (changedF + changedG > 0) {
+    if (changed > 0) {
         console.log('📝 시트 업데이트 중...');
 
         await sheets.spreadsheets.values.update({
@@ -54,8 +52,6 @@ async function main() {
         });
 
         console.log('✅ 완료!');
-    } else {
-        console.log('✅ 띄어쓰기 문제 없음!');
     }
 }
 

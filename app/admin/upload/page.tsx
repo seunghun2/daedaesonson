@@ -1233,6 +1233,24 @@ export default function AdminPage() {
 
                     <Tabs.Panel value="basic" pt="md">
                         <Stack>
+                            {/* 마커 표시 On/Off */}
+                            <Paper withBorder p="sm" radius="md" bg={editForm.isActive === false ? 'red.0' : 'green.0'}>
+                                <Group justify="space-between">
+                                    <div>
+                                        <Text fw={600} size="sm">마커 표시</Text>
+                                        <Text size="xs" c="dimmed">지도에 이 시설의 마커를 표시합니다.</Text>
+                                    </div>
+                                    <Switch
+                                        size="lg"
+                                        checked={editForm.isActive !== false}
+                                        onChange={(event) => setEditForm(prev => ({ ...prev, isActive: event.target.checked }))}
+                                        onLabel="ON"
+                                        offLabel="OFF"
+                                        color={editForm.isActive === false ? 'red' : 'green'}
+                                    />
+                                </Group>
+                            </Paper>
+
                             <TextInput
                                 label="시설명 (원본 - 고정값/폴더매칭용)"
                                 value={editForm.originalName || ''}

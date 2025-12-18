@@ -94,6 +94,7 @@ export interface Facility {
     phone?: string;
     fax?: string; // 팩스번호
     isPublic: boolean;
+    isActive?: boolean; // 마커 표시 여부 (false면 지도에서 숨김)
     operatorType?: string; // "FOUNDATION" | "CORPORATION" | "RELIGIOUS" | "ASSOCIATION" | "OTHER"
     originalName?: string; // Immutable original name matching archive folder
     lastUpdated?: string; // 업데이트 날짜

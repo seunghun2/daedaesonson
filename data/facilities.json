@@ -17,7 +17,7 @@
     "hasRestaurant": true,
     "hasStore": true,
     "hasAccessibility": true,
-    "isPublic": false,
+    "isPublic": true,
     "hasDetailedPrices": false,
     "images": [
       "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0001/photo_1.jpg",
@@ -87,7 +87,7 @@
     "maxPrice": 6465,
     "description": "",
     "createdAt": "2025-12-12T00:21:56.196",
-    "updatedAt": "2025-12-16T04:42:46.278",
+    "updatedAt": "2025-12-18T12:59:07.616",
     "reviews": [],
     "priceInfo": {
       "priceTable": {
@@ -783,7 +783,7 @@
               "raw": null
             },
             {
-              "name": "의전 서비스",
+              "name": "의전서비스스",
               "price": 300000,
               "grade": "[기타] 1회 기준",
               "groupType": null,
@@ -1551,7 +1551,8 @@
     "location": {
       "lat": 35.2674332,
       "lng": 128.8301094
-    }
+    },
+    "isActive": true
   },
   {
     "id": "park-0002",
@@ -141826,8 +141827,8 @@
     },
     "category": "CHARNEL_HOUSE",
     "priceRange": {
-      "min": 1000000400,
-      "max": 1000000700
+      "min": 100,
+      "max": 100
     },
     "hasParking": false,
     "hasRestaurant": true,
@@ -141880,13 +141881,13 @@
     },
     "lat": 35.2860107,
     "lng": 128.8951878,
-    "minPrice": 274,
-    "maxPrice": 830,
+    "minPrice": 100,
+    "maxPrice": 100,
     "description": "",
     "rating": 0,
     "reviewCount": 0,
     "createdAt": "2025-12-12T00:21:56.696",
-    "updatedAt": "2025-12-16T01:03:59.754",
+    "updatedAt": "2025-12-18T12:56:45.004",
     "reviews": [],
     "priceInfo": {
       "priceTable": {
@@ -141895,22 +141896,9 @@
           "category": "charnel",
           "rows": [
             {
-              "name": "폐쇄형(옥문)",
-              "price": 10000004000000,
-              "grade": "",
-              "groupType": null,
-              "size": null,
-              "hasInstallation": false,
-              "hasManagementFee": false,
-              "includedYear": null,
-              "discount": null,
-              "isRepresentative": true,
-              "raw": null
-            },
-            {
               "name": "개방형(유리)",
-              "price": 10000007000000,
-              "grade": "",
+              "price": 1000000,
+              "grade": "1,000,000원부터 7,000,000원",
               "groupType": null,
               "size": null,
               "hasInstallation": false,
@@ -141918,6 +141906,19 @@
               "includedYear": null,
               "discount": null,
               "isRepresentative": false,
+              "raw": null
+            },
+            {
+              "name": "폐쇄형(옥문)",
+              "price": 1000000,
+              "grade": "1,000,000원부터 4,000,000원",
+              "groupType": null,
+              "size": null,
+              "hasInstallation": false,
+              "hasManagementFee": false,
+              "includedYear": null,
+              "discount": null,
+              "isRepresentative": true,
               "raw": null
             }
           ]
@@ -141930,7 +141931,8 @@
       "categoryCount": 1,
       "itemCount": 2,
       "representativeCount": 1
-    }
+    },
+    "operatorType": "CORPORATION"
   },
   {
     "id": "park-0799",
