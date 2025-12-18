@@ -1106,7 +1106,8 @@ export default function AdminPage() {
                                                 color={
                                                     item.category === 'CHARNEL_HOUSE' ? 'blue' :
                                                         item.category === 'NATURAL_BURIAL' ? 'green' :
-                                                            item.category === 'FAMILY_GRAVE' ? 'orange' : 'gray'
+                                                            item.category === 'FAMILY_GRAVE' ? 'orange' :
+                                                                item.category === 'CREMATORIUM' ? 'grape' : 'gray'
                                                 }
                                             >
                                                 {FACILITY_CATEGORY_LABELS[item.category]}

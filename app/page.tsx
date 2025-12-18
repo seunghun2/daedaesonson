@@ -11,9 +11,9 @@ async function getFacilities(): Promise<Facility[]> {
     const fileContent = await fs.readFile(dataPath, 'utf-8');
     const facilities = JSON.parse(fileContent);
 
-    // 장례식장 제외 + isActive=false 제외 + 0원 제외 + 필요한 필드만 추출 (경량화)
+    // 장례식장, 화장시설 제외 + isActive=false 제외 + 0원 제외 + 필요한 필드만 추출 (경량화)
     return facilities
-      .filter((f: any) => f.category !== 'FUNERAL_HOME' && f.isActive !== false && (f.priceRange?.min > 0))
+      .filter((f: any) => f.category !== 'FUNERAL_HOME' && f.category !== 'CREMATORIUM' && f.isActive !== false && (f.priceRange?.min > 0))
       .map((f: any) => ({
         id: f.id,
         name: f.name,
