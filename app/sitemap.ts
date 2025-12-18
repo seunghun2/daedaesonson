@@ -36,6 +36,47 @@ export default function sitemap(): MetadataRoute.Sitemap {
             });
         }
     }
+    // 시/군 단위 랜딩페이지 (세분화 SEO)
+    const cityPages: MetadataRoute.Sitemap = [];
+    try {
+        const dataPath = path.join(process.cwd(), 'data', 'facilities.json');
+        const fileContent = fs.readFileSync(dataPath, 'utf-8');
+        const allFacilities = JSON.parse(fileContent);
+
+        const combos = new Map<string, number>();
+        allFacilities.forEach((f: any) => {
+            if (!f.address || !f.category) return;
+            if (f.category === 'FUNERAL_HOME' || f.category === 'CREMATORIUM') return;
+            if (!f.priceRange?.min || f.priceRange.min <= 0) return;
+
+            const tokens = f.address.split(' ');
+            const city = tokens[1];
+            if (!city) return;
+
+            let catSlug = '';
+            if (f.category === 'CHARNEL_HOUSE') catSlug = '봉안당';
+            else if (f.category === 'NATURAL_BURIAL') catSlug = '수목장';
+            else if (f.category === 'FAMILY_GRAVE') catSlug = '공원묘지';
+            else return;
+
+            const key = `${city}|${catSlug}`;
+            combos.set(key, (combos.get(key) || 0) + 1);
+        });
+
+        combos.forEach((count, key) => {
+            if (count >= 2) {
+                const [city, category] = key.split('|');
+                cityPages.push({
+                    url: `${baseUrl}/search/${city}/${category}`,
+                    lastModified: new Date(),
+                    changeFrequency: 'weekly' as const,
+                    priority: 0.8,
+                });
+            }
+        });
+    } catch (e) {
+        console.error('Sitemap: Failed to generate city pages', e);
+    }
 
     // 시설 상세 페이지
     let facilityPages: MetadataRoute.Sitemap = [];
@@ -66,5 +107,5 @@ export default function sitemap(): MetadataRoute.Sitemap {
         console.error('Sitemap: Failed to load facilities', e);
     }
 
-    return [...staticPages, ...regionPages, ...facilityPages];
+    return [...staticPages, ...regionPages, ...cityPages, ...facilityPages];
 }
