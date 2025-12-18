@@ -11,48 +11,34 @@ async function main() {
     const auth = new google.auth.GoogleAuth({ credentials, scopes: ['https://www.googleapis.com/auth/spreadsheets'] });
     const sheets = google.sheets({ version: 'v4', auth: await auth.getClient() });
 
+    console.log('📖 시트 데이터 읽는 중...');
+
     const response = await sheets.spreadsheets.values.get({
         spreadsheetId: SPREADSHEET_ID,
         range: `${SHEET_NAME}!A:I`
     });
 
     const rows = response.data.values || [];
-    const header = rows[0];
+    let changed = 0;
 
-    console.log(`총 ${rows.length - 1}개 행에서 중복 제거 중...\n`);
-
-    // 중복 제거
-    const seen = new Set();
-    const uniqueRows = [header];
-    let duplicateCount = 0;
-
+    // D열(index 3)을 모두 '사설'로 변경
     for (let i = 1; i < rows.length; i++) {
-        const key = rows[i].join('|||');
-        if (!seen.has(key)) {
-            seen.add(key);
-            uniqueRows.push(rows[i]);
-        } else {
-            duplicateCount++;
+        if (!rows[i][3] || rows[i][3] !== '사설') {
+            rows[i][3] = '사설';
+            changed++;
         }
     }
 
-    console.log(`🗑️ ${duplicateCount}개 중복 행 삭제`);
-    console.log(`📝 ${uniqueRows.length}개 행으로 업데이트 중...`);
+    console.log(`🔄 ${changed}개 행 수정 중...`);
 
-    // 시트 업데이트
-    await sheets.spreadsheets.values.clear({
-        spreadsheetId: SPREADSHEET_ID,
-        range: `${SHEET_NAME}!A:I`
-    });
-
+    // 전체 업데이트
     await sheets.spreadsheets.values.update({
         spreadsheetId: SPREADSHEET_ID,
         range: `${SHEET_NAME}!A1`,
         valueInputOption: 'RAW',
-        resource: { values: uniqueRows }
+        resource: { values: rows }
     });
 
-    console.log(`\n✅ 완료! ${duplicateCount}개 중복 삭제됨`);
-    console.log(`   남은 행: ${uniqueRows.length}개`);
+    console.log(`\n✅ 완료! ${changed}개 행이 '사설'로 변경되었습니다.`);
 }
 main();
