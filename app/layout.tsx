@@ -7,7 +7,7 @@ import { ColorSchemeScript, MantineProvider, createTheme } from '@mantine/core';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: '대대손손 - 전국 봉안당·수목장 가격비교',
+  title: '대대손손 - 전국 장지비교 플랫폼',
   description: '전국 1,500여개 봉안당, 수목장, 공원묘지 가격을 한눈에 비교하세요. 지역별 최저가 시설을 쉽게 찾아보세요.',
   keywords: ['봉안당', '수목장', '공원묘지', '장묘시설', '납골당', '자연장', '봉안시설 가격', '추모공원'],
   referrer: 'origin',
@@ -16,7 +16,7 @@ export const metadata: Metadata = {
     canonical: '/',
   },
   openGraph: {
-    title: '대대손손 - 전국 봉안당·수목장 가격비교',
+    title: '대대손손 - 전국 장지비교 플랫폼',
     description: '전국 1,500여개 봉안당, 수목장, 공원묘지 가격을 한눈에 비교하세요.',
     url: 'https://daedaesonson.com',
     siteName: '대대손손',
@@ -25,7 +25,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: '대대손손 - 전국 봉안당·수목장 가격비교',
+    title: '대대손손 - 전국 장지비교 플랫폼',
     description: '전국 1,500여개 봉안당, 수목장, 공원묘지 가격을 한눈에 비교하세요.',
   },
   robots: {
