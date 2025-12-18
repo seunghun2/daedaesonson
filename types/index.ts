@@ -133,11 +133,6 @@ export interface Facility {
     imageGallery?: string[]; // 갤러리 이미지 배열
     websiteUrl?: string; // 홈페이지 URL 추가
 
-    // 메타 데이터
-    rating?: number;
-    reviewCount?: number;
-    updatedAt?: string;
-
     // 편의시설 정보 (기본)
     hasParking?: boolean;
     hasRestaurant?: boolean;
