@@ -1263,6 +1263,23 @@ export default function AdminPage() {
                                     ]}
                                 />
                             </Box>
+
+                            {/* 사설/공설 구분 */}
+                            <Box>
+                                <Text size="sm" fw={500} mb={3}>운영 형태</Text>
+                                <SegmentedControl
+                                    fullWidth
+                                    size="xs"
+                                    value={editForm.isPublic ? 'public' : 'private'}
+                                    onChange={(val) => setEditForm(prev => ({ ...prev, isPublic: val === 'public' }))}
+                                    data={[
+                                        { label: '🏢 사설', value: 'private' },
+                                        { label: '🏛️ 공설', value: 'public' },
+                                    ]}
+                                    color={editForm.isPublic ? 'blue' : 'green'}
+                                />
+                            </Box>
+
                             <Select
                                 label="카테고리"
                                 data={Object.entries(FACILITY_CATEGORY_LABELS).map(([k, v]) => ({ value: k, label: v }))}
