@@ -319,6 +319,18 @@ export default function FacilityDetail({ facility: initialFacility, onClose }: F
     }, [initialFacility]);
     const [opened, setOpened] = useState(false); // Image Modal state
     const [selectedImageIndex, setSelectedImageIndex] = useState(0);
+
+    // 이미지 갤러리 열릴 때 body 스크롤 막기
+    useEffect(() => {
+        if (opened) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = '';
+        }
+        return () => {
+            document.body.style.overflow = '';
+        };
+    }, [opened]);
     const [viewCount, setViewCount] = useState(0);
     const theme = useMantineTheme();
     const isMobile = useMediaQuery(`(max-width: ${theme.breakpoints.sm})`);
