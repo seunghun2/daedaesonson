@@ -41,7 +41,7 @@ export const metadata: Metadata = {
   },
   verification: {
     google: 'x6XjVw34T66ZPgblW66kZmrgaujSCCr2TMJXUYp8_Mk',
-    // other: { 'naver-site-verification': '' }, // 네이버 웹마스터 인증 코드
+    other: { 'naver-site-verification': '15a97c3ef5f7f80107149be1ee4ddb21214ed4c3' },
   },
 };
 
