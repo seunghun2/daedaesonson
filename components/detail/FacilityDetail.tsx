@@ -924,34 +924,6 @@ export default function FacilityDetail({ facility: initialFacility, onClose }: F
                         </Button>
                     )}
                 </Group>
-                <Button
-                    variant="filled"
-                    color="yellow"
-                    size="sm"
-                    mt="sm"
-                    fullWidth
-                    onClick={() => {
-                        const shareUrl = `https://daedaesonson.com/facilities/${facility.id}`;
-                        const shareText = `${facility.name} - ${facility.priceRange?.min ? facility.priceRange.min.toLocaleString() + '만원~' : '가격정보'}`;
-
-                        // Web Share API (모바일)
-                        if (navigator.share) {
-                            navigator.share({
-                                title: facility.name,
-                                text: shareText,
-                                url: shareUrl,
-                            }).catch(() => { });
-                        } else {
-                            // 카카오톡 URL 스킴 (fallback)
-                            const kakaoLink = `https://story.kakao.com/share?url=${encodeURIComponent(shareUrl)}`;
-                            window.open(kakaoLink, '_blank');
-                        }
-                    }}
-                    leftSection={<span style={{ fontSize: '16px' }}>💬</span>}
-                    styles={{ root: { backgroundColor: '#FEE500', color: '#000', fontWeight: 600 } }}
-                >
-                    카카오톡 공유
-                </Button>
             </Box>
 
             {/* 10. 전화 상담 */}
