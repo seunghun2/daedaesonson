@@ -186,8 +186,10 @@ export default function AdminPage() {
 
     // Filter Logic
     const filteredData = useMemo(() => {
+        const query = searchQuery.trim().toLowerCase();
         return facilities.filter(item => {
-            const matchSearch = item.name.includes(searchQuery) || item.address.includes(searchQuery);
+            if (!query) return categoryFilter ? item.category === categoryFilter : true;
+            const matchSearch = item.name.toLowerCase().includes(query) || item.address.toLowerCase().includes(query);
             const matchCategory = categoryFilter ? item.category === categoryFilter : true;
             return matchSearch && matchCategory;
         });
