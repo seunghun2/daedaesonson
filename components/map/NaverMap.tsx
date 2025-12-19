@@ -28,7 +28,7 @@ interface NaverMapProps {
 }
 
 export interface NaverMapRef {
-    panTo: (lat: number, lng: number, zoom?: number) => void;
+    panTo: (lat: number, lng: number, zoom?: number, facilityId?: string) => void;
     highlightRegion: (lat: number, lng: number, zoom: number, type?: 'gu' | 'dong', regionName?: string) => void;
     searchRegion: (keyword: string) => { lat: number, lng: number, zoom: number, type: 'gu' | 'dong', name: string } | null;
 }
@@ -123,7 +123,7 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
     }, []);
 
     useImperativeHandle(ref, () => ({
-        panTo: (lat: number, lng: number, zoom?: number) => {
+        panTo: (lat: number, lng: number, zoom?: number, facilityId?: string) => {
             if (mapInstanceRef.current && window.naver) {
                 const newCenter = new window.naver.maps.LatLng(lat, lng);
                 if (zoom) {
@@ -132,27 +132,44 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
                     mapInstanceRef.current.panTo(newCenter);
                 }
 
-                // 🎯 해당 위치 근처 마커 찾아서 bounce 애니메이션
+                // 🎯 시설 ID로 마커 찾아서 bounce 애니메이션
                 setTimeout(() => {
-                    const targetMarker = markersRef.current.find(m => {
-                        const pos = m.getPosition();
-                        const dist = Math.abs(pos.lat() - lat) + Math.abs(pos.lng() - lng);
-                        return dist < 0.001; // 근접 마커
+                    // 1. 모든 마커 애니메이션 초기화
+                    markersRef.current.forEach(m => {
+                        const el = m.getElement();
+                        if (el) {
+                            el.style.animation = '';
+                            el.style.zIndex = '';
+                        }
+                        m.setZIndex(1);
                     });
+
+                    // 2. ID로 마커 찾기 (좌표 검색보다 정확)
+                    let targetMarker = null;
+                    if (facilityId) {
+                        targetMarker = markersRef.current.find(m =>
+                            (m as any).__facilityId === facilityId
+                        );
+                    }
+
+                    // 3. ID로 못 찾으면 좌표로 fallback
+                    if (!targetMarker) {
+                        targetMarker = markersRef.current.find(m => {
+                            const pos = m.getPosition();
+                            const dist = Math.abs(pos.lat() - lat) + Math.abs(pos.lng() - lng);
+                            return dist < 0.001;
+                        });
+                    }
 
                     if (targetMarker) {
                         const el = targetMarker.getElement();
                         if (el) {
                             el.style.animation = 'markerBounce 1.2s ease-in-out infinite';
-                            el.style.zIndex = '9999'; // 앞으로 나오게
-                            el.addEventListener('animationend', () => {
-                                el.style.animation = '';
-                            }, { once: true });
+                            el.style.zIndex = '9999';
                         }
-                        // 마커 자체 zIndex도 설정
                         targetMarker.setZIndex(9999);
                     }
-                }, 400); // 지도 이동 완료 후
+                }, 400);
             }
         },
 

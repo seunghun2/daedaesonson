@@ -688,10 +688,31 @@ export default function FacilityDetail({ facility: initialFacility, onClose }: F
                             </Badge>
                         </div>
 
-                        {/* 방문자 통계 텍스트 (오른쪽 정렬) */}
-                        <Text size="xs" c="gray.6" style={{ whiteSpace: 'nowrap', flexShrink: 0 }}>
+                        {/* 방문자 통계 텍스트 (오른쪽 정렬) - 슬라이드 업 애니메이션 */}
+                        <Text
+                            key={`viewcount-${facility.id}`}
+                            size="xs"
+                            c="gray.6"
+                            style={{
+                                whiteSpace: 'nowrap',
+                                flexShrink: 0,
+                                animation: 'slideUpFade 0.5s ease-out',
+                            }}
+                        >
                             최근 {viewCount}명이 찾아봤어요
                         </Text>
+                        <style jsx>{`
+                            @keyframes slideUpFade {
+                                from {
+                                    opacity: 0;
+                                    transform: translateY(10px);
+                                }
+                                to {
+                                    opacity: 1;
+                                    transform: translateY(0);
+                                }
+                            }
+                        `}</style>
                     </div>
                 </Box>
             </Box>
@@ -765,7 +786,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose }: F
                         <Box bg="white" p="md" style={{ borderBottom: '8px solid #f8f9fa' }}>
                             <Text size="sm" c="gray.6" mb={8} fw={500}>예상 이용 비용</Text>
                             <Group align="flex-end" gap="xs">
-                                <Text style={{ fontSize: '28px', fontWeight: 800, color: 'var(--mantine-color-brand-8)', lineHeight: 1, fontFamily: 'Pretendard' }}>
+                                <Text style={{ fontSize: '26px', fontWeight: 800, color: 'var(--mantine-color-brand-8)', lineHeight: 1, fontFamily: 'Pretendard' }}>
                                     {formatKoreanCurrency(displayPriceNum * 10000)}{isRep ? '' : '~'}
                                 </Text>
                             </Group>
