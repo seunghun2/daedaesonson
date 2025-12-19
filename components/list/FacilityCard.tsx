@@ -148,8 +148,12 @@ export default function FacilityCard({ facility, onClick }: FacilityCardProps) {
                             );
                         } else {
                             return (
-                                <Box h="100%" bg={config.bg} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                                    <Icon size={32} color={config.color} style={{ opacity: 0.7 }} />
+                                <Box h="100%" bg="#f1f3f5" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                                    <img
+                                        src="/logo-horizontal.svg"
+                                        alt="대대손손"
+                                        style={{ width: 60, height: 24, opacity: 0.25, filter: 'grayscale(100%)' }}
+                                    />
                                 </Box>
                             );
                         }

@@ -31257,7 +31257,8 @@
       "categoryCount": 2,
       "itemCount": 2,
       "representativeCount": 2
-    }
+    },
+    "viewCount": 311
   },
   {
     "id": "park-0227",
@@ -38464,7 +38465,7 @@
       "itemCount": 2,
       "representativeCount": 2
     },
-    "viewCount": 242
+    "viewCount": 244
   },
   {
     "id": "park-0304",
@@ -45943,13 +45944,13 @@
     },
     "lat": 35.0341546,
     "lng": 126.8393515,
-    "minPrice": 1202,
-    "maxPrice": 1901,
+    "minPrice": 1,
+    "maxPrice": 1,
     "description": "",
     "rating": 0,
     "reviewCount": 0,
     "createdAt": "2025-12-12T00:21:56.397",
-    "updatedAt": "2025-12-16T01:03:59.754",
+    "updatedAt": "2025-12-16T05:27:46.135",
     "reviews": [],
     "priceInfo": {
       "priceTable": {
@@ -45976,10 +45977,9 @@
     },
     "_detailedSource": "prisma",
     "_meta": {
-      "source": "supabase-js",
+      "source": "local-json",
       "categoryCount": 1,
-      "itemCount": 1,
-      "representativeCount": 1
+      "itemCount": 1
     }
   },
   {
@@ -76348,7 +76348,8 @@
       "categoryCount": 3,
       "itemCount": 16,
       "representativeCount": 3
-    }
+    },
+    "viewCount": 481
   },
   {
     "id": "park-0597",
@@ -118895,7 +118896,8 @@
       "categoryCount": 2,
       "itemCount": 4,
       "representativeCount": 0
-    }
+    },
+    "viewCount": 276
   },
   {
     "id": "park-1026",
@@ -134443,7 +134445,7 @@
       "lat": 37.6529003,
       "lng": 127.6544793
     },
-    "category": "ETC",
+    "category": "NATURAL_BURIAL",
     "phone": "",
     "website": "",
     "images": [
@@ -134482,7 +134484,7 @@
     "hasStore": false,
     "hasAccessibility": false,
     "createdAt": "2025-12-12T00:21:56.951",
-    "updatedAt": "2025-12-16T07:02:47.974",
+    "updatedAt": "2025-12-19T04:11:54.073",
     "reviews": [],
     "priceInfo": {
       "priceTable": {
@@ -134570,7 +134572,7 @@
       "min": 100,
       "max": 4300
     },
-    "viewCount": 366
+    "viewCount": 372
   },
   {
     "id": "park-1193",
@@ -165039,7 +165041,8 @@
       "categoryCount": 4,
       "itemCount": 24,
       "representativeCount": 4
-    }
+    },
+    "viewCount": 378
   },
   {
     "id": "park-1455",

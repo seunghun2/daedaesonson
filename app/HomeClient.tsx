@@ -379,7 +379,7 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
             )}
             <Box style={{ flex: 1, position: 'relative' }}>
               <TextInput
-                placeholder={searchQuery ? '' : placeholderTexts[placeholderIndex]}
+                placeholder=""
                 value={searchQuery}
                 onChange={handleSearchInput}
                 onKeyDown={(e) => {
@@ -393,14 +393,19 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
                   }
                 }}
                 rightSection={
-                  searchQuery ? (
-                    <ActionIcon variant="transparent" c="gray.5" onClick={() => {
-                      setSearchQuery('');
-                      setSubmittedQuery(''); // Clear submitted query immediately
-                    }}>
-                      <Search size={16} /> {/* Using Search icon for clear, could be X */}
-                    </ActionIcon>
-                  ) : null
+                  <ActionIcon
+                    variant="transparent"
+                    c={searchQuery ? 'brand.6' : 'gray.5'}
+                    onClick={() => {
+                      if (searchQuery) {
+                        setSubmittedQuery(searchQuery);
+                        setSearchFocused(false);
+                        (document.activeElement as HTMLElement)?.blur();
+                      }
+                    }}
+                  >
+                    <Search size={18} />
+                  </ActionIcon>
                 }
                 styles={{
                   input: {
@@ -412,6 +417,42 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
                 onFocus={() => setSearchFocused(true)}
                 onBlur={() => setTimeout(() => setSearchFocused(false), 250)} // 250ms for mobile touch stability
               />
+              {/* 롤링 Placeholder 오버레이 */}
+              {!searchQuery && (
+                <Box
+                  style={{
+                    position: 'absolute',
+                    top: '50%',
+                    left: '12px',
+                    transform: 'translateY(-50%)',
+                    pointerEvents: 'none',
+                    overflow: 'hidden',
+                    height: '20px',
+                    width: '150px'
+                  }}
+                >
+                  {/* 현재 텍스트 (위로 올라가며 사라짐) */}
+                  <Box
+                    key={placeholderIndex}
+                    style={{
+                      animation: 'slideUp 0.4s ease-out forwards',
+                      color: '#adb5bd',
+                      fontSize: '14px',
+                      lineHeight: '20px'
+                    }}
+                  >
+                    {placeholderTexts[placeholderIndex]}
+                  </Box>
+                </Box>
+              )}
+              <style>{`
+                @keyframes slideUp {
+                  0% { transform: translateY(100%); opacity: 0; }
+                  20% { opacity: 1; }
+                  80% { opacity: 1; }
+                  100% { transform: translateY(0); opacity: 1; }
+                }
+              `}</style>
 
               {/* 자동완성 목록 */}
               {searchFocused && searchQuery.trim() && (completionResults.regions.length > 0 || completionResults.facilities.length > 0) && (
@@ -630,7 +671,7 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
                 </Link>
                 <Box style={{ flex: 1, position: 'relative' }}>
                   <TextInput
-                    placeholder={searchQuery ? '' : placeholderTexts[placeholderIndex]}
+                    placeholder=""
                     value={searchQuery}
                     onChange={handleSearchInput}
                     onKeyDown={(e) => {
@@ -644,6 +685,21 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
                       }
                     }}
                     size="sm"
+                    rightSection={
+                      <ActionIcon
+                        variant="transparent"
+                        c={searchQuery ? 'white' : 'rgba(255,255,255,0.6)'}
+                        onClick={() => {
+                          if (searchQuery) {
+                            setSubmittedQuery(searchQuery);
+                            setSearchFocused(false);
+                            (document.activeElement as HTMLElement)?.blur();
+                          }
+                        }}
+                      >
+                        <Search size={16} />
+                      </ActionIcon>
+                    }
                     styles={{
                       input: {
                         backgroundColor: 'rgba(255,255,255,0.15)',
@@ -656,6 +712,41 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
                     onFocus={() => setSearchFocused(true)}
                     onBlur={() => setTimeout(() => setSearchFocused(false), 250)}
                   />
+                  {/* 모바일 롤링 Placeholder */}
+                  {!searchQuery && (
+                    <Box
+                      style={{
+                        position: 'absolute',
+                        top: '50%',
+                        left: '12px',
+                        transform: 'translateY(-50%)',
+                        pointerEvents: 'none',
+                        overflow: 'hidden',
+                        height: '18px',
+                        width: '120px'
+                      }}
+                    >
+                      <Box
+                        key={placeholderIndex}
+                        style={{
+                          animation: 'slideUpMobile 0.4s ease-out forwards',
+                          color: 'rgba(255,255,255,0.7)',
+                          fontSize: '14px',
+                          lineHeight: '18px'
+                        }}
+                      >
+                        {placeholderTexts[placeholderIndex]}
+                      </Box>
+                    </Box>
+                  )}
+                  <style>{`
+                    @keyframes slideUpMobile {
+                      0% { transform: translateY(100%); opacity: 0; }
+                      20% { opacity: 1; }
+                      80% { opacity: 1; }
+                      100% { transform: translateY(0); opacity: 1; }
+                    }
+                  `}</style>
 
                   {/* 모바일 자동완성 팝업 */}
                   {searchFocused && searchQuery.trim() && (completionResults.regions.length > 0 || completionResults.facilities.length > 0) && (

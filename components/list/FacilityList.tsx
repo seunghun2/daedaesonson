@@ -96,7 +96,7 @@ export default function FacilityList({ facilities, loading, onFacilityClick, sel
             <Transition transition="slide-up" mounted={scrollPosition.y > 100}>
                 {(transitionStyles) => (
                     <ActionIcon
-                        style={{ ...transitionStyles, position: 'absolute', bottom: 20, right: 20, zIndex: 100 }}
+                        style={{ ...transitionStyles, position: 'absolute', bottom: 80, right: 20, zIndex: 100 }}
                         variant="filled"
                         color="brand"
                         size="xl"
