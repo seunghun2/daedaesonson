@@ -119,11 +119,11 @@ export async function GET(
                 ...merged,
                 ...dbData, // Overwrite with DB data first
 
-                // RESTORE Local Data if DB data is missing/null/empty
+                // RESTORE Local Data if DB data is missing/null/empty (use ?? to keep 0 values)
                 address: dbData.address || merged.address,
                 phone: dbData.phone || merged.phone,
                 fax: dbData.fax || merged.fax,
-                capacity: dbData.capacity || merged.capacity,
+                capacity: dbData.capacity ?? merged.capacity,
                 lastUpdated: dbData.lastUpdated || merged.lastUpdated,
                 websiteUrl: dbData.websiteUrl || merged.website || merged.websiteUrl, // Handle key variations
 

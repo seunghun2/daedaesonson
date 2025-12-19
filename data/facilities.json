@@ -738,7 +738,8 @@
     "location": {
       "lat": 35.5411417,
       "lng": 129.2780664
-    }
+    },
+    "viewCount": 209
   },
   {
     "id": "park-0005",
@@ -55609,7 +55610,7 @@
       "itemCount": 0,
       "representativeCount": 0
     },
-    "viewCount": 244
+    "viewCount": 245
   },
   {
     "id": "park-0511",
@@ -77707,7 +77708,8 @@
       "categoryCount": 1,
       "itemCount": 14,
       "representativeCount": 1
-    }
+    },
+    "viewCount": 344
   },
   {
     "id": "park-0607",
@@ -81359,7 +81361,7 @@
       "itemCount": 10,
       "representativeCount": 3
     },
-    "viewCount": 413
+    "viewCount": 414
   },
   {
     "id": "park-0629",
@@ -82147,7 +82149,8 @@
       "categoryCount": 1,
       "itemCount": 7,
       "representativeCount": 1
-    }
+    },
+    "viewCount": 362
   },
   {
     "id": "park-0635",
@@ -82803,7 +82806,7 @@
       "itemCount": 9,
       "representativeCount": 2
     },
-    "viewCount": 329
+    "viewCount": 330
   },
   {
     "id": "park-0642",
@@ -84459,7 +84462,8 @@
       "categoryCount": 1,
       "itemCount": 7,
       "representativeCount": 1
-    }
+    },
+    "viewCount": 413
   },
   {
     "id": "park-0656",
@@ -85714,7 +85718,8 @@
       "categoryCount": 2,
       "itemCount": 6,
       "representativeCount": 2
-    }
+    },
+    "viewCount": 429
   },
   {
     "id": "park-0666",
@@ -88429,7 +88434,8 @@
       "categoryCount": 1,
       "itemCount": 6,
       "representativeCount": 1
-    }
+    },
+    "viewCount": 480
   },
   {
     "id": "park-0687",
@@ -91229,7 +91235,7 @@
       "itemCount": 4,
       "representativeCount": 1
     },
-    "viewCount": 277
+    "viewCount": 278
   },
   {
     "id": "park-0711",
@@ -97279,7 +97285,7 @@
       "itemCount": 4,
       "representativeCount": 1
     },
-    "viewCount": 451
+    "viewCount": 452
   },
   {
     "id": "park-0766",
@@ -100523,7 +100529,8 @@
       "itemCount": 2,
       "representativeCount": 1
     },
-    "operatorType": "CORPORATION"
+    "operatorType": "CORPORATION",
+    "viewCount": 98
   },
   {
     "id": "park-0799",
@@ -102258,7 +102265,7 @@
       "itemCount": 2,
       "representativeCount": 2
     },
-    "viewCount": 429
+    "viewCount": 430
   },
   {
     "id": "park-0819",
@@ -108897,7 +108904,8 @@
       "categoryCount": 2,
       "itemCount": 2,
       "representativeCount": 2
-    }
+    },
+    "viewCount": 463
   },
   {
     "id": "park-0893",
@@ -109234,7 +109242,8 @@
       "categoryCount": 2,
       "itemCount": 2,
       "representativeCount": 2
-    }
+    },
+    "viewCount": 81
   },
   {
     "id": "park-0897",
@@ -109642,7 +109651,7 @@
       "itemCount": 4,
       "representativeCount": 0
     },
-    "viewCount": 312
+    "viewCount": 313
   },
   {
     "id": "park-0902",
@@ -115672,7 +115681,7 @@
       "itemCount": 2,
       "representativeCount": 0
     },
-    "viewCount": 463
+    "viewCount": 464
   },
   {
     "id": "park-0983",
@@ -117565,7 +117574,8 @@
       "categoryCount": 2,
       "itemCount": 4,
       "representativeCount": 0
-    }
+    },
+    "viewCount": 293
   },
   {
     "id": "park-1009",
@@ -137805,7 +137815,8 @@
     "priceRange": {
       "min": 200,
       "max": 200
-    }
+    },
+    "viewCount": 363
   },
   {
     "id": "park-1220",
@@ -140157,15 +140168,15 @@
       "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-1232/photo_5.jpg"
     ],
     "hasDetailedPrices": true,
-    "lat": 0,
-    "lng": 0,
-    "minPrice": 0,
-    "maxPrice": 0,
+    "lat": 35.4499992,
+    "lng": 128.8693686,
+    "minPrice": 400,
+    "maxPrice": 400,
     "description": "",
     "rating": 0,
     "reviewCount": 0,
     "createdAt": "2025-12-12T00:21:57.295",
-    "updatedAt": "2025-12-16T01:03:59.755",
+    "updatedAt": "2025-12-19T04:45:37.643",
     "reviews": [],
     "priceInfo": {
       "priceTable": {
@@ -140185,15 +140196,15 @@
     },
     "_detailedSource": "prisma",
     "_meta": {
-      "source": "supabase-js",
+      "source": "local-json",
       "categoryCount": 1,
-      "itemCount": 5,
-      "representativeCount": 1
+      "itemCount": 1
     },
     "priceRange": {
       "min": 400,
       "max": 400
-    }
+    },
+    "viewCount": 288
   },
   {
     "id": "park-1233",

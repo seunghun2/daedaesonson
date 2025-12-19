@@ -32,3 +32,48 @@ export function formatKoreanCurrency(amount: number): string {
 
     return `${amount.toLocaleString()}원`;
 }
+
+/**
+ * 날짜를 상대 시간으로 변환 (예: "26개월전", "3일전")
+ * 입력: "2022-01-16" 또는 "26개월전" 등
+ */
+export function formatRelativeTime(dateStr: string | undefined): string {
+    if (!dateStr) return '정보 없음';
+
+    // 이미 "N개월전", "N일전" 형식이면 그대로 반환
+    if (dateStr.includes('개월전') || dateStr.includes('일전') || dateStr.includes('년전')) {
+        return dateStr;
+    }
+
+    // YYYY-MM-DD 형식인지 확인
+    const dateMatch = dateStr.match(/^(\d{4})-(\d{2})-(\d{2})$/);
+    if (!dateMatch) {
+        return dateStr; // 알 수 없는 형식은 그대로 반환
+    }
+
+    const targetDate = new Date(dateStr);
+    const now = new Date();
+
+    // 유효한 날짜인지 확인
+    if (isNaN(targetDate.getTime())) {
+        return dateStr;
+    }
+
+    const diffMs = now.getTime() - targetDate.getTime();
+    const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+
+    if (diffDays < 0) return '정보 없음';
+    if (diffDays === 0) return '오늘';
+    if (diffDays === 1) return '어제';
+    if (diffDays < 7) return `${diffDays}일전`;
+    if (diffDays < 30) return `${Math.floor(diffDays / 7)}주전`;
+
+    const diffMonths = Math.floor(diffDays / 30);
+    if (diffMonths < 12) return `${diffMonths}개월전`;
+
+    const diffYears = Math.floor(diffMonths / 12);
+    const remainingMonths = diffMonths % 12;
+
+    if (remainingMonths === 0) return `${diffYears}년전`;
+    return `${diffYears}년 ${remainingMonths}개월전`;
+}

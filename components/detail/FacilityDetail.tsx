@@ -5,7 +5,7 @@ import { Car, Utensils, Accessibility, Store, Navigation, Globe, ChevronLeft, Ch
 import StoryPanel from './StoryPanel';
 import { Facility, FACILITY_CATEGORY_LABELS, Review } from '@/types';
 import { PRICE_TAB_CATEGORIES, OTHER_TAB_CATEGORY } from '@/lib/constants';
-import { formatKoreanCurrency } from '@/lib/format';
+import { formatKoreanCurrency, formatRelativeTime } from '@/lib/format';
 import { getSingleFacilityImageUrl } from '@/lib/supabaseImage';
 
 // ... (Existing code) ...
@@ -1013,12 +1013,12 @@ export default function FacilityDetail({ facility: initialFacility, onClose }: F
                         </Text>
                     </Group>
 
-                    {/* 총매장능력 (값이 있을 때만 노출) */}
-                    {facility.capacity && facility.capacity > 0 && (
+                    {/* 총매장능력 (값이 0보다 클 때만 노출) */}
+                    {Number(facility.capacity) > 0 && (
                         <Group justify="space-between">
                             <Text size="sm" c="gray.6">총매장능력</Text>
                             <Text size="sm" fw={500} c="dark.9">
-                                {facility.capacity.toLocaleString()}기
+                                {Number(facility.capacity).toLocaleString()}기
                             </Text>
                         </Group>
                     )}
@@ -1026,7 +1026,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose }: F
                     <Group justify="space-between">
                         <Text size="sm" c="gray.6">업데이트</Text>
                         <Text size="sm" fw={500} c="dark.9">
-                            {facility.lastUpdated || '정보 없음'}
+                            {formatRelativeTime(facility.lastUpdated)}
                         </Text>
                     </Group>
                 </Stack>
