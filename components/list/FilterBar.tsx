@@ -1,15 +1,17 @@
 'use client';
 
-import { Group, Button, Select } from '@mantine/core';
-import { ArrowDownUp, Filter as FilterIcon } from 'lucide-react';
+import { Group, Text, SegmentedControl } from '@mantine/core';
 
 interface FilterBarProps {
     sortBy: string;
     setSortBy: (val: string) => void;
     totalCount: number;
+    institutionFilter: 'all' | 'public' | 'private';
+    setInstitutionFilter: (val: 'all' | 'public' | 'private') => void;
+    regionName?: string; // 현재 지역명
 }
 
-export default function FilterBar({ sortBy, setSortBy, totalCount }: FilterBarProps) {
+export default function FilterBar({ sortBy, setSortBy, totalCount, institutionFilter, setInstitutionFilter, regionName }: FilterBarProps) {
     return (
         <Group
             p="sm"
@@ -17,37 +19,24 @@ export default function FilterBar({ sortBy, setSortBy, totalCount }: FilterBarPr
             style={{ borderBottom: '1px solid #e9ecef', zIndex: 10 }}
             justify="space-between"
         >
-            <Group gap="xs">
-                <Button
-                    variant="default"
-                    size="xs"
-                    leftSection={<ArrowDownUp size={14} />}
-                    radius="xl"
-                    onClick={() => setSortBy(sortBy === 'price' ? 'rating' : 'price')}
-                >
-                    {sortBy === 'price' ? '가격순' : '평점순'}
-                </Button>
-                <Button
-                    variant="default"
-                    size="xs"
-                    leftSection={<FilterIcon size={14} />}
-                    radius="xl"
-                >
-                    필터
-                </Button>
-            </Group>
+            {/* 왼쪽: 현재 지역명 */}
+            <Text size="sm" fw={600} c="dark">
+                {regionName || '전체 지역'}
+            </Text>
 
-            <Select
+            {/* 오른쪽: 공설/사설 필터 */}
+            <SegmentedControl
                 size="xs"
-                w={100}
-                value={sortBy}
-                onChange={(v) => v && setSortBy(v)}
+                value={institutionFilter}
+                onChange={(v) => setInstitutionFilter(v as 'all' | 'public' | 'private')}
                 data={[
-                    { value: 'rating', label: '평점 높은순' },
-                    { value: 'price', label: '가격 낮은순' },
-                    { value: 'review', label: '리뷰 많은순' },
+                    { value: 'all', label: '전체' },
+                    { value: 'public', label: '공설' },
+                    { value: 'private', label: '사설' }
                 ]}
-                styles={{ input: { borderRadius: '20px' } }}
+                styles={{
+                    root: { backgroundColor: '#f1f3f5' },
+                }}
             />
         </Group>
     );

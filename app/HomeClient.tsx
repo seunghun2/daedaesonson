@@ -53,6 +53,7 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
 
   // 상태 관리
   const [activeCategory, setActiveCategory] = useState<string[]>(['all']);
+  const [institutionFilter, setInstitutionFilter] = useState<'all' | 'public' | 'private'>('all'); // 공설/사설 필터
   const [selectedFacility, setSelectedFacility] = useState<Facility | null>(null);
   const [mobileView, setMobileView] = useState<'map' | 'list'>('map');
   const [sortBy, setSortBy] = useState('rating');
@@ -78,6 +79,7 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
 
   // 현재 지도 좌표
   const [currentBounds, setCurrentBounds] = useState<{ south: number, north: number, west: number, east: number } | null>(null);
+  const [currentRegionName, setCurrentRegionName] = useState<string>(''); // 현재 지역명
 
   // UI 숨김 상태 (지도 탭 시 토글) - 호갱노노 스타일
   const [uiHidden, setUiHidden] = useState(false);
@@ -207,10 +209,22 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
       }
     }
 
+    // 2. 공설/사설 필터
+    if (institutionFilter !== 'all') {
+      base = base.filter(f => {
+        if (institutionFilter === 'public') {
+          return f.isPublic === true;
+        } else if (institutionFilter === 'private') {
+          return f.isPublic === false;
+        }
+        return true;
+      });
+    }
+
     // ❌ 검색어 필터링 제거 - 마커는 항상 표시되어야 함
 
     return base;
-  }, [dbFacilities, activeCategory]);
+  }, [dbFacilities, activeCategory, institutionFilter]);
 
   // 2. 리스트에 표시할 데이터 (지도 데이터 + 현재 Viewport filtering + 정렬)
   const finalFacilities = useMemo(() => {
@@ -234,6 +248,8 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
       return Number(b.rating || 0) - Number(a.rating || 0);
     });
   }, [filteredMapFacilities, currentBounds, sortBy]);
+
+  // 현재 지역명은 NaverMap에서 onCenterAddressChange 콜백으로 받음
 
   // 검색 결과 선택 (시설)
   const handleSelectFacility = (facility: Facility) => {
@@ -550,7 +566,7 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
             />
           ) : (
             <Flex direction="column" h="100%">
-              <FilterBar sortBy={sortBy} setSortBy={setSortBy} totalCount={finalFacilities.length} />
+              <FilterBar sortBy={sortBy} setSortBy={setSortBy} totalCount={finalFacilities.length} institutionFilter={institutionFilter} setInstitutionFilter={setInstitutionFilter} regionName={currentRegionName} />
               <FacilityList
                 facilities={finalFacilities}
                 onFacilityClick={handleMarkerClick}
@@ -793,6 +809,7 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
             handleMarkerClick(f);
           }}
           onBoundsChanged={handleBoundsChanged}
+          onCenterAddressChange={setCurrentRegionName}
           isMobile={isMobile}
           onViewList={() => router.push('/list')}
           onMapTap={handleMapTap}

@@ -729,13 +729,15 @@ export default function FacilityDetail({ facility: initialFacility, onClose }: F
                 // Collection for sub-items (Label, Price in Won)
                 const subRepItems: { label: string; price: number }[] = [];
 
-                if (facility.pricing) {
+                // 실제 가격 데이터는 priceInfo.priceTable에 있음
+                const priceTable = facility.priceInfo?.priceTable || facility.pricing;
+
+                if (priceTable) {
                     // 1. Collect all representative items
-                    Object.keys(facility.pricing).forEach(key => {
-                        const cat = facility.pricing[key];
-                        // Skip 'Others' or Option-like categories for the main sumamry if desired, 
-                        // but user asked for "Main categories". Usually 매장, 봉안, 수목.
-                        if (key.includes('옵션') || key.includes('관리비')) return;
+                    Object.keys(priceTable).forEach(key => {
+                        const cat = priceTable[key];
+                        // Skip non-main categories: 기타/공통, 제외됨, 옵션, 관리비, 석물, 비고 등
+                        if (/옵션|관리비|기타|공통|제외|석물|비고|안내|별도/.test(key)) return;
 
                         if (cat && Array.isArray(cat.rows)) {
                             const rep = cat.rows.find((r: any) => r.isRepresentative);
@@ -756,8 +758,8 @@ export default function FacilityDetail({ facility: initialFacility, onClose }: F
 
                     // 2. Pick Main Display Price (Preferred Category matching)
                     let preferredKeywords: string[] = [];
-                    if (facility.category === 'FAMILY_GRAVE') preferredKeywords = ['매장', '묘지'];
-                    else if (facility.category === 'CHARNEL_HOUSE') preferredKeywords = ['봉안', '납골'];
+                    if (facility.category === 'FAMILY_GRAVE') preferredKeywords = ['매장', '묘지', '분양'];
+                    else if (facility.category === 'CHARNEL_HOUSE') preferredKeywords = ['봉안', '납골', '안치'];
                     else if (facility.category === 'NATURAL_BURIAL') preferredKeywords = ['수목', '자연', '잔디', '화초'];
 
                     // Find first item that matches ANY of the keywords
@@ -774,13 +776,8 @@ export default function FacilityDetail({ facility: initialFacility, onClose }: F
 
                 // Fallback: Use priceRange.min if no representative price found
                 if (displayPriceNum === 0) {
-                    let priceMin = facility.priceRange?.min || 0;
-                    // 🔧 100 이상이면 원 단위로 저장된 것 → 만원으로 변환
-                    if (priceMin >= 100) {
-                        displayPriceNum = priceMin / 10000; // 5000원 → 0.5 (만원)
-                    } else {
-                        displayPriceNum = priceMin; // 이미 만원 단위
-                    }
+                    // priceRange.min은 만원 단위로 저장됨
+                    displayPriceNum = facility.priceRange?.min || 0;
                 }
 
                 // Fallback attempt with legacy representativePricing if not found in pricing
@@ -794,7 +791,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose }: F
                             <Text size="sm" c="gray.6" mb={8} fw={500}>예상 이용 비용</Text>
                             <Group align="flex-end" gap="xs">
                                 <Text style={{ fontSize: '26px', fontWeight: 800, color: 'var(--mantine-color-brand-8)', lineHeight: 1, fontFamily: 'Pretendard' }}>
-                                    {formatKoreanCurrency(displayPriceNum * 10000)}{isRep ? '' : '~'}
+                                    {formatKoreanCurrency(displayPriceNum * 10000)}~
                                 </Text>
                             </Group>
 

@@ -3872,7 +3872,7 @@
     },
     "category": "FAMILY_GRAVE",
     "priceRange": {
-      "min": 263,
+      "min": 527,
       "max": 527
     },
     "hasParking": true,
@@ -4074,7 +4074,7 @@
     },
     "category": "FAMILY_GRAVE",
     "priceRange": {
-      "min": 300,
+      "min": 2125,
       "max": 2125
     },
     "hasParking": true,
@@ -9226,7 +9226,7 @@
     },
     "category": "FAMILY_GRAVE",
     "priceRange": {
-      "min": 269,
+      "min": 296,
       "max": 296
     },
     "hasParking": false,
@@ -10495,7 +10495,7 @@
     },
     "category": "FAMILY_GRAVE",
     "priceRange": {
-      "min": 20,
+      "min": 18,
       "max": 150
     },
     "hasParking": false,
@@ -11215,7 +11215,7 @@
     },
     "category": "FAMILY_GRAVE",
     "priceRange": {
-      "min": 72,
+      "min": 100,
       "max": 100
     },
     "hasParking": false,
@@ -13799,7 +13799,7 @@
     },
     "category": "FAMILY_GRAVE",
     "priceRange": {
-      "min": 30,
+      "min": 100,
       "max": 100
     },
     "hasParking": true,
@@ -14101,7 +14101,7 @@
     },
     "category": "FAMILY_GRAVE",
     "priceRange": {
-      "min": 28,
+      "min": 135,
       "max": 135
     },
     "hasParking": true,
@@ -14270,7 +14270,7 @@
     },
     "category": "FAMILY_GRAVE",
     "priceRange": {
-      "min": 50,
+      "min": 100,
       "max": 100
     },
     "hasParking": false,
@@ -14361,7 +14361,7 @@
       "itemCount": 7,
       "representativeCount": 2
     },
-    "viewCount": 398
+    "viewCount": 402
   },
   {
     "id": "park-0070",
@@ -14544,7 +14544,7 @@
     },
     "category": "FAMILY_GRAVE",
     "priceRange": {
-      "min": 475,
+      "min": 870,
       "max": 1000
     },
     "hasParking": false,
@@ -14893,7 +14893,7 @@
     },
     "category": "FAMILY_GRAVE",
     "priceRange": {
-      "min": 0,
+      "min": 2,
       "max": 2
     },
     "hasParking": true,
@@ -16456,7 +16456,7 @@
     },
     "category": "FAMILY_GRAVE",
     "priceRange": {
-      "min": 80,
+      "min": 300,
       "max": 300
     },
     "hasParking": true,
@@ -16553,7 +16553,7 @@
       "itemCount": 6,
       "representativeCount": 4
     },
-    "viewCount": 378
+    "viewCount": 382
   },
   {
     "id": "park-0087",
@@ -17917,7 +17917,7 @@
     },
     "category": "FAMILY_GRAVE",
     "priceRange": {
-      "min": 60,
+      "min": 82,
       "max": 82
     },
     "hasParking": true,
@@ -22698,7 +22698,8 @@
       "categoryCount": 3,
       "itemCount": 4,
       "representativeCount": 3
-    }
+    },
+    "viewCount": 362
   },
   {
     "id": "park-0139",
@@ -24571,7 +24572,7 @@
     },
     "category": "FAMILY_GRAVE",
     "priceRange": {
-      "min": 60,
+      "min": 120,
       "max": 120
     },
     "hasParking": false,
@@ -25938,7 +25939,7 @@
     },
     "category": "FAMILY_GRAVE",
     "priceRange": {
-      "min": 2,
+      "min": 150,
       "max": 150
     },
     "hasParking": true,
@@ -26506,7 +26507,7 @@
     },
     "category": "FAMILY_GRAVE",
     "priceRange": {
-      "min": 1,
+      "min": 9260,
       "max": 1
     },
     "hasParking": true,
@@ -55733,7 +55734,8 @@
       "categoryCount": 1,
       "itemCount": 96,
       "representativeCount": 1
-    }
+    },
+    "viewCount": 279
   },
   {
     "id": "park-0513",
@@ -61379,7 +61381,7 @@
     },
     "category": "CHARNEL_HOUSE",
     "priceRange": {
-      "min": 50,
+      "min": 200,
       "max": 1000
     },
     "hasParking": false,
@@ -62384,7 +62386,7 @@
       "representativeCount": 3
     },
     "priceRange": {
-      "min": 4080,
+      "min": 2585,
       "max": 35800
     }
   },
@@ -66905,7 +66907,7 @@
       "representativeCount": 4
     },
     "priceRange": {
-      "min": 195,
+      "min": 200,
       "max": 3900
     }
   },
@@ -70108,7 +70110,7 @@
     },
     "category": "CHARNEL_HOUSE",
     "priceRange": {
-      "min": 420,
+      "min": 100,
       "max": 620
     },
     "hasParking": false,
@@ -72989,7 +72991,7 @@
       "representativeCount": 5
     },
     "priceRange": {
-      "min": 930,
+      "min": 50,
       "max": 2280
     }
   },
@@ -73503,7 +73505,7 @@
     },
     "category": "CHARNEL_HOUSE",
     "priceRange": {
-      "min": 700,
+      "min": 100,
       "max": 700
     },
     "hasParking": true,
@@ -74799,7 +74801,7 @@
     },
     "category": "CHARNEL_HOUSE",
     "priceRange": {
-      "min": 40,
+      "min": 420,
       "max": 420
     },
     "hasParking": true,
@@ -75399,7 +75401,7 @@
     },
     "category": "CHARNEL_HOUSE",
     "priceRange": {
-      "min": 17,
+      "min": 160,
       "max": 160
     },
     "hasParking": true,
@@ -75861,7 +75863,7 @@
     },
     "category": "CHARNEL_HOUSE",
     "priceRange": {
-      "min": 22,
+      "min": 160,
       "max": 160
     },
     "hasParking": true,
@@ -79915,7 +79917,7 @@
     },
     "category": "CHARNEL_HOUSE",
     "priceRange": {
-      "min": 32,
+      "min": 550,
       "max": 550
     },
     "hasParking": false,
@@ -80267,7 +80269,7 @@
     },
     "category": "CHARNEL_HOUSE",
     "priceRange": {
-      "min": 250,
+      "min": 300,
       "max": 300
     },
     "hasParking": false,
@@ -81446,7 +81448,7 @@
       "representativeCount": 1
     },
     "priceRange": {
-      "min": 1,
+      "min": 150,
       "max": 150
     }
   },
@@ -81677,7 +81679,7 @@
     },
     "category": "CHARNEL_HOUSE",
     "priceRange": {
-      "min": 5,
+      "min": 400,
       "max": 400
     },
     "hasParking": true,
@@ -82660,7 +82662,7 @@
     },
     "category": "CHARNEL_HOUSE",
     "priceRange": {
-      "min": 5,
+      "min": 438,
       "max": 438
     },
     "hasParking": true,
@@ -84872,7 +84874,7 @@
     },
     "category": "CHARNEL_HOUSE",
     "priceRange": {
-      "min": 0,
+      "min": 800,
       "max": 0
     },
     "hasParking": true,
@@ -85998,7 +86000,7 @@
     },
     "category": "CHARNEL_HOUSE",
     "priceRange": {
-      "min": 35,
+      "min": 200,
       "max": 200
     },
     "hasParking": true,
@@ -87067,7 +87069,7 @@
       "representativeCount": 3
     },
     "priceRange": {
-      "min": 36,
+      "min": 20,
       "max": 55
     }
   },
@@ -87724,7 +87726,8 @@
       "categoryCount": 2,
       "itemCount": 6,
       "representativeCount": 2
-    }
+    },
+    "viewCount": 397
   },
   {
     "id": "park-0681",
@@ -89881,7 +89884,7 @@
     },
     "category": "CHARNEL_HOUSE",
     "priceRange": {
-      "min": 65,
+      "min": 450,
       "max": 450
     },
     "hasParking": true,
@@ -90709,7 +90712,7 @@
       "representativeCount": 3
     },
     "priceRange": {
-      "min": 1,
+      "min": 70,
       "max": 70
     }
   },
@@ -91478,8 +91481,8 @@
     },
     "category": "CHARNEL_HOUSE",
     "priceRange": {
-      "min": 0,
-      "max": 0
+      "min": 30,
+      "max": 300
     },
     "hasParking": true,
     "hasRestaurant": false,
@@ -91530,13 +91533,13 @@
     },
     "lat": 35.1818844,
     "lng": 128.4656204,
-    "minPrice": 341,
-    "maxPrice": 837,
+    "minPrice": 30,
+    "maxPrice": 300,
     "description": "",
     "rating": 0,
     "reviewCount": 0,
     "createdAt": "2025-12-12T00:21:56.696",
-    "updatedAt": "2025-12-16T01:03:59.754",
+    "updatedAt": "2025-12-16T06:05:05.143",
     "reviews": [],
     "priceInfo": {
       "priceTable": {
@@ -91545,15 +91548,27 @@
           "rows": [
             {
               "name": "개인단(사용료)",
-              "grade": "사용료",
-              "price": 30,
+              "grade": "30만원부터 100만원",
+              "price": 300000,
               "isRepresentative": true
+            },
+            {
+              "name": "개인단(관리비)",
+              "grade": "1년간",
+              "price": 25000,
+              "groupType": "미분류"
             },
             {
               "name": "부부단(사용료)",
               "grade": "1구당",
-              "price": 300,
+              "price": 3000000,
               "isRepresentative": false
+            },
+            {
+              "name": "부부단(사용료)",
+              "grade": "1년간",
+              "price": 25000,
+              "groupType": "미분류"
             }
           ],
           "category": "봉안당"
@@ -91562,10 +91577,9 @@
     },
     "_detailedSource": "prisma",
     "_meta": {
-      "source": "supabase-js",
-      "categoryCount": 2,
-      "itemCount": 4,
-      "representativeCount": 2
+      "source": "local-json",
+      "categoryCount": 1,
+      "itemCount": 2
     }
   },
   {
@@ -92033,8 +92047,8 @@
     },
     "category": "FAMILY_GRAVE",
     "priceRange": {
-      "min": 20,
-      "max": 80
+      "min": 80,
+      "max": 180
     },
     "hasParking": true,
     "hasRestaurant": false,
@@ -92065,13 +92079,13 @@
     },
     "lat": 36.2111481,
     "lng": 128.5997464,
-    "minPrice": 1243,
-    "maxPrice": 1824,
+    "minPrice": 80,
+    "maxPrice": 180,
     "description": "",
     "rating": 0,
     "reviewCount": 0,
     "createdAt": "2025-12-12T00:21:56.696",
-    "updatedAt": "2025-12-16T01:03:59.754",
+    "updatedAt": "2025-12-19T03:38:58.526",
     "reviews": [],
     "priceInfo": {
       "priceTable": {
@@ -92121,11 +92135,11 @@
     },
     "_detailedSource": "prisma",
     "_meta": {
-      "source": "supabase-js",
-      "categoryCount": 2,
-      "itemCount": 4,
-      "representativeCount": 2
-    }
+      "source": "local-json",
+      "categoryCount": 3,
+      "itemCount": 4
+    },
+    "viewCount": 318
   },
   {
     "id": "park-0721",
@@ -95132,7 +95146,7 @@
     },
     "category": "CHARNEL_HOUSE",
     "priceRange": {
-      "min": 65,
+      "min": 50,
       "max": 98
     },
     "hasParking": true,
@@ -97673,7 +97687,7 @@
     },
     "category": "CHARNEL_HOUSE",
     "priceRange": {
-      "min": 10,
+      "min": 5,
       "max": 10
     },
     "hasParking": false,
@@ -98415,7 +98429,7 @@
     },
     "category": "CHARNEL_HOUSE",
     "priceRange": {
-      "min": 7,
+      "min": 55,
       "max": 55
     },
     "hasParking": false,
@@ -98841,7 +98855,7 @@
     },
     "category": "CHARNEL_HOUSE",
     "priceRange": {
-      "min": 40,
+      "min": 500,
       "max": 500
     },
     "hasParking": true,
@@ -99539,7 +99553,7 @@
     },
     "category": "CHARNEL_HOUSE",
     "priceRange": {
-      "min": 3,
+      "min": 100,
       "max": 100
     },
     "hasParking": true,
@@ -107822,7 +107836,7 @@
     },
     "category": "CHARNEL_HOUSE",
     "priceRange": {
-      "min": 0,
+      "min": 300,
       "max": 0
     },
     "hasParking": true,
@@ -120289,7 +120303,7 @@
     },
     "category": "CHARNEL_HOUSE",
     "priceRange": {
-      "min": 65,
+      "min": 450,
       "max": 450
     },
     "hasParking": true,
@@ -131129,7 +131143,7 @@
       "representativeCount": 2
     },
     "priceRange": {
-      "min": 65,
+      "min": 93,
       "max": 93
     }
   },
@@ -134510,7 +134524,7 @@
       "representativeCount": 2
     },
     "priceRange": {
-      "min": 0,
+      "min": 3000,
       "max": 0
     }
   },
@@ -135495,7 +135509,7 @@
       "representativeCount": 2
     },
     "priceRange": {
-      "min": 80,
+      "min": 180,
       "max": 180
     }
   },
@@ -136707,7 +136721,7 @@
     },
     "category": "NATURAL_BURIAL",
     "priceRange": {
-      "min": 50,
+      "min": 400,
       "max": 400
     },
     "hasParking": true,
@@ -140382,7 +140396,7 @@
     },
     "category": "NATURAL_BURIAL",
     "priceRange": {
-      "min": 0,
+      "min": 2300,
       "max": 0
     },
     "hasParking": true,
@@ -142753,7 +142767,7 @@
       "representativeCount": 3
     },
     "priceRange": {
-      "min": 30,
+      "min": 162,
       "max": 162
     }
   },
@@ -142767,7 +142781,7 @@
     },
     "category": "NATURAL_BURIAL",
     "priceRange": {
-      "min": 50,
+      "min": 150,
       "max": 150
     },
     "hasParking": true,
@@ -159643,7 +159657,7 @@
       "representativeCount": 2
     },
     "priceRange": {
-      "min": 0,
+      "min": 60,
       "max": 0
     }
   },
