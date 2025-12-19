@@ -266,7 +266,8 @@
       "lat": 35.2674332,
       "lng": 128.8301094
     },
-    "isActive": true
+    "isActive": true,
+    "viewCount": 158
   },
   {
     "id": "park-0002",
@@ -32586,7 +32587,8 @@
       "categoryCount": 2,
       "itemCount": 2,
       "representativeCount": 2
-    }
+    },
+    "viewCount": 242
   },
   {
     "id": "park-0241",
@@ -32905,11 +32907,30 @@
     "minPrice": 930,
     "maxPrice": 1715,
     "description": "",
-    "rating": 0,
-    "reviewCount": 0,
+    "rating": 5,
+    "reviewCount": 1,
     "createdAt": "2025-12-12T00:21:56.319",
     "updatedAt": "2025-12-16T01:03:59.753",
-    "reviews": [],
+    "reviews": [
+      {
+        "id": "rev-1766120021858-9f0zfnvll",
+        "author": "익명",
+        "date": "2025-12-19",
+        "rating": 5,
+        "content": "안성\n",
+        "likes": 0,
+        "photos": [],
+        "replies": [
+          {
+            "id": "rep-1766120045781",
+            "author": "관리자",
+            "content": "ㅈ",
+            "date": "2025-12-19"
+          }
+        ],
+        "tags": []
+      }
+    ],
     "priceInfo": {
       "priceTable": {
         "매장묘": {
@@ -32938,7 +32959,8 @@
       "categoryCount": 1,
       "itemCount": 2,
       "representativeCount": 1
-    }
+    },
+    "viewCount": 311
   },
   {
     "id": "park-0245",
@@ -81705,8 +81727,8 @@
     },
     "category": "CHARNEL_HOUSE",
     "priceRange": {
-      "min": 400,
-      "max": 400
+      "min": 200,
+      "max": 500
     },
     "hasParking": true,
     "hasRestaurant": false,
@@ -81714,28 +81736,8 @@
     "hasAccessibility": true,
     "isPublic": false,
     "hasDetailedPrices": false,
-    "images": [
-      "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0631/photo_1.jpeg",
-      "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0631/photo_2.jpeg",
-      "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0631/photo_3.jpg",
-      "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0631/photo_4.jpg",
-      "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0631/photo_5.jpg",
-      "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0631/photo_6.jpeg",
-      "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0631/photo_7.jpg",
-      "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0631/photo_8.jpg",
-      "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0631/photo_9.jpeg"
-    ],
-    "imageGallery": [
-      "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0631/photo_1.jpeg",
-      "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0631/photo_2.jpeg",
-      "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0631/photo_3.jpg",
-      "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0631/photo_4.jpg",
-      "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0631/photo_5.jpg",
-      "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0631/photo_6.jpeg",
-      "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0631/photo_7.jpg",
-      "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0631/photo_8.jpg",
-      "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0631/photo_9.jpeg"
-    ],
+    "images": [],
+    "imageGallery": [],
     "phone": "031-886-4060",
     "capacity": null,
     "lastUpdated": "1개월전",
@@ -81753,13 +81755,13 @@
     },
     "lat": 37.3517194,
     "lng": 127.511628,
-    "minPrice": 286,
-    "maxPrice": 862,
+    "minPrice": 200,
+    "maxPrice": 500,
     "description": "",
     "rating": 0,
     "reviewCount": 0,
     "createdAt": "2025-12-12T00:21:56.629",
-    "updatedAt": "2025-12-16T01:03:59.754",
+    "updatedAt": "2025-12-19T04:58:59.636",
     "reviews": [],
     "priceInfo": {
       "priceTable": {
@@ -81845,12 +81847,11 @@
     },
     "_detailedSource": "prisma",
     "_meta": {
-      "source": "supabase-js",
-      "categoryCount": 3,
-      "itemCount": 10,
-      "representativeCount": 3
+      "source": "local-json",
+      "categoryCount": 4,
+      "itemCount": 9
     },
-    "viewCount": 310
+    "viewCount": 311
   },
   {
     "id": "park-0632",
@@ -91983,7 +91984,7 @@
       "itemCount": 4,
       "representativeCount": 1
     },
-    "viewCount": 413
+    "viewCount": 415
   },
   {
     "id": "park-0719",
@@ -137674,41 +137675,21 @@
     "category": "NATURAL_BURIAL",
     "phone": "",
     "website": "",
-    "images": [
-      "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-1218/photo_1.jpg",
-      "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-1218/photo_2.jpeg",
-      "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-1218/photo_3.jpeg",
-      "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-1218/photo_4.jpg",
-      "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-1218/photo_5.jpg",
-      "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-1218/photo_6.jpg",
-      "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-1218/photo_7.jpg",
-      "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-1218/photo_8.jpeg",
-      "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-1218/photo_9.jpg"
-    ],
+    "images": [],
     "lastUpdated": "2025-11-16",
     "location": {
       "lat": 37.3517194,
       "lng": 127.511628
     },
-    "imageGallery": [
-      "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-1218/photo_1.jpg",
-      "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-1218/photo_2.jpeg",
-      "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-1218/photo_3.jpeg",
-      "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-1218/photo_4.jpg",
-      "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-1218/photo_5.jpg",
-      "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-1218/photo_6.jpg",
-      "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-1218/photo_7.jpg",
-      "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-1218/photo_8.jpeg",
-      "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-1218/photo_9.jpg"
-    ],
+    "imageGallery": [],
     "hasDetailedPrices": false,
     "representativePricing": {
       "natural": {
         "individual": 4000000
       }
     },
-    "lat": 0,
-    "lng": 0,
+    "lat": 37.3517194,
+    "lng": 127.511628,
     "minPrice": 0,
     "maxPrice": 0,
     "description": "",
@@ -137720,7 +137701,7 @@
     "hasStore": false,
     "hasAccessibility": false,
     "createdAt": "2025-12-12T00:21:57.295",
-    "updatedAt": "2025-12-16T01:03:59.755",
+    "updatedAt": "2025-12-19T04:58:51.185",
     "reviews": [],
     "priceInfo": {
       "priceTable": {
@@ -137740,10 +137721,9 @@
     },
     "_detailedSource": "prisma",
     "_meta": {
-      "source": "supabase-js",
-      "categoryCount": 2,
-      "itemCount": 6,
-      "representativeCount": 2
+      "source": "local-json",
+      "categoryCount": 1,
+      "itemCount": 1
     },
     "priceRange": {
       "min": 0,
@@ -142698,7 +142678,7 @@
       "min": 210,
       "max": 210
     },
-    "viewCount": 345
+    "viewCount": 346
   },
   {
     "id": "park-1255",
