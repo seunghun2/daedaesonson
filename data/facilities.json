@@ -22783,7 +22783,8 @@
       "categoryCount": 1,
       "itemCount": 4,
       "representativeCount": 1
-    }
+    },
+    "viewCount": 361
   },
   {
     "id": "park-0140",
@@ -84538,7 +84539,8 @@
       "categoryCount": 1,
       "itemCount": 7,
       "representativeCount": 1
-    }
+    },
+    "viewCount": 430
   },
   {
     "id": "park-0657",
@@ -86086,7 +86088,8 @@
       "categoryCount": 3,
       "itemCount": 5,
       "representativeCount": 3
-    }
+    },
+    "viewCount": 481
   },
   {
     "id": "park-0669",
@@ -86438,15 +86441,15 @@
         "label": "250000~1000000"
       }
     },
-    "lat": 0,
-    "lng": 0,
-    "minPrice": 0,
-    "maxPrice": 0,
+    "lat": 37.6620032,
+    "lng": 127.217737,
+    "minPrice": 270,
+    "maxPrice": 470,
     "description": "",
     "rating": 0,
     "reviewCount": 0,
     "createdAt": "2025-12-12T00:21:56.629",
-    "updatedAt": "2025-12-16T01:03:59.754",
+    "updatedAt": "2025-12-19T03:49:53.78",
     "reviews": [],
     "priceInfo": {
       "priceTable": {
@@ -86456,8 +86459,8 @@
           "rows": [
             {
               "name": "개인단사용료",
-              "price": 250,
-              "grade": "관리비 년 5만원",
+              "price": 2700000,
+              "grade": "250만원~600만원/ 관리비 년 5만원",
               "groupType": null,
               "size": null,
               "hasInstallation": false,
@@ -86468,9 +86471,15 @@
               "raw": null
             },
             {
+              "name": "5년 개인단",
+              "grade": "",
+              "price": 250000,
+              "groupType": "미분류"
+            },
+            {
               "name": "부부단사용료",
-              "price": 450,
-              "grade": "관리비 년 5만원",
+              "price": 4700000,
+              "grade": "450만원~1100만원/ 관리비 년 5만원",
               "groupType": null,
               "size": null,
               "hasInstallation": false,
@@ -86479,6 +86488,12 @@
               "discount": null,
               "isRepresentative": false,
               "raw": null
+            },
+            {
+              "name": "5년 부부단",
+              "grade": "",
+              "price": 500000,
+              "groupType": "미분류"
             }
           ]
         },
@@ -86544,15 +86559,15 @@
     },
     "_detailedSource": "prisma",
     "_meta": {
-      "source": "supabase-js",
+      "source": "local-json",
       "categoryCount": 2,
-      "itemCount": 6,
-      "representativeCount": 2
+      "itemCount": 8
     },
     "priceRange": {
-      "min": 250,
-      "max": 100
-    }
+      "min": 270,
+      "max": 470
+    },
+    "viewCount": 388
   },
   {
     "id": "park-0672",
@@ -88611,7 +88626,8 @@
       "categoryCount": 2,
       "itemCount": 5,
       "representativeCount": 2
-    }
+    },
+    "viewCount": 65
   },
   {
     "id": "park-0689",
