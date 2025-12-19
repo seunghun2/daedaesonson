@@ -18,7 +18,7 @@
     "hasStore": true,
     "hasAccessibility": true,
     "isPublic": false,
-    "hasDetailedPrices": false,
+    "hasDetailedPrices": true,
     "images": [
       "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0001/photo_1.jpg",
       "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0001/photo_2.jpg",
@@ -5913,7 +5913,8 @@
       "categoryCount": 3,
       "itemCount": 24,
       "representativeCount": 3
-    }
+    },
+    "viewCount": 210
   },
   {
     "id": "park-0023",
@@ -8454,7 +8455,8 @@
       "categoryCount": 2,
       "itemCount": 18,
       "representativeCount": 2
-    }
+    },
+    "viewCount": 192
   },
   {
     "id": "park-0031",
@@ -14682,7 +14684,7 @@
     "rating": 0,
     "reviewCount": 0,
     "createdAt": "2025-12-12T00:21:56.196",
-    "updatedAt": "2025-12-16T04:45:29.661",
+    "updatedAt": "2025-12-19T04:27:29.014",
     "reviews": [],
     "priceInfo": {
       "priceTable": {
@@ -14799,11 +14801,12 @@
     },
     "_detailedSource": "prisma",
     "_meta": {
-      "source": "supabase-js",
+      "source": "local-json",
       "categoryCount": 3,
-      "itemCount": 7,
-      "representativeCount": 3
-    }
+      "itemCount": 7
+    },
+    "isActive": false,
+    "viewCount": 293
   },
   {
     "id": "park-0073",
@@ -18301,7 +18304,7 @@
     "hasStore": false,
     "hasAccessibility": true,
     "isPublic": true,
-    "hasDetailedPrices": false,
+    "hasDetailedPrices": true,
     "images": [
       "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0102/photo_1.PNG"
     ],
@@ -18321,15 +18324,15 @@
       "lat": 37.2147546,
       "lng": 127.4920057
     },
-    "lat": 37.21443,
-    "lng": 127.50044,
-    "minPrice": 818,
-    "maxPrice": 1985,
+    "lat": 37.2147546,
+    "lng": 127.4920057,
+    "minPrice": 20,
+    "maxPrice": 20,
     "description": "",
     "rating": 0,
     "reviewCount": 0,
     "createdAt": "2025-12-12T00:21:56.255",
-    "updatedAt": "2025-12-16T01:03:59.753",
+    "updatedAt": "2025-12-19T04:30:52.265",
     "reviews": [],
     "priceInfo": {
       "priceTable": {
@@ -18401,11 +18404,12 @@
     },
     "_detailedSource": "prisma",
     "_meta": {
-      "source": "supabase-js",
+      "source": "local-json",
       "categoryCount": 2,
-      "itemCount": 4,
-      "representativeCount": 2
-    }
+      "itemCount": 4
+    },
+    "isActive": false,
+    "viewCount": 191
   },
   {
     "id": "park-0103",
@@ -19713,7 +19717,8 @@
       "categoryCount": 2,
       "itemCount": 4,
       "representativeCount": 2
-    }
+    },
+    "isActive": false
   },
   {
     "id": "park-0114",
@@ -20922,7 +20927,8 @@
       "categoryCount": 2,
       "itemCount": 4,
       "representativeCount": 2
-    }
+    },
+    "isActive": false
   },
   {
     "id": "park-0124",
@@ -21046,7 +21052,8 @@
       "categoryCount": 2,
       "itemCount": 4,
       "representativeCount": 2
-    }
+    },
+    "isActive": false
   },
   {
     "id": "park-0125",
@@ -26798,15 +26805,15 @@
       "lat": 37.452214,
       "lng": 126.7442927
     },
-    "lat": 37.4538232,
-    "lng": 126.7524602,
-    "minPrice": 1030,
-    "maxPrice": 2491,
+    "lat": 37.452214,
+    "lng": 126.7442927,
+    "minPrice": 3600,
+    "maxPrice": 3600,
     "description": "",
     "rating": 0,
     "reviewCount": 0,
     "createdAt": "2025-12-12T00:21:56.255",
-    "updatedAt": "2025-12-16T01:03:59.753",
+    "updatedAt": "2025-12-16T05:03:12.4",
     "reviews": [],
     "priceInfo": {
       "priceTable": {
@@ -26852,12 +26859,12 @@
     },
     "_detailedSource": "prisma",
     "_meta": {
-      "source": "supabase-js",
+      "source": "local-json",
       "categoryCount": 2,
-      "itemCount": 2,
-      "representativeCount": 2
+      "itemCount": 2
     },
-    "viewCount": 314
+    "viewCount": 314,
+    "isActive": false
   },
   {
     "id": "park-0182",
@@ -26995,15 +27002,15 @@
       "lat": 37.4413987,
       "lng": 126.7297603
     },
-    "lat": 37.4391973,
-    "lng": 126.7252881,
-    "minPrice": 1159,
-    "maxPrice": 2320,
+    "lat": 37.4413987,
+    "lng": 126.7297603,
+    "minPrice": 3600,
+    "maxPrice": 3600,
     "description": "",
     "rating": 0,
     "reviewCount": 0,
     "createdAt": "2025-12-12T00:21:56.255",
-    "updatedAt": "2025-12-16T01:03:59.753",
+    "updatedAt": "2025-12-16T05:03:26.359",
     "reviews": [],
     "priceInfo": {
       "priceTable": {
@@ -27049,12 +27056,12 @@
     },
     "_detailedSource": "prisma",
     "_meta": {
-      "source": "supabase-js",
+      "source": "local-json",
       "categoryCount": 2,
-      "itemCount": 2,
-      "representativeCount": 2
+      "itemCount": 2
     },
-    "viewCount": 344
+    "viewCount": 344,
+    "isActive": false
   },
   {
     "id": "park-0184",
@@ -28126,7 +28133,8 @@
       "itemCount": 2,
       "representativeCount": 2
     },
-    "viewCount": 378
+    "viewCount": 378,
+    "isActive": false
   },
   {
     "id": "park-0195",
@@ -28925,7 +28933,8 @@
       "itemCount": 2,
       "representativeCount": 2
     },
-    "viewCount": 213
+    "viewCount": 213,
+    "isActive": false
   },
   {
     "id": "park-0203",
@@ -29433,7 +29442,8 @@
       "categoryCount": 2,
       "itemCount": 2,
       "representativeCount": 2
-    }
+    },
+    "isActive": false
   },
   {
     "id": "park-0208",
@@ -29825,7 +29835,8 @@
       "categoryCount": 2,
       "itemCount": 2,
       "representativeCount": 2
-    }
+    },
+    "isActive": false
   },
   {
     "id": "park-0212",
@@ -30022,7 +30033,8 @@
       "itemCount": 2,
       "representativeCount": 2
     },
-    "viewCount": 242
+    "viewCount": 242,
+    "isActive": false
   },
   {
     "id": "park-0214",
@@ -34882,7 +34894,7 @@
     "hasStore": false,
     "hasAccessibility": true,
     "isPublic": true,
-    "hasDetailedPrices": false,
+    "hasDetailedPrices": true,
     "images": [
       "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0265/photo_1.PNG"
     ],
@@ -34960,7 +34972,8 @@
       "categoryCount": 2,
       "itemCount": 2,
       "representativeCount": 2
-    }
+    },
+    "isActive": false
   },
   {
     "id": "park-0266",
@@ -36802,7 +36815,7 @@
     "hasStore": true,
     "hasAccessibility": true,
     "isPublic": true,
-    "hasDetailedPrices": false,
+    "hasDetailedPrices": true,
     "images": [
       "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0286/photo_1.PNG"
     ],
@@ -36874,7 +36887,8 @@
       "categoryCount": 1,
       "itemCount": 2,
       "representativeCount": 1
-    }
+    },
+    "isActive": false
   },
   {
     "id": "park-0287",
@@ -37090,7 +37104,7 @@
     "hasStore": true,
     "hasAccessibility": true,
     "isPublic": true,
-    "hasDetailedPrices": false,
+    "hasDetailedPrices": true,
     "images": [
       "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0289/photo_1.PNG"
     ],
@@ -37168,7 +37182,8 @@
       "categoryCount": 2,
       "itemCount": 2,
       "representativeCount": 2
-    }
+    },
+    "isActive": false
   },
   {
     "id": "park-0290",
@@ -37719,7 +37734,7 @@
     "hasStore": false,
     "hasAccessibility": true,
     "isPublic": true,
-    "hasDetailedPrices": false,
+    "hasDetailedPrices": true,
     "images": [
       "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0296/photo_1.PNG"
     ],
@@ -37739,15 +37754,15 @@
       "lat": 37.4194825,
       "lng": 126.7246485
     },
-    "lat": 37.42057,
-    "lng": 126.72663,
-    "minPrice": 1165,
-    "maxPrice": 2244,
+    "lat": 37.4194825,
+    "lng": 126.7246485,
+    "minPrice": 3600,
+    "maxPrice": 3600,
     "description": "",
     "rating": 0,
     "reviewCount": 0,
     "createdAt": "2025-12-12T00:21:56.319",
-    "updatedAt": "2025-12-16T01:03:59.754",
+    "updatedAt": "2025-12-19T04:33:43.477",
     "reviews": [],
     "priceInfo": {
       "priceTable": {
@@ -37793,12 +37808,12 @@
     },
     "_detailedSource": "prisma",
     "_meta": {
-      "source": "supabase-js",
+      "source": "local-json",
       "categoryCount": 2,
-      "itemCount": 2,
-      "representativeCount": 2
+      "itemCount": 2
     },
-    "viewCount": 430
+    "viewCount": 430,
+    "isActive": false
   },
   {
     "id": "park-0297",
@@ -39005,7 +39020,7 @@
     "hasStore": true,
     "hasAccessibility": true,
     "isPublic": true,
-    "hasDetailedPrices": false,
+    "hasDetailedPrices": true,
     "images": [
       "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0310/photo_1.PNG"
     ],
@@ -39077,7 +39092,8 @@
       "categoryCount": 1,
       "itemCount": 2,
       "representativeCount": 1
-    }
+    },
+    "isActive": false
   },
   {
     "id": "park-0311",
@@ -40997,13 +41013,13 @@
     },
     "lat": 37.4405644,
     "lng": 126.7673424,
-    "minPrice": 857,
-    "maxPrice": 1633,
+    "minPrice": 3600,
+    "maxPrice": 3600,
     "description": "",
     "rating": 0,
     "reviewCount": 0,
     "createdAt": "2025-12-12T00:21:56.397",
-    "updatedAt": "2025-12-16T01:03:59.754",
+    "updatedAt": "2025-12-16T05:20:28.848",
     "reviews": [],
     "priceInfo": {
       "priceTable": {
@@ -41049,12 +41065,12 @@
     },
     "_detailedSource": "prisma",
     "_meta": {
-      "source": "supabase-js",
+      "source": "local-json",
       "categoryCount": 2,
-      "itemCount": 2,
-      "representativeCount": 2
+      "itemCount": 2
     },
-    "viewCount": 263
+    "viewCount": 263,
+    "isActive": false
   },
   {
     "id": "park-0332",
@@ -41353,7 +41369,7 @@
     "hasStore": false,
     "hasAccessibility": true,
     "isPublic": true,
-    "hasDetailedPrices": false,
+    "hasDetailedPrices": true,
     "images": [
       "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0335/photo_1.PNG"
     ],
@@ -41452,7 +41468,8 @@
       "categoryCount": 2,
       "itemCount": 4,
       "representativeCount": 0
-    }
+    },
+    "isActive": false
   },
   {
     "id": "park-0336",
@@ -41472,7 +41489,7 @@
     "hasStore": true,
     "hasAccessibility": true,
     "isPublic": true,
-    "hasDetailedPrices": false,
+    "hasDetailedPrices": true,
     "images": [
       "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0336/photo_1.PNG"
     ],
@@ -41526,7 +41543,8 @@
       "categoryCount": 1,
       "itemCount": 1,
       "representativeCount": 0
-    }
+    },
+    "isActive": false
   },
   {
     "id": "park-0337",
@@ -41910,7 +41928,7 @@
     "hasStore": false,
     "hasAccessibility": true,
     "isPublic": true,
-    "hasDetailedPrices": false,
+    "hasDetailedPrices": true,
     "images": [
       "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0342/photo_1.jpg"
     ],
@@ -41970,7 +41988,8 @@
       "itemCount": 1,
       "representativeCount": 1
     },
-    "viewCount": 293
+    "viewCount": 293,
+    "isActive": false
   },
   {
     "id": "park-0343",
@@ -53681,7 +53700,8 @@
       "categoryCount": 0,
       "itemCount": 0,
       "representativeCount": 0
-    }
+    },
+    "isActive": false
   },
   {
     "id": "park-0498",
@@ -53835,7 +53855,8 @@
       "categoryCount": 1,
       "itemCount": 3,
       "representativeCount": 0
-    }
+    },
+    "isActive": false
   },
   {
     "id": "park-0500",
@@ -105797,7 +105818,8 @@
       "categoryCount": 1,
       "itemCount": 1,
       "representativeCount": 0
-    }
+    },
+    "isActive": false
   },
   {
     "id": "park-0859",
@@ -121669,7 +121691,8 @@
       "categoryCount": 0,
       "itemCount": 0,
       "representativeCount": 0
-    }
+    },
+    "isActive": false
   },
   {
     "id": "park-1062",
@@ -127157,7 +127180,8 @@
       "categoryCount": 1,
       "itemCount": 2,
       "representativeCount": 0
-    }
+    },
+    "isActive": false
   },
   {
     "id": "park-1136",
@@ -127211,7 +127235,8 @@
       "categoryCount": 0,
       "itemCount": 0,
       "representativeCount": 0
-    }
+    },
+    "isActive": false
   },
   {
     "id": "park-1137",
@@ -127312,7 +127337,8 @@
       "categoryCount": 1,
       "itemCount": 3,
       "representativeCount": 0
-    }
+    },
+    "isActive": false
   },
   {
     "id": "park-1138",
@@ -127366,7 +127392,8 @@
       "categoryCount": 0,
       "itemCount": 0,
       "representativeCount": 0
-    }
+    },
+    "isActive": false
   },
   {
     "id": "park-1139",

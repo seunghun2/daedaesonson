@@ -340,6 +340,7 @@ export async function GET() {
             hasAccessibility: f.hasAccessibility,
             // Flags
             isPublic: f.isPublic,
+            isActive: f.isActive,
             hasDetailedPrices: f._hasDetailedPrices,
 
             // FIX: Return FULL images/gallery so Admin UI doesn't see truncated data
@@ -390,8 +391,14 @@ export async function POST(req: Request) {
                 const index = facilities.findIndex((f: any) => f.id === body.id);
 
                 if (index !== -1) {
-                    facilities[index] = { ...facilities[index], ...body };
+                    // isActive 필드 명시적으로 병합
+                    facilities[index] = {
+                        ...facilities[index],
+                        ...body,
+                        isActive: body.isActive !== undefined ? body.isActive : facilities[index].isActive
+                    };
                     await fs.writeFile(DATA_FILE, JSON.stringify(facilities, null, 2), 'utf-8');
+                    console.log(`[V1-API] Updated facility: ${body.id}, isActive: ${body.isActive}`);
                 } else {
                     // Add new if not exists
                     facilities.unshift(body); // Prepend new item

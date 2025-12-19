@@ -182,6 +182,17 @@ export default function AdminPage() {
         }
     };
 
+    // 마커 표시 토글 핸들러
+    const handleToggleMarker = async (item: Facility) => {
+        const newIsActive = item.isActive === false ? true : false;
+        const updatedItem = { ...item, isActive: newIsActive };
+
+        // 로컬 상태 업데이트
+        setFacilities(prev => prev.map(f => f.id === item.id ? updatedItem : f));
+
+        // 서버에 저장
+        await saveToServer(updatedItem);
+    };
 
 
     // Filter Logic
@@ -1075,6 +1086,7 @@ export default function AdminPage() {
                                     <Table.Th>주소</Table.Th>
                                     <Table.Th>대표가격</Table.Th>
                                     <Table.Th>상세 상태</Table.Th>
+                                    <Table.Th>마커표시</Table.Th>
                                     <Table.Th>관리</Table.Th>
                                 </Table.Tr>
                             </Table.Thead>
@@ -1123,6 +1135,16 @@ export default function AdminPage() {
                                             ) : (
                                                 <Badge size="sm" variant="dot" color="gray">이미지 없음</Badge>
                                             )}
+                                        </Table.Td>
+                                        <Table.Td>
+                                            <Switch
+                                                size="sm"
+                                                checked={item.isActive !== false}
+                                                onChange={() => handleToggleMarker(item)}
+                                                color={item.isActive !== false ? 'green' : 'gray'}
+                                                onLabel="ON"
+                                                offLabel="OFF"
+                                            />
                                         </Table.Td>
                                         <Table.Td>
                                             <Group gap={4}>
