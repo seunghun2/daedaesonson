@@ -1172,7 +1172,10 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                         ))
                     ) : (
                         <Box ta="center" py="xl">
-                            <Text size="sm" c="dimmed">아직 작성된 리뷰가 없습니다.<br />첫 번째 리뷰를 남겨보세요!</Text>
+                            <Text size="sm" c="dimmed">
+                                최근 {viewCount}명이 조회했어요.<br />
+                                방문 경험을 나눠주시면 많은 분들께 도움이 됩니다!
+                            </Text>
                         </Box>
                     )}
                 </Stack>
