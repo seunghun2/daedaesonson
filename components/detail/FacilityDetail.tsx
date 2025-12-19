@@ -291,9 +291,11 @@ function PriceInfoSection({ priceInfo, hasPrice }: { priceInfo: any, hasPrice: b
 interface FacilityDetailProps {
     facility: Facility;
     onClose: () => void;
+    allFacilities?: Facility[];
+    onSelectFacility?: (id: string) => void;
 }
 
-export default function FacilityDetail({ facility: initialFacility, onClose }: FacilityDetailProps) {
+export default function FacilityDetail({ facility: initialFacility, onClose, allFacilities = [], onSelectFacility }: FacilityDetailProps) {
     const [facility, setFacility] = useState<Facility>(initialFacility);
     const [isFetchingDetail, setIsFetchingDetail] = useState(false);
 
@@ -610,7 +612,17 @@ export default function FacilityDetail({ facility: initialFacility, onClose }: F
                         </Group>
                     </Group>
                     <Group gap={0} style={{ flexShrink: 0 }}>
-                        <ActionIcon variant="transparent" color="white" w={36} h={36}>
+                        <ActionIcon
+                            variant="transparent"
+                            color="white"
+                            w={36}
+                            h={36}
+                            onClick={(e) => {
+                                e.stopPropagation();
+                                e.preventDefault();
+                                navigator.clipboard.writeText(`https://daedaesonson.com/?id=${facility.id}`);
+                            }}
+                        >
                             <span className="material-symbols-outlined" style={{ fontSize: '24px' }}>share</span>
                         </ActionIcon>
                         <ActionIcon variant="transparent" color="white" w={36} h={36} onClick={onClose} ml={4}>
@@ -878,60 +890,58 @@ export default function FacilityDetail({ facility: initialFacility, onClose }: F
             </Box>
 
             {/* 6. 사진 갤러리 (수정됨: 2개 노출 + 오버레이 + 클릭 시 팝업) */}
-            {
-                galleryImages.length > 0 && (
-                    <Box bg="white" p="md" style={{ borderBottom: '8px solid #f8f9fa' }}>
-                        <Text size="sm" fw={700} mb="md">시설 사진</Text>
-                        <Box style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 8 }}>
-                            {visibleImages.map((img, idx) => {
-                                const isLastAndMore = idx === 1 && extraInfoCount > 0;
-                                return (
-                                    <Box
-                                        key={idx}
-                                        onClick={() => handleImageClick(idx)}
-                                        style={{ position: 'relative', paddingBottom: '100%', borderRadius: 8, overflow: 'hidden', cursor: 'pointer' }}
-                                    >
-                                        <Image
-                                            src={getSingleFacilityImageUrl(img)}
-                                            // fallbackSrc removed to avoid showing random fake images
-                                            alt={`${facility.name} ${idx + 1}`}
+            {galleryImages.length > 0 && (
+                <Box bg="white" p="md" style={{ borderBottom: '8px solid #f8f9fa' }}>
+                    <Text size="sm" fw={700} mb="md">시설 사진</Text>
+                    <Box style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 8 }}>
+                        {visibleImages.map((img, idx) => {
+                            const isLastAndMore = idx === 1 && extraInfoCount > 0;
+                            return (
+                                <Box
+                                    key={idx}
+                                    onClick={() => handleImageClick(idx)}
+                                    style={{ position: 'relative', paddingBottom: '100%', borderRadius: 8, overflow: 'hidden', cursor: 'pointer' }}
+                                >
+                                    <Image
+                                        src={getSingleFacilityImageUrl(img)}
+                                        // fallbackSrc removed to avoid showing random fake images
+                                        alt={`${facility.name} ${idx + 1}`}
+                                        style={{
+                                            position: 'absolute',
+                                            top: 0,
+                                            left: 0,
+                                            width: '100%',
+                                            height: '100%',
+                                            objectFit: 'cover'
+                                        }}
+                                    />
+                                    {/* 오버레이 (+7) */}
+                                    {isLastAndMore && (
+                                        <Box
                                             style={{
                                                 position: 'absolute',
                                                 top: 0,
                                                 left: 0,
                                                 width: '100%',
                                                 height: '100%',
-                                                objectFit: 'cover'
+                                                backgroundColor: 'rgba(0,0,0,0.3)', // 요청사항: 오버레이 30%
+                                                display: 'flex',
+                                                alignItems: 'center',
+                                                justifyContent: 'center',
+                                                color: 'white',
+                                                fontSize: '24px',
+                                                fontWeight: 700
                                             }}
-                                        />
-                                        {/* 오버레이 (+7) */}
-                                        {isLastAndMore && (
-                                            <Box
-                                                style={{
-                                                    position: 'absolute',
-                                                    top: 0,
-                                                    left: 0,
-                                                    width: '100%',
-                                                    height: '100%',
-                                                    backgroundColor: 'rgba(0,0,0,0.3)', // 요청사항: 오버레이 30%
-                                                    display: 'flex',
-                                                    alignItems: 'center',
-                                                    justifyContent: 'center',
-                                                    color: 'white',
-                                                    fontSize: '24px',
-                                                    fontWeight: 700
-                                                }}
-                                            >
-                                                +{extraInfoCount}
-                                            </Box>
-                                        )}
-                                    </Box>
-                                );
-                            })}
-                        </Box>
+                                        >
+                                            +{extraInfoCount}
+                                        </Box>
+                                    )}
+                                </Box>
+                            );
+                        })}
                     </Box>
-                )
-            }
+                </Box>
+            )}
 
             {/* 7. 시설 소개 */}
             {
@@ -1178,6 +1188,86 @@ export default function FacilityDetail({ facility: initialFacility, onClose }: F
                         방문자 리뷰 {reviews.length}개 더보기
                     </Button>
                 )}
+
+                {/* 주변 시설 추천 */}
+                {allFacilities.length > 0 && (() => {
+                    // 같은 지역(주소 앞 2단어) + 같은 카테고리 필터
+                    const region = facility.address?.split(' ').slice(0, 2).join(' ') || '';
+                    const similarFacilities = allFacilities
+                        .filter(f =>
+                            f.id !== facility.id &&
+                            f.category === facility.category &&
+                            f.address?.startsWith(region)
+                        )
+                        .slice(0, 3);
+
+                    // 같은 지역 없으면 같은 카테고리만
+                    const recommendations = similarFacilities.length > 0
+                        ? similarFacilities
+                        : allFacilities
+                            .filter(f => f.id !== facility.id && f.category === facility.category)
+                            .slice(0, 3);
+
+                    if (recommendations.length === 0) return null;
+
+                    return (
+                        <Box mt="lg">
+                            <Text size="sm" fw={700} mb="md">주변 시설</Text>
+                            <Stack gap="xs">
+                                {recommendations.map(rec => {
+                                    const thumbUrl = rec.imageGallery?.[0]
+                                        ? getSingleFacilityImageUrl(rec.imageGallery[0])
+                                        : '/logo-horizontal.svg';
+                                    return (
+                                        <Box
+                                            key={rec.id}
+                                            p="sm"
+                                            bg="gray.0"
+                                            style={{ borderRadius: 8, cursor: 'pointer' }}
+                                            onClick={() => onSelectFacility?.(rec.id)}
+                                        >
+                                            <Group wrap="nowrap" gap="sm">
+                                                <Box
+                                                    style={{
+                                                        width: 48,
+                                                        height: 48,
+                                                        borderRadius: 6,
+                                                        overflow: 'hidden',
+                                                        flexShrink: 0,
+                                                        backgroundColor: '#f1f3f5',
+                                                        display: 'flex',
+                                                        alignItems: 'center',
+                                                        justifyContent: 'center',
+                                                    }}
+                                                >
+                                                    <img
+                                                        src={thumbUrl}
+                                                        alt={rec.name}
+                                                        style={{
+                                                            width: rec.imageGallery?.[0] ? '100%' : 32,
+                                                            height: rec.imageGallery?.[0] ? '100%' : 16,
+                                                            objectFit: 'cover',
+                                                            opacity: rec.imageGallery?.[0] ? 1 : 0.3,
+                                                        }}
+                                                    />
+                                                </Box>
+                                                <Box style={{ flex: 1, minWidth: 0 }}>
+                                                    <Text size="sm" fw={600} lineClamp={1}>{rec.name}</Text>
+                                                    <Text size="xs" c="dimmed">{rec.address?.split(' ').slice(0, 2).join(' ')}</Text>
+                                                </Box>
+                                                {rec.priceRange?.min && rec.priceRange.min > 0 && (
+                                                    <Text size="sm" fw={600} c="dark.6" style={{ flexShrink: 0 }}>
+                                                        {formatKoreanCurrency(rec.priceRange.min * 10000)}부터
+                                                    </Text>
+                                                )}
+                                            </Group>
+                                        </Box>
+                                    );
+                                })}
+                            </Stack>
+                        </Box>
+                    );
+                })()}
                 {/* 14. 면책 조항 (법적 보호) */}
                 <Box mt="xl" pt="xl" style={{ borderTop: '1px solid #f1f3f5' }}>
                     <Text size="xs" c="dimmed" ta="center" lh={1.6}>

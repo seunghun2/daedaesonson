@@ -615,6 +615,11 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
             <FacilityDetail
               facility={selectedFacility}
               onClose={handleCloseDetail}
+              allFacilities={finalFacilities}
+              onSelectFacility={(id) => {
+                const fac = finalFacilities.find(f => f.id === id);
+                if (fac) handleMarkerClick(fac);
+              }}
             />
           ) : (
             <Flex direction="column" h="100%">
@@ -956,6 +961,11 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
               <FacilityDetail
                 facility={selectedFacility}
                 onClose={() => router.back()} // 히스토리 뒤로가기로 닫기
+                allFacilities={finalFacilities}
+                onSelectFacility={(id) => {
+                  const fac = finalFacilities.find(f => f.id === id);
+                  if (fac) handleMarkerClick(fac);
+                }}
               />
             </Box>
           </Box>

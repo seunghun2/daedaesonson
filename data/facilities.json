@@ -267,7 +267,7 @@
       "lng": 128.8301094
     },
     "isActive": true,
-    "viewCount": 158
+    "viewCount": 160
   },
   {
     "id": "park-0002",
@@ -14365,7 +14365,7 @@
       "itemCount": 7,
       "representativeCount": 2
     },
-    "viewCount": 402
+    "viewCount": 413
   },
   {
     "id": "park-0070",
@@ -20548,7 +20548,8 @@
       "categoryCount": 1,
       "itemCount": 4,
       "representativeCount": 1
-    }
+    },
+    "viewCount": 192
   },
   {
     "id": "park-0121",
@@ -22793,7 +22794,7 @@
       "itemCount": 4,
       "representativeCount": 1
     },
-    "viewCount": 361
+    "viewCount": 371
   },
   {
     "id": "park-0140",
@@ -32960,7 +32961,7 @@
       "itemCount": 2,
       "representativeCount": 1
     },
-    "viewCount": 311
+    "viewCount": 316
   },
   {
     "id": "park-0245",
@@ -38488,7 +38489,7 @@
       "itemCount": 2,
       "representativeCount": 2
     },
-    "viewCount": 244
+    "viewCount": 245
   },
   {
     "id": "park-0304",
@@ -77008,7 +77009,8 @@
       "categoryCount": 1,
       "itemCount": 16,
       "representativeCount": 1
-    }
+    },
+    "viewCount": 278
   },
   {
     "id": "park-0603",
@@ -88436,7 +88438,7 @@
       "itemCount": 6,
       "representativeCount": 1
     },
-    "viewCount": 480
+    "viewCount": 483
   },
   {
     "id": "park-0687",
@@ -91236,7 +91238,7 @@
       "itemCount": 4,
       "representativeCount": 1
     },
-    "viewCount": 278
+    "viewCount": 285
   },
   {
     "id": "park-0711",
@@ -92081,7 +92083,7 @@
       "itemCount": 2,
       "representativeCount": 2
     },
-    "viewCount": 430
+    "viewCount": 434
   },
   {
     "id": "park-0720",
@@ -93292,7 +93294,7 @@
       "itemCount": 4,
       "representativeCount": 2
     },
-    "viewCount": 310
+    "viewCount": 313
   },
   {
     "id": "park-0731",
@@ -97286,7 +97288,7 @@
       "itemCount": 4,
       "representativeCount": 1
     },
-    "viewCount": 452
+    "viewCount": 453
   },
   {
     "id": "park-0766",
@@ -107724,7 +107726,8 @@
       "categoryCount": 1,
       "itemCount": 1,
       "representativeCount": 1
-    }
+    },
+    "viewCount": 429
   },
   {
     "id": "park-0882",
@@ -142678,7 +142681,7 @@
       "min": 210,
       "max": 210
     },
-    "viewCount": 346
+    "viewCount": 350
   },
   {
     "id": "park-1255",
