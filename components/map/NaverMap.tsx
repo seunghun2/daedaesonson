@@ -753,7 +753,18 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
             }
 
             if (formattedPrice > 0) {
-                priceText = `${formattedPrice.toLocaleString()}만`;
+                // 🔧 100 이상이면 원 단위로 저장된 것 → 만원으로 변환
+                if (formattedPrice >= 100) {
+                    // 원 단위 → 만원 단위로 변환 (예: 5000원 → 0.5만원)
+                    const inManwon = formattedPrice / 10000;
+                    if (inManwon < 1) {
+                        priceText = `${formattedPrice.toLocaleString()}원`;
+                    } else {
+                        priceText = `${Math.round(inManwon).toLocaleString()}만`;
+                    }
+                } else {
+                    priceText = `${formattedPrice.toLocaleString()}만`;
+                }
             }
 
             const categoryLabel = FACILITY_CATEGORY_LABELS[fac.category as FacilityCategory] || fac.category;

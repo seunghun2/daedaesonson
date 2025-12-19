@@ -774,7 +774,13 @@ export default function FacilityDetail({ facility: initialFacility, onClose }: F
 
                 // Fallback: Use priceRange.min if no representative price found
                 if (displayPriceNum === 0) {
-                    displayPriceNum = facility.priceRange?.min || 0;
+                    let priceMin = facility.priceRange?.min || 0;
+                    // 🔧 100 이상이면 원 단위로 저장된 것 → 만원으로 변환
+                    if (priceMin >= 100) {
+                        displayPriceNum = priceMin / 10000; // 5000원 → 0.5 (만원)
+                    } else {
+                        displayPriceNum = priceMin; // 이미 만원 단위
+                    }
                 }
 
                 // Fallback attempt with legacy representativePricing if not found in pricing
