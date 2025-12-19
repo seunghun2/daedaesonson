@@ -154,7 +154,12 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
       return;
     }
 
-    // 2. 시설 검색
+    // 2. 시설 검색 (최소 2글자 이상)
+    if (query.length < 2) {
+      console.log('검색어가 너무 짧음 (2글자 미만)');
+      return;
+    }
+
     const lowerQuery = query.toLowerCase();
     const matches = dbFacilities.filter(f =>
       f.name.toLowerCase().includes(lowerQuery) ||
@@ -351,6 +356,8 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
                 value={searchQuery}
                 onChange={handleSearchInput}
                 onKeyDown={(e) => {
+                  // 한글 IME 조합 중이면 무시 (글자 중복 방지)
+                  if (e.nativeEvent.isComposing) return;
                   if (e.key === 'Enter') {
                     e.preventDefault(); // Prevent form submission if in a form
                     setSubmittedQuery(searchQuery); // Trigger immediate search
@@ -600,6 +607,8 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
                     value={searchQuery}
                     onChange={handleSearchInput}
                     onKeyDown={(e) => {
+                      // 한글 IME 조합 중이면 무시 (글자 중복 방지)
+                      if (e.nativeEvent.isComposing) return;
                       if (e.key === 'Enter') {
                         e.preventDefault();
                         setSubmittedQuery(searchQuery);

@@ -329,29 +329,35 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
                 const targetName = normKeyword.replace(/시|군|구/g, '');
                 console.log(`   - Gu Search Target: "${targetName}"`);
 
-                const match = geomGuRef.current.features.find((f: any) => {
-                    const fName = (f.properties.name || '').normalize('NFC');
-                    // "강남" matches "강남구"
-                    return fName.includes(targetName) || normKeyword.includes(fName);
-                });
-
-                if (match) {
-                    console.log(`   ✅ Gu Match Found: ${match.properties.name}`);
-                    try {
-                        const center = turf.centerOfMass(match);
-                        const [lng, lat] = center.geometry.coordinates;
-                        return {
-                            lat: lat,
-                            lng: lng,
-                            zoom: 12,
-                            type: 'gu' as const,
-                            name: match.properties.name
-                        };
-                    } catch (e) {
-                        console.error('   ❌ Centroid calc failed', e);
-                    }
+                // 🔒 최소 2글자 이상
+                if (targetName.length < 2) {
+                    console.log('   - 검색어가 너무 짧음 (2글자 미만)');
                 } else {
-                    console.log('   - No Gu match found');
+                    const match = geomGuRef.current.features.find((f: any) => {
+                        const fName = (f.properties.name || '').normalize('NFC');
+                        const fNameClean = fName.replace(/시|군|구/g, '');
+                        // 🔒 정확한 매칭: 이름이 검색어로 시작하거나, 검색어가 정확히 이름과 같음
+                        return fNameClean === targetName || fNameClean.startsWith(targetName) || targetName.startsWith(fNameClean);
+                    });
+
+                    if (match) {
+                        console.log(`   ✅ Gu Match Found: ${match.properties.name}`);
+                        try {
+                            const center = turf.centerOfMass(match);
+                            const [lng, lat] = center.geometry.coordinates;
+                            return {
+                                lat: lat,
+                                lng: lng,
+                                zoom: 12,
+                                type: 'gu' as const,
+                                name: match.properties.name
+                            };
+                        } catch (e) {
+                            console.error('   ❌ Centroid calc failed', e);
+                        }
+                    } else {
+                        console.log('   - No Gu match found');
+                    }
                 }
             } else {
                 console.warn('   ⚠️ geomGuRef is missing or empty');
@@ -377,12 +383,21 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
                     // "수유동" -> "수유"로 변환하여 "수유1동", "수유2동" 등 매칭 허용
                     const cleanKeyword = normKeyword.replace(/동$/, '');
 
-                    // exact match, contains, or sub-dong match
+                    // 🔒 최소 2글자 이상이어야 검색 (너무 짧으면 이상한 매칭 방지)
+                    if (cleanKeyword.length < 2) {
+                        console.log('   - 검색어가 너무 짧음 (2글자 미만)');
+                        return null;
+                    }
+
+                    // exact match 또는 이름이 검색어로 시작하는 경우만 (더 정확한 매칭)
                     targetFeatures = geomRef.current.features.filter((f: any) => {
                         const fName = (f.properties.name || '').normalize('NFC');
+                        // 정확히 일치
                         if (fName === normKeyword) return true;
+                        // "동"으로 끝나는 검색어가 포함된 경우
                         if (normKeyword.endsWith('동') && fName.includes(normKeyword)) return true;
-                        if (cleanKeyword.length > 0 && fName.includes(cleanKeyword)) return true;
+                        // 이름이 검색어로 시작하는 경우 (더 정확)
+                        if (fName.startsWith(cleanKeyword)) return true;
                         return false;
                     });
                 }
