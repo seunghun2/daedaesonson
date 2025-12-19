@@ -21,3 +21,16 @@ body {
 .naver-map-container {
   touch-action: auto;
 }
+
+/* 🎯 마커 통~~통~~통~~ 무한 바운스 애니메이션 */
+@keyframes markerBounce {
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  35% {
+    transform: translateY(-12px);
+  }
+}

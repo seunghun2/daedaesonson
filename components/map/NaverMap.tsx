@@ -84,6 +84,8 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
     // GeoJSON 데이터 저장 Ref
     const geomRef = useRef<any>(null);
     const geomGuRef = useRef<any>(null);
+    // 🎯 마커 호버 툴팁용 InfoWindow
+    const hoverInfoWindowRef = useRef<any>(null);
 
     // ♻️ 마커 풀링 (재사용)
     const markerPoolRef = useRef<any[]>([]);
@@ -129,6 +131,28 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
                 } else {
                     mapInstanceRef.current.panTo(newCenter);
                 }
+
+                // 🎯 해당 위치 근처 마커 찾아서 bounce 애니메이션
+                setTimeout(() => {
+                    const targetMarker = markersRef.current.find(m => {
+                        const pos = m.getPosition();
+                        const dist = Math.abs(pos.lat() - lat) + Math.abs(pos.lng() - lng);
+                        return dist < 0.001; // 근접 마커
+                    });
+
+                    if (targetMarker) {
+                        const el = targetMarker.getElement();
+                        if (el) {
+                            el.style.animation = 'markerBounce 1.2s ease-in-out infinite';
+                            el.style.zIndex = '9999'; // 앞으로 나오게
+                            el.addEventListener('animationend', () => {
+                                el.style.animation = '';
+                            }, { once: true });
+                        }
+                        // 마커 자체 zIndex도 설정
+                        targetMarker.setZIndex(9999);
+                    }
+                }, 400); // 지도 이동 완료 후
             }
         },
 
@@ -738,6 +762,47 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
 
             window.naver.maps.Event.addListener(marker, 'click', () => {
                 onMarkerClick(fac);
+            });
+
+            // 🎯 마커 호버 시 툴팁 표시
+            window.naver.maps.Event.addListener(marker, 'mouseover', () => {
+                if (!hoverInfoWindowRef.current) {
+                    hoverInfoWindowRef.current = new window.naver.maps.InfoWindow({
+                        content: '',
+                        borderWidth: 0,
+                        backgroundColor: 'transparent',
+                        disableAnchor: true,
+                        pixelOffset: new window.naver.maps.Point(0, -10),
+                    });
+                }
+
+                const tooltipContent = `
+                    <div style="
+                        background: white;
+                        padding: 8px 12px;
+                        border-radius: 8px;
+                        box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+                        font-family: -apple-system, sans-serif;
+                        min-width: 120px;
+                        max-width: 200px;
+                    ">
+                        <div style="font-weight: 700; font-size: 13px; color: #333; margin-bottom: 4px;">
+                            ${fac.name}
+                        </div>
+                        <div style="font-size: 11px; color: #666;">
+                            ${fac.address || ''}
+                        </div>
+                    </div>
+                `;
+
+                hoverInfoWindowRef.current.setContent(tooltipContent);
+                hoverInfoWindowRef.current.open(map, marker);
+            });
+
+            window.naver.maps.Event.addListener(marker, 'mouseout', () => {
+                if (hoverInfoWindowRef.current) {
+                    hoverInfoWindowRef.current.close();
+                }
             });
 
             createdMarkers.push(marker);

@@ -239,7 +239,7 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
 
     // Map movement logic
     if (mapRef.current && facility.coordinates) {
-      mapRef.current.panTo(facility.coordinates.lat, facility.coordinates.lng, 16);
+      mapRef.current.panTo(facility.coordinates.lat, facility.coordinates.lng, 17);
       if (isMobile) setMobileView('map');
     }
     setSearchFocused(false);

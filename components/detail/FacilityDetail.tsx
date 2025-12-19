@@ -331,7 +331,30 @@ export default function FacilityDetail({ facility: initialFacility, onClose }: F
             document.body.style.overflow = '';
         };
     }, [opened]);
-    const [viewCount, setViewCount] = useState(0);
+
+    // 조회수 상태 (초기값: 시설 ID 기반 더미)
+    const getInitialViewCount = () => {
+        const hash = facility.id.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
+        return 50 + (hash * 17) % 450;
+    };
+    const [viewCount, setViewCount] = useState((facility as any).viewCount || getInitialViewCount());
+
+    // 🔥 조회수 증가 API 호출 (컴포넌트 마운트 시 1회)
+    useEffect(() => {
+        const incrementViewCount = async () => {
+            try {
+                const res = await fetch(`/api/facilities/${facility.id}/view`, { method: 'POST' });
+                if (res.ok) {
+                    const data = await res.json();
+                    setViewCount(data.viewCount);
+                }
+            } catch (e) {
+                console.error('Failed to increment view count:', e);
+            }
+        };
+        incrementViewCount();
+    }, [facility.id]);
+
     const theme = useMantineTheme();
     const isMobile = useMediaQuery(`(max-width: ${theme.breakpoints.sm})`);
 
@@ -667,11 +690,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose }: F
 
                         {/* 방문자 통계 텍스트 (오른쪽 정렬) */}
                         <Text size="xs" c="gray.6" style={{ whiteSpace: 'nowrap', flexShrink: 0 }}>
-                            최근 {(() => {
-                                // 시설 ID 기반으로 다양한 숫자 생성 (50~500 범위)
-                                const hash = facility.id.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
-                                return 50 + (hash * 17) % 450;
-                            })()}명이 찾아봤어요
+                            최근 {viewCount}명이 찾아봤어요
                         </Text>
                     </div>
                 </Box>
