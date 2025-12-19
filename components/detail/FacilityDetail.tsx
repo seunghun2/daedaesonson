@@ -319,6 +319,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose }: F
     }, [initialFacility]);
     const [opened, setOpened] = useState(false); // Image Modal state
     const [selectedImageIndex, setSelectedImageIndex] = useState(0);
+    const [isAnimating, setIsAnimating] = useState(false); // 🔒 스와이프 애니메이션 중복 방지
 
     // 이미지 갤러리 열릴 때 body 스크롤 막기
     useEffect(() => {
@@ -1268,6 +1269,9 @@ export default function FacilityDetail({ facility: initialFacility, onClose }: F
                             }
                         }}
                         onTouchEnd={(e) => {
+                            // 🔒 애니메이션 중이면 무시
+                            if (isAnimating) return;
+
                             const startX = (e.currentTarget as any).startX || 0;
                             const endX = e.changedTouches[0].clientX;
                             const diff = startX - endX;
@@ -1283,6 +1287,8 @@ export default function FacilityDetail({ facility: initialFacility, onClose }: F
                             }
 
                             if (Math.abs(diff) > 50) {
+                                setIsAnimating(true); // 🔒 애니메이션 시작
+
                                 // 현재 이미지가 나가는 방향 (스와이프 방향으로)
                                 const direction = diff > 0 ? -100 : 100;
                                 if (imgEl) {
@@ -1309,6 +1315,8 @@ export default function FacilityDetail({ facility: initialFacility, onClose }: F
                                             imgEl.style.opacity = '1';
                                         });
                                     }
+                                    // 🔒 애니메이션 완료 후 해제
+                                    setTimeout(() => setIsAnimating(false), 250);
                                 }, 80);
                             } else {
                                 if (imgEl) {
@@ -1337,6 +1345,9 @@ export default function FacilityDetail({ facility: initialFacility, onClose }: F
                             (e.currentTarget as any).isDragging = false;
                             (e.currentTarget as any).style.cursor = 'grab';
 
+                            // 🔒 애니메이션 중이면 무시
+                            if (isAnimating) return;
+
                             const startX = (e.currentTarget as any).startX || 0;
                             const diff = startX - e.clientX;
                             const imgEl = e.currentTarget.querySelector('img');
@@ -1351,6 +1362,8 @@ export default function FacilityDetail({ facility: initialFacility, onClose }: F
                             }
 
                             if (Math.abs(diff) > 50) {
+                                setIsAnimating(true); // 🔒 애니메이션 시작
+
                                 const direction = diff > 0 ? -100 : 100;
                                 if (imgEl) {
                                     imgEl.style.transition = 'transform 0.2s ease-out, opacity 0.2s ease-out';
@@ -1375,6 +1388,8 @@ export default function FacilityDetail({ facility: initialFacility, onClose }: F
                                             imgEl.style.opacity = '1';
                                         });
                                     }
+                                    // 🔒 애니메이션 완료 후 해제
+                                    setTimeout(() => setIsAnimating(false), 250);
                                 }, 80);
                             } else {
                                 if (imgEl) {
@@ -1396,6 +1411,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose }: F
                         }}
                     >
                         <Image
+                            key={`gallery-img-${selectedImageIndex}`}
                             src={getSingleFacilityImageUrl(galleryImages[selectedImageIndex])}
                             fit="contain"
                             h="80vh"
