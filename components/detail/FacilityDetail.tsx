@@ -589,9 +589,6 @@ export default function FacilityDetail({ facility: initialFacility, onClose }: F
                         <ActionIcon variant="transparent" color="white" w={36} h={36}>
                             <span className="material-symbols-outlined" style={{ fontSize: '24px' }}>share</span>
                         </ActionIcon>
-                        <ActionIcon variant="transparent" color="white" w={36} h={36}>
-                            <span className="material-symbols-outlined" style={{ fontSize: '24px' }}>notifications</span>
-                        </ActionIcon>
                         <ActionIcon variant="transparent" color="white" w={36} h={36} onClick={onClose} ml={4}>
                             <span className="material-symbols-outlined" style={{ fontSize: '24px' }}>close</span>
                         </ActionIcon>
@@ -670,7 +667,11 @@ export default function FacilityDetail({ facility: initialFacility, onClose }: F
 
                         {/* 방문자 통계 텍스트 (오른쪽 정렬) */}
                         <Text size="xs" c="gray.6" style={{ whiteSpace: 'nowrap', flexShrink: 0 }}>
-                            최근 {viewCount * 12 + 34}명이 찾아봤어요
+                            최근 {(() => {
+                                // 시설 ID 기반으로 다양한 숫자 생성 (50~500 범위)
+                                const hash = facility.id.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
+                                return 50 + (hash * 17) % 450;
+                            })()}명이 찾아봤어요
                         </Text>
                     </div>
                 </Box>
