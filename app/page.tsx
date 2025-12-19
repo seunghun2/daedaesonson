@@ -37,6 +37,8 @@ async function getFacilities(): Promise<Facility[]> {
         lastUpdated: f.lastUpdated,
         website: f.website || f.websiteUrl,
         pricing: f.pricing,
+        priceInfo: f.priceInfo,
+        description: f.description || '',
       }));
   } catch (error) {
     console.error('Failed to load facilities:', error);

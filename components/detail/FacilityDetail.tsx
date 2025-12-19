@@ -1232,34 +1232,43 @@ export default function FacilityDetail({ facility: initialFacility, onClose }: F
                             const diff = startX - endX;
                             const imgEl = e.currentTarget.querySelector('img');
 
+                            // 이미지가 1개면 무시
+                            if (galleryImages.length <= 1) {
+                                if (imgEl) {
+                                    imgEl.style.transition = 'transform 0.2s ease-out';
+                                    imgEl.style.transform = 'translateX(0)';
+                                }
+                                return;
+                            }
+
                             if (Math.abs(diff) > 50) {
+                                // 현재 이미지가 나가는 방향 (스와이프 방향으로)
                                 const direction = diff > 0 ? -100 : 100;
                                 if (imgEl) {
-                                    imgEl.style.transition = 'transform 0.25s ease-out, opacity 0.25s ease-out';
+                                    imgEl.style.transition = 'transform 0.2s ease-out, opacity 0.2s ease-out';
                                     imgEl.style.transform = `translateX(${direction}%)`;
                                     imgEl.style.opacity = '0';
                                 }
 
                                 setTimeout(() => {
+                                    // 인덱스 업데이트 (순환 포함)
                                     if (diff > 0) {
-                                        // 왼쪽으로 스와이프(손가락 왼쪽): 다음 이미지
                                         setSelectedImageIndex(prev => prev < galleryImages.length - 1 ? prev + 1 : 0);
-                                    } else if (diff < 0) {
-                                        // 오른쪽으로 스와이프(손가락 오른쪽): 이전 이미지
+                                    } else {
                                         setSelectedImageIndex(prev => prev > 0 ? prev - 1 : galleryImages.length - 1);
                                     }
                                     if (imgEl) {
+                                        // 새 이미지가 반대편에서 들어옴 (방향 반대)
                                         imgEl.style.transition = 'none';
-                                        // 새 이미지가 반대편에서 들어옴
-                                        imgEl.style.transform = `translateX(${direction}%)`;
+                                        imgEl.style.transform = `translateX(${-direction}%)`;
                                         imgEl.style.opacity = '0';
                                         requestAnimationFrame(() => {
-                                            imgEl.style.transition = 'transform 0.25s ease-out, opacity 0.25s ease-out';
+                                            imgEl.style.transition = 'transform 0.2s ease-out, opacity 0.2s ease-out';
                                             imgEl.style.transform = 'translateX(0)';
                                             imgEl.style.opacity = '1';
                                         });
                                     }
-                                }, 100);
+                                }, 80);
                             } else {
                                 if (imgEl) {
                                     imgEl.style.transition = 'transform 0.2s ease-out';
@@ -1291,10 +1300,19 @@ export default function FacilityDetail({ facility: initialFacility, onClose }: F
                             const diff = startX - e.clientX;
                             const imgEl = e.currentTarget.querySelector('img');
 
+                            // 이미지가 1개면 무시
+                            if (galleryImages.length <= 1) {
+                                if (imgEl) {
+                                    imgEl.style.transition = 'transform 0.2s ease-out';
+                                    imgEl.style.transform = 'translateX(0)';
+                                }
+                                return;
+                            }
+
                             if (Math.abs(diff) > 50) {
                                 const direction = diff > 0 ? -100 : 100;
                                 if (imgEl) {
-                                    imgEl.style.transition = 'transform 0.25s ease-out, opacity 0.25s ease-out';
+                                    imgEl.style.transition = 'transform 0.2s ease-out, opacity 0.2s ease-out';
                                     imgEl.style.transform = `translateX(${direction}%)`;
                                     imgEl.style.opacity = '0';
                                 }
@@ -1302,20 +1320,21 @@ export default function FacilityDetail({ facility: initialFacility, onClose }: F
                                 setTimeout(() => {
                                     if (diff > 0) {
                                         setSelectedImageIndex(prev => prev < galleryImages.length - 1 ? prev + 1 : 0);
-                                    } else if (diff < 0) {
+                                    } else {
                                         setSelectedImageIndex(prev => prev > 0 ? prev - 1 : galleryImages.length - 1);
                                     }
                                     if (imgEl) {
+                                        // 새 이미지가 반대편에서 들어옴
                                         imgEl.style.transition = 'none';
-                                        imgEl.style.transform = `translateX(${direction}%)`;
+                                        imgEl.style.transform = `translateX(${-direction}%)`;
                                         imgEl.style.opacity = '0';
                                         requestAnimationFrame(() => {
-                                            imgEl.style.transition = 'transform 0.25s ease-out, opacity 0.25s ease-out';
+                                            imgEl.style.transition = 'transform 0.2s ease-out, opacity 0.2s ease-out';
                                             imgEl.style.transform = 'translateX(0)';
                                             imgEl.style.opacity = '1';
                                         });
                                     }
-                                }, 100);
+                                }, 80);
                             } else {
                                 if (imgEl) {
                                     imgEl.style.transition = 'transform 0.2s ease-out';
