@@ -1196,9 +1196,14 @@ export default function FacilityDetail({ facility: initialFacility, onClose }: F
 
                     {/* 이미지 영역 (스와이프 + 마우스 드래그 + 애니메이션) */}
                     <Box
-                        h="100%"
+                        pos="absolute"
+                        top="50%"
+                        left="50%"
+                        w="100%"
+                        maw="90vw"
                         onClick={(e) => e.stopPropagation()} // 이미지 영역 클릭 시 닫히지 않게
                         style={{
+                            transform: 'translate(-50%, -50%)',
                             display: 'flex',
                             alignItems: 'center',
                             justifyContent: 'center',
