@@ -84,6 +84,17 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
   // UI 숨김 상태 (지도 탭 시 토글) - 호갱노노 스타일
   const [uiHidden, setUiHidden] = useState(false);
 
+  // 검색창 롤링 placeholder
+  const placeholderTexts = ['서울 봉안당', '경기 수목장', '부산 공원묘지', '대전 납골당', '인천 자연장'];
+  const [placeholderIndex, setPlaceholderIndex] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setPlaceholderIndex((prev) => (prev + 1) % placeholderTexts.length);
+    }, 3000);
+    return () => clearInterval(interval);
+  }, []);
+
   // Sync URL with State (activeFacilityId)
   useEffect(() => {
     const facilityId = searchParams.get('id');
@@ -368,7 +379,7 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
             )}
             <Box style={{ flex: 1, position: 'relative' }}>
               <TextInput
-                placeholder="지역, 시설명 검색"
+                placeholder={searchQuery ? '' : placeholderTexts[placeholderIndex]}
                 value={searchQuery}
                 onChange={handleSearchInput}
                 onKeyDown={(e) => {
@@ -619,7 +630,7 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
                 </Link>
                 <Box style={{ flex: 1, position: 'relative' }}>
                   <TextInput
-                    placeholder="지역, 시설명 검색"
+                    placeholder={searchQuery ? '' : placeholderTexts[placeholderIndex]}
                     value={searchQuery}
                     onChange={handleSearchInput}
                     onKeyDown={(e) => {

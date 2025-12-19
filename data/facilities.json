@@ -86567,7 +86567,7 @@
       "min": 270,
       "max": 470
     },
-    "viewCount": 388
+    "viewCount": 390
   },
   {
     "id": "park-0672",
@@ -134415,7 +134415,7 @@
       "lat": 37.6529003,
       "lng": 127.6544793
     },
-    "category": "NATURAL_BURIAL",
+    "category": "ETC",
     "phone": "",
     "website": "",
     "images": [
@@ -134441,10 +134441,10 @@
         "couple": 8001
       }
     },
-    "lat": 0,
-    "lng": 0,
-    "minPrice": 0,
-    "maxPrice": 0,
+    "lat": 37.6529003,
+    "lng": 127.6544793,
+    "minPrice": 100,
+    "maxPrice": 4300,
     "description": "",
     "rating": 0,
     "reviewCount": 0,
@@ -134454,7 +134454,7 @@
     "hasStore": false,
     "hasAccessibility": false,
     "createdAt": "2025-12-12T00:21:56.951",
-    "updatedAt": "2025-12-16T01:03:59.755",
+    "updatedAt": "2025-12-16T07:02:47.974",
     "reviews": [],
     "priceInfo": {
       "priceTable": {
@@ -134464,68 +134464,68 @@
             {
               "name": "대가족목 반송",
               "grade": "수목장",
-              "price": 3000,
-              "isRepresentative": true
-            },
-            {
-              "name": "대가족목 반송",
-              "grade": "수목장",
-              "price": 3900,
+              "price": 30000000,
               "isRepresentative": false
             },
             {
               "name": "대가족목 반송",
               "grade": "수목장",
-              "price": 4300,
+              "price": 39000000,
+              "isRepresentative": false
+            },
+            {
+              "name": "대가족목 반송",
+              "grade": "수목장",
+              "price": 43000000,
               "isRepresentative": false
             },
             {
               "name": "가족목 조경송",
               "grade": "수목장",
-              "price": 1200,
+              "price": 12000000,
               "isRepresentative": false
             },
             {
               "name": "가족목 조경송",
               "grade": "수목장",
-              "price": 800,
+              "price": 8000000,
               "isRepresentative": false
             },
             {
               "name": "가족목 조경송",
               "grade": "수목장",
-              "price": 900,
+              "price": 9000000,
               "isRepresentative": false
             },
             {
               "name": "개인목 주목",
               "grade": "수목장",
-              "price": 200,
+              "price": 2000000,
               "isRepresentative": false
             },
             {
               "name": "개인목 사철나무",
               "grade": "수목장",
-              "price": 200,
+              "price": 2000000,
               "isRepresentative": false
             },
             {
               "name": "공동목 장송",
               "grade": "수목장",
-              "price": 100,
+              "price": 1000000,
               "isRepresentative": false
             },
             {
               "name": "공동목 소나무",
               "grade": "수목장",
-              "price": 100,
+              "price": 1000000,
               "isRepresentative": false
             },
             {
               "name": "공동목 반송",
               "grade": "수목장",
-              "price": 100,
-              "isRepresentative": false
+              "price": 1000000,
+              "isRepresentative": true
             }
           ],
           "category": "수목장"
@@ -134534,15 +134534,15 @@
     },
     "_detailedSource": "prisma",
     "_meta": {
-      "source": "supabase-js",
-      "categoryCount": 2,
-      "itemCount": 11,
-      "representativeCount": 2
+      "source": "local-json",
+      "categoryCount": 1,
+      "itemCount": 11
     },
     "priceRange": {
-      "min": 3000,
-      "max": 0
-    }
+      "min": 100,
+      "max": 4300
+    },
+    "viewCount": 364
   },
   {
     "id": "park-1193",
@@ -137396,7 +137396,8 @@
       "categoryCount": 2,
       "itemCount": 7,
       "representativeCount": 2
-    }
+    },
+    "viewCount": 276
   },
   {
     "id": "park-1215",
@@ -137618,7 +137619,8 @@
       "categoryCount": 2,
       "itemCount": 7,
       "representativeCount": 2
-    }
+    },
+    "viewCount": 328
   },
   {
     "id": "park-1218",
@@ -142785,7 +142787,8 @@
     "priceRange": {
       "min": 162,
       "max": 162
-    }
+    },
+    "viewCount": 361
   },
   {
     "id": "park-1256",
@@ -143129,7 +143132,8 @@
       "categoryCount": 2,
       "itemCount": 4,
       "representativeCount": 1
-    }
+    },
+    "viewCount": 412
   },
   {
     "id": "park-1259",
@@ -145202,7 +145206,8 @@
     "priceRange": {
       "min": 16,
       "max": 32
-    }
+    },
+    "viewCount": 446
   },
   {
     "id": "park-1279",
@@ -147401,7 +147406,8 @@
       "categoryCount": 1,
       "itemCount": 1,
       "representativeCount": 1
-    }
+    },
+    "viewCount": 259
   },
   {
     "id": "park-1304",
