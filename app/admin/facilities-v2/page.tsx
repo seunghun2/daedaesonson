@@ -14,6 +14,7 @@ import {
     MessageSquare, TrendingUp, TrendingDown, Star
 } from 'lucide-react';
 import { Facility, FACILITY_CATEGORY_LABELS } from '@/types';
+import { formatKoreanCurrency } from '@/lib/format';
 import { cropImagesFromScreenshot } from '@/lib/imageCropper';
 import { PRICE_TAB_CATEGORIES, OTHER_TAB_CATEGORY } from '@/lib/constants';
 import { getSingleFacilityImageUrl } from '@/lib/supabaseImage';
@@ -1126,7 +1127,7 @@ export default function AdminPage() {
                                             </Badge>
                                         </Table.Td>
                                         <Table.Td style={{ maxWidth: 200 }}><Text truncate>{item.address}</Text></Table.Td>
-                                        <Table.Td>{item.priceRange?.min ? item.priceRange.min.toLocaleString() + '만원' : '-'}</Table.Td>
+                                        <Table.Td>{item.priceRange?.min ? formatKoreanCurrency(item.priceRange.min) : '-'}</Table.Td>
                                         <Table.Td>
                                             {item.imageGallery && item.imageGallery.length > 0 ? (
                                                 <Badge size="sm" variant="dot" color="teal">이미지 {item.imageGallery.length}</Badge>
