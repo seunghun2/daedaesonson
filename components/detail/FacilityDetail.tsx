@@ -297,27 +297,19 @@ interface FacilityDetailProps {
 
 export default function FacilityDetail({ facility: initialFacility, onClose, allFacilities = [], onSelectFacility }: FacilityDetailProps) {
     const [facility, setFacility] = useState<Facility>(initialFacility);
-    const [isFetchingDetail, setIsFetchingDetail] = useState(false);
+    const [isFetchingDetail] = useState(false); // 🔥 로딩 표시 제거 - 항상 false
 
     useEffect(() => {
         setFacility(initialFacility);
 
-        // Check if Lite data (missing description/priceInfo)
-        // Note: Even if description is empty string, if it's lite it might be undefined or we check keys.
-        // Our Lite API removes 'description' key completely.
-        const needsFetch = !('priceInfo' in initialFacility) && !('description' in initialFacility);
-
-        if (needsFetch) {
-            setIsFetchingDetail(true);
-            fetch(`/api/facilities/${initialFacility.id}`)
-                .then(res => res.json())
-                .then(fullData => {
-                    if (!fullData || fullData.error) return;
-                    setFacility(prev => ({ ...prev, ...fullData }));
-                })
-                .catch(e => console.error('Detail fetch error:', e))
-                .finally(() => setIsFetchingDetail(false));
-        }
+        // 🔥 백그라운드에서 상세 데이터 로딩 (로딩 표시 없이)
+        fetch(`/api/facilities/${initialFacility.id}`)
+            .then(res => res.json())
+            .then(fullData => {
+                if (!fullData || fullData.error) return;
+                setFacility(prev => ({ ...prev, ...fullData }));
+            })
+            .catch(e => console.error('Detail fetch error:', e));
     }, [initialFacility]);
     const [opened, setOpened] = useState(false); // Image Modal state
     const [selectedImageIndex, setSelectedImageIndex] = useState(0);
