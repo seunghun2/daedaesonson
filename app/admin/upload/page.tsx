@@ -504,11 +504,22 @@ export default function AdminPage() {
         close();
     };
 
-    const handleDelete = (id: string) => {
-        if (confirm('정말 삭제하시겠습니까?')) {
-            const newFacilities = facilities.filter(f => f.id !== id);
-            setFacilities(newFacilities);
-            saveToServer(newFacilities);
+    const handleDelete = async (id: string) => {
+        if (!confirm('정말 삭제하시겠습니까?')) return;
+
+        try {
+            const res = await fetch(`/api/facilities?id=${id}`, { method: 'DELETE' });
+            const data = await res.json();
+
+            if (data.success) {
+                setFacilities(prev => prev.filter(f => f.id !== id));
+                alert('삭제되었습니다.');
+            } else {
+                alert('삭제 실패: ' + (data.error || 'Unknown error'));
+            }
+        } catch (err) {
+            console.error('Delete error:', err);
+            alert('삭제 중 오류가 발생했습니다.');
         }
     };
 

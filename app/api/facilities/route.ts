@@ -400,3 +400,38 @@ export async function POST(req: Request) {
         return NextResponse.json({ error: 'Internal error', details: String(e) }, { status: 500 });
     }
 }
+
+// ==========================================
+// DELETE: 시설 삭제
+// ==========================================
+export async function DELETE(req: Request) {
+    try {
+        const { searchParams } = new URL(req.url);
+        const id = searchParams.get('id');
+
+        if (!id) {
+            return NextResponse.json({ error: 'Missing facility id' }, { status: 400 });
+        }
+
+        console.log('[API DELETE] Deleting facility:', id);
+
+        // 관련 데이터 먼저 삭제
+        await supabase.from('PriceCategory').delete().eq('facilityId', id);
+        await supabase.from('PriceItem').delete().eq('facilityId', id);
+
+        // 시설 삭제
+        const { error } = await supabase.from('Facility').delete().eq('id', id);
+
+        if (error) {
+            console.error('[API DELETE] Supabase error:', error);
+            return NextResponse.json({ error: 'Delete failed', details: error.message }, { status: 500 });
+        }
+
+        console.log('[API DELETE] Successfully deleted:', id);
+        return NextResponse.json({ success: true, deletedId: id });
+
+    } catch (e) {
+        console.error('[API DELETE] Error:', e);
+        return NextResponse.json({ error: 'Internal error', details: String(e) }, { status: 500 });
+    }
+}
