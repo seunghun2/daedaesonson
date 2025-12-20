@@ -90,12 +90,15 @@ export async function GET(
 
         console.log(`[Detail API] Fetching ${id} from Supabase...`);
 
-        // 1. Supabase에서 시설 정보 가져오기
-        const { data: dbData, error } = await supabase
-            .from('Facility')
-            .select('*')
-            .eq('id', id)
-            .single();
+        // 🔥 Supabase 쿼리 + CSV 로딩을 병렬 실행
+        const [facilityResult, reviewsResult, pricingMap] = await Promise.all([
+            supabase.from('Facility').select('*').eq('id', id).single(),
+            supabase.from('Review').select('*, replies:Reply(*)').eq('facilityId', id).order('createdAt', { ascending: false }),
+            loadPricingData()
+        ]);
+
+        const { data: dbData, error } = facilityResult;
+        const { data: reviews } = reviewsResult;
 
         if (error || !dbData) {
             console.error(`[Detail API] Facility ${id} not found:`, error);
@@ -123,16 +126,6 @@ export async function GET(
                 console.error('Failed to parse pricing:', e);
             }
         }
-
-        // 4. 대표 가격 로드 (CSV)
-        const pricingMap = await loadPricingData();
-
-        // 5. 리뷰 로드
-        const { data: reviews } = await supabase
-            .from('Review')
-            .select('*, replies:Reply(*)')
-            .eq('facilityId', id)
-            .order('createdAt', { ascending: false });
 
         // 6. 응답 데이터 구성
         const facility = {
