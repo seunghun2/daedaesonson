@@ -12,7 +12,7 @@
       "min": 300,
       "max": 6465
     },
-    "operatorType": "FOUNDATION",
+    "operatorType": null,
     "hasParking": false,
     "hasRestaurant": true,
     "hasStore": true,
@@ -83,11 +83,11 @@
     },
     "lat": 35.2674332,
     "lng": 128.8301094,
-    "minPrice": 3000,
+    "minPrice": 300,
     "maxPrice": 6465,
     "description": "",
     "createdAt": "2025-12-12T00:21:56.196",
-    "updatedAt": "2025-12-18T13:21:31.303",
+    "updatedAt": "2025-12-20T06:16:35.772",
     "reviews": [],
     "priceInfo": {
       "priceTable": {
@@ -261,13 +261,13 @@
       "categoryCount": 1,
       "itemCount": 26
     },
-    "originalName": "1.(재)낙원추모공원_price_info.png",
+    "originalName": null,
     "location": {
       "lat": 35.2674332,
       "lng": 128.8301094
     },
     "isActive": true,
-    "viewCount": 160
+    "viewCount": 177
   },
   {
     "id": "park-0002",

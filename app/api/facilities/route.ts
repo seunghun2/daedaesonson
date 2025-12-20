@@ -148,6 +148,7 @@ export async function GET() {
                 const { data, error: facError } = await supabase
                     .from('Facility')
                     .select('id, name, images')
+                    .order('id', { ascending: true })
                     .range(from, from + PAGE_SIZE - 1);
 
                 if (facError) {
