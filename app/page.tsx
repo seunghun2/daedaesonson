@@ -22,9 +22,10 @@ async function getFacilities(): Promise<Facility[]> {
     const PAGE_SIZE = 1000;
 
     while (true) {
+      // 🔥 경량화: 지도 마커에 필요한 최소 필드만
       const { data, error } = await supabase
         .from('Facility')
-        .select('id, name, address, lat, lng, category, operatorType, hasParking, hasRestaurant, hasStore, hasAccessibility, isPublic, isActive, images, reviewCount, rating, phone, fax, capacity, lastUpdated, websiteUrl, pricing, description, minPrice, maxPrice')
+        .select('id, name, address, lat, lng, category, operatorType, isPublic, isActive, minPrice, maxPrice')
         .order('id', { ascending: true })
         .range(from, from + PAGE_SIZE - 1);
 
@@ -34,7 +35,7 @@ async function getFacilities(): Promise<Facility[]> {
       }
 
       if (!data || data.length === 0) break;
-      allFacilities = allFacilities.concat(data);
+      allFacilities = [...allFacilities, ...data];
 
       if (data.length < PAGE_SIZE) break;
       from += PAGE_SIZE;
@@ -46,53 +47,19 @@ async function getFacilities(): Promise<Facility[]> {
       return p < 10000 ? p * 10000 : p;
     };
 
-    // 장례식장, 화장시설 제외 + isActive=false 제외 + 0원 제외 + 경량화
+    // 장례식장, 화장시설 제외 + isActive=false 제외 + 0원 제외
     return allFacilities
       .filter((f: any) => f.category !== 'FUNERAL_HOME' && f.category !== 'CREMATORIUM' && f.isActive !== false && f.minPrice > 0)
-      .map((f: any) => {
-        // 이미지 파싱
-        let parsedImages: string[] = [];
-        if (f.images) {
-          try {
-            parsedImages = typeof f.images === 'string' ? JSON.parse(f.images) : f.images;
-          } catch { parsedImages = []; }
-        }
-
-        // pricing 파싱
-        let parsedPricing = null;
-        if (f.pricing) {
-          try {
-            parsedPricing = typeof f.pricing === 'string' ? JSON.parse(f.pricing) : f.pricing;
-          } catch { parsedPricing = null; }
-        }
-
-        return {
-          id: f.id,
-          name: f.name,
-          address: f.address,
-          coordinates: { lat: f.lat || 0, lng: f.lng || 0 },
-          category: f.category,
-          priceRange: { min: normalizePrice(f.minPrice), max: normalizePrice(f.maxPrice) },
-          operatorType: f.operatorType,
-          hasParking: f.hasParking,
-          hasRestaurant: f.hasRestaurant,
-          hasStore: f.hasStore,
-          hasAccessibility: f.hasAccessibility,
-          isPublic: f.isPublic,
-          images: parsedImages,
-          imageGallery: parsedImages,
-          reviewCount: f.reviewCount,
-          rating: f.rating,
-          phone: f.phone,
-          fax: f.fax,
-          capacity: f.capacity,
-          lastUpdated: f.lastUpdated,
-          website: f.websiteUrl,
-          pricing: parsedPricing,
-          priceInfo: parsedPricing ? { priceTable: parsedPricing.priceTable } : null,
-          description: f.description || '',
-        };
-      });
+      .map((f: any) => ({
+        id: f.id,
+        name: f.name,
+        address: f.address,
+        coordinates: { lat: f.lat || 0, lng: f.lng || 0 },
+        category: f.category,
+        priceRange: { min: normalizePrice(f.minPrice), max: normalizePrice(f.maxPrice) },
+        operatorType: f.operatorType,
+        isPublic: f.isPublic,
+      }));
   } catch (error) {
     console.error('Failed to load facilities:', error);
     return [];
