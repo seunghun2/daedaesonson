@@ -136,6 +136,8 @@ function ListPageContent() {
         const params = new URLSearchParams(searchParams.toString());
         params.set('id', facility.id);
         router.push(`/list?${params.toString()}`, { scroll: false });
+        // 🔥 PC에서 상세 페이지 열릴 때 맨 위로 스크롤
+        window.scrollTo({ top: 0, behavior: 'instant' });
     };
 
     const handleCloseDetail = () => {
