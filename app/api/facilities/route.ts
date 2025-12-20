@@ -224,8 +224,8 @@ export async function POST(req: Request) {
                             ? parseInt(row.price.replace(/,/g, ''))
                             : row.price;
 
-                        // 매칭되는 카테고리의 대표가격 우선
-                        if (row.isRepresentative && price > 0 && isMatchingCategory) {
+                        // 매칭되는 카테고리의 대표가격 우선 (첫 번째만!)
+                        if (row.isRepresentative && price > 0 && isMatchingCategory && representativePrice === 0) {
                             representativePrice = price;
                         }
                         if (price > max) max = price;
