@@ -204,17 +204,48 @@ export async function POST(req: Request) {
             let maxPrice = normalizePriceForSave(f.priceRange?.max || 0);
 
             if (f.priceInfo?.priceTable) {
+                // 시설 카테고리에 맞는 키워드
+                const categoryKeywords: Record<string, string[]> = {
+                    'FAMILY_GRAVE': ['묘지', '공원묘지', '매장', '분묘'],
+                    'CHARNEL_HOUSE': ['봉안', '납골', '안치'],
+                    'NATURAL_BURIAL': ['수목', '자연', '잔디', '화초'],
+                };
+                const preferredKeywords = categoryKeywords[f.category] || [];
+
                 let representativePrice = 0;
                 let max = 0;
-                Object.values(f.priceInfo.priceTable).forEach((cat: any) => {
+
+                // 1. 시설 카테고리와 매칭되는 가격 카테고리에서 우선 검색
+                Object.entries(f.priceInfo.priceTable).forEach(([catKey, cat]: [string, any]) => {
+                    const isMatchingCategory = preferredKeywords.some(kw => catKey.includes(kw));
+
                     cat?.rows?.forEach((row: any) => {
                         const price = typeof row.price === 'string'
                             ? parseInt(row.price.replace(/,/g, ''))
                             : row.price;
-                        if (row.isRepresentative && price > 0) representativePrice = price;
+
+                        // 매칭되는 카테고리의 대표가격 우선
+                        if (row.isRepresentative && price > 0 && isMatchingCategory) {
+                            representativePrice = price;
+                        }
                         if (price > max) max = price;
                     });
                 });
+
+                // 2. 매칭되는 카테고리에서 못 찾으면, 전체에서 첫 번째 대표가격
+                if (representativePrice === 0) {
+                    Object.values(f.priceInfo.priceTable).forEach((cat: any) => {
+                        cat?.rows?.forEach((row: any) => {
+                            const price = typeof row.price === 'string'
+                                ? parseInt(row.price.replace(/,/g, ''))
+                                : row.price;
+                            if (row.isRepresentative && price > 0 && representativePrice === 0) {
+                                representativePrice = price;
+                            }
+                        });
+                    });
+                }
+
                 if (representativePrice > 0) minPrice = normalizePriceForSave(representativePrice);
                 if (max > 0) maxPrice = normalizePriceForSave(max);
             }
