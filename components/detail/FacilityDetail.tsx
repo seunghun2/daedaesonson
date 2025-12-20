@@ -624,6 +624,46 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                 </Group>
             </Box>
 
+            {/* 🔥 이미지 히어로 섹션 (헤더 바로 아래) */}
+            {galleryImages.length > 0 && (
+                <Box
+                    onClick={() => handleImageClick(0)}
+                    style={{
+                        cursor: 'pointer',
+                        position: 'relative',
+                        height: '180px',
+                        overflow: 'hidden'
+                    }}
+                >
+                    <img
+                        src={galleryImages[0]}
+                        alt={facility.name}
+                        style={{
+                            width: '100%',
+                            height: '100%',
+                            objectFit: 'cover'
+                        }}
+                    />
+                    {galleryImages.length > 1 && (
+                        <Box
+                            style={{
+                                position: 'absolute',
+                                bottom: 8,
+                                right: 8,
+                                background: 'rgba(0,0,0,0.6)',
+                                color: 'white',
+                                borderRadius: 4,
+                                padding: '4px 8px',
+                                fontSize: '12px',
+                                fontWeight: 500
+                            }}
+                        >
+                            +{galleryImages.length - 1}장 더보기
+                        </Box>
+                    )}
+                </Box>
+            )}
+
             {/* 3. 정보 요약 & 소셜 데이터 */}
             <Box bg="white">
                 <Box pt="md" px="md" pb="xs">
