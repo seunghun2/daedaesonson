@@ -1081,6 +1081,7 @@ export default function AdminPage() {
                             <Table.Thead>
                                 <Table.Tr>
                                     <Table.Th style={{ width: 50 }}>No.</Table.Th>
+                                    <Table.Th style={{ width: 100 }}>ID</Table.Th>
                                     <Table.Th style={{ width: 60 }}>구분</Table.Th>
                                     <Table.Th>시설명</Table.Th>
                                     <Table.Th>카테고리</Table.Th>
@@ -1102,6 +1103,9 @@ export default function AdminPage() {
                                             <Text c="dimmed" size="sm">
                                                 {(activePage - 1) * ITEMS_PER_PAGE + index + 1}
                                             </Text>
+                                        </Table.Td>
+                                        <Table.Td>
+                                            <Text size="xs" c="dimmed" ff="monospace">{item.id}</Text>
                                         </Table.Td>
                                         <Table.Td>
                                             <Badge size="xs" color={item.isPublic ? 'blue' : 'pink'} variant="light">
