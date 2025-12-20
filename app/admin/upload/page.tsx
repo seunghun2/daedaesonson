@@ -146,7 +146,17 @@ export default function AdminPage() {
     const [cropping, setCropping] = useState(false);
     const [useOcr] = useState(false); // Force OCR Checkbox -- MOVED HERE
 
-    const [itemsPerPage, setItemsPerPage] = useState(100);
+    const [itemsPerPage, setItemsPerPage] = useState(() => {
+        if (typeof window !== 'undefined') {
+            return Number(localStorage.getItem('adminItemsPerPage')) || 100;
+        }
+        return 100;
+    });
+
+    // localStorage에 저장
+    useEffect(() => {
+        localStorage.setItem('adminItemsPerPage', String(itemsPerPage));
+    }, [itemsPerPage]);
 
     // Load Data from API
     useEffect(() => {
