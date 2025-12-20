@@ -22,10 +22,10 @@ async function getFacilities(): Promise<Facility[]> {
     const PAGE_SIZE = 1000;
 
     while (true) {
-      // 🔥 경량화: 지도 마커에 필요한 최소 필드만
+      // 🔥 모바일 최적화: 대표 이미지 1장 포함
       const { data, error } = await supabase
         .from('Facility')
-        .select('id, name, address, lat, lng, category, operatorType, isPublic, isActive, minPrice, maxPrice')
+        .select('id, name, address, lat, lng, category, operatorType, isPublic, isActive, minPrice, maxPrice, images')
         .order('id', { ascending: true })
         .range(from, from + PAGE_SIZE - 1);
 
@@ -50,16 +50,27 @@ async function getFacilities(): Promise<Facility[]> {
     // 장례식장, 화장시설 제외 + isActive=false 제외 + 0원 제외
     return allFacilities
       .filter((f: any) => f.category !== 'FUNERAL_HOME' && f.category !== 'CREMATORIUM' && f.isActive !== false && f.minPrice > 0)
-      .map((f: any) => ({
-        id: f.id,
-        name: f.name,
-        address: f.address,
-        coordinates: { lat: f.lat || 0, lng: f.lng || 0 },
-        category: f.category,
-        priceRange: { min: normalizePrice(f.minPrice), max: normalizePrice(f.maxPrice) },
-        operatorType: f.operatorType,
-        isPublic: f.isPublic,
-      }));
+      .map((f: any) => {
+        // 대표 이미지 1장 추출
+        let thumbnail = '';
+        if (f.images) {
+          try {
+            const imgs = typeof f.images === 'string' ? JSON.parse(f.images) : f.images;
+            if (Array.isArray(imgs) && imgs.length > 0) thumbnail = imgs[0];
+          } catch { }
+        }
+        return {
+          id: f.id,
+          name: f.name,
+          address: f.address,
+          coordinates: { lat: f.lat || 0, lng: f.lng || 0 },
+          category: f.category,
+          priceRange: { min: normalizePrice(f.minPrice), max: normalizePrice(f.maxPrice) },
+          operatorType: f.operatorType,
+          isPublic: f.isPublic,
+          thumbnail, // 🔥 대표 이미지
+        };
+      });
   } catch (error) {
     console.error('Failed to load facilities:', error);
     return [];
