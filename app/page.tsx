@@ -21,7 +21,7 @@ async function getFacilities(): Promise<Facility[]> {
     while (true) {
       const { data, error } = await supabase
         .from('Facility')
-        .select('id, name, address, coordinates, category, priceRange, operatorType, hasParking, hasRestaurant, hasStore, hasAccessibility, isPublic, isActive, images, imageGallery, reviewCount, rating, phone, fax, capacity, lastUpdated, websiteUrl, pricing, priceInfo, description, minPrice, maxPrice')
+        .select('id, name, address, lat, lng, category, operatorType, hasParking, hasRestaurant, hasStore, hasAccessibility, isPublic, isActive, images, reviewCount, rating, phone, fax, capacity, lastUpdated, websiteUrl, pricing, description, minPrice, maxPrice')
         .order('id', { ascending: true })
         .range(from, from + PAGE_SIZE - 1);
 
@@ -37,35 +37,59 @@ async function getFacilities(): Promise<Facility[]> {
       from += PAGE_SIZE;
     }
 
+    // 가격 단위 정규화
+    const normalizePrice = (p: number): number => {
+      if (!p || p <= 0) return 0;
+      return p < 10000 ? p * 10000 : p;
+    };
+
     // 장례식장, 화장시설 제외 + isActive=false 제외 + 0원 제외 + 경량화
     return allFacilities
-      .filter((f: any) => f.category !== 'FUNERAL_HOME' && f.category !== 'CREMATORIUM' && f.isActive !== false && (f.minPrice > 0 || f.priceRange?.min > 0))
-      .map((f: any) => ({
-        id: f.id,
-        name: f.name,
-        address: f.address,
-        coordinates: f.coordinates,
-        category: f.category,
-        priceRange: f.priceRange || { min: f.minPrice, max: f.maxPrice },
-        operatorType: f.operatorType,
-        hasParking: f.hasParking,
-        hasRestaurant: f.hasRestaurant,
-        hasStore: f.hasStore,
-        hasAccessibility: f.hasAccessibility,
-        isPublic: f.isPublic,
-        images: f.images || [],
-        imageGallery: f.imageGallery || [],
-        reviewCount: f.reviewCount,
-        rating: f.rating,
-        phone: f.phone,
-        fax: f.fax,
-        capacity: f.capacity,
-        lastUpdated: f.lastUpdated,
-        website: f.websiteUrl,
-        pricing: typeof f.pricing === 'string' ? JSON.parse(f.pricing) : f.pricing,
-        priceInfo: typeof f.priceInfo === 'string' ? JSON.parse(f.priceInfo) : f.priceInfo,
-        description: f.description || '',
-      }));
+      .filter((f: any) => f.category !== 'FUNERAL_HOME' && f.category !== 'CREMATORIUM' && f.isActive !== false && f.minPrice > 0)
+      .map((f: any) => {
+        // 이미지 파싱
+        let parsedImages: string[] = [];
+        if (f.images) {
+          try {
+            parsedImages = typeof f.images === 'string' ? JSON.parse(f.images) : f.images;
+          } catch { parsedImages = []; }
+        }
+
+        // pricing 파싱
+        let parsedPricing = null;
+        if (f.pricing) {
+          try {
+            parsedPricing = typeof f.pricing === 'string' ? JSON.parse(f.pricing) : f.pricing;
+          } catch { parsedPricing = null; }
+        }
+
+        return {
+          id: f.id,
+          name: f.name,
+          address: f.address,
+          coordinates: { lat: f.lat || 0, lng: f.lng || 0 },
+          category: f.category,
+          priceRange: { min: normalizePrice(f.minPrice), max: normalizePrice(f.maxPrice) },
+          operatorType: f.operatorType,
+          hasParking: f.hasParking,
+          hasRestaurant: f.hasRestaurant,
+          hasStore: f.hasStore,
+          hasAccessibility: f.hasAccessibility,
+          isPublic: f.isPublic,
+          images: parsedImages,
+          imageGallery: parsedImages,
+          reviewCount: f.reviewCount,
+          rating: f.rating,
+          phone: f.phone,
+          fax: f.fax,
+          capacity: f.capacity,
+          lastUpdated: f.lastUpdated,
+          website: f.websiteUrl,
+          pricing: parsedPricing,
+          priceInfo: parsedPricing ? { priceTable: parsedPricing.priceTable } : null,
+          description: f.description || '',
+        };
+      });
   } catch (error) {
     console.error('Failed to load facilities:', error);
     return [];
