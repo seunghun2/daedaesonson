@@ -17,8 +17,14 @@ export const dynamic = 'force-dynamic';
 
 const DATA_DIR = path.join(process.cwd(), 'data');
 
-// Helper: Load pricing CSVs (이건 CSV라서 유지)
+// 🔥 CSV 캐싱 (서버 시작 후 한 번만 로드)
+let cachedPricingData: Map<string, RepresentativePricing> | null = null;
+
+// Helper: Load pricing CSVs (캐싱 적용)
 async function loadPricingData(): Promise<Map<string, RepresentativePricing>> {
+    // 🔥 캐시가 있으면 바로 반환
+    if (cachedPricingData) return cachedPricingData;
+
     const map = new Map<string, RepresentativePricing>();
     const analyzedDir = path.join(DATA_DIR, 'analyzed');
 
@@ -69,6 +75,8 @@ async function loadPricingData(): Promise<Map<string, RepresentativePricing>> {
     } catch (e) {
         console.error('Error loading pricing CSVs:', e);
     }
+    // 🔥 캐시에 저장
+    cachedPricingData = map;
     return map;
 }
 
