@@ -771,18 +771,15 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
             };
             const markerColor = categoryColors[fac.category as FacilityCategory] || '#0097a7';
 
-            // 🔥 모바일 터치 개선: 마커 크기 확대
-            const contentWidth = 68;
-            const contentHeight = 50;
+            const contentWidth = 58;
+            const contentHeight = 44;
 
             const svgContent = `
             <svg width="${contentWidth}" height="${contentHeight + 8}" viewBox="0 0 ${contentWidth} ${contentHeight + 8}" xmlns="http://www.w3.org/2000/svg">
-                <!-- 투명 터치 영역 확장 -->
-                <rect x="-8" y="-8" width="${contentWidth + 16}" height="${contentHeight + 24}" fill="transparent"/>
-                <rect x="0" y="0" width="${contentWidth}" height="${contentHeight}" rx="7" fill="${markerColor}"/>
-                <path d="M${contentWidth / 2 - 7} ${contentHeight - 1} L${contentWidth / 2} ${contentHeight + 7} L${contentWidth / 2 + 7} ${contentHeight - 1} Z" fill="${markerColor}"/>
-                <text x="${contentWidth / 2}" y="18" font-family="-apple-system, sans-serif" font-size="11" fill="white" fill-opacity="0.9" text-anchor="middle">${categoryLabel}</text>
-                <text x="${contentWidth / 2}" y="38" font-family="-apple-system, sans-serif" font-size="15" font-weight="800" fill="white" text-anchor="middle">${priceText}</text>
+                <rect x="0" y="0" width="${contentWidth}" height="${contentHeight}" rx="6" fill="${markerColor}"/>
+                <path d="M${contentWidth / 2 - 6} ${contentHeight - 1} L${contentWidth / 2} ${contentHeight + 7} L${contentWidth / 2 + 6} ${contentHeight - 1} Z" fill="${markerColor}"/>
+                <text x="${contentWidth / 2}" y="16" font-family="-apple-system, sans-serif" font-size="10" fill="white" fill-opacity="0.9" text-anchor="middle">${categoryLabel}</text>
+                <text x="${contentWidth / 2}" y="33" font-family="-apple-system, sans-serif" font-size="13" font-weight="800" fill="white" text-anchor="middle">${priceText}</text>
             </svg>
             `;
 
