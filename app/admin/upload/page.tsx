@@ -249,12 +249,13 @@ export default function AdminPage() {
             }
         }
 
-        // Fetch Latest Details & Prices (Parallel)
-        try {
-            // 가격 요청 URL
-            const priceUrl = `/api/facilities/${parsedFacility.id}/prices`;
+        // 🔥 모달 먼저 열고 기본 데이터 표시
+        setEditForm(JSON.parse(JSON.stringify(parsedFacility)));
+        open();
 
-            // 상세 정보 요청 (새로고침 안 해도 최신 데이터 가져오기 위함)
+        // 🔥 백그라운드에서 상세 데이터 로딩
+        try {
+            const priceUrl = `/api/facilities/${parsedFacility.id}/prices`;
             const detailUrl = `/api/facilities/${parsedFacility.id}`;
 
             const [detailRes, priceRes] = await Promise.all([
@@ -264,18 +265,15 @@ export default function AdminPage() {
 
             let mergedFacility = { ...parsedFacility };
 
-            // 1. 상세 정보 병합 (Basic Info)
             if (detailRes.ok) {
                 const latestDetail = await detailRes.json();
                 mergedFacility = {
                     ...mergedFacility,
-                    ...latestDetail, // 최신 DB/Local 데이터로 덮어쓰기 (phone, capacity 등 확보)
-                    // 이미지는 로직이 복잡하므로 기존 로직 유지하되, latestDetail에 있으면 그것도 고려
+                    ...latestDetail,
                     imageGallery: latestDetail.imageGallery || mergedFacility.imageGallery
                 };
             }
 
-            // 2. 가격 정보 병합 (Prices)
             if (priceRes.ok) {
                 const detailedData = await priceRes.json();
                 mergedFacility = {
@@ -286,17 +284,14 @@ export default function AdminPage() {
                 } as any;
                 (mergedFacility as any)._detailedSource = 'prisma';
                 (mergedFacility as any)._meta = detailedData._meta;
-                console.log('✅ Loaded detailed prices:', detailedData._meta);
             }
 
-            setEditForm(JSON.parse(JSON.stringify(mergedFacility)));
+            // 🔥 모달이 열려있을 때만 업데이트
+            setEditForm((prev: any) => prev?.id === parsedFacility.id ? JSON.parse(JSON.stringify(mergedFacility)) : prev);
 
         } catch (e) {
             console.error('Fetch error in handleEdit:', e);
-            // 에러 나면 목록에 있던 데이터라도 보여줌
-            setEditForm(JSON.parse(JSON.stringify(parsedFacility)));
         }
-        open();
     };
 
     const handleCreate = () => {
