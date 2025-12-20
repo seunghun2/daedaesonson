@@ -297,12 +297,15 @@ interface FacilityDetailProps {
 
 export default function FacilityDetail({ facility: initialFacility, onClose, allFacilities = [], onSelectFacility }: FacilityDetailProps) {
     const [facility, setFacility] = useState<Facility>(initialFacility);
-    const [isFetchingDetail] = useState(false); // 🔥 로딩 표시 제거 - 항상 false
+    const [isFetchingDetail] = useState(false);
+    const containerRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
         setFacility(initialFacility);
+        // 🔥 시설 변경 시 스크롤 맨 위로
+        containerRef.current?.scrollTo({ top: 0 });
+        containerRef.current?.parentElement?.scrollTo({ top: 0 });
 
-        // 🔥 백그라운드에서 상세 데이터 로딩 (로딩 표시 없이)
         fetch(`/api/facilities/${initialFacility.id}`)
             .then(res => res.json())
             .then(fullData => {
@@ -591,6 +594,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
 
     return (
         <Box
+            ref={containerRef}
             style={{ backgroundColor: '#f8f9fa', height: '100%', position: 'relative', overflowY: 'auto', touchAction: 'pan-y' }}
             onTouchStart={(e) => e.stopPropagation()} // 🚀 지도 터치 간섭 방지 (재적용)
         >
