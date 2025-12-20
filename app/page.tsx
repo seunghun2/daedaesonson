@@ -3,9 +3,8 @@ import { createClient } from '@supabase/supabase-js';
 import HomeClient from './HomeClient';
 import { Facility } from '@/types';
 
-// 🔥 캐싱 완전 비활성화 (항상 최신 데이터)
-export const revalidate = 0;
-export const dynamic = 'force-dynamic';
+// 🔥 30초 캐시 (성능 + 업데이트 반영 균형)
+export const revalidate = 30;
 
 const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://jbydmhfuqnpukfutvrgs.supabase.co';
 const SUPABASE_SERVICE_KEY = process.env.SUPABASE_SERVICE_KEY || 'sb_secret_CDAM3cyG1RBEmjvSIaHOPA_If4LP8u3';
