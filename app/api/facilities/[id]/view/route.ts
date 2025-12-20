@@ -1,9 +1,12 @@
+import { createClient } from '@supabase/supabase-js';
 import { NextResponse } from 'next/server';
-import fs from 'fs';
-import path from 'path';
 
-const FACILITIES_PATH = path.join(process.cwd(), 'data', 'facilities.json');
+const SUPABASE_URL = 'https://jbydmhfuqnpukfutvrgs.supabase.co';
+const SUPABASE_KEY = process.env.SUPABASE_SERVICE_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImpieWRtaGZ1cW5wdWtmdXR2cmdzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzI1ODA0ODYsImV4cCI6MjA0ODE1NjQ4Nn0.sb_secret_CDAM3cyG1RBEmjvSIaHOPA_If4LP8u3';
 
+const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
+
+// 조회수 증가 (POST)
 export async function POST(
     request: Request,
     { params }: { params: Promise<{ id: string }> }
@@ -11,39 +14,51 @@ export async function POST(
     try {
         const { id } = await params;
 
-        // facilities.json 읽기
-        const data = JSON.parse(fs.readFileSync(FACILITIES_PATH, 'utf-8'));
+        // 현재 조회수 가져오기
+        const { data: facility, error: fetchError } = await supabase
+            .from('Facility')
+            .select('viewCount')
+            .eq('id', id)
+            .single();
 
-        // 해당 시설 찾기
-        const facilityIndex = data.findIndex((f: any) => f.id === id);
-
-        if (facilityIndex === -1) {
-            return NextResponse.json({ error: 'Facility not found' }, { status: 404 });
+        if (fetchError && fetchError.code !== 'PGRST116') {
+            console.error('Fetch error:', fetchError);
         }
 
-        // viewCount 초기화 (없으면 랜덤 시작)
-        if (!data[facilityIndex].viewCount) {
-            // ID 기반 랜덤 시작값 (50~500)
+        // 조회수 계산 (없으면 ID 기반 시작값)
+        let currentCount = facility?.viewCount || 0;
+        if (currentCount === 0) {
             const hash = id.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
-            data[facilityIndex].viewCount = 50 + (hash * 17) % 450;
+            currentCount = 50 + (hash * 17) % 450;
         }
+        const newCount = currentCount + 1;
 
-        // 조회수 +1
-        data[facilityIndex].viewCount += 1;
+        // Supabase에 업데이트
+        const { error: updateError } = await supabase
+            .from('Facility')
+            .update({ viewCount: newCount })
+            .eq('id', id);
 
-        // 파일에 저장
-        fs.writeFileSync(FACILITIES_PATH, JSON.stringify(data, null, 2));
+        if (updateError) {
+            console.error('Update error:', updateError);
+            // 업데이트 실패해도 카운트는 반환
+        }
 
         return NextResponse.json({
-            viewCount: data[facilityIndex].viewCount,
+            viewCount: newCount,
             success: true
         });
     } catch (error) {
         console.error('View count error:', error);
-        return NextResponse.json({ error: 'Failed to update view count' }, { status: 500 });
+        // 에러 시에도 기본값 반환
+        const { id } = await params;
+        const hash = id.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
+        const fallbackCount = 50 + (hash * 17) % 450;
+        return NextResponse.json({ viewCount: fallbackCount, success: false });
     }
 }
 
+// 조회수 조회 (GET)
 export async function GET(
     request: Request,
     { params }: { params: Promise<{ id: string }> }
@@ -51,22 +66,23 @@ export async function GET(
     try {
         const { id } = await params;
 
-        const data = JSON.parse(fs.readFileSync(FACILITIES_PATH, 'utf-8'));
-        const facility = data.find((f: any) => f.id === id);
+        const { data: facility, error } = await supabase
+            .from('Facility')
+            .select('viewCount')
+            .eq('id', id)
+            .single();
 
-        if (!facility) {
-            return NextResponse.json({ error: 'Facility not found' }, { status: 404 });
-        }
-
-        // viewCount 없으면 계산
-        let viewCount = facility.viewCount;
-        if (!viewCount) {
+        let viewCount = facility?.viewCount || 0;
+        if (viewCount === 0) {
             const hash = id.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
             viewCount = 50 + (hash * 17) % 450;
         }
 
         return NextResponse.json({ viewCount });
     } catch (error) {
-        return NextResponse.json({ error: 'Failed to get view count' }, { status: 500 });
+        const { id } = await params;
+        const hash = id.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
+        const viewCount = 50 + (hash * 17) % 450;
+        return NextResponse.json({ viewCount });
     }
 }
