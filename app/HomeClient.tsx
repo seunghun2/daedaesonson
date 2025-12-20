@@ -928,47 +928,43 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
       {/* 모바일 상세 팝업 (Full Page Overlay with Slide Animation) */}
       {
         isMobile && selectedFacility && (
-          <Box
-            pos="fixed"
-            top={0}
-            left={0}
-            w="100%"
-            h="100%" // Full height
-            bg="white"
-            style={{
-              zIndex: 3000, // Topmost layer
-              display: 'flex',
-              flexDirection: 'column',
-              overflow: 'hidden',
-              touchAction: 'pan-y', // 🚀 스크롤 개선
-              overscrollBehavior: 'contain', // 🚀 스크롤 개선
-              // 🎬 스르륵 애니메이션 (0.2s로 단축하여 더 빠르게)
-              animation: 'slideInRight 0.2s ease-out',
-            }}
-          >
-            <style jsx>{`
+          <>
+            <style>{`
               @keyframes slideInRight {
-                from {
-                  transform: translateX(100%);
-                }
-                to {
-                  transform: translateX(0);
-                }
+                from { transform: translateX(100%); }
+                to { transform: translateX(0); }
               }
             `}</style>
-            {/* 컨텐츠 영역 (Full height, FacilityDetail handles header) */}
-            <Box style={{ flex: 1, overflow: 'hidden' }}>
-              <FacilityDetail
-                facility={selectedFacility}
-                onClose={() => router.back()} // 히스토리 뒤로가기로 닫기
-                allFacilities={finalFacilities}
-                onSelectFacility={(id) => {
-                  const fac = finalFacilities.find(f => f.id === id);
-                  if (fac) handleMarkerClick(fac);
-                }}
-              />
+            <Box
+              pos="fixed"
+              top={0}
+              left={0}
+              w="100%"
+              h="100%"
+              bg="white"
+              style={{
+                zIndex: 3000,
+                display: 'flex',
+                flexDirection: 'column',
+                overflow: 'hidden',
+                touchAction: 'pan-y',
+                overscrollBehavior: 'contain',
+                animation: 'slideInRight 0.25s ease-out forwards',
+              }}
+            >
+              <Box style={{ flex: 1, overflow: 'hidden' }}>
+                <FacilityDetail
+                  facility={selectedFacility}
+                  onClose={() => router.back()}
+                  allFacilities={finalFacilities}
+                  onSelectFacility={(id) => {
+                    const fac = finalFacilities.find(f => f.id === id);
+                    if (fac) handleMarkerClick(fac);
+                  }}
+                />
+              </Box>
             </Box>
-          </Box>
+          </>
         )
       }
       {/* 모바일 하단 지도/목록 전환은 "주변 시설 보기" 버튼이 대체 */}
