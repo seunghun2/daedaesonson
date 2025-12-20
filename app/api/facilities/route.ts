@@ -194,8 +194,14 @@ export async function POST(req: Request) {
             const imageStr = JSON.stringify(Array.isArray(imgSource) ? imgSource : []);
 
             // 🔥 priceTable에서 대표가격 계산
-            let minPrice = f.priceRange?.min || 0;
-            let maxPrice = f.priceRange?.max || 0;
+            // 가격 단위 통일: 10000 미만이면 만원 단위로 가정 → 원 단위로 변환
+            const normalizePriceForSave = (p: number): number => {
+                if (!p || p <= 0) return 0;
+                return p < 10000 ? p * 10000 : p;
+            };
+
+            let minPrice = normalizePriceForSave(f.priceRange?.min || 0);
+            let maxPrice = normalizePriceForSave(f.priceRange?.max || 0);
 
             if (f.priceInfo?.priceTable) {
                 let representativePrice = 0;
@@ -209,8 +215,8 @@ export async function POST(req: Request) {
                         if (price > max) max = price;
                     });
                 });
-                if (representativePrice > 0) minPrice = representativePrice;
-                if (max > 0) maxPrice = max;
+                if (representativePrice > 0) minPrice = normalizePriceForSave(representativePrice);
+                if (max > 0) maxPrice = normalizePriceForSave(max);
             }
 
             // DB Record 준비
