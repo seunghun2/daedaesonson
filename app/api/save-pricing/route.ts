@@ -1,6 +1,4 @@
 import { NextResponse } from 'next/server';
-import fs from 'fs';
-import path from 'path';
 import { createClient } from '@supabase/supabase-js';
 
 const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://jbydmhfuqnpukfutvrgs.supabase.co';
@@ -9,23 +7,18 @@ const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_KEY, {
     auth: { persistSession: false }
 });
 
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+
 export async function POST(request: Request) {
     try {
         const body = await request.json();
         const { facilityId, rows } = body;
 
-        const filePath = path.join(process.cwd(), 'data/facilities.json');
-        const fileData = fs.readFileSync(filePath, 'utf8');
-        const facilities = JSON.parse(fileData);
+        console.log(`[Save Pricing] Saving ${rows?.length || 0} items for ${facilityId} to Supabase...`);
 
-        const fIndex = facilities.findIndex((f: any) => f.id === facilityId);
-        if (fIndex === -1) {
-            return NextResponse.json({ error: 'Facility not found' }, { status: 404 });
-        }
-
-        // Reconstruct pricing object from flat rows, respecting order
+        // 1. pricing 객체 생성
         const newPricing: any = {};
-
         rows.forEach((row: any) => {
             if (!newPricing[row.category]) {
                 newPricing[row.category] = { rows: [] };
@@ -38,16 +31,23 @@ export async function POST(request: Request) {
             });
         });
 
-        // Update the facility object
-        facilities[fIndex].pricing = newPricing;
+        // 2. Supabase에 pricing 업데이트
+        const { error: updateError } = await supabase
+            .from('Facility')
+            .update({
+                pricing: JSON.stringify({ priceTable: newPricing }),
+                updatedAt: new Date().toISOString()
+            })
+            .eq('id', facilityId);
 
-        // Write back to file
-        fs.writeFileSync(filePath, JSON.stringify(facilities, null, 2));
+        if (updateError) {
+            console.error('[Save Pricing] DB Error:', updateError);
+            return NextResponse.json({ error: 'Database update failed', details: updateError.message }, { status: 500 });
+        }
 
-        // 🔥 Also update Supabase isRepresentative for each item
+        // 3. PriceItem의 isRepresentative 업데이트 (기존 로직 유지)
         for (const row of rows) {
             if (row.id) {
-                // Update existing item's isRepresentative
                 await supabase
                     .from('PriceItem')
                     .update({ isRepresentative: row.isRepresentative || false })
@@ -55,10 +55,11 @@ export async function POST(request: Request) {
             }
         }
 
-        return NextResponse.json({ success: true });
+        console.log(`✅ [Save Pricing] Saved to Supabase for ${facilityId}`);
+        return NextResponse.json({ success: true, source: 'supabase' });
 
     } catch (error) {
-        console.error(error);
-        return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
+        console.error('[Save Pricing] Error:', error);
+        return NextResponse.json({ error: 'Internal Server Error', details: String(error) }, { status: 500 });
     }
 }

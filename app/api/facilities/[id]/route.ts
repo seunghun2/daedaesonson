@@ -1,13 +1,10 @@
-
 import { NextRequest, NextResponse } from 'next/server';
-import fs from 'fs/promises';
 import { readFileSync, existsSync } from 'fs';
 import path from 'path';
 import { parse } from 'csv-parse/sync';
 import { createClient } from '@supabase/supabase-js';
 import { RepresentativePricing } from '@/types';
 
-// Configuration for Supabase Client
 const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://jbydmhfuqnpukfutvrgs.supabase.co';
 const SUPABASE_SERVICE_KEY = process.env.SUPABASE_SERVICE_KEY || 'sb_secret_CDAM3cyG1RBEmjvSIaHOPA_If4LP8u3';
 
@@ -15,13 +12,12 @@ const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_KEY, {
     auth: { persistSession: false }
 });
 
+export const revalidate = 0;
+export const dynamic = 'force-dynamic';
+
 const DATA_DIR = path.join(process.cwd(), 'data');
-const DATA_FILE = path.join(DATA_DIR, 'facilities.json');
 
-// Revalidate cache every hour
-export const revalidate = 3600;
-
-// Helper: Load pricing (Same as list API)
+// Helper: Load pricing CSVs (이건 CSV라서 유지)
 async function loadPricingData(): Promise<Map<string, RepresentativePricing>> {
     const map = new Map<string, RepresentativePricing>();
     const analyzedDir = path.join(DATA_DIR, 'analyzed');
@@ -76,7 +72,7 @@ async function loadPricingData(): Promise<Map<string, RepresentativePricing>> {
     return map;
 }
 
-// GET: Single Facility Detail
+// GET: Single Facility Detail (🔥 Supabase Only!)
 export async function GET(
     request: NextRequest,
     { params }: { params: Promise<{ id: string }> }
@@ -84,75 +80,88 @@ export async function GET(
     try {
         const { id } = await params;
 
-        // 1. Load JSON Data
-        const fileContent = await fs.readFile(DATA_FILE, 'utf-8');
-        const facilities = JSON.parse(fileContent);
-        const facility = facilities.find((f: any) => f.id === id);
+        console.log(`[Detail API] Fetching ${id} from Supabase...`);
 
-        if (!facility) {
-            return NextResponse.json({ error: 'Facility not found' }, { status: 404 });
-        }
-
-        // 2. Load Pricing
-        const pricingMap = await loadPricingData();
-
-        // 3. Load Supabase Data (Reviews, Full Images, etc)
+        // 1. Supabase에서 시설 정보 가져오기
         const { data: dbData, error } = await supabase
             .from('Facility')
             .select('*')
             .eq('id', id)
             .single();
 
-        let merged = { ...facility };
+        if (error || !dbData) {
+            console.error(`[Detail API] Facility ${id} not found:`, error);
+            return NextResponse.json({ error: 'Facility not found' }, { status: 404 });
+        }
 
-        if (dbData) {
-            let parsedImages: string[] = [];
-            if (dbData.images) {
-                try {
-                    parsedImages = typeof dbData.images === 'string'
-                        ? JSON.parse(dbData.images)
-                        : (Array.isArray(dbData.images) ? dbData.images : []);
-                } catch (e) { parsedImages = []; }
+        // 2. 이미지 파싱
+        let parsedImages: string[] = [];
+        if (dbData.images) {
+            try {
+                parsedImages = typeof dbData.images === 'string'
+                    ? JSON.parse(dbData.images)
+                    : (Array.isArray(dbData.images) ? dbData.images : []);
+            } catch (e) { parsedImages = []; }
+        }
+
+        // 3. pricing JSON 파싱
+        let parsedPriceInfo = null;
+        if (dbData.pricing) {
+            try {
+                parsedPriceInfo = typeof dbData.pricing === 'string'
+                    ? JSON.parse(dbData.pricing)
+                    : dbData.pricing;
+            } catch (e) {
+                console.error('Failed to parse pricing:', e);
             }
-
-            merged = {
-                ...merged,
-                ...dbData, // Overwrite with DB data first
-
-                // RESTORE Local Data if DB data is missing/null/empty (use ?? to keep 0 values)
-                address: dbData.address || merged.address,
-                phone: dbData.phone || merged.phone,
-                fax: dbData.fax || merged.fax,
-                capacity: dbData.capacity ?? merged.capacity,
-                lastUpdated: dbData.lastUpdated || merged.lastUpdated,
-                websiteUrl: dbData.websiteUrl || merged.website || merged.websiteUrl, // Handle key variations
-
-                // CRITICAL: Force local pricing for park-0001 (to break 300만원 lock)
-                // For other facilities, prefer DB over local
-                pricing: id === 'park-0001'
-                    ? (facility.pricing || dbData.pricing || merged.pricing)
-                    : (dbData.pricing || facility.pricing || merged.pricing),
-
-                images: parsedImages.length > 0 ? parsedImages : merged.images,
-                imageGallery: parsedImages.length > 0 ? parsedImages : merged.images, // Full gallery
-            };
         }
 
-        // Attach Pricing
-        if (pricingMap.has(id)) {
-            merged.representativePricing = pricingMap.get(id);
-        }
+        // 4. 대표 가격 로드 (CSV)
+        const pricingMap = await loadPricingData();
 
-        // 4. Load Reviews (Separate query usually, but fetching here for "full details")
+        // 5. 리뷰 로드
         const { data: reviews } = await supabase
             .from('Review')
             .select('*, replies:Reply(*)')
             .eq('facilityId', id)
             .order('createdAt', { ascending: false });
 
-        merged.reviews = reviews || [];
+        // 6. 응답 데이터 구성
+        const facility = {
+            id: dbData.id,
+            name: dbData.name,
+            address: dbData.address || '',
+            coordinates: { lat: dbData.lat || 0, lng: dbData.lng || 0 },
+            category: dbData.category || 'OTHER',
+            priceRange: { min: dbData.minPrice || 0, max: dbData.maxPrice || 0 },
+            operatorType: dbData.operatorType,
+            hasParking: dbData.hasParking ?? false,
+            hasRestaurant: dbData.hasRestaurant ?? false,
+            hasStore: dbData.hasStore ?? false,
+            hasAccessibility: dbData.hasAccessibility ?? false,
+            isPublic: dbData.isPublic ?? false,
+            isActive: dbData.isActive ?? true,
+            images: parsedImages,
+            imageGallery: parsedImages,
+            priceInfo: parsedPriceInfo,
+            pricing: parsedPriceInfo,
+            representativePricing: pricingMap.get(id),
+            reviewCount: dbData.reviewCount || 0,
+            rating: dbData.rating || 0,
+            phone: dbData.phone || '',
+            fax: dbData.fax || '',
+            capacity: dbData.capacity,
+            lastUpdated: dbData.lastUpdated,
+            websiteUrl: dbData.websiteUrl || '',
+            website: dbData.websiteUrl || '',
+            viewCount: dbData.viewCount || 0,
+            description: dbData.description || '',
+            originalName: dbData.originalName,
+            reviews: reviews || [],
+        };
 
-        return NextResponse.json(merged);
+        console.log(`✅ [Detail API] ${id} from Supabase`);
+        return NextResponse.json(facility);
 
     } catch (e) {
         console.error('Detail API Error:', e);

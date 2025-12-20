@@ -1,37 +1,22 @@
 import { NextResponse } from 'next/server';
-import fs from 'fs/promises';
-import { readFileSync, existsSync } from 'fs'; // Sync fs for initial load if needed, using promises for main flow
+import { readFileSync, existsSync } from 'fs';
 import path from 'path';
-import { parse } from 'csv-parse/sync'; // Import CSV parser
-import { MOCK_FACILITIES } from '@/lib/mockData';
+import { parse } from 'csv-parse/sync';
 import { createClient } from '@supabase/supabase-js';
 import { RepresentativePricing } from '@/types';
 import { randomUUID } from 'crypto';
 
-// Configuration for Supabase Client (HTTP-based, reliable)
 const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://jbydmhfuqnpukfutvrgs.supabase.co';
 const SUPABASE_SERVICE_KEY = process.env.SUPABASE_SERVICE_KEY || 'sb_secret_CDAM3cyG1RBEmjvSIaHOPA_If4LP8u3';
 
-// Initialize Supabase Client
 const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_KEY, {
     auth: { persistSession: false }
 });
 
-// Disable caching for Admin/API usage to ensure fresh data
 export const revalidate = 0;
 export const dynamic = 'force-dynamic';
 
 const DATA_DIR = path.join(process.cwd(), 'data');
-const DATA_FILE = path.join(DATA_DIR, 'facilities.json');
-
-// Helper: Ensure data directory exists
-async function ensureDataDir() {
-    try {
-        await fs.access(DATA_DIR);
-    } catch {
-        await fs.mkdir(DATA_DIR, { recursive: true });
-    }
-}
 
 // Helper: Load and parse pricing CSVs
 async function loadPricingData(): Promise<Map<string, RepresentativePricing>> {
@@ -39,71 +24,36 @@ async function loadPricingData(): Promise<Map<string, RepresentativePricing>> {
     const analyzedDir = path.join(DATA_DIR, 'analyzed');
 
     try {
-        // 1. Cremation
         const cremPath = path.join(analyzedDir, 'analyzed_pricing_cremation.csv');
         if (existsSync(cremPath)) {
             const content = readFileSync(cremPath, 'utf-8');
             const rows = parse(content, { columns: true, skip_empty_lines: true });
             rows.forEach((r: any) => {
                 const id = r.ParkID;
-                if (!map.has(id)) map.set(id, {});
-                const entry = map.get(id)!;
+                if (!map.has(id)) map.set(id, {} as any);
+                const entry = map.get(id)! as any;
                 entry.cremation = {
-                    resident: parseInt(r.ResidentFee) || 0,
-                    nonResident: parseInt(r.NonResidentFee) || 0
+                    minAdult15kg: parseInt(r.MinAdult15kg) || 0,
+                    minChild: parseInt(r.MinChild) || 0,
                 };
             });
         }
 
-        // 2. Enshrinement
-        const enshPath = path.join(analyzedDir, 'analyzed_pricing_enshrinement.csv');
-        if (existsSync(enshPath)) {
-            const content = readFileSync(enshPath, 'utf-8');
+        const charnelPath = path.join(analyzedDir, 'analyzed_pricing_charnel.csv');
+        if (existsSync(charnelPath)) {
+            const content = readFileSync(charnelPath, 'utf-8');
             const rows = parse(content, { columns: true, skip_empty_lines: true });
             rows.forEach((r: any) => {
                 const id = r.ParkID;
-                if (!map.has(id)) map.set(id, {});
-                const entry = map.get(id)!;
-                entry.enshrinement = {
-                    min: parseInt(r.MinPrice) || 0,
-                    max: parseInt(r.MaxPrice) || 0,
-                    label: r.Label || ''
+                if (!map.has(id)) map.set(id, {} as any);
+                const entry = map.get(id)! as any;
+                entry.charnel = {
+                    minSingle: parseInt(r.MinSingle) || 0,
+                    minCouple: parseInt(r.MinCouple) || 0,
+                    minFamily: parseInt(r.MinFamily) || 0
                 };
             });
         }
-
-        // 3. Natural
-        const natPath = path.join(analyzedDir, 'analyzed_pricing_natural.csv');
-        if (existsSync(natPath)) {
-            const content = readFileSync(natPath, 'utf-8');
-            const rows = parse(content, { columns: true, skip_empty_lines: true });
-            rows.forEach((r: any) => {
-                const id = r.ParkID;
-                if (!map.has(id)) map.set(id, {});
-                const entry = map.get(id)!;
-                entry.natural = {
-                    joint: r.JointMinPrice ? parseInt(r.JointMinPrice) : undefined,
-                    individual: r.IndividualMinPrice ? parseInt(r.IndividualMinPrice) : undefined,
-                    couple: r.CoupleMinPrice ? parseInt(r.CoupleMinPrice) : undefined
-                };
-            });
-        }
-
-        // 4. Cemetery
-        const cemPath = path.join(analyzedDir, 'analyzed_pricing_cemetery.csv');
-        if (existsSync(cemPath)) {
-            const content = readFileSync(cemPath, 'utf-8');
-            const rows = parse(content, { columns: true, skip_empty_lines: true });
-            rows.forEach((r: any) => {
-                const id = r.ParkID;
-                if (!map.has(id)) map.set(id, {});
-                const entry = map.get(id)!;
-                entry.cemetery = {
-                    minLandFee: parseInt(r.MinLandFee) || 0
-                };
-            });
-        }
-
     } catch (e) {
         console.error('Error loading pricing CSVs:', e);
     }
@@ -111,79 +61,42 @@ async function loadPricingData(): Promise<Map<string, RepresentativePricing>> {
     return map;
 }
 
-// GET: 시설 목록 조회 (Supabase DB와 JSON 병합)
+// ==========================================
+// GET: 시설 목록 조회 (🔥 Supabase Only!)
+// ==========================================
 export async function GET() {
     try {
-        await ensureDataDir();
+        console.log('[API] Fetching facilities from Supabase Only...');
 
-        // Load Pricing Data Parallel
-        const [_, pricingMap] = await Promise.all([
-            ensureDataDir(),
-            loadPricingData()
-        ]);
-
-        console.log('Reading facilities file...');
-
-        let jsonData: any[] = [];
-        try {
-            const fileContent = await fs.readFile(DATA_FILE, 'utf-8');
-            jsonData = JSON.parse(fileContent);
-        } catch (error) {
-            console.error('Error reading file:', error);
-            // MOCK backup
-            jsonData = MOCK_FACILITIES;
-        }
-
-        // 1. Fetch from Supabase (HTTP Request, bypassing Port block)
-        // Fetch Facilities
-        // 1. Fetch from Supabase (Pagination to get ALL rows, bypass 1000 limit)
+        // 1. Supabase에서 모든 시설 가져오기 (페이지네이션)
         let facilitiesFromDb: any[] = [];
-        let supabaseAvailable = true;
+        let from = 0;
+        const PAGE_SIZE = 1000;
 
-        try {
-            let from = 0;
-            const PAGE_SIZE = 1000;
+        while (true) {
+            const { data, error } = await supabase
+                .from('Facility')
+                .select('*')
+                .order('id', { ascending: true })
+                .range(from, from + PAGE_SIZE - 1);
 
-            while (true) {
-                const { data, error: facError } = await supabase
-                    .from('Facility')
-                    .select('id, name, images')
-                    .order('id', { ascending: true })
-                    .range(from, from + PAGE_SIZE - 1);
-
-                if (facError) {
-                    console.error('Supabase Facility Fetch Error:', facError);
-                    supabaseAvailable = false;
-                    break;
-                }
-
-                if (data) {
-                    facilitiesFromDb.push(...data);
-                }
-
-                if (!data || data.length < PAGE_SIZE) {
-                    break;
-                }
-                from += PAGE_SIZE;
+            if (error) {
+                console.error('Supabase Fetch Error:', error);
+                throw new Error('Database connection failed');
             }
-        } catch (e) {
-            console.error('Supabase connection failed, using local JSON:', e);
-            supabaseAvailable = false;
+
+            if (data) facilitiesFromDb.push(...data);
+            if (!data || data.length < PAGE_SIZE) break;
+            from += PAGE_SIZE;
         }
 
+        console.log(`[API] Loaded ${facilitiesFromDb.length} facilities from Supabase`);
 
-
-        // 2. Fetch PriceCategories for counts
-        const { data: categories, error: catError } = await supabase
+        // 2. 가격 카테고리 개수 (hasDetailedPrices 용)
+        const { data: categories } = await supabase
             .from('PriceCategory')
             .select('facilityId');
 
-        if (catError) {
-            console.error('Supabase Category Fetch Error:', catError);
-            // Continue without counts? No, safer to throw or warn.
-        }
-
-        // Build Maps
         const categoryCountMap = new Map();
         if (categories) {
             categories.forEach((c: any) => {
@@ -191,235 +104,116 @@ export async function GET() {
             });
         }
 
-        const dbMap = new Map();
-        const nameMap = new Map(); // 이름으로 매칭 시도
+        // 3. 대표 가격 로드 (CSV)
+        const pricingMap = await loadPricingData();
 
-        (facilitiesFromDb || []).forEach((f: any) => {
-            const count = categoryCountMap.get(f.id) || 0;
-            const info = {
+        // 4. 데이터 변환 (DB 필드 → 프론트엔드 형식)
+        const liteData = facilitiesFromDb.map(f => {
+            // 이미지 파싱
+            let parsedImages: string[] = [];
+            if (f.images) {
+                try {
+                    parsedImages = typeof f.images === 'string' ? JSON.parse(f.images) : f.images;
+                } catch (e) { parsedImages = []; }
+            }
+
+            // pricing JSON 파싱
+            let parsedPriceInfo = null;
+            if (f.pricing) {
+                try {
+                    parsedPriceInfo = typeof f.pricing === 'string' ? JSON.parse(f.pricing) : f.pricing;
+                } catch (e) { parsedPriceInfo = null; }
+            }
+
+            return {
                 id: f.id,
-                hasDetailedPrices: count > 0,
-                images: f.images
+                name: f.name,
+                address: f.address || '',
+                coordinates: { lat: f.lat || 0, lng: f.lng || 0 },
+                category: f.category || 'OTHER',
+                priceRange: { min: f.minPrice || 0, max: f.maxPrice || 0 },
+                operatorType: f.operatorType,
+                hasParking: f.hasParking ?? false,
+                hasRestaurant: f.hasRestaurant ?? false,
+                hasStore: f.hasStore ?? false,
+                hasAccessibility: f.hasAccessibility ?? false,
+                isPublic: f.isPublic ?? false,
+                isActive: f.isActive ?? true,
+                hasDetailedPrices: (categoryCountMap.get(f.id) || 0) > 0,
+                images: parsedImages,
+                imageGallery: parsedImages,
+                priceInfo: parsedPriceInfo,
+                representativePricing: pricingMap.get(f.id),
+                reviewCount: f.reviewCount || 0,
+                rating: f.rating || 0,
+                phone: f.phone || '',
+                fax: f.fax || '',
+                capacity: f.capacity,
+                lastUpdated: f.lastUpdated,
+                website: f.websiteUrl || '',
+                viewCount: f.viewCount || 0,
+                description: f.description || '',
+                originalName: f.originalName,
             };
-            dbMap.set(f.id, info);
-
-            // 이름 매핑
-            if (f.name) {
-                const normName = f.name.normalize('NFC').replace(/\s+/g, '').trim();
-                const existingInfo = nameMap.get(normName);
-
-                let shouldReplace = false;
-                if (!existingInfo) {
-                    shouldReplace = true;
-                } else if (f.images && !existingInfo.images) {
-                    shouldReplace = true;
-                } else if (f.images && existingInfo.images) {
-                    const newHasLocal = f.images.includes('/images/');
-                    const oldHasLocal = existingInfo.images.includes('/images/');
-                    if (newHasLocal && !oldHasLocal) {
-                        shouldReplace = true;
-                    }
-                }
-
-                if (shouldReplace) {
-                    nameMap.set(normName, info);
-                }
-            }
         });
 
-        // 병합
-        const mergedData = jsonData.map(facility => {
-            // 1. ID로 매칭 시도
-            let dbInfo = dbMap.get(facility.id);
-
-            // 2. 이름 매칭 확인
-            if (facility.name) {
-                const normalizedKey = facility.name.normalize('NFC').replace(/\s+/g, '').trim();
-                const nameMatch = nameMap.get(normalizedKey);
-
-                // Case A: ID 매칭 실패 -> 이름 매칭 사용
-                if (!dbInfo && nameMatch) {
-                    dbInfo = nameMatch;
-                }
-                // Case B: 이름 매칭이 더 좋은 데이터(로컬 이미지)를 가진 경우
-                else if (dbInfo && nameMatch && nameMatch.id !== dbInfo.id) {
-                    const dbHasLocal = dbInfo.images && dbInfo.images.includes('/images/');
-                    const nameHasLocal = nameMatch.images && nameMatch.images.includes('/images/');
-
-                    if (!dbHasLocal && nameHasLocal) {
-                        dbInfo = nameMatch;
-                    }
-                }
-            }
-
-            if (dbInfo) {
-                // Parse images properly from DB (it's stored as JSON string)
-                let parsedImages: string[] = [];
-                if (dbInfo.images) {
-                    try {
-                        parsedImages = typeof dbInfo.images === 'string'
-                            ? JSON.parse(dbInfo.images)
-                            : (Array.isArray(dbInfo.images) ? dbInfo.images : []);
-                    } catch (e) {
-                        console.error('Failed to parse DB images for:', facility.name, e);
-                        parsedImages = []; // Default to empty on parse error
-                    }
-                } else {
-                    parsedImages = []; // Explicitly empty if dbInfo.images is null/undefined/empty
-                }
-
-                if (facility.id === 'park-0001') {
-                    console.log('🔍 [Debug park-0001] Merge Logic:');
-                    console.log('   - DB Has Detailed:', dbInfo.hasDetailedPrices);
-                    console.log('   - DB Images Raw:', dbInfo.images);
-                    console.log('   - Parsed DB Images Count:', parsedImages.length);
-                    console.log('   - Local JSON Images Count:', facility.images?.length);
-                    console.log('   - Local JSON Gallery Count:', facility.imageGallery?.length);
-                }
-                if (facility.id === 'park-0001') {
-                    console.log('🔍 [Debug] Comparing Counts - DB:', parsedImages.length, 'vs Local:', facility.images?.length);
-                }
-
-                if (facility.id === 'park-0001') {
-                    console.log('🔍 [Debug] Merging All Images - DB:', parsedImages.length, 'Local:', facility.images?.length);
-                }
-
-                // Strategy: UNION (Show Everything)
-                // User Request: "Just show all images added"
-                // We combine DB images and Local images, removing duplicates.
-                const dbImages = parsedImages || [];
-                const localImages = facility.images || [];
-
-                // Combine and deduplicate
-                const allImagesSet = new Set([...dbImages, ...localImages]);
-                const allImages = Array.from(allImagesSet);
-
-                const resultObj = {
-                    ...facility,
-                    _hasDetailedPrices: dbInfo.hasDetailedPrices,
-                    images: allImages,
-                    imageGallery: allImages,
-                    representativePricing: pricingMap.get(facility.id) // Attach Pricing Data
-                };
-
-                if (facility.id === 'park-0001') {
-                    (resultObj as any)._debug_info = {
-                        source_used: 'UNION',
-                        total_count: allImages.length,
-                        db_count: dbImages.length,
-                        local_count: localImages.length
-                    };
-                }
-
-                return resultObj;
-            }
-
-            // If not in DB, still attach pricing if exists
-            if (pricingMap.has(facility.id)) {
-                return {
-                    ...facility,
-                    representativePricing: pricingMap.get(facility.id)
-                };
-            }
-
-            return facility;
-        });
-
-        // Lite version for Map/List (Updated: Include Images for Admin/UI consistency)
-        const liteData = mergedData.map(f => ({
-            id: f.id,
-            name: f.name,
-            address: f.address,
-            coordinates: f.coordinates,
-            category: f.category,
-            priceRange: f.priceRange,
-            // Keep critical identifiers
-            operatorType: f.operatorType,
-            hasParking: f.hasParking,
-            hasRestaurant: f.hasRestaurant,
-            hasStore: f.hasStore,
-            hasAccessibility: f.hasAccessibility,
-            // Flags
-            isPublic: f.isPublic,
-            isActive: f.isActive,
-            hasDetailedPrices: f._hasDetailedPrices,
-
-            // FIX: Return FULL images/gallery so Admin UI doesn't see truncated data
-            images: f.images || [],
-            imageGallery: f.imageGallery || [], // Explicitly include gallery
-
-            // Light pricing
-            representativePricing: f.representativePricing,
-            // Stats
-            reviewCount: f.reviewCount,
-            rating: f.rating,
-
-            // New Fields (Requested by User)
-            phone: f.phone,
-            fax: f.fax,
-            capacity: f.capacity,
-            lastUpdated: f.lastUpdated,
-            website: f.website || f.websiteUrl, // Support both keys
-
-            // Debug info pass-through
-            _debug_info: (f as any)._debug_info
-        }));
-
-        console.log(`Returned ${liteData.length} facilities (Lite), ${dbMap.size} from DB`);
+        console.log(`[API] Returned ${liteData.length} facilities (Supabase Only)`);
         return NextResponse.json(liteData);
+
     } catch (e) {
         console.error('API Error:', e);
         return NextResponse.json({ error: 'Failed to load data', details: String(e) }, { status: 500 });
     }
 }
 
+// ==========================================
+// POST: 시설 저장 (🔥 Supabase Only!)
+// ==========================================
 export async function POST(req: Request) {
     try {
-        await ensureDataDir();
-        const body = await req.json();
+        const payloadRaw = await req.json();
+        const isBulk = Array.isArray(payloadRaw);
 
-        // CASE A: Single Item Update (Efficient)
-        // If body is an object and has 'id', treat as single update
-        if (!Array.isArray(body) && body.id) {
-            console.log(`[V1-API] Processing Single Item Update: ${body.name} (${body.id})`);
+        console.log('[API POST] Received:', isBulk ? `${payloadRaw.length} items (bulk)` : `Single item: ${payloadRaw.id}`);
 
-            // 1. Read existing file
-            let existingData = [];
-            // 1. Update Local JSON (Try-Back strategy)
-            try {
-                const fileData = await fs.readFile(DATA_FILE, 'utf-8');
-                const facilities = JSON.parse(fileData);
-                const index = facilities.findIndex((f: any) => f.id === body.id);
+        if (!isBulk) {
+            const f = payloadRaw;
 
-                if (index !== -1) {
-                    // isActive 필드 명시적으로 병합
-                    facilities[index] = {
-                        ...facilities[index],
-                        ...body,
-                        isActive: body.isActive !== undefined ? body.isActive : facilities[index].isActive
-                    };
-                    await fs.writeFile(DATA_FILE, JSON.stringify(facilities, null, 2), 'utf-8');
-                    console.log(`[V1-API] Updated facility: ${body.id}, isActive: ${body.isActive}`);
-                } else {
-                    // Add new if not exists
-                    facilities.unshift(body); // Prepend new item
-                    await fs.writeFile(DATA_FILE, JSON.stringify(facilities, null, 2), 'utf-8');
-                }
-            } catch (err) {
-                console.warn('[V1-API] Local JSON update failed (Read-Only FS?), proceeding to DB sync.', err);
+            if (!f.id) {
+                return NextResponse.json({ error: 'Missing facility ID' }, { status: 400 });
             }
 
-            // 4. Sync Single Item to DB
-            const f = body;
+            // 이미지 처리
             const imgSource = f.imageGallery || f.images || [];
             const imageStr = JSON.stringify(Array.isArray(imgSource) ? imgSource : []);
 
-            const dbRecord = {
+            // 🔥 priceTable에서 대표가격 계산
+            let minPrice = f.priceRange?.min || 0;
+            let maxPrice = f.priceRange?.max || 0;
+
+            if (f.priceInfo?.priceTable) {
+                let representativePrice = 0;
+                let max = 0;
+                Object.values(f.priceInfo.priceTable).forEach((cat: any) => {
+                    cat?.rows?.forEach((row: any) => {
+                        const price = typeof row.price === 'string'
+                            ? parseInt(row.price.replace(/,/g, ''))
+                            : row.price;
+                        if (row.isRepresentative && price > 0) representativePrice = price;
+                        if (price > max) max = price;
+                    });
+                });
+                if (representativePrice > 0) minPrice = representativePrice;
+                if (max > 0) maxPrice = max;
+            }
+
+            // DB Record 준비
+            const dbRecord: any = {
                 id: f.id,
                 name: f.name,
-                address: f.address || '',
+                address: f.address,
                 category: f.category || 'OTHER',
-                description: f.description || '',
+                description: f.description,
                 images: imageStr,
                 updatedAt: new Date().toISOString(),
                 rating: f.rating || 0,
@@ -429,33 +223,46 @@ export async function POST(req: Request) {
                 hasRestaurant: f.hasRestaurant ?? false,
                 hasStore: f.hasStore ?? false,
                 hasAccessibility: f.hasAccessibility ?? false,
-                lat: f.coordinates?.lat || 0,
-                lng: f.coordinates?.lng || 0,
-                minPrice: f.priceRange?.min || 0,
-                maxPrice: f.priceRange?.max || 0,
+                lat: f.coordinates?.lat,
+                lng: f.coordinates?.lng,
+                minPrice: minPrice,
+                maxPrice: maxPrice,
+                pricing: f.priceInfo?.priceTable ? JSON.stringify(f.priceInfo) : undefined,
+                phone: f.phone,
+                fax: f.fax,
+                capacity: f.capacity ?? undefined,
+                websiteUrl: f.website || f.websiteUrl,
+                isActive: f.isActive ?? true,
+                operatorType: f.operatorType,
+                originalName: f.originalName,
+                lastUpdated: f.lastUpdated,
             };
+
+            // undefined 필드 제거 (기존 DB값 유지)
+            Object.keys(dbRecord).forEach(key => {
+                if (dbRecord[key] === undefined) {
+                    delete dbRecord[key];
+                }
+            });
+
+            console.log('[API POST] Saving to Supabase:', f.id);
 
             const { error } = await supabase
                 .from('Facility')
                 .upsert(dbRecord, { onConflict: 'id' });
 
             if (error) {
-                console.error('[V1-API] DB Sync Error (Single):', error);
-                // Don't fail the whole request if DB sync fails, but warn
+                console.error('[API POST] DB Error:', error);
+                return NextResponse.json({ error: 'Database save failed', details: error.message }, { status: 500 });
             }
 
-            // 5. Sync Pricing Data if exists
+            // Pricing 동기화 (PriceCategory/PriceItem)
             if (f.priceInfo?.priceTable) {
-                console.log(`[V1-API] Syncing pricing data for ${f.id}...`);
+                console.log(`[API POST] Syncing pricing data for ${f.id}...`);
 
                 try {
-                    // Delete existing categories
-                    await supabase
-                        .from('PriceCategory')
-                        .delete()
-                        .eq('facilityId', f.id);
+                    await supabase.from('PriceCategory').delete().eq('facilityId', f.id);
 
-                    // Insert new categories and items
                     for (const [key, categoryData] of Object.entries(f.priceInfo.priceTable) as [string, any][]) {
                         const categoryId = randomUUID();
                         const { data: category, error: catError } = await supabase
@@ -470,10 +277,7 @@ export async function POST(req: Request) {
                             .select()
                             .single();
 
-                        if (catError || !category) {
-                            console.error('[V1-API] Price category insert error:', catError);
-                            continue;
-                        }
+                        if (catError || !category) continue;
 
                         if (categoryData.rows && categoryData.rows.length > 0) {
                             const items = categoryData.rows.map((row: any) => ({
@@ -488,87 +292,68 @@ export async function POST(req: Request) {
                                 isRepresentative: row.isRepresentative || false
                             }));
 
-                            const { error: itemError } = await supabase
-                                .from('PriceItem')
-                                .insert(items);
-
-                            if (itemError) {
-                                console.error('[V1-API] Price item insert error:', itemError);
-                            }
+                            await supabase.from('PriceItem').insert(items);
                         }
                     }
-                    console.log(`[V1-API] Pricing sync complete for ${f.id}`);
-                } catch (priceError) {
-                    console.error('[V1-API] Pricing sync failed:', priceError);
+                } catch (e) {
+                    console.error('Pricing sync error:', e);
                 }
             }
 
-            return NextResponse.json({ success: true, mode: 'single', id: body.id });
-        }
+            console.log(`✅ [API POST] Saved ${f.id} to Supabase`);
+            return NextResponse.json({ success: true, mode: 'single', id: f.id, source: 'supabase' });
 
-        // CASE B: Bulk Update (Legacy / Delete)
-        if (!Array.isArray(body)) {
-            return NextResponse.json({ error: 'Input must be an array or facility object' }, { status: 400 });
-        }
+        } else {
+            // Bulk Update
+            console.log('[API POST] Bulk update...');
 
-        // 1. Write to Local JSON File (Try-Catch for Read-Only Environments)
-        try {
-            await fs.writeFile(DATA_FILE, JSON.stringify(body, null, 2), 'utf-8');
-        } catch (fileErr) {
-            console.warn('[API] Failed to write local JSON (likely read-only fs). Continuing to DB sync.', fileErr);
-        }
+            const dbRecords = payloadRaw.map((f: any) => {
+                const imgSource = f.imageGallery || f.images || [];
+                const imageStr = JSON.stringify(Array.isArray(imgSource) ? imgSource : []);
 
-        // 2. Sync to Supabase DB (Bulk)
-        const dbRecords = body.map((f: any) => {
-            const imgSource = f.imageGallery || f.images || [];
-            const imageStr = JSON.stringify(Array.isArray(imgSource) ? imgSource : []);
+                return {
+                    id: f.id,
+                    name: f.name,
+                    address: f.address || '',
+                    category: f.category || 'OTHER',
+                    description: f.description || '',
+                    images: imageStr,
+                    updatedAt: new Date().toISOString(),
+                    rating: f.rating || 0,
+                    reviewCount: f.reviewCount || 0,
+                    isPublic: f.isPublic ?? false,
+                    hasParking: f.hasParking ?? false,
+                    hasRestaurant: f.hasRestaurant ?? false,
+                    hasStore: f.hasStore ?? false,
+                    hasAccessibility: f.hasAccessibility ?? false,
+                    lat: f.coordinates?.lat || 0,
+                    lng: f.coordinates?.lng || 0,
+                    minPrice: f.priceRange?.min || 0,
+                    maxPrice: f.priceRange?.max || 0,
+                    pricing: f.priceInfo?.priceTable ? JSON.stringify(f.priceInfo) : null,
+                    phone: f.phone || '',
+                    fax: f.fax || '',
+                    capacity: f.capacity ?? null,
+                    websiteUrl: f.website || f.websiteUrl || '',
+                    isActive: f.isActive ?? true,
+                };
+            });
 
-            return {
-                id: f.id,
-                name: f.name,
-                address: f.address || '',
-                category: f.category || 'OTHER',
-                description: f.description || '',
-                images: imageStr,
-                updatedAt: new Date().toISOString(),
-                rating: f.rating || 0,
-                reviewCount: f.reviewCount || 0,
-                isPublic: f.isPublic ?? false,
-                hasParking: f.hasParking ?? false,
-                hasRestaurant: f.hasRestaurant ?? false,
-                hasStore: f.hasStore ?? false,
-                hasAccessibility: f.hasAccessibility ?? false,
-                lat: f.coordinates?.lat || 0,
-                lng: f.coordinates?.lng || 0,
-                minPrice: f.priceRange?.min || 0,
-                maxPrice: f.priceRange?.max || 0,
-            };
-        });
-
-        // Bulk Upsert in chunks
-        const CHUNK_SIZE = 50;
-        let successCount = 0;
-
-        // Only verify DB sync if array is not HUGE (to prevent timeouts)
-        // If array is 1498, we might want to skip DB sync or do background?
-        // For now, keep logic but be aware.
-
-        for (let i = 0; i < dbRecords.length; i += CHUNK_SIZE) {
-            const chunk = dbRecords.slice(i, i + CHUNK_SIZE);
             const { error } = await supabase
                 .from('Facility')
-                .upsert(chunk, { onConflict: 'id' });
+                .upsert(dbRecords, { onConflict: 'id' });
 
-            if (!error) successCount += chunk.length;
+            if (error) {
+                console.error('[API POST] Bulk DB Error:', error);
+                return NextResponse.json({ error: 'Bulk save failed', details: error.message }, { status: 500 });
+            }
+
+            console.log(`✅ [API POST] Bulk saved ${dbRecords.length} items`);
+            return NextResponse.json({ success: true, mode: 'bulk', count: dbRecords.length, source: 'supabase' });
         }
 
-        console.log(`[Dual-Save] JSON Written + Synced ${successCount}/${dbRecords.length} to DB.`);
-
-        return NextResponse.json({ success: true, count: body.length, dbSynced: successCount });
-
     } catch (e) {
-        console.error('Save V1 Error:', e);
-        return NextResponse.json({ error: 'Failed to save', details: String(e) }, { status: 500 });
+        console.error('[API POST] Error:', e);
+        return NextResponse.json({ error: 'Internal error', details: String(e) }, { status: 500 });
     }
 }
-
