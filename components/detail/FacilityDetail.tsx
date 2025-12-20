@@ -553,7 +553,12 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
     }, []);
 
     // 갤러리 이미지 처리 (엄격한 필터링)
-    const galleryImages = (facility.imageGallery || [])
+    // 🔥 thumbnail이 있으면 imageGallery 폴백으로 사용 (즉시 표시)
+    let rawImages = facility.imageGallery || [];
+    if (rawImages.length === 0 && (facility as any).thumbnail) {
+        rawImages = [(facility as any).thumbnail];
+    }
+    const galleryImages = rawImages
         .filter(img => img && typeof img === 'string' && img.trim() !== '')
         .filter(img => img.startsWith('http') || img.startsWith('/') || img.startsWith('blob:') || img.startsWith('data:'));
 
