@@ -132,7 +132,8 @@ export default function FacilityCard({ facility, onClick }: FacilityCardProps) {
                 >
                     {/* Check for valid image URL first */}
                     {(() => {
-                        const rawImg = facility.imageUrl || (Array.isArray(facility.images) ? facility.images[0] : facility.images) || facility.imageGallery?.[0];
+                        // 🔥 thumbnail을 우선 체크 (초기 데이터)
+                        const rawImg = (facility as any).thumbnail || facility.imageUrl || (Array.isArray(facility.images) ? facility.images[0] : facility.images) || facility.imageGallery?.[0];
                         const validUrl = getFacilityImageUrl(rawImg);
 
                         if (validUrl) {
