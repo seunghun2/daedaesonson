@@ -125,13 +125,19 @@ export async function GET() {
                 } catch (e) { parsedPriceInfo = null; }
             }
 
+            // 가격 단위 통일: 10000 미만이면 만원 단위로 가정 → 원 단위로 변환
+            const normalizePrice = (p: number): number => {
+                if (!p || p <= 0) return 0;
+                return p < 10000 ? p * 10000 : p;  // 만원 → 원
+            };
+
             return {
                 id: f.id,
                 name: f.name,
                 address: f.address || '',
                 coordinates: { lat: f.lat || 0, lng: f.lng || 0 },
                 category: f.category || 'OTHER',
-                priceRange: { min: f.minPrice || 0, max: f.maxPrice || 0 },
+                priceRange: { min: normalizePrice(f.minPrice), max: normalizePrice(f.maxPrice) },
                 operatorType: f.operatorType,
                 hasParking: f.hasParking ?? false,
                 hasRestaurant: f.hasRestaurant ?? false,
