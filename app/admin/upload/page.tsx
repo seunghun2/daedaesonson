@@ -146,7 +146,7 @@ export default function AdminPage() {
     const [cropping, setCropping] = useState(false);
     const [useOcr] = useState(false); // Force OCR Checkbox -- MOVED HERE
 
-    const ITEMS_PER_PAGE = 100;
+    const [itemsPerPage, setItemsPerPage] = useState(100);
 
     // Load Data from API
     useEffect(() => {
@@ -209,11 +209,11 @@ export default function AdminPage() {
 
     // Pagination Logic
     const paginatedData = useMemo(() => {
-        const start = (activePage - 1) * ITEMS_PER_PAGE;
-        return filteredData.slice(start, start + ITEMS_PER_PAGE);
+        const start = (activePage - 1) * itemsPerPage;
+        return filteredData.slice(start, start + itemsPerPage);
     }, [filteredData, activePage]);
 
-    const totalPages = Math.ceil(filteredData.length / ITEMS_PER_PAGE);
+    const totalPages = Math.ceil(filteredData.length / itemsPerPage);
 
     // Handlers
     const handleEdit = async (facility: Facility) => {
@@ -1067,6 +1067,17 @@ export default function AdminPage() {
                     value={categoryFilter}
                     onChange={setCategoryFilter}
                 />
+                <Select
+                    placeholder="표시 개수"
+                    data={[
+                        { value: '10', label: '10개' },
+                        { value: '50', label: '50개' },
+                        { value: '100', label: '100개' },
+                    ]}
+                    value={String(itemsPerPage)}
+                    onChange={(val) => { setItemsPerPage(Number(val) || 100); setActivePage(1); }}
+                    style={{ width: 100 }}
+                />
             </Group>
 
             <Tabs defaultValue="facilities" mb="xl">
@@ -1101,7 +1112,7 @@ export default function AdminPage() {
                                     <Table.Tr key={item.id}>
                                         <Table.Td>
                                             <Text c="dimmed" size="sm">
-                                                {(activePage - 1) * ITEMS_PER_PAGE + index + 1}
+                                                {(activePage - 1) * itemsPerPage + index + 1}
                                             </Text>
                                         </Table.Td>
                                         <Table.Td>
