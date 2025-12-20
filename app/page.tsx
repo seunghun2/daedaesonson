@@ -1,15 +1,22 @@
 import { Suspense } from 'react';
-import fs from 'fs/promises';
-import path from 'path';
 import HomeClient from './HomeClient';
 import { Facility } from '@/types';
 
-// 서버에서 시설 데이터 미리 로드
+// 서버에서 시설 데이터 미리 로드 (Supabase API 사용)
 async function getFacilities(): Promise<Facility[]> {
   try {
-    const dataPath = path.join(process.cwd(), 'data', 'facilities.json');
-    const fileContent = await fs.readFile(dataPath, 'utf-8');
-    const facilities = JSON.parse(fileContent);
+    // 내부 API 호출 대신 직접 fetch (SSR에서 절대 URL 필요)
+    const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000';
+    const res = await fetch(`${baseUrl}/api/facilities`, {
+      cache: 'no-store', // 항상 최신 데이터
+    });
+
+    if (!res.ok) {
+      console.error('Failed to fetch facilities:', res.status);
+      return [];
+    }
+
+    const facilities = await res.json();
 
     // 장례식장, 화장시설 제외 + isActive=false 제외 + 0원 제외 + 필요한 필드만 추출 (경량화)
     return facilities
