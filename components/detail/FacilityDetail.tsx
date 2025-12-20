@@ -1332,192 +1332,240 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                         </Group>
                     </Box>
 
-                    {/* 이미지 영역 (스와이프 + 마우스 드래그 + 애니메이션) */}
+                    {/* 이미지 영역 - 인스타그램 스타일 무한 캐러셀 */}
                     <Box
                         pos="absolute"
                         top="50%"
-                        left="50%"
+                        left="0"
                         w="100%"
-                        maw="90vw"
-                        onClick={(e) => e.stopPropagation()} // 이미지 영역 클릭 시 닫히지 않게
+                        h="80vh"
+                        onClick={(e) => e.stopPropagation()}
                         style={{
-                            transform: 'translate(-50%, -50%)',
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            touchAction: 'pan-x',
+                            transform: 'translateY(-50%)',
                             overflow: 'hidden',
-                            cursor: 'grab',
+                            touchAction: 'pan-x',
                         }}
-                        // 📱 터치 이벤트 (모바일)
                         onTouchStart={(e) => {
                             const touch = e.touches[0];
                             (e.currentTarget as any).startX = touch.clientX;
-                            (e.currentTarget as any).currentX = touch.clientX;
+                            (e.currentTarget as any).startTime = Date.now();
+                            (e.currentTarget as any).offsetX = 0;
                         }}
                         onTouchMove={(e) => {
+                            if (isAnimating) return;
                             const touch = e.touches[0];
-                            (e.currentTarget as any).currentX = touch.clientX;
-                            const diff = (e.currentTarget as any).startX - touch.clientX;
-                            const imgEl = e.currentTarget.querySelector('img');
-                            if (imgEl) {
-                                imgEl.style.transform = `translateX(${-diff * 0.3}px)`;
+                            const diff = touch.clientX - (e.currentTarget as any).startX;
+                            (e.currentTarget as any).offsetX = diff;
+                            const container = e.currentTarget.querySelector('[data-carousel]') as HTMLElement;
+                            if (container) {
+                                // +1 for cloned first image at start
+                                const baseOffset = -(selectedImageIndex + 1) * 100;
+                                const dragPercent = (diff / window.innerWidth) * 100;
+                                container.style.transition = 'none';
+                                container.style.transform = `translateX(${baseOffset + dragPercent}%)`;
                             }
                         }}
                         onTouchEnd={(e) => {
-                            // 🔒 애니메이션 중이면 무시
                             if (isAnimating) return;
+                            const offsetX = (e.currentTarget as any).offsetX || 0;
+                            const velocity = Math.abs(offsetX) / (Date.now() - (e.currentTarget as any).startTime);
+                            const threshold = velocity > 0.3 ? 30 : 80;
 
-                            const startX = (e.currentTarget as any).startX || 0;
-                            const endX = e.changedTouches[0].clientX;
-                            const diff = startX - endX;
-                            const imgEl = e.currentTarget.querySelector('img');
+                            const container = e.currentTarget.querySelector('[data-carousel]') as HTMLElement;
 
-                            // 이미지가 1개면 무시
-                            if (galleryImages.length <= 1) {
-                                if (imgEl) {
-                                    imgEl.style.transition = 'transform 0.2s ease-out';
-                                    imgEl.style.transform = 'translateX(0)';
+                            if (Math.abs(offsetX) > threshold && galleryImages.length > 1) {
+                                setIsAnimating(true);
+
+                                let nextIndex = selectedImageIndex;
+                                if (offsetX < 0) {
+                                    nextIndex = selectedImageIndex + 1;
+                                } else {
+                                    nextIndex = selectedImageIndex - 1;
                                 }
-                                return;
-                            }
 
-                            if (Math.abs(diff) > 50) {
-                                setIsAnimating(true); // 🔒 애니메이션 시작
-
-                                // 현재 이미지가 나가는 방향 (스와이프 방향으로)
-                                const direction = diff > 0 ? -100 : 100;
-                                if (imgEl) {
-                                    imgEl.style.transition = 'transform 0.2s ease-out, opacity 0.2s ease-out';
-                                    imgEl.style.transform = `translateX(${direction}%)`;
-                                    imgEl.style.opacity = '0';
+                                // Animate to the virtual position
+                                if (container) {
+                                    container.style.transition = 'transform 0.3s ease-out';
+                                    container.style.transform = `translateX(${-(nextIndex + 1) * 100}%)`;
                                 }
 
                                 setTimeout(() => {
-                                    // 인덱스 업데이트 (순환 포함)
-                                    if (diff > 0) {
-                                        setSelectedImageIndex(prev => prev < galleryImages.length - 1 ? prev + 1 : 0);
-                                    } else {
-                                        setSelectedImageIndex(prev => prev > 0 ? prev - 1 : galleryImages.length - 1);
+                                    // Handle wrap-around
+                                    let realIndex = nextIndex;
+                                    if (nextIndex >= galleryImages.length) {
+                                        realIndex = 0;
+                                    } else if (nextIndex < 0) {
+                                        realIndex = galleryImages.length - 1;
                                     }
-                                    if (imgEl) {
-                                        // 새 이미지가 반대편에서 들어옴 (방향 반대)
-                                        imgEl.style.transition = 'none';
-                                        imgEl.style.transform = `translateX(${-direction}%)`;
-                                        imgEl.style.opacity = '0';
-                                        requestAnimationFrame(() => {
-                                            imgEl.style.transition = 'transform 0.2s ease-out, opacity 0.2s ease-out';
-                                            imgEl.style.transform = 'translateX(0)';
-                                            imgEl.style.opacity = '1';
-                                        });
+
+                                    // Instantly jump to real position without animation
+                                    if (realIndex !== nextIndex && container) {
+                                        container.style.transition = 'none';
+                                        container.style.transform = `translateX(${-(realIndex + 1) * 100}%)`;
                                     }
-                                    // 🔒 애니메이션 완료 후 해제
-                                    setTimeout(() => setIsAnimating(false), 250);
-                                }, 80);
+
+                                    setSelectedImageIndex(realIndex);
+                                    setTimeout(() => setIsAnimating(false), 50);
+                                }, 300);
                             } else {
-                                if (imgEl) {
-                                    imgEl.style.transition = 'transform 0.2s ease-out';
-                                    imgEl.style.transform = 'translateX(0)';
+                                if (container) {
+                                    container.style.transition = 'transform 0.3s ease-out';
+                                    container.style.transform = `translateX(${-(selectedImageIndex + 1) * 100}%)`;
                                 }
                             }
                         }}
-                        // 🖱️ 마우스 드래그 이벤트 (PC)
                         onMouseDown={(e) => {
                             e.preventDefault();
                             (e.currentTarget as any).isDragging = true;
                             (e.currentTarget as any).startX = e.clientX;
-                            (e.currentTarget as any).style.cursor = 'grabbing';
+                            (e.currentTarget as any).startTime = Date.now();
+                            (e.currentTarget as any).offsetX = 0;
                         }}
                         onMouseMove={(e) => {
-                            if (!(e.currentTarget as any).isDragging) return;
-                            const diff = (e.currentTarget as any).startX - e.clientX;
-                            const imgEl = e.currentTarget.querySelector('img');
-                            if (imgEl) {
-                                imgEl.style.transform = `translateX(${-diff * 0.3}px)`;
+                            if (!(e.currentTarget as any).isDragging || isAnimating) return;
+                            const diff = e.clientX - (e.currentTarget as any).startX;
+                            (e.currentTarget as any).offsetX = diff;
+                            const container = e.currentTarget.querySelector('[data-carousel]') as HTMLElement;
+                            if (container) {
+                                const baseOffset = -(selectedImageIndex + 1) * 100;
+                                const dragPercent = (diff / window.innerWidth) * 100;
+                                container.style.transition = 'none';
+                                container.style.transform = `translateX(${baseOffset + dragPercent}%)`;
                             }
                         }}
                         onMouseUp={(e) => {
                             if (!(e.currentTarget as any).isDragging) return;
                             (e.currentTarget as any).isDragging = false;
-                            (e.currentTarget as any).style.cursor = 'grab';
-
-                            // 🔒 애니메이션 중이면 무시
                             if (isAnimating) return;
 
-                            const startX = (e.currentTarget as any).startX || 0;
-                            const diff = startX - e.clientX;
-                            const imgEl = e.currentTarget.querySelector('img');
+                            const offsetX = (e.currentTarget as any).offsetX || 0;
+                            const velocity = Math.abs(offsetX) / (Date.now() - (e.currentTarget as any).startTime);
+                            const threshold = velocity > 0.3 ? 30 : 80;
 
-                            // 이미지가 1개면 무시
-                            if (galleryImages.length <= 1) {
-                                if (imgEl) {
-                                    imgEl.style.transition = 'transform 0.2s ease-out';
-                                    imgEl.style.transform = 'translateX(0)';
+                            const container = e.currentTarget.querySelector('[data-carousel]') as HTMLElement;
+
+                            if (Math.abs(offsetX) > threshold && galleryImages.length > 1) {
+                                setIsAnimating(true);
+
+                                let nextIndex = selectedImageIndex;
+                                if (offsetX < 0) {
+                                    nextIndex = selectedImageIndex + 1;
+                                } else {
+                                    nextIndex = selectedImageIndex - 1;
                                 }
-                                return;
-                            }
 
-                            if (Math.abs(diff) > 50) {
-                                setIsAnimating(true); // 🔒 애니메이션 시작
-
-                                const direction = diff > 0 ? -100 : 100;
-                                if (imgEl) {
-                                    imgEl.style.transition = 'transform 0.2s ease-out, opacity 0.2s ease-out';
-                                    imgEl.style.transform = `translateX(${direction}%)`;
-                                    imgEl.style.opacity = '0';
+                                if (container) {
+                                    container.style.transition = 'transform 0.3s ease-out';
+                                    container.style.transform = `translateX(${-(nextIndex + 1) * 100}%)`;
                                 }
 
                                 setTimeout(() => {
-                                    if (diff > 0) {
-                                        setSelectedImageIndex(prev => prev < galleryImages.length - 1 ? prev + 1 : 0);
-                                    } else {
-                                        setSelectedImageIndex(prev => prev > 0 ? prev - 1 : galleryImages.length - 1);
+                                    let realIndex = nextIndex;
+                                    if (nextIndex >= galleryImages.length) {
+                                        realIndex = 0;
+                                    } else if (nextIndex < 0) {
+                                        realIndex = galleryImages.length - 1;
                                     }
-                                    if (imgEl) {
-                                        // 새 이미지가 반대편에서 들어옴
-                                        imgEl.style.transition = 'none';
-                                        imgEl.style.transform = `translateX(${-direction}%)`;
-                                        imgEl.style.opacity = '0';
-                                        requestAnimationFrame(() => {
-                                            imgEl.style.transition = 'transform 0.2s ease-out, opacity 0.2s ease-out';
-                                            imgEl.style.transform = 'translateX(0)';
-                                            imgEl.style.opacity = '1';
-                                        });
+
+                                    if (realIndex !== nextIndex && container) {
+                                        container.style.transition = 'none';
+                                        container.style.transform = `translateX(${-(realIndex + 1) * 100}%)`;
                                     }
-                                    // 🔒 애니메이션 완료 후 해제
-                                    setTimeout(() => setIsAnimating(false), 250);
-                                }, 80);
+
+                                    setSelectedImageIndex(realIndex);
+                                    setTimeout(() => setIsAnimating(false), 50);
+                                }, 300);
                             } else {
-                                if (imgEl) {
-                                    imgEl.style.transition = 'transform 0.2s ease-out';
-                                    imgEl.style.transform = 'translateX(0)';
+                                if (container) {
+                                    container.style.transition = 'transform 0.3s ease-out';
+                                    container.style.transform = `translateX(${-(selectedImageIndex + 1) * 100}%)`;
                                 }
                             }
                         }}
                         onMouseLeave={(e) => {
                             if ((e.currentTarget as any).isDragging) {
                                 (e.currentTarget as any).isDragging = false;
-                                (e.currentTarget as any).style.cursor = 'grab';
-                                const imgEl = e.currentTarget.querySelector('img');
-                                if (imgEl) {
-                                    imgEl.style.transition = 'transform 0.2s ease-out';
-                                    imgEl.style.transform = 'translateX(0)';
+                                const container = e.currentTarget.querySelector('[data-carousel]') as HTMLElement;
+                                if (container) {
+                                    container.style.transition = 'transform 0.3s ease-out';
+                                    container.style.transform = `translateX(${-(selectedImageIndex + 1) * 100}%)`;
                                 }
                             }
                         }}
                     >
-                        <Image
-                            key={`gallery-img-${selectedImageIndex}`}
-                            src={getSingleFacilityImageUrl(galleryImages[selectedImageIndex])}
-                            fit="contain"
-                            h="80vh"
-                            w="100%"
-                            alt={`${facility.name} 사진 ${selectedImageIndex + 1}`}
+                        {/* 무한 캐러셀 컨테이너 - [마지막복제, ...원본들, 첫번째복제] */}
+                        <Box
+                            data-carousel
                             style={{
-                                transition: 'transform 0.25s ease-out, opacity 0.25s ease-out',
-                                pointerEvents: 'none', // 이미지 드래그 방지
+                                display: 'flex',
+                                height: '100%',
+                                transform: `translateX(${-(selectedImageIndex + 1) * 100}%)`,
+                                transition: 'transform 0.3s ease-out',
                             }}
-                        />
+                        >
+                            {/* 마지막 이미지 복제 (맨 앞) */}
+                            <Box
+                                style={{
+                                    minWidth: '100%',
+                                    height: '100%',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                }}
+                            >
+                                <Image
+                                    src={getSingleFacilityImageUrl(galleryImages[galleryImages.length - 1])}
+                                    fit="contain"
+                                    h="100%"
+                                    w="100%"
+                                    alt={`${facility.name} 사진 (복제)`}
+                                    style={{ pointerEvents: 'none' }}
+                                />
+                            </Box>
+
+                            {/* 원본 이미지들 */}
+                            {galleryImages.map((img, idx) => (
+                                <Box
+                                    key={idx}
+                                    style={{
+                                        minWidth: '100%',
+                                        height: '100%',
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        justifyContent: 'center',
+                                    }}
+                                >
+                                    <Image
+                                        src={getSingleFacilityImageUrl(img)}
+                                        fit="contain"
+                                        h="100%"
+                                        w="100%"
+                                        alt={`${facility.name} 사진 ${idx + 1}`}
+                                        style={{ pointerEvents: 'none' }}
+                                    />
+                                </Box>
+                            ))}
+
+                            {/* 첫번째 이미지 복제 (맨 뒤) */}
+                            <Box
+                                style={{
+                                    minWidth: '100%',
+                                    height: '100%',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                }}
+                            >
+                                <Image
+                                    src={getSingleFacilityImageUrl(galleryImages[0])}
+                                    fit="contain"
+                                    h="100%"
+                                    w="100%"
+                                    alt={`${facility.name} 사진 (복제)`}
+                                    style={{ pointerEvents: 'none' }}
+                                />
+                            </Box>
+                        </Box>
                     </Box>
 
                     {/* 하단 dot indicator (PC만) */}
