@@ -788,8 +788,8 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
 
                 // Fallback: Use priceRange.min if no representative price found
                 if (displayPriceNum === 0) {
-                    // priceRange.min은 만원 단위로 저장됨
-                    displayPriceNum = facility.priceRange?.min || 0;
+                    // priceRange.min은 이제 원 단위 - 만원으로 변환
+                    displayPriceNum = facility.priceRange?.min ? Math.round(facility.priceRange.min / 10000) : 0;
                 }
 
                 // Fallback attempt with legacy representativePricing if not found in pricing
@@ -1260,7 +1260,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                                 </Box>
                                                 {rec.priceRange?.min && rec.priceRange.min > 0 && (
                                                     <Text size="sm" fw={600} c="dark.6" style={{ flexShrink: 0 }}>
-                                                        {formatKoreanCurrency(rec.priceRange.min * 10000)}부터
+                                                        {formatKoreanCurrency(rec.priceRange.min)}부터
                                                     </Text>
                                                 )}
                                             </Group>

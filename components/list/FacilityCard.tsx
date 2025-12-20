@@ -103,7 +103,7 @@ export default function FacilityCard({ facility, onClick }: FacilityCardProps) {
 
     // Fallback to legacy priceRange if no representative price found (or it was 0)
     if (displayPrice === '가격문의' && facility.priceRange?.min) {
-        displayPrice = formatKoreanCurrency(facility.priceRange.min * 10000);
+        displayPrice = formatKoreanCurrency(facility.priceRange.min);
     }
 
     // Flag for showing '~' (from)

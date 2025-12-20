@@ -751,11 +751,12 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
             }
 
             if (!isRep && fac.priceRange?.min) {
-                formattedPrice = fac.priceRange.min;
+                // priceRange.min은 이제 원 단위 - 만원으로 변환
+                formattedPrice = Math.round(fac.priceRange.min / 10000);
             }
 
             if (formattedPrice > 0) {
-                // priceRange.min은 만원 단위로 저장됨
+                // 만원 단위로 표시
                 priceText = `${formattedPrice.toLocaleString()}만`;
             }
 
