@@ -1215,16 +1215,24 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                             <Text size="sm" fw={700} mb="md">주변 시설</Text>
                             <Stack gap="xs">
                                 {recommendations.map(rec => {
-                                    const thumbUrl = rec.imageGallery?.[0]
-                                        ? getSingleFacilityImageUrl(rec.imageGallery[0])
-                                        : '/logo-horizontal.svg';
+                                    // 🔥 썸네일 우선순위: thumbnail > imageGallery[0] > 로고
+                                    const hasImage = rec.thumbnail || rec.imageGallery?.[0];
+                                    const thumbUrl = rec.thumbnail
+                                        ? rec.thumbnail
+                                        : rec.imageGallery?.[0]
+                                            ? getSingleFacilityImageUrl(rec.imageGallery[0])
+                                            : '/logo-horizontal.svg';
                                     return (
                                         <Box
                                             key={rec.id}
                                             p="sm"
                                             bg="gray.0"
                                             style={{ borderRadius: 8, cursor: 'pointer' }}
-                                            onClick={() => onSelectFacility?.(rec.id)}
+                                            onClick={() => {
+                                                onSelectFacility?.(rec.id);
+                                                // 🔥 상세 페이지 맨 위로 스크롤
+                                                window.scrollTo({ top: 0, behavior: 'instant' });
+                                            }}
                                         >
                                             <Group wrap="nowrap" gap="sm">
                                                 <Box
@@ -1244,10 +1252,10 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                                         src={thumbUrl}
                                                         alt={rec.name}
                                                         style={{
-                                                            width: rec.imageGallery?.[0] ? '100%' : 32,
-                                                            height: rec.imageGallery?.[0] ? '100%' : 16,
+                                                            width: hasImage ? '100%' : 32,
+                                                            height: hasImage ? '100%' : 16,
                                                             objectFit: 'cover',
-                                                            opacity: rec.imageGallery?.[0] ? 1 : 0.3,
+                                                            opacity: hasImage ? 1 : 0.3,
                                                         }}
                                                     />
                                                 </Box>
