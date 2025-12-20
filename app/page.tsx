@@ -1,33 +1,52 @@
 import { Suspense } from 'react';
+import { createClient } from '@supabase/supabase-js';
 import HomeClient from './HomeClient';
 import { Facility } from '@/types';
 
-// 서버에서 시설 데이터 미리 로드 (Supabase API 사용)
+const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://jbydmhfuqnpukfutvrgs.supabase.co';
+const SUPABASE_SERVICE_KEY = process.env.SUPABASE_SERVICE_KEY || 'sb_secret_CDAM3cyG1RBEmjvSIaHOPA_If4LP8u3';
+
+// 서버에서 시설 데이터 미리 로드 (Supabase 직접 호출)
 async function getFacilities(): Promise<Facility[]> {
   try {
-    // 내부 API 호출 대신 직접 fetch (SSR에서 절대 URL 필요)
-    const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000';
-    const res = await fetch(`${baseUrl}/api/facilities`, {
-      cache: 'no-store', // 항상 최신 데이터
+    const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_KEY, {
+      auth: { persistSession: false }
     });
 
-    if (!res.ok) {
-      console.error('Failed to fetch facilities:', res.status);
-      return [];
+    // 페이지네이션으로 전체 데이터 로드
+    let allFacilities: any[] = [];
+    let from = 0;
+    const PAGE_SIZE = 1000;
+
+    while (true) {
+      const { data, error } = await supabase
+        .from('Facility')
+        .select('id, name, address, coordinates, category, priceRange, operatorType, hasParking, hasRestaurant, hasStore, hasAccessibility, isPublic, isActive, images, imageGallery, reviewCount, rating, phone, fax, capacity, lastUpdated, websiteUrl, pricing, priceInfo, description, minPrice, maxPrice')
+        .order('id', { ascending: true })
+        .range(from, from + PAGE_SIZE - 1);
+
+      if (error) {
+        console.error('Supabase error:', error);
+        break;
+      }
+
+      if (!data || data.length === 0) break;
+      allFacilities = allFacilities.concat(data);
+
+      if (data.length < PAGE_SIZE) break;
+      from += PAGE_SIZE;
     }
 
-    const facilities = await res.json();
-
-    // 장례식장, 화장시설 제외 + isActive=false 제외 + 0원 제외 + 필요한 필드만 추출 (경량화)
-    return facilities
-      .filter((f: any) => f.category !== 'FUNERAL_HOME' && f.category !== 'CREMATORIUM' && f.isActive !== false && (f.priceRange?.min > 0))
+    // 장례식장, 화장시설 제외 + isActive=false 제외 + 0원 제외 + 경량화
+    return allFacilities
+      .filter((f: any) => f.category !== 'FUNERAL_HOME' && f.category !== 'CREMATORIUM' && f.isActive !== false && (f.minPrice > 0 || f.priceRange?.min > 0))
       .map((f: any) => ({
         id: f.id,
         name: f.name,
         address: f.address,
         coordinates: f.coordinates,
         category: f.category,
-        priceRange: f.priceRange,
+        priceRange: f.priceRange || { min: f.minPrice, max: f.maxPrice },
         operatorType: f.operatorType,
         hasParking: f.hasParking,
         hasRestaurant: f.hasRestaurant,
@@ -42,9 +61,9 @@ async function getFacilities(): Promise<Facility[]> {
         fax: f.fax,
         capacity: f.capacity,
         lastUpdated: f.lastUpdated,
-        website: f.website || f.websiteUrl,
-        pricing: f.pricing,
-        priceInfo: f.priceInfo,
+        website: f.websiteUrl,
+        pricing: typeof f.pricing === 'string' ? JSON.parse(f.pricing) : f.pricing,
+        priceInfo: typeof f.priceInfo === 'string' ? JSON.parse(f.priceInfo) : f.priceInfo,
         description: f.description || '',
       }));
   } catch (error) {
