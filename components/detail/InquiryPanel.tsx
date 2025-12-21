@@ -246,62 +246,77 @@ export default function InquiryPanel({ facility, isOpen, onClose }: InquiryPanel
                                 const showContent = !inquiry.isPrivate || isUnlocked;
 
                                 return (
-                                    <Paper key={inquiry.id} p="md" radius="md" bg="white" withBorder style={{ borderColor: '#f1f3f5' }}>
-                                        {/* 제목 + 상태 */}
-                                        <Group justify="space-between" mb="xs">
-                                            <Group gap="xs">
-                                                {inquiry.isPrivate && !isUnlocked ? (
-                                                    <Lock size={14} color="#868e96" />
-                                                ) : inquiry.isPrivate ? (
-                                                    <Unlock size={14} color="#40c057" />
-                                                ) : null}
-                                                <Text fw={600}>{inquiry.title}</Text>
-                                            </Group>
+                                    <Box
+                                        key={inquiry.id}
+                                        py="sm"
+                                        style={{
+                                            borderBottom: '1px solid #f1f3f5',
+                                            cursor: showContent ? 'default' : 'pointer'
+                                        }}
+                                        onClick={() => !showContent && handleUnlock(inquiry)}
+                                    >
+                                        {/* 카테고리 + 날짜 */}
+                                        <Group justify="space-between" mb={4}>
+                                            <Text size="xs" c="brand" fw={500}>
+                                                {(inquiry as any).type === 'price' ? '가격 문의' :
+                                                    (inquiry as any).type === 'reservation' ? '예약/절차' :
+                                                        (inquiry as any).type === 'facility' ? '시설' : '기타'}
+                                            </Text>
                                             <Text size="xs" c="dimmed">
-                                                {new Date(inquiry.createdAt).toLocaleDateString('ko-KR')}
+                                                {new Date(inquiry.createdAt).toLocaleDateString('ko-KR', { year: '2-digit', month: 'numeric', day: 'numeric' })}
                                             </Text>
                                         </Group>
 
-                                        {/* 내용 */}
-                                        {showContent ? (
-                                            <>
-                                                <Text size="sm" mb="sm" style={{ whiteSpace: 'pre-wrap' }}>
-                                                    {inquiry.content}
-                                                </Text>
+                                        {/* 자물쇠 + 제목 */}
+                                        <Group gap={6} mb={4}>
+                                            {inquiry.isPrivate && (
+                                                <Lock size={14} color={isUnlocked ? '#40c057' : '#adb5bd'} />
+                                            )}
+                                            <Text size="sm" fw={500} c="dark">{inquiry.title}</Text>
+                                            {inquiry.replies && inquiry.replies.length > 0 && (
+                                                <Box px={6} py={2} bg="brand.0" style={{ borderRadius: 4 }}>
+                                                    <Text size="xs" c="brand" fw={500}>답변완료</Text>
+                                                </Box>
+                                            )}
+                                        </Group>
 
-                                                {/* 잠금 해제된 경우 수정/삭제 버튼 */}
-                                                {isUnlocked && (
-                                                    <Group gap="xs" mt="sm">
-                                                        <Button size="xs" variant="subtle" color="red" onClick={() => handleDelete(inquiry)}>
-                                                            삭제
-                                                        </Button>
-                                                    </Group>
-                                                )}
+                                        {/* 내용 (비공개면 블러) */}
+                                        <Text
+                                            size="xs"
+                                            c="dimmed"
+                                            lineClamp={3}
+                                            style={{
+                                                whiteSpace: 'pre-wrap',
+                                                ...(inquiry.isPrivate && !isUnlocked ? {
+                                                    filter: 'blur(4px)',
+                                                    userSelect: 'none'
+                                                } : {})
+                                            }}
+                                        >
+                                            {inquiry.content || '문의 내용'}
+                                        </Text>
 
-                                                {/* 관리자 답변 */}
-                                                {inquiry.replies?.map(reply => (
-                                                    <Box key={reply.id} bg="gray.1" p="sm" mt="sm" style={{ borderRadius: 'var(--mantine-radius-md)' }}>
-                                                        <Group gap="xs" mb={4}>
-                                                            <MessageCircle size={12} />
-                                                            <Text size="xs" fw={600}>{reply.author}</Text>
-                                                            <Text size="xs" c="dimmed">{new Date(reply.createdAt).toLocaleDateString('ko-KR')}</Text>
-                                                        </Group>
-                                                        <Text size="sm">{reply.content}</Text>
-                                                    </Box>
-                                                ))}
-                                            </>
-                                        ) : (
-                                            <Group
-                                                gap="xs"
-                                                c="dimmed"
-                                                style={{ cursor: 'pointer' }}
-                                                onClick={() => handleUnlock(inquiry)}
-                                            >
-                                                <Lock size={14} />
-                                                <Text size="sm">비공개 내용입니다.</Text>
+                                        {/* 잠금 해제 시 삭제 버튼 */}
+                                        {isUnlocked && (
+                                            <Group gap="xs" mt="sm">
+                                                <Button size="xs" variant="subtle" color="red" onClick={(e) => { e.stopPropagation(); handleDelete(inquiry); }}>
+                                                    삭제
+                                                </Button>
                                             </Group>
                                         )}
-                                    </Paper>
+
+                                        {/* 관리자 답변 */}
+                                        {showContent && inquiry.replies?.map(reply => (
+                                            <Box key={reply.id} bg="gray.1" p="sm" mt="sm" style={{ borderRadius: 'var(--mantine-radius-md)' }}>
+                                                <Group gap="xs" mb={4}>
+                                                    <MessageCircle size={12} />
+                                                    <Text size="xs" fw={600}>{reply.author}</Text>
+                                                    <Text size="xs" c="dimmed">{new Date(reply.createdAt).toLocaleDateString('ko-KR')}</Text>
+                                                </Group>
+                                                <Text size="sm">{reply.content}</Text>
+                                            </Box>
+                                        ))}
+                                    </Box>
                                 );
                             })}
                         </Stack>
