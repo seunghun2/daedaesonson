@@ -213,7 +213,8 @@ export default function InquiryPanel({ facility, isOpen, onClose, allFacilities 
                     content: {
                         width: '100%',
                         maxWidth: '400px',
-                        marginLeft: 'min(400px, 100vw)', // 시설 상세 패널 옆에 위치
+                        // PC에서만 시설 상세 옆에, 모바일은 전체화면
+                        marginLeft: 'clamp(0px, calc(100vw - 400px), 400px)',
                         boxShadow: '2px 0 10px rgba(0,0,0,0.1)'
                     },
                     header: { display: 'none' },
