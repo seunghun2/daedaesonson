@@ -1,6 +1,6 @@
 'use client';
 
-import { Box, Text, Group, Stack, Button, ScrollArea, Loader, Modal, PinInput } from '@mantine/core';
+import { Box, Text, Group, Stack, Button, ScrollArea, Loader, Modal, TextInput } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { ChevronLeft, Lock, Unlock } from 'lucide-react';
 import { useState, useEffect } from 'react';
@@ -215,14 +215,31 @@ export default function InquiriesPage() {
                         작성 시 입력한 연락처 뒷자리 4자리를 입력해주세요.
                     </Text>
 
-                    <PinInput
-                        length={4}
-                        type="number"
+                    <TextInput
                         value={pinValue}
-                        onChange={setPinValue}
-                        error={pinError}
-                        onComplete={verifyPassword}
+                        onChange={(e) => {
+                            const val = e.currentTarget.value.replace(/\D/g, '').slice(0, 4);
+                            setPinValue(val);
+                        }}
+                        placeholder="0 0 0 0"
+                        maxLength={4}
                         size="lg"
+                        radius="xl"
+                        w="100%"
+                        styles={{
+                            input: {
+                                textAlign: 'center',
+                                letterSpacing: '12px',
+                                fontSize: '20px',
+                                fontWeight: 500,
+                                backgroundColor: '#f8f9fa',
+                                border: '1px solid #e9ecef',
+                                '&::placeholder': {
+                                    letterSpacing: '12px'
+                                }
+                            }
+                        }}
+                        error={pinError}
                     />
 
                     {pinError && <Text size="xs" c="red">비밀번호가 일치하지 않습니다.</Text>}
