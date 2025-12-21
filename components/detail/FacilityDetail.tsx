@@ -1188,20 +1188,26 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                 }}
                                 onClick={() => handleInquiryClick(inquiry)}
                             >
+                                {/* 문의 종류 + 날짜 */}
                                 <Group justify="space-between" mb={4}>
-                                    <Group gap={6}>
-                                        {inquiry.isPrivate && (
-                                            <span className="material-symbols-outlined" style={{ fontSize: 14, color: '#adb5bd' }}>lock</span>
-                                        )}
-                                        <Text size="sm" fw={500} c="dark">{inquiry.title}</Text>
-                                        {inquiry.replies && inquiry.replies.length > 0 && (
-                                            <Badge size="xs" variant="light" color="brand">답변완료</Badge>
-                                        )}
-                                    </Group>
+                                    <Text size="xs" c="brand" fw={500}>
+                                        {INQUIRY_TYPES.find(t => t.value === inquiry.type)?.label || '문의'}
+                                    </Text>
                                     <Text size="xs" c="dimmed">
                                         {new Date(inquiry.createdAt).toLocaleDateString('ko-KR', { month: 'numeric', day: 'numeric' })}
                                     </Text>
                                 </Group>
+                                {/* 제목 줄 */}
+                                <Group gap={6} mb={4}>
+                                    {inquiry.isPrivate && (
+                                        <span className="material-symbols-outlined" style={{ fontSize: 14, color: '#adb5bd' }}>lock</span>
+                                    )}
+                                    <Text size="sm" fw={500} c="dark">{inquiry.title}</Text>
+                                    {inquiry.replies && inquiry.replies.length > 0 && (
+                                        <Badge size="xs" variant="light" color="brand">답변완료</Badge>
+                                    )}
+                                </Group>
+                                {/* 설명 (블러) */}
                                 <Text
                                     size="xs"
                                     c="dimmed"

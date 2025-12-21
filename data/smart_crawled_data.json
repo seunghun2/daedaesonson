@@ -7574,5 +7574,69 @@
     "totalPrices": 0,
     "images": 3,
     "crawledAt": "2025-12-21T11:25:57.707Z"
+  },
+  {
+    "no": "733",
+    "name": "이천시립 추모의집(봉안)",
+    "url": "https://www.2000fmc.or.kr/ic-kr/cntnts/i-70/web.do",
+    "prices": {
+      "묘지": [],
+      "봉안당": [],
+      "자연장": [],
+      "관리비": [],
+      "기타": []
+    },
+    "allPrices": [],
+    "totalPrices": 0,
+    "images": 15,
+    "crawledAt": "2025-12-21T11:28:03.509Z"
+  },
+  {
+    "no": "734",
+    "name": "창원시립마산영생원",
+    "url": "https://www.cwsisul.or.kr/",
+    "prices": {
+      "묘지": [],
+      "봉안당": [],
+      "자연장": [],
+      "관리비": [],
+      "기타": []
+    },
+    "allPrices": [],
+    "totalPrices": 0,
+    "images": 15,
+    "crawledAt": "2025-12-21T11:28:45.963Z"
+  },
+  {
+    "no": "736",
+    "name": "광양시립영세공원 봉안당",
+    "url": "https://cemetery.gwangyang.go.kr/pr/info/archives/list",
+    "prices": {
+      "묘지": [],
+      "봉안당": [],
+      "자연장": [],
+      "관리비": [],
+      "기타": []
+    },
+    "allPrices": [],
+    "totalPrices": 0,
+    "images": 0,
+    "crawledAt": "2025-12-21T11:29:13.603Z"
+  },
+  {
+    "no": "737",
+    "name": "동대문구추모의집",
+    "url": "http://www.yeaeunpark.com/",
+    "prices": {
+      "묘지": [],
+      "봉안당": [],
+      "자연장": [],
+      "관리비": [],
+      "기타": []
+    },
+    "allPrices": [],
+    "totalPrices": 0,
+    "images": 13,
+    "crawledAt": "2025-12-21T11:29:49.485Z"
   }
 ]
