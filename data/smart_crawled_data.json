@@ -7782,5 +7782,69 @@
     "totalPrices": 0,
     "images": 11,
     "crawledAt": "2025-12-21T11:38:25.181Z"
+  },
+  {
+    "no": "751",
+    "name": "천안추모공원 봉안당",
+    "url": "https://cauc.or.kr/_chpark/main.asp?no=26",
+    "prices": {
+      "묘지": [],
+      "봉안당": [],
+      "자연장": [],
+      "관리비": [],
+      "기타": []
+    },
+    "allPrices": [],
+    "totalPrices": 0,
+    "images": 2,
+    "crawledAt": "2025-12-21T11:39:37.858Z"
+  },
+  {
+    "no": "755",
+    "name": "서산시 희망공원(봉안시설)",
+    "url": "https://www.msn.com/ko-kr/news/other/%EC%84%9C%EC%82%B0%EC%8B%9C-%ED%9D%AC%EB%A7%9D%EA%B3%B5%EC%9B%90-%EB%B4%89%EC%95%88%EB%8B%B9-%EB%AA%85%EC%B9%AD-%EA%B3%B5%EB%AA%A8/ar-AA1MdSyE",
+    "prices": {
+      "묘지": [],
+      "봉안당": [],
+      "자연장": [],
+      "관리비": [],
+      "기타": []
+    },
+    "allPrices": [],
+    "totalPrices": 0,
+    "images": 0,
+    "crawledAt": "2025-12-21T11:40:00.805Z"
+  },
+  {
+    "no": "756",
+    "name": "고성군추모의집",
+    "url": "https://www.gwgs.go.kr/",
+    "prices": {
+      "묘지": [],
+      "봉안당": [],
+      "자연장": [],
+      "관리비": [],
+      "기타": [
+        {
+          "price": 5000000,
+          "priceText": "500만원",
+          "context": "행한 자동차를 수입한 경우\n등록하지 않고 자동차를 운행하는 경우에는 2년 이하의 징역이나 500만원 이하의 벌금을 물게 됨\n메뉴담당자 담당부서 : 안전교통과 연락처 : 033-680-302",
+          "category": "기타",
+          "type": "분양가"
+        }
+      ]
+    },
+    "allPrices": [
+      {
+        "price": 5000000,
+        "priceText": "500만원",
+        "context": "행한 자동차를 수입한 경우\n등록하지 않고 자동차를 운행하는 경우에는 2년 이하의 징역이나 500만원 이하의 벌금을 물게 됨\n메뉴담당자 담당부서 : 안전교통과 연락처 : 033-680-302",
+        "category": "기타",
+        "type": "분양가"
+      }
+    ],
+    "totalPrices": 1,
+    "images": 1,
+    "crawledAt": "2025-12-21T11:41:04.824Z"
   }
 ]

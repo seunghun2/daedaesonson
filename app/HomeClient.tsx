@@ -629,6 +629,11 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
                 const fac = finalFacilities.find(f => f.id === id);
                 if (fac) handleMarkerClick(fac);
               }}
+              onMapView={(lat, lng) => {
+                if (mapRef.current) {
+                  mapRef.current.panTo(lat, lng, 17);
+                }
+              }}
             />
           ) : (
             <Flex direction="column" h="100%">
@@ -969,6 +974,14 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
                   onSelectFacility={(id) => {
                     const fac = finalFacilities.find(f => f.id === id);
                     if (fac) handleMarkerClick(fac);
+                  }}
+                  onMapView={(lat, lng) => {
+                    router.back();
+                    setTimeout(() => {
+                      if (mapRef.current) {
+                        mapRef.current.panTo(lat, lng, 17);
+                      }
+                    }, 300);
                   }}
                 />
               </Box>

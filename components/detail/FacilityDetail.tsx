@@ -293,9 +293,10 @@ interface FacilityDetailProps {
     onClose: () => void;
     allFacilities?: Facility[];
     onSelectFacility?: (id: string) => void;
+    onMapView?: (lat: number, lng: number) => void;
 }
 
-export default function FacilityDetail({ facility: initialFacility, onClose, allFacilities = [], onSelectFacility }: FacilityDetailProps) {
+export default function FacilityDetail({ facility: initialFacility, onClose, allFacilities = [], onSelectFacility, onMapView }: FacilityDetailProps) {
     const [facility, setFacility] = useState<Facility>(initialFacility);
     const [isFetchingDetail] = useState(false);
     const containerRef = useRef<HTMLDivElement>(null);
@@ -720,6 +721,9 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                 e.stopPropagation();
                                 e.preventDefault();
                                 // 지도에서 해당 위치로 이동
+                                if (onMapView && facility.coordinates) {
+                                    onMapView(facility.coordinates.lat, facility.coordinates.lng);
+                                }
                                 onClose();
                             }}
                         >
