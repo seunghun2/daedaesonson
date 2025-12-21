@@ -1,7 +1,7 @@
 'use client';
 
 import { Drawer, Box, Text, Group, Button, Stack, TextInput, Textarea, Switch, Paper, Modal, ActionIcon, PinInput, ScrollArea } from '@mantine/core';
-import { useDisclosure } from '@mantine/hooks';
+import { useDisclosure, useMediaQuery } from '@mantine/hooks';
 import { ChevronRight, PenLine, Lock, Unlock, X, MessageCircle } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { Facility } from '@/types';
@@ -33,6 +33,9 @@ interface InquiryPanelProps {
 }
 
 export default function InquiryPanel({ facility, isOpen, onClose, allFacilities = [] }: InquiryPanelProps) {
+    // 모바일 감지
+    const isMobile = useMediaQuery('(max-width: 800px)');
+
     // 시설 ID → 시설명 매핑
     const facilityNameMap = new Map(allFacilities.map(f => [f.id, f.name]));
 
@@ -210,26 +213,20 @@ export default function InquiryPanel({ facility, isOpen, onClose, allFacilities 
                 styles={{
                     root: { zIndex: 2050 },
                     overlay: {
-                        backgroundColor: 'rgba(0,0,0,0.3)',
-                        '@media (min-width: 800px)': {
-                            backgroundColor: 'transparent',
-                            pointerEvents: 'none'
-                        }
+                        backgroundColor: isMobile ? 'rgba(0,0,0,0.3)' : 'transparent',
+                        pointerEvents: isMobile ? 'auto' : 'none'
                     },
                     content: {
                         width: '100%',
                         maxWidth: '400px',
-                        marginLeft: 0, // 모바일 기본
-                        boxShadow: '2px 0 10px rgba(0,0,0,0.1)',
-                        '@media (min-width: 800px)': {
-                            marginLeft: '400px' // PC에서는 시설 상세 옆에
-                        }
+                        marginLeft: isMobile ? 0 : '400px',
+                        boxShadow: '2px 0 10px rgba(0,0,0,0.1)'
                     },
                     header: { display: 'none' },
                     body: { padding: 0, backgroundColor: '#fff', height: '100%' }
                 }}
                 withCloseButton={false}
-                lockScroll={false}
+                lockScroll={isMobile}
             >
                 <Stack gap={0} h="100%">
                     {/* Header */}

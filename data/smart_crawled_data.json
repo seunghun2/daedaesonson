@@ -10056,5 +10056,37 @@
     "totalPrices": 0,
     "images": 0,
     "crawledAt": "2025-12-21T13:50:53.659Z"
+  },
+  {
+    "no": "909",
+    "name": "가평추모공원(봉안시설)",
+    "url": "https://www.gp.go.kr/portal/contents.do?key=2285",
+    "prices": {
+      "묘지": [],
+      "봉안당": [],
+      "자연장": [],
+      "관리비": [],
+      "기타": []
+    },
+    "allPrices": [],
+    "totalPrices": 0,
+    "images": 15,
+    "crawledAt": "2025-12-21T13:51:34.421Z"
+  },
+  {
+    "no": "910",
+    "name": "인천가족공원 봉안담",
+    "url": "https://www.insiseol.or.kr/life/family/facility/map.jsp",
+    "prices": {
+      "묘지": [],
+      "봉안당": [],
+      "자연장": [],
+      "관리비": [],
+      "기타": []
+    },
+    "allPrices": [],
+    "totalPrices": 0,
+    "images": 3,
+    "crawledAt": "2025-12-21T13:52:37.681Z"
   }
 ]
