@@ -9394,5 +9394,37 @@
     "totalPrices": 0,
     "images": 3,
     "crawledAt": "2025-12-21T13:11:20.626Z"
+  },
+  {
+    "no": "851",
+    "name": "인천가족공원 별빛당",
+    "url": "https://www.insiseol.or.kr/life/family/facility/cinerary.jsp",
+    "prices": {
+      "묘지": [],
+      "봉안당": [],
+      "자연장": [],
+      "관리비": [],
+      "기타": []
+    },
+    "allPrices": [],
+    "totalPrices": 0,
+    "images": 5,
+    "crawledAt": "2025-12-21T13:12:24.014Z"
+  },
+  {
+    "no": "853",
+    "name": "성아우구스띠노수도회 봉안시설",
+    "url": "http://www.osakorea.or.kr/",
+    "prices": {
+      "묘지": [],
+      "봉안당": [],
+      "자연장": [],
+      "관리비": [],
+      "기타": []
+    },
+    "allPrices": [],
+    "totalPrices": 0,
+    "images": 15,
+    "crawledAt": "2025-12-21T13:12:50.645Z"
   }
 ]

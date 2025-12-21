@@ -227,8 +227,8 @@ export default function InquiryPanel({ facility, isOpen, onClose }: InquiryPanel
                     <ScrollArea style={{ flex: 1 }} bg="gray.0">
                         <Stack gap="md" p="md">
                             {/* 안내 문구 */}
-                            <Paper p="sm" radius="md" bg="blue.0" style={{ border: '1px solid var(--mantine-color-blue-2)' }}>
-                                <Text size="xs" c="blue.7">
+                            <Paper p="sm" radius="md" bg="gray.0" style={{ border: '1px solid #f1f3f5' }}>
+                                <Text size="xs" c="dimmed">
                                     💡 시설에 대해 궁금한 점을 문의하세요. 비공개 설정 시 제목만 공개됩니다.
                                 </Text>
                             </Paper>
