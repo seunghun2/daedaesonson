@@ -291,15 +291,15 @@ export default function InquiryPanel({ facility, isOpen, onClose }: InquiryPanel
                                                 ))}
                                             </>
                                         ) : (
-                                            <Box
-                                                bg="gray.1"
-                                                p="md"
-                                                style={{ borderRadius: 'var(--mantine-radius-md)', cursor: 'pointer', textAlign: 'center' }}
+                                            <Group
+                                                gap="xs"
+                                                c="dimmed"
+                                                style={{ cursor: 'pointer' }}
                                                 onClick={() => handleUnlock(inquiry)}
                                             >
-                                                <Lock size={20} color="#868e96" style={{ marginBottom: 4 }} />
-                                                <Text size="sm" c="dimmed">비공개 내용입니다. 터치하여 비밀번호를 입력하세요.</Text>
-                                            </Box>
+                                                <Lock size={14} />
+                                                <Text size="sm">비공개 내용입니다.</Text>
+                                            </Group>
                                         )}
                                     </Paper>
                                 );
@@ -343,7 +343,15 @@ export default function InquiryPanel({ facility, isOpen, onClose }: InquiryPanel
                         value={pinValue}
                         onChange={setPinValue}
                         error={!!pinError}
-                        size="md"
+                        size="xl"
+                        radius="xl"
+                        styles={{
+                            input: {
+                                backgroundColor: '#f8f9fa',
+                                border: '1px solid #e9ecef',
+                                fontWeight: 500
+                            }
+                        }}
                     />
 
                     {pinError && <Text size="xs" c="red">{pinError}</Text>}
@@ -351,10 +359,18 @@ export default function InquiryPanel({ facility, isOpen, onClose }: InquiryPanel
                     <Button
                         fullWidth
                         size="md"
-                        radius="md"
+                        radius="xl"
                         color="brand"
                         onClick={handlePinSubmit}
                         disabled={pinValue.length !== 4}
+                        styles={{
+                            root: {
+                                '&:disabled': {
+                                    backgroundColor: '#e9ecef',
+                                    color: '#adb5bd'
+                                }
+                            }
+                        }}
                     >
                         확인하기
                     </Button>

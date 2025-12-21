@@ -9768,5 +9768,37 @@
     "totalPrices": 0,
     "images": 1,
     "crawledAt": "2025-12-21T13:33:13.428Z"
+  },
+  {
+    "no": "888",
+    "name": "(재)남도추모공원",
+    "url": "http://www.namdopark.kr/sub0101.php",
+    "prices": {
+      "묘지": [],
+      "봉안당": [],
+      "자연장": [],
+      "관리비": [],
+      "기타": []
+    },
+    "allPrices": [],
+    "totalPrices": 0,
+    "images": 7,
+    "crawledAt": "2025-12-21T13:33:31.261Z"
+  },
+  {
+    "no": "889",
+    "name": "해원정사",
+    "url": "https://www.haewonjungsa.com/bbs/board.php?bo_table=notice&wr_id=2",
+    "prices": {
+      "묘지": [],
+      "봉안당": [],
+      "자연장": [],
+      "관리비": [],
+      "기타": []
+    },
+    "allPrices": [],
+    "totalPrices": 0,
+    "images": 1,
+    "crawledAt": "2025-12-21T13:34:05.696Z"
   }
 ]
