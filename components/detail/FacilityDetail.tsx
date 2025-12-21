@@ -1304,7 +1304,13 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                             </Box>
                         ))}
                         {inquiries.length > 3 && (
-                            <Text size="xs" c="dimmed" ta="center" py="sm" style={{ cursor: 'pointer' }} onClick={() => setInquiryOpen(true)}>
+                            <Text size="xs" c="dimmed" ta="center" py="sm" style={{ cursor: 'pointer' }} onClick={() => {
+                                if (isMobile) {
+                                    router.push('/inquiries');
+                                } else {
+                                    setInquiryOpen(true);
+                                }
+                            }}>
                                 +{inquiries.length - 3}건 더보기
                             </Text>
                         )}
