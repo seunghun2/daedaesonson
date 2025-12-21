@@ -1,7 +1,7 @@
 'use client';
 
 import { AppShell, Burger, Group, NavLink, Text, Avatar, Box, ThemeIcon, ActionIcon, Tooltip } from '@mantine/core';
-import { useDisclosure } from '@mantine/hooks';
+import { useDisclosure, useMediaQuery } from '@mantine/hooks';
 import { useState, useEffect } from 'react';
 import {
     LayoutDashboard as IconDashboard,
@@ -17,10 +17,11 @@ import {
 import { usePathname, useRouter } from 'next/navigation';
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
-    const [opened, { toggle }] = useDisclosure();
+    const [opened, { toggle, close }] = useDisclosure();
     const [collapsed, setCollapsed] = useState(false);
     const pathname = usePathname();
     const router = useRouter();
+    const isMobile = useMediaQuery('(max-width: 768px)');
 
     // localStorage에서 상태 불러오기
     useEffect(() => {
@@ -42,6 +43,11 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         { label: '설정', icon: IconSettings, link: '/admin/settings' },
     ];
 
+    const handleNavClick = (link: string) => {
+        router.push(link);
+        if (isMobile) close(); // 모바일에서 네비 클릭 후 자동 닫힘
+    };
+
     return (
         <AppShell
             header={{ height: 60 }}
@@ -50,15 +56,18 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                 breakpoint: 'sm',
                 collapsed: { mobile: !opened }
             }}
-            padding="md"
+            padding={isMobile ? 'xs' : 'md'}
             layout="alt"
         >
             <AppShell.Header>
                 <Group h="100%" px="md" justify="space-between">
-                    <Burger opened={opened} onClick={toggle} hiddenFrom="sm" size="sm" />
-                    <Text size="lg" fw={700} visibleFrom="sm">관리자 페이지</Text>
+                    <Group gap="sm">
+                        <Burger opened={opened} onClick={toggle} hiddenFrom="sm" size="sm" />
+                        <Text size="lg" fw={700} hiddenFrom="sm">관리자</Text>
+                        <Text size="lg" fw={700} visibleFrom="sm">관리자 페이지</Text>
+                    </Group>
                     <Group>
-                        <Avatar color="blue" radius="xl">AD</Avatar>
+                        <Avatar color="blue" radius="xl" size={isMobile ? 'sm' : 'md'}>AD</Avatar>
                         <Box visibleFrom="sm">
                             <Text size="sm" fw={500}>Super Admin</Text>
                             <Text size="xs" c="dimmed">master@daedaesonson.com</Text>
@@ -68,7 +77,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
             </AppShell.Header>
 
             <AppShell.Navbar p="md" bg="dark.7" style={{ borderRight: 'none', color: 'white', transition: 'width 0.2s ease' }}>
-                <Group mb={40} mt={10} px="xs" style={{ cursor: 'pointer' }} onClick={() => router.push('/')} justify={collapsed ? 'center' : 'flex-start'}>
+                <Group mb={40} mt={10} px="xs" style={{ cursor: 'pointer' }} onClick={() => { router.push('/'); if (isMobile) close(); }} justify={collapsed ? 'center' : 'flex-start'}>
                     <ThemeIcon size="lg" radius="md" color="blue" variant="filled">
                         <MapPin size={20} color="white" />
                     </ThemeIcon>
@@ -86,7 +95,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                             color="blue"
                             onClick={(e) => {
                                 e.preventDefault();
-                                router.push(item.link);
+                                handleNavClick(item.link);
                             }}
                             styles={{
                                 root: { color: '#adb5bd', borderRadius: 8, marginBottom: 4, justifyContent: collapsed ? 'center' : 'flex-start' },
@@ -99,8 +108,8 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
 
                 <Box style={{ flex: 1 }} />
 
-                {/* 접기/펼치기 버튼 */}
-                <Group justify="center" mb="md">
+                {/* 접기/펼치기 버튼 - PC only */}
+                <Group justify="center" mb="md" visibleFrom="sm">
                     <ActionIcon
                         variant="subtle"
                         color="gray"

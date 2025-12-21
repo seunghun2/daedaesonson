@@ -7894,5 +7894,117 @@
     "totalPrices": 0,
     "images": 1,
     "crawledAt": "2025-12-21T11:45:28.348Z"
+  },
+  {
+    "no": "760",
+    "name": "남해추모누리 안락원",
+    "url": "https://place.udanax.org/p/2219833/%EB%82%A8%ED%95%B4%EC%B6%94%EB%AA%A8%EB%88%84%EB%A6%AC%EB%AC%98%EC%A7%80+%EC%95%88%EB%9D%BD%EC%9B%90",
+    "prices": {
+      "묘지": [],
+      "봉안당": [],
+      "자연장": [],
+      "관리비": [],
+      "기타": []
+    },
+    "allPrices": [],
+    "totalPrices": 0,
+    "images": 0,
+    "crawledAt": "2025-12-21T11:45:59.877Z"
+  },
+  {
+    "no": "761",
+    "name": "양양군공설묘원 봉안당",
+    "url": "https://www.yangyang.go.kr/gw/portal/yyc_partinfo_women_multi",
+    "prices": {
+      "묘지": [],
+      "봉안당": [],
+      "자연장": [],
+      "관리비": [],
+      "기타": [
+        {
+          "price": 5000000,
+          "priceText": "500만원",
+          "context": "세무회계과\t1천만원이상 공사, 용역, 물품 발주계획\t수시\t수시\t홈페이지 공개\n세무회계과\t500만원 이상 공사, 용역, 물품 대가지급 현황\t수시\t수시\t홈페이지 공개\n세무회계과\t500만원 이",
+          "category": "기타",
+          "type": "분양가"
+        }
+      ]
+    },
+    "allPrices": [
+      {
+        "price": 5000000,
+        "priceText": "500만원",
+        "context": "세무회계과\t1천만원이상 공사, 용역, 물품 발주계획\t수시\t수시\t홈페이지 공개\n세무회계과\t500만원 이상 공사, 용역, 물품 대가지급 현황\t수시\t수시\t홈페이지 공개\n세무회계과\t500만원 이",
+        "category": "기타",
+        "type": "분양가"
+      }
+    ],
+    "totalPrices": 1,
+    "images": 10,
+    "crawledAt": "2025-12-21T11:46:41.850Z"
+  },
+  {
+    "no": "763",
+    "name": "무지개 뜨는 언덕",
+    "url": "https://www.guc.or.kr/",
+    "prices": {
+      "묘지": [],
+      "봉안당": [],
+      "자연장": [],
+      "관리비": [],
+      "기타": []
+    },
+    "allPrices": [],
+    "totalPrices": 0,
+    "images": 15,
+    "crawledAt": "2025-12-21T11:47:37.217Z"
+  },
+  {
+    "no": "764",
+    "name": "(재)평화원",
+    "url": "http://www.xn--sp5b70v21b.com/default/00/01.php",
+    "prices": {
+      "묘지": [],
+      "봉안당": [],
+      "자연장": [],
+      "관리비": [],
+      "기타": []
+    },
+    "allPrices": [],
+    "totalPrices": 0,
+    "images": 15,
+    "crawledAt": "2025-12-21T11:47:45.470Z"
+  },
+  {
+    "no": "765",
+    "name": "정각사 봉안당",
+    "url": "https://hankook-sj.com/product/%EC%84%9C%EC%9A%B8-%EC%A0%95%EA%B0%81%EC%82%AC-%EB%B4%89%EC%95%88%EB%8B%B9/",
+    "prices": {
+      "묘지": [],
+      "봉안당": [],
+      "자연장": [],
+      "관리비": [],
+      "기타": []
+    },
+    "allPrices": [],
+    "totalPrices": 0,
+    "images": 15,
+    "crawledAt": "2025-12-21T11:51:40.079Z"
+  },
+  {
+    "no": "767",
+    "name": "덕원사 추모관",
+    "url": "https://place.udanax.org/p/2217521/%EB%8D%95%EC%9B%90%EC%82%AC+%EC%B6%94%EB%AA%A8%EA%B4%80",
+    "prices": {
+      "묘지": [],
+      "봉안당": [],
+      "자연장": [],
+      "관리비": [],
+      "기타": []
+    },
+    "allPrices": [],
+    "totalPrices": 0,
+    "images": 0,
+    "crawledAt": "2025-12-21T11:52:11.603Z"
   }
 ]
