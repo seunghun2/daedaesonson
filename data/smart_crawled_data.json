@@ -9688,5 +9688,37 @@
     "totalPrices": 0,
     "images": 15,
     "crawledAt": "2025-12-21T13:27:01.006Z"
+  },
+  {
+    "no": "881",
+    "name": "구파발성당 성요셉관",
+    "url": "http://mygupabal.or.kr/index.php",
+    "prices": {
+      "묘지": [],
+      "봉안당": [],
+      "자연장": [],
+      "관리비": [],
+      "기타": []
+    },
+    "allPrices": [],
+    "totalPrices": 0,
+    "images": 15,
+    "crawledAt": "2025-12-21T13:27:34.188Z"
+  },
+  {
+    "no": "882",
+    "name": "대구광역시 낙산추모의집",
+    "url": "http://hdpark.co.kr/",
+    "prices": {
+      "묘지": [],
+      "봉안당": [],
+      "자연장": [],
+      "관리비": [],
+      "기타": []
+    },
+    "allPrices": [],
+    "totalPrices": 0,
+    "images": 15,
+    "crawledAt": "2025-12-21T13:28:58.041Z"
   }
 ]

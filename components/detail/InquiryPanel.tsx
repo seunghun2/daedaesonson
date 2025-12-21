@@ -1,6 +1,6 @@
 'use client';
 
-import { Drawer, Box, Text, Group, Button, Stack, TextInput, Textarea, Switch, Paper, ActionIcon, PinInput, ScrollArea } from '@mantine/core';
+import { Drawer, Box, Text, Group, Button, Stack, TextInput, Textarea, Switch, Paper, Modal, ActionIcon, PinInput, ScrollArea } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { ChevronRight, PenLine, Lock, Unlock, X, MessageCircle } from 'lucide-react';
 import { useState, useEffect } from 'react';
@@ -308,61 +308,48 @@ export default function InquiryPanel({ facility, isOpen, onClose }: InquiryPanel
                     </ScrollArea>
                 </Stack>
             </Drawer >
+            {/* 비밀번호 입력 모달 */}
+            <Modal
+                opened={pinOpened}
+                onClose={closePin}
+                centered
+                size="xs"
+                radius="md"
+                withCloseButton={false}
+                title={null}
+                styles={{
+                    root: { zIndex: 9999 },
+                    body: { padding: '24px' }
+                }}
+            >
+                <Stack gap="sm" align="center">
+                    <Lock size={20} color="#868e96" />
+                    <Text size="sm" fw={600}>비공개 문의입니다</Text>
+                    <Text size="xs" c="dimmed" ta="center">
+                        연락처 뒷자리 4자리 입력
+                    </Text>
 
-            {/* 비밀번호 입력 - 인라인 오버레이 */}
-            {pinOpened && (
-                <Box
-                    pos="absolute"
-                    top={0}
-                    left={0}
-                    right={0}
-                    bottom={0}
-                    style={{
-                        backgroundColor: 'rgba(0,0,0,0.3)',
-                        zIndex: 10,
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center'
-                    }}
-                    onClick={closePin}
-                >
-                    <Paper
-                        p="xl"
-                        radius="md"
-                        shadow="lg"
-                        style={{ width: '280px' }}
-                        onClick={(e) => e.stopPropagation()}
+                    <PinInput
+                        length={4}
+                        type="number"
+                        value={pinValue}
+                        onChange={setPinValue}
+                        error={!!pinError}
+                        size="md"
+                    />
+
+                    {pinError && <Text size="xs" c="red">{pinError}</Text>}
+
+                    <Button
+                        fullWidth
+                        size="sm"
+                        onClick={handlePinSubmit}
+                        disabled={pinValue.length !== 4}
                     >
-                        <Stack gap="sm" align="center">
-                            <Lock size={20} color="#868e96" />
-                            <Text size="sm" fw={600}>비공개 문의입니다</Text>
-                            <Text size="xs" c="dimmed" ta="center">
-                                연락처 뒷자리 4자리 입력
-                            </Text>
-
-                            <PinInput
-                                length={4}
-                                type="number"
-                                value={pinValue}
-                                onChange={setPinValue}
-                                error={!!pinError}
-                                size="md"
-                            />
-
-                            {pinError && <Text size="xs" c="red">{pinError}</Text>}
-
-                            <Button
-                                fullWidth
-                                size="sm"
-                                onClick={handlePinSubmit}
-                                disabled={pinValue.length !== 4}
-                            >
-                                확인하기
-                            </Button>
-                        </Stack>
-                    </Paper>
-                </Box>
-            )}
+                        확인하기
+                    </Button>
+                </Stack>
+            </Modal>
         </>
     );
 }
