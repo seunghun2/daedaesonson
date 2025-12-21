@@ -6804,5 +6804,101 @@
     "totalPrices": 0,
     "images": 0,
     "crawledAt": "2025-12-21T10:55:17.339Z"
+  },
+  {
+    "no": "687",
+    "name": "영광군 공설추모공원 봉안당",
+    "url": "https://www.yeonggwang.go.kr/subpage/?site=headquarter_new&mn=15645",
+    "prices": {
+      "묘지": [],
+      "봉안당": [],
+      "자연장": [],
+      "관리비": [],
+      "기타": []
+    },
+    "allPrices": [],
+    "totalPrices": 0,
+    "images": 15,
+    "crawledAt": "2025-12-21T10:55:59.233Z"
+  },
+  {
+    "no": "688",
+    "name": "갑곶순교성지 천국의 문",
+    "url": "http://gabgot.com/",
+    "prices": {
+      "묘지": [],
+      "봉안당": [],
+      "자연장": [],
+      "관리비": [],
+      "기타": []
+    },
+    "allPrices": [],
+    "totalPrices": 0,
+    "images": 6,
+    "crawledAt": "2025-12-21T11:00:08.272Z"
+  },
+  {
+    "no": "689",
+    "name": "천주교 광주교구 담양공원묘원",
+    "url": "http://www.gjccp.kr/sogae/default.asp",
+    "prices": {
+      "묘지": [],
+      "봉안당": [],
+      "자연장": [],
+      "관리비": [],
+      "기타": []
+    },
+    "allPrices": [],
+    "totalPrices": 0,
+    "images": 15,
+    "crawledAt": "2025-12-21T11:00:14.156Z"
+  },
+  {
+    "no": "690",
+    "name": "광명메모리얼파크",
+    "url": "https://www.gmuc.co.kr/user/conn/memoInfo.do?pmn=23000&cmn=20000&mn=2",
+    "prices": {
+      "묘지": [],
+      "봉안당": [],
+      "자연장": [],
+      "관리비": [],
+      "기타": []
+    },
+    "allPrices": [],
+    "totalPrices": 0,
+    "images": 4,
+    "crawledAt": "2025-12-21T11:02:46.024Z"
+  },
+  {
+    "no": "691",
+    "name": "공주나래원 봉안당",
+    "url": "https://www.gongju.go.kr/naraewon/sub01_01.do",
+    "prices": {
+      "묘지": [],
+      "봉안당": [],
+      "자연장": [],
+      "관리비": [],
+      "기타": []
+    },
+    "allPrices": [],
+    "totalPrices": 0,
+    "images": 3,
+    "crawledAt": "2025-12-21T11:03:30.699Z"
+  },
+  {
+    "no": "692",
+    "name": "불광사 추모관",
+    "url": "http://www.bulkwangsa.org/bbs/register.php",
+    "prices": {
+      "묘지": [],
+      "봉안당": [],
+      "자연장": [],
+      "관리비": [],
+      "기타": []
+    },
+    "allPrices": [],
+    "totalPrices": 0,
+    "images": 3,
+    "crawledAt": "2025-12-21T11:04:01.393Z"
   }
 ]

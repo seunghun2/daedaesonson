@@ -107,6 +107,8 @@ export default function RootLayout({
         />
         {/* 🚫 모바일 더블탭 확대 완전 차단 */}
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
+        {/* 🚫 iOS Safari 전화번호/주소 자동링크 비활성화 */}
+        <meta name="format-detection" content="telephone=no, address=no, date=no" />
         {/* Google Material Symbols Outlined */}
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
         {/* 네이버 지도 API 스크립트 (클라이언트 ID는 환경변수에서 로드) */}
