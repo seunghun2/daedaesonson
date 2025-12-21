@@ -204,9 +204,6 @@ export default function InquiryPanel({ facility, isOpen, onClose, allFacilities 
         return `${digits.slice(0, 3)}-${digits.slice(3, 7)}-${digits.slice(7, 11)}`;
     };
 
-    // 디버깅
-    console.log('[InquiryPanel] isOpen:', isOpen, 'isMobile:', isMobile);
-
     return (
         <>
             <Drawer
