@@ -1896,7 +1896,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                     styles={{
                                         input: {
                                             padding: 0,
-                                            fontSize: '14px',
+                                            fontSize: '16px',
                                             '&::placeholder': { color: '#adb5bd' }
                                         }
                                     }}
@@ -1916,7 +1916,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                     styles={{
                                         input: {
                                             padding: 0,
-                                            fontSize: '15px',
+                                            fontSize: '16px',
                                             lineHeight: 1.6,
                                             '&::placeholder': { color: '#adb5bd' }
                                         }
@@ -2032,6 +2032,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                         onChange={(e) => setInquiryForm({ ...inquiryForm, phone: formatPhoneNumber(e.currentTarget.value) })}
                         description="뒷자리 4자리가 비밀번호로 사용됩니다"
                         required
+                        styles={{ input: { fontSize: '16px' } }}
                     />
 
                     <Paper p="sm" bg="gray.0" radius="md">
