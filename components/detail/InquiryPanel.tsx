@@ -309,23 +309,24 @@ export default function InquiryPanel({ facility, isOpen, onClose }: InquiryPanel
                 </Stack>
             </Drawer >
 
-            {/* 비밀번호 입력 모달 - 패널 너비에 맞춤 */}
+            {/* 비밀번호 입력 모달 - 작은 사이즈 */}
             <Modal
                 opened={pinOpened}
                 onClose={closePin}
-                centered={false}
-                size="100%"
+                centered
+                size="xs"
                 radius="md"
-                withCloseButton
+                withCloseButton={false}
                 title={null}
+                overlayProps={{ backgroundOpacity: 0.3 }}
                 styles={{
                     root: { zIndex: 2200 },
                     content: {
-                        maxWidth: '400px',
-                        margin: 'auto',
-                        marginTop: '30vh'
+                        width: '280px',
+                        minWidth: '280px',
+                        maxWidth: '280px'
                     },
-                    body: { padding: '20px' }
+                    body: { padding: '24px' }
                 }}
             >
                 <Stack gap="sm" align="center">

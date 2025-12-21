@@ -9624,5 +9624,21 @@
     "totalPrices": 6,
     "images": 15,
     "crawledAt": "2025-12-21T13:23:22.186Z"
+  },
+  {
+    "no": "870",
+    "name": "익산시 추모의집 제2관",
+    "url": "http://www.iksanmemorial.kr/main/main.do",
+    "prices": {
+      "묘지": [],
+      "봉안당": [],
+      "자연장": [],
+      "관리비": [],
+      "기타": []
+    },
+    "allPrices": [],
+    "totalPrices": 0,
+    "images": 15,
+    "crawledAt": "2025-12-21T13:25:01.081Z"
   }
 ]
