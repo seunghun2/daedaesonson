@@ -210,17 +210,15 @@ export default function InquiryPanel({ facility, isOpen, onClose, allFacilities 
                 opened={isOpen}
                 onClose={onClose}
                 position="left"
-                size="100%"
+                size={isMobile ? '100%' : 400}
                 styles={{
                     root: { zIndex: isMobile ? 10010 : 2050 },
                     overlay: {
                         backgroundColor: isMobile ? 'rgba(0,0,0,0.3)' : 'transparent',
                         pointerEvents: isMobile ? 'auto' : 'none'
                     },
-                    content: {
-                        width: '100%',
-                        maxWidth: '400px',
-                        marginLeft: isMobile ? 0 : '400px',
+                    content: isMobile ? {} : {
+                        marginLeft: '400px',
                         boxShadow: '2px 0 10px rgba(0,0,0,0.1)'
                     },
                     header: { display: 'none' },

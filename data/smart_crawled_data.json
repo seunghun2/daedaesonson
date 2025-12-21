@@ -10168,5 +10168,21 @@
     "totalPrices": 0,
     "images": 15,
     "crawledAt": "2025-12-21T13:54:55.479Z"
+  },
+  {
+    "no": "918",
+    "name": "대승불교법왕종 한광사",
+    "url": "https://www.wegive.co.kr/contents/wetownDetail/485692",
+    "prices": {
+      "묘지": [],
+      "봉안당": [],
+      "자연장": [],
+      "관리비": [],
+      "기타": []
+    },
+    "allPrices": [],
+    "totalPrices": 0,
+    "images": 15,
+    "crawledAt": "2025-12-21T13:55:38.349Z"
   }
 ]
