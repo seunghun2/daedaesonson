@@ -309,25 +309,30 @@ export default function InquiryPanel({ facility, isOpen, onClose }: InquiryPanel
                 </Stack>
             </Drawer >
 
-            {/* 비밀번호 입력 모달 */}
+            {/* 비밀번호 입력 모달 - 패널 너비에 맞춤 */}
             <Modal
                 opened={pinOpened}
                 onClose={closePin}
-                centered
-                size={300}
+                centered={false}
+                size="100%"
                 radius="md"
                 withCloseButton
                 title={null}
                 styles={{
-                    content: { padding: '16px' },
-                    body: { padding: '0' }
+                    root: { zIndex: 2200 },
+                    content: {
+                        maxWidth: '400px',
+                        margin: 'auto',
+                        marginTop: '30vh'
+                    },
+                    body: { padding: '20px' }
                 }}
             >
-                <Stack gap="md" align="center">
-                    <Lock size={24} color="#868e96" />
+                <Stack gap="sm" align="center">
+                    <Lock size={20} color="#868e96" />
                     <Text size="sm" fw={600}>비공개 문의입니다</Text>
                     <Text size="xs" c="dimmed" ta="center">
-                        작성 시 입력한 연락처 뒷자리 4자리를 입력해주세요.
+                        연락처 뒷자리 4자리 입력
                     </Text>
 
                     <PinInput
