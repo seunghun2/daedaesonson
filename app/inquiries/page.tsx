@@ -186,19 +186,35 @@ export default function InquiriesPage() {
                 )}
             </ScrollArea>
 
-            {/* 비밀번호 입력 모달 */}
+            {/* 비밀번호 입력 - PC와 동일한 디자인 */}
             <Modal
                 opened={pwOpened}
                 onClose={closePw}
-                title="비밀번호 확인"
                 centered
-                size="xs"
+                size={320}
+                radius="lg"
+                withCloseButton={false}
+                styles={{
+                    root: { zIndex: 9999 },
+                    content: { padding: 0 },
+                    body: { padding: '28px 24px' }
+                }}
             >
-                <Stack align="center" gap="md">
-                    <Text size="sm" c="dimmed" ta="center">
-                        비공개 문의입니다.<br />
-                        등록 시 입력한 전화번호 뒷자리 4자리를 입력해주세요.
+                <Stack gap="md" align="center">
+                    {/* 자물쇠 아이콘 */}
+                    <Box
+                        p="md"
+                        bg="gray.1"
+                        style={{ borderRadius: '50%' }}
+                    >
+                        <Lock size={24} color="#868e96" />
+                    </Box>
+
+                    <Text size="md" fw={600}>비공개 문의입니다</Text>
+                    <Text size="xs" c="dimmed" ta="center" lh={1.4}>
+                        작성 시 입력한 연락처 뒷자리 4자리를 입력해주세요.
                     </Text>
+
                     <PinInput
                         length={4}
                         type="number"
@@ -206,12 +222,20 @@ export default function InquiriesPage() {
                         onChange={setPinValue}
                         error={pinError}
                         onComplete={verifyPassword}
+                        size="lg"
                     />
-                    {pinError && (
-                        <Text size="xs" c="red">비밀번호가 일치하지 않습니다.</Text>
-                    )}
-                    <Button fullWidth onClick={verifyPassword} disabled={pinValue.length !== 4}>
-                        확인
+
+                    {pinError && <Text size="xs" c="red">비밀번호가 일치하지 않습니다.</Text>}
+
+                    <Button
+                        fullWidth
+                        size="md"
+                        radius="xl"
+                        color="brand"
+                        onClick={verifyPassword}
+                        disabled={pinValue.length !== 4}
+                    >
+                        확인하기
                     </Button>
                 </Stack>
             </Modal>
