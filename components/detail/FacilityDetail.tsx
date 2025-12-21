@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
+import { useRouter } from 'next/navigation';
 import { Image, Text, Badge, Group, Button, Stack, Box, Paper, Modal, Tabs, Collapse, ActionIcon, Rating, Textarea, TextInput, LoadingOverlay, useMantineTheme, Accordion, Table, Switch, Select, Drawer } from '@mantine/core';
 import { useDisclosure, useMediaQuery } from '@mantine/hooks';
 import { Car, Utensils, Accessibility, Store, Navigation, Globe, ChevronLeft, ChevronRight, TrendingUp, ChevronDown, ChevronUp, Star, Pencil, Camera, X, ImageIcon, Plus, Trash, Archive, Mountain, Trees, Layers, Lock, Unlock } from 'lucide-react';
@@ -297,6 +298,7 @@ interface FacilityDetailProps {
 }
 
 export default function FacilityDetail({ facility: initialFacility, onClose, allFacilities = [], onSelectFacility, onMapView }: FacilityDetailProps) {
+    const router = useRouter();
     const [facility, setFacility] = useState<Facility>(initialFacility);
     const [isFetchingDetail] = useState(false);
     const containerRef = useRef<HTMLDivElement>(null);
@@ -1205,7 +1207,12 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                 <Group justify="space-between" mb="md" align="center">
                     <Text size="lg" fw={700}>문의하기</Text>
                     <Group gap={4} style={{ cursor: 'pointer' }} onClick={() => {
-                        setInquiryOpen(true);
+                        // 모바일에서는 페이지 이동
+                        if (isMobile) {
+                            router.push('/inquiries');
+                        } else {
+                            setInquiryOpen(true);
+                        }
                         // 📊 GA4: 문의하기 클릭
                         if ((window as any).gtag) {
                             (window as any).gtag('event', 'inquiry_open', {
