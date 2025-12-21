@@ -64,7 +64,7 @@ export async function POST(
 
     try {
         const body = await request.json();
-        const { title, content, phone, isPrivate = true } = body;
+        const { type, title, content, phone, isPrivate = true } = body;
 
         // Validation
         if (!title?.trim() || !content?.trim() || !phone?.trim()) {
@@ -83,6 +83,7 @@ export async function POST(
             .from('Inquiry')
             .insert({
                 facilityId,
+                type: type || 'other',
                 title,
                 content,
                 phone,

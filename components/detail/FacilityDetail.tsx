@@ -359,6 +359,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
 
     // Inquiry State (문의 폼)
     const [reviews, setReviews] = useState<Review[]>(facility.reviews || []);
+    const [inquiries, setInquiries] = useState<any[]>((facility as any).inquiries || []);
     const [reviewCount, setReviewCount] = useState(facility.reviews?.length || 0);
     const [reviewModalOpened, { open: openReviewModal, close: closeReviewModal }] = useDisclosure(false);
     const [isSubmitting, setIsSubmitting] = useState(false);
@@ -435,6 +436,10 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
             const data = await res.json();
 
             if (res.ok && data.success) {
+                // Add to inquiries list
+                if (data.inquiry) {
+                    setInquiries(prev => [data.inquiry, ...prev]);
+                }
                 // Reset form and close
                 setInquiryForm({ type: '', facilityId: facility.id, facilityName: facility.name, title: '', content: '', phone: '', isPrivate: true, photos: [], privacyAgreed: true });
                 closeReviewModal();
@@ -1111,6 +1116,46 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                     </Group>
                 </Paper>
 
+                {/* 문의 목록 */}
+                {inquiries.length > 0 && (
+                    <Stack gap="sm" mb="lg">
+                        {inquiries.slice(0, 3).map((inquiry: any) => (
+                            <Box
+                                key={inquiry.id}
+                                p="sm"
+                                style={{
+                                    borderBottom: '1px solid #f1f3f5',
+                                    cursor: 'pointer'
+                                }}
+                                onClick={() => setInquiryOpen(true)}
+                            >
+                                <Group justify="space-between" mb={4}>
+                                    <Group gap={6}>
+                                        {inquiry.isPrivate && (
+                                            <span className="material-symbols-outlined" style={{ fontSize: 14, color: '#adb5bd' }}>lock</span>
+                                        )}
+                                        <Text size="sm" fw={500} c="dark">{inquiry.title}</Text>
+                                    </Group>
+                                    <Text size="xs" c="dimmed">
+                                        {new Date(inquiry.createdAt).toLocaleDateString('ko-KR', { month: 'numeric', day: 'numeric' })}
+                                    </Text>
+                                </Group>
+                                {!inquiry.isPrivate && (
+                                    <Text size="xs" c="dimmed" lineClamp={1}>{inquiry.content}</Text>
+                                )}
+                                {inquiry.replies && inquiry.replies.length > 0 && (
+                                    <Badge size="xs" variant="light" color="blue" mt={4}>답변완료</Badge>
+                                )}
+                            </Box>
+                        ))}
+                        {inquiries.length > 3 && (
+                            <Text size="xs" c="dimmed" ta="center" style={{ cursor: 'pointer' }} onClick={() => setInquiryOpen(true)}>
+                                +{inquiries.length - 3}건 더보기
+                            </Text>
+                        )}
+                    </Stack>
+                )}
+
                 {/* Review List */}
                 <Stack gap="md" mb="xl">
                     {reviews.length > 0 ? (
@@ -1204,14 +1249,14 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                 )}
                             </Box>
                         ))
-                    ) : (
+                    ) : inquiries.length === 0 ? (
                         <Box ta="center" py="xl">
                             <Text size="sm" c="dimmed">
                                 최근 {viewCount}명이 조회했어요.<br />
                                 방문 경험을 나눠주시면 많은 분들께 도움이 됩니다!
                             </Text>
                         </Box>
-                    )}
+                    ) : null}
                 </Stack>
 
 

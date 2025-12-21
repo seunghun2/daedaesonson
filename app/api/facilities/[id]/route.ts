@@ -91,14 +91,16 @@ export async function GET(
         console.log(`[Detail API] Fetching ${id} from Supabase...`);
 
         // 🔥 Supabase 쿼리 + CSV 로딩을 병렬 실행
-        const [facilityResult, reviewsResult, pricingMap] = await Promise.all([
+        const [facilityResult, reviewsResult, inquiriesResult, pricingMap] = await Promise.all([
             supabase.from('Facility').select('*').eq('id', id).single(),
             supabase.from('Review').select('*, replies:Reply(*)').eq('facilityId', id).order('createdAt', { ascending: false }),
+            supabase.from('Inquiry').select('*, replies:InquiryReply(*)').eq('facilityId', id).order('createdAt', { ascending: false }),
             loadPricingData()
         ]);
 
         const { data: dbData, error } = facilityResult;
         const { data: reviews } = reviewsResult;
+        const { data: inquiries } = inquiriesResult;
 
         if (error || !dbData) {
             console.error(`[Detail API] Facility ${id} not found:`, error);
@@ -159,6 +161,7 @@ export async function GET(
             description: dbData.description || '',
             originalName: dbData.originalName,
             reviews: reviews || [],
+            inquiries: inquiries || [],
         };
 
         console.log(`✅ [Detail API] ${id} from Supabase`);

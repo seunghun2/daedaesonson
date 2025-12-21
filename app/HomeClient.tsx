@@ -99,13 +99,22 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
   useEffect(() => {
     const facilityId = searchParams.get('id');
     if (facilityId && dbFacilities.length > 0) {
-      const fac = dbFacilities.find(f => f.id === facilityId);
-      if (fac) {
-        setSelectedFacility(fac);
-      } else {
-        // If ID is in URL but facility not found, clear ID from URL
-        router.push(pathname, { scroll: false });
-      }
+      // Fetch full detail with inquiries
+      fetch(`/api/facilities/${facilityId}`)
+        .then(res => res.json())
+        .then(data => {
+          if (data && data.id) {
+            setSelectedFacility(data);
+          } else {
+            // If facility not found, clear ID from URL
+            router.push(pathname, { scroll: false });
+          }
+        })
+        .catch(() => {
+          // Fallback to local data
+          const fac = dbFacilities.find(f => f.id === facilityId);
+          if (fac) setSelectedFacility(fac);
+        });
     } else if (!facilityId) {
       // If no ID in URL, ensure selectedFacility is null
       setSelectedFacility(null);

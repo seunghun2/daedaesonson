@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40">
+  <g id="MENU" transform="translate(-326 -11)">
+    <path id="패스_547" data-name="패스 547" d="M0,0H40V40H0Z" transform="translate(326 11)" fill="#fff" opacity="0"/>
+    <g id="MENU_ICON_" data-name="MENU ICON " transform="translate(-1 -37)">
+      <rect id="사각형_2" data-name="사각형 2" width="25" height="1.5" transform="translate(335 60)" fill="#fff"/>
+      <rect id="사각형_3" data-name="사각형 3" width="25" height="1.5" transform="translate(335 67)" fill="#fff"/>
+      <rect id="사각형_4" data-name="사각형 4" width="25" height="1.5" transform="translate(335 74)" fill="#fff"/>
+    </g>
+  </g>
+</svg>
