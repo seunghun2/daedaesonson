@@ -10152,5 +10152,21 @@
     "totalPrices": 0,
     "images": 15,
     "crawledAt": "2025-12-21T13:54:19.173Z"
+  },
+  {
+    "no": "917",
+    "name": "국원하늘정원",
+    "url": "https://www.knps.or.kr/",
+    "prices": {
+      "묘지": [],
+      "봉안당": [],
+      "자연장": [],
+      "관리비": [],
+      "기타": []
+    },
+    "allPrices": [],
+    "totalPrices": 0,
+    "images": 15,
+    "crawledAt": "2025-12-21T13:54:55.479Z"
   }
 ]
