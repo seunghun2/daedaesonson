@@ -7386,5 +7386,21 @@
     "totalPrices": 0,
     "images": 8,
     "crawledAt": "2025-12-21T11:21:22.310Z"
+  },
+  {
+    "no": "724",
+    "name": "영광사불지원",
+    "url": "http://yeonggwang.go.kr/",
+    "prices": {
+      "묘지": [],
+      "봉안당": [],
+      "자연장": [],
+      "관리비": [],
+      "기타": []
+    },
+    "allPrices": [],
+    "totalPrices": 0,
+    "images": 1,
+    "crawledAt": "2025-12-21T11:21:45.285Z"
   }
 ]

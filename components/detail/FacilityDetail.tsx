@@ -1177,38 +1177,53 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
 
                 {/* 문의 목록 */}
                 {inquiries.length > 0 && (
-                    <Stack gap="sm" mb="lg">
+                    <Stack gap={0} mb="lg">
                         {inquiries.slice(0, 3).map((inquiry: any) => (
                             <Box
                                 key={inquiry.id}
-                                p="sm"
+                                py="md"
                                 style={{
                                     borderBottom: '1px solid #f1f3f5',
                                     cursor: 'pointer'
                                 }}
                                 onClick={() => handleInquiryClick(inquiry)}
                             >
-                                <Group justify="space-between" mb={4}>
+                                {/* 제목 줄 */}
+                                <Group justify="space-between" mb={6}>
                                     <Group gap={6}>
                                         {inquiry.isPrivate && (
-                                            <span className="material-symbols-outlined" style={{ fontSize: 14, color: '#adb5bd' }}>lock</span>
+                                            <span className="material-symbols-outlined" style={{ fontSize: 14, color: '#868e96' }}>lock</span>
                                         )}
-                                        <Text size="sm" fw={500} c="dark">{inquiry.title}</Text>
+                                        <Text size="sm" fw={600} c="dark">{inquiry.title}</Text>
                                     </Group>
-                                    <Text size="xs" c="dimmed">
-                                        {new Date(inquiry.createdAt).toLocaleDateString('ko-KR', { month: 'numeric', day: 'numeric' })}
-                                    </Text>
+                                    {inquiry.replies && inquiry.replies.length > 0 && (
+                                        <Badge size="xs" variant="light" color="brand">답변완료</Badge>
+                                    )}
                                 </Group>
-                                {!inquiry.isPrivate && (
-                                    <Text size="xs" c="dimmed" lineClamp={1}>{inquiry.content}</Text>
-                                )}
-                                {inquiry.replies && inquiry.replies.length > 0 && (
-                                    <Badge size="xs" variant="light" color="blue" mt={4}>답변완료</Badge>
-                                )}
+
+                                {/* 설명 (비공개면 블러) */}
+                                <Text
+                                    size="xs"
+                                    c="dimmed"
+                                    lineClamp={1}
+                                    mb={4}
+                                    style={inquiry.isPrivate ? {
+                                        filter: 'blur(4px)',
+                                        userSelect: 'none',
+                                        opacity: 0.7
+                                    } : undefined}
+                                >
+                                    {inquiry.content || '문의 내용이 있습니다.'}
+                                </Text>
+
+                                {/* 날짜 */}
+                                <Text size="xs" c="dimmed">
+                                    {new Date(inquiry.createdAt).toLocaleDateString('ko-KR', { year: 'numeric', month: 'numeric', day: 'numeric' })}
+                                </Text>
                             </Box>
                         ))}
                         {inquiries.length > 3 && (
-                            <Text size="xs" c="dimmed" ta="center" style={{ cursor: 'pointer' }} onClick={() => setInquiryOpen(true)}>
+                            <Text size="xs" c="dimmed" ta="center" py="sm" style={{ cursor: 'pointer' }} onClick={() => setInquiryOpen(true)}>
                                 +{inquiries.length - 3}건 더보기
                             </Text>
                         )}
