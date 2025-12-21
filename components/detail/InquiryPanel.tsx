@@ -337,21 +337,31 @@ export default function InquiryPanel({ facility, isOpen, onClose }: InquiryPanel
                         작성 시 입력한 연락처 뒷자리 4자리를 입력해주세요.
                     </Text>
 
-                    <PinInput
-                        length={4}
-                        type="number"
+                    <TextInput
                         value={pinValue}
-                        onChange={setPinValue}
-                        error={!!pinError}
-                        size="xl"
+                        onChange={(e) => {
+                            const val = e.currentTarget.value.replace(/\D/g, '').slice(0, 4);
+                            setPinValue(val);
+                        }}
+                        placeholder="0 0 0 0"
+                        maxLength={4}
+                        size="lg"
                         radius="xl"
+                        w="100%"
                         styles={{
                             input: {
+                                textAlign: 'center',
+                                letterSpacing: '12px',
+                                fontSize: '20px',
+                                fontWeight: 500,
                                 backgroundColor: '#f8f9fa',
                                 border: '1px solid #e9ecef',
-                                fontWeight: 500
+                                '&::placeholder': {
+                                    letterSpacing: '12px'
+                                }
                             }
                         }}
+                        error={!!pinError}
                     />
 
                     {pinError && <Text size="xs" c="red">{pinError}</Text>}
@@ -363,14 +373,6 @@ export default function InquiryPanel({ facility, isOpen, onClose }: InquiryPanel
                         color="brand"
                         onClick={handlePinSubmit}
                         disabled={pinValue.length !== 4}
-                        styles={{
-                            root: {
-                                '&:disabled': {
-                                    backgroundColor: '#e9ecef',
-                                    color: '#adb5bd'
-                                }
-                            }
-                        }}
                     >
                         확인하기
                     </Button>
