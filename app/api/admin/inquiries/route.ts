@@ -16,7 +16,7 @@ let facilityNameMap: Map<string, string> | null = null;
 function getFacilityNameMap() {
     if (!facilityNameMap) {
         try {
-            const filePath = path.join(process.cwd(), 'public', 'facilities.json');
+            const filePath = path.join(process.cwd(), 'public', 'data', 'facilities.json');
             const data = fs.readFileSync(filePath, 'utf-8');
             const facilities = JSON.parse(data);
             facilityNameMap = new Map(facilities.map((f: any) => [f.id, f.name]));
