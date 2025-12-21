@@ -21,7 +21,6 @@ export default function InquiriesPage() {
     const router = useRouter();
     const [inquiries, setInquiries] = useState<Inquiry[]>([]);
     const [isLoading, setIsLoading] = useState(true);
-    const [facilityNameMap, setFacilityNameMap] = useState<Map<string, string>>(new Map());
 
     useEffect(() => {
         loadData();
@@ -29,20 +28,10 @@ export default function InquiriesPage() {
 
     const loadData = async () => {
         try {
-            // 시설 목록 가져오기
-            const facilitiesRes = await fetch('/api/facilities');
-            const facilitiesData = await facilitiesRes.json();
-            const nameMap = new Map((facilitiesData as any[]).map(f => [f.id, f.name]));
-            setFacilityNameMap(nameMap);
-
-            // 문의 목록 가져오기
             const res = await fetch('/api/admin/inquiries');
             const data = await res.json();
             if (data.inquiries) {
-                const sorted = data.inquiries.sort((a: any, b: any) =>
-                    new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
-                );
-                setInquiries(sorted);
+                setInquiries(data.inquiries);
             }
         } catch (e) {
             console.error('Failed to load data:', e);
@@ -100,7 +89,7 @@ export default function InquiriesPage() {
                                 {/* [시설명] 카테고리 + 날짜 */}
                                 <Group justify="space-between" mb={4}>
                                     <Group gap={4}>
-                                        <Text size="xs" c="dimmed">[{facilityNameMap.get(inquiry.facilityId) || '시설'}]</Text>
+                                        <Text size="xs" c="dimmed">[{(inquiry as any).facilityName || '시설'}]</Text>
                                         <Text size="xs" c="brand" fw={500}>
                                             {inquiry.type === 'price' ? '가격 문의' :
                                                 inquiry.type === 'reservation' ? '예약/절차' :

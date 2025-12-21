@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
+import fs from 'fs';
+import path from 'path';
 
 const SUPABASE_URL = 'https://jbydmhfuqnpukfutvrgs.supabase.co';
 const SUPABASE_KEY = process.env.SUPABASE_SERVICE_KEY || 'sb_secret_CDAM3cyG1RBEmjvSIaHOPA_If4LP8u3';
@@ -7,6 +9,24 @@ const SUPABASE_KEY = process.env.SUPABASE_SERVICE_KEY || 'sb_secret_CDAM3cyG1RBE
 const supabase = createClient(SUPABASE_URL, SUPABASE_KEY, {
     auth: { persistSession: false }
 });
+
+// 시설명 매핑 (lazy load)
+let facilityNameMap: Map<string, string> | null = null;
+
+function getFacilityNameMap() {
+    if (!facilityNameMap) {
+        try {
+            const filePath = path.join(process.cwd(), 'public', 'facilities.json');
+            const data = fs.readFileSync(filePath, 'utf-8');
+            const facilities = JSON.parse(data);
+            facilityNameMap = new Map(facilities.map((f: any) => [f.id, f.name]));
+        } catch (e) {
+            console.error('Failed to load facilities:', e);
+            facilityNameMap = new Map();
+        }
+    }
+    return facilityNameMap;
+}
 
 // GET: 모든 문의 조회 (어드민용)
 export async function GET() {
@@ -24,7 +44,14 @@ export async function GET() {
             return NextResponse.json({ error: '문의 조회 실패' }, { status: 500 });
         }
 
-        return NextResponse.json({ inquiries: inquiries || [] });
+        // 시설명 추가
+        const nameMap = getFacilityNameMap();
+        const enrichedInquiries = (inquiries || []).map(inq => ({
+            ...inq,
+            facilityName: nameMap.get(inq.facilityId) || '시설'
+        }));
+
+        return NextResponse.json({ inquiries: enrichedInquiries });
 
     } catch (error) {
         console.error('Admin inquiries GET error:', error);
