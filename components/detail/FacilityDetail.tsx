@@ -486,6 +486,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
+                    type: inquiryForm.type || 'other',
                     title: inquiryForm.title,
                     content: inquiryForm.content,
                     phone: inquiryForm.phone,

@@ -34,6 +34,7 @@ export async function GET(
         const safeInquiries = inquiries?.map(inq => ({
             id: inq.id,
             facilityId: inq.facilityId,
+            type: inq.type || 'other',
             title: inq.title,
             content: inq.content,
             isPrivate: inq.isPrivate,
@@ -105,6 +106,7 @@ export async function POST(
             inquiry: {
                 id: newInquiry.id,
                 facilityId: newInquiry.facilityId,
+                type: newInquiry.type || 'other',
                 title: newInquiry.title,
                 content: newInquiry.content,
                 isPrivate: newInquiry.isPrivate,
