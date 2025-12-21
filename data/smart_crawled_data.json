@@ -10008,5 +10008,53 @@
     "totalPrices": 0,
     "images": 6,
     "crawledAt": "2025-12-21T13:49:19.834Z"
+  },
+  {
+    "no": "903",
+    "name": "밀양성당 천상낙원",
+    "url": "http://www.catholicbusan.or.kr/index.php?mid=miryang_7a&document_srl=2808817",
+    "prices": {
+      "묘지": [],
+      "봉안당": [],
+      "자연장": [],
+      "관리비": [],
+      "기타": []
+    },
+    "allPrices": [],
+    "totalPrices": 0,
+    "images": 15,
+    "crawledAt": "2025-12-21T13:50:17.002Z"
+  },
+  {
+    "no": "907",
+    "name": "(재)예다원",
+    "url": "http://xn--2j1bz67agra.kr/",
+    "prices": {
+      "묘지": [],
+      "봉안당": [],
+      "자연장": [],
+      "관리비": [],
+      "기타": []
+    },
+    "allPrices": [],
+    "totalPrices": 0,
+    "images": 15,
+    "crawledAt": "2025-12-21T13:50:51.681Z"
+  },
+  {
+    "no": "908",
+    "name": "대정공원묘원 봉안묘",
+    "url": "https://www.daejeongpark.co.kr/user/sub/intro.do?_idxn=35",
+    "prices": {
+      "묘지": [],
+      "봉안당": [],
+      "자연장": [],
+      "관리비": [],
+      "기타": []
+    },
+    "allPrices": [],
+    "totalPrices": 0,
+    "images": 0,
+    "crawledAt": "2025-12-21T13:50:53.659Z"
   }
 ]

@@ -209,12 +209,21 @@ export default function InquiryPanel({ facility, isOpen, onClose, allFacilities 
                 size="100%"
                 styles={{
                     root: { zIndex: 2050 },
-                    overlay: { backgroundColor: 'transparent', pointerEvents: 'none' },
+                    overlay: {
+                        backgroundColor: 'rgba(0,0,0,0.3)',
+                        '@media (min-width: 800px)': {
+                            backgroundColor: 'transparent',
+                            pointerEvents: 'none'
+                        }
+                    },
                     content: {
                         width: '100%',
                         maxWidth: '400px',
-                        marginLeft: 'min(400px, 100vw)',
-                        boxShadow: '2px 0 10px rgba(0,0,0,0.1)'
+                        marginLeft: 0, // 모바일 기본
+                        boxShadow: '2px 0 10px rgba(0,0,0,0.1)',
+                        '@media (min-width: 800px)': {
+                            marginLeft: '400px' // PC에서는 시설 상세 옆에
+                        }
                     },
                     header: { display: 'none' },
                     body: { padding: 0, backgroundColor: '#fff', height: '100%' }
