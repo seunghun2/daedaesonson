@@ -364,6 +364,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
         setReviews(facility.reviews || []);
         setInquiries((facility as any).inquiries || []);
         setReviewCount(facility.reviews?.length || 0);
+        setShowAllInquiries(false);
 
         // 백그라운드에서 조회수 증가 (UI 블로킹 없음)
         fetch(`/api/facilities/${facility.id}/view`, { method: 'POST' })
@@ -403,6 +404,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
     const [replyContent, setReplyContent] = useState('');
     const [likedReviews, setLikedReviews] = useState<Set<string>>(new Set());
     const [inquiryOpen, setInquiryOpen] = useState(false);
+    const [showAllInquiries, setShowAllInquiries] = useState(false);
     const [totalInquiryCount, setTotalInquiryCount] = useState(0);
 
     // 시설 선택 모달
@@ -1262,7 +1264,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                 {/* 문의 목록 */}
                 {inquiries.length > 0 && (
                     <Stack gap={0} mb="lg">
-                        {inquiries.slice(0, 3).map((inquiry: any) => (
+                        {(showAllInquiries ? inquiries : inquiries.slice(0, 3)).map((inquiry: any) => (
                             <Box
                                 key={inquiry.id}
                                 py="sm"
@@ -1308,15 +1310,14 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                 </Text>
                             </Box>
                         ))}
-                        {inquiries.length > 3 && (
-                            <Text size="xs" c="dimmed" ta="center" py="sm" style={{ cursor: 'pointer' }} onClick={() => {
-                                if (isMobile) {
-                                    router.push('/inquiries');
-                                } else {
-                                    setInquiryOpen(true);
-                                }
-                            }}>
+                        {inquiries.length > 3 && !showAllInquiries && (
+                            <Text size="xs" c="dimmed" ta="center" py="sm" style={{ cursor: 'pointer' }} onClick={() => setShowAllInquiries(true)}>
                                 +{inquiries.length - 3}건 더보기
+                            </Text>
+                        )}
+                        {showAllInquiries && inquiries.length > 3 && (
+                            <Text size="xs" c="dimmed" ta="center" py="sm" style={{ cursor: 'pointer' }} onClick={() => setShowAllInquiries(false)}>
+                                접기
                             </Text>
                         )}
                     </Stack>
