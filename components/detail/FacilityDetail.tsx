@@ -1181,44 +1181,37 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                         {inquiries.slice(0, 3).map((inquiry: any) => (
                             <Box
                                 key={inquiry.id}
-                                py="md"
+                                py="sm"
                                 style={{
                                     borderBottom: '1px solid #f1f3f5',
                                     cursor: 'pointer'
                                 }}
                                 onClick={() => handleInquiryClick(inquiry)}
                             >
-                                {/* 제목 줄 */}
-                                <Group justify="space-between" mb={6}>
+                                <Group justify="space-between" mb={4}>
                                     <Group gap={6}>
                                         {inquiry.isPrivate && (
-                                            <span className="material-symbols-outlined" style={{ fontSize: 14, color: '#868e96' }}>lock</span>
+                                            <span className="material-symbols-outlined" style={{ fontSize: 14, color: '#adb5bd' }}>lock</span>
                                         )}
-                                        <Text size="sm" fw={600} c="dark">{inquiry.title}</Text>
+                                        <Text size="sm" fw={500} c="dark">{inquiry.title}</Text>
+                                        {inquiry.replies && inquiry.replies.length > 0 && (
+                                            <Badge size="xs" variant="light" color="brand">답변완료</Badge>
+                                        )}
                                     </Group>
-                                    {inquiry.replies && inquiry.replies.length > 0 && (
-                                        <Badge size="xs" variant="light" color="brand">답변완료</Badge>
-                                    )}
+                                    <Text size="xs" c="dimmed">
+                                        {new Date(inquiry.createdAt).toLocaleDateString('ko-KR', { month: 'numeric', day: 'numeric' })}
+                                    </Text>
                                 </Group>
-
-                                {/* 설명 (비공개면 블러) */}
                                 <Text
                                     size="xs"
                                     c="dimmed"
                                     lineClamp={1}
-                                    mb={4}
                                     style={inquiry.isPrivate ? {
                                         filter: 'blur(4px)',
-                                        userSelect: 'none',
-                                        opacity: 0.7
+                                        userSelect: 'none'
                                     } : undefined}
                                 >
-                                    {inquiry.content || '문의 내용이 있습니다.'}
-                                </Text>
-
-                                {/* 날짜 */}
-                                <Text size="xs" c="dimmed">
-                                    {new Date(inquiry.createdAt).toLocaleDateString('ko-KR', { year: 'numeric', month: 'numeric', day: 'numeric' })}
+                                    {inquiry.content || '문의 내용'}
                                 </Text>
                             </Box>
                         ))}
