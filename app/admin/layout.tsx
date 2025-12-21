@@ -21,7 +21,8 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     const [collapsed, setCollapsed] = useState(false);
     const pathname = usePathname();
     const router = useRouter();
-    const isMobile = useMediaQuery('(max-width: 768px)');
+    // SSR 시 undefined로 시작, useEffect에서 값 설정 (hydration mismatch 방지)
+    const isMobile = useMediaQuery('(max-width: 768px)', undefined, { getInitialValueInEffect: true });
 
     // localStorage에서 상태 불러오기
     useEffect(() => {

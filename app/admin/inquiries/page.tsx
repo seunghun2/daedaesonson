@@ -34,7 +34,7 @@ export default function InquiriesPage() {
     const [detailOpened, { open: openDetail, close: closeDetail }] = useDisclosure(false);
     const [replyContent, setReplyContent] = useState('');
     const [submitting, setSubmitting] = useState(false);
-    const isMobile = useMediaQuery('(max-width: 768px)');
+    const isMobile = useMediaQuery('(max-width: 768px)', undefined, { getInitialValueInEffect: true });
 
     // Fetch all inquiries
     const fetchInquiries = async () => {
