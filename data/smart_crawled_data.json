@@ -358,5 +358,53 @@
     "totalPrices": 0,
     "images": 13,
     "crawledAt": "2025-12-21T05:12:36.689Z"
+  },
+  {
+    "no": "25",
+    "name": "금릉공원묘원",
+    "url": "https://www.grpark.co.kr/facility/list",
+    "prices": {
+      "묘지": [],
+      "봉안당": [],
+      "자연장": [],
+      "관리비": [],
+      "기타": []
+    },
+    "allPrices": [],
+    "totalPrices": 0,
+    "images": 15,
+    "crawledAt": "2025-12-21T05:13:32.761Z"
+  },
+  {
+    "no": "26",
+    "name": "(재)경춘공원묘원",
+    "url": "https://www.gyoungchun.com/contents/family.html",
+    "prices": {
+      "묘지": [],
+      "봉안당": [],
+      "자연장": [],
+      "관리비": [],
+      "기타": []
+    },
+    "allPrices": [],
+    "totalPrices": 0,
+    "images": 10,
+    "crawledAt": "2025-12-21T05:14:06.481Z"
+  },
+  {
+    "no": "27",
+    "name": "우성공원묘원",
+    "url": "http://www.woosungpark.com/bbs/board.php?bo_table=sub0101",
+    "prices": {
+      "묘지": [],
+      "봉안당": [],
+      "자연장": [],
+      "관리비": [],
+      "기타": []
+    },
+    "allPrices": [],
+    "totalPrices": 0,
+    "images": 6,
+    "crawledAt": "2025-12-21T05:14:19.989Z"
   }
 ]

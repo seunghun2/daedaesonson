@@ -301,18 +301,24 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
     const containerRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
+        // 🚀 즉시 초기 데이터로 렌더링 (API 기다리지 않음)
         setFacility(initialFacility);
-        // 🔥 시설 변경 시 스크롤 맨 위로
+
+        // 스크롤 맨 위로
         containerRef.current?.scrollTo({ top: 0 });
         containerRef.current?.parentElement?.scrollTo({ top: 0 });
 
-        fetch(`/api/facilities/${initialFacility.id}`)
-            .then(res => res.json())
-            .then(fullData => {
-                if (!fullData || fullData.error) return;
-                setFacility(prev => ({ ...prev, ...fullData }));
-            })
-            .catch(e => console.error('Detail fetch error:', e));
+        // 🔥 상세 정보 백그라운드 로딩 (UI 블로킹 없음)
+        // 이미 priceInfo가 있으면 추가 로딩 스킵
+        if (!initialFacility.priceInfo && !initialFacility.pricing) {
+            fetch(`/api/facilities/${initialFacility.id}`)
+                .then(res => res.json())
+                .then(fullData => {
+                    if (!fullData || fullData.error) return;
+                    setFacility(prev => ({ ...prev, ...fullData }));
+                })
+                .catch(() => { }); // 실패해도 무시
+        }
     }, [initialFacility]);
     const [opened, setOpened] = useState(false); // Image Modal state
     const [selectedImageIndex, setSelectedImageIndex] = useState(0);
