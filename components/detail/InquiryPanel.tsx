@@ -29,9 +29,13 @@ interface InquiryPanelProps {
     facility: Facility;
     isOpen: boolean;
     onClose: () => void;
+    allFacilities?: Facility[];
 }
 
-export default function InquiryPanel({ facility, isOpen, onClose }: InquiryPanelProps) {
+export default function InquiryPanel({ facility, isOpen, onClose, allFacilities = [] }: InquiryPanelProps) {
+    // 시설 ID → 시설명 매핑
+    const facilityNameMap = new Map(allFacilities.map(f => [f.id, f.name]));
+
     const [inquiries, setInquiries] = useState<Inquiry[]>([]);
     const [isLoading, setIsLoading] = useState(false);
 
@@ -260,7 +264,7 @@ export default function InquiryPanel({ facility, isOpen, onClose }: InquiryPanel
                                         {/* [시설명] 카테고리 + 날짜 */}
                                         <Group justify="space-between" mb={4}>
                                             <Group gap={4}>
-                                                <Text size="xs" c="dimmed">[{(inquiry as any).facilityName || '시설'}]</Text>
+                                                <Text size="xs" c="dimmed">[{facilityNameMap.get(inquiry.facilityId) || '시설'}]</Text>
                                                 <Text size="xs" c="brand" fw={500}>
                                                     {(inquiry as any).type === 'price' ? '가격 문의' :
                                                         (inquiry as any).type === 'reservation' ? '예약/절차' :

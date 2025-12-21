@@ -1514,7 +1514,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
 
 
             {/* Story Panel Overlay */}
-            <InquiryPanel facility={facility} isOpen={inquiryOpen} onClose={() => setInquiryOpen(false)} />
+            <InquiryPanel facility={facility} isOpen={inquiryOpen} onClose={() => setInquiryOpen(false)} allFacilities={allFacilities} />
 
             {/* Floating Button Removed */}
 

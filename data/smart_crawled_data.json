@@ -9896,5 +9896,85 @@
     "totalPrices": 1,
     "images": 15,
     "crawledAt": "2025-12-21T13:40:12.450Z"
+  },
+  {
+    "no": "896",
+    "name": "백운공원묘원 제2묘원",
+    "url": "https://www.baekwoonmemorial.co.kr/",
+    "prices": {
+      "묘지": [],
+      "봉안당": [],
+      "자연장": [],
+      "관리비": [],
+      "기타": []
+    },
+    "allPrices": [],
+    "totalPrices": 0,
+    "images": 0,
+    "crawledAt": "2025-12-21T13:42:16.669Z"
+  },
+  {
+    "no": "897",
+    "name": "서동사",
+    "url": "https://sailing-blog.click/4446",
+    "prices": {
+      "묘지": [],
+      "봉안당": [],
+      "자연장": [],
+      "관리비": [],
+      "기타": []
+    },
+    "allPrices": [],
+    "totalPrices": 0,
+    "images": 0,
+    "crawledAt": "2025-12-21T13:42:42.259Z"
+  },
+  {
+    "no": "898",
+    "name": "태고종관음사 봉안당",
+    "url": "http://www.taego.kr/",
+    "prices": {
+      "묘지": [],
+      "봉안당": [],
+      "자연장": [],
+      "관리비": [],
+      "기타": []
+    },
+    "allPrices": [],
+    "totalPrices": 0,
+    "images": 12,
+    "crawledAt": "2025-12-21T13:43:17.494Z"
+  },
+  {
+    "no": "899",
+    "name": "부활의집",
+    "url": "http://www.gjccp.kr/sogae/intro.asp",
+    "prices": {
+      "묘지": [],
+      "봉안당": [],
+      "자연장": [],
+      "관리비": [],
+      "기타": []
+    },
+    "allPrices": [],
+    "totalPrices": 0,
+    "images": 15,
+    "crawledAt": "2025-12-21T13:43:24.768Z"
+  },
+  {
+    "no": "900",
+    "name": "남국선원봉안탑",
+    "url": "https://www.kwlife.co.kr/service/service02_5.jsp?pType=3&locName=12",
+    "prices": {
+      "묘지": [],
+      "봉안당": [],
+      "자연장": [],
+      "관리비": [],
+      "기타": []
+    },
+    "allPrices": [],
+    "totalPrices": 0,
+    "images": 8,
+    "crawledAt": "2025-12-21T13:43:58.932Z"
   }
 ]
