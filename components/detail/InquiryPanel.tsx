@@ -199,12 +199,19 @@ export default function InquiryPanel({ facility, isOpen, onClose }: InquiryPanel
                 position="left"
                 size="100%"
                 styles={{
-                    root: { zIndex: 2100 },
-                    content: { width: '100%', maxWidth: '400px' },
+                    root: { zIndex: 2050 },
+                    overlay: { backgroundColor: 'transparent', pointerEvents: 'none' },
+                    content: {
+                        width: '100%',
+                        maxWidth: '400px',
+                        marginLeft: 'min(400px, 100vw)', // 시설 상세 패널 옆에 위치
+                        boxShadow: '2px 0 10px rgba(0,0,0,0.1)'
+                    },
                     header: { display: 'none' },
                     body: { padding: 0, backgroundColor: '#fff', height: '100%' }
                 }}
                 withCloseButton={false}
+                lockScroll={false}
             >
                 <Stack gap={0} h="100%">
                     {/* Header */}

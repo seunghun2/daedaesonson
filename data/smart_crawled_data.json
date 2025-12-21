@@ -9346,5 +9346,53 @@
     "totalPrices": 1,
     "images": 8,
     "crawledAt": "2025-12-21T13:06:43.142Z"
+  },
+  {
+    "no": "847",
+    "name": "새문안추모관",
+    "url": "https://saemoonan.org/",
+    "prices": {
+      "묘지": [],
+      "봉안당": [],
+      "자연장": [],
+      "관리비": [],
+      "기타": []
+    },
+    "allPrices": [],
+    "totalPrices": 0,
+    "images": 15,
+    "crawledAt": "2025-12-21T13:10:22.547Z"
+  },
+  {
+    "no": "849",
+    "name": "안성시추모공원(봉안담)",
+    "url": "https://xn--ob0bv8vlra82stoflrclwswd.com/",
+    "prices": {
+      "묘지": [],
+      "봉안당": [],
+      "자연장": [],
+      "관리비": [],
+      "기타": []
+    },
+    "allPrices": [],
+    "totalPrices": 0,
+    "images": 15,
+    "crawledAt": "2025-12-21T13:10:46.875Z"
+  },
+  {
+    "no": "850",
+    "name": "산청군공설묘지 본향원",
+    "url": "https://sancheong.go.kr/www/contents.do?key=6243",
+    "prices": {
+      "묘지": [],
+      "봉안당": [],
+      "자연장": [],
+      "관리비": [],
+      "기타": []
+    },
+    "allPrices": [],
+    "totalPrices": 0,
+    "images": 3,
+    "crawledAt": "2025-12-21T13:11:20.626Z"
   }
 ]
