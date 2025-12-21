@@ -7354,5 +7354,37 @@
     "totalPrices": 0,
     "images": 15,
     "crawledAt": "2025-12-21T11:19:11.847Z"
+  },
+  {
+    "no": "722",
+    "name": "완도군추모공원 봉안담",
+    "url": "https://www.wando.go.kr/wando/sub.cs?m=445",
+    "prices": {
+      "묘지": [],
+      "봉안당": [],
+      "자연장": [],
+      "관리비": [],
+      "기타": []
+    },
+    "allPrices": [],
+    "totalPrices": 0,
+    "images": 15,
+    "crawledAt": "2025-12-21T11:21:02.373Z"
+  },
+  {
+    "no": "723",
+    "name": "정수사",
+    "url": "http://contest.jeongsusa.or.kr/",
+    "prices": {
+      "묘지": [],
+      "봉안당": [],
+      "자연장": [],
+      "관리비": [],
+      "기타": []
+    },
+    "allPrices": [],
+    "totalPrices": 0,
+    "images": 8,
+    "crawledAt": "2025-12-21T11:21:22.310Z"
   }
 ]

@@ -2180,77 +2180,53 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                         <Box h={1} bg="gray.1" />
 
                         {/* 내용 영역 */}
-                        <Box p="lg" style={{ maxHeight: '50vh', overflowY: 'auto' }}>
+                        <Box p="lg" style={{ minHeight: 280 }}>
                             {/* 비공개이고 잠금 상태일 때 */}
                             {selectedInquiry.isPrivate && !inquiryUnlocked ? (
-                                <Box pos="relative">
-                                    {/* 블러 처리된 내용 */}
-                                    <Box style={{ filter: 'blur(6px)', userSelect: 'none', opacity: 0.5 }}>
-                                        <Text size="sm" c="dark" style={{ lineHeight: 1.8 }}>
-                                            {selectedInquiry.content || '문의 내용이 여기에 표시됩니다. 비밀번호를 입력하면 전체 내용을 확인할 수 있습니다.'}
-                                        </Text>
-                                    </Box>
-
-                                    {/* 오버레이 */}
+                                <Box ta="center" py="xl">
                                     <Box
-                                        pos="absolute"
-                                        top={0} left={0} right={0} bottom={0}
+                                        w={56} h={56} mb="md" mx="auto"
                                         style={{
                                             display: 'flex',
-                                            flexDirection: 'column',
                                             alignItems: 'center',
                                             justifyContent: 'center',
-                                            background: 'rgba(255,255,255,0.7)',
-                                            backdropFilter: 'blur(2px)',
-                                            borderRadius: 12,
-                                            padding: 24
+                                            background: 'linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%)',
+                                            borderRadius: 28
                                         }}
                                     >
-                                        <Box
-                                            w={48} h={48} mb="md"
-                                            style={{
-                                                display: 'flex',
-                                                alignItems: 'center',
-                                                justifyContent: 'center',
-                                                background: '#f1f3f5',
-                                                borderRadius: 24
-                                            }}
-                                        >
-                                            <span className="material-symbols-outlined" style={{ fontSize: 24, color: '#495057' }}>lock</span>
-                                        </Box>
-                                        <Text size="sm" fw={500} c="dark" mb={4}>비공개 문의</Text>
-                                        <Text size="xs" c="dimmed" ta="center" mb="lg">
-                                            작성 시 입력한 연락처 뒷자리 4자리를<br />입력해주세요.
-                                        </Text>
+                                        <span className="material-symbols-outlined" style={{ fontSize: 28, color: '#495057' }}>lock</span>
+                                    </Box>
+                                    <Text size="md" fw={600} c="dark" mb={6}>비공개 문의입니다</Text>
+                                    <Text size="sm" c="dimmed" mb="xl">
+                                        작성 시 입력한 연락처 뒷자리 4자리를 입력해주세요.
+                                    </Text>
+
+                                    <Box maw={200} mx="auto">
                                         <TextInput
                                             placeholder="0000"
                                             value={inquiryPinInput}
                                             onChange={(e) => setInquiryPinInput(e.currentTarget.value.replace(/\D/g, '').slice(0, 4))}
                                             maxLength={4}
-                                            w={160}
                                             styles={{
                                                 input: {
                                                     textAlign: 'center',
-                                                    fontSize: '24px',
+                                                    fontSize: '22px',
                                                     fontWeight: 600,
-                                                    letterSpacing: 12,
-                                                    height: 48,
+                                                    letterSpacing: 10,
+                                                    height: 52,
                                                     borderRadius: 12,
-                                                    border: '2px solid #e9ecef',
-                                                    '&:focus': { borderColor: '#3b4896' }
+                                                    border: '2px solid #dee2e6',
                                                 }
                                             }}
                                             error={inquiryPinError}
                                         />
                                         <Button
                                             fullWidth
-                                            w={160}
                                             mt="md"
                                             size="md"
                                             radius="xl"
                                             onClick={handleInquiryUnlock}
                                             disabled={inquiryPinInput.length !== 4}
-                                            style={{ fontWeight: 600 }}
                                         >
                                             확인하기
                                         </Button>
