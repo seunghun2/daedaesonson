@@ -7686,5 +7686,69 @@
     "totalPrices": 0,
     "images": 8,
     "crawledAt": "2025-12-21T11:31:48.927Z"
+  },
+  {
+    "no": "744",
+    "name": "세종시추모의집",
+    "url": "https://www.youngpyungsapark.co.kr/",
+    "prices": {
+      "묘지": [],
+      "봉안당": [],
+      "자연장": [],
+      "관리비": [],
+      "기타": []
+    },
+    "allPrices": [],
+    "totalPrices": 0,
+    "images": 5,
+    "crawledAt": "2025-12-21T11:32:09.913Z"
+  },
+  {
+    "no": "746",
+    "name": "대한불교관음종불문사",
+    "url": "http://www.kwanum.or.kr/",
+    "prices": {
+      "묘지": [],
+      "봉안당": [],
+      "자연장": [],
+      "관리비": [],
+      "기타": []
+    },
+    "allPrices": [],
+    "totalPrices": 0,
+    "images": 15,
+    "crawledAt": "2025-12-21T11:32:56.585Z"
+  },
+  {
+    "no": "747",
+    "name": "평택시립추모공원",
+    "url": "http://www.seohopark.kr/",
+    "prices": {
+      "묘지": [],
+      "봉안당": [],
+      "자연장": [],
+      "관리비": [],
+      "기타": []
+    },
+    "allPrices": [],
+    "totalPrices": 0,
+    "images": 15,
+    "crawledAt": "2025-12-21T11:33:22.045Z"
+  },
+  {
+    "no": "748",
+    "name": "화성시추모공원 봉안당",
+    "url": "https://www.hu.or.kr/www/M040000/M040500/M0405003/M04050031.jsp",
+    "prices": {
+      "묘지": [],
+      "봉안당": [],
+      "자연장": [],
+      "관리비": [],
+      "기타": []
+    },
+    "allPrices": [],
+    "totalPrices": 0,
+    "images": 15,
+    "crawledAt": "2025-12-21T11:33:57.179Z"
   }
 ]

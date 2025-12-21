@@ -1211,11 +1211,14 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                 <Text
                                     size="xs"
                                     c="dimmed"
-                                    lineClamp={1}
-                                    style={inquiry.isPrivate ? {
-                                        filter: 'blur(4px)',
-                                        userSelect: 'none'
-                                    } : undefined}
+                                    lineClamp={5}
+                                    style={{
+                                        whiteSpace: 'pre-wrap',
+                                        ...(inquiry.isPrivate ? {
+                                            filter: 'blur(4px)',
+                                            userSelect: 'none'
+                                        } : {})
+                                    }}
                                 >
                                     {inquiry.content || '문의 내용'}
                                 </Text>
