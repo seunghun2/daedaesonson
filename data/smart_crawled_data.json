@@ -8006,5 +8006,241 @@
     "totalPrices": 0,
     "images": 0,
     "crawledAt": "2025-12-21T11:52:11.603Z"
+  },
+  {
+    "no": "770",
+    "name": "고성군공설봉안당",
+    "url": "https://coconews.co.kr/%EA%B3%A0%EC%84%B1-%EB%B4%89%EC%95%88%EC%8B%9C%EC%84%A4-%ED%98%84%ED%99%A9%EA%B3%BC-%EC%9D%B4%EC%9A%A9-%EC%95%88%EB%82%B4-%EC%A3%BC%EC%9A%94-%EC%A0%95%EB%B3%B4-%EC%B4%9D%EC%A0%95%EB%A6%AC/",
+    "prices": {
+      "묘지": [],
+      "봉안당": [],
+      "자연장": [],
+      "관리비": [],
+      "기타": []
+    },
+    "allPrices": [],
+    "totalPrices": 0,
+    "images": 0,
+    "crawledAt": "2025-12-21T11:54:47.979Z"
+  },
+  {
+    "no": "771",
+    "name": "고창군추모의집",
+    "url": "https://www.textbakery.com/%EC%A0%84%EB%B6%81-%EA%B3%A0%EC%B0%BD%EA%B5%B0-%EC%B6%94%EB%AA%A8%EC%9D%98-%EC%A7%91-%EC%9A%B4%EC%98%81-%EC%95%8C%EC%95%84%EB%B3%B4%EA%B8%B0/",
+    "prices": {
+      "묘지": [],
+      "봉안당": [],
+      "자연장": [],
+      "관리비": [],
+      "기타": []
+    },
+    "allPrices": [],
+    "totalPrices": 0,
+    "images": 15,
+    "crawledAt": "2025-12-21T11:55:39.392Z"
+  },
+  {
+    "no": "772",
+    "name": "통영시공설봉안당",
+    "url": "http://www.tyinews.com/front/news/view.do?articleId=ARTICLE_00027166",
+    "prices": {
+      "묘지": [],
+      "봉안당": [],
+      "자연장": [],
+      "관리비": [],
+      "기타": [
+        {
+          "price": 5000000,
+          "priceText": "500만원",
+          "context": "최\n\n통영시의회 의원연구단체, 인구감소 해법 모색\n\n정점식 국회의원, 연말 이웃돕기 성금 500만원 기탁\n\n제240회 통영시의회 제2차 정례회 폐회\n\n민주당, 기초비례 경선 시 '당원 50",
+          "category": "기타",
+          "type": "분양가"
+        },
+        {
+          "price": 10000000,
+          "priceText": "1000만원",
+          "context": "새통영병원, 통영시인재육성기금 1,000만원 쾌척\n\n서남해수어류양식수협, 인재육성기금 1000만원 기탁\n\n㈜광운 ‧ ㈜더 포레스트, 통영시 인재육성기금 기탁\n\n새통영병원, 사회복지시설서",
+          "category": "기타",
+          "type": "분양가"
+        }
+      ]
+    },
+    "allPrices": [
+      {
+        "price": 5000000,
+        "priceText": "500만원",
+        "context": "최\n\n통영시의회 의원연구단체, 인구감소 해법 모색\n\n정점식 국회의원, 연말 이웃돕기 성금 500만원 기탁\n\n제240회 통영시의회 제2차 정례회 폐회\n\n민주당, 기초비례 경선 시 '당원 50",
+        "category": "기타",
+        "type": "분양가"
+      },
+      {
+        "price": 10000000,
+        "priceText": "1000만원",
+        "context": "새통영병원, 통영시인재육성기금 1,000만원 쾌척\n\n서남해수어류양식수협, 인재육성기금 1000만원 기탁\n\n㈜광운 ‧ ㈜더 포레스트, 통영시 인재육성기금 기탁\n\n새통영병원, 사회복지시설서",
+        "category": "기타",
+        "type": "분양가"
+      }
+    ],
+    "totalPrices": 2,
+    "images": 15,
+    "crawledAt": "2025-12-21T11:56:24.523Z"
+  },
+  {
+    "no": "774",
+    "name": "대한불교조계종 신흥사",
+    "url": "http://www.sinheungsa.kr/",
+    "prices": {
+      "묘지": [],
+      "봉안당": [],
+      "자연장": [],
+      "관리비": [],
+      "기타": []
+    },
+    "allPrices": [],
+    "totalPrices": 0,
+    "images": 11,
+    "crawledAt": "2025-12-21T11:56:46.173Z"
+  },
+  {
+    "no": "775",
+    "name": "선약사",
+    "url": "http://www.sunamsa.or.kr/",
+    "prices": {
+      "묘지": [],
+      "봉안당": [],
+      "자연장": [],
+      "관리비": [],
+      "기타": []
+    },
+    "allPrices": [],
+    "totalPrices": 0,
+    "images": 8,
+    "crawledAt": "2025-12-21T11:57:15.751Z"
+  },
+  {
+    "no": "776",
+    "name": "순천시립추모공원 제1·2봉안당",
+    "url": "https://www.suncheon.go.kr/kr/welfare/0002/0010/0003/",
+    "prices": {
+      "묘지": [],
+      "봉안당": [],
+      "자연장": [],
+      "관리비": [],
+      "기타": []
+    },
+    "allPrices": [],
+    "totalPrices": 0,
+    "images": 8,
+    "crawledAt": "2025-12-21T11:58:03.665Z"
+  },
+  {
+    "no": "778",
+    "name": "지장정사 연화대",
+    "url": "http://www.jijang.co.kr/bbs/register.php",
+    "prices": {
+      "묘지": [],
+      "봉안당": [],
+      "자연장": [],
+      "관리비": [],
+      "기타": []
+    },
+    "allPrices": [],
+    "totalPrices": 0,
+    "images": 15,
+    "crawledAt": "2025-12-21T11:58:10.796Z"
+  },
+  {
+    "no": "780",
+    "name": "(재)자하연분당",
+    "url": "http://www.jahayeon.com/",
+    "prices": {
+      "묘지": [],
+      "봉안당": [],
+      "자연장": [],
+      "관리비": [],
+      "기타": []
+    },
+    "allPrices": [],
+    "totalPrices": 0,
+    "images": 7,
+    "crawledAt": "2025-12-21T11:58:17.711Z"
+  },
+  {
+    "no": "781",
+    "name": "광주영락공원 제2추모관",
+    "url": "https://www.cyberyoungrak.or.kr/main/index.php",
+    "prices": {
+      "묘지": [],
+      "봉안당": [],
+      "자연장": [],
+      "관리비": [],
+      "기타": []
+    },
+    "allPrices": [],
+    "totalPrices": 0,
+    "images": 0,
+    "crawledAt": "2025-12-21T11:58:54.615Z"
+  },
+  {
+    "no": "782",
+    "name": "존제산 일월사 설법전",
+    "url": "http://www.ilwolsa.co.kr/info/info01.do",
+    "prices": {
+      "묘지": [],
+      "봉안당": [],
+      "자연장": [],
+      "관리비": [],
+      "기타": []
+    },
+    "allPrices": [],
+    "totalPrices": 0,
+    "images": 6,
+    "crawledAt": "2025-12-21T11:59:18.397Z"
+  },
+  {
+    "no": "783",
+    "name": "(재)영호추모공원",
+    "url": "http://younghopark.com/about/about-02/",
+    "prices": {
+      "묘지": [],
+      "봉안당": [],
+      "자연장": [],
+      "관리비": [],
+      "기타": [
+        {
+          "price": 9500000,
+          "priceText": "950만원",
+          "context": "따라 다름\n부부\t460만원\t년 7만원\t45만원\t1회 무료, 2회부터 매 20만원\n가족4인\t950만원\t년 8만원\t120만원\n가족8인\t1,600만원\t년 9만원\t215만원\n가족12인\t2,320만",
+          "category": "기타",
+          "type": "분양가"
+        },
+        {
+          "price": 6000000,
+          "priceText": "600만원",
+          "context": "1회 무료, 2회부터 매 20만원\n가족4인\t950만원\t년 8만원\t120만원\n가족8인\t1,600만원\t년 9만원\t215만원\n가족12인\t2,320만원\t년 10만원\t280만원\n카카오톡에서 \"영호",
+          "category": "기타",
+          "type": "분양가"
+        }
+      ]
+    },
+    "allPrices": [
+      {
+        "price": 9500000,
+        "priceText": "950만원",
+        "context": "따라 다름\n부부\t460만원\t년 7만원\t45만원\t1회 무료, 2회부터 매 20만원\n가족4인\t950만원\t년 8만원\t120만원\n가족8인\t1,600만원\t년 9만원\t215만원\n가족12인\t2,320만",
+        "category": "기타",
+        "type": "분양가"
+      },
+      {
+        "price": 6000000,
+        "priceText": "600만원",
+        "context": "1회 무료, 2회부터 매 20만원\n가족4인\t950만원\t년 8만원\t120만원\n가족8인\t1,600만원\t년 9만원\t215만원\n가족12인\t2,320만원\t년 10만원\t280만원\n카카오톡에서 \"영호",
+        "category": "기타",
+        "type": "분양가"
+      }
+    ],
+    "totalPrices": 2,
+    "images": 14,
+    "crawledAt": "2025-12-21T11:59:48.458Z"
   }
 ]

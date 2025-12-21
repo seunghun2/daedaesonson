@@ -217,7 +217,10 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
   const filteredMapFacilities = useMemo(() => {
     let base = dbFacilities;
 
-    // 0. 장례식장 기본 제외
+    // 0. 마커 off된 시설 제외 (어드민에서 isActive: false 설정)
+    base = base.filter(f => f.isActive !== false);
+
+    // 0-1. 장례식장 기본 제외
     base = base.filter(f => f.category !== 'FUNERAL_HOME');
 
     // 1. 카테고리 (다중 선택)

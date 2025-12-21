@@ -98,6 +98,9 @@ function ListPageContent() {
     const filteredFacilities = useMemo(() => {
         let result = allFacilities;
 
+        // 마커 off된 시설 제외
+        result = result.filter(f => f.isActive !== false);
+
         // 장례식장, 화장시설, 기타 제외
         result = result.filter(f =>
             f.category !== 'FUNERAL_HOME' &&
