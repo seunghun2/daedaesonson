@@ -387,6 +387,65 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
     // 연락처 입력 모달 (등록 버튼 클릭 시)
     const [phoneModalOpened, { open: openPhoneModal, close: closePhoneModal }] = useDisclosure(false);
 
+    // 문의 상세 보기 모달
+    const [selectedInquiry, setSelectedInquiry] = useState<any>(null);
+    const [inquiryDetailOpened, { open: openInquiryDetail, close: closeInquiryDetail }] = useDisclosure(false);
+    const [inquiryPinInput, setInquiryPinInput] = useState('');
+    const [inquiryUnlocked, setInquiryUnlocked] = useState(false);
+    const [inquiryPinError, setInquiryPinError] = useState('');
+
+    // 문의 클릭 핸들러
+    const handleInquiryClick = (inquiry: any) => {
+        setSelectedInquiry(inquiry);
+        setInquiryPinInput('');
+        setInquiryUnlocked(!inquiry.isPrivate); // 공개글은 바로 공개
+        setInquiryPinError('');
+        openInquiryDetail();
+    };
+
+    // 비밀번호 확인
+    const handleInquiryUnlock = async () => {
+        if (!selectedInquiry) return;
+        try {
+            const res = await fetch(`/api/facilities/${facility.id}/inquiries/verify`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ inquiryId: selectedInquiry.id, pin: inquiryPinInput })
+            });
+            const data = await res.json();
+            if (res.ok && data.success) {
+                setInquiryUnlocked(true);
+                setInquiryPinError('');
+            } else {
+                setInquiryPinError(data.error || '비밀번호가 일치하지 않습니다.');
+            }
+        } catch {
+            setInquiryPinError('확인 중 오류가 발생했습니다.');
+        }
+    };
+
+    // 문의 삭제
+    const handleInquiryDelete = async () => {
+        if (!selectedInquiry || !confirm('정말 삭제하시겠습니까?')) return;
+        try {
+            const res = await fetch(`/api/facilities/${facility.id}/inquiries`, {
+                method: 'DELETE',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ inquiryId: selectedInquiry.id, pin: inquiryPinInput })
+            });
+            if (res.ok) {
+                setInquiries(prev => prev.filter(i => i.id !== selectedInquiry.id));
+                closeInquiryDetail();
+                alert('삭제되었습니다.');
+            } else {
+                const data = await res.json();
+                alert(data.error || '삭제에 실패했습니다.');
+            }
+        } catch {
+            alert('삭제 중 오류가 발생했습니다.');
+        }
+    };
+
     // 문의 종류 옵션
     const INQUIRY_TYPES = [
         { value: 'price', label: '가격 문의' },
@@ -1127,7 +1186,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                     borderBottom: '1px solid #f1f3f5',
                                     cursor: 'pointer'
                                 }}
-                                onClick={() => setInquiryOpen(true)}
+                                onClick={() => handleInquiryClick(inquiry)}
                             >
                                 <Group justify="space-between" mb={4}>
                                     <Group gap={6}>
@@ -2064,6 +2123,117 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                         문의 등록하기
                     </Button>
                 </Stack>
+            </Modal>
+
+            {/* 문의 상세 바텀시트 */}
+            <Modal
+                opened={inquiryDetailOpened}
+                onClose={closeInquiryDetail}
+                withCloseButton={false}
+                size="md"
+                padding={0}
+                zIndex={10001}
+                centered={false}
+                styles={{
+                    content: {
+                        position: 'fixed',
+                        bottom: 0,
+                        left: 0,
+                        right: 0,
+                        margin: 0,
+                        borderRadius: '16px 16px 0 0',
+                        maxHeight: '70vh',
+                    },
+                    body: { padding: 0 },
+                    inner: { padding: 0, alignItems: 'flex-end' }
+                }}
+            >
+                {selectedInquiry && (
+                    <Box>
+                        {/* 헤더 */}
+                        <Box p="md" style={{ borderBottom: '1px solid #f1f3f5' }}>
+                            <Group justify="space-between" mb="xs">
+                                <Group gap="xs">
+                                    {selectedInquiry.isPrivate && (
+                                        <span className="material-symbols-outlined" style={{ fontSize: 16, color: '#868e96' }}>lock</span>
+                                    )}
+                                    <Text size="lg" fw={600}>{selectedInquiry.title}</Text>
+                                </Group>
+                                <ActionIcon variant="subtle" color="gray" onClick={closeInquiryDetail}>
+                                    <X size={18} />
+                                </ActionIcon>
+                            </Group>
+                            <Text size="xs" c="dimmed">
+                                {new Date(selectedInquiry.createdAt).toLocaleDateString('ko-KR')}
+                            </Text>
+                        </Box>
+
+                        {/* 내용 영역 */}
+                        <Box p="md" style={{ maxHeight: '40vh', overflowY: 'auto' }}>
+                            {/* 비공개이고 잠금 상태일 때 */}
+                            {selectedInquiry.isPrivate && !inquiryUnlocked ? (
+                                <Box ta="center" py="xl">
+                                    {/* 블러 처리된 내용 미리보기 */}
+                                    <Box mb="lg" style={{ filter: 'blur(8px)', userSelect: 'none', pointerEvents: 'none' }}>
+                                        <Text size="sm" c="dimmed" style={{ lineHeight: 1.8 }}>
+                                            {selectedInquiry.content.slice(0, 100)}...
+                                        </Text>
+                                    </Box>
+
+                                    {/* 비밀번호 입력 */}
+                                    <Box maw={280} mx="auto">
+                                        <Text size="sm" c="dimmed" mb="md">
+                                            비공개 문의입니다.<br />연락처 뒷자리 4자리를 입력해주세요.
+                                        </Text>
+                                        <TextInput
+                                            placeholder="뒷자리 4자리"
+                                            value={inquiryPinInput}
+                                            onChange={(e) => setInquiryPinInput(e.currentTarget.value.replace(/\D/g, '').slice(0, 4))}
+                                            maxLength={4}
+                                            styles={{ input: { textAlign: 'center', fontSize: '18px', letterSpacing: 8 } }}
+                                            error={inquiryPinError}
+                                        />
+                                        <Button
+                                            fullWidth
+                                            mt="md"
+                                            onClick={handleInquiryUnlock}
+                                            disabled={inquiryPinInput.length !== 4}
+                                        >
+                                            확인하기
+                                        </Button>
+                                    </Box>
+                                </Box>
+                            ) : (
+                                /* 공개 또는 잠금 해제 시 */
+                                <Stack gap="md">
+                                    <Text size="sm" style={{ whiteSpace: 'pre-wrap', lineHeight: 1.8 }}>
+                                        {selectedInquiry.content}
+                                    </Text>
+
+                                    {/* 답변 */}
+                                    {selectedInquiry.replies && selectedInquiry.replies.length > 0 && (
+                                        <Box p="md" bg="blue.0" style={{ borderRadius: 8 }}>
+                                            <Text size="xs" fw={600} c="blue" mb={4}>관리자 답변</Text>
+                                            <Text size="sm">{selectedInquiry.replies[0].content}</Text>
+                                        </Box>
+                                    )}
+
+                                    {/* 삭제 버튼 (잠금 해제 시만) */}
+                                    {inquiryUnlocked && selectedInquiry.isPrivate && (
+                                        <Button
+                                            variant="subtle"
+                                            color="red"
+                                            size="sm"
+                                            onClick={handleInquiryDelete}
+                                        >
+                                            이 문의 삭제하기
+                                        </Button>
+                                    )}
+                                </Stack>
+                            )}
+                        </Box>
+                    </Box>
+                )}
             </Modal>
         </Box >
     );

@@ -6900,5 +6900,283 @@
     "totalPrices": 0,
     "images": 3,
     "crawledAt": "2025-12-21T11:04:01.393Z"
+  },
+  {
+    "no": "693",
+    "name": "창원시립상복공원 제1봉안당",
+    "url": "https://hoon.gonewhappylife.com/entry/%EC%84%A4-%EB%AA%85%EC%A0%88-%EC%B0%BD%EC%9B%90%EC%8B%9C%EB%A6%BD%EC%83%81%EB%B3%B5%EA%B3%B5%EC%9B%90-%EB%B4%89%EC%95%88%EB%8B%B9-%EC%9A%B4%EC%98%81-%EA%B8%B0%EA%B0%84-%EB%B0%8F-%EC%8B%9C%EA%B0%84-%EC%9E%84%EC%8B%9C-%EC%A3%BC%EC%B0%A8-%EC%95%88%EB%82%B4",
+    "prices": {
+      "묘지": [],
+      "봉안당": [],
+      "자연장": [],
+      "관리비": [],
+      "기타": []
+    },
+    "allPrices": [],
+    "totalPrices": 0,
+    "images": 4,
+    "crawledAt": "2025-12-21T11:06:24.829Z"
+  },
+  {
+    "no": "694",
+    "name": "새로나추모관",
+    "url": "http://www.saerona-mp.com/sub.htm?PID=0101",
+    "prices": {
+      "묘지": [],
+      "봉안당": [],
+      "자연장": [],
+      "관리비": [],
+      "기타": []
+    },
+    "allPrices": [],
+    "totalPrices": 0,
+    "images": 0,
+    "crawledAt": "2025-12-21T11:06:53.812Z"
+  },
+  {
+    "no": "696",
+    "name": "서대문구추모의집",
+    "url": "http://www.yeaeunpark.com/",
+    "prices": {
+      "묘지": [],
+      "봉안당": [],
+      "자연장": [],
+      "관리비": [],
+      "기타": []
+    },
+    "allPrices": [],
+    "totalPrices": 0,
+    "images": 13,
+    "crawledAt": "2025-12-21T11:07:27.962Z"
+  },
+  {
+    "no": "697",
+    "name": "삼광사추모공원 봉안당",
+    "url": "http://samgwangsa.co.kr/g5/bbs/board.php?bo_table=service",
+    "prices": {
+      "묘지": [],
+      "봉안당": [
+        {
+          "price": 9900000,
+          "priceText": "990만원",
+          "context": "관리비\n\n\n\n\n 1위\n\n\t\n\n880만원\n\n\t\n\n 10년 선납 30만원\n\n\n\n\n 부부\n\n\t990만원\t\n\n 10년 선납 50만원\n\n\n\n\n※1위 추가 봉안시 기도금액 110만원 추가 관리비",
+          "category": "봉안당",
+          "type": "분양가"
+        }
+      ],
+      "자연장": [
+        {
+          "price": 8800000,
+          "priceText": "880만원",
+          "context": "프리미엄 자연장 가격표\n\n 구분\n\n\t\n\n 기도금액\n\n\t\n\n 관리비\n\n\n\n\n 1위\n\n\t\n\n880만원\n\n\t\n\n 10년 선납 30만원\n\n\n\n\n 부부\n\n\t990만원\t\n\n 10년 선납 50만원",
+          "category": "자연장",
+          "type": "분양가"
+        }
+      ],
+      "관리비": [],
+      "기타": [
+        {
+          "price": 5000000,
+          "priceText": "500만원",
+          "context": "30만원)\n\n\n\n\n부부단 추가\n\n(20만원) \n\n\n\n\n 7단\n\n\t\n\n250만원  \n\n\t\n\n500만원  \n\n\n\n\n 6단\n\n\t\n\n400만원  \n\n\t\n\n700만원  \n\n\n\n\n 5단\n\n\t\n\n500",
+          "category": "기타",
+          "type": "분양가"
+        },
+        {
+          "price": 7000000,
+          "priceText": "700만원",
+          "context": "단\n\n\t\n\n250만원  \n\n\t\n\n500만원  \n\n\n\n\n 6단\n\n\t\n\n400만원  \n\n\t\n\n700만원  \n\n\n\n\n 5단\n\n\t\n\n500만원  \n\n\t\n\n800만원  \n\n\n\n\n 4단\n\n\t\n\n400",
+          "category": "기타",
+          "type": "분양가"
+        },
+        {
+          "price": 8000000,
+          "priceText": "800만원",
+          "context": "단\n\n\t\n\n400만원  \n\n\t\n\n700만원  \n\n\n\n\n 5단\n\n\t\n\n500만원  \n\n\t\n\n800만원  \n\n\n\n\n 4단\n\n\t\n\n400만원\n\n\t\n\n700만원  \n\n\n\n\n 3단\n\n\t\n\n350만원",
+          "category": "기타",
+          "type": "분양가"
+        },
+        {
+          "price": 6000000,
+          "priceText": "600만원",
+          "context": "4단\n\n\t\n\n400만원\n\n\t\n\n700만원  \n\n\n\n\n 3단\n\n\t\n\n350만원  \n\n\t\n\n600만원  \n\n\n\n\n 2단\n\n\t\n\n300만원\n\n\t\n\n550만원  \n\n\n\n\n 1단\n\n\t\n\n200만원",
+          "category": "기타",
+          "type": "분양가"
+        },
+        {
+          "price": 5500000,
+          "priceText": "550만원",
+          "context": "3단\n\n\t\n\n350만원  \n\n\t\n\n600만원  \n\n\n\n\n 2단\n\n\t\n\n300만원\n\n\t\n\n550만원  \n\n\n\n\n 1단\n\n\t\n\n200만원  \n\n\t\n\n400만원\n\n\n\n\n※ 년4회 설, 추석,",
+          "category": "기타",
+          "type": "분양가"
+        }
+      ]
+    },
+    "allPrices": [
+      {
+        "price": 8800000,
+        "priceText": "880만원",
+        "context": "프리미엄 자연장 가격표\n\n 구분\n\n\t\n\n 기도금액\n\n\t\n\n 관리비\n\n\n\n\n 1위\n\n\t\n\n880만원\n\n\t\n\n 10년 선납 30만원\n\n\n\n\n 부부\n\n\t990만원\t\n\n 10년 선납 50만원",
+        "category": "자연장",
+        "type": "분양가"
+      },
+      {
+        "price": 9900000,
+        "priceText": "990만원",
+        "context": "관리비\n\n\n\n\n 1위\n\n\t\n\n880만원\n\n\t\n\n 10년 선납 30만원\n\n\n\n\n 부부\n\n\t990만원\t\n\n 10년 선납 50만원\n\n\n\n\n※1위 추가 봉안시 기도금액 110만원 추가 관리비",
+        "category": "봉안당",
+        "type": "분양가"
+      },
+      {
+        "price": 5000000,
+        "priceText": "500만원",
+        "context": "30만원)\n\n\n\n\n부부단 추가\n\n(20만원) \n\n\n\n\n 7단\n\n\t\n\n250만원  \n\n\t\n\n500만원  \n\n\n\n\n 6단\n\n\t\n\n400만원  \n\n\t\n\n700만원  \n\n\n\n\n 5단\n\n\t\n\n500",
+        "category": "기타",
+        "type": "분양가"
+      },
+      {
+        "price": 7000000,
+        "priceText": "700만원",
+        "context": "단\n\n\t\n\n250만원  \n\n\t\n\n500만원  \n\n\n\n\n 6단\n\n\t\n\n400만원  \n\n\t\n\n700만원  \n\n\n\n\n 5단\n\n\t\n\n500만원  \n\n\t\n\n800만원  \n\n\n\n\n 4단\n\n\t\n\n400",
+        "category": "기타",
+        "type": "분양가"
+      },
+      {
+        "price": 8000000,
+        "priceText": "800만원",
+        "context": "단\n\n\t\n\n400만원  \n\n\t\n\n700만원  \n\n\n\n\n 5단\n\n\t\n\n500만원  \n\n\t\n\n800만원  \n\n\n\n\n 4단\n\n\t\n\n400만원\n\n\t\n\n700만원  \n\n\n\n\n 3단\n\n\t\n\n350만원",
+        "category": "기타",
+        "type": "분양가"
+      },
+      {
+        "price": 6000000,
+        "priceText": "600만원",
+        "context": "4단\n\n\t\n\n400만원\n\n\t\n\n700만원  \n\n\n\n\n 3단\n\n\t\n\n350만원  \n\n\t\n\n600만원  \n\n\n\n\n 2단\n\n\t\n\n300만원\n\n\t\n\n550만원  \n\n\n\n\n 1단\n\n\t\n\n200만원",
+        "category": "기타",
+        "type": "분양가"
+      },
+      {
+        "price": 5500000,
+        "priceText": "550만원",
+        "context": "3단\n\n\t\n\n350만원  \n\n\t\n\n600만원  \n\n\n\n\n 2단\n\n\t\n\n300만원\n\n\t\n\n550만원  \n\n\n\n\n 1단\n\n\t\n\n200만원  \n\n\t\n\n400만원\n\n\n\n\n※ 년4회 설, 추석,",
+        "category": "기타",
+        "type": "분양가"
+      }
+    ],
+    "totalPrices": 7,
+    "images": 4,
+    "crawledAt": "2025-12-21T11:07:49.812Z"
+  },
+  {
+    "no": "698",
+    "name": "재단법인북한강공원",
+    "url": "http://wp343.disneycookie.gethompy.com/adv02/notice/?mod=document&uid=2",
+    "prices": {
+      "묘지": [],
+      "봉안당": [],
+      "자연장": [],
+      "관리비": [],
+      "기타": []
+    },
+    "allPrices": [],
+    "totalPrices": 0,
+    "images": 0,
+    "crawledAt": "2025-12-21T11:08:36.577Z"
+  },
+  {
+    "no": "699",
+    "name": "사천시누리원(봉안시설)",
+    "url": "https://xbugo.com/funeralhall/%EC%82%AC%EC%B2%9C%EC%8B%9C%EB%88%84%EB%A6%AC%EC%9B%90",
+    "prices": {
+      "묘지": [],
+      "봉안당": [],
+      "자연장": [],
+      "관리비": [],
+      "기타": []
+    },
+    "allPrices": [],
+    "totalPrices": 0,
+    "images": 1,
+    "crawledAt": "2025-12-21T11:08:51.287Z"
+  },
+  {
+    "no": "700",
+    "name": "대한불교조계종 대관음사 봉안당",
+    "url": "http://monkedu.buddhism.or.kr/",
+    "prices": {
+      "묘지": [],
+      "봉안당": [],
+      "자연장": [],
+      "관리비": [],
+      "기타": []
+    },
+    "allPrices": [],
+    "totalPrices": 0,
+    "images": 6,
+    "crawledAt": "2025-12-21T11:09:18.536Z"
+  },
+  {
+    "no": "701",
+    "name": "영평사 봉안당",
+    "url": "https://www.youngpyungsapark.co.kr/",
+    "prices": {
+      "묘지": [],
+      "봉안당": [],
+      "자연장": [],
+      "관리비": [],
+      "기타": []
+    },
+    "allPrices": [],
+    "totalPrices": 0,
+    "images": 5,
+    "crawledAt": "2025-12-21T11:09:39.013Z"
+  },
+  {
+    "no": "704",
+    "name": "함안군공설봉안당",
+    "url": "http://hamanhaneul.or.kr/?page_id=2639",
+    "prices": {
+      "묘지": [],
+      "봉안당": [],
+      "자연장": [],
+      "관리비": [],
+      "기타": []
+    },
+    "allPrices": [],
+    "totalPrices": 0,
+    "images": 3,
+    "crawledAt": "2025-12-21T11:10:57.621Z"
+  },
+  {
+    "no": "705",
+    "name": "삼척시추모공원 봉안당",
+    "url": "https://www.samcheok.go.kr/memorial/cyber_Memorial/letter.html?idx=921&mode=view",
+    "prices": {
+      "묘지": [],
+      "봉안당": [],
+      "자연장": [],
+      "관리비": [],
+      "기타": []
+    },
+    "allPrices": [],
+    "totalPrices": 0,
+    "images": 0,
+    "crawledAt": "2025-12-21T11:12:09.491Z"
+  },
+  {
+    "no": "706",
+    "name": "삼성개발공원묘원(봉안)",
+    "url": "http://www.elysium.co.kr/kor/about/greeting.php",
+    "prices": {
+      "묘지": [],
+      "봉안당": [],
+      "자연장": [],
+      "관리비": [],
+      "기타": []
+    },
+    "allPrices": [],
+    "totalPrices": 0,
+    "images": 2,
+    "crawledAt": "2025-12-21T11:12:42.438Z"
   }
 ]
