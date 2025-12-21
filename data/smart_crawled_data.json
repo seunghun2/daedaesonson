@@ -7638,5 +7638,53 @@
     "totalPrices": 0,
     "images": 13,
     "crawledAt": "2025-12-21T11:29:49.485Z"
+  },
+  {
+    "no": "739",
+    "name": "의왕하늘쉼터(봉안담)",
+    "url": "https://www.gccity.go.kr/dept/contents.do?mId=0205070000",
+    "prices": {
+      "묘지": [],
+      "봉안당": [],
+      "자연장": [],
+      "관리비": [],
+      "기타": []
+    },
+    "allPrices": [],
+    "totalPrices": 0,
+    "images": 15,
+    "crawledAt": "2025-12-21T11:30:29.632Z"
+  },
+  {
+    "no": "742",
+    "name": "창원시립진해천자원",
+    "url": "https://www.cwsisul.or.kr/",
+    "prices": {
+      "묘지": [],
+      "봉안당": [],
+      "자연장": [],
+      "관리비": [],
+      "기타": []
+    },
+    "allPrices": [],
+    "totalPrices": 0,
+    "images": 15,
+    "crawledAt": "2025-12-21T11:31:10.593Z"
+  },
+  {
+    "no": "743",
+    "name": "경신하늘뜰공원 봉안당",
+    "url": "https://www.yangju.go.kr/www/contents.do?key=503",
+    "prices": {
+      "묘지": [],
+      "봉안당": [],
+      "자연장": [],
+      "관리비": [],
+      "기타": []
+    },
+    "allPrices": [],
+    "totalPrices": 0,
+    "images": 8,
+    "crawledAt": "2025-12-21T11:31:48.927Z"
   }
 ]

@@ -1194,7 +1194,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                         {INQUIRY_TYPES.find(t => t.value === inquiry.type)?.label || '문의'}
                                     </Text>
                                     <Text size="xs" c="dimmed">
-                                        {new Date(inquiry.createdAt).toLocaleDateString('ko-KR', { month: 'numeric', day: 'numeric' })}
+                                        {new Date(inquiry.createdAt).toLocaleDateString('ko-KR', { year: '2-digit', month: 'numeric', day: 'numeric' })}
                                     </Text>
                                 </Group>
                                 {/* 제목 줄 */}
