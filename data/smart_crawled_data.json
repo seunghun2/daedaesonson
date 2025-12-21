@@ -7178,5 +7178,181 @@
     "totalPrices": 0,
     "images": 2,
     "crawledAt": "2025-12-21T11:12:42.438Z"
+  },
+  {
+    "no": "707",
+    "name": "용인평온의숲(평온마루 봉안당)",
+    "url": "https://www.tranquil-forest.or.kr/main_new/m01/1",
+    "prices": {
+      "묘지": [],
+      "봉안당": [],
+      "자연장": [],
+      "관리비": [],
+      "기타": []
+    },
+    "allPrices": [],
+    "totalPrices": 0,
+    "images": 2,
+    "crawledAt": "2025-12-21T11:15:44.247Z"
+  },
+  {
+    "no": "710",
+    "name": "봉원사",
+    "url": "http://www.bongwonsa.or.kr/bbs/board.php?bo_table=menu0301",
+    "prices": {
+      "묘지": [],
+      "봉안당": [],
+      "자연장": [],
+      "관리비": [],
+      "기타": []
+    },
+    "allPrices": [],
+    "totalPrices": 0,
+    "images": 15,
+    "crawledAt": "2025-12-21T11:16:16.530Z"
+  },
+  {
+    "no": "713",
+    "name": "보현사 납골공원",
+    "url": "https://place.udanax.org/p/2219160/%EB%B3%B4%ED%98%84%EC%82%AC%EB%82%A9%EA%B3%A8%EA%B3%B5%EC%9B%90",
+    "prices": {
+      "묘지": [],
+      "봉안당": [],
+      "자연장": [],
+      "관리비": [],
+      "기타": []
+    },
+    "allPrices": [],
+    "totalPrices": 0,
+    "images": 0,
+    "crawledAt": "2025-12-21T11:16:48.056Z"
+  },
+  {
+    "no": "714",
+    "name": "용광사",
+    "url": "http://www.samkwangsa.or.kr/",
+    "prices": {
+      "묘지": [],
+      "봉안당": [],
+      "자연장": [],
+      "관리비": [],
+      "기타": []
+    },
+    "allPrices": [],
+    "totalPrices": 0,
+    "images": 0,
+    "crawledAt": "2025-12-21T11:16:57.622Z"
+  },
+  {
+    "no": "715",
+    "name": "만월사",
+    "url": "http://xn--lz2bu9jcuf.kr/",
+    "prices": {
+      "묘지": [],
+      "봉안당": [],
+      "자연장": [],
+      "관리비": [],
+      "기타": []
+    },
+    "allPrices": [],
+    "totalPrices": 0,
+    "images": 11,
+    "crawledAt": "2025-12-21T11:17:08.684Z"
+  },
+  {
+    "no": "716",
+    "name": "김포시추모공원(봉안담)",
+    "url": "https://www.guc.or.kr/rainbow/html/member/login.php",
+    "prices": {
+      "묘지": [],
+      "봉안당": [],
+      "자연장": [],
+      "관리비": [],
+      "기타": []
+    },
+    "allPrices": [],
+    "totalPrices": 0,
+    "images": 0,
+    "crawledAt": "2025-12-21T11:17:46.843Z"
+  },
+  {
+    "no": "717",
+    "name": "구미시공설숭조당 제1관",
+    "url": "https://www.gumi.go.kr/wel/contents.do?mid=0306030100",
+    "prices": {
+      "묘지": [],
+      "봉안당": [],
+      "자연장": [],
+      "관리비": [],
+      "기타": []
+    },
+    "allPrices": [],
+    "totalPrices": 0,
+    "images": 0,
+    "crawledAt": "2025-12-21T11:17:52.958Z"
+  },
+  {
+    "no": "718",
+    "name": "청운사 봉안당",
+    "url": "http://xn--ob0bu3xn5ewted7b3yr.com/",
+    "prices": {
+      "묘지": [],
+      "봉안당": [],
+      "자연장": [],
+      "관리비": [],
+      "기타": []
+    },
+    "allPrices": [],
+    "totalPrices": 0,
+    "images": 15,
+    "crawledAt": "2025-12-21T11:18:17.188Z"
+  },
+  {
+    "no": "719",
+    "name": "하늘공원(부곡동공설공원묘지)",
+    "url": "http://xn--ob0bx0i3gt55ah0mz2alkn74g.com/",
+    "prices": {
+      "묘지": [],
+      "봉안당": [],
+      "자연장": [],
+      "관리비": [],
+      "기타": []
+    },
+    "allPrices": [],
+    "totalPrices": 0,
+    "images": 15,
+    "crawledAt": "2025-12-21T11:18:46.452Z"
+  },
+  {
+    "no": "720",
+    "name": "가톨릭군위묘원 봉안담",
+    "url": "https://www.gunwipark.com/bbs/content.php?co_id=welcome",
+    "prices": {
+      "묘지": [],
+      "봉안당": [],
+      "자연장": [],
+      "관리비": [],
+      "기타": []
+    },
+    "allPrices": [],
+    "totalPrices": 0,
+    "images": 0,
+    "crawledAt": "2025-12-21T11:18:48.234Z"
+  },
+  {
+    "no": "721",
+    "name": "목포추모공원 추모의집",
+    "url": "http://www.mokpopark.com/",
+    "prices": {
+      "묘지": [],
+      "봉안당": [],
+      "자연장": [],
+      "관리비": [],
+      "기타": []
+    },
+    "allPrices": [],
+    "totalPrices": 0,
+    "images": 15,
+    "crawledAt": "2025-12-21T11:19:11.847Z"
   }
 ]

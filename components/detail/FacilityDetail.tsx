@@ -2141,8 +2141,9 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                         left: 0,
                         right: 0,
                         margin: 0,
-                        borderRadius: '16px 16px 0 0',
-                        maxHeight: '70vh',
+                        borderRadius: '20px 20px 0 0',
+                        maxHeight: '80vh',
+                        boxShadow: '0 -4px 30px rgba(0,0,0,0.1)',
                     },
                     body: { padding: 0 },
                     inner: { padding: 0, alignItems: 'flex-end' }
@@ -2150,54 +2151,106 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
             >
                 {selectedInquiry && (
                     <Box>
-                        {/* 헤더 */}
-                        <Box p="md" style={{ borderBottom: '1px solid #f1f3f5' }}>
-                            <Group justify="space-between" mb="xs">
-                                <Group gap="xs">
-                                    {selectedInquiry.isPrivate && (
-                                        <span className="material-symbols-outlined" style={{ fontSize: 16, color: '#868e96' }}>lock</span>
-                                    )}
-                                    <Text size="lg" fw={600}>{selectedInquiry.title}</Text>
-                                </Group>
-                                <ActionIcon variant="subtle" color="gray" onClick={closeInquiryDetail}>
-                                    <X size={18} />
-                                </ActionIcon>
-                            </Group>
-                            <Text size="xs" c="dimmed">
-                                {new Date(selectedInquiry.createdAt).toLocaleDateString('ko-KR')}
-                            </Text>
+                        {/* 드래그 핸들 */}
+                        <Box pt="sm" pb="xs" ta="center">
+                            <Box w={40} h={4} bg="gray.3" mx="auto" style={{ borderRadius: 2 }} />
                         </Box>
 
+                        {/* 헤더 */}
+                        <Box px="lg" pb="md">
+                            <Group justify="space-between" align="flex-start">
+                                <Box style={{ flex: 1 }}>
+                                    <Group gap={6} mb={4}>
+                                        {selectedInquiry.isPrivate && (
+                                            <span className="material-symbols-outlined" style={{ fontSize: 16, color: '#868e96' }}>lock</span>
+                                        )}
+                                        <Text size="lg" fw={700} c="dark">{selectedInquiry.title}</Text>
+                                    </Group>
+                                    <Text size="xs" c="dimmed">
+                                        {new Date(selectedInquiry.createdAt).toLocaleDateString('ko-KR', { year: 'numeric', month: 'long', day: 'numeric' })}
+                                    </Text>
+                                </Box>
+                                <ActionIcon variant="subtle" color="gray" size="lg" onClick={closeInquiryDetail}>
+                                    <X size={20} />
+                                </ActionIcon>
+                            </Group>
+                        </Box>
+
+                        {/* 구분선 */}
+                        <Box h={1} bg="gray.1" />
+
                         {/* 내용 영역 */}
-                        <Box p="md" style={{ maxHeight: '40vh', overflowY: 'auto' }}>
+                        <Box p="lg" style={{ maxHeight: '50vh', overflowY: 'auto' }}>
                             {/* 비공개이고 잠금 상태일 때 */}
                             {selectedInquiry.isPrivate && !inquiryUnlocked ? (
-                                <Box ta="center" py="xl">
-                                    {/* 블러 처리된 내용 미리보기 */}
-                                    <Box mb="lg" style={{ filter: 'blur(8px)', userSelect: 'none', pointerEvents: 'none' }}>
-                                        <Text size="sm" c="dimmed" style={{ lineHeight: 1.8 }}>
-                                            {selectedInquiry.content.slice(0, 100)}...
+                                <Box pos="relative">
+                                    {/* 블러 처리된 내용 */}
+                                    <Box style={{ filter: 'blur(6px)', userSelect: 'none', opacity: 0.5 }}>
+                                        <Text size="sm" c="dark" style={{ lineHeight: 1.8 }}>
+                                            {selectedInquiry.content || '문의 내용이 여기에 표시됩니다. 비밀번호를 입력하면 전체 내용을 확인할 수 있습니다.'}
                                         </Text>
                                     </Box>
 
-                                    {/* 비밀번호 입력 */}
-                                    <Box maw={280} mx="auto">
-                                        <Text size="sm" c="dimmed" mb="md">
-                                            비공개 문의입니다.<br />연락처 뒷자리 4자리를 입력해주세요.
+                                    {/* 오버레이 */}
+                                    <Box
+                                        pos="absolute"
+                                        top={0} left={0} right={0} bottom={0}
+                                        style={{
+                                            display: 'flex',
+                                            flexDirection: 'column',
+                                            alignItems: 'center',
+                                            justifyContent: 'center',
+                                            background: 'rgba(255,255,255,0.7)',
+                                            backdropFilter: 'blur(2px)',
+                                            borderRadius: 12,
+                                            padding: 24
+                                        }}
+                                    >
+                                        <Box
+                                            w={48} h={48} mb="md"
+                                            style={{
+                                                display: 'flex',
+                                                alignItems: 'center',
+                                                justifyContent: 'center',
+                                                background: '#f1f3f5',
+                                                borderRadius: 24
+                                            }}
+                                        >
+                                            <span className="material-symbols-outlined" style={{ fontSize: 24, color: '#495057' }}>lock</span>
+                                        </Box>
+                                        <Text size="sm" fw={500} c="dark" mb={4}>비공개 문의</Text>
+                                        <Text size="xs" c="dimmed" ta="center" mb="lg">
+                                            작성 시 입력한 연락처 뒷자리 4자리를<br />입력해주세요.
                                         </Text>
                                         <TextInput
-                                            placeholder="뒷자리 4자리"
+                                            placeholder="0000"
                                             value={inquiryPinInput}
                                             onChange={(e) => setInquiryPinInput(e.currentTarget.value.replace(/\D/g, '').slice(0, 4))}
                                             maxLength={4}
-                                            styles={{ input: { textAlign: 'center', fontSize: '18px', letterSpacing: 8 } }}
+                                            w={160}
+                                            styles={{
+                                                input: {
+                                                    textAlign: 'center',
+                                                    fontSize: '24px',
+                                                    fontWeight: 600,
+                                                    letterSpacing: 12,
+                                                    height: 48,
+                                                    borderRadius: 12,
+                                                    border: '2px solid #e9ecef',
+                                                    '&:focus': { borderColor: '#3b4896' }
+                                                }
+                                            }}
                                             error={inquiryPinError}
                                         />
                                         <Button
                                             fullWidth
+                                            w={160}
                                             mt="md"
+                                            size="md"
+                                            radius="xl"
                                             onClick={handleInquiryUnlock}
                                             disabled={inquiryPinInput.length !== 4}
+                                            style={{ fontWeight: 600 }}
                                         >
                                             확인하기
                                         </Button>
@@ -2205,16 +2258,19 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                 </Box>
                             ) : (
                                 /* 공개 또는 잠금 해제 시 */
-                                <Stack gap="md">
-                                    <Text size="sm" style={{ whiteSpace: 'pre-wrap', lineHeight: 1.8 }}>
+                                <Stack gap="lg">
+                                    <Text size="sm" c="dark" style={{ whiteSpace: 'pre-wrap', lineHeight: 1.8 }}>
                                         {selectedInquiry.content}
                                     </Text>
 
                                     {/* 답변 */}
                                     {selectedInquiry.replies && selectedInquiry.replies.length > 0 && (
-                                        <Box p="md" bg="blue.0" style={{ borderRadius: 8 }}>
-                                            <Text size="xs" fw={600} c="blue" mb={4}>관리자 답변</Text>
-                                            <Text size="sm">{selectedInquiry.replies[0].content}</Text>
+                                        <Box p="md" style={{ backgroundColor: '#f0f4ff', borderRadius: 12, borderLeft: '4px solid #3b4896' }}>
+                                            <Group gap={6} mb={6}>
+                                                <span className="material-symbols-outlined" style={{ fontSize: 16, color: '#3b4896' }}>support_agent</span>
+                                                <Text size="xs" fw={600} c="brand">관리자 답변</Text>
+                                            </Group>
+                                            <Text size="sm" c="dark">{selectedInquiry.replies[0].content}</Text>
                                         </Box>
                                     )}
 
@@ -2222,11 +2278,13 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                     {inquiryUnlocked && selectedInquiry.isPrivate && (
                                         <Button
                                             variant="subtle"
-                                            color="red"
+                                            color="gray"
                                             size="sm"
+                                            leftSection={<span className="material-symbols-outlined" style={{ fontSize: 16 }}>delete</span>}
                                             onClick={handleInquiryDelete}
+                                            style={{ alignSelf: 'center' }}
                                         >
-                                            이 문의 삭제하기
+                                            이 문의 삭제
                                         </Button>
                                     )}
                                 </Stack>
