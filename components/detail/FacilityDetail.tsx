@@ -718,6 +718,20 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                             onClick={(e) => {
                                 e.stopPropagation();
                                 e.preventDefault();
+                                // 지도에서 해당 위치로 이동
+                                onClose();
+                            }}
+                        >
+                            <span className="material-symbols-outlined" style={{ fontSize: '24px' }}>location_on</span>
+                        </ActionIcon>
+                        <ActionIcon
+                            variant="transparent"
+                            color="white"
+                            w={36}
+                            h={36}
+                            onClick={(e) => {
+                                e.stopPropagation();
+                                e.preventDefault();
                                 navigator.clipboard.writeText(`https://daedaesonson.com/?id=${facility.id}`);
                             }}
                         >
