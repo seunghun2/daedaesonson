@@ -9640,5 +9640,53 @@
     "totalPrices": 0,
     "images": 15,
     "crawledAt": "2025-12-21T13:25:01.081Z"
+  },
+  {
+    "no": "876",
+    "name": "상락원 지장영묘전",
+    "url": "http://w2r2.com/",
+    "prices": {
+      "묘지": [],
+      "봉안당": [],
+      "자연장": [],
+      "관리비": [],
+      "기타": []
+    },
+    "allPrices": [],
+    "totalPrices": 0,
+    "images": 6,
+    "crawledAt": "2025-12-21T13:25:14.833Z"
+  },
+  {
+    "no": "878",
+    "name": "장성군추모공원",
+    "url": "https://www.jangseong.go.kr/home/www/news/jangseong/notice/show/5238?content_print=doc&&title=%EA%B3%B5%EC%A7%80%EC%82%AC%ED%95%AD",
+    "prices": {
+      "묘지": [],
+      "봉안당": [],
+      "자연장": [],
+      "관리비": [],
+      "기타": []
+    },
+    "allPrices": [],
+    "totalPrices": 0,
+    "images": 0,
+    "crawledAt": "2025-12-21T13:25:24.599Z"
+  },
+  {
+    "no": "879",
+    "name": "익산시 추모의집 제1관",
+    "url": "http://www.iksanmemorial.kr/main/main.do",
+    "prices": {
+      "묘지": [],
+      "봉안당": [],
+      "자연장": [],
+      "관리비": [],
+      "기타": []
+    },
+    "allPrices": [],
+    "totalPrices": 0,
+    "images": 15,
+    "crawledAt": "2025-12-21T13:27:01.006Z"
   }
 ]
