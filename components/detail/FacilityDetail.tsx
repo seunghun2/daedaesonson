@@ -330,31 +330,22 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
         };
     }, [opened]);
 
-    // 조회수 상태 (초기값: 시설 ID 기반 더미)
+    // 조회수 상태 (초기값: 시설 데이터에서 가져오거나 ID 기반 계산)
     const getInitialViewCount = () => {
         const hash = facility.id.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
         return 50 + (hash * 17) % 450;
     };
-    const initialCount = (facility as any).viewCount || getInitialViewCount();
-    const [viewCount, setViewCount] = useState(initialCount);
+    const baseCount = (facility as any).viewCount || getInitialViewCount();
+    // 🚀 즉시 +1 표시 (마운트 시점에 바로)
+    const [viewCount, setViewCount] = useState(baseCount + 1);
 
-    // 🔥 조회수 증가 API 호출 (컴포넌트 마운트 시 1회) + Optimistic Update
+    // 🔥 조회수 증가 API 호출 - Fire & Forget (응답 기다리지 않음)
     useEffect(() => {
-        // 🚀 Optimistic: 즉시 +1 표시 (API 응답 전에)
-        setViewCount(initialCount + 1);
-
-        const incrementViewCount = async () => {
-            try {
-                const res = await fetch(`/api/facilities/${facility.id}/view`, { method: 'POST' });
-                if (res.ok) {
-                    const data = await res.json();
-                    setViewCount(data.viewCount);
-                }
-            } catch (e) {
-                console.error('Failed to increment view count:', e);
-            }
-        };
-        incrementViewCount();
+        // 백그라운드에서 조회수 증가 (UI 블로킹 없음)
+        fetch(`/api/facilities/${facility.id}/view`, { method: 'POST' })
+            .then(res => res.ok && res.json())
+            .then(data => data?.viewCount && setViewCount(data.viewCount))
+            .catch(() => { }); // 실패해도 무시
     }, [facility.id]);
 
     const theme = useMantineTheme();

@@ -342,5 +342,21 @@
     "totalPrices": 0,
     "images": 9,
     "crawledAt": "2025-12-21T05:10:25.239Z"
+  },
+  {
+    "no": "24",
+    "name": "(재)하늘나라공원 포천묘원",
+    "url": "https://xn--ob0bz2e4zbexiv9vu3t.com/",
+    "prices": {
+      "묘지": [],
+      "봉안당": [],
+      "자연장": [],
+      "관리비": [],
+      "기타": []
+    },
+    "allPrices": [],
+    "totalPrices": 0,
+    "images": 13,
+    "crawledAt": "2025-12-21T05:12:36.689Z"
   }
 ]
