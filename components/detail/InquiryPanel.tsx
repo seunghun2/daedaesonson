@@ -33,8 +33,9 @@ interface InquiryPanelProps {
 }
 
 export default function InquiryPanel({ facility, isOpen, onClose, allFacilities = [] }: InquiryPanelProps) {
-    // 모바일 감지
-    const isMobile = useMediaQuery('(max-width: 800px)');
+    // 모바일 감지 (기본값 true - SSR 대응)
+    const isMobileQuery = useMediaQuery('(max-width: 800px)');
+    const isMobile = isMobileQuery ?? true;
 
     // 시설 ID → 시설명 매핑
     const facilityNameMap = new Map(allFacilities.map(f => [f.id, f.name]));
