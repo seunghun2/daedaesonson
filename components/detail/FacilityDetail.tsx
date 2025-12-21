@@ -1,8 +1,8 @@
 import { useState, useEffect, useRef } from 'react';
-import { Image, Text, Badge, Group, Button, Stack, Box, Paper, Modal, Tabs, Collapse, ActionIcon, Rating, Textarea, TextInput, LoadingOverlay, useMantineTheme, Accordion, Table } from '@mantine/core';
+import { Image, Text, Badge, Group, Button, Stack, Box, Paper, Modal, Tabs, Collapse, ActionIcon, Rating, Textarea, TextInput, LoadingOverlay, useMantineTheme, Accordion, Table, Switch, Select, Drawer } from '@mantine/core';
 import { useDisclosure, useMediaQuery } from '@mantine/hooks';
-import { Car, Utensils, Accessibility, Store, Navigation, Globe, ChevronLeft, ChevronRight, TrendingUp, ChevronDown, ChevronUp, Star, Pencil, Camera, X, ImageIcon, Plus, Trash, Archive, Mountain, Trees, Layers } from 'lucide-react';
-import StoryPanel from './StoryPanel';
+import { Car, Utensils, Accessibility, Store, Navigation, Globe, ChevronLeft, ChevronRight, TrendingUp, ChevronDown, ChevronUp, Star, Pencil, Camera, X, ImageIcon, Plus, Trash, Archive, Mountain, Trees, Layers, Lock, Unlock } from 'lucide-react';
+import InquiryPanel from './InquiryPanel';
 import { Facility, FACILITY_CATEGORY_LABELS, Review } from '@/types';
 import { PRICE_TAB_CATEGORIES, OTHER_TAB_CATEGORY } from '@/lib/constants';
 import { formatKoreanCurrency, formatRelativeTime } from '@/lib/format';
@@ -357,54 +357,90 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
     const theme = useMantineTheme();
     const isMobile = useMediaQuery(`(max-width: ${theme.breakpoints.sm})`);
 
-    // Review State
+    // Inquiry State (문의 폼)
     const [reviews, setReviews] = useState<Review[]>(facility.reviews || []);
     const [reviewCount, setReviewCount] = useState(facility.reviews?.length || 0);
     const [reviewModalOpened, { open: openReviewModal, close: closeReviewModal }] = useDisclosure(false);
     const [isSubmitting, setIsSubmitting] = useState(false);
-    const [reviewForm, setReviewForm] = useState({
-        rating: 5,
+    const [inquiryForm, setInquiryForm] = useState({
+        type: '', // 문의 종류
+        facilityId: facility.id, // 선택된 시설
+        facilityName: facility.name,
+        title: '',
         content: '',
-        author: '',
-        password: '',
-        photos: [] as string[]
+        phone: '',
+        isPrivate: true,
+        photos: [] as string[],
+        privacyAgreed: true, // 개인정보 동의
     });
     const fileInputRef = useRef<HTMLInputElement>(null);
     const [replyingTo, setReplyingTo] = useState<string | null>(null);
     const [replyContent, setReplyContent] = useState('');
     const [likedReviews, setLikedReviews] = useState<Set<string>>(new Set());
-    const [storyOpen, setStoryOpen] = useState(false);
+    const [inquiryOpen, setInquiryOpen] = useState(false);
+
+    // 시설 선택 모달
+    const [facilitySearchOpened, { open: openFacilitySearch, close: closeFacilitySearch }] = useDisclosure(false);
+    const [facilitySearchQuery, setFacilitySearchQuery] = useState('');
+
+    // 연락처 입력 모달 (등록 버튼 클릭 시)
+    const [phoneModalOpened, { open: openPhoneModal, close: closePhoneModal }] = useDisclosure(false);
+
+    // 문의 종류 옵션
+    const INQUIRY_TYPES = [
+        { value: 'price', label: '가격 문의' },
+        { value: 'location', label: '위치/교통' },
+        { value: 'reservation', label: '예약/절차' },
+        { value: 'facility', label: '시설 이용' },
+        { value: 'other', label: '기타' },
+    ];
 
     const phoneNumber = facility.phone || facility.operator?.contact || facility.description || '문의 필요';
     const hasPrice = (facility.priceRange?.max || 0) > 0;
 
-    const handleSubmitReview = async () => {
-        if (!reviewForm.content.trim()) {
-            alert('리뷰 내용을 입력해주세요.');
+    // 전화번호 포맷팅 헬퍼
+    const formatPhoneNumber = (value: string) => {
+        const digits = value.replace(/\D/g, '');
+        if (digits.length <= 3) return digits;
+        if (digits.length <= 7) return `${digits.slice(0, 3)}-${digits.slice(3)}`;
+        return `${digits.slice(0, 3)}-${digits.slice(3, 7)}-${digits.slice(7, 11)}`;
+    };
+
+    const handleSubmitInquiry = async () => {
+        if (!inquiryForm.title.trim()) {
+            alert('제목을 입력해주세요.');
+            return;
+        }
+        if (!inquiryForm.content.trim()) {
+            alert('문의 내용을 입력해주세요.');
+            return;
+        }
+        if (!inquiryForm.phone.trim() || inquiryForm.phone.replace(/\D/g, '').length < 10) {
+            alert('올바른 연락처를 입력해주세요.');
             return;
         }
 
         setIsSubmitting(true);
         try {
-            const res = await fetch(`/api/facilities/${facility.id}/review`, {
+            const res = await fetch(`/api/facilities/${facility.id}/inquiries`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(reviewForm)
+                body: JSON.stringify({
+                    title: inquiryForm.title,
+                    content: inquiryForm.content,
+                    phone: inquiryForm.phone,
+                    isPrivate: inquiryForm.isPrivate
+                })
             });
             const data = await res.json();
 
             if (res.ok && data.success) {
-                // Update local state
-                const newReview = data.review;
-                setReviews([newReview, ...reviews]);
-                setReviewCount(prev => prev + 1);
-
                 // Reset form and close
-                setReviewForm({ rating: 5, content: '', author: '', password: '', photos: [] });
+                setInquiryForm({ type: '', facilityId: facility.id, facilityName: facility.name, title: '', content: '', phone: '', isPrivate: true, photos: [], privacyAgreed: true });
                 closeReviewModal();
-                alert('리뷰가 등록되었습니다!');
+                alert('문의가 등록되었습니다!');
             } else {
-                alert(data.error || '리뷰 등록에 실패했습니다.');
+                alert(data.error || '문의 등록에 실패했습니다.');
             }
         } catch (error) {
             console.error(error);
@@ -419,7 +455,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
         if (!files || files.length === 0) return;
 
         // Limit to 5 photos
-        if (reviewForm.photos.length + files.length > 5) {
+        if (inquiryForm.photos.length + files.length > 5) {
             alert('사진은 최대 5장까지 첨부할 수 있습니다.');
             return;
         }
@@ -427,7 +463,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
         Array.from(files).forEach(file => {
             const reader = new FileReader();
             reader.onloadend = () => {
-                setReviewForm(prev => ({
+                setInquiryForm(prev => ({
                     ...prev,
                     photos: [...prev.photos, reader.result as string]
                 }));
@@ -437,7 +473,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
     };
 
     const removePhoto = (index: number) => {
-        setReviewForm(prev => ({
+        setInquiryForm(prev => ({
             ...prev,
             photos: prev.photos.filter((_, i) => i !== index)
         }));
@@ -1040,15 +1076,15 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                 </Stack>
             </Box>
 
-            {/* 13. 이용자 리뷰 */}
+            {/* 13. 문의하기 */}
             <Box bg="white" p="md" pb={100}>
                 <Group justify="space-between" mb="md" align="center">
                     <Group justify="space-between">
-                        <Text size="lg" fw={700} style={{ cursor: 'pointer' }} onClick={() => setStoryOpen(true)}>방문자 리뷰</Text>
-                        <ChevronRight size={20} style={{ cursor: 'pointer' }} onClick={() => setStoryOpen(true)} />
+                        <Text size="lg" fw={700} style={{ cursor: 'pointer' }} onClick={() => setInquiryOpen(true)}>문의하기</Text>
+                        <ChevronRight size={20} style={{ cursor: 'pointer' }} onClick={() => setInquiryOpen(true)} />
                     </Group>
-                    <Group gap={4} style={{ cursor: 'pointer' }} onClick={() => setStoryOpen(true)}>
-                        <Text size="xs" c="dimmed">사진 전체</Text>
+                    <Group gap={4} style={{ cursor: 'pointer' }} onClick={() => setInquiryOpen(true)}>
+                        <Text size="xs" c="dimmed">전체보기</Text>
                         <ChevronRight size={14} color="gray" />
                     </Group>
                 </Group>
@@ -1179,14 +1215,14 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                 </Stack>
 
 
-                {/* 'Current Reviews' Count Button - Open Story Panel */}
+                {/* 'Current Reviews' Count Button - Open Inquiry Panel */}
                 {reviews.length > 0 && (
                     <Button
                         variant="filled" color="gray.0" fullWidth size="lg" radius="md"
                         styles={{ root: { color: '#495057', height: '52px' } }}
-                        onClick={() => setStoryOpen(true)}
+                        onClick={() => setInquiryOpen(true)}
                     >
-                        방문자 리뷰 {reviews.length}개 더보기
+                        문의 {reviews.length}개 더보기
                     </Button>
                 )}
 
@@ -1292,7 +1328,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
 
 
             {/* Story Panel Overlay */}
-            <StoryPanel facility={facility} isOpen={storyOpen} onClose={() => setStoryOpen(false)} />
+            <InquiryPanel facility={facility} isOpen={inquiryOpen} onClose={() => setInquiryOpen(false)} />
 
             {/* Floating Button Removed */}
 
@@ -1642,148 +1678,347 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                     )}
                 </Box>
             )}
-            {/* Review Write Panel (HogangNono Style - Slide Panel) */}
+            {/* 글쓰기 패널 (블라인드/호갱노노/리멤버 스타일) */}
             {
                 reviewModalOpened && (
-                    <Paper
-                        shadow="xl"
-                        radius={0}
+                    <Box
                         style={{
-                            position: 'fixed', // Fixed to escape parent overflow
+                            position: 'fixed',
                             top: 0,
-                            left: isMobile ? 0 : 400, // Desktop: Start after the 400px sidebar
+                            left: isMobile ? 0 : 400,
                             width: isMobile ? '100%' : '400px',
-                            height: '100dvh', // Use dynamic viewport height for mobile
-                            zIndex: 9999, // Above map and other elements
+                            height: '100dvh',
+                            zIndex: 9999,
                             backgroundColor: 'white',
-                            borderLeft: isMobile ? 'none' : '1px solid #e9ecef',
                             display: 'flex',
                             flexDirection: 'column',
-                            transition: 'left 0.3s ease' // Smooth transition
                         }}
                     >
                         <LoadingOverlay visible={isSubmitting} />
 
-                        {/* Header */}
-                        <Box px="md" h={56} style={{ borderBottom: '1px solid #f1f3f5', display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexShrink: 0, position: 'relative' }}>
-                            <ActionIcon variant="transparent" c="black" onClick={closeReviewModal} style={{ zIndex: 1 }}>
-                                <X size={24} />
+                        {/* 헤더 */}
+                        <Box
+                            px="md"
+                            py="sm"
+                            style={{
+                                borderBottom: '1px solid #f1f3f5',
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'space-between',
+                                flexShrink: 0,
+                                height: 56,
+                            }}
+                        >
+                            <ActionIcon variant="subtle" color="dark" size="lg" onClick={closeReviewModal}>
+                                <X size={22} />
                             </ActionIcon>
 
-                            <Text size="md" fw={700} style={{ position: 'absolute', left: '50%', transform: 'translateX(-50%)', zIndex: 0 }}>
-                                글쓰기
-                            </Text>
+                            <Text size="md" fw={600}>문의하기</Text>
 
                             <Button
-                                variant="light"
+                                variant="filled"
                                 color="brand"
-                                c="brand.8"
-                                size="sm"
+                                size="xs"
                                 radius="md"
-                                fw={700}
-                                onClick={handleSubmitReview}
-                                disabled={!reviewForm.content.trim()}
-                                style={{ zIndex: 1, backgroundColor: 'var(--mantine-color-brand-0)', border: 'none' }}
+                                fw={600}
+                                onClick={openPhoneModal}
+                                disabled={!inquiryForm.type || !inquiryForm.title.trim() || !inquiryForm.content.trim()}
                             >
                                 등록
                             </Button>
                         </Box>
 
-                        {/* Content */}
-                        <Box p="md" style={{ flex: 1, overflowY: 'auto' }}>
-                            {/* Disclaimer Box */}
-                            <Paper p="sm" radius="md" mb="lg" bg="#f1f3f5">
-                                <Text size="xs" c="gray.7" style={{ lineHeight: 1.5, wordBreak: 'keep-all' }}>
-                                    다른 사람을 비방하거나, 타인에게 불쾌감을 유발하는 부적절한 표현, 영리 목적의 광고는 삼가해주세요.
+                        {/* 컨텐츠 영역 */}
+                        <Box style={{ flex: 1, overflowY: 'auto' }}>
+                            {/* 안내 문구 - 회색 배경 */}
+                            <Box p="md" style={{ backgroundColor: '#f8f9fa', borderBottom: '1px solid #f1f3f5' }}>
+                                <Text size="xs" c="gray.6" lh={1.6}>
+                                    다른 사람을 비방하거나 부적절한 표현은 삼가해주세요.
                                 </Text>
-                                <Text size="xs" c="dimmed" style={{ textDecoration: 'underline', marginTop: 6, cursor: 'pointer' }}>
-                                    운영 정책 보기
-                                </Text>
-                            </Paper>
-
-                            {/* Facility Name Dropdown */}
-                            <Group justify="space-between" mb="xl" style={{ cursor: 'pointer' }}>
-                                <Text fw={600} size="md">시설: {facility.name}</Text>
-                                <ChevronDown size={20} color="#adb5bd" />
-                            </Group>
-
-                            {/* Hidden Rating Field */}
-                            <Box mb="lg" style={{ display: 'none' }}>
-                                <Rating value={reviewForm.rating} onChange={(v) => setReviewForm({ ...reviewForm, rating: v })} />
                             </Box>
 
-                            {/* Photo Add Button (Square with border) */}
-                            <Box mb="lg">
-                                <input
-                                    type="file"
-                                    multiple
-                                    accept="image/*"
-                                    ref={fileInputRef}
-                                    style={{ display: 'none' }}
-                                    onChange={handlePhotoChange}
-                                />
-                                <Group gap="xs" align="flex-start">
-                                    <Button
-                                        variant="outline"
-                                        color="gray.4"
-                                        w={80} h={80}
-                                        radius="md"
-                                        bg="white"
-                                        style={{
-                                            border: '1px solid #dee2e6',
-                                            flexDirection: 'column',
-                                            gap: 4,
-                                            height: '80px',
-                                            padding: 0,
-                                            flexShrink: 0,
-                                            color: '#868e96'
-                                        }}
-                                        onClick={() => fileInputRef.current?.click()}
-                                    >
-                                        <Camera size={24} strokeWidth={1.5} />
-                                        <Text size="xs" fw={400}>
-                                            {reviewForm.photos.length}/5
-                                        </Text>
-                                    </Button>
-
-                                    {/* Photo Previews */}
-                                    {reviewForm.photos.map((photo, idx) => (
-                                        <Box key={idx} pos="relative" w={80} h={80}>
-                                            <Image src={photo} w={80} h={80} radius="md" style={{ objectFit: 'cover', border: '1px solid #dee2e6' }} />
-                                            <ActionIcon
-                                                size="xs" radius="xl" color="dark" variant="filled"
-                                                style={{ position: 'absolute', top: -6, right: -6 }}
-                                                onClick={() => removePhoto(idx)}
-                                            >
-                                                <X size={10} />
-                                            </ActionIcon>
-                                        </Box>
-                                    ))}
+                            {/* 1. 문의 종류 선택 */}
+                            <Box px="md" py={14} style={{ borderBottom: '1px solid #f1f3f5' }}>
+                                <Group justify="space-between" align="center">
+                                    <Text size="sm" c="dark">문의 종류</Text>
+                                    <Group gap={6}>
+                                        <Select
+                                            placeholder="선택해주세요"
+                                            value={inquiryForm.type}
+                                            onChange={(value) => setInquiryForm({ ...inquiryForm, type: value || '' })}
+                                            data={INQUIRY_TYPES.map(t => ({ value: t.value, label: t.label }))}
+                                            variant="unstyled"
+                                            size="sm"
+                                            comboboxProps={{
+                                                withinPortal: true,
+                                                zIndex: 10001,
+                                                position: 'bottom-end',
+                                                width: 160
+                                            }}
+                                            styles={{
+                                                input: {
+                                                    textAlign: 'right',
+                                                    fontWeight: 500,
+                                                    paddingRight: 24,
+                                                    color: inquiryForm.type ? '#495057' : '#adb5bd',
+                                                    minWidth: 100
+                                                },
+                                                wrapper: { width: 'auto' }
+                                            }}
+                                            rightSection={<ChevronDown size={14} color="#adb5bd" />}
+                                            rightSectionWidth={24}
+                                        />
+                                    </Group>
                                 </Group>
                             </Box>
 
-                            {/* Text Input */}
-                            <Textarea
-                                placeholder="솔직한 후기를 남겨주세요."
-                                variant="unstyled"
-                                size="md"
-                                autosize
-                                minRows={10}
-                                value={reviewForm.content}
-                                onChange={(e) => setReviewForm({ ...reviewForm, content: e.target.value })}
-                                styles={{
-                                    input: {
-                                        padding: 0,
-                                        fontSize: '16px',
-                                        color: '#343a40',
-                                        '::placeholder': { color: '#adb5bd' }
-                                    }
-                                }}
-                            />
+                            {/* 2. 시설 선택 */}
+                            <Box
+                                px="md"
+                                py={14}
+                                style={{ borderBottom: facilitySearchOpened ? 'none' : '1px solid #f1f3f5', cursor: 'pointer' }}
+                                onClick={() => facilitySearchOpened ? closeFacilitySearch() : openFacilitySearch()}
+                            >
+                                <Group justify="space-between" align="center">
+                                    <Text size="sm" c="dark">시설</Text>
+                                    <Group gap={6} pr={4}>
+                                        <Text size="sm" fw={500} c="dark">{inquiryForm.facilityName}</Text>
+                                        {facilitySearchOpened ? (
+                                            <ChevronUp size={14} color="#adb5bd" />
+                                        ) : (
+                                            <ChevronDown size={14} color="#adb5bd" />
+                                        )}
+                                    </Group>
+                                </Group>
+                            </Box>
+
+                            {/* 시설 검색 인라인 패널 */}
+                            <Collapse in={facilitySearchOpened}>
+                                <Box px="md" pb="sm" style={{ borderBottom: '1px solid #f1f3f5', backgroundColor: '#f8f9fa' }}>
+                                    <TextInput
+                                        placeholder="시설명 검색..."
+                                        value={facilitySearchQuery}
+                                        onChange={(e) => setFacilitySearchQuery(e.currentTarget.value)}
+                                        mb="xs"
+                                        size="sm"
+                                        radius="sm"
+                                    />
+                                    <Box style={{ maxHeight: 200, overflowY: 'auto' }}>
+                                        {allFacilities
+                                            .filter(f => f.name.toLowerCase().includes(facilitySearchQuery.toLowerCase()))
+                                            .slice(0, 20)
+                                            .map(f => (
+                                                <Box
+                                                    key={f.id}
+                                                    py={10}
+                                                    style={{
+                                                        cursor: 'pointer',
+                                                        borderRadius: 6,
+                                                        backgroundColor: inquiryForm.facilityId === f.id ? '#e7f5ff' : 'transparent',
+                                                    }}
+                                                    onClick={() => {
+                                                        setInquiryForm({ ...inquiryForm, facilityId: f.id, facilityName: f.name });
+                                                        closeFacilitySearch();
+                                                    }}
+                                                >
+                                                    <Group justify="space-between">
+                                                        <Box>
+                                                            <Text size="sm" fw={inquiryForm.facilityId === f.id ? 600 : 500}>{f.name}</Text>
+                                                            <Text size="xs" c="dimmed">{f.address?.split(' ').slice(0, 2).join(' ')}</Text>
+                                                        </Box>
+                                                        {inquiryForm.facilityId === f.id && (
+                                                            <Text size="sm" c="brand" fw={600}>✓</Text>
+                                                        )}
+                                                    </Group>
+                                                </Box>
+                                            ))
+                                        }
+                                    </Box>
+                                </Box>
+                            </Collapse>
+
+                            {/* 3. 제목 입력 */}
+                            <Box px="md" py={14} style={{ borderBottom: '1px solid #f1f3f5' }}>
+                                <Text size="sm" fw={500} c="dark" mb={8}>
+                                    제목 <Text component="span" c="red" inherit>*</Text>
+                                </Text>
+                                <TextInput
+                                    placeholder="ex) 봉안당 가격이 궁금합니다"
+                                    value={inquiryForm.title}
+                                    onChange={(e) => setInquiryForm({ ...inquiryForm, title: e.currentTarget.value })}
+                                    variant="unstyled"
+                                    size="sm"
+                                    styles={{
+                                        input: {
+                                            padding: 0,
+                                            fontSize: '14px',
+                                            '&::placeholder': { color: '#adb5bd' }
+                                        }
+                                    }}
+                                />
+                            </Box>
+
+                            {/* 4. 문의 내용 + 사진 */}
+                            <Box px="md" py={14} style={{ borderBottom: '1px solid #f1f3f5', minHeight: 160 }}>
+                                <Textarea
+                                    placeholder="궁금한 점을 자세히 적어주세요."
+                                    variant="unstyled"
+                                    size="md"
+                                    autosize
+                                    minRows={6}
+                                    value={inquiryForm.content}
+                                    onChange={(e) => setInquiryForm({ ...inquiryForm, content: e.target.value })}
+                                    styles={{
+                                        input: {
+                                            padding: 0,
+                                            fontSize: '15px',
+                                            lineHeight: 1.6,
+                                            '&::placeholder': { color: '#adb5bd' }
+                                        }
+                                    }}
+                                />
+
+                                {/* 사진 추가 */}
+                                <Box mt="lg">
+                                    <input
+                                        type="file"
+                                        multiple
+                                        accept="image/*"
+                                        ref={fileInputRef}
+                                        style={{ display: 'none' }}
+                                        onChange={handlePhotoChange}
+                                    />
+                                    <Group gap="xs" align="flex-start">
+                                        <Box
+                                            w={72}
+                                            h={72}
+                                            style={{
+                                                border: '1px solid #dee2e6',
+                                                borderRadius: 8,
+                                                display: 'flex',
+                                                flexDirection: 'column',
+                                                alignItems: 'center',
+                                                justifyContent: 'center',
+                                                cursor: 'pointer',
+                                                flexShrink: 0,
+                                            }}
+                                            onClick={() => fileInputRef.current?.click()}
+                                        >
+                                            <Camera size={22} color="#868e96" strokeWidth={1.5} />
+                                            <Text size="xs" c="dimmed" mt={2}>
+                                                {inquiryForm.photos.length}/5
+                                            </Text>
+                                        </Box>
+
+                                        {inquiryForm.photos.map((photo, idx) => (
+                                            <Box key={idx} pos="relative" w={72} h={72}>
+                                                <Image src={photo} w={72} h={72} radius="md" style={{ objectFit: 'cover', border: '1px solid #dee2e6' }} />
+                                                <ActionIcon
+                                                    size={18}
+                                                    radius="xl"
+                                                    color="dark"
+                                                    variant="filled"
+                                                    style={{ position: 'absolute', top: -6, right: -6 }}
+                                                    onClick={() => removePhoto(idx)}
+                                                >
+                                                    <X size={10} />
+                                                </ActionIcon>
+                                            </Box>
+                                        ))}
+                                    </Group>
+                                </Box>
+                            </Box>
+
+                            {/* 5. 비공개 토글 */}
+                            <Box p="md">
+                                <Group justify="space-between">
+                                    <Group gap="xs">
+                                        <Box
+                                            w={32}
+                                            h={32}
+                                            style={{
+                                                borderRadius: 8,
+                                                backgroundColor: inquiryForm.isPrivate ? '#e7f5ff' : '#f1f3f5',
+                                                display: 'flex',
+                                                alignItems: 'center',
+                                                justifyContent: 'center',
+                                            }}
+                                        >
+                                            {inquiryForm.isPrivate ? (
+                                                <Lock size={16} color="#228be6" />
+                                            ) : (
+                                                <Unlock size={16} color="#868e96" />
+                                            )}
+                                        </Box>
+                                        <Text size="sm" fw={500}>비공개</Text>
+                                    </Group>
+                                    <Switch
+                                        checked={inquiryForm.isPrivate}
+                                        onChange={(e) => setInquiryForm({ ...inquiryForm, isPrivate: e.currentTarget.checked })}
+                                        color="brand"
+                                        size="md"
+                                    />
+                                </Group>
+                            </Box>
                         </Box>
-                    </Paper>
+                    </Box>
                 )
             }
+
+
+            {/* 연락처 입력 모달 (등록 버튼 클릭 시) */}
+            <Modal
+                opened={phoneModalOpened}
+                onClose={closePhoneModal}
+                title="연락처 입력"
+                size="sm"
+                centered
+                zIndex={10001}
+            >
+                <Stack gap="md">
+                    <Text size="sm" c="dimmed">
+                        문의 답변을 받으실 연락처를 입력해주세요.
+                    </Text>
+
+                    <TextInput
+                        label="연락처"
+                        placeholder="010-0000-0000"
+                        value={inquiryForm.phone}
+                        onChange={(e) => setInquiryForm({ ...inquiryForm, phone: formatPhoneNumber(e.currentTarget.value) })}
+                        description="뒷자리 4자리가 비밀번호로 사용됩니다"
+                        required
+                    />
+
+                    <Paper p="sm" bg="gray.0" radius="md">
+                        <Group align="flex-start" gap="sm">
+                            <Switch
+                                checked={inquiryForm.privacyAgreed}
+                                onChange={(e) => setInquiryForm({ ...inquiryForm, privacyAgreed: e.currentTarget.checked })}
+                                color="brand"
+                                size="sm"
+                                mt={2}
+                            />
+                            <Box style={{ flex: 1 }}>
+                                <Text size="xs" fw={500}>개인정보 수집 동의</Text>
+                                <Text size="xs" c="dimmed" lh={1.5} mt={4}>
+                                    문의 답변 및 비밀번호 생성을 위해 연락처를 수집합니다.
+                                </Text>
+                            </Box>
+                        </Group>
+                    </Paper>
+
+                    <Button
+                        fullWidth
+                        onClick={() => {
+                            closePhoneModal();
+                            handleSubmitInquiry();
+                        }}
+                        disabled={!inquiryForm.phone.trim() || inquiryForm.phone.replace(/\D/g, '').length < 10 || !inquiryForm.privacyAgreed}
+                    >
+                        문의 등록하기
+                    </Button>
+                </Stack>
+            </Modal>
         </Box >
     );
 }
