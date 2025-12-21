@@ -360,6 +360,11 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
 
     // 🔥 조회수 증가 API 호출 - Fire & Forget (응답 기다리지 않음)
     useEffect(() => {
+        // 시설 변경 시 리뷰/문의 리셋
+        setReviews(facility.reviews || []);
+        setInquiries((facility as any).inquiries || []);
+        setReviewCount(facility.reviews?.length || 0);
+
         // 백그라운드에서 조회수 증가 (UI 블로킹 없음)
         fetch(`/api/facilities/${facility.id}/view`, { method: 'POST' })
             .then(res => res.ok && res.json())
