@@ -309,6 +309,16 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
         containerRef.current?.scrollTo({ top: 0 });
         containerRef.current?.parentElement?.scrollTo({ top: 0 });
 
+        // 📊 GA4 이벤트 전송 - 시설 상세 조회
+        if (typeof window !== 'undefined' && (window as any).gtag) {
+            (window as any).gtag('event', 'facility_view', {
+                facility_id: initialFacility.id,
+                facility_name: initialFacility.name,
+                facility_category: initialFacility.category,
+                is_public: initialFacility.isPublic
+            });
+        }
+
         // 🔥 상세 정보 백그라운드 로딩 (UI 블로킹 없음)
         // 이미 priceInfo가 있으면 추가 로딩 스킵
         if (!initialFacility.priceInfo && !initialFacility.pricing) {

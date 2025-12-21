@@ -8971,5 +8971,212 @@
     "totalPrices": 0,
     "images": 1,
     "crawledAt": "2025-12-21T12:51:45.445Z"
+  },
+  {
+    "no": "825",
+    "name": "완주군 추모의집",
+    "url": "https://www.wanju.go.kr/index.9is?contentUid=ff8080818b024d8e018b274f41dd2af8",
+    "prices": {
+      "묘지": [],
+      "봉안당": [],
+      "자연장": [],
+      "관리비": [],
+      "기타": []
+    },
+    "allPrices": [],
+    "totalPrices": 0,
+    "images": 3,
+    "crawledAt": "2025-12-21T12:53:29.075Z"
+  },
+  {
+    "no": "827",
+    "name": "춘천안식공원(봉안묘)",
+    "url": "https://www.cuc.or.kr/serviceStandard.do",
+    "prices": {
+      "묘지": [],
+      "봉안당": [],
+      "자연장": [],
+      "관리비": [],
+      "기타": [
+        {
+          "price": 5000000,
+          "priceText": "500만원",
+          "context": "상금지급\n보상한도액\n보상한도액은 보험가입 대상 시설별로 설정·운영\n대인 : 1사고당 최소 500만원 ~ 최대 100억원, 1인당 최소 500만원 ~ 최대 5억원\n대물 : 1사고당 최소 50",
+          "category": "기타",
+          "type": "분양가"
+        }
+      ]
+    },
+    "allPrices": [
+      {
+        "price": 5000000,
+        "priceText": "500만원",
+        "context": "상금지급\n보상한도액\n보상한도액은 보험가입 대상 시설별로 설정·운영\n대인 : 1사고당 최소 500만원 ~ 최대 100억원, 1인당 최소 500만원 ~ 최대 5억원\n대물 : 1사고당 최소 50",
+        "category": "기타",
+        "type": "분양가"
+      }
+    ],
+    "totalPrices": 1,
+    "images": 0,
+    "crawledAt": "2025-12-21T12:54:02.624Z"
+  },
+  {
+    "no": "831",
+    "name": "천주교평화의문",
+    "url": "http://pu2046.kr/",
+    "prices": {
+      "묘지": [],
+      "봉안당": [],
+      "자연장": [],
+      "관리비": [],
+      "기타": []
+    },
+    "allPrices": [],
+    "totalPrices": 0,
+    "images": 2,
+    "crawledAt": "2025-12-21T12:54:19.364Z"
+  },
+  {
+    "no": "832",
+    "name": "합천군공설봉안담",
+    "url": "http://www.hcpark.kr/",
+    "prices": {
+      "묘지": [],
+      "봉안당": [],
+      "자연장": [],
+      "관리비": [],
+      "기타": []
+    },
+    "allPrices": [],
+    "totalPrices": 0,
+    "images": 14,
+    "crawledAt": "2025-12-21T12:54:51.256Z"
+  },
+  {
+    "no": "833",
+    "name": "매화원",
+    "url": "https://www.crossroadfukuoka.jp/kr/spot/10817",
+    "prices": {
+      "묘지": [],
+      "봉안당": [],
+      "자연장": [],
+      "관리비": [],
+      "기타": []
+    },
+    "allPrices": [],
+    "totalPrices": 0,
+    "images": 15,
+    "crawledAt": "2025-12-21T12:55:56.525Z"
+  },
+  {
+    "no": "834",
+    "name": "대한불교선각종 정향사",
+    "url": "http://monkedu.buddhism.or.kr/",
+    "prices": {
+      "묘지": [],
+      "봉안당": [],
+      "자연장": [],
+      "관리비": [],
+      "기타": []
+    },
+    "allPrices": [],
+    "totalPrices": 0,
+    "images": 6,
+    "crawledAt": "2025-12-21T12:56:23.058Z"
+  },
+  {
+    "no": "835",
+    "name": "탑동추모공원",
+    "url": "https://www.sisul.or.kr/open_content/memorial/park/introduce.jsp",
+    "prices": {
+      "묘지": [],
+      "봉안당": [],
+      "자연장": [],
+      "관리비": [],
+      "기타": []
+    },
+    "allPrices": [],
+    "totalPrices": 0,
+    "images": 6,
+    "crawledAt": "2025-12-21T12:56:58.662Z"
+  },
+  {
+    "no": "836",
+    "name": "합천추모공원 봉안당 ",
+    "url": "http://www.hcpark.kr/memorial1.html",
+    "prices": {
+      "묘지": [],
+      "봉안당": [],
+      "자연장": [],
+      "관리비": [],
+      "기타": []
+    },
+    "allPrices": [],
+    "totalPrices": 0,
+    "images": 9,
+    "crawledAt": "2025-12-21T12:57:27.608Z"
+  },
+  {
+    "no": "837",
+    "name": "봉선사 봉안당",
+    "url": "http://www.bongsunsa.net/bbs/content.php?co_id=1010",
+    "prices": {
+      "묘지": [],
+      "봉안당": [
+        {
+          "price": 9000000,
+          "priceText": "900만원",
+          "context": "안당(납골당) 안내\n· 기간 : 30년    · 개인단 : 600만원    · 부부단 : 900만원\n· 관리비 : 관리비 포함    · 규격 : 24*24 기본사이즈\n◇ 영구위패(50년)",
+          "category": "봉안당",
+          "type": "분양가"
+        }
+      ],
+      "자연장": [],
+      "관리비": [],
+      "기타": [
+        {
+          "price": 6000000,
+          "priceText": "600만원",
+          "context": "천도재와 제사에 정성을 함께 하시어 복덕을 지으시기 바랍니다.\n\n1. 49재 - 7*7재 600만원, 막재 300만원\n사람이 죽으면 49일 동안 중음신으로 활동하게 되는데, 이 기간에 7*",
+          "category": "기타",
+          "type": "분양가"
+        }
+      ]
+    },
+    "allPrices": [
+      {
+        "price": 6000000,
+        "priceText": "600만원",
+        "context": "천도재와 제사에 정성을 함께 하시어 복덕을 지으시기 바랍니다.\n\n1. 49재 - 7*7재 600만원, 막재 300만원\n사람이 죽으면 49일 동안 중음신으로 활동하게 되는데, 이 기간에 7*",
+        "category": "기타",
+        "type": "분양가"
+      },
+      {
+        "price": 9000000,
+        "priceText": "900만원",
+        "context": "안당(납골당) 안내\n· 기간 : 30년    · 개인단 : 600만원    · 부부단 : 900만원\n· 관리비 : 관리비 포함    · 규격 : 24*24 기본사이즈\n◇ 영구위패(50년)",
+        "category": "봉안당",
+        "type": "분양가"
+      }
+    ],
+    "totalPrices": 2,
+    "images": 5,
+    "crawledAt": "2025-12-21T12:57:58.455Z"
+  },
+  {
+    "no": "838",
+    "name": "광릉 더 크레스트 봉안묘",
+    "url": "http://www.thecrest.co.kr/?m=nobility",
+    "prices": {
+      "묘지": [],
+      "봉안당": [],
+      "자연장": [],
+      "관리비": [],
+      "기타": []
+    },
+    "allPrices": [],
+    "totalPrices": 0,
+    "images": 15,
+    "crawledAt": "2025-12-21T12:58:20.204Z"
   }
 ]
