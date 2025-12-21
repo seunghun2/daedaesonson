@@ -1221,7 +1221,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                             });
                         }
                     }}>
-                        <Text size="xs" c="dimmed">전체보기</Text>
+                        <Text size="xs" c="dimmed">총 {inquiries.length}개의 문의</Text>
                         <ChevronRight size={14} color="gray" />
                     </Group>
                 </Group>
