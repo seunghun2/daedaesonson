@@ -9458,5 +9458,37 @@
     "totalPrices": 0,
     "images": 3,
     "crawledAt": "2025-12-21T13:16:07.120Z"
+  },
+  {
+    "no": "859",
+    "name": "대호지공설묘지 어성정",
+    "url": "https://www.dangjin.go.kr/bokji/sub04_05_03.do",
+    "prices": {
+      "묘지": [],
+      "봉안당": [],
+      "자연장": [],
+      "관리비": [],
+      "기타": []
+    },
+    "allPrices": [],
+    "totalPrices": 0,
+    "images": 15,
+    "crawledAt": "2025-12-21T13:20:49.231Z"
+  },
+  {
+    "no": "863",
+    "name": "모란공원(봉안)",
+    "url": "https://www.brsisul.or.kr/kor/sub01_03_02.do",
+    "prices": {
+      "묘지": [],
+      "봉안당": [],
+      "자연장": [],
+      "관리비": [],
+      "기타": []
+    },
+    "allPrices": [],
+    "totalPrices": 0,
+    "images": 1,
+    "crawledAt": "2025-12-21T13:21:20.486Z"
   }
 ]

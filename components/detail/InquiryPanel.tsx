@@ -310,16 +310,24 @@ export default function InquiryPanel({ facility, isOpen, onClose }: InquiryPanel
             </Drawer >
 
             {/* 비밀번호 입력 모달 */}
-            < Modal
+            <Modal
                 opened={pinOpened}
                 onClose={closePin}
-                title="비밀번호 입력"
                 centered
-                size="xs"
+                size={300}
+                radius="md"
+                withCloseButton
+                title={null}
+                styles={{
+                    content: { padding: '16px' },
+                    body: { padding: '0' }
+                }}
             >
                 <Stack gap="md" align="center">
-                    <Text size="sm" c="dimmed" ta="center">
-                        연락처 뒷자리 4자리를 입력해주세요
+                    <Lock size={24} color="#868e96" />
+                    <Text size="sm" fw={600}>비공개 문의입니다</Text>
+                    <Text size="xs" c="dimmed" ta="center">
+                        작성 시 입력한 연락처 뒷자리 4자리를 입력해주세요.
                     </Text>
 
                     <PinInput
@@ -328,20 +336,21 @@ export default function InquiryPanel({ facility, isOpen, onClose }: InquiryPanel
                         value={pinValue}
                         onChange={setPinValue}
                         error={!!pinError}
-                        size="lg"
+                        size="md"
                     />
 
-                    {pinError && <Text size="sm" c="red">{pinError}</Text>}
+                    {pinError && <Text size="xs" c="red">{pinError}</Text>}
 
                     <Button
                         fullWidth
+                        size="sm"
                         onClick={handlePinSubmit}
                         disabled={pinValue.length !== 4}
                     >
-                        확인
+                        확인하기
                     </Button>
                 </Stack>
-            </Modal >
+            </Modal>
         </>
     );
 }
