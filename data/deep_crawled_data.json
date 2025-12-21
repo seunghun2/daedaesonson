@@ -1,0 +1,657 @@
+[
+  {
+    "no": "1",
+    "name": "(재)낙원추모공원",
+    "url": "https://www.nakwonpark.co.kr/bbs/content.php?co_id=01_03",
+    "religion": "일반/무교",
+    "prices": {
+      "묘지": [
+        {
+          "price": 3300000,
+          "priceText": "330만원",
+          "context": "! 더이음 후불제 상조와 낙원추모공원 장지(수목형 평장묘)를 패키지 상품으로 계약시 최대 330만원 할인 혜택을 드립니다. 전국 최고 수준의 낙",
+          "productName": "평장묘",
+          "category": "묘지",
+          "type": "분양가"
+        }
+      ],
+      "봉안당": [],
+      "자연장": [],
+      "관리비": [],
+      "기타": [
+        {
+          "price": 2900000,
+          "priceText": "290만원",
+          "context": "비하고 싶은 분 필요한 것만 담아 가격은 낮추고 품질은 높였습니다 더이음 250 R 사 (290만원 기준) P 사 (360만원 기준) 의전관리사",
+          "productName": "의전관",
+          "category": "기타",
+          "type": "분양가"
+        },
+        {
+          "price": 3600000,
+          "priceText": "360만원",
+          "context": "담아 가격은 낮추고 품질은 높였습니다 더이음 250 R 사 (290만원 기준) P 사 (360만원 기준) 의전관리사 (장례도우미) 3명 2명 2",
+          "productName": "의전관",
+          "category": "기타",
+          "type": "분양가"
+        },
+        {
+          "price": 2000000,
+          "priceText": "200만원",
+          "context": "기, 기증자 유자녀 후원금 1억4천만원, 기증원 홍보대사 김경식 씨 등 8인의 기부금 4천200만원 등이 모였다. 이 기부금은 57명의 장기 기",
+          "productName": "일반상품",
+          "category": "기타",
+          "type": "분양가"
+        },
+        {
+          "price": 2810000,
+          "priceText": "281만원",
+          "context": "표: 조회 196",
+          "productName": "조회 196",
+          "category": "기타",
+          "type": "테이블가격"
+        },
+        {
+          "price": 2830000,
+          "priceText": "283만원",
+          "context": "표: 조회 195",
+          "productName": "조회 195",
+          "category": "기타",
+          "type": "테이블가격"
+        },
+        {
+          "price": 3060000,
+          "priceText": "306만원",
+          "context": "표: 조회 194",
+          "productName": "조회 194",
+          "category": "기타",
+          "type": "테이블가격"
+        },
+        {
+          "price": 2970000,
+          "priceText": "297만원",
+          "context": "표: 조회 193",
+          "productName": "조회 193",
+          "category": "기타",
+          "type": "테이블가격"
+        }
+      ]
+    },
+    "allPrices": [
+      {
+        "price": 2900000,
+        "priceText": "290만원",
+        "context": "비하고 싶은 분 필요한 것만 담아 가격은 낮추고 품질은 높였습니다 더이음 250 R 사 (290만원 기준) P 사 (360만원 기준) 의전관리사",
+        "productName": "의전관",
+        "category": "기타",
+        "type": "분양가"
+      },
+      {
+        "price": 3600000,
+        "priceText": "360만원",
+        "context": "담아 가격은 낮추고 품질은 높였습니다 더이음 250 R 사 (290만원 기준) P 사 (360만원 기준) 의전관리사 (장례도우미) 3명 2명 2",
+        "productName": "의전관",
+        "category": "기타",
+        "type": "분양가"
+      },
+      {
+        "price": 3300000,
+        "priceText": "330만원",
+        "context": "! 더이음 후불제 상조와 낙원추모공원 장지(수목형 평장묘)를 패키지 상품으로 계약시 최대 330만원 할인 혜택을 드립니다. 전국 최고 수준의 낙",
+        "productName": "평장묘",
+        "category": "묘지",
+        "type": "분양가"
+      },
+      {
+        "price": 2000000,
+        "priceText": "200만원",
+        "context": "기, 기증자 유자녀 후원금 1억4천만원, 기증원 홍보대사 김경식 씨 등 8인의 기부금 4천200만원 등이 모였다. 이 기부금은 57명의 장기 기",
+        "productName": "일반상품",
+        "category": "기타",
+        "type": "분양가"
+      },
+      {
+        "price": 2810000,
+        "priceText": "281만원",
+        "context": "표: 조회 196",
+        "productName": "조회 196",
+        "category": "기타",
+        "type": "테이블가격"
+      },
+      {
+        "price": 2830000,
+        "priceText": "283만원",
+        "context": "표: 조회 195",
+        "productName": "조회 195",
+        "category": "기타",
+        "type": "테이블가격"
+      },
+      {
+        "price": 3060000,
+        "priceText": "306만원",
+        "context": "표: 조회 194",
+        "productName": "조회 194",
+        "category": "기타",
+        "type": "테이블가격"
+      },
+      {
+        "price": 2970000,
+        "priceText": "297만원",
+        "context": "표: 조회 193",
+        "productName": "조회 193",
+        "category": "기타",
+        "type": "테이블가격"
+      }
+    ],
+    "totalPrices": 8,
+    "images": 0,
+    "crawledAt": "2025-12-21T04:46:56.054Z"
+  },
+  {
+    "no": "2",
+    "name": "(재)실로암공원묘원",
+    "url": "http://www.siloami.com/bbs/write.php?bo_table=qa1",
+    "religion": "일반/무교",
+    "prices": {
+      "묘지": [],
+      "봉안당": [],
+      "자연장": [],
+      "관리비": [],
+      "기타": []
+    },
+    "allPrices": [],
+    "totalPrices": 0,
+    "images": 0,
+    "crawledAt": "2025-12-21T04:48:23.403Z"
+  },
+  {
+    "no": "4",
+    "name": "재단법인울산공원묘원",
+    "url": "http://ulsanpark.org/",
+    "religion": "일반/무교",
+    "prices": {
+      "묘지": [],
+      "봉안당": [],
+      "자연장": [],
+      "관리비": [],
+      "기타": []
+    },
+    "allPrices": [],
+    "totalPrices": 0,
+    "images": 0,
+    "crawledAt": "2025-12-21T04:48:29.199Z"
+  },
+  {
+    "no": "5",
+    "name": "진주내동공원묘원",
+    "url": "http://www.ndpark.co.kr/doc/parcel01.html",
+    "religion": "일반/무교",
+    "prices": {
+      "묘지": [],
+      "봉안당": [],
+      "자연장": [],
+      "관리비": [],
+      "기타": []
+    },
+    "allPrices": [],
+    "totalPrices": 0,
+    "images": 0,
+    "crawledAt": "2025-12-21T04:49:54.599Z"
+  },
+  {
+    "no": "6",
+    "name": "신불산공원묘원",
+    "url": "http://www.shinbulsanpark.co.kr/",
+    "religion": "일반/무교",
+    "prices": {
+      "묘지": [],
+      "봉안당": [],
+      "자연장": [],
+      "관리비": [],
+      "기타": [
+        {
+          "price": 2160000,
+          "priceText": "216만원",
+          "context": "표: 조회 공지",
+          "productName": "조회 공지",
+          "category": "기타",
+          "type": "테이블가격"
+        },
+        {
+          "price": 7050000,
+          "priceText": "705만원",
+          "context": "표: 조회 공지",
+          "productName": "조회 공지",
+          "category": "기타",
+          "type": "테이블가격"
+        },
+        {
+          "price": 20700000,
+          "priceText": "2070만원",
+          "context": "표: 조회 공지",
+          "productName": "조회 공지",
+          "category": "기타",
+          "type": "테이블가격"
+        },
+        {
+          "price": 24000000,
+          "priceText": "2400만원",
+          "context": "표: 조회 공지",
+          "productName": "조회 공지",
+          "category": "기타",
+          "type": "테이블가격"
+        },
+        {
+          "price": 14990000,
+          "priceText": "1499만원",
+          "context": "표: 조회 공지",
+          "productName": "조회 공지",
+          "category": "기타",
+          "type": "테이블가격"
+        },
+        {
+          "price": 16950000,
+          "priceText": "1695만원",
+          "context": "표: 조회 공지",
+          "productName": "조회 공지",
+          "category": "기타",
+          "type": "테이블가격"
+        },
+        {
+          "price": 4160000,
+          "priceText": "416만원",
+          "context": "표: 조회 7",
+          "productName": "조회 7",
+          "category": "기타",
+          "type": "테이블가격"
+        },
+        {
+          "price": 28480000,
+          "priceText": "2848만원",
+          "context": "표: 조회 6",
+          "productName": "조회 6",
+          "category": "기타",
+          "type": "테이블가격"
+        },
+        {
+          "price": 25870000,
+          "priceText": "2587만원",
+          "context": "표: 조회 5",
+          "productName": "조회 5",
+          "category": "기타",
+          "type": "테이블가격"
+        },
+        {
+          "price": 21930000,
+          "priceText": "2193만원",
+          "context": "표: 조회 4",
+          "productName": "조회 4",
+          "category": "기타",
+          "type": "테이블가격"
+        },
+        {
+          "price": 14120000,
+          "priceText": "1412만원",
+          "context": "표: 조회 3",
+          "productName": "조회 3",
+          "category": "기타",
+          "type": "테이블가격"
+        },
+        {
+          "price": 19210000,
+          "priceText": "1921만원",
+          "context": "표: 조회 2",
+          "productName": "조회 2",
+          "category": "기타",
+          "type": "테이블가격"
+        },
+        {
+          "price": 18070000,
+          "priceText": "1807만원",
+          "context": "표: 조회 1",
+          "productName": "조회 1",
+          "category": "기타",
+          "type": "테이블가격"
+        }
+      ]
+    },
+    "allPrices": [
+      {
+        "price": 2160000,
+        "priceText": "216만원",
+        "context": "표: 조회 공지",
+        "productName": "조회 공지",
+        "category": "기타",
+        "type": "테이블가격"
+      },
+      {
+        "price": 7050000,
+        "priceText": "705만원",
+        "context": "표: 조회 공지",
+        "productName": "조회 공지",
+        "category": "기타",
+        "type": "테이블가격"
+      },
+      {
+        "price": 20700000,
+        "priceText": "2070만원",
+        "context": "표: 조회 공지",
+        "productName": "조회 공지",
+        "category": "기타",
+        "type": "테이블가격"
+      },
+      {
+        "price": 24000000,
+        "priceText": "2400만원",
+        "context": "표: 조회 공지",
+        "productName": "조회 공지",
+        "category": "기타",
+        "type": "테이블가격"
+      },
+      {
+        "price": 14990000,
+        "priceText": "1499만원",
+        "context": "표: 조회 공지",
+        "productName": "조회 공지",
+        "category": "기타",
+        "type": "테이블가격"
+      },
+      {
+        "price": 16950000,
+        "priceText": "1695만원",
+        "context": "표: 조회 공지",
+        "productName": "조회 공지",
+        "category": "기타",
+        "type": "테이블가격"
+      },
+      {
+        "price": 4160000,
+        "priceText": "416만원",
+        "context": "표: 조회 7",
+        "productName": "조회 7",
+        "category": "기타",
+        "type": "테이블가격"
+      },
+      {
+        "price": 28480000,
+        "priceText": "2848만원",
+        "context": "표: 조회 6",
+        "productName": "조회 6",
+        "category": "기타",
+        "type": "테이블가격"
+      },
+      {
+        "price": 25870000,
+        "priceText": "2587만원",
+        "context": "표: 조회 5",
+        "productName": "조회 5",
+        "category": "기타",
+        "type": "테이블가격"
+      },
+      {
+        "price": 21930000,
+        "priceText": "2193만원",
+        "context": "표: 조회 4",
+        "productName": "조회 4",
+        "category": "기타",
+        "type": "테이블가격"
+      },
+      {
+        "price": 14120000,
+        "priceText": "1412만원",
+        "context": "표: 조회 3",
+        "productName": "조회 3",
+        "category": "기타",
+        "type": "테이블가격"
+      },
+      {
+        "price": 19210000,
+        "priceText": "1921만원",
+        "context": "표: 조회 2",
+        "productName": "조회 2",
+        "category": "기타",
+        "type": "테이블가격"
+      },
+      {
+        "price": 18070000,
+        "priceText": "1807만원",
+        "context": "표: 조회 1",
+        "productName": "조회 1",
+        "category": "기타",
+        "type": "테이블가격"
+      }
+    ],
+    "totalPrices": 13,
+    "images": 5,
+    "crawledAt": "2025-12-21T04:51:34.899Z"
+  },
+  {
+    "no": "7",
+    "name": "예산군추모공원",
+    "url": "https://www.yesan.go.kr/kor/sub06_13_04_02_06.do",
+    "religion": "일반/무교",
+    "prices": {
+      "묘지": [],
+      "봉안당": [],
+      "자연장": [],
+      "관리비": [],
+      "기타": [
+        {
+          "price": 70000000,
+          "priceText": "7,000만원",
+          "context": "표: 한식",
+          "productName": "한식",
+          "category": "기타",
+          "type": "테이블가격"
+        },
+        {
+          "price": 80000000,
+          "priceText": "8,000만원",
+          "context": "표: 한식",
+          "productName": "한식",
+          "category": "기타",
+          "type": "테이블가격"
+        },
+        {
+          "price": 40000000,
+          "priceText": "4,000만원",
+          "context": "표: 한식",
+          "productName": "한식",
+          "category": "기타",
+          "type": "테이블가격"
+        },
+        {
+          "price": 50000000,
+          "priceText": "5,000만원",
+          "context": "표: 한식",
+          "productName": "한식",
+          "category": "기타",
+          "type": "테이블가격"
+        },
+        {
+          "price": 60000000,
+          "priceText": "6,000만원",
+          "context": "표: 한식",
+          "productName": "한식",
+          "category": "기타",
+          "type": "테이블가격"
+        },
+        {
+          "price": 75000000,
+          "priceText": "7,500만원",
+          "context": "표: 한식",
+          "productName": "한식",
+          "category": "기타",
+          "type": "테이블가격"
+        },
+        {
+          "price": 20000000,
+          "priceText": "2,000만원",
+          "context": "표: 한식",
+          "productName": "한식",
+          "category": "기타",
+          "type": "테이블가격"
+        },
+        {
+          "price": 59000000,
+          "priceText": "5,900만원",
+          "context": "표: 한식",
+          "productName": "한식",
+          "category": "기타",
+          "type": "테이블가격"
+        },
+        {
+          "price": 49000000,
+          "priceText": "4,900만원",
+          "context": "표: 한식",
+          "productName": "한식",
+          "category": "기타",
+          "type": "테이블가격"
+        },
+        {
+          "price": 90000000,
+          "priceText": "9,000만원",
+          "context": "표: 한식",
+          "productName": "한식",
+          "category": "기타",
+          "type": "테이블가격"
+        },
+        {
+          "price": 10000000,
+          "priceText": "1,000만원",
+          "context": "표: 수수료 등기",
+          "productName": "수수료 등기",
+          "category": "기타",
+          "type": "테이블가격"
+        }
+      ]
+    },
+    "allPrices": [
+      {
+        "price": 70000000,
+        "priceText": "7,000만원",
+        "context": "표: 한식",
+        "productName": "한식",
+        "category": "기타",
+        "type": "테이블가격"
+      },
+      {
+        "price": 80000000,
+        "priceText": "8,000만원",
+        "context": "표: 한식",
+        "productName": "한식",
+        "category": "기타",
+        "type": "테이블가격"
+      },
+      {
+        "price": 40000000,
+        "priceText": "4,000만원",
+        "context": "표: 한식",
+        "productName": "한식",
+        "category": "기타",
+        "type": "테이블가격"
+      },
+      {
+        "price": 50000000,
+        "priceText": "5,000만원",
+        "context": "표: 한식",
+        "productName": "한식",
+        "category": "기타",
+        "type": "테이블가격"
+      },
+      {
+        "price": 60000000,
+        "priceText": "6,000만원",
+        "context": "표: 한식",
+        "productName": "한식",
+        "category": "기타",
+        "type": "테이블가격"
+      },
+      {
+        "price": 75000000,
+        "priceText": "7,500만원",
+        "context": "표: 한식",
+        "productName": "한식",
+        "category": "기타",
+        "type": "테이블가격"
+      },
+      {
+        "price": 20000000,
+        "priceText": "2,000만원",
+        "context": "표: 한식",
+        "productName": "한식",
+        "category": "기타",
+        "type": "테이블가격"
+      },
+      {
+        "price": 59000000,
+        "priceText": "5,900만원",
+        "context": "표: 한식",
+        "productName": "한식",
+        "category": "기타",
+        "type": "테이블가격"
+      },
+      {
+        "price": 49000000,
+        "priceText": "4,900만원",
+        "context": "표: 한식",
+        "productName": "한식",
+        "category": "기타",
+        "type": "테이블가격"
+      },
+      {
+        "price": 90000000,
+        "priceText": "9,000만원",
+        "context": "표: 한식",
+        "productName": "한식",
+        "category": "기타",
+        "type": "테이블가격"
+      },
+      {
+        "price": 10000000,
+        "priceText": "1,000만원",
+        "context": "표: 수수료 등기",
+        "productName": "수수료 등기",
+        "category": "기타",
+        "type": "테이블가격"
+      }
+    ],
+    "totalPrices": 11,
+    "images": 0,
+    "crawledAt": "2025-12-21T04:53:43.045Z"
+  },
+  {
+    "no": "9",
+    "name": "재단법인선산공원묘원",
+    "url": "http://sunsanpark.co.kr/main.html",
+    "religion": "일반/무교",
+    "prices": {
+      "묘지": [],
+      "봉안당": [],
+      "자연장": [],
+      "관리비": [],
+      "기타": []
+    },
+    "allPrices": [],
+    "totalPrices": 0,
+    "images": 0,
+    "crawledAt": "2025-12-21T04:53:49.087Z"
+  },
+  {
+    "no": "11",
+    "name": "재단법인 로엠(묘지)",
+    "url": "https://xn--ob0bz2e4zbexiv9vu3t.com/",
+    "religion": "일반/무교",
+    "prices": {
+      "묘지": [],
+      "봉안당": [],
+      "자연장": [],
+      "관리비": [],
+      "기타": []
+    },
+    "allPrices": [],
+    "totalPrices": 0,
+    "images": 0,
+    "crawledAt": "2025-12-21T04:56:12.054Z"
+  }
+]
