@@ -365,6 +365,12 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
             .then(res => res.ok && res.json())
             .then(data => data?.viewCount && setViewCount(data.viewCount))
             .catch(() => { }); // 실패해도 무시
+
+        // 전체 문의 개수 가져오기
+        fetch('/api/admin/inquiries')
+            .then(res => res.json())
+            .then(data => data?.inquiries && setTotalInquiryCount(data.inquiries.length))
+            .catch(() => { });
     }, [facility.id]);
 
     const theme = useMantineTheme();
@@ -392,6 +398,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
     const [replyContent, setReplyContent] = useState('');
     const [likedReviews, setLikedReviews] = useState<Set<string>>(new Set());
     const [inquiryOpen, setInquiryOpen] = useState(false);
+    const [totalInquiryCount, setTotalInquiryCount] = useState(0);
 
     // 시설 선택 모달
     const [facilitySearchOpened, { open: openFacilitySearch, close: closeFacilitySearch }] = useDisclosure(false);
@@ -1221,7 +1228,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                             });
                         }
                     }}>
-                        <Text size="xs" c="dimmed">총 {inquiries.length}개의 문의</Text>
+                        <Text size="xs" c="dimmed">총 {totalInquiryCount}개의 문의</Text>
                         <ChevronRight size={14} color="gray" />
                     </Group>
                 </Group>
