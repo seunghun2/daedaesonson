@@ -9992,5 +9992,21 @@
     "totalPrices": 0,
     "images": 6,
     "crawledAt": "2025-12-21T13:48:29.993Z"
+  },
+  {
+    "no": "902",
+    "name": "실로암추모관",
+    "url": "https://shue.kr/%EC%98%81%ED%98%B8%EA%B3%B5%EC%9B%90%EC%B6%94%EB%AA%A8%EA%B4%80/",
+    "prices": {
+      "묘지": [],
+      "봉안당": [],
+      "자연장": [],
+      "관리비": [],
+      "기타": []
+    },
+    "allPrices": [],
+    "totalPrices": 0,
+    "images": 6,
+    "crawledAt": "2025-12-21T13:49:19.834Z"
   }
 ]
