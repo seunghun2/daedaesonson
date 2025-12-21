@@ -730,6 +730,13 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                             onClick={(e) => {
                                 e.stopPropagation();
                                 e.preventDefault();
+                                // 📊 GA4: 지도로 이동 클릭
+                                if ((window as any).gtag) {
+                                    (window as any).gtag('event', 'map_navigate', {
+                                        facility_id: facility.id,
+                                        facility_name: facility.name
+                                    });
+                                }
                                 // 지도에서 해당 위치로 이동
                                 if (onMapView && facility.coordinates) {
                                     onMapView(facility.coordinates.lat, facility.coordinates.lng);
@@ -748,6 +755,13 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                 e.stopPropagation();
                                 e.preventDefault();
                                 navigator.clipboard.writeText(`https://daedaesonson.com/?id=${facility.id}`);
+                                // 📊 GA4: 공유하기 클릭
+                                if ((window as any).gtag) {
+                                    (window as any).gtag('event', 'share_click', {
+                                        facility_id: facility.id,
+                                        facility_name: facility.name
+                                    });
+                                }
                             }}
                         >
                             <span className="material-symbols-outlined" style={{ fontSize: '24px' }}>share</span>
@@ -1128,7 +1142,24 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
             {/* 전화상담 */}
             <Box bg="white" p="md" style={{ borderBottom: '8px solid #f8f9fa' }}>
                 <Text size="sm" fw={700} mb="md">전화상담</Text>
-                <Text size="lg" fw={700} c="dark.9">
+                <Text
+                    size="lg"
+                    fw={700}
+                    c={facility.phone ? 'brand.8' : 'gray.6'}
+                    style={{ cursor: facility.phone ? 'pointer' : 'default' }}
+                    onClick={() => {
+                        if (facility.phone) {
+                            // 📊 GA4: 전화 걸기 클릭
+                            if ((window as any).gtag) {
+                                (window as any).gtag('event', 'phone_click', {
+                                    facility_id: facility.id,
+                                    facility_name: facility.name
+                                });
+                            }
+                            window.location.href = `tel:${facility.phone.replace(/-/g, '')}`;
+                        }
+                    }}
+                >
                     {facility.phone || '문의 필요'}
                 </Text>
             </Box>
@@ -1173,7 +1204,16 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
             <Box bg="white" p="md" pb={100}>
                 <Group justify="space-between" mb="md" align="center">
                     <Group justify="space-between">
-                        <Text size="lg" fw={700} style={{ cursor: 'pointer' }} onClick={() => setInquiryOpen(true)}>문의하기</Text>
+                        <Text size="lg" fw={700} style={{ cursor: 'pointer' }} onClick={() => {
+                            setInquiryOpen(true);
+                            // 📊 GA4: 문의하기 클릭
+                            if ((window as any).gtag) {
+                                (window as any).gtag('event', 'inquiry_open', {
+                                    facility_id: facility.id,
+                                    facility_name: facility.name
+                                });
+                            }
+                        }}>문의하기</Text>
                         <ChevronRight size={20} style={{ cursor: 'pointer' }} onClick={() => setInquiryOpen(true)} />
                     </Group>
                     <Group gap={4} style={{ cursor: 'pointer' }} onClick={() => setInquiryOpen(true)}>

@@ -419,6 +419,12 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
                         setSubmittedQuery(searchQuery);
                         setSearchFocused(false);
                         (document.activeElement as HTMLElement)?.blur();
+                        // 📊 GA4: 검색 실행
+                        if ((window as any).gtag) {
+                          (window as any).gtag('event', 'search', {
+                            search_term: searchQuery
+                          });
+                        }
                       }
                     }}
                   >

@@ -9178,5 +9178,53 @@
     "totalPrices": 0,
     "images": 15,
     "crawledAt": "2025-12-21T12:58:20.204Z"
+  },
+  {
+    "no": "841",
+    "name": "인천가족공원 금마총",
+    "url": "https://www.insiseol.or.kr/life/family/facility/map.jsp",
+    "prices": {
+      "묘지": [],
+      "봉안당": [],
+      "자연장": [],
+      "관리비": [],
+      "기타": []
+    },
+    "allPrices": [],
+    "totalPrices": 0,
+    "images": 3,
+    "crawledAt": "2025-12-21T12:59:23.078Z"
+  },
+  {
+    "no": "842",
+    "name": "김해추모의집 제1·2봉안당",
+    "url": "https://www.gimhaememorialpark.or.kr/www/",
+    "prices": {
+      "묘지": [],
+      "봉안당": [],
+      "자연장": [],
+      "관리비": [],
+      "기타": []
+    },
+    "allPrices": [],
+    "totalPrices": 0,
+    "images": 8,
+    "crawledAt": "2025-12-21T12:59:57.133Z"
+  },
+  {
+    "no": "843",
+    "name": "인천가족공원 추모의집",
+    "url": "https://www.insiseol.or.kr/life/family/facility/manwol.jsp",
+    "prices": {
+      "묘지": [],
+      "봉안당": [],
+      "자연장": [],
+      "관리비": [],
+      "기타": []
+    },
+    "allPrices": [],
+    "totalPrices": 0,
+    "images": 3,
+    "crawledAt": "2025-12-21T13:01:01.112Z"
   }
 ]
