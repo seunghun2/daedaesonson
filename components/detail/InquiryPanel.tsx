@@ -208,7 +208,7 @@ export default function InquiryPanel({ facility, isOpen, onClose, allFacilities 
                 position="left"
                 size="100%"
                 styles={{
-                    root: { zIndex: 2050 },
+                    root: { zIndex: 10002 },
                     overlay: { backgroundColor: 'transparent', pointerEvents: 'none' },
                     content: {
                         width: '100%',
