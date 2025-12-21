@@ -204,20 +204,26 @@ export default function InquiryPanel({ facility, isOpen, onClose, allFacilities 
         return `${digits.slice(0, 3)}-${digits.slice(3, 7)}-${digits.slice(7, 11)}`;
     };
 
+    // 디버깅
+    console.log('[InquiryPanel] isOpen:', isOpen, 'isMobile:', isMobile);
+
     return (
         <>
             <Drawer
                 opened={isOpen}
                 onClose={onClose}
-                position="left"
-                size={isMobile ? '100%' : 400}
+                position={isMobile ? 'bottom' : 'left'}
+                size={isMobile ? '90%' : 400}
                 styles={{
                     root: { zIndex: isMobile ? 10010 : 2050 },
                     overlay: {
-                        backgroundColor: isMobile ? 'rgba(0,0,0,0.3)' : 'transparent',
+                        backgroundColor: isMobile ? 'rgba(0,0,0,0.5)' : 'transparent',
                         pointerEvents: isMobile ? 'auto' : 'none'
                     },
-                    content: isMobile ? {} : {
+                    content: isMobile ? {
+                        borderTopLeftRadius: 16,
+                        borderTopRightRadius: 16
+                    } : {
                         marginLeft: '400px',
                         boxShadow: '2px 0 10px rgba(0,0,0,0.1)'
                     },
