@@ -38,15 +38,17 @@ export default function InquiriesPage() {
 
     const loadData = async () => {
         try {
-            // 시설 목록 먼저 가져오기
-            const facilitiesRes = await fetch('/api/facilities');
+            // 병렬로 동시에 가져오기 (속도 개선)
+            const [facilitiesRes, inquiriesRes] = await Promise.all([
+                fetch('/api/facilities'),
+                fetch('/api/admin/inquiries')
+            ]);
+
             const facilitiesData = await facilitiesRes.json();
             const nameMap = new Map((facilitiesData as any[]).map(f => [f.id, f.name]));
             setFacilityNameMap(nameMap);
 
-            // 문의 목록 가져오기
-            const res = await fetch('/api/admin/inquiries');
-            const data = await res.json();
+            const data = await inquiriesRes.json();
             if (data.inquiries) {
                 setInquiries(data.inquiries);
             }
