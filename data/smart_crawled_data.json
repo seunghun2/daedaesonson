@@ -7846,5 +7846,37 @@
     "totalPrices": 1,
     "images": 1,
     "crawledAt": "2025-12-21T11:41:04.824Z"
+  },
+  {
+    "no": "757",
+    "name": "법지사",
+    "url": "https://moleg.go.kr/",
+    "prices": {
+      "묘지": [],
+      "봉안당": [],
+      "자연장": [],
+      "관리비": [],
+      "기타": []
+    },
+    "allPrices": [],
+    "totalPrices": 0,
+    "images": 15,
+    "crawledAt": "2025-12-21T11:41:50.056Z"
+  },
+  {
+    "no": "758",
+    "name": "무주추모의집(봉안)",
+    "url": "https://www.textbakery.com/%EC%A0%84%EB%B6%81-%EB%AC%B4%EC%A3%BC%EC%B6%94%EB%AA%A8%EC%9D%98%EC%A7%91-%EC%9A%B4%EC%98%81-%EC%95%8C%EC%95%84%EB%B3%B4%EA%B8%B0/",
+    "prices": {
+      "묘지": [],
+      "봉안당": [],
+      "자연장": [],
+      "관리비": [],
+      "기타": []
+    },
+    "allPrices": [],
+    "totalPrices": 0,
+    "images": 15,
+    "crawledAt": "2025-12-21T11:42:46.403Z"
   }
 ]

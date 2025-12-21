@@ -976,6 +976,7 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
                     if (fac) handleMarkerClick(fac);
                   }}
                   onMapView={(lat, lng) => {
+                    setMobileView('map');
                     router.back();
                     setTimeout(() => {
                       if (mapRef.current) {
