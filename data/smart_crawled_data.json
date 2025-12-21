@@ -7878,5 +7878,21 @@
     "totalPrices": 0,
     "images": 15,
     "crawledAt": "2025-12-21T11:42:46.403Z"
+  },
+  {
+    "no": "759",
+    "name": "수원시연화장 추모의집",
+    "url": "https://yhjjr.suwonudc.co.kr/base/main/view",
+    "prices": {
+      "묘지": [],
+      "봉안당": [],
+      "자연장": [],
+      "관리비": [],
+      "기타": []
+    },
+    "allPrices": [],
+    "totalPrices": 0,
+    "images": 1,
+    "crawledAt": "2025-12-21T11:45:28.348Z"
   }
 ]

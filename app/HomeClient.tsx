@@ -74,7 +74,13 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
 
 
   // 🚀 SSR로 미리 로드된 데이터 사용 (API fetch 없음!)
-  const [dbFacilities, setDbFacilities] = useState<Facility[]>(initialFacilities);
+  const [dbFacilities, setDbFacilities] = useState<Facility[]>(() => {
+    // 캐시에도 저장 (list 페이지에서 사용)
+    if (typeof window !== 'undefined' && initialFacilities.length > 0) {
+      sessionStorage.setItem('facilitiesCache', JSON.stringify(initialFacilities));
+    }
+    return initialFacilities;
+  });
   const [isLoading, setIsLoading] = useState(false); // 이미 로드됨
 
   // 현재 지도 좌표

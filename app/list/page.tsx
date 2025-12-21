@@ -53,13 +53,25 @@ function ListPageContent() {
         return () => clearTimeout(timer);
     }, []);
 
-    // 데이터 로드
+    // 데이터 로드 (캐시 우선)
     useEffect(() => {
         async function fetchData() {
+            // 1. 캐시된 데이터가 있으면 먼저 사용
+            const cached = sessionStorage.getItem('facilitiesCache');
+            if (cached) {
+                try {
+                    const parsedCache = JSON.parse(cached);
+                    setAllFacilities(parsedCache);
+                    setLoading(false);
+                } catch { }
+            }
+
+            // 2. 백그라운드에서 최신 데이터 fetch
             try {
                 const res = await fetch('/api/facilities');
                 const data = await res.json();
                 setAllFacilities(data);
+                sessionStorage.setItem('facilitiesCache', JSON.stringify(data));
             } catch (error) {
                 console.error('Failed to fetch facilities:', error);
             } finally {
