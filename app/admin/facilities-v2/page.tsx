@@ -179,6 +179,10 @@ export default function AdminPage() {
     const [categoryFilter, setCategoryFilter] = useState<string | null>(null);
     const [activePage, setActivePage] = useState(1);
 
+    // 🆕 Supabase Reviews State
+    const [allReviews, setAllReviews] = useState<any[]>([]);
+    const [isLoadingReviews, setIsLoadingReviews] = useState(false);
+
     // Modal State
     const [opened, { open, close }] = useDisclosure(false);
     const [editingId, setEditingId] = useState<string | null>(null);
@@ -207,6 +211,26 @@ export default function AdminPage() {
                 alert('데이터를 불러오지 못했습니다. (V2)');
                 setIsLoadingData(false);
             });
+    }, []);
+
+    // 🆕 Load Reviews from Supabase
+    const loadReviews = async () => {
+        setIsLoadingReviews(true);
+        try {
+            const res = await fetch('/api/admin/reviews');
+            const data = await res.json();
+            if (data.reviews) {
+                setAllReviews(data.reviews);
+            }
+        } catch (e) {
+            console.error('Reviews load failed:', e);
+        } finally {
+            setIsLoadingReviews(false);
+        }
+    };
+
+    useEffect(() => {
+        loadReviews();
     }, []);
 
     // Save to Server Helper
@@ -504,26 +528,26 @@ export default function AdminPage() {
         }
     };
 
-    const handleDeleteReview = (facilityId: string, reviewId: string) => {
+    // 🆕 Delete review via Supabase API
+    const handleDeleteReview = async (facilityId: string, reviewId: string) => {
         if (!confirm('해당 리뷰를 정말 삭제하시겠습니까?')) return;
-        const newFacilities = facilities.map(f => {
-            if (f.id === facilityId) {
-                return {
-                    ...f,
-                    reviews: f.reviews?.filter(r => r.id !== reviewId)
-                };
+        try {
+            const res = await fetch('/api/admin/reviews', {
+                method: 'DELETE',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ reviewId })
+            });
+            if (res.ok) {
+                setAllReviews(prev => prev.filter(r => r.id !== reviewId));
+                alert('리뷰가 삭제되었습니다.');
+            } else {
+                alert('삭제 실패');
             }
-            return f;
-        });
-        setFacilities(newFacilities);
-        saveToServer(newFacilities);
+        } catch (e) {
+            console.error('Delete review error:', e);
+            alert('삭제 중 오류 발생');
+        }
     };
-
-
-    const allReviews = useMemo(() => {
-        return facilities.flatMap(f => (f.reviews || []).map(r => ({ ...r, facilityName: f.name, facilityId: f.id })))
-            .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
-    }, [facilities]);
 
     // e-Haneul Sync Handler
     const handleSync = async () => {

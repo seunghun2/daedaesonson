@@ -1,74 +1,129 @@
-
 import { NextRequest, NextResponse } from 'next/server';
-import fs from 'fs';
-import path from 'path';
-import { Facility, Review, ReviewReply } from '@/types';
+import { createClient } from '@supabase/supabase-js';
+import bcrypt from 'bcryptjs';
 
-const DATA_PATH = path.join(process.cwd(), 'data/facilities.json');
+const SUPABASE_URL = 'https://jbydmhfuqnpukfutvrgs.supabase.co';
+const SUPABASE_KEY = process.env.SUPABASE_SERVICE_KEY || 'sb_secret_CDAM3cyG1RBEmjvSIaHOPA_If4LP8u3';
+
+const supabase = createClient(SUPABASE_URL, SUPABASE_KEY, {
+    auth: { persistSession: false }
+});
 
 export async function POST(request: NextRequest) {
     try {
         const body = await request.json();
-        const { facilityId, reviewId, action, content, author } = body;
+        const { facilityId, reviewId, action, content, author, password, replyId, isAdmin } = body;
 
         // Base validation
-        if (!facilityId || !reviewId || !action) {
+        if (!reviewId || !action) {
             return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
         }
 
-        const fileContent = fs.readFileSync(DATA_PATH, 'utf-8');
-        const facilities: Facility[] = JSON.parse(fileContent);
+        // Get review
+        const { data: review, error: fetchError } = await supabase
+            .from('Review')
+            .select('*')
+            .eq('id', reviewId)
+            .single();
 
-        const facilityIndex = facilities.findIndex(f => f.id === facilityId);
-        if (facilityIndex === -1) {
-            return NextResponse.json({ error: 'Facility not found' }, { status: 404 });
-        }
-
-        const facility = facilities[facilityIndex];
-        const reviewIndex = facility.reviews?.findIndex(r => r.id === reviewId);
-
-        if (reviewIndex === undefined || reviewIndex === -1 || !facility.reviews) {
+        if (fetchError || !review) {
             return NextResponse.json({ error: 'Review not found' }, { status: 404 });
         }
 
-        const review = facility.reviews[reviewIndex];
-
         // Handle Actions
         if (action === 'LIKE') {
-            review.likes = (review.likes || 0) + 1;
+            const { error } = await supabase
+                .from('Review')
+                .update({ likes: (review.likes || 0) + 1 })
+                .eq('id', reviewId);
+
+            if (error) throw error;
+
+            return NextResponse.json({ success: true, likes: (review.likes || 0) + 1 });
+
         } else if (action === 'UNLIKE') {
-            review.likes = Math.max(0, (review.likes || 0) - 1);
+            const newLikes = Math.max(0, (review.likes || 0) - 1);
+            const { error } = await supabase
+                .from('Review')
+                .update({ likes: newLikes })
+                .eq('id', reviewId);
+
+            if (error) throw error;
+
+            return NextResponse.json({ success: true, likes: newLikes });
+
         } else if (action === 'REPLY') {
-            if (!content) return NextResponse.json({ error: 'Reply content required' }, { status: 400 });
+            if (!content) {
+                return NextResponse.json({ error: 'Reply content required' }, { status: 400 });
+            }
 
-            const newReply: ReviewReply = {
-                id: `rep-${Date.now()}`,
-                author: author || '관리자', // Default to admin for now, or from request
-                content: content,
-                date: new Date().toISOString().split('T')[0]
-            };
+            // Insert reply to Reply table
+            const { data: newReply, error } = await supabase
+                .from('Reply')
+                .insert({
+                    reviewId: reviewId,
+                    author: author || '관리자',
+                    content: content,
+                    createdAt: new Date().toISOString()
+                })
+                .select()
+                .single();
 
-            review.replies = review.replies || [];
-            review.replies.push(newReply);
+            if (error) throw error;
+
+            return NextResponse.json({ success: true, reply: newReply });
+
         } else if (action === 'DELETE_REVIEW') {
-            facility.reviews.splice(reviewIndex, 1);
-        } else if (action === 'DELETE_REPLY') {
-            const { replyId } = body;
-            if (!replyId) return NextResponse.json({ error: 'Reply ID required' }, { status: 400 });
+            // Check permission
+            if (!isAdmin) {
+                if (!password) {
+                    return NextResponse.json({ error: '비밀번호를 입력해주세요.' }, { status: 400 });
+                }
 
-            review.replies = review.replies?.filter(r => r.id !== replyId) || [];
+                const isMatch = await bcrypt.compare(password, review.password || '');
+                if (!isMatch) {
+                    return NextResponse.json({ error: '비밀번호가 일치하지 않습니다.' }, { status: 403 });
+                }
+            }
+
+            // Delete all replies first
+            await supabase.from('Reply').delete().eq('reviewId', reviewId);
+
+            // Delete review
+            const { error } = await supabase.from('Review').delete().eq('id', reviewId);
+            if (error) throw error;
+
+            // Update facility reviewCount
+            if (review.facilityId) {
+                const { data: facility } = await supabase
+                    .from('Facility')
+                    .select('reviewCount')
+                    .eq('id', review.facilityId)
+                    .single();
+
+                if (facility && facility.reviewCount > 0) {
+                    await supabase
+                        .from('Facility')
+                        .update({ reviewCount: facility.reviewCount - 1 })
+                        .eq('id', review.facilityId);
+                }
+            }
+
+            return NextResponse.json({ success: true });
+
+        } else if (action === 'DELETE_REPLY') {
+            if (!replyId) {
+                return NextResponse.json({ error: 'Reply ID required' }, { status: 400 });
+            }
+
+            const { error } = await supabase.from('Reply').delete().eq('id', replyId);
+            if (error) throw error;
+
+            return NextResponse.json({ success: true });
+
         } else {
             return NextResponse.json({ error: 'Invalid action' }, { status: 400 });
         }
-
-        // Apply changes
-        facility.reviews[reviewIndex] = review;
-        facilities[facilityIndex] = facility;
-
-        // Save
-        fs.writeFileSync(DATA_PATH, JSON.stringify(facilities, null, 2), 'utf-8');
-
-        return NextResponse.json({ success: true, review });
 
     } catch (error) {
         console.error('Interaction API Error:', error);
