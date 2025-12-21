@@ -50,23 +50,25 @@ export default function InquiryPanel({ facility, isOpen, onClose }: InquiryPanel
     const [pinError, setPinError] = useState('');
     const [unlockedIds, setUnlockedIds] = useState<Set<string>>(new Set());
 
-    // 문의 목록 로드
+    // 문의 목록 로드 (전체 문의 - 풍성하게!)
     useEffect(() => {
-        if (isOpen && facility.id) {
-            console.log('[InquiryPanel] Loading inquiries for:', facility.id, facility.name);
+        if (isOpen) {
             loadInquiries();
         }
-    }, [isOpen, facility.id]);
+    }, [isOpen]);
 
     const loadInquiries = async () => {
         setIsLoading(true);
         try {
-            console.log('[InquiryPanel] Fetching:', `/api/facilities/${facility.id}/inquiries`);
-            const res = await fetch(`/api/facilities/${facility.id}/inquiries`);
+            // 전체 문의 로드 (어드민 API 활용)
+            const res = await fetch('/api/admin/inquiries');
             const data = await res.json();
-            console.log('[InquiryPanel] Response:', data);
             if (data.inquiries) {
-                setInquiries(data.inquiries);
+                // 최신순 정렬
+                const sorted = data.inquiries.sort((a: any, b: any) =>
+                    new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+                );
+                setInquiries(sorted);
             }
         } catch (e) {
             console.error('Failed to load inquiries:', e);
@@ -255,13 +257,16 @@ export default function InquiryPanel({ facility, isOpen, onClose }: InquiryPanel
                                         }}
                                         onClick={() => !showContent && handleUnlock(inquiry)}
                                     >
-                                        {/* 카테고리 + 날짜 */}
+                                        {/* [시설명] 카테고리 + 날짜 */}
                                         <Group justify="space-between" mb={4}>
-                                            <Text size="xs" c="brand" fw={500}>
-                                                {(inquiry as any).type === 'price' ? '가격 문의' :
-                                                    (inquiry as any).type === 'reservation' ? '예약/절차' :
-                                                        (inquiry as any).type === 'facility' ? '시설' : '기타'}
-                                            </Text>
+                                            <Group gap={4}>
+                                                <Text size="xs" c="dimmed">[{(inquiry as any).facilityName || '시설'}]</Text>
+                                                <Text size="xs" c="brand" fw={500}>
+                                                    {(inquiry as any).type === 'price' ? '가격 문의' :
+                                                        (inquiry as any).type === 'reservation' ? '예약/절차' :
+                                                            (inquiry as any).type === 'facility' ? '시설' : '기타'}
+                                                </Text>
+                                            </Group>
                                             <Text size="xs" c="dimmed">
                                                 {new Date(inquiry.createdAt).toLocaleDateString('ko-KR', { year: '2-digit', month: 'numeric', day: 'numeric' })}
                                             </Text>

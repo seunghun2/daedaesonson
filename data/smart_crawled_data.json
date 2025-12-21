@@ -9832,5 +9832,69 @@
     "totalPrices": 0,
     "images": 0,
     "crawledAt": "2025-12-21T13:38:48.454Z"
+  },
+  {
+    "no": "893",
+    "name": "(재)동산공원묘원 봉안당",
+    "url": "http://dongsanpark.com/greetings.asp",
+    "prices": {
+      "묘지": [],
+      "봉안당": [],
+      "자연장": [],
+      "관리비": [],
+      "기타": []
+    },
+    "allPrices": [],
+    "totalPrices": 0,
+    "images": 7,
+    "crawledAt": "2025-12-21T13:39:25.618Z"
+  },
+  {
+    "no": "894",
+    "name": "솔치백합동산 봉안묘",
+    "url": "https://www.skpark.co.kr/bbs/info2-2.php",
+    "prices": {
+      "묘지": [],
+      "봉안당": [],
+      "자연장": [],
+      "관리비": [],
+      "기타": []
+    },
+    "allPrices": [],
+    "totalPrices": 0,
+    "images": 10,
+    "crawledAt": "2025-12-21T13:39:42.500Z"
+  },
+  {
+    "no": "895",
+    "name": "동화경모공원(봉안)",
+    "url": "https://donghwapark.co.kr:48152/park/memorial02.php",
+    "prices": {
+      "묘지": [],
+      "봉안당": [],
+      "자연장": [],
+      "관리비": [],
+      "기타": [
+        {
+          "price": 5500000,
+          "priceText": "550만원",
+          "context": "pm 16:00\n분양가\n단\t개인단\t부부단\n7단\t260만원\t490만원\n6단\n5단\t290만원\t550만원\n4단\n3단\n2단\t230만원\t430만원\n1단\n비고\n• 이북도민\n개인단만 선택 가능\n \n•",
+          "category": "기타",
+          "type": "분양가"
+        }
+      ]
+    },
+    "allPrices": [
+      {
+        "price": 5500000,
+        "priceText": "550만원",
+        "context": "pm 16:00\n분양가\n단\t개인단\t부부단\n7단\t260만원\t490만원\n6단\n5단\t290만원\t550만원\n4단\n3단\n2단\t230만원\t430만원\n1단\n비고\n• 이북도민\n개인단만 선택 가능\n \n•",
+        "category": "기타",
+        "type": "분양가"
+      }
+    ],
+    "totalPrices": 1,
+    "images": 15,
+    "crawledAt": "2025-12-21T13:40:12.450Z"
   }
 ]
