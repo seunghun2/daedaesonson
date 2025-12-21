@@ -308,25 +308,33 @@ export default function InquiryPanel({ facility, isOpen, onClose }: InquiryPanel
                     </ScrollArea>
                 </Stack>
             </Drawer >
-            {/* 비밀번호 입력 모달 */}
+            {/* 비밀번호 입력 - 예쁜 팝업 */}
             <Modal
                 opened={pinOpened}
                 onClose={closePin}
                 centered
-                size="xs"
-                radius="md"
+                size={320}
+                radius="lg"
                 withCloseButton={false}
-                title={null}
                 styles={{
                     root: { zIndex: 9999 },
-                    body: { padding: '24px' }
+                    content: { padding: 0 },
+                    body: { padding: '28px 24px' }
                 }}
             >
-                <Stack gap="sm" align="center">
-                    <Lock size={20} color="#868e96" />
-                    <Text size="sm" fw={600}>비공개 문의입니다</Text>
-                    <Text size="xs" c="dimmed" ta="center">
-                        연락처 뒷자리 4자리 입력
+                <Stack gap="md" align="center">
+                    {/* 자물쇠 아이콘 */}
+                    <Box
+                        p="md"
+                        bg="gray.1"
+                        style={{ borderRadius: '50%' }}
+                    >
+                        <Lock size={24} color="#868e96" />
+                    </Box>
+
+                    <Text size="md" fw={600}>비공개 문의입니다</Text>
+                    <Text size="xs" c="dimmed" ta="center" lh={1.4}>
+                        작성 시 입력한 연락처 뒷자리 4자리를 입력해주세요.
                     </Text>
 
                     <PinInput
@@ -342,7 +350,9 @@ export default function InquiryPanel({ facility, isOpen, onClose }: InquiryPanel
 
                     <Button
                         fullWidth
-                        size="sm"
+                        size="md"
+                        radius="md"
+                        color="brand"
                         onClick={handlePinSubmit}
                         disabled={pinValue.length !== 4}
                     >

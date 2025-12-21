@@ -9720,5 +9720,53 @@
     "totalPrices": 0,
     "images": 15,
     "crawledAt": "2025-12-21T13:28:58.041Z"
+  },
+  {
+    "no": "884",
+    "name": "만불사",
+    "url": "http://www.manbulsa.org/",
+    "prices": {
+      "묘지": [],
+      "봉안당": [],
+      "자연장": [],
+      "관리비": [],
+      "기타": []
+    },
+    "allPrices": [],
+    "totalPrices": 0,
+    "images": 7,
+    "crawledAt": "2025-12-21T13:32:02.159Z"
+  },
+  {
+    "no": "885",
+    "name": "조안공원",
+    "url": "http://www.haneulan.co.kr/intro",
+    "prices": {
+      "묘지": [],
+      "봉안당": [],
+      "자연장": [],
+      "관리비": [],
+      "기타": []
+    },
+    "allPrices": [],
+    "totalPrices": 0,
+    "images": 2,
+    "crawledAt": "2025-12-21T13:32:29.732Z"
+  },
+  {
+    "no": "886",
+    "name": "문빈정사 봉안당",
+    "url": "https://sbsat.co.kr/%EA%B4%91%EC%A3%BC%EA%B4%91%EC%97%AD%EC%8B%9C-%EB%82%A9%EA%B3%A8%EB%8B%B9-%EB%AA%A9%EB%A1%9D-%EC%B6%94%EB%AA%A8%EA%B3%B5%EC%9B%90-%EA%B0%80%EA%B2%A9-%EB%B4%89%EC%95%88%EB%8B%B9-%EC%98%88%EC%95%BD/",
+    "prices": {
+      "묘지": [],
+      "봉안당": [],
+      "자연장": [],
+      "관리비": [],
+      "기타": []
+    },
+    "allPrices": [],
+    "totalPrices": 0,
+    "images": 1,
+    "crawledAt": "2025-12-21T13:33:13.428Z"
   }
 ]
