@@ -205,23 +205,14 @@ export default function InquiryPanel({ facility, isOpen, onClose, allFacilities 
             <Drawer
                 opened={isOpen}
                 onClose={onClose}
-                position="left"
-                size="100%"
+                position="right"
+                size={400}
                 styles={{
                     root: { zIndex: 10002 },
-                    overlay: { backgroundColor: 'transparent', pointerEvents: 'none' },
-                    content: {
-                        width: '100%',
-                        maxWidth: '400px',
-                        // PC에서만 시설 상세 옆에, 모바일은 전체화면
-                        marginLeft: 'clamp(0px, calc(100vw - 400px), 400px)',
-                        boxShadow: '2px 0 10px rgba(0,0,0,0.1)'
-                    },
                     header: { display: 'none' },
                     body: { padding: 0, backgroundColor: '#fff', height: '100%' }
                 }}
                 withCloseButton={false}
-                lockScroll={false}
             >
                 <Stack gap={0} h="100%">
                     {/* Header */}
