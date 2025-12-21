@@ -9426,5 +9426,37 @@
     "totalPrices": 0,
     "images": 15,
     "crawledAt": "2025-12-21T13:12:50.645Z"
+  },
+  {
+    "no": "855",
+    "name": "강동구추모의집",
+    "url": "http://gangdongnews.co.kr/2023%EB%85%84-%E3%80%8C%EA%B0%95%EB%8F%99%EA%B5%AC-%EC%B6%94%EB%AA%A8%EC%9D%98-%EC%A7%91%E3%80%8D%EC%9D%B4%EC%9A%A9-%EC%95%88%EB%82%B4/",
+    "prices": {
+      "묘지": [],
+      "봉안당": [],
+      "자연장": [],
+      "관리비": [],
+      "기타": []
+    },
+    "allPrices": [],
+    "totalPrices": 0,
+    "images": 15,
+    "crawledAt": "2025-12-21T13:15:34.250Z"
+  },
+  {
+    "no": "857",
+    "name": "오봉사 봉안당",
+    "url": "https://www.mitawon.or.kr/page/sub4_4",
+    "prices": {
+      "묘지": [],
+      "봉안당": [],
+      "자연장": [],
+      "관리비": [],
+      "기타": []
+    },
+    "allPrices": [],
+    "totalPrices": 0,
+    "images": 3,
+    "crawledAt": "2025-12-21T13:16:07.120Z"
   }
 ]

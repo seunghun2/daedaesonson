@@ -53,6 +53,7 @@ export default function InquiryPanel({ facility, isOpen, onClose }: InquiryPanel
     // 문의 목록 로드
     useEffect(() => {
         if (isOpen && facility.id) {
+            console.log('[InquiryPanel] Loading inquiries for:', facility.id, facility.name);
             loadInquiries();
         }
     }, [isOpen, facility.id]);
@@ -60,8 +61,10 @@ export default function InquiryPanel({ facility, isOpen, onClose }: InquiryPanel
     const loadInquiries = async () => {
         setIsLoading(true);
         try {
+            console.log('[InquiryPanel] Fetching:', `/api/facilities/${facility.id}/inquiries`);
             const res = await fetch(`/api/facilities/${facility.id}/inquiries`);
             const data = await res.json();
+            console.log('[InquiryPanel] Response:', data);
             if (data.inquiries) {
                 setInquiries(data.inquiries);
             }
@@ -301,177 +304,6 @@ export default function InquiryPanel({ facility, isOpen, onClose }: InquiryPanel
                                     </Paper>
                                 );
                             })}
-                        </Stack>
-                    </ScrollArea>
-
-                    {/* 글쓰기 버튼 */}
-                    <Box pos="absolute" bottom={20} right={20}>
-                        <Button
-                            variant="filled"
-                            color="brand"
-                            radius="xl"
-                            size="md"
-                            leftSection={<PenLine size={18} />}
-                            onClick={openWrite}
-                        >
-                            문의하기
-                        </Button>
-                    </Box>
-                </Stack>
-            </Drawer >
-
-            {/* 문의 등록 - 전체 화면 Drawer */}
-            < Drawer
-                opened={writeOpened}
-                onClose={closeWrite}
-                position="right"
-                size="100%"
-                styles={{
-                    root: { zIndex: 2200 },
-                    content: { width: '100%', maxWidth: '480px' },
-                    header: { display: 'none' },
-                    body: { padding: 0, backgroundColor: '#fff', height: '100%' }
-                }
-                }
-                withCloseButton={false}
-            >
-                <Stack gap={0} h="100%">
-                    {/* 헤더: X | 글쓰기 | 등록 */}
-                    <Box
-                        p="md"
-                        style={{
-                            borderBottom: '1px solid #f1f3f5',
-                            position: 'sticky',
-                            top: 0,
-                            backgroundColor: '#fff',
-                            zIndex: 10
-                        }}
-                    >
-                        <Group justify="space-between">
-                            <ActionIcon variant="subtle" color="dark" onClick={closeWrite}>
-                                <X size={20} />
-                            </ActionIcon>
-                            <Text fw={600} size="md">글쓰기</Text>
-                            <Button
-                                variant="filled"
-                                color="brand"
-                                size="xs"
-                                radius="md"
-                                onClick={handleSubmit}
-                                loading={isSubmitting}
-                                disabled={!title.trim() || !content.trim() || !phone.trim()}
-                            >
-                                등록
-                            </Button>
-                        </Group>
-                    </Box>
-
-                    <ScrollArea style={{ flex: 1 }}>
-                        <Stack gap="md" p="md">
-                            {/* 안내 배너 */}
-                            <Paper
-                                p="sm"
-                                radius="md"
-                                style={{
-                                    backgroundColor: '#f3f0ff',
-                                    border: '1px solid #e5dbff'
-                                }}
-                            >
-                                <Text size="xs" c="violet.7" lh={1.5}>
-                                    다른 사람을 비방하거나, 타인에게 불쾌감을 유발하는 부적절한 표현, 영리 목적의 광고는 삼가해주세요.
-                                </Text>
-                            </Paper>
-
-                            {/* 시설명 */}
-                            <Paper
-                                p="sm"
-                                radius="md"
-                                withBorder
-                                style={{ borderColor: '#e9ecef' }}
-                            >
-                                <Group gap="xs">
-                                    <Text size="sm" c="dimmed">시설:</Text>
-                                    <Text size="sm" fw={600}>{facility.name}</Text>
-                                </Group>
-                            </Paper>
-
-                            {/* 제목 입력 */}
-                            <Box>
-                                <Text size="sm" fw={500} mb={6} c="dark">
-                                    제목 <Text component="span" c="red" inherit>*</Text>
-                                </Text>
-                                <TextInput
-                                    placeholder="ex) 봉안당 가격이 궁금합니다"
-                                    value={title}
-                                    onChange={(e) => setTitle(e.currentTarget.value)}
-                                    styles={{
-                                        input: {
-                                            border: '1px solid #dee2e6',
-                                            '&:focus': { borderColor: 'var(--mantine-color-brand-5)' }
-                                        }
-                                    }}
-                                />
-                            </Box>
-
-                            {/* 문의 내용 */}
-                            <Box>
-                                <Textarea
-                                    placeholder="궁금한 점을 자세히 적어주세요."
-                                    value={content}
-                                    onChange={(e) => setContent(e.currentTarget.value)}
-                                    minRows={8}
-                                    styles={{
-                                        input: {
-                                            border: '1px solid #dee2e6',
-                                            '&:focus': { borderColor: 'var(--mantine-color-brand-5)' }
-                                        }
-                                    }}
-                                />
-                            </Box>
-
-                            {/* 연락처 */}
-                            <Box>
-                                <Text size="sm" fw={500} mb={2} c="dark">
-                                    연락처 <Text component="span" c="red" inherit>*</Text>
-                                </Text>
-                                <Text size="xs" c="dimmed" mb={6}>
-                                    뒷자리 4자리가 비밀번호로 사용됩니다
-                                </Text>
-                                <TextInput
-                                    placeholder="010-0000-0000"
-                                    value={phone}
-                                    onChange={(e) => setPhone(formatPhone(e.currentTarget.value))}
-                                    styles={{
-                                        input: {
-                                            border: '1px solid #dee2e6',
-                                            '&:focus': { borderColor: 'var(--mantine-color-brand-5)' }
-                                        }
-                                    }}
-                                />
-                            </Box>
-
-                            {/* 비공개 토글 */}
-                            <Paper
-                                p="md"
-                                radius="md"
-                                withBorder
-                                style={{ borderColor: '#e9ecef' }}
-                            >
-                                <Group justify="space-between">
-                                    <Group gap="xs">
-                                        <Lock size={16} color={isPrivate ? '#7950f2' : '#adb5bd'} />
-                                        <Text size="sm" fw={500}>비공개</Text>
-                                    </Group>
-                                    <Switch
-                                        checked={isPrivate}
-                                        onChange={(e) => setIsPrivate(e.currentTarget.checked)}
-                                        color="violet"
-                                    />
-                                </Group>
-                                <Text size="xs" c="dimmed" mt={6}>
-                                    비공개 시 제목만 공개되고, 내용은 비밀번호 입력 후 확인 가능합니다
-                                </Text>
-                            </Paper>
                         </Stack>
                     </ScrollArea>
                 </Stack>
