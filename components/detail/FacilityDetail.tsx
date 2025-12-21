@@ -1203,25 +1203,21 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
             {/* 13. 문의하기 */}
             <Box bg="white" p="md" pb={100}>
                 <Group justify="space-between" mb="md" align="center">
-                    <Group justify="space-between">
-                        <Text size="lg" fw={700} style={{ cursor: 'pointer' }} onClick={() => {
-                            setInquiryOpen(true);
-                            // 📊 GA4: 문의하기 클릭
-                            if ((window as any).gtag) {
-                                (window as any).gtag('event', 'inquiry_open', {
-                                    facility_id: facility.id,
-                                    facility_name: facility.name
-                                });
-                            }
-                        }}>문의하기</Text>
-                        <ChevronRight size={20} style={{ cursor: 'pointer' }} onClick={() => setInquiryOpen(true)} />
-                    </Group>
-                    <Group gap={4} style={{ cursor: 'pointer' }} onClick={() => setInquiryOpen(true)}>
+                    <Text size="lg" fw={700}>문의하기</Text>
+                    <Group gap={4} style={{ cursor: 'pointer' }} onClick={() => {
+                        setInquiryOpen(true);
+                        // 📊 GA4: 문의하기 클릭
+                        if ((window as any).gtag) {
+                            (window as any).gtag('event', 'inquiry_open', {
+                                facility_id: facility.id,
+                                facility_name: facility.name
+                            });
+                        }
+                    }}>
                         <Text size="xs" c="dimmed">전체보기</Text>
                         <ChevronRight size={14} color="gray" />
                     </Group>
                 </Group>
-
 
                 {/* Photo Strip (Simulated for now) - If reviews have photos, show here */}
                 {/* <Box mb="lg" ... /> */}

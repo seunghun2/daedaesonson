@@ -196,11 +196,11 @@ export default function InquiryPanel({ facility, isOpen, onClose }: InquiryPanel
             <Drawer
                 opened={isOpen}
                 onClose={onClose}
-                position="right"
+                position="left"
                 size="100%"
                 styles={{
                     root: { zIndex: 2100 },
-                    content: { width: '100%', maxWidth: '480px' },
+                    content: { width: '100%', maxWidth: '400px' },
                     header: { display: 'none' },
                     body: { padding: 0, backgroundColor: '#fff', height: '100%' }
                 }}
@@ -210,10 +210,10 @@ export default function InquiryPanel({ facility, isOpen, onClose }: InquiryPanel
                     {/* Header */}
                     <Box p="md" style={{ borderBottom: '1px solid #f1f3f5' }}>
                         <Group justify="space-between">
-                            <Group gap="sm" style={{ cursor: 'pointer' }} onClick={onClose}>
-                                <ChevronRight style={{ transform: 'rotate(180deg)' }} />
-                                <Text fw={700} size="lg">문의 ({inquiries.length})</Text>
-                            </Group>
+                            <Text fw={700} size="lg">문의 ({inquiries.length})</Text>
+                            <ActionIcon variant="subtle" color="dark" onClick={onClose}>
+                                <X size={20} />
+                            </ActionIcon>
                         </Group>
                     </Box>
 
@@ -311,10 +311,10 @@ export default function InquiryPanel({ facility, isOpen, onClose }: InquiryPanel
                         </Button>
                     </Box>
                 </Stack>
-            </Drawer>
+            </Drawer >
 
             {/* 문의 등록 - 전체 화면 Drawer */}
-            <Drawer
+            < Drawer
                 opened={writeOpened}
                 onClose={closeWrite}
                 position="right"
@@ -324,7 +324,8 @@ export default function InquiryPanel({ facility, isOpen, onClose }: InquiryPanel
                     content: { width: '100%', maxWidth: '480px' },
                     header: { display: 'none' },
                     body: { padding: 0, backgroundColor: '#fff', height: '100%' }
-                }}
+                }
+                }
                 withCloseButton={false}
             >
                 <Stack gap={0} h="100%">
@@ -467,10 +468,10 @@ export default function InquiryPanel({ facility, isOpen, onClose }: InquiryPanel
                         </Stack>
                     </ScrollArea>
                 </Stack>
-            </Drawer>
+            </Drawer >
 
             {/* 비밀번호 입력 모달 */}
-            <Modal
+            < Modal
                 opened={pinOpened}
                 onClose={closePin}
                 title="비밀번호 입력"
@@ -501,7 +502,7 @@ export default function InquiryPanel({ facility, isOpen, onClose }: InquiryPanel
                         확인
                     </Button>
                 </Stack>
-            </Modal>
+            </Modal >
         </>
     );
 }
