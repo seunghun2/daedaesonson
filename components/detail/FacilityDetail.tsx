@@ -335,10 +335,14 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
         const hash = facility.id.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
         return 50 + (hash * 17) % 450;
     };
-    const [viewCount, setViewCount] = useState((facility as any).viewCount || getInitialViewCount());
+    const initialCount = (facility as any).viewCount || getInitialViewCount();
+    const [viewCount, setViewCount] = useState(initialCount);
 
-    // 🔥 조회수 증가 API 호출 (컴포넌트 마운트 시 1회)
+    // 🔥 조회수 증가 API 호출 (컴포넌트 마운트 시 1회) + Optimistic Update
     useEffect(() => {
+        // 🚀 Optimistic: 즉시 +1 표시 (API 응답 전에)
+        setViewCount(initialCount + 1);
+
         const incrementViewCount = async () => {
             try {
                 const res = await fetch(`/api/facilities/${facility.id}/view`, { method: 'POST' });
@@ -549,11 +553,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
         } catch (e) { console.error(e); }
     };
 
-    useEffect(() => {
-        // Random view count (simulated) - Client side only
-        // eslint-disable-next-line react-hooks/set-state-in-effect
-        setViewCount(Math.floor(Math.random() * 20) + 5);
-    }, []);
+    // 🔥 랜덤 조회수 설정 제거됨 - API 호출로 대체 (line 341-354)
 
     // 갤러리 이미지 처리 (엄격한 필터링)
     // 🔥 thumbnail이 있으면 imageGallery 폴백으로 사용 (즉시 표시)
