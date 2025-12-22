@@ -1122,18 +1122,6 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                 <Text size="sm" mb="md" c="dark.7">{facility.address}</Text>
 
                 <Group grow>
-                    <Button
-                        variant="outline"
-                        color="brand"
-                        size="sm"
-                        component="a"
-                        href={facility.transportInfo?.naverMapUrl || `https://map.naver.com/v5/search/${encodeURIComponent(facility.address)}`}
-                        target="_blank"
-                        leftSection={<Navigation size={16} />}
-                        styles={{ root: { borderColor: 'var(--mantine-color-brand-3)' } }}
-                    >
-                        길찾기
-                    </Button>
                     {facility.websiteUrl && (
                         <Button
                             variant="outline"
