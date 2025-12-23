@@ -343,22 +343,49 @@ function PriceInfoSection({ priceInfo, hasPrice }: { priceInfo: any, hasPrice: b
                                                             <>
                                                                 <Stack gap="sm" mb={optionRows.length > 0 ? "lg" : 0}>
                                                                     {mainRows.map((row: any, idx: number) => (
-                                                                        <Group key={`main-${idx}`} justify="space-between" align="flex-start" wrap="nowrap"
-                                                                            style={{ borderBottom: '1px solid #e9ecef', paddingBottom: 12 }}
+                                                                        <Box key={`main-${idx}`}
+                                                                            style={{
+                                                                                borderBottom: '1px solid #e9ecef',
+                                                                                padding: '10px 0',
+                                                                                display: 'flex',
+                                                                                alignItems: 'center',
+                                                                                gap: 8
+                                                                            }}
                                                                         >
-                                                                            <Box style={{ flex: 1, minWidth: 0 }}>
-                                                                                <Group gap="xs" mb={4} align="center" wrap="wrap">
-                                                                                    <Text fw={600} size="md" c="dark.9" style={{ lineHeight: 1.3, wordBreak: 'keep-all' }}>
-                                                                                        {formatName(row.name)}
-                                                                                    </Text>
-                                                                                    {getTypeLabel(row.name)}
-                                                                                </Group>
-                                                                                {row.grade && <Text size="12px" c="dimmed">{row.grade}</Text>}
-                                                                            </Box>
-                                                                            <Text fw={700} size="md" c="black" style={{ whiteSpace: 'nowrap', marginLeft: 8 }}>
+                                                                            {/* 상품명 - 고정 너비 */}
+                                                                            <Text fw={600} size="12px" c="dark.9"
+                                                                                style={{
+                                                                                    width: 125,
+                                                                                    flexShrink: 0,
+                                                                                    overflow: 'hidden',
+                                                                                    textOverflow: 'ellipsis',
+                                                                                    whiteSpace: 'nowrap'
+                                                                                }}
+                                                                            >
+                                                                                {formatName(row.name)}
+                                                                            </Text>
+                                                                            {/* 세부정보 - 유연 너비 */}
+                                                                            <Text size="12px" c="dark.9"
+                                                                                style={{
+                                                                                    flex: 1,
+                                                                                    overflow: 'hidden',
+                                                                                    textOverflow: 'ellipsis',
+                                                                                    whiteSpace: 'nowrap'
+                                                                                }}
+                                                                            >
+                                                                                {(row.grade || '-').length > 10 ? (row.grade || '-').slice(0, 10) + '...' : (row.grade || '-')}
+                                                                            </Text>
+                                                                            {/* 가격 - 오른쪽 고정 */}
+                                                                            <Text fw={700} size="12px" c="black"
+                                                                                style={{
+                                                                                    flexShrink: 0,
+                                                                                    whiteSpace: 'nowrap',
+                                                                                    textAlign: 'right'
+                                                                                }}
+                                                                            >
                                                                                 {formatKoreanCurrency(row.price)}
                                                                             </Text>
-                                                                        </Group>
+                                                                        </Box>
                                                                     ))}
                                                                 </Stack>
                                                                 {optionRows.length > 0 && (
