@@ -11,7 +11,8 @@ import {
     MapPin,
     ChevronLeft,
     ChevronRight,
-    MessageCircle as IconMessage
+    MessageCircle as IconMessage,
+    PhoneCall as IconPhoneCall
 } from 'lucide-react';
 
 import { usePathname, useRouter } from 'next/navigation';
@@ -40,6 +41,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     const navItems = [
         { label: '대시보드', icon: IconDashboard, link: '/admin' },
         { label: '시설 데이터 관리', icon: IconDatabase, link: '/admin/upload' },
+        { label: '상담신청관리', icon: IconPhoneCall, link: '/admin/consults' },
         { label: '댓글문의관리', icon: IconMessage, link: '/admin/inquiries' },
         { label: '설정', icon: IconSettings, link: '/admin/settings' },
     ];
