@@ -686,6 +686,10 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
     // 🔒 이전 facilities 개수 저장 (필터 변경 감지용)
     const prevFacilitiesCountRef = useRef(0);
 
+    // 🏷️ 시설명 레이블 마커 (줌 레벨 높을 때 표시)
+    const nameLabelMarkersRef = useRef<any[]>([]);
+    const nameLabelsVisibleRef = useRef(false);
+
     const updateVisibleMarkers = useCallback(() => {
         const map = mapInstanceRef.current;
         if (!map || !window.naver || !window.naver.maps) return;
@@ -770,15 +774,27 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
             };
             const markerColor = categoryColors[fac.category as FacilityCategory] || '#0097a7';
 
-            const contentWidth = 58;
-            const contentHeight = 44;
+            const contentWidth = 56;
+            const contentHeight = 48;
+            const tailSize = 10;
+            const archHeight = 14;
 
+            // 위쪽 아치형 + 왼쪽 아래 꼬리 + 오른쪽 아래 라운드
             const svgContent = `
-            <svg width="${contentWidth}" height="${contentHeight + 8}" viewBox="0 0 ${contentWidth} ${contentHeight + 8}" xmlns="http://www.w3.org/2000/svg">
-                <rect x="0" y="0" width="${contentWidth}" height="${contentHeight}" rx="6" fill="${markerColor}"/>
-                <path d="M${contentWidth / 2 - 6} ${contentHeight - 1} L${contentWidth / 2} ${contentHeight + 7} L${contentWidth / 2 + 6} ${contentHeight - 1} Z" fill="${markerColor}"/>
-                <text x="${contentWidth / 2}" y="16" font-family="-apple-system, sans-serif" font-size="10" fill="white" fill-opacity="0.9" text-anchor="middle">${categoryLabel}</text>
-                <text x="${contentWidth / 2}" y="33" font-family="-apple-system, sans-serif" font-size="13" font-weight="800" fill="white" text-anchor="middle">${priceText}</text>
+            <svg width="${contentWidth}" height="${contentHeight + tailSize}" viewBox="0 0 ${contentWidth} ${contentHeight + tailSize}" xmlns="http://www.w3.org/2000/svg">
+                <path d="
+                    M 0 ${archHeight}
+                    Q 0 0, ${contentWidth / 2} 0
+                    Q ${contentWidth} 0, ${contentWidth} ${archHeight}
+                    L ${contentWidth} ${contentHeight - 8}
+                    Q ${contentWidth} ${contentHeight}, ${contentWidth - 8} ${contentHeight}
+                    L ${tailSize} ${contentHeight}
+                    L 0 ${contentHeight + tailSize}
+                    L 0 ${archHeight}
+                    Z
+                " fill="${markerColor}"/>
+                <text x="${contentWidth / 2}" y="20" font-family="-apple-system, sans-serif" font-size="10" fill="white" fill-opacity="0.9" text-anchor="middle">${categoryLabel}</text>
+                <text x="${contentWidth / 2}" y="38" font-family="-apple-system, sans-serif" font-size="13" font-weight="800" fill="white" text-anchor="middle">${priceText}</text>
             </svg>
             `;
 
@@ -787,7 +803,7 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
                 title: fac.name,
                 icon: {
                     content: svgContent,
-                    anchor: new window.naver.maps.Point(contentWidth / 2, contentHeight + 7),
+                    anchor: new window.naver.maps.Point(0, contentHeight + tailSize),
                 }
             });
 
@@ -807,7 +823,7 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
                         borderWidth: 0,
                         backgroundColor: 'transparent',
                         disableAnchor: true,
-                        pixelOffset: new window.naver.maps.Point(0, -10),
+                        pixelOffset: new window.naver.maps.Point(30, -10),
                     });
                 }
 
@@ -976,6 +992,87 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
 
                 // 중심 주소 업데이트
                 updateCenterAddress(map);
+
+                // 🏷️ 줌 레벨에 따라 시설명 레이블 표시/숨김
+                const currentZoom = map.getZoom();
+                const SHOW_LABELS_ZOOM = 13; // 줌 13 이상이면 이름 표시
+
+                if (currentZoom >= SHOW_LABELS_ZOOM) {
+                    // 레이블 표시 (항상 새로 그림 - 지도 이동 시에도)
+                    nameLabelsVisibleRef.current = true;
+
+                    // 기존 레이블 제거
+                    nameLabelMarkersRef.current.forEach(m => m.setMap(null));
+                    nameLabelMarkersRef.current = [];
+
+                    // 화면에 보이는 마커들만 레이블 생성
+                    const bounds = map.getBounds();
+                    console.log(`🏷️ 레이블 표시 시도 - 마커 수: ${markersRef.current.length}, 줌: ${currentZoom}`);
+                    markersRef.current.forEach((marker, idx) => {
+                        const pos = marker.getPosition();
+                        if (!bounds.hasPoint(pos)) return;
+
+                        const fac = (marker as any).__facilityData;
+                        if (!fac) return;
+
+                        // 시설명 (최대 10자)
+                        const name = fac.name?.length > 10 ? fac.name.slice(0, 10) + '...' : fac.name;
+
+                        const labelMarker = new window.naver.maps.Marker({
+                            position: pos,
+                            map: map,
+                            icon: {
+                                content: `
+                                    <div class="facility-label" style="
+                                        display: flex;
+                                        flex-direction: column;
+                                        align-items: center;
+                                        transform: translateX(-50%);
+                                        animation: labelSlideUp 0.3s ease-out forwards;
+                                    ">
+                                        <div style="
+                                            background: white;
+                                            padding: 5px 10px;
+                                            border-radius: 6px;
+                                            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+                                            font-size: 12px;
+                                            font-weight: 700;
+                                            color: #333;
+                                            white-space: nowrap;
+                                            font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+                                        ">${name}</div>
+                                    </div>
+                                    <style>
+                                        @keyframes labelSlideUp {
+                                            from {
+                                                opacity: 0;
+                                                transform: translateX(-50%) translateY(10px);
+                                            }
+                                            to {
+                                                opacity: 1;
+                                                transform: translateX(-50%) translateY(0);
+                                            }
+                                        }
+                                    </style>
+                                `,
+                                anchor: new window.naver.maps.Point(-30, 96),
+                            },
+                            zIndex: 50
+                        });
+
+                        // 레이블 클릭 시 마커 클릭과 동일하게 동작
+                        window.naver.maps.Event.addListener(labelMarker, 'click', () => {
+                            onMarkerClick(fac);
+                        });
+
+                        nameLabelMarkersRef.current.push(labelMarker);
+                    });
+                } else if (currentZoom < SHOW_LABELS_ZOOM && nameLabelsVisibleRef.current) {
+                    // 레이블 숨김
+                    nameLabelsVisibleRef.current = false;
+                    nameLabelMarkersRef.current.forEach(m => m.setMap(null));
+                    nameLabelMarkersRef.current = [];
+                }
 
                 // ❌ 마커 재생성 제거 - 위치 고정을 위해 지도 이동 시 마커 업데이트 안 함
                 // updateVisibleMarkers();
