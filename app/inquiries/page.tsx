@@ -23,7 +23,6 @@ export default function InquiriesPage() {
     const router = useRouter();
     const [inquiries, setInquiries] = useState<Inquiry[]>([]);
     const [isLoading, setIsLoading] = useState(true);
-    const [facilityNameMap, setFacilityNameMap] = useState<Map<string, string>>(new Map());
 
     // 비밀번호 모달
     const [pwOpened, { open: openPw, close: closePw }] = useDisclosure(false);
@@ -38,17 +37,9 @@ export default function InquiriesPage() {
 
     const loadData = async () => {
         try {
-            // 병렬로 동시에 가져오기 (속도 개선)
-            const [facilitiesRes, inquiriesRes] = await Promise.all([
-                fetch('/api/facilities'),
-                fetch('/api/admin/inquiries')
-            ]);
-
-            const facilitiesData = await facilitiesRes.json();
-            const nameMap = new Map((facilitiesData as any[]).map(f => [f.id, f.name]));
-            setFacilityNameMap(nameMap);
-
-            const data = await inquiriesRes.json();
+            // API에서 facilityName 이미 포함되어 반환됨
+            const res = await fetch('/api/admin/inquiries');
+            const data = await res.json();
             if (data.inquiries) {
                 setInquiries(data.inquiries);
             }
@@ -147,7 +138,7 @@ export default function InquiriesPage() {
                                     {/* [시설명] 카테고리 + 날짜 */}
                                     <Group justify="space-between" mb={4}>
                                         <Group gap={4}>
-                                            <Text size="xs" c="dimmed">[{facilityNameMap.get(inquiry.facilityId) || inquiry.facilityName || '시설'}]</Text>
+                                            <Text size="xs" c="dimmed">[{inquiry.facilityName || '시설'}]</Text>
                                             <Text size="xs" c="brand" fw={500}>
                                                 {inquiry.type === 'price' ? '가격 문의' :
                                                     inquiry.type === 'reservation' ? '예약/절차' :
