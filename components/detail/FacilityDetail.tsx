@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { Image, Text, Badge, Group, Button, Stack, Box, Paper, Modal, Tabs, Collapse, ActionIcon, Rating, Textarea, TextInput, LoadingOverlay, useMantineTheme, Accordion, Table, Switch, Select, Drawer } from '@mantine/core';
 import { useDisclosure, useMediaQuery } from '@mantine/hooks';
 import { Car, Utensils, Accessibility, Store, Navigation, Globe, ChevronLeft, ChevronRight, TrendingUp, ChevronDown, ChevronUp, Star, Pencil, Camera, X, ImageIcon, Plus, Trash, Archive, Mountain, Trees, Layers, Lock, Unlock } from 'lucide-react';
@@ -545,8 +545,18 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
     const [showAllInquiries, setShowAllInquiries] = useState(false);
     const [totalInquiryCount, setTotalInquiryCount] = useState(0);
 
-    // 상담 신청 모달
-    const [consultModalOpened, setConsultModalOpened] = useState(false);
+    // 상담 신청 모달 - URL 파라미터로 관리
+    const searchParams = useSearchParams();
+    const consultModalOpened = searchParams.get('consult') === 'true';
+    const setConsultModalOpened = (open: boolean) => {
+        const url = new URL(window.location.href);
+        if (open) {
+            url.searchParams.set('consult', 'true');
+        } else {
+            url.searchParams.delete('consult');
+        }
+        window.history.pushState({}, '', url.toString());
+    };
     const [consultForm, setConsultForm] = useState({
         name: '',
         phone: '',
@@ -1699,120 +1709,392 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
             {/* Story Panel Overlay */}
             <InquiryPanel facility={facility} isOpen={inquiryOpen} onClose={() => setInquiryOpen(false)} allFacilities={allFacilities} />
 
-            {/* 상담 신청 모달 */}
-            <Modal
-                opened={consultModalOpened}
-                onClose={() => setConsultModalOpened(false)}
-                title={<Text fw={700} size="lg">상담 신청</Text>}
-                centered
-                size="md"
-            >
-                <Stack gap="md">
-                    <Text size="sm" c="dimmed">
-                        <Text span fw={600} c="brand">{facility.name}</Text> 시설에 대한 상담을 신청합니다.
-                    </Text>
-
-                    <TextInput
-                        label="이름"
-                        placeholder="이름을 입력해주세요"
-                        required
-                        value={consultForm.name}
-                        onChange={(e) => setConsultForm({ ...consultForm, name: e.currentTarget.value })}
-                    />
-
-                    <TextInput
-                        label="연락처"
-                        placeholder="010-0000-0000"
-                        required
-                        value={consultForm.phone}
-                        onChange={(e) => setConsultForm({ ...consultForm, phone: e.currentTarget.value })}
-                    />
-
-                    <Box>
-                        <Text size="sm" fw={500} mb="xs">연락 가능 시간</Text>
-                        <Group>
-                            {['09시~12시', '12시~14시', '14시~18시', '18시~21시', '시간 무관'].map((time) => (
-                                <Button
-                                    key={time}
-                                    variant={consultForm.preferredTime === time ? 'filled' : 'outline'}
-                                    color={consultForm.preferredTime === time ? 'brand' : 'gray'}
-                                    size="xs"
-                                    radius="xl"
-                                    onClick={() => setConsultForm({ ...consultForm, preferredTime: time })}
-                                >
-                                    {time}
-                                </Button>
-                            ))}
-                        </Group>
+            {/* 상담 신청 - 모바일: Modal fullScreen, PC: Drawer 스타일 */}
+            {isMobile ? (
+                <Modal
+                    opened={consultModalOpened}
+                    onClose={() => setConsultModalOpened(false)}
+                    fullScreen
+                    withCloseButton={false}
+                    withinPortal
+                    zIndex={10000}
+                    padding={0}
+                    styles={{ body: { height: '100%', display: 'flex', flexDirection: 'column' } }}
+                >
+                    {/* 헤더 */}
+                    <Box
+                        p="md"
+                        style={{
+                            borderBottom: '1px solid #f1f3f5',
+                            display: 'flex',
+                            justifyContent: 'space-between',
+                            alignItems: 'center',
+                            position: 'sticky',
+                            top: 0,
+                            background: 'white',
+                            zIndex: 10
+                        }}
+                    >
+                        <ActionIcon variant="subtle" color="gray" onClick={() => setConsultModalOpened(false)}>
+                            <X size={20} />
+                        </ActionIcon>
+                        <Box style={{ width: 36 }} />
                     </Box>
 
-                    <Box>
-                        <Text size="sm" fw={500} mb="xs">상담 질문</Text>
-                        <Stack gap="xs">
-                            {[
-                                { value: 'price', label: '비용/가격이 궁금해요' },
-                                { value: 'location', label: '위치/교통이 궁금해요' },
-                                { value: 'grave', label: '묘지 유형이 궁금해요' },
-                                { value: 'other', label: '기타 문의' }
-                            ].map((q) => (
-                                <Button
-                                    key={q.value}
-                                    variant={consultForm.question === q.value ? 'filled' : 'light'}
-                                    color={consultForm.question === q.value ? 'brand' : 'gray'}
-                                    size="sm"
-                                    radius="md"
-                                    justify="flex-start"
-                                    fullWidth
-                                    onClick={() => setConsultForm({ ...consultForm, question: q.value })}
-                                >
-                                    {q.label}
-                                </Button>
-                            ))}
+                    {/* 본문 - 스크롤 영역 */}
+                    <Box style={{ flex: 1, overflowY: 'auto', padding: '24px 20px 120px' }}>
+                        {/* 타이틀 */}
+                        <Box mb="xl">
+                            <Text size="24px" fw={700} lh={1.3} style={{ wordBreak: 'keep-all' }}>
+                                상담을 신청하려면{'\n'}
+                                <Text span c="brand" inherit>필수 정보</Text>가 필요해요.
+                            </Text>
+                            <Text size="sm" c="dimmed" mt="sm">
+                                {facility.name}
+                            </Text>
+                        </Box>
+
+                        <Stack gap="sm">
+                            {/* 1. 이름 */}
+                            <Box p="lg" style={{ border: '1px solid #e9ecef', borderRadius: 12 }}>
+                                <Text size="md" fw={700} mb="md">1. 이름</Text>
+                                <TextInput
+                                    placeholder="이름을 입력해 주세요."
+                                    variant="unstyled"
+                                    size="md"
+                                    value={consultForm.name}
+                                    onChange={(e) => setConsultForm({ ...consultForm, name: e.currentTarget.value })}
+                                    styles={{
+                                        input: {
+                                            borderBottom: '1px solid #dee2e6',
+                                            borderRadius: 0,
+                                            paddingBottom: 8
+                                        }
+                                    }}
+                                />
+                            </Box>
+
+                            {/* 2. 연락처 */}
+                            <Box p="lg" style={{ border: '1px solid #e9ecef', borderRadius: 12 }}>
+                                <Text size="md" fw={700} mb="md">2. 연락처</Text>
+                                <TextInput
+                                    placeholder="연락처를 입력해 주세요."
+                                    variant="unstyled"
+                                    size="md"
+                                    value={consultForm.phone}
+                                    onChange={(e) => setConsultForm({ ...consultForm, phone: e.currentTarget.value })}
+                                    styles={{
+                                        input: {
+                                            borderBottom: '1px solid #dee2e6',
+                                            borderRadius: 0,
+                                            paddingBottom: 8
+                                        }
+                                    }}
+                                />
+                                <Text size="xs" c="dimmed" mt="xs">
+                                    연락처는 상담사와 제휴시설에만 전달됩니다.
+                                </Text>
+                            </Box>
+
+                            {/* 3. 연락 가능 시간 */}
+                            <Box p="lg" style={{ border: '1px solid #e9ecef', borderRadius: 12 }}>
+                                <Text size="md" fw={700} mb="md">3. 연락 가능 시간</Text>
+                                <Stack gap="xs">
+                                    {['09시~12시', '12시~14시', '14시~18시', '18시~21시', '시간 무관'].map((time) => (
+                                        <Box
+                                            key={time}
+                                            onClick={() => setConsultForm({ ...consultForm, preferredTime: time })}
+                                            style={{
+                                                display: 'flex',
+                                                alignItems: 'center',
+                                                gap: 12,
+                                                cursor: 'pointer',
+                                                padding: '8px 0'
+                                            }}
+                                        >
+                                            <Box
+                                                style={{
+                                                    width: 22,
+                                                    height: 22,
+                                                    borderRadius: '50%',
+                                                    border: consultForm.preferredTime === time ? '6px solid var(--mantine-color-brand-6)' : '2px solid #ced4da',
+                                                    background: 'white'
+                                                }}
+                                            />
+                                            <Text size="md">{time}</Text>
+                                        </Box>
+                                    ))}
+                                </Stack>
+                            </Box>
+
+                            {/* 4. 상담 질문 */}
+                            <Box p="lg" style={{ border: '1px solid #e9ecef', borderRadius: 12 }}>
+                                <Text size="md" fw={700} mb="md">4. 궁금한 점</Text>
+                                <Stack gap="xs">
+                                    {[
+                                        { value: 'price', label: '비용/가격이 궁금해요' },
+                                        { value: 'location', label: '위치/교통이 궁금해요' },
+                                        { value: 'grave', label: '묘지 유형이 궁금해요' },
+                                        { value: 'other', label: '기타 문의' }
+                                    ].map((q) => (
+                                        <Box
+                                            key={q.value}
+                                            onClick={() => setConsultForm({ ...consultForm, question: q.value })}
+                                            style={{
+                                                display: 'flex',
+                                                alignItems: 'center',
+                                                gap: 12,
+                                                cursor: 'pointer',
+                                                padding: '8px 0'
+                                            }}
+                                        >
+                                            <Box
+                                                style={{
+                                                    width: 22,
+                                                    height: 22,
+                                                    borderRadius: '50%',
+                                                    border: consultForm.question === q.value ? '6px solid var(--mantine-color-brand-6)' : '2px solid #ced4da',
+                                                    background: 'white'
+                                                }}
+                                            />
+                                            <Text size="md">{q.label}</Text>
+                                        </Box>
+                                    ))}
+                                </Stack>
+                            </Box>
+
+                            {/* 5. 추가 요청사항 */}
+                            <Box p="lg" style={{ border: '1px solid #e9ecef', borderRadius: 12 }}>
+                                <Text size="md" fw={700} mb="md">5. 추가 요청사항 (선택)</Text>
+                                <Textarea
+                                    placeholder="추가로 궁금한 점이 있으시면 입력해주세요."
+                                    variant="unstyled"
+                                    rows={3}
+                                    value={consultForm.message}
+                                    onChange={(e) => setConsultForm({ ...consultForm, message: e.currentTarget.value })}
+                                    styles={{
+                                        input: {
+                                            border: '1px solid #dee2e6',
+                                            borderRadius: 8,
+                                            padding: 12
+                                        }
+                                    }}
+                                />
+                            </Box>
                         </Stack>
                     </Box>
 
-                    <Textarea
-                        label="상담 요청사항 (선택)"
-                        placeholder="추가로 궁금한 점이 있으시면 입력해주세요"
-                        rows={3}
-                        value={consultForm.message}
-                        onChange={(e) => setConsultForm({ ...consultForm, message: e.currentTarget.value })}
-                    />
-
-                    <Button
-                        fullWidth
-                        size="lg"
-                        color="brand"
-                        loading={consultSubmitting}
-                        disabled={!consultForm.name || !consultForm.phone}
-                        onClick={async () => {
-                            setConsultSubmitting(true);
-                            try {
-                                const res = await fetch('/api/consult', {
-                                    method: 'POST',
-                                    headers: { 'Content-Type': 'application/json' },
-                                    body: JSON.stringify({
-                                        facilityId: facility.id,
-                                        facilityName: facility.name,
-                                        ...consultForm
-                                    })
-                                });
-                                if (res.ok) {
-                                    setConsultModalOpened(false);
-                                    setConsultForm({ name: '', phone: '', preferredTime: '', question: 'price', message: '' });
-                                    alert('상담 신청이 완료되었습니다. 빠른 시일 내에 연락드리겠습니다.');
-                                }
-                            } catch (err) {
-                                alert('신청 중 오류가 발생했습니다.');
-                            } finally {
-                                setConsultSubmitting(false);
-                            }
+                    {/* 하단 고정 버튼 */}
+                    <Box
+                        p="md"
+                        style={{
+                            borderTop: '1px solid #f1f3f5',
+                            background: 'white',
+                            position: 'fixed',
+                            bottom: 0,
+                            left: 0,
+                            right: 0,
+                            zIndex: 10
                         }}
                     >
-                        신청하기
-                    </Button>
-                </Stack>
-            </Modal>
+                        <Button
+                            fullWidth
+                            size="lg"
+                            radius="md"
+                            color="brand"
+                            loading={consultSubmitting}
+                            disabled={!consultForm.name || !consultForm.phone}
+                            styles={{ root: { height: 52 } }}
+                            onClick={async () => {
+                                setConsultSubmitting(true);
+                                try {
+                                    const res = await fetch('/api/consult', {
+                                        method: 'POST',
+                                        headers: { 'Content-Type': 'application/json' },
+                                        body: JSON.stringify({
+                                            facilityId: facility.id,
+                                            facilityName: facility.name,
+                                            ...consultForm
+                                        })
+                                    });
+                                    if (res.ok) {
+                                        setConsultModalOpened(false);
+                                        setConsultForm({ name: '', phone: '', preferredTime: '', question: 'price', message: '' });
+                                        alert('상담 신청이 완료되었습니다. 빠른 시일 내에 연락드리겠습니다.');
+                                    }
+                                } catch (err) {
+                                    alert('신청 중 오류가 발생했습니다.');
+                                } finally {
+                                    setConsultSubmitting(false);
+                                }
+                            }}
+                        >
+                            상담 신청하기
+                        </Button>
+                    </Box>
+                </Modal>
+            ) : (
+                <Drawer
+                    opened={consultModalOpened}
+                    onClose={() => setConsultModalOpened(false)}
+                    position="left"
+                    size="400px"
+                    withCloseButton={false}
+                    withinPortal
+                    zIndex={10000}
+                    overlayProps={{ opacity: 0 }}
+                    styles={{ body: { height: '100%', display: 'flex', flexDirection: 'column', padding: 0 } }}
+                >
+                    {/* 헤더 */}
+                    <Box
+                        p="md"
+                        style={{
+                            borderBottom: '1px solid #f1f3f5',
+                            display: 'flex',
+                            justifyContent: 'space-between',
+                            alignItems: 'center',
+                            background: 'white'
+                        }}
+                    >
+                        <ActionIcon variant="subtle" color="gray" onClick={() => setConsultModalOpened(false)}>
+                            <X size={20} />
+                        </ActionIcon>
+                        <Box style={{ width: 36 }} />
+                    </Box>
+
+                    {/* 본문 */}
+                    <Box style={{ flex: 1, overflowY: 'auto', padding: '24px 20px 120px' }}>
+                        <Box mb="xl">
+                            <Text size="24px" fw={700} lh={1.3} style={{ wordBreak: 'keep-all' }}>
+                                상담을 신청하려면{'\n'}
+                                <Text span c="brand" inherit>필수 정보</Text>가 필요해요.
+                            </Text>
+                            <Text size="sm" c="dimmed" mt="sm">
+                                {facility.name}
+                            </Text>
+                        </Box>
+
+                        <Stack gap="sm">
+                            {/* 1. 이름 */}
+                            <Box p="lg" style={{ border: '1px solid #e9ecef', borderRadius: 12 }}>
+                                <Text size="md" fw={700} mb="md">1. 이름</Text>
+                                <TextInput
+                                    placeholder="이름을 입력해 주세요."
+                                    variant="unstyled"
+                                    size="md"
+                                    value={consultForm.name}
+                                    onChange={(e) => setConsultForm({ ...consultForm, name: e.currentTarget.value })}
+                                    styles={{ input: { borderBottom: '1px solid #dee2e6', borderRadius: 0, paddingBottom: 8 } }}
+                                />
+                            </Box>
+
+                            {/* 2. 연락처 */}
+                            <Box p="lg" style={{ border: '1px solid #e9ecef', borderRadius: 12 }}>
+                                <Text size="md" fw={700} mb="md">2. 연락처</Text>
+                                <TextInput
+                                    placeholder="연락처를 입력해 주세요."
+                                    variant="unstyled"
+                                    size="md"
+                                    value={consultForm.phone}
+                                    onChange={(e) => setConsultForm({ ...consultForm, phone: e.currentTarget.value })}
+                                    styles={{ input: { borderBottom: '1px solid #dee2e6', borderRadius: 0, paddingBottom: 8 } }}
+                                />
+                                <Text size="xs" c="dimmed" mt="xs">연락처는 상담사와 제휴시설에만 전달됩니다.</Text>
+                            </Box>
+
+                            {/* 3. 연락 가능 시간 */}
+                            <Box p="lg" style={{ border: '1px solid #e9ecef', borderRadius: 12 }}>
+                                <Text size="md" fw={700} mb="md">3. 연락 가능 시간</Text>
+                                <Stack gap="xs">
+                                    {['09시~12시', '12시~14시', '14시~18시', '18시~21시', '시간 무관'].map((time) => (
+                                        <Box key={time} onClick={() => setConsultForm({ ...consultForm, preferredTime: time })}
+                                            style={{ display: 'flex', alignItems: 'center', gap: 12, cursor: 'pointer', padding: '8px 0' }}>
+                                            <Box style={{
+                                                width: 22, height: 22, borderRadius: '50%',
+                                                border: consultForm.preferredTime === time ? '6px solid var(--mantine-color-brand-6)' : '2px solid #ced4da', background: 'white'
+                                            }} />
+                                            <Text size="md">{time}</Text>
+                                        </Box>
+                                    ))}
+                                </Stack>
+                            </Box>
+
+                            {/* 4. 상담 질문 */}
+                            <Box p="lg" style={{ border: '1px solid #e9ecef', borderRadius: 12 }}>
+                                <Text size="md" fw={700} mb="md">4. 궁금한 점</Text>
+                                <Stack gap="xs">
+                                    {[
+                                        { value: 'price', label: '비용/가격이 궁금해요' },
+                                        { value: 'location', label: '위치/교통이 궁금해요' },
+                                        { value: 'grave', label: '묘지 유형이 궁금해요' },
+                                        { value: 'other', label: '기타 문의' }
+                                    ].map((q) => (
+                                        <Box key={q.value} onClick={() => setConsultForm({ ...consultForm, question: q.value })}
+                                            style={{ display: 'flex', alignItems: 'center', gap: 12, cursor: 'pointer', padding: '8px 0' }}>
+                                            <Box style={{
+                                                width: 22, height: 22, borderRadius: '50%',
+                                                border: consultForm.question === q.value ? '6px solid var(--mantine-color-brand-6)' : '2px solid #ced4da', background: 'white'
+                                            }} />
+                                            <Text size="md">{q.label}</Text>
+                                        </Box>
+                                    ))}
+                                </Stack>
+                            </Box>
+
+                            {/* 5. 추가 요청사항 */}
+                            <Box p="lg" style={{ border: '1px solid #e9ecef', borderRadius: 12 }}>
+                                <Text size="md" fw={700} mb="md">5. 추가 요청사항 (선택)</Text>
+                                <Textarea
+                                    placeholder="추가로 궁금한 점이 있으시면 입력해주세요."
+                                    variant="unstyled"
+                                    rows={3}
+                                    value={consultForm.message}
+                                    onChange={(e) => setConsultForm({ ...consultForm, message: e.currentTarget.value })}
+                                    styles={{ input: { border: '1px solid #dee2e6', borderRadius: 8, padding: 12 } }}
+                                />
+                            </Box>
+                        </Stack>
+                    </Box>
+
+                    {/* 하단 버튼 */}
+                    <Box p="md" style={{ borderTop: '1px solid #f1f3f5', background: 'white' }}>
+                        <Button
+                            fullWidth
+                            size="lg"
+                            radius="md"
+                            color="brand"
+                            loading={consultSubmitting}
+                            disabled={!consultForm.name || !consultForm.phone}
+                            styles={{ root: { height: 52 } }}
+                            onClick={async () => {
+                                setConsultSubmitting(true);
+                                try {
+                                    const res = await fetch('/api/consult', {
+                                        method: 'POST',
+                                        headers: { 'Content-Type': 'application/json' },
+                                        body: JSON.stringify({
+                                            facilityId: facility.id,
+                                            facilityName: facility.name,
+                                            ...consultForm
+                                        })
+                                    });
+                                    if (res.ok) {
+                                        setConsultModalOpened(false);
+                                        setConsultForm({ name: '', phone: '', preferredTime: '', question: 'price', message: '' });
+                                        alert('상담 신청이 완료되었습니다. 빠른 시일 내에 연락드리겠습니다.');
+                                    }
+                                } catch (err) {
+                                    alert('신청 중 오류가 발생했습니다.');
+                                } finally {
+                                    setConsultSubmitting(false);
+                                }
+                            }}
+                        >
+                            상담 신청하기
+                        </Button>
+                    </Box>
+                </Drawer>
+            )}
 
             {/* Floating Button Removed */}
 
