@@ -274,7 +274,7 @@ export async function POST(req: Request) {
                 phone: f.phone,
                 fax: f.fax,
                 capacity: f.capacity ?? undefined,
-                websiteUrl: f.website || f.websiteUrl,
+                websiteUrl: f.websiteUrl || f.website,
                 isActive: f.isActive ?? true,
                 operatorType: f.operatorType,
                 originalName: f.originalName,
@@ -377,7 +377,7 @@ export async function POST(req: Request) {
                     phone: f.phone || '',
                     fax: f.fax || '',
                     capacity: f.capacity ?? null,
-                    websiteUrl: f.website || f.websiteUrl || '',
+                    websiteUrl: f.websiteUrl || f.website || '',
                     isActive: f.isActive ?? true,
                 };
             });
