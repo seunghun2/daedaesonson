@@ -260,7 +260,7 @@ function PriceInfoSection({ priceInfo, hasPrice }: { priceInfo: any, hasPrice: b
                                                             return (
                                                                 <>
                                                                     <Tabs defaultValue={groupNames[0]}>
-                                                                        <Tabs.List mb="md">
+                                                                        <Tabs.List grow mb="md">
                                                                             {groupNames.map((gName, idx) => (
                                                                                 <Tabs.Tab key={idx} value={gName}>
                                                                                     {gName}
