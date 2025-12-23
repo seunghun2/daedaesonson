@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
-import { Image, Text, Badge, Group, Button, Stack, Box, Paper, Modal, Tabs, Collapse, ActionIcon, Rating, Textarea, TextInput, LoadingOverlay, useMantineTheme, Accordion, Table, Switch, Select, Drawer, SegmentedControl } from '@mantine/core';
+import { Image, Text, Badge, Group, Button, Stack, Box, Paper, Modal, Tabs, Collapse, ActionIcon, Rating, Textarea, TextInput, LoadingOverlay, useMantineTheme, Accordion, Table, Switch, Select, Drawer } from '@mantine/core';
 import { useDisclosure, useMediaQuery } from '@mantine/hooks';
 import { Car, Utensils, Accessibility, Store, Navigation, Globe, ChevronLeft, ChevronRight, TrendingUp, ChevronDown, ChevronUp, Star, Pencil, Camera, X, ImageIcon, Plus, Trash, Archive, Mountain, Trees, Layers, Lock, Unlock } from 'lucide-react';
 import InquiryPanel from './InquiryPanel';
@@ -66,10 +66,6 @@ const getDisplayName = (name: string) => {
 };
 
 function PriceInfoSection({ priceInfo, hasPrice }: { priceInfo: any, hasPrice: boolean }) {
-    const [selectedType, setSelectedType] = useState<string | null>(null);
-    const [selectedSubType, setSelectedSubType] = useState<string | null>(null);
-    const [selectedGroup, setSelectedGroup] = useState<string | null>(null);
-
     if (!priceInfo) return null;
 
     // 1. Data Prep & Fallback
@@ -90,183 +86,202 @@ function PriceInfoSection({ priceInfo, hasPrice }: { priceInfo: any, hasPrice: b
         ) : null;
     }
 
-    // 2. 3뎁스 구조 구성
-    type SubType = {
-        name: string;
-        groups: {
-            name: string;
-            rows: any[];
-        }[];
+    // 2. Grouping Logic (Burial / Charnel / Natural / Etc)
+    const groups: Record<string, { label: string, items: any[], categories: string[] }> = {
+        burial: { label: '매장묘', items: [], categories: [] },
+        charnel: { label: '봉안(납골)', items: [], categories: [] },
+        natural: { label: '수목장(자연장)', items: [], categories: [] },
+        etc: { label: '기타/공통', items: [], categories: [] }
     };
 
-    type DepthItem = {
-        label: string;
-        key: string;
-        subTypes: SubType[];
-    };
-
-    const depth1Map: DepthItem[] = [
-        { label: '봉안', key: 'charnel', subTypes: [] },
-        { label: '수목장', key: 'natural', subTypes: [] },
-        { label: '매장묘', key: 'burial', subTypes: [] },
-    ];
-
-    // 카테고리를 1뎁스로 분류, groupType으로 3뎁스 구성
     Object.entries(priceTable).forEach(([catName, catData]: [string, any]) => {
+        let key = 'etc';
+        if (/매장|묘지|봉분|둘레석/.test(catName)) key = 'burial';
+        else if (/기본비용/.test(catName)) key = 'burial';
+        else if (/봉안|납골|유골/.test(catName)) key = 'charnel';
+        else if (/수목|자연|평장|잔디|화초/.test(catName)) key = 'natural';
+
         const rows = catData.rows || [];
-        if (rows.length === 0) return;
-
-        let targetKey = 'burial';
-        if (/봉안|납골|유골/.test(catName)) targetKey = 'charnel';
-        else if (/수목|자연|평장|잔디|화초/.test(catName)) targetKey = 'natural';
-        else if (/매장|묘지|봉분|둘레석|기본비용/.test(catName)) targetKey = 'burial';
-
-        const target = depth1Map.find(d => d.key === targetKey);
-        if (!target) return;
-
-        // groupType별로 분류
-        const groupMap = new Map<string, any[]>();
-        rows.forEach((row: any) => {
-            const groupName = row.groupType || '기본';
-            if (!groupMap.has(groupName)) groupMap.set(groupName, []);
-            groupMap.get(groupName)!.push(row);
-        });
-
-        const groups = Array.from(groupMap.entries()).map(([name, rows]) => ({ name, rows }));
-
-        // 기존 subType에 추가하거나 새로 생성
-        const existingSub = target.subTypes.find(s => s.name === catName);
-        if (existingSub) {
-            existingSub.groups.push(...groups);
-        } else {
-            target.subTypes.push({ name: catName, groups });
+        if (rows.length > 0) {
+            groups[key].items.push(...rows);
+            groups[key].categories.push(catName);
         }
     });
 
-    // 빈 카테고리 제거
-    const visibleDepth1 = depth1Map.filter(d => d.subTypes.length > 0);
+    const visibleGroups = Object.values(groups).filter(g => g.items.length > 0);
 
-    if (visibleDepth1.length === 0) return null;
+    // 3. Min Price Calculation (Prioritize Representative)
+    const getMinPrice = (items: any[]) => {
+        // [New Logic] Check Representative First
+        const repItem = items.find(i => i.isRepresentative);
+        if (repItem && repItem.price > 0) {
+            return repItem.price;
+        }
 
-    // 선택값 설정
-    const activeType = selectedType || visibleDepth1[0]?.key;
-    const activeDepth1 = visibleDepth1.find(d => d.key === activeType) || visibleDepth1[0];
-    const activeSubType = selectedSubType || activeDepth1?.subTypes[0]?.name;
-    const activeSubData = activeDepth1?.subTypes.find(s => s.name === activeSubType);
-    const activeGroupName = selectedGroup || activeSubData?.groups[0]?.name;
-    const activeGroup = activeSubData?.groups.find(g => g.name === activeGroupName);
+        // [Legacy Logic] Calculate Min Price
+        const candidates = items.filter(i => {
+            const n = i.name || '';
+            // 관리비, 석물, 제례비 등 부대비용 제외 (본상품 가격만)
+            if (/관리|석물|작업|각자|제례|상석/.test(n)) return false;
+            return true;
+        });
 
-    // Helper: 타입 라벨
-    const getTypeLabel = (name: string) => {
-        if (/부부|쌍/.test(name)) return <Badge size="xs" variant="light" color="blue">부부형</Badge>;
-        if (/합장/.test(name)) return <Badge size="xs" variant="light" color="teal">합장형</Badge>;
-        if (/가족/.test(name)) return <Badge size="xs" variant="light" color="grape">가족형</Badge>;
-        if (/개인|1위/.test(name)) return <Badge size="xs" variant="light" color="gray">개인형</Badge>;
-        return null;
+        if (candidates.length === 0) return 0;
+
+        const prices = candidates.map(i => {
+            if (typeof i.price === 'number') return i.price;
+            return Number(String(i.price).replace(/,/g, ''));
+        }).filter(p => !isNaN(p) && p > 0);
+
+        if (prices.length === 0) return 0;
+        return Math.min(...prices);
     };
+
+    // 4. Name Formatter
+    const formatName = (name: string) => {
+        return name
+            .replace(/(\d+)위/g, '$1분 안치')
+            .replace(/1분 안치/g, '1분 안치 (개인형)')
+            .replace(/2분 안치/g, '2분 안치 (부부형)');
+    };
+
+    // 5. Icons Mapping
+    const getIcon = (type: string) => {
+        switch (type) {
+            case 'burial': return <Mountain size={24} color="#495057" />;
+            case 'charnel': return <Archive size={24} color="#495057" />;
+            case 'natural': return <Trees size={24} color="#495057" />;
+            default: return <Layers size={24} color="#495057" />;
+        }
+    };
+
+    if (visibleGroups.length === 0) return null;
+
+    // Filter out '기타' group as per user request
+    const displayGroups = visibleGroups.filter(g => !g.label.includes('기타'));
 
     return (
         <Box bg="white" p="md" pb="xl" style={{ borderBottom: '8px solid #f8f9fa' }}>
-            <Text size="xl" fw={800} mb="lg" style={{ letterSpacing: '-1px' }}>
-                시설 사용료
+            <Text size="xl" fw={800} mb="xl" style={{ letterSpacing: '-1px' }}>
+                사용료
             </Text>
 
-            {/* 1뎁스: 장지 종류 */}
-            <Box mb="md">
-                <Text size="xs" c="dimmed" mb="xs">장지 종류</Text>
-                <SegmentedControl
-                    fullWidth
-                    value={activeType}
-                    onChange={(val) => {
-                        setSelectedType(val);
-                        setSelectedSubType(null);
-                        setSelectedGroup(null);
-                    }}
-                    data={visibleDepth1.map(d => ({ label: d.label, value: d.key }))}
-                    styles={{
-                        root: { backgroundColor: '#f8f9fa' },
-                        label: { fontWeight: 600 }
-                    }}
-                />
-            </Box>
+            <Accordion
+                variant="default"
+                radius="md"
+                // 🔒 초기 상태: 모두 닫힘
+                styles={{
+                    item: { borderBottom: '1px solid #f1f3f5' },
+                    control: { padding: '20px 0', '&:hover': { backgroundColor: 'transparent' } },
+                    content: { padding: '0 0 24px 0' },
+                    chevron: { display: 'none' }
+                }}
+            >
+                {displayGroups.map((group) => {
+                    const minPrice = getMinPrice(group.items);
+                    const hasMinPrice = minPrice > 0 && minPrice < Infinity;
 
-            {/* 2뎁스: 유형 종류 */}
-            {activeDepth1 && activeDepth1.subTypes.length > 1 && (
-                <Box mb="md">
-                    <Text size="xs" c="dimmed" mb="xs">유형 종류</Text>
-                    <SegmentedControl
-                        fullWidth
-                        value={activeSubType || ''}
-                        onChange={(val) => {
-                            setSelectedSubType(val);
-                            setSelectedGroup(null);
-                        }}
-                        data={activeDepth1.subTypes.map(s => ({ label: s.name, value: s.name }))}
-                        styles={{
-                            root: { backgroundColor: '#f8f9fa' },
-                            label: { fontWeight: 500, fontSize: 13 }
-                        }}
-                    />
-                </Box>
-            )}
+                    // Identify key for icon
+                    let groupKey = 'etc';
+                    if (group.label.includes('매장')) groupKey = 'burial';
+                    else if (group.label.includes('봉안')) groupKey = 'charnel';
+                    else if (group.label.includes('수목')) groupKey = 'natural';
 
-            {/* 3뎁스: 세부 종류 (groupType 기반) */}
-            {activeSubData && activeSubData.groups.length > 1 && (
-                <Box mb="md">
-                    <Text size="xs" c="dimmed" mb="xs">세부 종류</Text>
-                    <Group gap="xs">
-                        {activeSubData.groups.map(g => (
-                            <Button
-                                key={g.name}
-                                variant={activeGroupName === g.name ? 'filled' : 'light'}
-                                color={activeGroupName === g.name ? 'brand' : 'gray'}
-                                size="xs"
-                                radius="xl"
-                                onClick={() => setSelectedGroup(g.name)}
-                            >
-                                {g.name}
-                            </Button>
-                        ))}
-                    </Group>
-                </Box>
-            )}
+                    return (
+                        <Accordion.Item key={group.label} value={group.label}>
+                            <Accordion.Control>
+                                <Group justify="space-between" wrap="nowrap">
+                                    <Group gap="md">
+                                        {getIcon(groupKey)}
+                                        <Text fw={700} size="lg" c="dark.9">{group.label}</Text>
+                                    </Group>
 
-            {/* 가격 테이블 */}
-            {activeGroup && (
-                <Box bg="#f8f9fa" p="md" style={{ borderRadius: 12 }}>
-                    <Table withRowBorders={false} verticalSpacing="md">
-                        <Table.Thead>
-                            <Table.Tr>
-                                <Table.Th style={{ color: '#868e96', fontWeight: 500 }}>구분</Table.Th>
-                                <Table.Th style={{ color: '#868e96', fontWeight: 500, textAlign: 'right' }}>가격</Table.Th>
-                            </Table.Tr>
-                        </Table.Thead>
-                        <Table.Tbody>
-                            {activeGroup.rows.map((row: any, idx: number) => (
-                                <Table.Tr key={idx}>
-                                    <Table.Td>
-                                        <Group gap="xs">
-                                            <Text fw={600} size="sm">{row.name}</Text>
-                                            {getTypeLabel(row.name)}
-                                        </Group>
-                                        {row.grade && <Text size="xs" c="dimmed">{row.grade}</Text>}
-                                    </Table.Td>
-                                    <Table.Td style={{ textAlign: 'right' }}>
-                                        <Text fw={700} size="md">
-                                            {formatKoreanCurrency(row.price)}
-                                        </Text>
-                                    </Table.Td>
-                                </Table.Tr>
-                            ))}
-                        </Table.Tbody>
-                    </Table>
-                </Box>
-            )}
+                                    <Group gap="xs">
+                                        {hasMinPrice ? (
+                                            <Text fw={800} c="#35469C" size="lg">
+                                                {formatKoreanCurrency(minPrice)}부터
+                                            </Text>
+                                        ) : (
+                                            <Text size="sm" c="dimmed">가격 문의</Text>
+                                        )}
+                                        <ChevronRight size={18} color="#adb5bd" />
+                                    </Group>
+                                </Group>
+                            </Accordion.Control>
 
-            {/* 하단 안내 */}
+                            <Accordion.Panel>
+                                <Box p="sm" bg="#f8f9fa" style={{ borderRadius: 8 }}>
+                                    <Stack gap="lg">
+                                        {group.categories.map(cat => {
+                                            const rows = priceTable[cat].rows;
+                                            const mainRows = rows.filter((r: any) => !/관리|석물|작업|각자|제례|상석/.test(r.name));
+                                            const optionRows = rows.filter((r: any) => /관리|석물|작업|각자|제례|상석/.test(r.name));
+
+                                            // Helper for Type Display
+                                            const getTypeLabel = (name: string) => {
+                                                if (/부부|쌍/.test(name)) return <Badge size="xs" variant="light" color="blue">부부형</Badge>;
+                                                if (/합장/.test(name)) return <Badge size="xs" variant="light" color="teal">합장형</Badge>;
+                                                if (/가족/.test(name)) return <Badge size="xs" variant="light" color="grape">가족형</Badge>;
+                                                if (/개인|1위/.test(name)) return <Badge size="xs" variant="light" color="gray">개인형</Badge>;
+                                                return null;
+                                            };
+
+                                            return (
+                                                <Box key={cat}>
+                                                    <Text size="sm" c="dimmed" fw={700} mb="xs">{cat}</Text>
+
+                                                    {/* 메인 상품 리스트 (Compact, Fix Truncation) */}
+                                                    <Stack gap="sm" mb={optionRows.length > 0 ? "lg" : 0}>
+                                                        {mainRows.map((row: any, idx: number) => (
+                                                            <Group key={`main-${idx}`} justify="space-between" align="flex-start" wrap="nowrap"
+                                                                style={{ borderBottom: '1px solid #e9ecef', paddingBottom: 12 }}
+                                                            >
+                                                                <Box style={{ flex: 1, minWidth: 0 }}>
+                                                                    <Group gap="xs" mb={4} align="center" wrap="wrap">
+                                                                        <Text fw={600} size="md" c="dark.9" style={{ lineHeight: 1.3, wordBreak: 'keep-all' }}>
+                                                                            {formatName(row.name)}
+                                                                        </Text>
+                                                                        {getTypeLabel(row.name)}
+                                                                    </Group>
+                                                                    {row.grade && <Text size="12px" c="dimmed">{row.grade}</Text>}
+                                                                </Box>
+                                                                <Text fw={700} size="md" c="black" style={{ whiteSpace: 'nowrap', marginLeft: 8 }}>
+                                                                    {formatKoreanCurrency(row.price)}
+                                                                </Text>
+                                                            </Group>
+                                                        ))}
+                                                    </Stack>
+
+                                                    {/* 부가 비용 리스트 (Compact) */}
+                                                    {optionRows.length > 0 && (
+                                                        <Box bg="white" p="xs" style={{ borderRadius: 6, border: '1px solid #f1f3f5' }}>
+                                                            <Group justify="space-between" mb="xs">
+                                                                <Text size="11px" fw={700} c="dimmed">💡 부가 옵션</Text>
+                                                            </Group>
+                                                            <Stack gap="xs">
+                                                                {optionRows.map((row: any, idx: number) => (
+                                                                    <Group key={`opt-${idx}`} justify="space-between">
+                                                                        <Text size="xs" c="dark.5">{row.name}</Text>
+                                                                        <Text size="xs" fw={600} c="dark.7">{formatKoreanCurrency(row.price)}</Text>
+                                                                    </Group>
+                                                                ))}
+                                                            </Stack>
+                                                        </Box>
+                                                    )}
+                                                </Box>
+                                            )
+                                        })}
+                                    </Stack>
+                                </Box>
+                            </Accordion.Panel>
+                        </Accordion.Item>
+                    );
+                })}
+            </Accordion>
+
             <Box mt="xl" p="lg" bg="gray.0" style={{ borderRadius: 8 }}>
                 <Text size="xs" c="dimmed" style={{ lineHeight: 1.6 }}>
-                    ℹ️ <b>안내사항</b>: 사용료는 <b>e하늘 장사정보 시스템</b>에 등록되어 있는 가격정보를 바탕으로 안내해드리고 있어 상이할 수 있습니다.<br />
+                    사용료는 <b>e하늘 장사정보 시스템</b>에 등록되어 있는 가격정보를 바탕으로 안내해드리고 있어 상이할 수 있습니다.<br />
                     사용료 정보가 안내되지 않은 시설은 <b>해당 시설에 직접 문의</b>바랍니다.
                 </Text>
             </Box>
