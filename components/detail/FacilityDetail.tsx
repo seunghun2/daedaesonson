@@ -240,11 +240,9 @@ function PriceInfoSection({ priceInfo, hasPrice }: { priceInfo: any, hasPrice: b
                                                 <Accordion.Control>
                                                     <Group justify="space-between" wrap="nowrap">
                                                         <Text fw={600} size="sm" c="dark.7">{cat}</Text>
-                                                        {hasCatMinPrice && (
-                                                            <Text fw={700} size="sm" c="#35469C">
-                                                                {formatKoreanCurrency(catMinPrice)}부터
-                                                            </Text>
-                                                        )}
+                                                        <Text size="sm" c="dimmed">
+                                                            {mainRows.length}항목
+                                                        </Text>
                                                     </Group>
                                                 </Accordion.Control>
                                                 <Accordion.Panel>
