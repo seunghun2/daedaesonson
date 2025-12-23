@@ -562,7 +562,8 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
         phone: '',
         preferredTime: '',
         question: 'price', // price, location, grave, other
-        message: ''
+        message: '',
+        consultMethod: 'phone' // phone, visit, field
     });
     const [consultSubmitting, setConsultSubmitting] = useState(false);
     const [consultStep, setConsultStep] = useState(0); // 0: 1,2,3 열림, 4: 4번만 열림, 5: 5번만 열림
@@ -573,6 +574,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
         preferredTime: string;
         question: string;
         message: string;
+        consultMethod: string;
     } | null>(null); // 성공 화면에 표시할 데이터
 
     // 전화번호 포맷팅 함수 (010-1234-5678 형식)
@@ -1829,7 +1831,10 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                         )}
                                         <Group justify="space-between">
                                             <Text size="sm" c="dimmed">상담 방식</Text>
-                                            <Text size="sm" fw={600}>전화 상담</Text>
+                                            <Text size="sm" fw={600}>
+                                                {submittedConsultData?.consultMethod === 'phone' && '전화 상담'}
+                                                {submittedConsultData?.consultMethod === 'field' && '방문 상담'}
+                                            </Text>
                                         </Group>
                                     </Stack>
                                 </Box>
@@ -1993,29 +1998,78 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                     </Collapse>
                                 </Box>
 
-                                {/* 4. 궁금한 점 - 클릭하면 4번만 열림 */}
+                                {/* 4. 상담 방법 */}
                                 <Box
                                     p="lg"
                                     style={{
                                         border: consultStep === 4 ? '2px solid var(--mantine-color-brand-6)' : '1px solid #e9ecef',
                                         borderRadius: 12,
-                                        transition: 'all 0.2s ease',
-                                        cursor: 'pointer'
+                                        cursor: 'pointer',
+                                        transition: 'all 0.2s ease'
                                     }}
                                     onClick={() => setConsultStep(consultStep === 4 ? -1 : 4)}
                                 >
                                     <Group justify="space-between">
-                                        <Text size="md" fw={700}>4. 궁금한 점</Text>
+                                        <Text size="md" fw={700}>4. 상담 방법</Text>
                                         <Group gap="xs">
-                                            {consultStep !== 4 && consultForm.question && <Text size="sm" c="dimmed">{
-                                                consultForm.question === 'price' ? '비용/가격' :
-                                                    consultForm.question === 'location' ? '위치/교통' :
-                                                        consultForm.question === 'grave' ? '묘지 유형' : '기타'
+                                            {consultStep !== 4 && consultForm.consultMethod && <Text size="sm" c="dimmed">{
+                                                consultForm.consultMethod === 'phone' ? '전화 상담' :
+                                                    consultForm.consultMethod === 'phone' ? '전화 상담' : '방문 상담'
                                             }</Text>}
                                             <ChevronDown size={18} color="#adb5bd" style={{ transform: consultStep === 4 ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s' }} />
                                         </Group>
                                     </Group>
                                     <Collapse in={consultStep === 4}>
+                                        <Stack gap="sm" mt="md" onClick={(e) => e.stopPropagation()}>
+                                            {[
+                                                { value: 'phone', label: '전화 상담', desc: '전화로 상담받기' },
+                                                { value: 'field', label: '방문 상담', desc: '시설 현장에서 상담' }
+                                            ].map(method => (
+                                                <Box
+                                                    key={method.value}
+                                                    p="md"
+                                                    style={{
+                                                        border: consultForm.consultMethod === method.value ? '2px solid var(--mantine-color-brand-6)' : '1px solid #dee2e6',
+                                                        borderRadius: 8,
+                                                        cursor: 'pointer',
+                                                        background: consultForm.consultMethod === method.value ? 'var(--mantine-color-brand-0)' : 'white'
+                                                    }}
+                                                    onClick={() => {
+                                                        setConsultForm({ ...consultForm, consultMethod: method.value });
+                                                        setConsultStep(5); // 선택하면 5번 열림
+                                                    }}
+                                                >
+                                                    <Text size="sm" fw={600}>{method.label}</Text>
+                                                    <Text size="xs" c="dimmed">{method.desc}</Text>
+                                                </Box>
+                                            ))}
+                                        </Stack>
+                                    </Collapse>
+                                </Box>
+
+                                {/* 5. 궁금한 점 - 클릭하면 5번만 열림 */}
+                                <Box
+                                    p="lg"
+                                    style={{
+                                        border: consultStep === 5 ? '2px solid var(--mantine-color-brand-6)' : '1px solid #e9ecef',
+                                        borderRadius: 12,
+                                        transition: 'all 0.2s ease',
+                                        cursor: 'pointer'
+                                    }}
+                                    onClick={() => setConsultStep(consultStep === 5 ? -1 : 5)}
+                                >
+                                    <Group justify="space-between">
+                                        <Text size="md" fw={700}>5. 궁금한 점</Text>
+                                        <Group gap="xs">
+                                            {consultStep !== 5 && consultForm.question && <Text size="sm" c="dimmed">{
+                                                consultForm.question === 'price' ? '비용/가격' :
+                                                    consultForm.question === 'location' ? '위치/교통' :
+                                                        consultForm.question === 'grave' ? '묘지 유형' : '기타'
+                                            }</Text>}
+                                            <ChevronDown size={18} color="#adb5bd" style={{ transform: consultStep === 5 ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s' }} />
+                                        </Group>
+                                    </Group>
+                                    <Collapse in={consultStep === 5}>
                                         <Stack gap="xs" mt="md">
                                             {[
                                                 { value: 'price', label: '비용/가격이 궁금해요' },
@@ -2027,7 +2081,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                                     onClick={(e) => {
                                                         e.stopPropagation();
                                                         setConsultForm({ ...consultForm, question: q.value });
-                                                        setConsultStep(5); // 선택하면 5번 열림
+                                                        setConsultStep(6); // 선택하면 6번 열림
                                                     }}
                                                     style={{ display: 'flex', alignItems: 'center', gap: 12, cursor: 'pointer', padding: '8px 0' }}>
                                                     <Box style={{
@@ -2041,22 +2095,22 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                     </Collapse>
                                 </Box>
 
-                                {/* 5. 추가 요청사항 - 클릭하면 5번만 열림 */}
+                                {/* 6. 추가 요청사항 - 클릭하면 6번만 열림 */}
                                 <Box
                                     p="lg"
                                     style={{
-                                        border: consultStep === 5 ? '2px solid var(--mantine-color-brand-6)' : '1px solid #e9ecef',
+                                        border: consultStep === 6 ? '2px solid var(--mantine-color-brand-6)' : '1px solid #e9ecef',
                                         borderRadius: 12,
                                         transition: 'all 0.2s ease',
                                         cursor: 'pointer'
                                     }}
-                                    onClick={() => setConsultStep(consultStep === 5 ? -1 : 5)}
+                                    onClick={() => setConsultStep(consultStep === 6 ? -1 : 6)}
                                 >
                                     <Group justify="space-between">
-                                        <Text size="md" fw={700}>5. 추가 요청사항 (선택)</Text>
-                                        <ChevronDown size={18} color="#adb5bd" style={{ transform: consultStep === 5 ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s' }} />
+                                        <Text size="md" fw={700}>6. 추가 요청사항 (선택)</Text>
+                                        <ChevronDown size={18} color="#adb5bd" style={{ transform: consultStep === 6 ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s' }} />
                                     </Group>
-                                    <Collapse in={consultStep === 5}>
+                                    <Collapse in={consultStep === 6}>
                                         <Box mt="md">
                                             <Textarea
                                                 placeholder="추가로 궁금한 점이 있으시면 입력해주세요."
@@ -2110,7 +2164,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                         });
                                         if (res.ok) {
                                             setSubmittedConsultData({ ...consultForm }); // 성공 화면용 데이터 저장
-                                            setConsultForm({ name: '', phone: '', preferredTime: '', question: 'price', message: '' });
+                                            setConsultForm({ name: '', phone: '', preferredTime: '', question: 'price', message: '', consultMethod: 'phone' });
                                             setConsultStep(0);
                                             setConsultSuccess(true); // 성공 화면 표시
                                         }
@@ -2228,7 +2282,10 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                         )}
                                         <Group justify="space-between">
                                             <Text size="sm" c="dimmed">상담 방식</Text>
-                                            <Text size="sm" fw={600}>전화 상담</Text>
+                                            <Text size="sm" fw={600}>
+                                                {submittedConsultData?.consultMethod === 'phone' && '전화 상담'}
+                                                {submittedConsultData?.consultMethod === 'field' && '방문 상담'}
+                                            </Text>
                                         </Group>
                                     </Stack>
                                 </Box>
@@ -2391,29 +2448,78 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                     </Collapse>
                                 </Box>
 
-                                {/* 4. 궁금한 점 - 클릭하면 4번만 열림 */}
+                                {/* 4. 상담 방법 */}
                                 <Box
                                     p="lg"
                                     style={{
                                         border: consultStep === 4 ? '2px solid var(--mantine-color-brand-6)' : '1px solid #e9ecef',
                                         borderRadius: 12,
-                                        transition: 'all 0.2s ease',
-                                        cursor: 'pointer'
+                                        cursor: 'pointer',
+                                        transition: 'all 0.2s ease'
                                     }}
                                     onClick={() => setConsultStep(consultStep === 4 ? -1 : 4)}
                                 >
                                     <Group justify="space-between">
-                                        <Text size="md" fw={700}>4. 궁금한 점</Text>
+                                        <Text size="md" fw={700}>4. 상담 방법</Text>
                                         <Group gap="xs">
-                                            {consultStep !== 4 && consultForm.question && <Text size="sm" c="dimmed">{
-                                                consultForm.question === 'price' ? '비용/가격' :
-                                                    consultForm.question === 'location' ? '위치/교통' :
-                                                        consultForm.question === 'grave' ? '묘지 유형' : '기타'
+                                            {consultStep !== 4 && consultForm.consultMethod && <Text size="sm" c="dimmed">{
+                                                consultForm.consultMethod === 'phone' ? '전화 상담' :
+                                                    consultForm.consultMethod === 'phone' ? '전화 상담' : '방문 상담'
                                             }</Text>}
                                             <ChevronDown size={18} color="#adb5bd" style={{ transform: consultStep === 4 ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s' }} />
                                         </Group>
                                     </Group>
                                     <Collapse in={consultStep === 4}>
+                                        <Stack gap="sm" mt="md" onClick={(e) => e.stopPropagation()}>
+                                            {[
+                                                { value: 'phone', label: '전화 상담', desc: '전화로 상담받기' },
+                                                { value: 'field', label: '방문 상담', desc: '시설 현장에서 상담' }
+                                            ].map(method => (
+                                                <Box
+                                                    key={method.value}
+                                                    p="md"
+                                                    style={{
+                                                        border: consultForm.consultMethod === method.value ? '2px solid var(--mantine-color-brand-6)' : '1px solid #dee2e6',
+                                                        borderRadius: 8,
+                                                        cursor: 'pointer',
+                                                        background: consultForm.consultMethod === method.value ? 'var(--mantine-color-brand-0)' : 'white'
+                                                    }}
+                                                    onClick={() => {
+                                                        setConsultForm({ ...consultForm, consultMethod: method.value });
+                                                        setConsultStep(5); // 선택하면 5번 열림
+                                                    }}
+                                                >
+                                                    <Text size="sm" fw={600}>{method.label}</Text>
+                                                    <Text size="xs" c="dimmed">{method.desc}</Text>
+                                                </Box>
+                                            ))}
+                                        </Stack>
+                                    </Collapse>
+                                </Box>
+
+                                {/* 5. 궁금한 점 - 클릭하면 5번만 열림 */}
+                                <Box
+                                    p="lg"
+                                    style={{
+                                        border: consultStep === 5 ? '2px solid var(--mantine-color-brand-6)' : '1px solid #e9ecef',
+                                        borderRadius: 12,
+                                        transition: 'all 0.2s ease',
+                                        cursor: 'pointer'
+                                    }}
+                                    onClick={() => setConsultStep(consultStep === 5 ? -1 : 5)}
+                                >
+                                    <Group justify="space-between">
+                                        <Text size="md" fw={700}>5. 궁금한 점</Text>
+                                        <Group gap="xs">
+                                            {consultStep !== 5 && consultForm.question && <Text size="sm" c="dimmed">{
+                                                consultForm.question === 'price' ? '비용/가격' :
+                                                    consultForm.question === 'location' ? '위치/교통' :
+                                                        consultForm.question === 'grave' ? '묘지 유형' : '기타'
+                                            }</Text>}
+                                            <ChevronDown size={18} color="#adb5bd" style={{ transform: consultStep === 5 ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s' }} />
+                                        </Group>
+                                    </Group>
+                                    <Collapse in={consultStep === 5}>
                                         <Stack gap="xs" mt="md">
                                             {[
                                                 { value: 'price', label: '비용/가격이 궁금해요' },
@@ -2425,7 +2531,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                                     onClick={(e) => {
                                                         e.stopPropagation();
                                                         setConsultForm({ ...consultForm, question: q.value });
-                                                        setConsultStep(5); // 선택하면 5번 열림
+                                                        setConsultStep(6); // 선택하면 6번 열림
                                                     }}
                                                     style={{ display: 'flex', alignItems: 'center', gap: 12, cursor: 'pointer', padding: '8px 0' }}>
                                                     <Box style={{
@@ -2439,22 +2545,22 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                     </Collapse>
                                 </Box>
 
-                                {/* 5. 추가 요청사항 - 클릭하면 5번만 열림 */}
+                                {/* 6. 추가 요청사항 - 클릭하면 6번만 열림 */}
                                 <Box
                                     p="lg"
                                     style={{
-                                        border: consultStep === 5 ? '2px solid var(--mantine-color-brand-6)' : '1px solid #e9ecef',
+                                        border: consultStep === 6 ? '2px solid var(--mantine-color-brand-6)' : '1px solid #e9ecef',
                                         borderRadius: 12,
                                         transition: 'all 0.2s ease',
                                         cursor: 'pointer'
                                     }}
-                                    onClick={() => setConsultStep(consultStep === 5 ? -1 : 5)}
+                                    onClick={() => setConsultStep(consultStep === 6 ? -1 : 6)}
                                 >
                                     <Group justify="space-between">
-                                        <Text size="md" fw={700}>5. 추가 요청사항 (선택)</Text>
-                                        <ChevronDown size={18} color="#adb5bd" style={{ transform: consultStep === 5 ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s' }} />
+                                        <Text size="md" fw={700}>6. 추가 요청사항 (선택)</Text>
+                                        <ChevronDown size={18} color="#adb5bd" style={{ transform: consultStep === 6 ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s' }} />
                                     </Group>
-                                    <Collapse in={consultStep === 5}>
+                                    <Collapse in={consultStep === 6}>
                                         <Box mt="md">
                                             <Textarea
                                                 placeholder="추가로 궁금한 점이 있으시면 입력해주세요."
@@ -2497,7 +2603,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                         });
                                         if (res.ok) {
                                             setSubmittedConsultData({ ...consultForm }); // 성공 화면용 데이터 저장
-                                            setConsultForm({ name: '', phone: '', preferredTime: '', question: 'price', message: '' });
+                                            setConsultForm({ name: '', phone: '', preferredTime: '', question: 'price', message: '', consultMethod: 'phone' });
                                             setConsultStep(0);
                                             setConsultSuccess(true); // 성공 화면 표시
                                         }
