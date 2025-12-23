@@ -210,27 +210,45 @@ function PriceInfoSection({ priceInfo, hasPrice }: { priceInfo: any, hasPrice: b
                             </Accordion.Control>
 
                             <Accordion.Panel>
-                                <Box p="sm" bg="#f8f9fa" style={{ borderRadius: 8 }}>
-                                    <Stack gap="lg">
-                                        {group.categories.map(cat => {
-                                            const rows = priceTable[cat].rows;
-                                            const mainRows = rows.filter((r: any) => !/관리|석물|작업|각자|제례|상석/.test(r.name));
-                                            const optionRows = rows.filter((r: any) => /관리|석물|작업|각자|제례|상석/.test(r.name));
+                                <Accordion
+                                    variant="separated"
+                                    radius="md"
+                                    styles={{
+                                        item: { backgroundColor: '#f8f9fa', border: 'none' },
+                                        control: { padding: '12px 16px' },
+                                        content: { padding: '0 16px 16px 16px' },
+                                    }}
+                                >
+                                    {group.categories.map(cat => {
+                                        const rows = priceTable[cat].rows;
+                                        const mainRows = rows.filter((r: any) => !/관리|석물|작업|각자|제례|상석/.test(r.name));
+                                        const optionRows = rows.filter((r: any) => /관리|석물|작업|각자|제례|상석/.test(r.name));
+                                        const catMinPrice = getMinPrice(rows);
+                                        const hasCatMinPrice = catMinPrice > 0 && catMinPrice < Infinity;
 
-                                            // Helper for Type Display
-                                            const getTypeLabel = (name: string) => {
-                                                if (/부부|쌍/.test(name)) return <Badge size="xs" variant="light" color="blue">부부형</Badge>;
-                                                if (/합장/.test(name)) return <Badge size="xs" variant="light" color="teal">합장형</Badge>;
-                                                if (/가족/.test(name)) return <Badge size="xs" variant="light" color="grape">가족형</Badge>;
-                                                if (/개인|1위/.test(name)) return <Badge size="xs" variant="light" color="gray">개인형</Badge>;
-                                                return null;
-                                            };
+                                        // Helper for Type Display
+                                        const getTypeLabel = (name: string) => {
+                                            if (/부부|쌍/.test(name)) return <Badge size="xs" variant="light" color="blue">부부형</Badge>;
+                                            if (/합장/.test(name)) return <Badge size="xs" variant="light" color="teal">합장형</Badge>;
+                                            if (/가족/.test(name)) return <Badge size="xs" variant="light" color="grape">가족형</Badge>;
+                                            if (/개인|1위/.test(name)) return <Badge size="xs" variant="light" color="gray">개인형</Badge>;
+                                            return null;
+                                        };
 
-                                            return (
-                                                <Box key={cat}>
-                                                    <Text size="sm" c="dimmed" fw={700} mb="xs">{cat}</Text>
-
-                                                    {/* 메인 상품 리스트 (Compact, Fix Truncation) */}
+                                        return (
+                                            <Accordion.Item key={cat} value={cat}>
+                                                <Accordion.Control>
+                                                    <Group justify="space-between" wrap="nowrap">
+                                                        <Text fw={600} size="sm" c="dark.7">{cat}</Text>
+                                                        {hasCatMinPrice && (
+                                                            <Text fw={700} size="sm" c="#35469C">
+                                                                {formatKoreanCurrency(catMinPrice)}부터
+                                                            </Text>
+                                                        )}
+                                                    </Group>
+                                                </Accordion.Control>
+                                                <Accordion.Panel>
+                                                    {/* 메인 상품 리스트 */}
                                                     <Stack gap="sm" mb={optionRows.length > 0 ? "lg" : 0}>
                                                         {mainRows.map((row: any, idx: number) => (
                                                             <Group key={`main-${idx}`} justify="space-between" align="flex-start" wrap="nowrap"
@@ -252,7 +270,7 @@ function PriceInfoSection({ priceInfo, hasPrice }: { priceInfo: any, hasPrice: b
                                                         ))}
                                                     </Stack>
 
-                                                    {/* 부가 비용 리스트 (Compact) */}
+                                                    {/* 부가 비용 리스트 */}
                                                     {optionRows.length > 0 && (
                                                         <Box bg="white" p="xs" style={{ borderRadius: 6, border: '1px solid #f1f3f5' }}>
                                                             <Group justify="space-between" mb="xs">
@@ -268,11 +286,11 @@ function PriceInfoSection({ priceInfo, hasPrice }: { priceInfo: any, hasPrice: b
                                                             </Stack>
                                                         </Box>
                                                     )}
-                                                </Box>
-                                            )
-                                        })}
-                                    </Stack>
-                                </Box>
+                                                </Accordion.Panel>
+                                            </Accordion.Item>
+                                        );
+                                    })}
+                                </Accordion>
                             </Accordion.Panel>
                         </Accordion.Item>
                     );
