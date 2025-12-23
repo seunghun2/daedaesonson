@@ -156,7 +156,7 @@ export async function GET() {
                 fax: f.fax || '',
                 capacity: f.capacity,
                 lastUpdated: f.lastUpdated,
-                website: f.websiteUrl || '',
+                websiteUrl: f.websiteUrl || '',
                 viewCount: f.viewCount || 0,
                 description: f.description || '',
                 originalName: f.originalName,
