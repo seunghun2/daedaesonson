@@ -53,6 +53,17 @@ function ListPageContent() {
         return () => clearTimeout(timer);
     }, []);
 
+    // 📊 GA4: 리스트 페이지뷰
+    useEffect(() => {
+        if (typeof window !== 'undefined' && (window as any).gtag) {
+            (window as any).gtag('event', 'page_view', {
+                page_title: `리스트 - ${regionName}`,
+                page_location: window.location.href,
+                page_path: '/list'
+            });
+        }
+    }, [regionName]);
+
     // 데이터 로드 (캐시 우선)
     useEffect(() => {
         async function fetchData() {

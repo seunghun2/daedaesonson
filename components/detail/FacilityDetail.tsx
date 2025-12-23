@@ -449,9 +449,12 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
         containerRef.current?.scrollTo({ top: 0 });
         containerRef.current?.parentElement?.scrollTo({ top: 0 });
 
-        // 📊 GA4 이벤트 전송 - 시설 상세 조회
+        // 📊 GA4 이벤트 전송 - 시설 상세 조회 (페이지 리포트에 표시)
         if (typeof window !== 'undefined' && (window as any).gtag) {
-            (window as any).gtag('event', 'facility_view', {
+            (window as any).gtag('event', 'page_view', {
+                page_title: `${initialFacility.name} - 시설 상세`,
+                page_location: window.location.href,
+                page_path: `/?id=${initialFacility.id}`,
                 facility_id: initialFacility.id,
                 facility_name: initialFacility.name,
                 facility_category: initialFacility.category,

@@ -94,6 +94,17 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
   const placeholderTexts = ['서울 봉안당', '경기 수목장', '부산 공원묘지', '대전 납골당', '인천 자연장'];
   const [placeholderIndex, setPlaceholderIndex] = useState(0);
 
+  // 📊 GA4: 홈페이지 페이지뷰
+  useEffect(() => {
+    if (typeof window !== 'undefined' && (window as any).gtag) {
+      (window as any).gtag('event', 'page_view', {
+        page_title: '홈 - 지도',
+        page_location: window.location.href,
+        page_path: '/'
+      });
+    }
+  }, []);
+
   useEffect(() => {
     const interval = setInterval(() => {
       setPlaceholderIndex((prev) => (prev + 1) % placeholderTexts.length);

@@ -33,6 +33,15 @@ export default function InquiriesPage() {
 
     useEffect(() => {
         loadData();
+
+        // 📊 GA4: 문의 페이지뷰
+        if (typeof window !== 'undefined' && (window as any).gtag) {
+            (window as any).gtag('event', 'page_view', {
+                page_title: '문의 목록',
+                page_location: window.location.href,
+                page_path: '/inquiries'
+            });
+        }
     }, []);
 
     const loadData = async () => {
