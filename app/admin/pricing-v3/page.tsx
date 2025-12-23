@@ -222,7 +222,7 @@ export default function PricingManagerV3() {
     const filteredFacilities = facilities.filter(f =>
         f.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
         f.id.toLowerCase().includes(searchTerm.toLowerCase())
-    );
+    ).slice(0, 100); // 성능: 최대 100개만 렌더링
 
     return (
         <div className="flex h-screen bg-slate-50 font-sans text-slate-900">
