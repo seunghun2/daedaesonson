@@ -407,6 +407,17 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
     const [showAllInquiries, setShowAllInquiries] = useState(false);
     const [totalInquiryCount, setTotalInquiryCount] = useState(0);
 
+    // 상담 신청 모달
+    const [consultModalOpened, setConsultModalOpened] = useState(false);
+    const [consultForm, setConsultForm] = useState({
+        name: '',
+        phone: '',
+        preferredTime: '',
+        question: 'price', // price, location, grave, other
+        message: ''
+    });
+    const [consultSubmitting, setConsultSubmitting] = useState(false);
+
     // 시설 선택 모달
     const [facilitySearchOpened, { open: openFacilitySearch, close: closeFacilitySearch }] = useDisclosure(false);
     const [facilitySearchQuery, setFacilitySearchQuery] = useState('');
@@ -1143,29 +1154,48 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
 
 
 
-            {/* 전화상담 */}
+            {/* 전화상담 + 상담하기 */}
             <Box bg="white" p="md" style={{ borderBottom: '8px solid #f8f9fa' }}>
-                <Text size="sm" fw={700} mb="md">전화상담</Text>
-                <Text
-                    size="lg"
-                    fw={700}
-                    c={facility.phone ? 'brand.8' : 'gray.6'}
-                    style={{ cursor: facility.phone ? 'pointer' : 'default' }}
-                    onClick={() => {
-                        if (facility.phone) {
-                            // 📊 GA4: 전화 걸기 클릭
-                            if ((window as any).gtag) {
-                                (window as any).gtag('event', 'phone_click', {
-                                    facility_id: facility.id,
-                                    facility_name: facility.name
-                                });
-                            }
-                            window.location.href = `tel:${facility.phone.replace(/-/g, '')}`;
-                        }
-                    }}
-                >
-                    {facility.phone || '문의 필요'}
-                </Text>
+                <Group grow align="flex-start">
+                    {/* 왼쪽: 전화상담 */}
+                    <Box>
+                        <Text size="sm" fw={700} mb="md">전화상담</Text>
+                        <Text
+                            size="lg"
+                            fw={700}
+                            c={facility.phone ? 'brand.8' : 'gray.6'}
+                            style={{ cursor: facility.phone ? 'pointer' : 'default' }}
+                            onClick={() => {
+                                if (facility.phone) {
+                                    if ((window as any).gtag) {
+                                        (window as any).gtag('event', 'phone_click', {
+                                            facility_id: facility.id,
+                                            facility_name: facility.name
+                                        });
+                                    }
+                                    window.location.href = `tel:${facility.phone.replace(/-/g, '')}`;
+                                }
+                            }}
+                        >
+                            {facility.phone || '문의 필요'}
+                        </Text>
+                    </Box>
+
+                    {/* 오른쪽: 상담하기 */}
+                    <Box>
+                        <Text size="sm" fw={700} mb="md">상담하기</Text>
+                        <Button
+                            fullWidth
+                            variant="filled"
+                            color="brand"
+                            size="md"
+                            radius="md"
+                            onClick={() => setConsultModalOpened(true)}
+                        >
+                            비용 확인
+                        </Button>
+                    </Box>
+                </Group>
             </Box>
 
             {/* 시설 정보 */}
@@ -1529,6 +1559,121 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
 
             {/* Story Panel Overlay */}
             <InquiryPanel facility={facility} isOpen={inquiryOpen} onClose={() => setInquiryOpen(false)} allFacilities={allFacilities} />
+
+            {/* 상담 신청 모달 */}
+            <Modal
+                opened={consultModalOpened}
+                onClose={() => setConsultModalOpened(false)}
+                title={<Text fw={700} size="lg">상담 신청</Text>}
+                centered
+                size="md"
+            >
+                <Stack gap="md">
+                    <Text size="sm" c="dimmed">
+                        <Text span fw={600} c="brand">{facility.name}</Text> 시설에 대한 상담을 신청합니다.
+                    </Text>
+
+                    <TextInput
+                        label="이름"
+                        placeholder="이름을 입력해주세요"
+                        required
+                        value={consultForm.name}
+                        onChange={(e) => setConsultForm({ ...consultForm, name: e.currentTarget.value })}
+                    />
+
+                    <TextInput
+                        label="연락처"
+                        placeholder="010-0000-0000"
+                        required
+                        value={consultForm.phone}
+                        onChange={(e) => setConsultForm({ ...consultForm, phone: e.currentTarget.value })}
+                    />
+
+                    <Box>
+                        <Text size="sm" fw={500} mb="xs">연락 가능 시간</Text>
+                        <Group>
+                            {['09시~12시', '12시~14시', '14시~18시', '18시~21시', '시간 무관'].map((time) => (
+                                <Button
+                                    key={time}
+                                    variant={consultForm.preferredTime === time ? 'filled' : 'outline'}
+                                    color={consultForm.preferredTime === time ? 'brand' : 'gray'}
+                                    size="xs"
+                                    radius="xl"
+                                    onClick={() => setConsultForm({ ...consultForm, preferredTime: time })}
+                                >
+                                    {time}
+                                </Button>
+                            ))}
+                        </Group>
+                    </Box>
+
+                    <Box>
+                        <Text size="sm" fw={500} mb="xs">상담 질문</Text>
+                        <Stack gap="xs">
+                            {[
+                                { value: 'price', label: '비용/가격이 궁금해요' },
+                                { value: 'location', label: '위치/교통이 궁금해요' },
+                                { value: 'grave', label: '묘지 유형이 궁금해요' },
+                                { value: 'other', label: '기타 문의' }
+                            ].map((q) => (
+                                <Button
+                                    key={q.value}
+                                    variant={consultForm.question === q.value ? 'filled' : 'light'}
+                                    color={consultForm.question === q.value ? 'brand' : 'gray'}
+                                    size="sm"
+                                    radius="md"
+                                    justify="flex-start"
+                                    fullWidth
+                                    onClick={() => setConsultForm({ ...consultForm, question: q.value })}
+                                >
+                                    {q.label}
+                                </Button>
+                            ))}
+                        </Stack>
+                    </Box>
+
+                    <Textarea
+                        label="상담 요청사항 (선택)"
+                        placeholder="추가로 궁금한 점이 있으시면 입력해주세요"
+                        rows={3}
+                        value={consultForm.message}
+                        onChange={(e) => setConsultForm({ ...consultForm, message: e.currentTarget.value })}
+                    />
+
+                    <Button
+                        fullWidth
+                        size="lg"
+                        color="brand"
+                        loading={consultSubmitting}
+                        disabled={!consultForm.name || !consultForm.phone}
+                        onClick={async () => {
+                            setConsultSubmitting(true);
+                            try {
+                                const res = await fetch('/api/consult', {
+                                    method: 'POST',
+                                    headers: { 'Content-Type': 'application/json' },
+                                    body: JSON.stringify({
+                                        facilityId: facility.id,
+                                        facilityName: facility.name,
+                                        ...consultForm
+                                    })
+                                });
+                                if (res.ok) {
+                                    setConsultModalOpened(false);
+                                    setConsultForm({ name: '', phone: '', preferredTime: '', question: 'price', message: '' });
+                                    alert('상담 신청이 완료되었습니다. 빠른 시일 내에 연락드리겠습니다.');
+                                }
+                            } catch (err) {
+                                alert('신청 중 오류가 발생했습니다.');
+                            } finally {
+                                setConsultSubmitting(false);
+                            }
+                        }}
+                    >
+                        신청하기
+                    </Button>
+                </Stack>
+            </Modal>
 
             {/* Floating Button Removed */}
 
