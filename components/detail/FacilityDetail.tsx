@@ -1190,7 +1190,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                             color="brand"
                             size="md"
                             radius="md"
-                            styles={{ root: { height: 32, fontSize: 12 } }}
+                            styles={{ root: { height: 32, fontSize: 13 } }}
                             onClick={() => setConsultModalOpened(true)}
                         >
                             비용 확인
