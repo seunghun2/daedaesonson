@@ -259,42 +259,40 @@ function PriceInfoSection({ priceInfo, hasPrice }: { priceInfo: any, hasPrice: b
                                                         if (groupNames.length > 1) {
                                                             return (
                                                                 <>
-                                                                    <Accordion variant="default" defaultValue={groupNames[0]}>
-                                                                        {groupNames.map(gName => (
-                                                                            <Accordion.Item key={gName} value={gName}>
-                                                                                <Accordion.Control>
-                                                                                    <Group justify="space-between" wrap="nowrap">
-                                                                                        <Text size="sm" c="dark.6">{gName}</Text>
-                                                                                        <Badge color="gray" variant="outline" size="xs">
-                                                                                            {groupedRows[gName].length}개
-                                                                                        </Badge>
-                                                                                    </Group>
-                                                                                </Accordion.Control>
-                                                                                <Accordion.Panel>
-                                                                                    <Stack gap="sm">
-                                                                                        {groupedRows[gName].map((row: any, idx: number) => (
-                                                                                            <Group key={`${gName}-${idx}`} justify="space-between" align="flex-start" wrap="nowrap"
-                                                                                                style={{ borderBottom: '1px solid #e9ecef', paddingBottom: 12 }}
-                                                                                            >
-                                                                                                <Box style={{ flex: 1, minWidth: 0 }}>
-                                                                                                    <Group gap="xs" mb={4} align="center" wrap="wrap">
-                                                                                                        <Text fw={600} size="md" c="dark.9" style={{ lineHeight: 1.3, wordBreak: 'keep-all' }}>
-                                                                                                            {formatName(row.name)}
-                                                                                                        </Text>
-                                                                                                        {getTypeLabel(row.name)}
-                                                                                                    </Group>
-                                                                                                    {row.grade && <Text size="12px" c="dimmed">{row.grade}</Text>}
-                                                                                                </Box>
-                                                                                                <Text fw={700} size="md" c="black" style={{ whiteSpace: 'nowrap', marginLeft: 8 }}>
-                                                                                                    {formatKoreanCurrency(row.price)}
-                                                                                                </Text>
-                                                                                            </Group>
-                                                                                        ))}
-                                                                                    </Stack>
-                                                                                </Accordion.Panel>
-                                                                            </Accordion.Item>
+                                                                    <Tabs defaultValue={groupNames[0]}>
+                                                                        <Tabs.List mb="md">
+                                                                            {groupNames.map((gName, idx) => (
+                                                                                <Tabs.Tab key={idx} value={gName}>
+                                                                                    {gName}
+                                                                                </Tabs.Tab>
+                                                                            ))}
+                                                                        </Tabs.List>
+
+                                                                        {groupNames.map((gName, idx) => (
+                                                                            <Tabs.Panel key={idx} value={gName}>
+                                                                                <Stack gap="sm">
+                                                                                    {groupedRows[gName].map((row: any, rowIdx: number) => (
+                                                                                        <Group key={`${gName}-${rowIdx}`} justify="space-between" align="flex-start" wrap="nowrap"
+                                                                                            style={{ borderBottom: '1px solid #e9ecef', paddingBottom: 12 }}
+                                                                                        >
+                                                                                            <Box style={{ flex: 1, minWidth: 0 }}>
+                                                                                                <Group gap="xs" mb={4} align="center" wrap="wrap">
+                                                                                                    <Text fw={600} size="md" c="dark.9" style={{ lineHeight: 1.3, wordBreak: 'keep-all' }}>
+                                                                                                        {formatName(row.name)}
+                                                                                                    </Text>
+                                                                                                    {getTypeLabel(row.name)}
+                                                                                                </Group>
+                                                                                                {row.grade && <Text size="12px" c="dimmed">{row.grade}</Text>}
+                                                                                            </Box>
+                                                                                            <Text fw={700} size="md" c="black" style={{ whiteSpace: 'nowrap', marginLeft: 8 }}>
+                                                                                                {formatKoreanCurrency(row.price)}
+                                                                                            </Text>
+                                                                                        </Group>
+                                                                                    ))}
+                                                                                </Stack>
+                                                                            </Tabs.Panel>
                                                                         ))}
-                                                                    </Accordion>
+                                                                    </Tabs>
                                                                     {optionRows.length > 0 && (
                                                                         <Box bg="white" p="xs" style={{ borderRadius: 6, border: '1px solid #f1f3f5' }} mt="md">
                                                                             <Group justify="space-between" mb="xs">
