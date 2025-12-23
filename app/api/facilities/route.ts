@@ -274,7 +274,7 @@ export async function POST(req: Request) {
                 phone: f.phone,
                 fax: f.fax,
                 capacity: f.capacity ?? undefined,
-                websiteUrl: f.websiteUrl || f.website,
+                websiteUrl: f.websiteUrl !== undefined ? f.websiteUrl : (f.website || ''),
                 isActive: f.isActive ?? true,
                 operatorType: f.operatorType,
                 originalName: f.originalName,
@@ -288,7 +288,7 @@ export async function POST(req: Request) {
                 }
             });
 
-            console.log('[API POST] Saving to Supabase:', f.id);
+            console.log('[API POST] Saving to Supabase:', f.id, 'websiteUrl:', f.websiteUrl, 'dbRecord.websiteUrl:', dbRecord.websiteUrl);
 
             const { error } = await supabase
                 .from('Facility')
