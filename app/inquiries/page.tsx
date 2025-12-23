@@ -66,11 +66,11 @@ export default function InquiriesPage() {
             const res = await fetch(`/api/facilities/${selectedInquiry.facilityId}/inquiries/verify`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ inquiryId: selectedInquiry.id, phone: pinValue })
+                body: JSON.stringify({ inquiryId: selectedInquiry.id, pin: pinValue })
             });
             const data = await res.json();
 
-            if (data.verified) {
+            if (data.success) {
                 setUnlockedIds(prev => new Set(prev).add(selectedInquiry.id));
                 closePw();
             } else {
