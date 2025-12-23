@@ -240,9 +240,9 @@ function PriceInfoSection({ priceInfo, hasPrice }: { priceInfo: any, hasPrice: b
                                                 <Accordion.Control>
                                                     <Group justify="space-between" wrap="nowrap">
                                                         <Text fw={600} size="sm" c="dark.7">{cat}</Text>
-                                                        <Text size="sm" c="dimmed">
-                                                            {mainRows.length}항목
-                                                        </Text>
+                                                        <Badge color="gray" variant="light" size="sm">
+                                                            {mainRows.length} 항목
+                                                        </Badge>
                                                     </Group>
                                                 </Accordion.Control>
                                                 <Accordion.Panel>
