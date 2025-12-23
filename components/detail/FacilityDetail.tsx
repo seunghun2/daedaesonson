@@ -1683,6 +1683,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                                     <img
                                                         src={thumbUrl}
                                                         alt={rec.name}
+                                                        loading="lazy"
                                                         style={{
                                                             width: hasImage ? '100%' : 32,
                                                             height: hasImage ? '100%' : 16,
