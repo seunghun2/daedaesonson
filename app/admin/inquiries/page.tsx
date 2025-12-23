@@ -125,7 +125,7 @@ export default function InquiriesPage() {
     return (
         <div>
             <Group justify="space-between" mb="lg" wrap="wrap">
-                <Title order={isMobile ? 3 : 2}>문의 관리</Title>
+                <Title order={isMobile ? 3 : 2}>댓글문의관리</Title>
                 <Badge size="lg" variant="light" color="blue">
                     총 {inquiries.length}건
                 </Badge>

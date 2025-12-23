@@ -40,7 +40,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     const navItems = [
         { label: '대시보드', icon: IconDashboard, link: '/admin' },
         { label: '시설 데이터 관리', icon: IconDatabase, link: '/admin/upload' },
-        { label: '문의 관리', icon: IconMessage, link: '/admin/inquiries' },
+        { label: '댓글문의관리', icon: IconMessage, link: '/admin/inquiries' },
         { label: '설정', icon: IconSettings, link: '/admin/settings' },
     ];
 
