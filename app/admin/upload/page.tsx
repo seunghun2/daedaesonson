@@ -1521,20 +1521,21 @@ export default function AdminPage() {
                                                 color="gray"
                                                 radius="xl"
                                                 onClick={() => {
-                                                    // 해당 유형 카테고리가 없으면 생성
                                                     const priceTable = editForm.priceInfo?.priceTable || {};
-                                                    if (!priceTable[type]) {
-                                                        setEditForm({
-                                                            ...editForm,
-                                                            priceInfo: {
-                                                                ...editForm.priceInfo,
-                                                                priceTable: {
-                                                                    ...priceTable,
-                                                                    [type]: { rows: [], unit: '' }
-                                                                }
-                                                            }
-                                                        });
+                                                    if (priceTable[type]) {
+                                                        alert(`'${type}' 카테고리가 이미 있습니다.`);
+                                                        return;
                                                     }
+                                                    setEditForm({
+                                                        ...editForm,
+                                                        priceInfo: {
+                                                            ...editForm.priceInfo,
+                                                            priceTable: {
+                                                                ...priceTable,
+                                                                [type]: { rows: [], unit: '' }
+                                                            }
+                                                        }
+                                                    });
                                                 }}
                                             >
                                                 + {type}
@@ -1554,18 +1555,20 @@ export default function AdminPage() {
                                                 radius="xl"
                                                 onClick={() => {
                                                     const priceTable = editForm.priceInfo?.priceTable || {};
-                                                    if (!priceTable[type]) {
-                                                        setEditForm({
-                                                            ...editForm,
-                                                            priceInfo: {
-                                                                ...editForm.priceInfo,
-                                                                priceTable: {
-                                                                    ...priceTable,
-                                                                    [type]: { rows: [], unit: '' }
-                                                                }
-                                                            }
-                                                        });
+                                                    if (priceTable[type]) {
+                                                        alert(`'${type}' 카테고리가 이미 있습니다.`);
+                                                        return;
                                                     }
+                                                    setEditForm({
+                                                        ...editForm,
+                                                        priceInfo: {
+                                                            ...editForm.priceInfo,
+                                                            priceTable: {
+                                                                ...priceTable,
+                                                                [type]: { rows: [], unit: '' }
+                                                            }
+                                                        }
+                                                    });
                                                 }}
                                             >
                                                 + {type}
@@ -1585,18 +1588,20 @@ export default function AdminPage() {
                                                 radius="xl"
                                                 onClick={() => {
                                                     const priceTable = editForm.priceInfo?.priceTable || {};
-                                                    if (!priceTable[type]) {
-                                                        setEditForm({
-                                                            ...editForm,
-                                                            priceInfo: {
-                                                                ...editForm.priceInfo,
-                                                                priceTable: {
-                                                                    ...priceTable,
-                                                                    [type]: { rows: [], unit: '' }
-                                                                }
-                                                            }
-                                                        });
+                                                    if (priceTable[type]) {
+                                                        alert(`'${type}' 카테고리가 이미 있습니다.`);
+                                                        return;
                                                     }
+                                                    setEditForm({
+                                                        ...editForm,
+                                                        priceInfo: {
+                                                            ...editForm.priceInfo,
+                                                            priceTable: {
+                                                                ...priceTable,
+                                                                [type]: { rows: [], unit: '' }
+                                                            }
+                                                        }
+                                                    });
                                                 }}
                                             >
                                                 + {type}
