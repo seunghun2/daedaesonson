@@ -1735,7 +1735,11 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                     withinPortal
                     zIndex={10000}
                     padding={0}
+                    lockScroll={false}
                     styles={{
+                        inner: {
+                            height: '100%'
+                        },
                         body: {
                             height: '100%',
                             display: 'flex',
@@ -1745,7 +1749,8 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                         content: {
                             height: '100%',
                             display: 'flex',
-                            flexDirection: 'column'
+                            flexDirection: 'column',
+                            overflow: 'hidden'
                         }
                     }}
                 >
