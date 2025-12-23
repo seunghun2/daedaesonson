@@ -1619,10 +1619,10 @@ export default function AdminPage() {
                                             .filter(([catName]) => {
                                                 let group = '기타';
                                                 if (catName === '제외됨') group = '제외됨';
-                                                else if (/매장|묘지|석물|작업|봉분|둘레석/.test(catName)) group = '매장묘';
+                                                else if (/매장|묘지|석물|작업|봉분|둘레석|단장|합장|쌍분|복합묘/.test(catName)) group = '매장묘';
                                                 else if (/기본비용/.test(catName)) group = '매장묘';
                                                 else if (/봉안|납골|유골/.test(catName)) group = '봉안';
-                                                else if (/수목|자연|평장|잔디|화초/.test(catName)) group = '수목장';
+                                                else if (/수목|자연|평장|잔디|화초|암석/.test(catName)) group = '수목장';
                                                 return group === activeMajorTab || (activeMajorTab === '기타' && group === '기타');
                                             })
                                             .map(([catName]) => catName)
@@ -1632,10 +1632,10 @@ export default function AdminPage() {
                                         .filter(([catName]) => {
                                             let group = '기타';
                                             if (catName === '제외됨') group = '제외됨';
-                                            else if (/매장|묘지|석물|작업|봉분|둘레석/.test(catName)) group = '매장묘';
+                                            else if (/매장|묘지|석물|작업|봉분|둘레석|단장|합장|쌍분|복합묘/.test(catName)) group = '매장묘';
                                             else if (/기본비용/.test(catName)) group = '매장묘';
                                             else if (/봉안|납골|유골/.test(catName)) group = '봉안';
-                                            else if (/수목|자연|평장|잔디|화초/.test(catName)) group = '수목장';
+                                            else if (/수목|자연|평장|잔디|화초|암석/.test(catName)) group = '수목장';
                                             return group === activeMajorTab || (activeMajorTab === '기타' && group === '기타');
                                         })
                                         .map(([catName, catData]: [string, any]) => {
