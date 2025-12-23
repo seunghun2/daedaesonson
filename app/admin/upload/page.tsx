@@ -1610,490 +1610,451 @@ export default function AdminPage() {
                                     </Group>
                                 )}
 
-                                <Accordion
-                                    key={activeMajorTab}
-                                    variant="separated"
-                                    multiple
-                                    defaultValue={
-                                        Object.entries(editForm.priceInfo?.priceTable || {})
-                                            .filter(([catName]) => {
-                                                let group = '기타';
-                                                if (catName === '제외됨') group = '제외됨';
-                                                else if (/매장|묘지|석물|작업|봉분|둘레석|단장|합장|쌍분|복합묘/.test(catName)) group = '매장묘';
-                                                else if (/기본비용/.test(catName)) group = '매장묘';
-                                                else if (/봉안|납골|유골/.test(catName)) group = '봉안';
-                                                else if (/수목|자연|평장|잔디|화초|암석/.test(catName)) group = '수목장';
-                                                return group === activeMajorTab || (activeMajorTab === '기타' && group === '기타');
-                                            })
-                                            .map(([catName]) => catName)
-                                    }
-                                >
-                                    {Object.entries(editForm.priceInfo?.priceTable || {})
-                                        .filter(([catName]) => {
-                                            let group = '기타';
-                                            if (catName === '제외됨') group = '제외됨';
-                                            else if (/매장|묘지|석물|작업|봉분|둘레석|단장|합장|쌍분|복합묘/.test(catName)) group = '매장묘';
-                                            else if (/기본비용/.test(catName)) group = '매장묘';
-                                            else if (/봉안|납골|유골/.test(catName)) group = '봉안';
-                                            else if (/수목|자연|평장|잔디|화초|암석/.test(catName)) group = '수목장';
-                                            return group === activeMajorTab || (activeMajorTab === '기타' && group === '기타');
-                                        })
-                                        .map(([catName, catData]: [string, any]) => {
-                                            // 그룹별로 묶기
-                                            const itemsByGroup: Record<string, any[]> = {};
-                                            (catData.rows || []).forEach((row: any) => {
-                                                const group = row.groupType || '미분류';
-                                                if (!itemsByGroup[group]) itemsByGroup[group] = [];
-                                                itemsByGroup[group].push(row);
-                                            });
+                                {(() => {
+                                    // 기본 카테고리 정의
+                                    const defaultCategories: Record<string, string[]> = {
+                                        '매장묘': ['단장형', '합장형', '쌍분형', '복합묘'],
+                                        '봉안': ['봉안당', '봉안담', '봉안묘', '평장묘'],
+                                        '수목장': ['수목형', '잔디형', '화초형', '암석형'],
+                                        '기타': [],
+                                        '제외됨': []
+                                    };
 
-                                            const groupNames = Object.keys(itemsByGroup);
+                                    const priceTable = editForm.priceInfo?.priceTable || {};
 
-                                            // 핸들러 함수들
-                                            const moveGroup = (fromIdx: number, toIdx: number) => {
-                                                const newNames = [...groupNames];
-                                                const [moved] = newNames.splice(fromIdx, 1);
-                                                newNames.splice(toIdx, 0, moved);
-                                                const newRows: any[] = [];
-                                                newNames.forEach(gName => newRows.push(...itemsByGroup[gName]));
-                                                setEditForm({
-                                                    ...editForm,
-                                                    priceInfo: {
-                                                        ...editForm.priceInfo,
-                                                        priceTable: {
-                                                            ...editForm.priceInfo?.priceTable,
-                                                            [catName]: { ...catData, rows: newRows }
-                                                        }
-                                                    }
+                                    // 현재 탭에 해당하는 기존 카테고리
+                                    const existingCats = Object.keys(priceTable).filter(catName => {
+                                        let group = '기타';
+                                        if (catName === '제외됨') group = '제외됨';
+                                        else if (/매장|묘지|석물|작업|봉분|둘레석|단장|합장|쌍분|복합묘/.test(catName)) group = '매장묘';
+                                        else if (/기본비용/.test(catName)) group = '매장묘';
+                                        else if (/봉안|납골|유골/.test(catName)) group = '봉안';
+                                        else if (/수목|자연|평장|잔디|화초|암석/.test(catName)) group = '수목장';
+                                        return group === activeMajorTab;
+                                    });
+
+                                    // 기본 카테고리 + 기존 카테고리 병합 (중복 제거)
+                                    const defaults = defaultCategories[activeMajorTab] || [];
+                                    const allCats = [...new Set([...defaults, ...existingCats])];
+
+                                    return (
+                                        <Accordion
+                                            key={activeMajorTab}
+                                            variant="separated"
+                                            multiple
+                                            defaultValue={allCats}
+                                        >
+                                            {allCats.map(catName => {
+                                                const catData = priceTable[catName] || { rows: [], unit: '' };
+                                                // 그룹별로 묶기
+                                                const itemsByGroup: Record<string, any[]> = {};
+                                                (catData.rows || []).forEach((row: any) => {
+                                                    const group = row.groupType || '미분류';
+                                                    if (!itemsByGroup[group]) itemsByGroup[group] = [];
+                                                    itemsByGroup[group].push(row);
                                                 });
-                                            };
 
-                                            const deleteGroup = (groupName: string) => {
-                                                const newRows = (catData.rows || []).filter((r: any) => (r.groupType || '미분류') !== groupName);
-                                                setEditForm({
-                                                    ...editForm,
-                                                    priceInfo: {
-                                                        ...editForm.priceInfo,
-                                                        priceTable: {
-                                                            ...editForm.priceInfo?.priceTable,
-                                                            [catName]: { ...catData, rows: newRows }
-                                                        }
-                                                    }
-                                                });
-                                            };
+                                                const groupNames = Object.keys(itemsByGroup);
 
-                                            const moveItem = (groupName: string, fromIdx: number, toIdx: number) => {
-                                                const groupRows = [...itemsByGroup[groupName]];
-                                                const [moved] = groupRows.splice(fromIdx, 1);
-                                                groupRows.splice(toIdx, 0, moved);
-                                                const newRows: any[] = [];
-                                                groupNames.forEach(gName => {
-                                                    newRows.push(...(gName === groupName ? groupRows : itemsByGroup[gName]));
-                                                });
-                                                setEditForm({
-                                                    ...editForm,
-                                                    priceInfo: {
-                                                        ...editForm.priceInfo,
-                                                        priceTable: {
-                                                            ...editForm.priceInfo?.priceTable,
-                                                            [catName]: { ...catData, rows: newRows }
-                                                        }
-                                                    }
-                                                });
-                                            };
-
-                                            const deleteItem = (groupName: string, itemIdx: number) => {
-                                                const groupRows = itemsByGroup[groupName].filter((_, idx) => idx !== itemIdx);
-                                                const newRows: any[] = [];
-                                                groupNames.forEach(gName => {
-                                                    newRows.push(...(gName === groupName ? groupRows : itemsByGroup[gName]));
-                                                });
-                                                setEditForm({
-                                                    ...editForm,
-                                                    priceInfo: {
-                                                        ...editForm.priceInfo,
-                                                        priceTable: {
-                                                            ...editForm.priceInfo?.priceTable,
-                                                            [catName]: { ...catData, rows: newRows }
-                                                        }
-                                                    }
-                                                });
-                                            };
-
-                                            return (
-                                                <Accordion.Item key={catName} value={catName}>
-                                                    <Accordion.Control icon={<List size={16} />}>
-                                                        <Group justify="space-between">
-                                                            <Text fw={700}>{catName}</Text>
-                                                            <Badge color="gray" variant="light">{catData.rows?.length || 0} 항목</Badge>
-                                                        </Group>
-                                                    </Accordion.Control>
-                                                    <Accordion.Panel>
-                                                        <Stack gap="lg">
-                                                            {groupNames.map((groupName, groupIdx) => {
-                                                                const rows = itemsByGroup[groupName];
-
-                                                                return (
-                                                                    <Paper key={groupName} p="md" withBorder>
-                                                                        {/* 그룹 헤더 - 편집 가능 */}
-                                                                        <Group justify="space-between" mb="md">
-                                                                            <Group gap="xs">
-                                                                                <TextInput
-                                                                                    value={groupName}
-                                                                                    size="sm"
-                                                                                    fw={600}
-                                                                                    styles={{ input: { fontWeight: 600 } }}
-                                                                                    placeholder="그룹명"
-                                                                                    onChange={(e) => {
-                                                                                        const newName = e.target.value;
-                                                                                        const newRows = (catData.rows || []).map((r: any) => ({
-                                                                                            ...r,
-                                                                                            groupType: (r.groupType || '미분류') === groupName ? newName : r.groupType
-                                                                                        }));
-                                                                                        setEditForm({
-                                                                                            ...editForm,
-                                                                                            priceInfo: {
-                                                                                                ...editForm.priceInfo,
-                                                                                                priceTable: {
-                                                                                                    ...(editForm.priceInfo?.priceTable || {}),
-                                                                                                    [catName]: { ...catData, rows: newRows }
-                                                                                                }
-                                                                                            }
-                                                                                        });
-                                                                                    }}
-                                                                                />
-                                                                                <Badge size="sm" variant="light">{rows.length}개</Badge>
-                                                                            </Group>
-
-                                                                            <Group gap="xs">
-                                                                                {/* 그룹 순서 변경 */}
-                                                                                <ActionIcon
-                                                                                    variant="light"
-                                                                                    size="sm"
-                                                                                    disabled={groupIdx === 0}
-                                                                                    onClick={() => moveGroup(groupIdx, groupIdx - 1)}
-                                                                                >
-                                                                                    <TrendingUp size={14} />
-                                                                                </ActionIcon>
-                                                                                <ActionIcon
-                                                                                    variant="light"
-                                                                                    size="sm"
-                                                                                    disabled={groupIdx === groupNames.length - 1}
-                                                                                    onClick={() => moveGroup(groupIdx, groupIdx + 1)}
-                                                                                >
-                                                                                    <TrendingDown size={14} />
-                                                                                </ActionIcon>
-
-                                                                                {/* 그룹 전체 삭제 */}
-                                                                                <ActionIcon
-                                                                                    color="red"
-                                                                                    variant="light"
-                                                                                    size="sm"
-                                                                                    onClick={() => confirm(`"${groupName}" 삭제?`) && deleteGroup(groupName)}
-                                                                                >
-                                                                                    <Trash size={14} />
-                                                                                </ActionIcon>
-                                                                            </Group>
-                                                                        </Group>
-
-                                                                        {/* 항목 리스트 */}
-                                                                        <Stack gap="xs">
-                                                                            {rows.map((row: any, itemIdx: number) => (
-                                                                                <Group key={itemIdx} align="flex-start" gap="xs" wrap="nowrap">
-                                                                                    {/* 대표 가격 설정 버튼 (별) */}
-                                                                                    <Stack gap={2} mr="xs">
-                                                                                        <ActionIcon
-                                                                                            size="sm"
-                                                                                            variant="subtle"
-                                                                                            color={row.isRepresentative ? 'yellow' : 'gray'}
-                                                                                            onClick={() => {
-                                                                                                // [Fixed Logic] Radio Button per Category
-                                                                                                const newPriceTable = { ...editForm.priceInfo?.priceTable };
-                                                                                                const currentCat = newPriceTable[catName];
-
-                                                                                                if (currentCat && currentCat.rows) {
-                                                                                                    let updatedRows = [...currentCat.rows];
-                                                                                                    const wasActive = updatedRows[itemIdx].isRepresentative;
-
-                                                                                                    if (wasActive) {
-                                                                                                        // Toggle Off
-                                                                                                        updatedRows[itemIdx] = { ...updatedRows[itemIdx], isRepresentative: false };
-                                                                                                    } else {
-                                                                                                        // Toggle On (Radio Style in this category)
-                                                                                                        updatedRows = updatedRows.map((r, i) => ({
-                                                                                                            ...r,
-                                                                                                            isRepresentative: i === itemIdx
-                                                                                                        }));
-                                                                                                    }
-
-                                                                                                    newPriceTable[catName] = { ...currentCat, rows: updatedRows };
-
-                                                                                                    setEditForm({
-                                                                                                        ...editForm,
-                                                                                                        priceInfo: {
-                                                                                                            ...editForm.priceInfo!,
-                                                                                                            priceTable: newPriceTable
-                                                                                                        }
-                                                                                                    });
-                                                                                                }
-                                                                                            }}
-                                                                                            style={{ marginTop: itemIdx === 0 ? 30 : 6 }}
-                                                                                        >
-                                                                                            <Star size={16} fill={row.isRepresentative ? "currentColor" : "none"} />
-                                                                                        </ActionIcon>
-                                                                                    </Stack>
-
-                                                                                    {/* 항목 순서 변경 */}
-                                                                                    <Stack gap={2}>
-                                                                                        <ActionIcon
-                                                                                            size="xs"
-                                                                                            variant="subtle"
-                                                                                            disabled={itemIdx === 0}
-                                                                                            onClick={() => moveItem(groupName, itemIdx, itemIdx - 1)}
-                                                                                            style={{ marginTop: itemIdx === 0 ? 24 : 0 }}
-                                                                                        >
-                                                                                            <TrendingUp size={12} />
-                                                                                        </ActionIcon>
-                                                                                        <ActionIcon
-                                                                                            size="xs"
-                                                                                            variant="subtle"
-                                                                                            disabled={itemIdx === rows.length - 1}
-                                                                                            onClick={() => moveItem(groupName, itemIdx, itemIdx + 1)}
-                                                                                        >
-                                                                                            <TrendingDown size={12} />
-                                                                                        </ActionIcon>
-                                                                                    </Stack>
-
-                                                                                    {/* 입력 필드들 - onChange 연결 */}
-                                                                                    <TextInput
-                                                                                        label={itemIdx === 0 ? "상품명" : undefined}
-                                                                                        placeholder="상품명 (예: 개인단)"
-                                                                                        value={row.name || ''}
-                                                                                        onChange={(e) => {
-                                                                                            const newRows = [...rows];
-                                                                                            newRows[itemIdx] = { ...newRows[itemIdx], name: e.target.value };
-                                                                                            setEditForm({
-                                                                                                ...editForm,
-                                                                                                priceInfo: {
-                                                                                                    ...editForm.priceInfo!,
-                                                                                                    priceTable: {
-                                                                                                        ...editForm.priceInfo?.priceTable,
-                                                                                                        [catName]: { ...catData, rows: newRows }
-                                                                                                    }
-                                                                                                }
-                                                                                            });
-                                                                                        }}
-                                                                                        style={{ flex: 2 }}
-                                                                                        size="sm"
-                                                                                    />
-                                                                                    <TextInput
-                                                                                        label={itemIdx === 0 ? "세부정보" : undefined}
-                                                                                        placeholder="설명 (선택)"
-                                                                                        value={row.grade || ''}
-                                                                                        onChange={(e) => {
-                                                                                            const newRows = [...rows];
-                                                                                            newRows[itemIdx] = { ...newRows[itemIdx], grade: e.target.value };
-                                                                                            setEditForm({
-                                                                                                ...editForm,
-                                                                                                priceInfo: {
-                                                                                                    ...editForm.priceInfo!,
-                                                                                                    priceTable: {
-                                                                                                        ...editForm.priceInfo?.priceTable,
-                                                                                                        [catName]: { ...catData, rows: newRows }
-                                                                                                    }
-                                                                                                }
-                                                                                            });
-                                                                                        }}
-                                                                                        style={{ flex: 2 }}
-                                                                                        size="sm"
-                                                                                    />
-                                                                                    <NumberInput
-                                                                                        label={itemIdx === 0 ? "가격" : undefined}
-                                                                                        value={row.price ?? 0}
-                                                                                        onChange={(val) => {
-                                                                                            const newRows = [...rows];
-                                                                                            newRows[itemIdx] = { ...newRows[itemIdx], price: val };
-                                                                                            setEditForm({
-                                                                                                ...editForm,
-                                                                                                priceInfo: {
-                                                                                                    ...editForm.priceInfo!,
-                                                                                                    priceTable: {
-                                                                                                        ...editForm.priceInfo?.priceTable,
-                                                                                                        [catName]: { ...catData, rows: newRows }
-                                                                                                    }
-                                                                                                }
-                                                                                            });
-                                                                                        }}
-                                                                                        thousandSeparator=","
-                                                                                        suffix="원"
-                                                                                        style={{ flex: 1.5 }}
-                                                                                        size="sm"
-                                                                                    />
-                                                                                    {row.size !== undefined && ( // Check undefined to allow empty string
-                                                                                        <TextInput
-                                                                                            label={itemIdx === 0 ? "규격" : undefined}
-                                                                                            value={row.size || ''}
-                                                                                            onChange={(e) => {
-                                                                                                const newRows = [...rows];
-                                                                                                newRows[itemIdx] = { ...newRows[itemIdx], size: e.target.value };
-                                                                                                setEditForm({
-                                                                                                    ...editForm,
-                                                                                                    priceInfo: {
-                                                                                                        ...editForm.priceInfo,
-                                                                                                        priceTable: {
-                                                                                                            ...(editForm.priceInfo?.priceTable || {}),
-                                                                                                            [catName]: { ...catData, rows: newRows }
-                                                                                                        }
-                                                                                                    }
-                                                                                                });
-                                                                                            }}
-                                                                                            style={{ flex: 0.8 }}
-                                                                                            size="sm"
-                                                                                        />
-                                                                                    )}
-
-                                                                                    {/* 항목 삭제 */}
-                                                                                    <ActionIcon
-                                                                                        color="red"
-                                                                                        variant="subtle"
-                                                                                        size="sm"
-                                                                                        onClick={() => deleteItem(groupName, itemIdx)}
-                                                                                        style={{ marginTop: itemIdx === 0 ? 28 : 0 }}
-                                                                                    >
-                                                                                        <X size={16} />
-                                                                                    </ActionIcon>
-                                                                                </Group>
-                                                                            ))}
-
-                                                                            {/* 항목 추가 버튼 - 기능 연결됨 */}
-                                                                            <Button
-                                                                                variant="light"
-                                                                                size="xs"
-                                                                                leftSection={<Plus size={14} />}
-                                                                                mt="xs"
-                                                                                onClick={() => {
-                                                                                    const newRows = [...rows, { name: '', grade: '', price: 0 }];
-                                                                                    setEditForm({
-                                                                                        ...editForm,
-                                                                                        priceInfo: {
-                                                                                            ...editForm.priceInfo,
-                                                                                            priceTable: {
-                                                                                                ...(editForm.priceInfo?.priceTable || {}),
-                                                                                                [catName]: {
-                                                                                                    ...catData,
-                                                                                                    rows: (catData.rows || []).map((r: any) =>
-                                                                                                        (r.groupType || '미분류') === groupName ? r : r
-                                                                                                    ).concat({ name: '', grade: '', price: 0, groupType: groupName })
-                                                                                                }
-
-                                                                                            }
-                                                                                        }
-                                                                                    });
-                                                                                    // Wait, the structure is flattened rows in catData? 
-                                                                                    // But we are iterating itemsByGroup.
-                                                                                    // We need to add to catData.rows, with correct groupType.
-                                                                                    const currentRows = catData.rows || [];
-                                                                                    const newRow = { name: '', grade: '', price: 0, groupType: groupName };
-                                                                                    setEditForm({
-                                                                                        ...editForm,
-                                                                                        priceInfo: {
-                                                                                            ...editForm.priceInfo,
-                                                                                            priceTable: {
-                                                                                                ...(editForm.priceInfo?.priceTable || {}),
-                                                                                                [catName]: { ...catData, rows: [...currentRows, newRow] }
-                                                                                            }
-                                                                                        }
-                                                                                    });
-                                                                                }}
-                                                                            >
-                                                                                항목 추가
-                                                                            </Button>
-                                                                        </Stack>
-                                                                    </Paper>
-                                                                );
-                                                            })}
-
-                                                            {/* 그룹 추가 버튼 - 기능 연결됨 */}
-                                                            <Button
-                                                                variant="outline"
-                                                                leftSection={<Plus size={16} />}
-                                                                onClick={() => {
-                                                                    const newGroupName = `새 그룹 ${groupNames.length + 1}`;
-                                                                    // To add a group, we just add a row with that groupType? 
-                                                                    // Or creates an empty group? 
-                                                                    // Our logic relies on rows having groupType.
-                                                                    // So we add a dummy row? Or just handle empty groups?
-                                                                    // If we add a dummy row, it shows up.
-                                                                    // Let's add with a placeholder item.
-                                                                    const newRow = { name: '', price: 0, groupType: newGroupName };
-                                                                    setEditForm({
-                                                                        ...editForm,
-                                                                        priceInfo: {
-                                                                            ...editForm.priceInfo,
-                                                                            priceTable: {
-                                                                                ...(editForm.priceInfo?.priceTable || {}),
-                                                                                [catName]: { ...catData, rows: [...(catData.rows || []), newRow] }
-                                                                            }
-                                                                        }
-                                                                    });
-                                                                }}
-                                                            >
-                                                                새 그룹 추가
-                                                            </Button>
-                                                        </Stack>
-                                                    </Accordion.Panel>
-                                                </Accordion.Item>
-                                            );
-                                        })}
-                                </Accordion>
-
-                                {/* Empty State Notice with Add Button */}
-                                {Object.entries(editForm.priceInfo?.priceTable || {}).filter(([catName]) => {
-                                    let group = '기타';
-                                    if (/매장|묘지|석물|작업|봉분|둘레석/.test(catName)) group = '매장묘';
-                                    else if (/기본비용/.test(catName)) group = '매장묘';
-                                    else if (/봉안|납골|유골/.test(catName)) group = '봉안';
-                                    else if (/수목|자연|평장|잔디|화초/.test(catName)) group = '수목장';
-                                    return group === activeMajorTab || (activeMajorTab === '기타' && group === '기타');
-                                }).length === 0 && (
-                                        <Paper p="md" withBorder style={{ borderStyle: 'dashed', textAlign: 'center' }}>
-                                            <Text c="dimmed" mb="sm">
-                                                이 그룹('{activeMajorTab}')에 해당하는 가격 정보가 없습니다.
-                                            </Text>
-                                            <Button
-                                                variant="light"
-                                                size="xs"
-                                                leftSection={<Plus size={14} />}
-                                                onClick={() => {
-                                                    // Determine category name based on activeMajorTab
-                                                    let newCatName = '';
-                                                    if (activeMajorTab === '매장묘') newCatName = '매장묘';
-                                                    else if (activeMajorTab === '봉안') newCatName = '봉안당';
-                                                    else if (activeMajorTab === '수목장') newCatName = '수목장';
-                                                    else newCatName = '기타';
-
-                                                    const newGroupName = `새 그룹 1`;
-                                                    const newRow = { name: '', price: 0, groupType: newGroupName };
-
+                                                // 핸들러 함수들
+                                                const moveGroup = (fromIdx: number, toIdx: number) => {
+                                                    const newNames = [...groupNames];
+                                                    const [moved] = newNames.splice(fromIdx, 1);
+                                                    newNames.splice(toIdx, 0, moved);
+                                                    const newRows: any[] = [];
+                                                    newNames.forEach(gName => newRows.push(...itemsByGroup[gName]));
                                                     setEditForm({
                                                         ...editForm,
                                                         priceInfo: {
                                                             ...editForm.priceInfo,
                                                             priceTable: {
                                                                 ...editForm.priceInfo?.priceTable,
-                                                                [newCatName]: {
-                                                                    unit: '원',
-                                                                    rows: [newRow]
-                                                                }
+                                                                [catName]: { ...catData, rows: newRows }
                                                             }
                                                         }
                                                     });
-                                                }}
-                                            >
-                                                {activeMajorTab} 그룹 추가하기
-                                            </Button>
-                                        </Paper>
-                                    )}
+                                                };
+
+                                                const deleteGroup = (groupName: string) => {
+                                                    const newRows = (catData.rows || []).filter((r: any) => (r.groupType || '미분류') !== groupName);
+                                                    setEditForm({
+                                                        ...editForm,
+                                                        priceInfo: {
+                                                            ...editForm.priceInfo,
+                                                            priceTable: {
+                                                                ...editForm.priceInfo?.priceTable,
+                                                                [catName]: { ...catData, rows: newRows }
+                                                            }
+                                                        }
+                                                    });
+                                                };
+
+                                                const moveItem = (groupName: string, fromIdx: number, toIdx: number) => {
+                                                    const groupRows = [...itemsByGroup[groupName]];
+                                                    const [moved] = groupRows.splice(fromIdx, 1);
+                                                    groupRows.splice(toIdx, 0, moved);
+                                                    const newRows: any[] = [];
+                                                    groupNames.forEach(gName => {
+                                                        newRows.push(...(gName === groupName ? groupRows : itemsByGroup[gName]));
+                                                    });
+                                                    setEditForm({
+                                                        ...editForm,
+                                                        priceInfo: {
+                                                            ...editForm.priceInfo,
+                                                            priceTable: {
+                                                                ...editForm.priceInfo?.priceTable,
+                                                                [catName]: { ...catData, rows: newRows }
+                                                            }
+                                                        }
+                                                    });
+                                                };
+
+                                                const deleteItem = (groupName: string, itemIdx: number) => {
+                                                    const groupRows = itemsByGroup[groupName].filter((_, idx) => idx !== itemIdx);
+                                                    const newRows: any[] = [];
+                                                    groupNames.forEach(gName => {
+                                                        newRows.push(...(gName === groupName ? groupRows : itemsByGroup[gName]));
+                                                    });
+                                                    setEditForm({
+                                                        ...editForm,
+                                                        priceInfo: {
+                                                            ...editForm.priceInfo,
+                                                            priceTable: {
+                                                                ...editForm.priceInfo?.priceTable,
+                                                                [catName]: { ...catData, rows: newRows }
+                                                            }
+                                                        }
+                                                    });
+                                                };
+
+                                                return (
+                                                    <Accordion.Item key={catName} value={catName}>
+                                                        <Accordion.Control icon={<List size={16} />}>
+                                                            <Group justify="space-between">
+                                                                <Text fw={700}>{catName}</Text>
+                                                                <Badge color="gray" variant="light">{catData.rows?.length || 0} 항목</Badge>
+                                                            </Group>
+                                                        </Accordion.Control>
+                                                        <Accordion.Panel>
+                                                            <Stack gap="lg">
+                                                                {groupNames.map((groupName, groupIdx) => {
+                                                                    const rows = itemsByGroup[groupName];
+
+                                                                    return (
+                                                                        <Paper key={groupName} p="md" withBorder>
+                                                                            {/* 그룹 헤더 - 편집 가능 */}
+                                                                            <Group justify="space-between" mb="md">
+                                                                                <Group gap="xs">
+                                                                                    <TextInput
+                                                                                        value={groupName}
+                                                                                        size="sm"
+                                                                                        fw={600}
+                                                                                        styles={{ input: { fontWeight: 600 } }}
+                                                                                        placeholder="그룹명"
+                                                                                        onChange={(e) => {
+                                                                                            const newName = e.target.value;
+                                                                                            const newRows = (catData.rows || []).map((r: any) => ({
+                                                                                                ...r,
+                                                                                                groupType: (r.groupType || '미분류') === groupName ? newName : r.groupType
+                                                                                            }));
+                                                                                            setEditForm({
+                                                                                                ...editForm,
+                                                                                                priceInfo: {
+                                                                                                    ...editForm.priceInfo,
+                                                                                                    priceTable: {
+                                                                                                        ...(editForm.priceInfo?.priceTable || {}),
+                                                                                                        [catName]: { ...catData, rows: newRows }
+                                                                                                    }
+                                                                                                }
+                                                                                            });
+                                                                                        }}
+                                                                                    />
+                                                                                    <Badge size="sm" variant="light">{rows.length}개</Badge>
+                                                                                </Group>
+
+                                                                                <Group gap="xs">
+                                                                                    {/* 그룹 순서 변경 */}
+                                                                                    <ActionIcon
+                                                                                        variant="light"
+                                                                                        size="sm"
+                                                                                        disabled={groupIdx === 0}
+                                                                                        onClick={() => moveGroup(groupIdx, groupIdx - 1)}
+                                                                                    >
+                                                                                        <TrendingUp size={14} />
+                                                                                    </ActionIcon>
+                                                                                    <ActionIcon
+                                                                                        variant="light"
+                                                                                        size="sm"
+                                                                                        disabled={groupIdx === groupNames.length - 1}
+                                                                                        onClick={() => moveGroup(groupIdx, groupIdx + 1)}
+                                                                                    >
+                                                                                        <TrendingDown size={14} />
+                                                                                    </ActionIcon>
+
+                                                                                    {/* 그룹 전체 삭제 */}
+                                                                                    <ActionIcon
+                                                                                        color="red"
+                                                                                        variant="light"
+                                                                                        size="sm"
+                                                                                        onClick={() => confirm(`"${groupName}" 삭제?`) && deleteGroup(groupName)}
+                                                                                    >
+                                                                                        <Trash size={14} />
+                                                                                    </ActionIcon>
+                                                                                </Group>
+                                                                            </Group>
+
+                                                                            {/* 항목 리스트 */}
+                                                                            <Stack gap="xs">
+                                                                                {rows.map((row: any, itemIdx: number) => (
+                                                                                    <Group key={itemIdx} align="flex-start" gap="xs" wrap="nowrap">
+                                                                                        {/* 대표 가격 설정 버튼 (별) */}
+                                                                                        <Stack gap={2} mr="xs">
+                                                                                            <ActionIcon
+                                                                                                size="sm"
+                                                                                                variant="subtle"
+                                                                                                color={row.isRepresentative ? 'yellow' : 'gray'}
+                                                                                                onClick={() => {
+                                                                                                    // [Fixed Logic] Radio Button per Category
+                                                                                                    const newPriceTable = { ...editForm.priceInfo?.priceTable };
+                                                                                                    const currentCat = newPriceTable[catName];
+
+                                                                                                    if (currentCat && currentCat.rows) {
+                                                                                                        let updatedRows = [...currentCat.rows];
+                                                                                                        const wasActive = updatedRows[itemIdx].isRepresentative;
+
+                                                                                                        if (wasActive) {
+                                                                                                            // Toggle Off
+                                                                                                            updatedRows[itemIdx] = { ...updatedRows[itemIdx], isRepresentative: false };
+                                                                                                        } else {
+                                                                                                            // Toggle On (Radio Style in this category)
+                                                                                                            updatedRows = updatedRows.map((r, i) => ({
+                                                                                                                ...r,
+                                                                                                                isRepresentative: i === itemIdx
+                                                                                                            }));
+                                                                                                        }
+
+                                                                                                        newPriceTable[catName] = { ...currentCat, rows: updatedRows };
+
+                                                                                                        setEditForm({
+                                                                                                            ...editForm,
+                                                                                                            priceInfo: {
+                                                                                                                ...editForm.priceInfo!,
+                                                                                                                priceTable: newPriceTable
+                                                                                                            }
+                                                                                                        });
+                                                                                                    }
+                                                                                                }}
+                                                                                                style={{ marginTop: itemIdx === 0 ? 30 : 6 }}
+                                                                                            >
+                                                                                                <Star size={16} fill={row.isRepresentative ? "currentColor" : "none"} />
+                                                                                            </ActionIcon>
+                                                                                        </Stack>
+
+                                                                                        {/* 항목 순서 변경 */}
+                                                                                        <Stack gap={2}>
+                                                                                            <ActionIcon
+                                                                                                size="xs"
+                                                                                                variant="subtle"
+                                                                                                disabled={itemIdx === 0}
+                                                                                                onClick={() => moveItem(groupName, itemIdx, itemIdx - 1)}
+                                                                                                style={{ marginTop: itemIdx === 0 ? 24 : 0 }}
+                                                                                            >
+                                                                                                <TrendingUp size={12} />
+                                                                                            </ActionIcon>
+                                                                                            <ActionIcon
+                                                                                                size="xs"
+                                                                                                variant="subtle"
+                                                                                                disabled={itemIdx === rows.length - 1}
+                                                                                                onClick={() => moveItem(groupName, itemIdx, itemIdx + 1)}
+                                                                                            >
+                                                                                                <TrendingDown size={12} />
+                                                                                            </ActionIcon>
+                                                                                        </Stack>
+
+                                                                                        {/* 입력 필드들 - onChange 연결 */}
+                                                                                        <TextInput
+                                                                                            label={itemIdx === 0 ? "상품명" : undefined}
+                                                                                            placeholder="상품명 (예: 개인단)"
+                                                                                            value={row.name || ''}
+                                                                                            onChange={(e) => {
+                                                                                                const newRows = [...rows];
+                                                                                                newRows[itemIdx] = { ...newRows[itemIdx], name: e.target.value };
+                                                                                                setEditForm({
+                                                                                                    ...editForm,
+                                                                                                    priceInfo: {
+                                                                                                        ...editForm.priceInfo!,
+                                                                                                        priceTable: {
+                                                                                                            ...editForm.priceInfo?.priceTable,
+                                                                                                            [catName]: { ...catData, rows: newRows }
+                                                                                                        }
+                                                                                                    }
+                                                                                                });
+                                                                                            }}
+                                                                                            style={{ flex: 2 }}
+                                                                                            size="sm"
+                                                                                        />
+                                                                                        <TextInput
+                                                                                            label={itemIdx === 0 ? "세부정보" : undefined}
+                                                                                            placeholder="설명 (선택)"
+                                                                                            value={row.grade || ''}
+                                                                                            onChange={(e) => {
+                                                                                                const newRows = [...rows];
+                                                                                                newRows[itemIdx] = { ...newRows[itemIdx], grade: e.target.value };
+                                                                                                setEditForm({
+                                                                                                    ...editForm,
+                                                                                                    priceInfo: {
+                                                                                                        ...editForm.priceInfo!,
+                                                                                                        priceTable: {
+                                                                                                            ...editForm.priceInfo?.priceTable,
+                                                                                                            [catName]: { ...catData, rows: newRows }
+                                                                                                        }
+                                                                                                    }
+                                                                                                });
+                                                                                            }}
+                                                                                            style={{ flex: 2 }}
+                                                                                            size="sm"
+                                                                                        />
+                                                                                        <NumberInput
+                                                                                            label={itemIdx === 0 ? "가격" : undefined}
+                                                                                            value={row.price ?? 0}
+                                                                                            onChange={(val) => {
+                                                                                                const newRows = [...rows];
+                                                                                                newRows[itemIdx] = { ...newRows[itemIdx], price: val };
+                                                                                                setEditForm({
+                                                                                                    ...editForm,
+                                                                                                    priceInfo: {
+                                                                                                        ...editForm.priceInfo!,
+                                                                                                        priceTable: {
+                                                                                                            ...editForm.priceInfo?.priceTable,
+                                                                                                            [catName]: { ...catData, rows: newRows }
+                                                                                                        }
+                                                                                                    }
+                                                                                                });
+                                                                                            }}
+                                                                                            thousandSeparator=","
+                                                                                            suffix="원"
+                                                                                            style={{ flex: 1.5 }}
+                                                                                            size="sm"
+                                                                                        />
+                                                                                        {row.size !== undefined && ( // Check undefined to allow empty string
+                                                                                            <TextInput
+                                                                                                label={itemIdx === 0 ? "규격" : undefined}
+                                                                                                value={row.size || ''}
+                                                                                                onChange={(e) => {
+                                                                                                    const newRows = [...rows];
+                                                                                                    newRows[itemIdx] = { ...newRows[itemIdx], size: e.target.value };
+                                                                                                    setEditForm({
+                                                                                                        ...editForm,
+                                                                                                        priceInfo: {
+                                                                                                            ...editForm.priceInfo,
+                                                                                                            priceTable: {
+                                                                                                                ...(editForm.priceInfo?.priceTable || {}),
+                                                                                                                [catName]: { ...catData, rows: newRows }
+                                                                                                            }
+                                                                                                        }
+                                                                                                    });
+                                                                                                }}
+                                                                                                style={{ flex: 0.8 }}
+                                                                                                size="sm"
+                                                                                            />
+                                                                                        )}
+
+                                                                                        {/* 항목 삭제 */}
+                                                                                        <ActionIcon
+                                                                                            color="red"
+                                                                                            variant="subtle"
+                                                                                            size="sm"
+                                                                                            onClick={() => deleteItem(groupName, itemIdx)}
+                                                                                            style={{ marginTop: itemIdx === 0 ? 28 : 0 }}
+                                                                                        >
+                                                                                            <X size={16} />
+                                                                                        </ActionIcon>
+                                                                                    </Group>
+                                                                                ))}
+
+                                                                                {/* 항목 추가 버튼 - 기능 연결됨 */}
+                                                                                <Button
+                                                                                    variant="light"
+                                                                                    size="xs"
+                                                                                    leftSection={<Plus size={14} />}
+                                                                                    mt="xs"
+                                                                                    onClick={() => {
+                                                                                        const newRows = [...rows, { name: '', grade: '', price: 0 }];
+                                                                                        setEditForm({
+                                                                                            ...editForm,
+                                                                                            priceInfo: {
+                                                                                                ...editForm.priceInfo,
+                                                                                                priceTable: {
+                                                                                                    ...(editForm.priceInfo?.priceTable || {}),
+                                                                                                    [catName]: {
+                                                                                                        ...catData,
+                                                                                                        rows: (catData.rows || []).map((r: any) =>
+                                                                                                            (r.groupType || '미분류') === groupName ? r : r
+                                                                                                        ).concat({ name: '', grade: '', price: 0, groupType: groupName })
+                                                                                                    }
+
+                                                                                                }
+                                                                                            }
+                                                                                        });
+                                                                                        // Wait, the structure is flattened rows in catData? 
+                                                                                        // But we are iterating itemsByGroup.
+                                                                                        // We need to add to catData.rows, with correct groupType.
+                                                                                        const currentRows = catData.rows || [];
+                                                                                        const newRow = { name: '', grade: '', price: 0, groupType: groupName };
+                                                                                        setEditForm({
+                                                                                            ...editForm,
+                                                                                            priceInfo: {
+                                                                                                ...editForm.priceInfo,
+                                                                                                priceTable: {
+                                                                                                    ...(editForm.priceInfo?.priceTable || {}),
+                                                                                                    [catName]: { ...catData, rows: [...currentRows, newRow] }
+                                                                                                }
+                                                                                            }
+                                                                                        });
+                                                                                    }}
+                                                                                >
+                                                                                    항목 추가
+                                                                                </Button>
+                                                                            </Stack>
+                                                                        </Paper>
+                                                                    );
+                                                                })}
+
+                                                                {/* 그룹 추가 버튼 - 기능 연결됨 */}
+                                                                <Button
+                                                                    variant="outline"
+                                                                    leftSection={<Plus size={16} />}
+                                                                    onClick={() => {
+                                                                        const newGroupName = `새 그룹 ${groupNames.length + 1}`;
+                                                                        // To add a group, we just add a row with that groupType? 
+                                                                        // Or creates an empty group? 
+                                                                        // Our logic relies on rows having groupType.
+                                                                        // So we add a dummy row? Or just handle empty groups?
+                                                                        // If we add a dummy row, it shows up.
+                                                                        // Let's add with a placeholder item.
+                                                                        const newRow = { name: '', price: 0, groupType: newGroupName };
+                                                                        setEditForm({
+                                                                            ...editForm,
+                                                                            priceInfo: {
+                                                                                ...editForm.priceInfo,
+                                                                                priceTable: {
+                                                                                    ...(editForm.priceInfo?.priceTable || {}),
+                                                                                    [catName]: { ...catData, rows: [...(catData.rows || []), newRow] }
+                                                                                }
+                                                                            }
+                                                                        });
+                                                                    }}
+                                                                >
+                                                                    새 그룹 추가
+                                                                </Button>
+                                                            </Stack>
+                                                        </Accordion.Panel>
+                                                    </Accordion.Item>
+                                                );
+                                            })}
+                                        </Accordion>
+                                    );
+                                })()}
                             </Box>
                         ) : (
                             // 기존 JSON 데이터 렌더링
