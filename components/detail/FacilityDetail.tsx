@@ -1735,7 +1735,19 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                     withinPortal
                     zIndex={10000}
                     padding={0}
-                    styles={{ body: { height: '100%', display: 'flex', flexDirection: 'column' } }}
+                    styles={{
+                        body: {
+                            height: '100%',
+                            display: 'flex',
+                            flexDirection: 'column',
+                            overflow: 'hidden'
+                        },
+                        content: {
+                            height: '100%',
+                            display: 'flex',
+                            flexDirection: 'column'
+                        }
+                    }}
                 >
                     {/* 헤더 */}
                     <Box
@@ -1762,7 +1774,13 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                         /* 성공 화면 - 깔끔한 디자인 */
                         <Box style={{ flex: 1, display: 'flex', flexDirection: 'column', background: 'white' }}>
                             {/* 스크롤 가능한 메인 콘텐츠 */}
-                            <Box style={{ flex: 1, overflowY: 'auto', padding: '32px 20px' }}>
+                            <Box style={{
+                                flex: 1,
+                                overflowY: 'auto',
+                                padding: '32px 20px',
+                                WebkitOverflowScrolling: 'touch',
+                                touchAction: 'pan-y'
+                            }}>
                                 {/* 체크 아이콘 + 메시지 */}
                                 <Box style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginBottom: 32 }}>
                                     <Box
@@ -1879,7 +1897,13 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                             </Box>
                         </Box>
                     ) : (
-                        <Box style={{ flex: 1, overflowY: 'auto', padding: '24px 20px 100px' }}>
+                        <Box style={{
+                            flex: 1,
+                            overflowY: 'auto',
+                            padding: '24px 20px 100px',
+                            WebkitOverflowScrolling: 'touch',
+                            touchAction: 'pan-y'
+                        }}>
                             {/* 타이틀 */}
                             <Box mb="xl">
                                 <Text size="24px" fw={700} lh={1.3} style={{ wordBreak: 'keep-all' }}>

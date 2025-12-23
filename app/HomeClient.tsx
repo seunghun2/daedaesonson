@@ -984,7 +984,10 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
               <Box style={{ flex: 1, overflow: 'hidden' }}>
                 <FacilityDetail
                   facility={selectedFacility}
-                  onClose={() => router.back()}
+                  onClose={() => {
+                    // URL에서 모든 파라미터 정리 후 홈으로 이동 (히스토리 문제 방지)
+                    router.push(pathname, { scroll: false });
+                  }}
                   allFacilities={finalFacilities}
                   onSelectFacility={(id) => {
                     const fac = finalFacilities.find(f => f.id === id);
@@ -992,7 +995,7 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
                   }}
                   onMapView={(lat, lng) => {
                     setMobileView('map');
-                    router.back();
+                    router.push(pathname, { scroll: false });
                     setTimeout(() => {
                       if (mapRef.current) {
                         mapRef.current.panTo(lat, lng, 17);
