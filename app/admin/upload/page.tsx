@@ -2026,20 +2026,16 @@ export default function AdminPage() {
                                                                     leftSection={<Plus size={16} />}
                                                                     onClick={() => {
                                                                         const newGroupName = `새 그룹 ${groupNames.length + 1}`;
-                                                                        // To add a group, we just add a row with that groupType? 
-                                                                        // Or creates an empty group? 
-                                                                        // Our logic relies on rows having groupType.
-                                                                        // So we add a dummy row? Or just handle empty groups?
-                                                                        // If we add a dummy row, it shows up.
-                                                                        // Let's add with a placeholder item.
                                                                         const newRow = { name: '', price: 0, groupType: newGroupName };
+                                                                        const currentPriceTable = editForm.priceInfo?.priceTable || {};
+                                                                        const currentCatData = currentPriceTable[catName] || { rows: [], unit: '' };
                                                                         setEditForm({
                                                                             ...editForm,
                                                                             priceInfo: {
                                                                                 ...editForm.priceInfo,
                                                                                 priceTable: {
-                                                                                    ...(editForm.priceInfo?.priceTable || {}),
-                                                                                    [catName]: { ...catData, rows: [...(catData.rows || []), newRow] }
+                                                                                    ...currentPriceTable,
+                                                                                    [catName]: { ...currentCatData, rows: [...(currentCatData.rows || []), newRow] }
                                                                                 }
                                                                             }
                                                                         });
