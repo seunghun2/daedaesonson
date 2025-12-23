@@ -555,7 +555,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
         } else {
             url.searchParams.delete('consult');
         }
-        window.history.pushState({}, '', url.toString());
+        window.history.replaceState({}, '', url.toString());
     };
     const [consultForm, setConsultForm] = useState({
         name: '',
