@@ -1213,7 +1213,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                         if (isMobile) {
                             router.push('/inquiries');
                         } else {
-                            setInquiryOpen(true);
+                            setInquiryOpen(!inquiryOpen);
                         }
                         // 📊 GA4: 문의하기 클릭
                         if ((window as any).gtag) {
