@@ -246,44 +246,114 @@ function PriceInfoSection({ priceInfo, hasPrice }: { priceInfo: any, hasPrice: b
                                                     </Group>
                                                 </Accordion.Control>
                                                 <Accordion.Panel>
-                                                    {/* 메인 상품 리스트 */}
-                                                    <Stack gap="sm" mb={optionRows.length > 0 ? "lg" : 0}>
-                                                        {mainRows.map((row: any, idx: number) => (
-                                                            <Group key={`main-${idx}`} justify="space-between" align="flex-start" wrap="nowrap"
-                                                                style={{ borderBottom: '1px solid #e9ecef', paddingBottom: 12 }}
-                                                            >
-                                                                <Box style={{ flex: 1, minWidth: 0 }}>
-                                                                    <Group gap="xs" mb={4} align="center" wrap="wrap">
-                                                                        <Text fw={600} size="md" c="dark.9" style={{ lineHeight: 1.3, wordBreak: 'keep-all' }}>
-                                                                            {formatName(row.name)}
-                                                                        </Text>
-                                                                        {getTypeLabel(row.name)}
-                                                                    </Group>
-                                                                    {row.grade && <Text size="12px" c="dimmed">{row.grade}</Text>}
-                                                                </Box>
-                                                                <Text fw={700} size="md" c="black" style={{ whiteSpace: 'nowrap', marginLeft: 8 }}>
-                                                                    {formatKoreanCurrency(row.price)}
-                                                                </Text>
-                                                            </Group>
-                                                        ))}
-                                                    </Stack>
+                                                    {(() => {
+                                                        // 그룹별로 묶기
+                                                        const groupedRows: Record<string, any[]> = {};
+                                                        mainRows.forEach((row: any) => {
+                                                            const gType = row.groupType || '미분류';
+                                                            if (!groupedRows[gType]) groupedRows[gType] = [];
+                                                            groupedRows[gType].push(row);
+                                                        });
+                                                        const groupNames = Object.keys(groupedRows);
 
-                                                    {/* 부가 비용 리스트 */}
-                                                    {optionRows.length > 0 && (
-                                                        <Box bg="white" p="xs" style={{ borderRadius: 6, border: '1px solid #f1f3f5' }}>
-                                                            <Group justify="space-between" mb="xs">
-                                                                <Text size="11px" fw={700} c="dimmed">💡 부가 옵션</Text>
-                                                            </Group>
-                                                            <Stack gap="xs">
-                                                                {optionRows.map((row: any, idx: number) => (
-                                                                    <Group key={`opt-${idx}`} justify="space-between">
-                                                                        <Text size="xs" c="dark.5">{row.name}</Text>
-                                                                        <Text size="xs" fw={600} c="dark.7">{formatKoreanCurrency(row.price)}</Text>
-                                                                    </Group>
-                                                                ))}
-                                                            </Stack>
-                                                        </Box>
-                                                    )}
+                                                        if (groupNames.length > 1) {
+                                                            return (
+                                                                <>
+                                                                    <Accordion variant="default" defaultValue={groupNames[0]}>
+                                                                        {groupNames.map(gName => (
+                                                                            <Accordion.Item key={gName} value={gName}>
+                                                                                <Accordion.Control>
+                                                                                    <Group justify="space-between" wrap="nowrap">
+                                                                                        <Text size="sm" c="dark.6">{gName}</Text>
+                                                                                        <Badge color="gray" variant="outline" size="xs">
+                                                                                            {groupedRows[gName].length}개
+                                                                                        </Badge>
+                                                                                    </Group>
+                                                                                </Accordion.Control>
+                                                                                <Accordion.Panel>
+                                                                                    <Stack gap="sm">
+                                                                                        {groupedRows[gName].map((row: any, idx: number) => (
+                                                                                            <Group key={`${gName}-${idx}`} justify="space-between" align="flex-start" wrap="nowrap"
+                                                                                                style={{ borderBottom: '1px solid #e9ecef', paddingBottom: 12 }}
+                                                                                            >
+                                                                                                <Box style={{ flex: 1, minWidth: 0 }}>
+                                                                                                    <Group gap="xs" mb={4} align="center" wrap="wrap">
+                                                                                                        <Text fw={600} size="md" c="dark.9" style={{ lineHeight: 1.3, wordBreak: 'keep-all' }}>
+                                                                                                            {formatName(row.name)}
+                                                                                                        </Text>
+                                                                                                        {getTypeLabel(row.name)}
+                                                                                                    </Group>
+                                                                                                    {row.grade && <Text size="12px" c="dimmed">{row.grade}</Text>}
+                                                                                                </Box>
+                                                                                                <Text fw={700} size="md" c="black" style={{ whiteSpace: 'nowrap', marginLeft: 8 }}>
+                                                                                                    {formatKoreanCurrency(row.price)}
+                                                                                                </Text>
+                                                                                            </Group>
+                                                                                        ))}
+                                                                                    </Stack>
+                                                                                </Accordion.Panel>
+                                                                            </Accordion.Item>
+                                                                        ))}
+                                                                    </Accordion>
+                                                                    {optionRows.length > 0 && (
+                                                                        <Box bg="white" p="xs" style={{ borderRadius: 6, border: '1px solid #f1f3f5' }} mt="md">
+                                                                            <Group justify="space-between" mb="xs">
+                                                                                <Text size="11px" fw={700} c="dimmed">💡 부가 옵션</Text>
+                                                                            </Group>
+                                                                            <Stack gap="xs">
+                                                                                {optionRows.map((row: any, idx: number) => (
+                                                                                    <Group key={`opt-${idx}`} justify="space-between">
+                                                                                        <Text size="xs" c="dark.5">{row.name}</Text>
+                                                                                        <Text size="xs" fw={600} c="dark.7">{formatKoreanCurrency(row.price)}</Text>
+                                                                                    </Group>
+                                                                                ))}
+                                                                            </Stack>
+                                                                        </Box>
+                                                                    )}
+                                                                </>
+                                                            );
+                                                        }
+
+                                                        return (
+                                                            <>
+                                                                <Stack gap="sm" mb={optionRows.length > 0 ? "lg" : 0}>
+                                                                    {mainRows.map((row: any, idx: number) => (
+                                                                        <Group key={`main-${idx}`} justify="space-between" align="flex-start" wrap="nowrap"
+                                                                            style={{ borderBottom: '1px solid #e9ecef', paddingBottom: 12 }}
+                                                                        >
+                                                                            <Box style={{ flex: 1, minWidth: 0 }}>
+                                                                                <Group gap="xs" mb={4} align="center" wrap="wrap">
+                                                                                    <Text fw={600} size="md" c="dark.9" style={{ lineHeight: 1.3, wordBreak: 'keep-all' }}>
+                                                                                        {formatName(row.name)}
+                                                                                    </Text>
+                                                                                    {getTypeLabel(row.name)}
+                                                                                </Group>
+                                                                                {row.grade && <Text size="12px" c="dimmed">{row.grade}</Text>}
+                                                                            </Box>
+                                                                            <Text fw={700} size="md" c="black" style={{ whiteSpace: 'nowrap', marginLeft: 8 }}>
+                                                                                {formatKoreanCurrency(row.price)}
+                                                                            </Text>
+                                                                        </Group>
+                                                                    ))}
+                                                                </Stack>
+                                                                {optionRows.length > 0 && (
+                                                                    <Box bg="white" p="xs" style={{ borderRadius: 6, border: '1px solid #f1f3f5' }}>
+                                                                        <Group justify="space-between" mb="xs">
+                                                                            <Text size="11px" fw={700} c="dimmed">💡 부가 옵션</Text>
+                                                                        </Group>
+                                                                        <Stack gap="xs">
+                                                                            {optionRows.map((row: any, idx: number) => (
+                                                                                <Group key={`opt-${idx}`} justify="space-between">
+                                                                                    <Text size="xs" c="dark.5">{row.name}</Text>
+                                                                                    <Text size="xs" fw={600} c="dark.7">{formatKoreanCurrency(row.price)}</Text>
+                                                                                </Group>
+                                                                            ))}
+                                                                        </Stack>
+                                                                    </Box>
+                                                                )}
+                                                            </>
+                                                        );
+                                                    })()}
                                                 </Accordion.Panel>
                                             </Accordion.Item>
                                         );
