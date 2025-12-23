@@ -1647,9 +1647,10 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                             <Stack gap="xs">
                                 {recommendations.map(rec => {
                                     // 🔥 썸네일 우선순위: thumbnail > imageGallery[0] > 로고
-                                    const hasImage = rec.thumbnail || rec.imageGallery?.[0];
-                                    const thumbUrl = rec.thumbnail
-                                        ? rec.thumbnail
+                                    const recAny = rec as any;
+                                    const hasImage = recAny.thumbnail || rec.imageGallery?.[0];
+                                    const thumbUrl = recAny.thumbnail
+                                        ? recAny.thumbnail
                                         : rec.imageGallery?.[0]
                                             ? getSingleFacilityImageUrl(rec.imageGallery[0])
                                             : '/logo-horizontal.svg';
