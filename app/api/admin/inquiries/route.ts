@@ -1,7 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
-import fs from 'fs';
-import path from 'path';
 
 const SUPABASE_URL = 'https://jbydmhfuqnpukfutvrgs.supabase.co';
 const SUPABASE_KEY = process.env.SUPABASE_SERVICE_KEY || 'sb_secret_CDAM3cyG1RBEmjvSIaHOPA_If4LP8u3';
@@ -9,23 +7,6 @@ const SUPABASE_KEY = process.env.SUPABASE_SERVICE_KEY || 'sb_secret_CDAM3cyG1RBE
 const supabase = createClient(SUPABASE_URL, SUPABASE_KEY, {
     auth: { persistSession: false }
 });
-
-// 시설명 매핑 (캐싱 - 첫 호출만 파일 읽기)
-let facilityNameMap: Map<string, string> | null = null;
-
-function getFacilityNameMap() {
-    if (!facilityNameMap) {
-        try {
-            const filePath = path.join(process.cwd(), 'public', 'data', 'facilities.json');
-            const data = fs.readFileSync(filePath, 'utf-8');
-            const facilities = JSON.parse(data);
-            facilityNameMap = new Map(facilities.map((f: any) => [f.id, f.name]));
-        } catch (e) {
-            facilityNameMap = new Map();
-        }
-    }
-    return facilityNameMap;
-}
 
 // GET: 모든 문의 조회 (어드민용)
 export async function GET() {
@@ -43,11 +24,26 @@ export async function GET() {
             return NextResponse.json({ error: '문의 조회 실패' }, { status: 500 });
         }
 
+        // 문의에 있는 시설 ID들 추출
+        const facilityIds = [...new Set((inquiries || []).map(inq => inq.facilityId))];
+
+        // Supabase에서 시설명 조회
+        let facilityNameMap = new Map<string, string>();
+        if (facilityIds.length > 0) {
+            const { data: facilities } = await supabase
+                .from('Facility')
+                .select('id, name')
+                .in('id', facilityIds);
+
+            if (facilities) {
+                facilityNameMap = new Map(facilities.map(f => [f.id, f.name]));
+            }
+        }
+
         // 시설명 추가
-        const nameMap = getFacilityNameMap();
         const enrichedInquiries = (inquiries || []).map(inq => ({
             ...inq,
-            facilityName: nameMap.get(inq.facilityId) || '시설'
+            facilityName: facilityNameMap.get(inq.facilityId) || '시설'
         }));
 
         return NextResponse.json({ inquiries: enrichedInquiries });

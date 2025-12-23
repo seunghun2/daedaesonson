@@ -449,9 +449,8 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
         }
     }));
 
-    const handleMyInfo = () => {
-        // 아직 업데이트 안 됨
-        alert('내 정보 기능은 준비 중입니다.');
+    const handleInquiries = () => {
+        window.location.href = '/inquiries';
     };
 
     const handleZoomIn = () => {
@@ -1083,10 +1082,10 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
                         transform: uiHidden ? 'translateX(100px)' : 'translateX(0)',
                         transition: 'transform 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
                     }}>
-                        {/* 1. 내 정보 */}
+                        {/* 1. 문의하기 */}
                         <CustomControlBtn
-                            icon={<span className="material-symbols-outlined" style={{ fontSize: '24px', color: '#495057' }}>person</span>}
-                            onClick={handleMyInfo}
+                            icon={<span className="material-symbols-outlined" style={{ fontSize: '24px', color: '#495057' }}>chat_bubble</span>}
+                            onClick={handleInquiries}
                         />
 
                         {/* 2. 줌 컨트롤 그룹 */}
