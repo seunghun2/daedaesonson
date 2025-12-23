@@ -14,6 +14,7 @@ interface Consult {
     preferredTime: string;
     question: string;
     message: string;
+    consultMethod?: string;
     status: 'pending' | 'contacted' | 'completed';
     adminNote?: string;
     createdAt: string;
@@ -31,6 +32,11 @@ const STATUS_LABELS: Record<string, { label: string; color: string }> = {
     'pending': { label: '대기중', color: 'orange' },
     'contacted': { label: '연락완료', color: 'blue' },
     'completed': { label: '상담완료', color: 'green' },
+};
+
+const METHOD_LABELS: Record<string, string> = {
+    'phone': '전화 상담',
+    'field': '방문 상담',
 };
 
 export default function ConsultsPage() {
@@ -299,6 +305,12 @@ export default function ConsultsPage() {
                                     <Text size="sm" c="dimmed">궁금한 점</Text>
                                     <Badge variant="light" color="brand">
                                         {QUESTION_LABELS[selectedConsult.question] || '기타'}
+                                    </Badge>
+                                </Group>
+                                <Group justify="space-between">
+                                    <Text size="sm" c="dimmed">상담 방법</Text>
+                                    <Badge variant="light" color="cyan">
+                                        {METHOD_LABELS[selectedConsult.consultMethod || 'phone'] || '전화 상담'}
                                     </Badge>
                                 </Group>
                                 <Group justify="space-between">

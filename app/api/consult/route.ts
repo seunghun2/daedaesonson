@@ -12,7 +12,7 @@ const supabase = createClient(SUPABASE_URL, SUPABASE_KEY, {
 export async function POST(request: NextRequest) {
     try {
         const body = await request.json();
-        const { facilityId, facilityName, name, phone, preferredTime, question, message } = body;
+        const { facilityId, facilityName, name, phone, preferredTime, question, message, consultMethod } = body;
 
         if (!facilityId || !name || !phone) {
             return NextResponse.json({ error: '필수 정보를 입력해주세요.' }, { status: 400 });
@@ -28,6 +28,7 @@ export async function POST(request: NextRequest) {
                 preferredTime: preferredTime || null,
                 question: question || 'price',
                 message: message || null,
+                consultMethod: consultMethod || 'phone',
                 status: 'pending',
                 createdAt: new Date().toISOString()
             })
