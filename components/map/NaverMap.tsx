@@ -792,7 +792,7 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
                     L 0 ${contentHeight + tailSize}
                     L 0 ${archHeight}
                     Z
-                " fill="${markerColor}"/>
+                " fill="${markerColor}" stroke="rgba(0,0,0,0.2)" stroke-width="1"/>
                 <text x="${contentWidth / 2}" y="20" font-family="-apple-system, sans-serif" font-size="10" fill="white" fill-opacity="0.9" text-anchor="middle">${categoryLabel}</text>
                 <text x="${contentWidth / 2}" y="38" font-family="-apple-system, sans-serif" font-size="13" font-weight="800" fill="white" text-anchor="middle">${priceText}</text>
             </svg>
