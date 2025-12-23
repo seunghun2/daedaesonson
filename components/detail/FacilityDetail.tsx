@@ -1186,9 +1186,9 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                         <Text size="sm" fw={700} mb="md">상담하기</Text>
                         <Button
                             fullWidth
-                            variant="filled"
+                            variant="outline"
                             color="brand"
-                            size="md"
+                            size="sm"
                             radius="md"
                             onClick={() => setConsultModalOpened(true)}
                         >
