@@ -1506,8 +1506,104 @@ export default function AdminPage() {
                                         { label: '기타/공통', value: '기타' },
                                         { label: '제외됨', value: '제외됨' },
                                     ]}
-                                    mb="lg"
+                                    mb="md"
                                 />
+
+                                {/* 2뎁스 유형 선택 버튼 */}
+                                {activeMajorTab === '봉안' && (
+                                    <Group gap="xs" mb="md">
+                                        <Text size="xs" c="dimmed" mr="xs">유형:</Text>
+                                        {['봉안당', '봉안담', '봉안묘', '평장묘'].map(type => (
+                                            <Button
+                                                key={type}
+                                                size="xs"
+                                                variant="light"
+                                                color="gray"
+                                                radius="xl"
+                                                onClick={() => {
+                                                    // 해당 유형 카테고리가 없으면 생성
+                                                    const priceTable = editForm.priceInfo?.priceTable || {};
+                                                    if (!priceTable[type]) {
+                                                        setEditForm({
+                                                            ...editForm,
+                                                            priceInfo: {
+                                                                ...editForm.priceInfo,
+                                                                priceTable: {
+                                                                    ...priceTable,
+                                                                    [type]: { rows: [], unit: '' }
+                                                                }
+                                                            }
+                                                        });
+                                                    }
+                                                }}
+                                            >
+                                                + {type}
+                                            </Button>
+                                        ))}
+                                    </Group>
+                                )}
+                                {activeMajorTab === '수목장' && (
+                                    <Group gap="xs" mb="md">
+                                        <Text size="xs" c="dimmed" mr="xs">유형:</Text>
+                                        {['수목형', '잔디형', '화초형', '암석형'].map(type => (
+                                            <Button
+                                                key={type}
+                                                size="xs"
+                                                variant="light"
+                                                color="gray"
+                                                radius="xl"
+                                                onClick={() => {
+                                                    const priceTable = editForm.priceInfo?.priceTable || {};
+                                                    if (!priceTable[type]) {
+                                                        setEditForm({
+                                                            ...editForm,
+                                                            priceInfo: {
+                                                                ...editForm.priceInfo,
+                                                                priceTable: {
+                                                                    ...priceTable,
+                                                                    [type]: { rows: [], unit: '' }
+                                                                }
+                                                            }
+                                                        });
+                                                    }
+                                                }}
+                                            >
+                                                + {type}
+                                            </Button>
+                                        ))}
+                                    </Group>
+                                )}
+                                {activeMajorTab === '매장묘' && (
+                                    <Group gap="xs" mb="md">
+                                        <Text size="xs" c="dimmed" mr="xs">유형:</Text>
+                                        {['단장형', '합장형', '쌍분형', '복합묘'].map(type => (
+                                            <Button
+                                                key={type}
+                                                size="xs"
+                                                variant="light"
+                                                color="gray"
+                                                radius="xl"
+                                                onClick={() => {
+                                                    const priceTable = editForm.priceInfo?.priceTable || {};
+                                                    if (!priceTable[type]) {
+                                                        setEditForm({
+                                                            ...editForm,
+                                                            priceInfo: {
+                                                                ...editForm.priceInfo,
+                                                                priceTable: {
+                                                                    ...priceTable,
+                                                                    [type]: { rows: [], unit: '' }
+                                                                }
+                                                            }
+                                                        });
+                                                    }
+                                                }}
+                                            >
+                                                + {type}
+                                            </Button>
+                                        ))}
+                                    </Group>
+                                )}
 
                                 <Accordion
                                     key={activeMajorTab}
