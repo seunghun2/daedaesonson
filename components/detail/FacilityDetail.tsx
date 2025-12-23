@@ -1193,7 +1193,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                             styles={{ root: { height: 32, fontSize: 13 } }}
                             onClick={() => setConsultModalOpened(true)}
                         >
-                            비용 확인
+                            이용 비용 확인
                         </Button>
                     </Box>
                 </Group>
