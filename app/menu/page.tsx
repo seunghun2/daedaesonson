@@ -2,7 +2,7 @@
 
 import { Box, Text, Group, Stack } from '@mantine/core';
 import { useRouter } from 'next/navigation';
-import { ArrowLeft, Home, MessageCircle, Clock, Info, HelpCircle, FileText, Mail, Shield } from 'lucide-react';
+import { ArrowLeft, Home, MessageCircle, Clock, Info, HelpCircle, FileText, Mail, Shield, BookOpen } from 'lucide-react';
 import Link from 'next/link';
 import BottomNav from '@/components/common/BottomNav';
 
@@ -17,6 +17,7 @@ export default function MenuPage() {
 
     const infoItems = [
         { label: '서비스 안내', icon: Info, path: '/about' },
+        { label: '용어 가이드', icon: BookOpen, path: '/glossary' },
         { label: '자주 묻는 질문', icon: HelpCircle, path: '/faq' },
         { label: '이용약관', icon: FileText, path: '/terms' },
         { label: '개인정보 처리방침', icon: Shield, path: '/privacy' },
