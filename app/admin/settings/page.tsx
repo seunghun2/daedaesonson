@@ -224,11 +224,8 @@ export default function AdminSettingsPage() {
                 <Tabs.List grow px="md" bg="white">
                     <Tabs.Tab value="faq" leftSection={<HelpCircle size={16} />}>FAQ</Tabs.Tab>
                     <Tabs.Tab value="terms" leftSection={<FileText size={16} />}>약관</Tabs.Tab>
-                    <Tabs.Tab value="inquiry" leftSection={<MessageSquare size={16} />}>
-                        시설문의 <Badge size="xs" color="red" ml={4}>{inquiries.length}</Badge>
-                    </Tabs.Tab>
                     <Tabs.Tab value="contact" leftSection={<Mail size={16} />}>
-                        1:1 <Badge size="xs" color="blue" ml={4}>{contactInquiries.length}</Badge>
+                        1:1 문의 <Badge size="xs" color="blue" ml={4}>{contactInquiries.length}</Badge>
                     </Tabs.Tab>
                 </Tabs.List>
 
@@ -319,37 +316,6 @@ export default function AdminSettingsPage() {
                                 </Text>
                             )}
                         </Box>
-                    </Stack>
-                </Tabs.Panel>
-
-                {/* 문의 탭 */}
-                <Tabs.Panel value="inquiry" p="md">
-                    <Stack gap="sm">
-                        {inquiries.map((inq) => (
-                            <Box key={inq.id} bg="white" p="md" style={{ borderRadius: 12 }}>
-                                <Group justify="space-between" mb="xs">
-                                    <Badge size="sm" color={inq.replies?.length ? 'green' : 'orange'}>
-                                        {inq.replies?.length ? '답변완료' : '대기중'}
-                                    </Badge>
-                                    <Text size="xs" c="dimmed">{new Date(inq.createdAt).toLocaleDateString()}</Text>
-                                </Group>
-                                <Text size="sm" fw={600} mb={4}>{inq.title}</Text>
-                                <Text size="xs" c="dimmed" mb="xs" lineClamp={2}>{inq.content}</Text>
-                                <Group justify="space-between">
-                                    <Text size="xs" c="dimmed">연락처: {inq.contactInfo || inq.contact || '-'}</Text>
-                                    <Button size="xs" variant="light" color="violet" onClick={() => {
-                                        setSelectedInquiry(inq);
-                                        setReplyContent('');
-                                        setReplyModalOpen(true);
-                                    }}>
-                                        {inq.replies?.length ? '답변 보기' : '답변하기'}
-                                    </Button>
-                                </Group>
-                            </Box>
-                        ))}
-                        {inquiries.length === 0 && (
-                            <Text size="sm" c="dimmed" ta="center" py="xl">문의가 없습니다</Text>
-                        )}
                     </Stack>
                 </Tabs.Panel>
 
