@@ -102,11 +102,8 @@ const GroupEditor = ({ groupName, groupData, onRename, onUpdateRows, onDeleteGro
                             label="가격"
                             size="xs"
                             value={row.price}
-                            onChange={(val) => {
-                                updateLocalRow(idx, 'price', Number(val));
-                                // NumberInput은 blur 이벤트가 없으므로 직접 commit
-                                setTimeout(() => commitRows(), 0);
-                            }}
+                            onChange={(val) => updateLocalRow(idx, 'price', Number(val))}
+                            onBlur={commitRows}
                         />
                         <ActionIcon
                             color="red"
