@@ -96,10 +96,10 @@ function PriceInfoSection({ priceInfo, hasPrice }: { priceInfo: any, hasPrice: b
 
     Object.entries(priceTable).forEach(([catName, catData]: [string, any]) => {
         let key = 'etc';
-        if (/매장|묘지|봉분|둘레석|단장|합장|쌍분|복합묘/.test(catName)) key = 'burial';
+        if (/매장|묘지|봉분|둘레석|단장|합장|쌍분|복합묘|평장/.test(catName)) key = 'burial';
         else if (/기본비용/.test(catName)) key = 'burial';
         else if (/봉안|납골|유골/.test(catName)) key = 'charnel';
-        else if (/수목|자연|평장|잔디|화초|암석/.test(catName)) key = 'natural';
+        else if (/수목|자연|잔디|화초|암석/.test(catName)) key = 'natural';
 
         const rows = catData.rows || [];
         if (rows.length > 0) {
