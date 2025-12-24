@@ -24,6 +24,7 @@ import { getSingleFacilityImageUrl } from '@/lib/supabaseImage';
 
 
 // Sub-component for Group Editing to prevent focus loss
+// 🚀 최적화: 로컬 상태로 관리하여 타이핑 시 부모 리렌더링 방지
 const GroupEditor = ({ groupName, groupData, onRename, onUpdateRows, onDeleteGroup }: {
     groupName: string;
     groupData: any;
@@ -32,15 +33,30 @@ const GroupEditor = ({ groupName, groupData, onRename, onUpdateRows, onDeleteGro
     onDeleteGroup: (groupName: string) => void;
 }) => {
     const [localName, setLocalName] = useState(groupName);
+    const [localRows, setLocalRows] = useState(groupData.rows || []);
 
-    // Sync local name if prop changes (e.g. from parent re-render due to other changes)
-    // But don't override if user is typing (focus) - simplified by checking equality
+    // Sync with parent when groupData changes (e.g. after save)
+    useEffect(() => {
+        setLocalRows(groupData.rows || []);
+    }, [groupData.rows]);
+
     useEffect(() => {
         if (groupName !== localName) {
-            // eslint-disable-next-line react-hooks/set-state-in-effect
             setLocalName(groupName);
         }
     }, [groupName]);
+
+    // 로컬 row 업데이트 (즉시 반영, 부모 업데이트 X)
+    const updateLocalRow = (idx: number, field: string, value: any) => {
+        const newRows = [...localRows];
+        newRows[idx] = { ...newRows[idx], [field]: value };
+        setLocalRows(newRows);
+    };
+
+    // blur 시에만 부모에 전달
+    const commitRows = () => {
+        onUpdateRows(groupName, localRows);
+    };
 
     return (
         <Paper withBorder p="sm" radius="md" mb="sm">
@@ -65,44 +81,39 @@ const GroupEditor = ({ groupName, groupData, onRename, onUpdateRows, onDeleteGro
                 </ActionIcon>
             </Group>
             <Stack gap="xs">
-                {groupData.rows.map((row: any, idx: number) => (
+                {localRows.map((row: any, idx: number) => (
                     <Group key={idx} grow align="flex-end">
                         <TextInput
                             label="상품명"
                             size="xs"
                             value={row.name}
-                            onChange={(e) => {
-                                const newRows = [...groupData.rows];
-                                newRows[idx].name = e.target.value;
-                                onUpdateRows(groupName, newRows);
-                            }}
+                            onChange={(e) => updateLocalRow(idx, 'name', e.target.value)}
+                            onBlur={commitRows}
                         />
                         <TextInput
                             label="설명"
                             size="xs"
                             value={row.grade || ''}
                             placeholder="예: 1평형/1년"
-                            onChange={(e) => {
-                                const newRows = [...groupData.rows];
-                                newRows[idx].grade = e.target.value;
-                                onUpdateRows(groupName, newRows);
-                            }}
+                            onChange={(e) => updateLocalRow(idx, 'grade', e.target.value)}
+                            onBlur={commitRows}
                         />
                         <NumberInput
                             label="가격"
                             size="xs"
                             value={row.price}
                             onChange={(val) => {
-                                const newRows = [...groupData.rows];
-                                newRows[idx].price = Number(val);
-                                onUpdateRows(groupName, newRows);
+                                updateLocalRow(idx, 'price', Number(val));
+                                // NumberInput은 blur 이벤트가 없으므로 직접 commit
+                                setTimeout(() => commitRows(), 0);
                             }}
                         />
                         <ActionIcon
                             color="red"
                             variant="subtle"
                             onClick={() => {
-                                const newRows = groupData.rows.filter((_: any, i: number) => i !== idx);
+                                const newRows = localRows.filter((_: any, i: number) => i !== idx);
+                                setLocalRows(newRows);
                                 onUpdateRows(groupName, newRows);
                             }}
                         >
@@ -115,7 +126,8 @@ const GroupEditor = ({ groupName, groupData, onRename, onUpdateRows, onDeleteGro
                     variant="light"
                     leftSection={<Plus size={14} />}
                     onClick={() => {
-                        const newRows = [...groupData.rows, { name: '새 상품', price: 0 }];
+                        const newRows = [...localRows, { name: '새 상품', price: 0 }];
+                        setLocalRows(newRows);
                         onUpdateRows(groupName, newRows);
                     }}
                 >
@@ -125,6 +137,7 @@ const GroupEditor = ({ groupName, groupData, onRename, onUpdateRows, onDeleteGro
         </Paper>
     );
 };
+
 
 export default function AdminPage() {
     // State
