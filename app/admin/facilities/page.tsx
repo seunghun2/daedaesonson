@@ -1,43 +1,75 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { Title, TextInput, Group, Button, Table, Badge, ActionIcon, Paper, Pagination, Text, LoadingOverlay } from '@mantine/core';
 import { Search, Edit, Trash, Plus } from 'lucide-react';
 import { FACILITY_CATEGORY_LABELS, Facility } from '@/types';
+import { useDebouncedCallback } from '@mantine/hooks';
+
+interface PaginationInfo {
+    page: number;
+    limit: number;
+    total: number;
+    totalPages: number;
+}
 
 export default function FacilitiesPage() {
     const [search, setSearch] = useState('');
-    const [searchTarget, setSearchTarget] = useState<string>('all'); // 'all' | 'name' | 'address'
-
+    const [searchTarget, setSearchTarget] = useState<string>('all');
     const [page, setPage] = useState(1);
     const itemsPerPage = 15;
 
     const [data, setData] = useState<Facility[]>([]);
     const [loading, setLoading] = useState(true);
+    const [pagination, setPagination] = useState<PaginationInfo>({ page: 1, limit: 15, total: 0, totalPages: 0 });
 
-    const [sortBy, setSortBy] = useState<string>('id'); // 'id' | 'name' | 'updatedAt'
-    const [sortOrder, setSortOrder] = useState<string>('asc'); // 'asc' | 'desc'
+    const [sortBy, setSortBy] = useState<string>('id');
+    const [sortOrder, setSortOrder] = useState<string>('asc');
     const [filterCategory, setFilterCategory] = useState<string>('all');
 
-    // 데이터 불러오기
-    const fetchFacilities = async () => {
+    // 🚀 서버 사이드 데이터 불러오기
+    const fetchFacilities = useCallback(async (searchTerm?: string) => {
         setLoading(true);
         try {
-            const res = await fetch('/api/facilities');
+            const params = new URLSearchParams({
+                page: String(page),
+                limit: String(itemsPerPage),
+                search: searchTerm ?? search,
+                searchTarget,
+                category: filterCategory,
+                sortBy,
+                sortOrder
+            });
+
+            const res = await fetch(`/api/admin/facilities?${params}`);
             if (res.ok) {
                 const json = await res.json();
-                setData(json);
+                setData(json.data || []);
+                setPagination(json.pagination || { page: 1, limit: 15, total: 0, totalPages: 0 });
             }
         } catch (e) {
             console.error(e);
         } finally {
             setLoading(false);
         }
-    };
+    }, [page, search, searchTarget, filterCategory, sortBy, sortOrder, itemsPerPage]);
 
+    // 검색 디바운스
+    const debouncedSearch = useDebouncedCallback((value: string) => {
+        setPage(1); // 검색 시 첫 페이지로
+        fetchFacilities(value);
+    }, 300);
+
+    // 필터/정렬/페이지 변경 시 데이터 로드
     useEffect(() => {
         fetchFacilities();
-    }, []);
+    }, [page, filterCategory, sortBy, sortOrder]);
+
+    // 검색어 변경 시
+    const handleSearchChange = (value: string) => {
+        setSearch(value);
+        debouncedSearch(value);
+    };
 
     // 시설 삭제 핸들러
     const handleDelete = async (id: string) => {
@@ -47,8 +79,9 @@ export default function FacilitiesPage() {
             const res = await fetch(`/api/facilities/${id}`, { method: 'DELETE' });
             if (res.ok) {
                 alert('삭제되었습니다.');
-                // UI에서 즉시 제거 (API 재호출보다 빠름)
+                // UI에서 즉시 제거
                 setData(prev => prev.filter(item => item.id !== id));
+                setPagination(prev => ({ ...prev, total: prev.total - 1 }));
             } else {
                 alert('삭제 실패');
             }
@@ -57,63 +90,6 @@ export default function FacilitiesPage() {
             alert('삭제 중 오류가 발생했습니다.');
         }
     };
-
-    // 필터링 & 정렬 로직
-    const processedData = data
-        // 1. 카테고리 필터
-        .filter(item => {
-            if (filterCategory === 'all') return true;
-            return item.category === filterCategory;
-        })
-        // 2. 검색 필터 (정밀 검색)
-        .filter(item => {
-            if (!search) return true;
-            const term = search.toLowerCase();
-            const name = (item.name || '').toLowerCase();
-            const addr = (item.address || '').toLowerCase();
-
-            if (searchTarget === 'name') {
-                return name.includes(term);
-            } else if (searchTarget === 'address') {
-                return addr.includes(term);
-            } else if (searchTarget === 'id') {
-                return item.id.toLowerCase().includes(term);
-            } else {
-                // 'all'
-                return name.includes(term) || addr.includes(term) || item.id.toLowerCase().includes(term);
-            }
-        })
-        // 3. 정렬
-        .sort((a: any, b: any) => {
-            let valA, valB;
-
-            if (sortBy === 'id') {
-                // 숫자 ID 추출하여 정렬 (park-0001 -> 1)
-                const numA = parseInt(a.id.replace(/[^0-9]/g, '')) || 0;
-                const numB = parseInt(b.id.replace(/[^0-9]/g, '')) || 0;
-                valA = numA;
-                valB = numB;
-            } else if (sortBy === 'name') {
-                valA = a.name;
-                valB = b.name;
-            } else if (sortBy === 'updatedAt') {
-                valA = a.lastUpdated || '';
-                valB = b.lastUpdated || '';
-            } else if (sortBy === 'capacity') {
-                valA = a.capacity || 0;
-                valB = b.capacity || 0;
-            } else {
-                return 0;
-            }
-
-            if (valA < valB) return sortOrder === 'asc' ? -1 : 1;
-            if (valA > valB) return sortOrder === 'asc' ? 1 : -1;
-            return 0;
-        });
-
-    // 페이지네이션
-    const totalPages = Math.ceil(processedData.length / itemsPerPage);
-    const paginatedData = processedData.slice((page - 1) * itemsPerPage, page * itemsPerPage);
 
     return (
         <div>
@@ -138,7 +114,10 @@ export default function FacilitiesPage() {
                                     padding: '0 8px'
                                 }}
                                 value={searchTarget}
-                                onChange={(e) => setSearchTarget(e.target.value)}
+                                onChange={(e) => {
+                                    setSearchTarget(e.target.value);
+                                    setPage(1);
+                                }}
                             >
                                 <option value="all">전체</option>
                                 <option value="id">No. (ID)</option>
@@ -146,10 +125,10 @@ export default function FacilitiesPage() {
                                 <option value="address">주소</option>
                             </select>
                             <TextInput
-                                placeholder="검색어 입력"
+                                placeholder="검색어 입력 (서버 검색)"
                                 leftSection={<Search size={16} />}
                                 value={search}
-                                onChange={(e) => setSearch(e.currentTarget.value)}
+                                onChange={(e) => handleSearchChange(e.currentTarget.value)}
                                 style={{ flex: 1 }}
                             />
                         </Group>
@@ -161,7 +140,10 @@ export default function FacilitiesPage() {
                         <select
                             style={{ height: 36, borderRadius: 4, borderColor: '#ced4da', padding: '0 8px', width: 120 }}
                             value={filterCategory}
-                            onChange={(e) => setFilterCategory(e.target.value)}
+                            onChange={(e) => {
+                                setFilterCategory(e.target.value);
+                                setPage(1);
+                            }}
                         >
                             <option value="all">모든 카테고리</option>
                             {Object.entries(FACILITY_CATEGORY_LABELS).map(([key, label]) => (
@@ -173,7 +155,7 @@ export default function FacilitiesPage() {
 
                 <Group justify="space-between">
                     <Text size="sm" c="dimmed">
-                        총 <Text span fw={700} c="dark">{processedData.length}</Text>개 검색됨
+                        총 <Text span fw={700} c="dark">{pagination.total.toLocaleString()}</Text>개 중 {data.length}개 표시
                     </Text>
 
                     {/* 정렬 영역 */}
@@ -182,7 +164,10 @@ export default function FacilitiesPage() {
                         <select
                             style={{ height: 30, borderRadius: 4, borderColor: '#dee2e6' }}
                             value={sortBy}
-                            onChange={(e) => setSortBy(e.target.value)}
+                            onChange={(e) => {
+                                setSortBy(e.target.value);
+                                setPage(1);
+                            }}
                         >
                             <option value="id">ID순</option>
                             <option value="name">이름순</option>
@@ -192,7 +177,10 @@ export default function FacilitiesPage() {
                         <select
                             style={{ height: 30, borderRadius: 4, borderColor: '#dee2e6' }}
                             value={sortOrder}
-                            onChange={(e) => setSortOrder(e.target.value)}
+                            onChange={(e) => {
+                                setSortOrder(e.target.value);
+                                setPage(1);
+                            }}
                         >
                             <option value="asc">오름차순</option>
                             <option value="desc">내림차순</option>
@@ -216,8 +204,8 @@ export default function FacilitiesPage() {
                         </Table.Tr>
                     </Table.Thead>
                     <Table.Tbody>
-                        {paginatedData.length > 0 ? (
-                            paginatedData.map((item, index) => (
+                        {data.length > 0 ? (
+                            data.map((item, index) => (
                                 <Table.Tr key={`${item.id}-${index}`}>
                                     <Table.Td>
                                         <Text size="xs" c="dimmed">#{item.id}</Text>
@@ -263,7 +251,7 @@ export default function FacilitiesPage() {
                             ))
                         ) : (
                             <Table.Tr>
-                                <Table.Td colSpan={6} align="center" py="xl">
+                                <Table.Td colSpan={7} align="center" py="xl">
                                     {!loading && <Text c="dimmed">데이터가 없습니다.</Text>}
                                 </Table.Td>
                             </Table.Tr>
@@ -272,9 +260,13 @@ export default function FacilitiesPage() {
                 </Table>
 
                 {/* 페이지네이션 */}
-                {totalPages > 1 && (
+                {pagination.totalPages > 1 && (
                     <Group justify="center" p="md" style={{ borderTop: '1px solid #dee2e6' }}>
-                        <Pagination total={totalPages} value={page} onChange={setPage} />
+                        <Pagination
+                            total={pagination.totalPages}
+                            value={page}
+                            onChange={setPage}
+                        />
                     </Group>
                 )}
             </Paper>
