@@ -3,7 +3,7 @@
 import { useState, useMemo, useEffect, useRef, Suspense } from 'react';
 import { Box, Flex, useMantineTheme, TextInput, Group, Text, ThemeIcon, ActionIcon } from '@mantine/core';
 import { useMediaQuery } from '@mantine/hooks';
-import { Search, MapPin, Building } from 'lucide-react';
+import { Search, MapPin, Building, MessageCircle, Clock, Info } from 'lucide-react';
 import Link from 'next/link';
 import { useRouter, useSearchParams, usePathname } from 'next/navigation';
 import { useDebouncedCallback } from 'use-debounce';
