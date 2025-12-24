@@ -16,6 +16,7 @@ import FacilityDetail from '@/components/detail/FacilityDetail';
 import { Facility, FACILITY_CATEGORY_LABELS } from '@/types';
 
 import { searchRegions, RegionResult } from '@/lib/regionSearch';
+import BottomNav from '@/components/common/BottomNav';
 
 // Helper Component for highlighting text
 function HighlightText({ text, highlight }: { text: string, highlight: string }) {
@@ -333,6 +334,27 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
     params.set('id', facility.id);
     router.push(`${pathname}?${params.toString()}`, { scroll: false });
     if (isMobile) setMobileView('map');
+
+    // 📝 기록 저장
+    try {
+      const stored = localStorage.getItem('facilityHistory');
+      let history = stored ? JSON.parse(stored) : [];
+      // 중복 제거
+      history = history.filter((h: any) => h.id !== facility.id);
+      // 맨 앞에 추가
+      history.unshift({
+        id: facility.id,
+        name: facility.name,
+        address: facility.address,
+        category: facility.category,
+        minPrice: facility.priceRange?.min || 0,
+        thumbnail: (facility as any).thumbnail || facility.imageGallery?.[0],
+        visitedAt: Date.now(),
+      });
+      // 최대 20개
+      history = history.slice(0, 20);
+      localStorage.setItem('facilityHistory', JSON.stringify(history));
+    } catch { }
   };
 
   const handleCloseDetail = () => {
@@ -1020,6 +1042,9 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
         )
       }
       {/* 모바일 하단 지도/목록 전환은 "주변 시설 보기" 버튼이 대체 */}
+
+      {/* 모바일 하단 탭바 */}
+      {isMobile && !selectedFacility && <BottomNav hidden={uiHidden} />}
     </Flex >
   );
 }

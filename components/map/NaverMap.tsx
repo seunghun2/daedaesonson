@@ -1215,7 +1215,7 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
                 {isMapLoaded && centerAddress && (
                     <div style={{
                         position: 'absolute',
-                        bottom: isMobile ? '30px' : '24px',
+                        bottom: isMobile ? '70px' : '24px',
                         left: '50%',
                         transform: uiHidden
                             ? 'translateX(-50%) translateY(150%)'

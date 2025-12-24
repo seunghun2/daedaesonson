@@ -61,9 +61,15 @@ export default async function InquiriesPage() {
     // 🚀 서버에서 미리 데이터 로드 (SSR)
     const initialInquiries = await getInquiries();
 
+    // 시설 목록 (상위 200개만 - 성능)
+    const facilities = (facilitiesData as any[]).slice(0, 200).map(f => ({
+        id: f.id,
+        name: f.name
+    }));
+
     return (
         <Suspense fallback={<div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100vh' }}>로딩 중...</div>}>
-            <InquiriesClient initialInquiries={initialInquiries} />
+            <InquiriesClient initialInquiries={initialInquiries} facilities={facilities} />
         </Suspense>
     );
 }

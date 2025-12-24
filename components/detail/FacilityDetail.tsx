@@ -910,10 +910,9 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                             <span className="material-symbols-outlined" style={{ fontSize: '24px' }}>arrow_back_ios_new</span>
                         </ActionIcon>
                         <Group gap={4} wrap="nowrap" style={{ overflow: 'hidden' }}>
-                            <Text size="md" fw={600} c="white" ml={4} truncate>
+                            <Text size="lg" fw={600} c="white" ml={4} truncate>
                                 {facility.name}
                             </Text>
-                            <OperatorBadge type={facility.operatorType} name={facility.name} />
                         </Group>
                     </Group>
                     <Group gap={0} style={{ flexShrink: 0 }}>
