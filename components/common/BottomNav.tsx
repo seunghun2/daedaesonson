@@ -16,7 +16,7 @@ export default function BottomNav({ historyCount = 0, hidden = false }: BottomNa
     const tabs = [
         { id: 'home', label: '홈', icon: Home, path: '/' },
         { id: 'inquiries', label: '문의', icon: MessageCircle, path: '/inquiries' },
-        { id: 'history', label: '기록', icon: Clock, path: '/history' },
+        { id: 'history', label: '최근 본', icon: Clock, path: '/history' },
         { id: 'menu', label: '전체', icon: Menu, path: '/menu' },
     ];
 
