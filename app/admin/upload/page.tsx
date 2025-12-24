@@ -1220,7 +1220,7 @@ export default function AdminPage() {
                                         </Table.Td>
                                         <Table.Td>
                                             <Group gap={4}>
-                                                <ActionIcon variant="light" color="blue" onClick={() => handleEdit(item)}>
+                                                <ActionIcon variant="light" color="blue" onClick={() => window.location.href = `/admin/upload/${item.id}`}>
                                                     <Pencil size={16} />
                                                 </ActionIcon>
                                                 <ActionIcon variant="light" color="red" onClick={() => handleDelete(item.id)}>
