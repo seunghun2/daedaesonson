@@ -173,20 +173,36 @@ export default function AdminPage() {
         localStorage.setItem('adminItemsPerPage', String(itemsPerPage));
     }, [itemsPerPage]);
 
-    // 원래 API 사용 (전체 데이터 로드)
+    // 🚀 캐싱: LocalStorage에서 먼저 로드 → 배경에서 API 업데이트
     useEffect(() => {
-        setIsLoadingData(true);
+        // 1. 캐시에서 즉시 로드
+        const cached = localStorage.getItem('admin_facilities_cache');
+        if (cached) {
+            try {
+                const data = JSON.parse(cached);
+                if (Array.isArray(data) && data.length > 0) {
+                    setFacilities(data);
+                    setIsLoadingData(false);
+                }
+            } catch (e) { /* 캐시 파싱 실패 시 무시 */ }
+        }
+
+        // 2. 배경에서 최신 데이터 가져오기
         fetch('/api/facilities', { cache: 'no-store' })
             .then(res => res.json())
             .then(data => {
                 if (Array.isArray(data)) {
                     setFacilities(data);
+                    // 캐시 업데이트
+                    localStorage.setItem('admin_facilities_cache', JSON.stringify(data));
                 }
                 setIsLoadingData(false);
             })
             .catch(e => {
                 console.error('Data load failed:', e);
-                alert('데이터를 불러오지 못했습니다.');
+                if (!cached) {
+                    alert('데이터를 불러오지 못했습니다.');
+                }
                 setIsLoadingData(false);
             });
     }, []);
