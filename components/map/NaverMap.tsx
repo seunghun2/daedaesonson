@@ -1179,13 +1179,7 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
                         transform: uiHidden ? 'translateX(100px)' : 'translateX(0)',
                         transition: 'transform 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
                     }}>
-                        {/* 1. 문의하기 */}
-                        <CustomControlBtn
-                            icon={<span className="material-symbols-outlined" style={{ fontSize: '24px', color: '#495057' }}>chat_bubble</span>}
-                            onClick={handleInquiries}
-                        />
-
-                        {/* 2. 줌 컨트롤 그룹 */}
+                        {/* 1. 줌 컨트롤 그룹 */}
                         <div style={{
                             display: 'flex', flexDirection: 'column',
                             borderRadius: '8px', overflow: 'hidden',
