@@ -42,8 +42,8 @@ interface HomeClientProps {
 
 function HomeContent({ initialFacilities }: HomeClientProps) {
   const theme = useMantineTheme();
-  // isMobile: 초기값 false로 설정하여 PC 레이아웃 먼저 표시 (PC에서 깜빡임 방지)
-  const isMobile = useMediaQuery(`(max-width: ${theme.breakpoints.sm})`, false);
+  // isMobile: 초기값 true로 설정하여 모바일 레이아웃 먼저 표시 (모바일에서 깜빡임 방지)
+  const isMobile = useMediaQuery(`(max-width: ${theme.breakpoints.sm})`, true);
 
   // 지도 컨트롤 Ref
   const mapRef = useRef<NaverMapRef>(null);
