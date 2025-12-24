@@ -1,11 +1,18 @@
+import { Suspense } from 'react';
 import { createClient } from '@supabase/supabase-js';
 import InquiriesClient from './InquiriesClient';
+import facilitiesData from '@/data/facilities.json';
 
 // 🔥 30초 캐시 (빠른 로딩)
 export const revalidate = 30;
 
 const SUPABASE_URL = 'https://jbydmhfuqnpukfutvrgs.supabase.co';
 const SUPABASE_KEY = process.env.SUPABASE_SERVICE_KEY || 'sb_secret_CDAM3cyG1RBEmjvSIaHOPA_If4LP8u3';
+
+// 시설명 맵 (정적 JSON에서)
+const facilityNameMap = new Map(
+    (facilitiesData as any[]).map(f => [f.id, f.name])
+);
 
 interface Inquiry {
     id: string;
@@ -40,25 +47,9 @@ async function getInquiries(): Promise<Inquiry[]> {
             return [];
         }
 
-        // 문의에 있는 시설 ID들 추출
-        const facilityIds = [...new Set((inquiries || []).map(inq => inq.facilityId))];
-
-        // Supabase에서 시설명 조회
-        let facilityNameMap = new Map<string, string>();
-        if (facilityIds.length > 0) {
-            const { data: facilities } = await supabase
-                .from('Facility')
-                .select('id, name')
-                .in('id', facilityIds);
-
-            if (facilities) {
-                facilityNameMap = new Map(facilities.map(f => [f.id, f.name]));
-            }
-        }
-
         return (inquiries || []).map(inq => ({
             ...inq,
-            facilityName: facilityNameMap.get(inq.facilityId) || '시설'
+            facilityName: facilityNameMap.get(inq.facilityId) || inq.facilityId
         }));
     } catch (error) {
         console.error('Failed to load inquiries:', error);
@@ -70,5 +61,9 @@ export default async function InquiriesPage() {
     // 🚀 서버에서 미리 데이터 로드 (SSR)
     const initialInquiries = await getInquiries();
 
-    return <InquiriesClient initialInquiries={initialInquiries} />;
+    return (
+        <Suspense fallback={<div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100vh' }}>로딩 중...</div>}>
+            <InquiriesClient initialInquiries={initialInquiries} />
+        </Suspense>
+    );
 }

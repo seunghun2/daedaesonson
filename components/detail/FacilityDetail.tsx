@@ -169,6 +169,7 @@ function PriceInfoSection({ priceInfo, hasPrice }: { priceInfo: any, hasPrice: b
             <Accordion
                 variant="default"
                 radius="md"
+                multiple  // 🔓 여러 개 동시에 열 수 있음
                 // 🔒 초기 상태: 모두 닫힘
                 styles={{
                     item: { borderBottom: '1px solid #f1f3f5' },
@@ -213,6 +214,7 @@ function PriceInfoSection({ priceInfo, hasPrice }: { priceInfo: any, hasPrice: b
                                 <Accordion
                                     variant="separated"
                                     radius="md"
+                                    multiple  // 🔓 여러 개 동시에 열 수 있음
                                     styles={{
                                         item: { backgroundColor: '#f8f9fa', border: 'none' },
                                         control: { padding: '12px 16px' },

@@ -1514,7 +1514,7 @@ export default function AdminPage() {
                                 {activeMajorTab === '봉안' && (
                                     <Group gap="xs" mb="md">
                                         <Text size="xs" c="dimmed" mr="xs">유형:</Text>
-                                        {['봉안당', '봉안담', '봉안묘', '평장묘'].map(type => (
+                                        {['봉안당', '봉안담', '봉안묘'].map(type => (
                                             <Button
                                                 key={type}
                                                 size="xs"
@@ -1580,7 +1580,7 @@ export default function AdminPage() {
                                 {activeMajorTab === '매장묘' && (
                                     <Group gap="xs" mb="md">
                                         <Text size="xs" c="dimmed" mr="xs">유형:</Text>
-                                        {['단장형', '합장형', '쌍분형', '복합묘'].map(type => (
+                                        {['단장형', '합장형', '쌍분형', '복합묘', '평장묘'].map(type => (
                                             <Button
                                                 key={type}
                                                 size="xs"
@@ -1614,8 +1614,8 @@ export default function AdminPage() {
                                 {(() => {
                                     // 기본 카테고리 정의
                                     const defaultCategories: Record<string, string[]> = {
-                                        '매장묘': ['단장형', '합장형', '쌍분형', '복합묘'],
-                                        '봉안': ['봉안당', '봉안담', '봉안묘', '평장묘'],
+                                        '매장묘': ['단장형', '합장형', '쌍분형', '복합묘', '평장묘'],
+                                        '봉안': ['봉안당', '봉안담', '봉안묘'],
                                         '수목장': ['수목형', '잔디형', '화초형', '암석형'],
                                         '기타': [],
                                         '제외됨': []
@@ -1627,10 +1627,10 @@ export default function AdminPage() {
                                     const existingCats = Object.keys(priceTable).filter(catName => {
                                         let group = '기타';
                                         if (catName === '제외됨') group = '제외됨';
-                                        else if (/매장|묘지|석물|작업|봉분|둘레석|단장|합장|쌍분|복합묘/.test(catName)) group = '매장묘';
+                                        else if (/매장|묘지|석물|작업|봉분|둘레석|단장|합장|쌍분|복합묘|평장/.test(catName)) group = '매장묘';
                                         else if (/기본비용/.test(catName)) group = '매장묘';
                                         else if (/봉안|납골|유골/.test(catName)) group = '봉안';
-                                        else if (/수목|자연|평장|잔디|화초|암석/.test(catName)) group = '수목장';
+                                        else if (/수목|자연|잔디|화초|암석/.test(catName)) group = '수목장';
                                         return group === activeMajorTab;
                                     });
 
