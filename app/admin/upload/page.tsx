@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useMemo, useEffect } from 'react';
+import React, { useState, useMemo, useEffect, memo, useCallback } from 'react';
 import {
     Title, Text, Group, Button, Paper, TextInput, ActionIcon,
     Table, Badge, Modal, NumberInput, Select, ScrollArea,
@@ -24,8 +24,8 @@ import { getSingleFacilityImageUrl } from '@/lib/supabaseImage';
 
 
 // Sub-component for Group Editing to prevent focus loss
-// 🚀 최적화: 로컬 상태로 관리하여 타이핑 시 부모 리렌더링 방지
-const GroupEditor = ({ groupName, groupData, onRename, onUpdateRows, onDeleteGroup }: {
+// 🚀 최적화: memo로 감싸서 불필요한 리렌더링 방지
+const GroupEditorInner = memo(({ groupName, groupData, onRename, onUpdateRows, onDeleteGroup }: {
     groupName: string;
     groupData: any;
     onRename: (oldName: string, newName: string) => void;
@@ -133,7 +133,9 @@ const GroupEditor = ({ groupName, groupData, onRename, onUpdateRows, onDeleteGro
             </Stack>
         </Paper>
     );
-};
+});
+
+GroupEditorInner.displayName = 'GroupEditor';
 
 
 export default function AdminPage() {
@@ -942,7 +944,7 @@ export default function AdminPage() {
                         <Tabs.Panel key={tabName} value={tabName}>
                             {groups.length > 0 ? (
                                 groups.map((g: any, idx: number) => (
-                                    <GroupEditor
+                                    <GroupEditorInner
                                         key={idx}
                                         groupName={g.groupName}
                                         groupData={g.groupData}
@@ -982,7 +984,7 @@ export default function AdminPage() {
                     <Box mt="md" p="xs" bg="gray.0" style={{ borderRadius: 8 }}>
                         <Text size="sm" fw={700} mb="xs">➕ 별도 시설 설치비용 편집</Text>
                         {installationGroups.map((g: any, idx: number) => (
-                            <GroupEditor
+                            <GroupEditorInner
                                 key={idx}
                                 groupName={g.groupName}
                                 groupData={g.groupData}
@@ -998,7 +1000,7 @@ export default function AdminPage() {
                     <Box mt="md" p="xs" bg="blue.0" style={{ borderRadius: 8 }}>
                         <Text size="sm" fw={700} mb="xs" c="blue.9">ℹ️ 관리비 및 안내사항 편집</Text>
                         {managementGroups.map((g: any, idx: number) => (
-                            <GroupEditor
+                            <GroupEditorInner
                                 key={idx}
                                 groupName={g.groupName}
                                 groupData={g.groupData}
