@@ -7,7 +7,7 @@ import {
     Stack, Tabs, SimpleGrid, Card, Image, FileButton,
     Pagination, Box, Alert, ThemeIcon, Switch, SegmentedControl, Accordion
 } from '@mantine/core';
-import { useDisclosure } from '@mantine/hooks';
+import { useDisclosure, useDebouncedValue } from '@mantine/hooks';
 import {
     Search, Plus, Pencil, Trash, Save, X, Image as ImageIcon,
     DollarSign, Building2, CloudDownload, FileText, Wand2, Scissors,
@@ -144,6 +144,7 @@ export default function AdminPage() {
     const [facilities, setFacilities] = useState<Facility[]>([]);
     const [isLoadingData, setIsLoadingData] = useState(true);
     const [searchQuery, setSearchQuery] = useState('');
+    const [debouncedSearch] = useDebouncedValue(searchQuery, 300); // 🚀 검색어 디바운스
     const [categoryFilter, setCategoryFilter] = useState<string | null>(null);
     const [activePage, setActivePage] = useState(1);
 
@@ -172,13 +173,23 @@ export default function AdminPage() {
         localStorage.setItem('adminItemsPerPage', String(itemsPerPage));
     }, [itemsPerPage]);
 
-    // Load Data from API
+    // 🚀 최적화: 경량 API 사용 (처음 100개만 + 서버 사이드 페이지네이션)
     useEffect(() => {
-        fetch('/api/facilities', { cache: 'no-store' })
+        setIsLoadingData(true);
+        const params = new URLSearchParams({
+            page: String(activePage),
+            limit: String(itemsPerPage),
+            search: debouncedSearch || '',
+            category: categoryFilter || 'all',
+            sortBy: 'id',
+            sortOrder: 'asc'
+        });
+
+        fetch(`/api/admin/facilities?${params}`, { cache: 'no-store' })
             .then(res => res.json())
-            .then(data => {
-                if (Array.isArray(data)) {
-                    setFacilities(data);
+            .then(json => {
+                if (json.data && Array.isArray(json.data)) {
+                    setFacilities(json.data);
                 }
                 setIsLoadingData(false);
             })
@@ -187,7 +198,7 @@ export default function AdminPage() {
                 alert('데이터를 불러오지 못했습니다.');
                 setIsLoadingData(false);
             });
-    }, []);
+    }, [activePage, itemsPerPage, debouncedSearch, categoryFilter]);
 
     // Save to Server Helper
     const saveToServer = async (payload: Facility | Facility[]) => {
