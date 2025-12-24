@@ -8,7 +8,7 @@ const supabase = createClient(SUPABASE_URL, SUPABASE_KEY, {
     auth: { persistSession: false }
 });
 
-// GET: 모든 문의 조회 (어드민용)
+// GET: 모든 문의 조회 (어드민용) - 최적화
 export async function GET() {
     try {
         const { data: inquiries, error } = await supabase
@@ -17,7 +17,8 @@ export async function GET() {
                 *,
                 replies:InquiryReply(*)
             `)
-            .order('createdAt', { ascending: false });
+            .order('createdAt', { ascending: false })
+            .limit(50);
 
         if (error) {
             console.error('Fetch inquiries error:', error);
@@ -46,7 +47,12 @@ export async function GET() {
             facilityName: facilityNameMap.get(inq.facilityId) || '시설'
         }));
 
-        return NextResponse.json({ inquiries: enrichedInquiries });
+        // 🔥 30초 캐시 (빠른 응답)
+        return NextResponse.json({ inquiries: enrichedInquiries }, {
+            headers: {
+                'Cache-Control': 'public, s-maxage=30, stale-while-revalidate=60'
+            }
+        });
 
     } catch (error) {
         console.error('Admin inquiries GET error:', error);
