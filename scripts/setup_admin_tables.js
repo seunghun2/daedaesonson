@@ -16,8 +16,26 @@ CREATE TABLE IF NOT EXISTS faqs (
 
 -- 2. 약관/정책 테이블 (이용약관, 개인정보처리방침 등)
 CREATE TABLE IF NOT EXISTS site_policies (
+    type VARCHAR(50) PRIMARY KEY,
+    title VARCHAR(200) NOT NULL,
+    content TEXT NOT NULL,
+    version VARCHAR(20) DEFAULT '1.0',
+    updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+-- 3. 1:1 문의 테이블 (사이트 일반 문의)
+CREATE TABLE IF NOT EXISTS contact_inquiries (
     id SERIAL PRIMARY KEY,
-    type VARCHAR(50) NOT NULL UNIQUE, -- 'terms', 'privacy'
+    inquiry_type VARCHAR(50) NOT NULL,
+    title VARCHAR(200) NOT NULL,
+    content TEXT NOT NULL,
+    contact VARCHAR(100) NOT NULL,
+    status VARCHAR(20) DEFAULT 'pending',
+    admin_reply TEXT,
+    replied_at TIMESTAMP WITH TIME ZONE,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+    updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
     title VARCHAR(200) NOT NULL,
     content TEXT NOT NULL,
     version VARCHAR(20) DEFAULT '1.0',

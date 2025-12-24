@@ -28,10 +28,28 @@ export default function ContactPage() {
         if (!canSubmit) return;
 
         setIsSubmitting(true);
-        await new Promise(resolve => setTimeout(resolve, 1000));
+        try {
+            const res = await fetch('/api/contact', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    inquiry_type: inquiryType,
+                    title,
+                    content,
+                    contact,
+                }),
+            });
+
+            if (res.ok) {
+                alert('문의가 접수되었습니다. 빠른 시일 내에 답변 드리겠습니다.');
+                router.push('/menu');
+            } else {
+                alert('문의 접수에 실패했습니다. 다시 시도해주세요.');
+            }
+        } catch (error) {
+            alert('오류가 발생했습니다. 다시 시도해주세요.');
+        }
         setIsSubmitting(false);
-        alert('문의가 접수되었습니다. 빠른 시일 내에 답변 드리겠습니다.');
-        router.push('/menu');
     };
 
     return (

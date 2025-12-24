@@ -1,7 +1,7 @@
 'use client';
 
 import { Box, Text, Group, Stack, TextInput, Textarea, Button, ActionIcon, Modal, Table, Badge, Tabs, Switch, Loader } from '@mantine/core';
-import { ArrowLeft, Plus, Trash2, Edit, MessageSquare, FileText, HelpCircle, Save } from 'lucide-react';
+import { ArrowLeft, Plus, Trash2, Edit, MessageSquare, FileText, HelpCircle, Save, Mail } from 'lucide-react';
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
 import BottomNav from '@/components/common/BottomNav';
@@ -33,10 +33,22 @@ interface Inquiry {
     facilityName?: string;
 }
 
+interface ContactInquiry {
+    id: number;
+    inquiry_type: string;
+    title: string;
+    content: string;
+    contact: string;
+    status: string;
+    admin_reply?: string;
+    created_at: string;
+}
+
 export default function AdminSettingsPage() {
     const [activeTab, setActiveTab] = useState<string | null>('faq');
     const [faqs, setFaqs] = useState<FAQ[]>([]);
     const [inquiries, setInquiries] = useState<Inquiry[]>([]);
+    const [contactInquiries, setContactInquiries] = useState<ContactInquiry[]>([]);
     const [termsPolicy, setTermsPolicy] = useState<Policy | null>(null);
     const [privacyPolicy, setPrivacyPolicy] = useState<Policy | null>(null);
     const [loading, setLoading] = useState(true);
@@ -56,6 +68,11 @@ export default function AdminSettingsPage() {
     const [replyModalOpen, setReplyModalOpen] = useState(false);
     const [selectedInquiry, setSelectedInquiry] = useState<Inquiry | null>(null);
     const [replyContent, setReplyContent] = useState('');
+
+    // 1:1 문의 답변 모달
+    const [contactReplyModalOpen, setContactReplyModalOpen] = useState(false);
+    const [selectedContactInquiry, setSelectedContactInquiry] = useState<ContactInquiry | null>(null);
+    const [contactReplyContent, setContactReplyContent] = useState('');
 
     // 데이터 로드
     useEffect(() => {
@@ -92,6 +109,13 @@ export default function AdminSettingsPage() {
                 const data = await privacyRes.json();
                 setPrivacyPolicy(data);
                 setPrivacyContent(data?.content || '');
+            }
+
+            // 1:1 문의 로드
+            const contactRes = await fetch('/api/contact');
+            if (contactRes.ok) {
+                const contactData = await contactRes.json();
+                setContactInquiries(Array.isArray(contactData) ? contactData : []);
             }
         } catch (error) {
             console.error('데이터 로드 오류:', error);
@@ -201,7 +225,10 @@ export default function AdminSettingsPage() {
                     <Tabs.Tab value="faq" leftSection={<HelpCircle size={16} />}>FAQ</Tabs.Tab>
                     <Tabs.Tab value="terms" leftSection={<FileText size={16} />}>약관</Tabs.Tab>
                     <Tabs.Tab value="inquiry" leftSection={<MessageSquare size={16} />}>
-                        문의 <Badge size="xs" color="red" ml={4}>{inquiries.length}</Badge>
+                        시설문의 <Badge size="xs" color="red" ml={4}>{inquiries.length}</Badge>
+                    </Tabs.Tab>
+                    <Tabs.Tab value="contact" leftSection={<Mail size={16} />}>
+                        1:1 <Badge size="xs" color="blue" ml={4}>{contactInquiries.length}</Badge>
                     </Tabs.Tab>
                 </Tabs.List>
 
@@ -325,6 +352,40 @@ export default function AdminSettingsPage() {
                         )}
                     </Stack>
                 </Tabs.Panel>
+
+                {/* 1:1 문의 탭 */}
+                <Tabs.Panel value="contact" p="md">
+                    <Stack gap="sm">
+                        {contactInquiries.map((inq) => (
+                            <Box key={inq.id} bg="white" p="md" style={{ borderRadius: 12 }}>
+                                <Group justify="space-between" mb="xs">
+                                    <Group gap="xs">
+                                        <Badge size="sm" color="gray">{inq.inquiry_type}</Badge>
+                                        <Badge size="sm" color={inq.status === 'answered' ? 'green' : 'orange'}>
+                                            {inq.status === 'answered' ? '답변완료' : '대기중'}
+                                        </Badge>
+                                    </Group>
+                                    <Text size="xs" c="dimmed">{new Date(inq.created_at).toLocaleDateString()}</Text>
+                                </Group>
+                                <Text size="sm" fw={600} mb={4}>{inq.title}</Text>
+                                <Text size="xs" c="dimmed" mb="xs" lineClamp={2}>{inq.content}</Text>
+                                <Group justify="space-between">
+                                    <Text size="xs" c="dimmed">연락처: {inq.contact}</Text>
+                                    <Button size="xs" variant="light" color="blue" onClick={() => {
+                                        setSelectedContactInquiry(inq);
+                                        setContactReplyContent(inq.admin_reply || '');
+                                        setContactReplyModalOpen(true);
+                                    }}>
+                                        {inq.admin_reply ? '답변 보기' : '답변하기'}
+                                    </Button>
+                                </Group>
+                            </Box>
+                        ))}
+                        {contactInquiries.length === 0 && (
+                            <Text size="sm" c="dimmed" ta="center" py="xl">1:1 문의가 없습니다</Text>
+                        )}
+                    </Stack>
+                </Tabs.Panel>
             </Tabs>
 
             {/* FAQ 모달 */}
@@ -355,6 +416,52 @@ export default function AdminSettingsPage() {
 
                         <Textarea label="답변 작성" value={replyContent} onChange={(e) => setReplyContent(e.target.value)} minRows={3} />
                         <Button color="violet" onClick={submitReply}>답변 등록</Button>
+                    </Stack>
+                )}
+            </Modal>
+
+            {/* 1:1 문의 답변 모달 */}
+            <Modal opened={contactReplyModalOpen} onClose={() => setContactReplyModalOpen(false)} title="1:1 문의 상세" centered size="lg">
+                {selectedContactInquiry && (
+                    <Stack gap="md">
+                        <Box>
+                            <Group gap="xs" mb="xs">
+                                <Badge size="sm">{selectedContactInquiry.inquiry_type}</Badge>
+                                <Text size="xs" c="dimmed">{new Date(selectedContactInquiry.created_at).toLocaleDateString()}</Text>
+                            </Group>
+                            <Text size="sm" fw={600}>{selectedContactInquiry.title}</Text>
+                            <Text size="xs" c="dimmed" mt="xs" style={{ whiteSpace: 'pre-wrap' }}>{selectedContactInquiry.content}</Text>
+                            <Text size="xs" c="dimmed" mt="sm">연락처: {selectedContactInquiry.contact}</Text>
+                        </Box>
+
+                        {selectedContactInquiry.admin_reply && (
+                            <Box bg="blue.0" p="sm" style={{ borderRadius: 8 }}>
+                                <Text size="xs" c="dimmed">관리자 답변</Text>
+                                <Text size="sm" mt={4}>{selectedContactInquiry.admin_reply}</Text>
+                            </Box>
+                        )}
+
+                        <Textarea
+                            label="답변 작성"
+                            value={contactReplyContent}
+                            onChange={(e) => setContactReplyContent(e.target.value)}
+                            minRows={3}
+                        />
+                        <Button color="blue" onClick={async () => {
+                            try {
+                                await fetch(`/api/contact/${selectedContactInquiry.id}`, {
+                                    method: 'PUT',
+                                    headers: { 'Content-Type': 'application/json' },
+                                    body: JSON.stringify({ admin_reply: contactReplyContent, status: 'answered' }),
+                                });
+                                setContactReplyModalOpen(false);
+                                loadData();
+                            } catch (error) {
+                                alert('답변 등록 실패');
+                            }
+                        }}>
+                            답변 등록
+                        </Button>
                     </Stack>
                 )}
             </Modal>
