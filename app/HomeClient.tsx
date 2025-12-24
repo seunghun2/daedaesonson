@@ -378,21 +378,25 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
   };
 
   return (
-    <Flex h="100dvh" direction={isMobile ? 'column' : 'row'}>
+    <Flex h="100dvh" className="home-container">
 
-      {/* 1. 좌측 검색/필터/리스트 (PC: 400px, 모바일: 100%) */}
+      {/* 1. 좌측 검색/필터/리스트 (PC: 400px, 모바일: 100%) - CSS로 초기 크기 결정 */}
       <Box
-        w={isMobile ? '100%' : 400}
-        h={isMobile ? (mobileView === 'list' ? '100%' : '50%') : '100%'}
+        className="home-sidebar"
         style={{
           flexShrink: 0,
           display: isMobile && mobileView === 'map' ? 'none' : 'flex',
           flexDirection: 'column',
           overflow: 'hidden',
           position: 'relative',
-          zIndex: 1000, // 지도 위에 오도록
+          zIndex: 1000,
           backgroundColor: 'white',
-          borderRight: isMobile ? 'none' : '1px solid #e9ecef'
+          borderRight: isMobile ? 'none' : '1px solid #e9ecef',
+          // JS hydration 후 정확한 크기 적용
+          ...(isMobile !== undefined && {
+            width: isMobile ? '100%' : 400,
+            height: isMobile ? (mobileView === 'list' ? '100%' : '50%') : '100%'
+          })
         }}
       >
         {/* 검색창 및 카테고리 필터 */}
