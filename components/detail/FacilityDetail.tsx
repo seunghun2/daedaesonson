@@ -215,6 +215,7 @@ function PriceInfoSection({ priceInfo, hasPrice }: { priceInfo: any, hasPrice: b
                                     variant="separated"
                                     radius="md"
                                     multiple  // 🔓 여러 개 동시에 열 수 있음
+                                    defaultValue={group.categories.length === 1 ? group.categories : []}  // 🔓 1개면 자동 열림
                                     styles={{
                                         item: { backgroundColor: '#f8f9fa', border: 'none' },
                                         control: { padding: '12px 16px' },
