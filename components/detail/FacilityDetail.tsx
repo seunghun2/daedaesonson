@@ -199,7 +199,7 @@ function PriceInfoSection({ priceInfo, hasPrice }: { priceInfo: any, hasPrice: b
 
                                     <Group gap="xs">
                                         {hasMinPrice ? (
-                                            <Text fw={800} c="#35469C" size="lg">
+                                            <Text fw={800} c="#1D0098" size="lg">
                                                 {formatKoreanCurrency(minPrice)}부터
                                             </Text>
                                         ) : (
@@ -1442,8 +1442,8 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                             궁금한 점이나 솔직한 후기를 남겨주세요.
                         </Text>
                         <Group gap={12}>
-                            <Camera size={20} color="#5c7cfa" />
-                            <Pencil size={20} color="#5c7cfa" />
+                            <Camera size={20} color="#1D0098" />
+                            <Pencil size={20} color="#1D0098" />
                         </Group>
                     </Group>
                 </Paper>
@@ -3466,9 +3466,9 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
 
                                     {/* 답변 */}
                                     {selectedInquiry.replies && selectedInquiry.replies.length > 0 && (
-                                        <Box p="md" style={{ backgroundColor: '#f0f4ff', borderRadius: 12, borderLeft: '4px solid #3b4896' }}>
+                                        <Box p="md" style={{ backgroundColor: '#f0f4ff', borderRadius: 12, borderLeft: '4px solid #1D0098' }}>
                                             <Group gap={6} mb={6}>
-                                                <span className="material-symbols-outlined" style={{ fontSize: 16, color: '#3b4896' }}>support_agent</span>
+                                                <span className="material-symbols-outlined" style={{ fontSize: 16, color: '#1D0098' }}>support_agent</span>
                                                 <Text size="xs" fw={600} c="brand">관리자 답변</Text>
                                             </Group>
                                             <Text size="sm" c="dark">{selectedInquiry.replies[0].content}</Text>

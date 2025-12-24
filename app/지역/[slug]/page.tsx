@@ -104,7 +104,7 @@ export default async function RegionPage({ params }: PageProps) {
     return (
         <div style={{ padding: '20px', maxWidth: '1200px', margin: '0 auto' }}>
             <header style={{ marginBottom: '30px' }}>
-                <Link href="/" style={{ color: '#35469C', textDecoration: 'none' }}>
+                <Link href="/" style={{ color: '#1D0098', textDecoration: 'none' }}>
                     ← 지도로 돌아가기
                 </Link>
                 <h1 style={{ margin: '20px 0 10px', fontSize: '28px', color: '#1a1a1a' }}>
@@ -140,7 +140,7 @@ export default async function RegionPage({ params }: PageProps) {
                         <div style={{
                             fontSize: '20px',
                             fontWeight: 'bold',
-                            color: '#35469C'
+                            color: '#1D0098'
                         }}>
                             {f.priceRange?.min?.toLocaleString()}만 ~
                         </div>

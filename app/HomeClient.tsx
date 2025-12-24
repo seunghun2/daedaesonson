@@ -26,7 +26,7 @@ function HighlightText({ text, highlight }: { text: string, highlight: string })
     <Text span size="sm">
       {parts.map((part, i) =>
         part.toLowerCase() === highlight.toLowerCase() ? (
-          <Text span key={i} c="#35469C" fw={700}>{part}</Text>
+          <Text span key={i} c="#1D0098" fw={700}>{part}</Text>
         ) : (
           <Text span key={i}>{part}</Text>
         )
@@ -582,7 +582,7 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
                 height: '34px',
                 fontSize: '14px',
                 fontWeight: activeCategory.includes('all') ? 700 : 500,
-                backgroundColor: activeCategory.includes('all') ? '#3b4896' : 'white',
+                backgroundColor: activeCategory.includes('all') ? '#1D0098' : 'white',
                 color: activeCategory.includes('all') ? 'white' : '#495057',
                 border: activeCategory.includes('all') ? 'none' : '1px solid #dee2e6',
                 borderRadius: '20px',
@@ -627,7 +627,7 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
                     height: '34px',
                     fontSize: '14px',
                     fontWeight: isSelected ? 700 : 500,
-                    backgroundColor: isSelected ? '#3b4896' : 'white',
+                    backgroundColor: isSelected ? '#1D0098' : 'white',
                     color: isSelected ? 'white' : '#495057',
                     border: isSelected ? 'none' : '1px solid #dee2e6',
                     borderRadius: '20px',
@@ -694,7 +694,7 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
               w="100%"
               style={{
                 zIndex: 1000,
-                backgroundColor: '#3b4896', // 브랜드 컬러
+                backgroundColor: '#1D0098', // 브랜드 컬러
                 padding: '12px 16px',
                 transform: uiHidden ? 'translateY(-100%)' : 'translateY(0)',
                 transition: 'transform 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
@@ -879,8 +879,8 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
                     fontSize: '12px',
                     fontWeight: activeCategory.includes('all') ? 700 : 500,
                     backgroundColor: 'white',
-                    color: activeCategory.includes('all') ? '#3b4896' : '#495057',
-                    border: activeCategory.includes('all') ? '1.5px solid #3b4896' : '1px solid #dee2e6',
+                    color: activeCategory.includes('all') ? '#1D0098' : '#495057',
+                    border: activeCategory.includes('all') ? '1.5px solid #1D0098' : '1px solid #dee2e6',
                     borderRadius: '6px',
                     cursor: 'pointer',
                     transition: 'all 0.2s',
@@ -929,8 +929,8 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
                         fontSize: '12px',
                         fontWeight: isSelected ? 700 : 500,
                         backgroundColor: 'white',
-                        color: isSelected ? '#3b4896' : '#495057',
-                        border: isSelected ? '1.5px solid #3b4896' : '1px solid #dee2e6',
+                        color: isSelected ? '#1D0098' : '#495057',
+                        border: isSelected ? '1.5px solid #1D0098' : '1px solid #dee2e6',
                         borderRadius: '6px',
                         cursor: 'pointer',
                         transition: 'all 0.2s',

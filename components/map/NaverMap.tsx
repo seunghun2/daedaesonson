@@ -775,7 +775,7 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
             const markerColor = categoryColors[fac.category as FacilityCategory] || '#0097a7';
 
             const contentWidth = 56;
-            const contentHeight = 48;
+            const contentHeight = 52;
             const tailSize = 10;
             const archHeight = 14;
 
@@ -874,7 +874,7 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
                 averageCenter: false, // 🔒 첫 번째 마커 기준으로 위치 고정
                 icons: [{
                     content: `
-                         <div style="cursor:pointer; min-width:64px; padding: 6px 10px; background:#35469C; color:white; border-radius:6px; box-shadow:0 2px 6px rgba(0,0,0,0.15); display:flex; flex-direction:column; align-items:center; justify-content:center; font-family:-apple-system, sans-serif;">
+                         <div style="cursor:pointer; min-width:64px; padding: 6px 10px; background:#1D0098; color:white; border-radius:6px; box-shadow:0 2px 6px rgba(0,0,0,0.15); display:flex; flex-direction:column; align-items:center; justify-content:center; font-family:-apple-system, sans-serif;">
                              <div class="cluster-region" style="font-size:11px; opacity:0.8; margin-bottom:2px; line-height:1;"></div>
                              <div class="cluster-count" style="font-size:14px; font-weight:800; line-height:1;"></div>
                          </div>
@@ -1230,7 +1230,7 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
                                 display: 'flex',
                                 alignItems: 'center',
                                 gap: '6px',
-                                backgroundColor: '#35469C', // Brand Color
+                                backgroundColor: '#1D0098', // Brand Color
                                 color: 'white',
                                 padding: isMobile ? '10px 14px' : '12px 20px',
                                 borderRadius: '30px',

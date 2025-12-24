@@ -196,7 +196,7 @@ export default function FacilityCard({ facility, onClick }: FacilityCardProps) {
                     <Group justify="space-between" align="flex-end">
                         <Group gap={2} align="flex-end">
                             {priceLabel && <Text size="xs" c="gray.6" mb={3} fw={600} mr={2}>{priceLabel}</Text>}
-                            <Text fw={700} size="md" c="#35469C" style={{ lineHeight: 1 }}>
+                            <Text fw={700} size="md" c="#1D0098" style={{ lineHeight: 1 }}>
                                 {displayPrice}{showTilde ? '~' : ''}
                             </Text>
                         </Group>

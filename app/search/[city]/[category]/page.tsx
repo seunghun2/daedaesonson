@@ -111,7 +111,7 @@ export default async function CityPage({ params }: PageProps) {
     return (
         <div style={{ padding: '20px', maxWidth: '1200px', margin: '0 auto', backgroundColor: '#f5f5f5', minHeight: '100vh' }}>
             <header style={{ marginBottom: '30px' }}>
-                <Link href="/" style={{ color: '#35469C', textDecoration: 'none', fontSize: '14px' }}>
+                <Link href="/" style={{ color: '#1D0098', textDecoration: 'none', fontSize: '14px' }}>
                     ← 지도로 돌아가기
                 </Link>
                 <h1 style={{ margin: '20px 0 10px', fontSize: '28px', color: '#1a1a1a' }}>
@@ -119,7 +119,7 @@ export default async function CityPage({ params }: PageProps) {
                 </h1>
                 <p style={{ color: '#666', fontSize: '16px', margin: '0' }}>
                     <strong>{facilities.length}개</strong> 시설 |
-                    최저 <strong style={{ color: '#35469C' }}>{minPrice.toLocaleString()}만원</strong> ~
+                    최저 <strong style={{ color: '#1D0098' }}>{minPrice.toLocaleString()}만원</strong> ~
                     최고 {maxPrice.toLocaleString()}만원
                 </p>
             </header>
@@ -146,7 +146,7 @@ export default async function CityPage({ params }: PageProps) {
                             {f.address}
                         </p>
                         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                            <span style={{ fontSize: '20px', fontWeight: 'bold', color: '#35469C' }}>
+                            <span style={{ fontSize: '20px', fontWeight: 'bold', color: '#1D0098' }}>
                                 {f.priceRange?.min?.toLocaleString()}만원~
                             </span>
                             <span style={{ fontSize: '12px', color: '#aaa' }}>
