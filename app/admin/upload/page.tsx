@@ -172,10 +172,10 @@ export default function AdminPage() {
         localStorage.setItem('adminItemsPerPage', String(itemsPerPage));
     }, [itemsPerPage]);
 
-    // 🚀 리스트는 껍데기만! (경량 API)
+    // 원래 API 사용
     useEffect(() => {
         // 1. 캐시에서 즉시 로드
-        const cached = localStorage.getItem('admin_facilities_list_cache');
+        const cached = localStorage.getItem('admin_facilities_cache');
         if (cached) {
             try {
                 const data = JSON.parse(cached);
@@ -186,13 +186,13 @@ export default function AdminPage() {
             } catch (e) { /* 캐시 파싱 실패 시 무시 */ }
         }
 
-        // 2. 경량 API로 껍데기만 가져오기
-        fetch('/api/admin/facilities?limit=2000&sortBy=id&sortOrder=asc', { cache: 'no-store' })
+        // 2. 전체 데이터 가져오기
+        fetch('/api/facilities', { cache: 'no-store' })
             .then(res => res.json())
-            .then(json => {
-                if (json.data && Array.isArray(json.data)) {
-                    setFacilities(json.data);
-                    localStorage.setItem('admin_facilities_list_cache', JSON.stringify(json.data));
+            .then(data => {
+                if (Array.isArray(data)) {
+                    setFacilities(data);
+                    localStorage.setItem('admin_facilities_cache', JSON.stringify(data));
                 }
                 setIsLoadingData(false);
             })
