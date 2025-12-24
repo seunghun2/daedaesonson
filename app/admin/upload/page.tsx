@@ -1027,6 +1027,15 @@ export default function AdminPage() {
         );
     };
 
+    // 🔧 Hydration 에러 방지: 클라이언트 마운트 확인
+    if (isLoadingData) {
+        return (
+            <Box p="lg" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '50vh' }}>
+                <Text c="dimmed">데이터 로딩 중...</Text>
+            </Box>
+        );
+    }
+
     return (
         <Box p="lg">
             <Group justify="space-between" mb="lg">
@@ -1470,7 +1479,7 @@ export default function AdminPage() {
                             />
                             <TextInput
                                 label="설명"
-                                value={editForm.description}
+                                value={editForm.description || ''}
                                 onChange={(e) => setEditForm(prev => ({ ...prev, description: e.target.value }))}
                             />
 
