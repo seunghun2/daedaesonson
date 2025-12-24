@@ -173,23 +173,14 @@ export default function AdminPage() {
         localStorage.setItem('adminItemsPerPage', String(itemsPerPage));
     }, [itemsPerPage]);
 
-    // 🚀 최적화: 경량 API 사용 (처음 100개만 + 서버 사이드 페이지네이션)
+    // 원래 API 사용 (전체 데이터 로드)
     useEffect(() => {
         setIsLoadingData(true);
-        const params = new URLSearchParams({
-            page: String(activePage),
-            limit: String(itemsPerPage),
-            search: debouncedSearch || '',
-            category: categoryFilter || 'all',
-            sortBy: 'id',
-            sortOrder: 'asc'
-        });
-
-        fetch(`/api/admin/facilities?${params}`, { cache: 'no-store' })
+        fetch('/api/facilities', { cache: 'no-store' })
             .then(res => res.json())
-            .then(json => {
-                if (json.data && Array.isArray(json.data)) {
-                    setFacilities(json.data);
+            .then(data => {
+                if (Array.isArray(data)) {
+                    setFacilities(data);
                 }
                 setIsLoadingData(false);
             })
@@ -198,7 +189,7 @@ export default function AdminPage() {
                 alert('데이터를 불러오지 못했습니다.');
                 setIsLoadingData(false);
             });
-    }, [activePage, itemsPerPage, debouncedSearch, categoryFilter]);
+    }, []);
 
     // Save to Server Helper
     const saveToServer = async (payload: Facility | Facility[]) => {
