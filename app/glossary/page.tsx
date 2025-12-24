@@ -66,7 +66,7 @@ const GLOSSARY_GROUPS = [
                 term: '화장',
                 Icon: Flame,
                 simple: '시신을 유골로 만드는 것',
-                link: null,
+                link: '/glossary/hwajang',
             },
             {
                 term: '안치 / 봉안',
