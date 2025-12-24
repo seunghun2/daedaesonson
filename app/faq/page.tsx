@@ -1,6 +1,6 @@
 'use client';
 
-import { Box, Text, Stack, Group, Accordion, Tabs } from '@mantine/core';
+import { Box, Text, Stack, Group, Accordion } from '@mantine/core';
 import { ArrowLeft } from 'lucide-react';
 import Link from 'next/link';
 import { useState } from 'react';
@@ -235,31 +235,33 @@ export default function FAQPage() {
             </Box>
 
             {/* 탭 메뉴 */}
-            <Box bg="white" px="md" pb="xs" style={{ borderBottom: '1px solid #e9ecef' }}>
-                <Tabs value={activeTab} onChange={(v) => setActiveTab(v || 'all')}>
-                    <Tabs.List style={{ flexWrap: 'wrap', gap: 4 }}>
-                        {FAQ_CATEGORIES.map((cat) => (
-                            <Tabs.Tab
-                                key={cat.value}
-                                value={cat.value}
-                                style={{
-                                    fontSize: '13px',
-                                    padding: '8px 12px',
-                                    borderRadius: 20,
-                                    ...(activeTab === cat.value ? {
-                                        backgroundColor: '#1D0098',
-                                        color: 'white',
-                                    } : {
-                                        backgroundColor: '#f1f3f5',
-                                        color: '#495057',
-                                    })
-                                }}
-                            >
-                                {cat.label}
-                            </Tabs.Tab>
-                        ))}
-                    </Tabs.List>
-                </Tabs>
+            <Box bg="white" px="md" py="sm" style={{ borderBottom: '1px solid #e9ecef', overflowX: 'auto' }}>
+                <Group gap={8} wrap="nowrap">
+                    {FAQ_CATEGORIES.map((cat) => (
+                        <Box
+                            key={cat.value}
+                            onClick={() => setActiveTab(cat.value)}
+                            style={{
+                                padding: '8px 16px',
+                                borderRadius: 20,
+                                cursor: 'pointer',
+                                whiteSpace: 'nowrap',
+                                fontSize: '13px',
+                                fontWeight: 500,
+                                transition: 'all 0.2s ease',
+                                ...(activeTab === cat.value ? {
+                                    backgroundColor: '#1D0098',
+                                    color: 'white',
+                                } : {
+                                    backgroundColor: '#f1f3f5',
+                                    color: '#495057',
+                                })
+                            }}
+                        >
+                            {cat.label}
+                        </Box>
+                    ))}
+                </Group>
             </Box>
 
             {/* FAQ 목록 */}

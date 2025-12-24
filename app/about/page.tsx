@@ -39,7 +39,7 @@ export default function AboutPage() {
                 <Stack gap="md">
                     <Box bg="white" p="lg" style={{ borderRadius: 12 }}>
                         <Group gap="md" mb="sm">
-                            <Box p={10} bg="brand.0" style={{ borderRadius: 10 }}>
+                            <Box p={10} bg="gray.0" style={{ borderRadius: 10 }}>
                                 <MapPin size={24} color="#1D0098" />
                             </Box>
                             <Text fw={600}>전국 1,500+ 시설</Text>
@@ -51,7 +51,7 @@ export default function AboutPage() {
 
                     <Box bg="white" p="lg" style={{ borderRadius: 12 }}>
                         <Group gap="md" mb="sm">
-                            <Box p={10} bg="brand.0" style={{ borderRadius: 10 }}>
+                            <Box p={10} bg="gray.0" style={{ borderRadius: 10 }}>
                                 <Search size={24} color="#1D0098" />
                             </Box>
                             <Text fw={600}>쉬운 검색</Text>
@@ -63,7 +63,7 @@ export default function AboutPage() {
 
                     <Box bg="white" p="lg" style={{ borderRadius: 12 }}>
                         <Group gap="md" mb="sm">
-                            <Box p={10} bg="brand.0" style={{ borderRadius: 10 }}>
+                            <Box p={10} bg="gray.0" style={{ borderRadius: 10 }}>
                                 <Shield size={24} color="#1D0098" />
                             </Box>
                             <Text fw={600}>신뢰할 수 있는 정보</Text>
@@ -75,7 +75,7 @@ export default function AboutPage() {
 
                     <Box bg="white" p="lg" style={{ borderRadius: 12 }}>
                         <Group gap="md" mb="sm">
-                            <Box p={10} bg="brand.0" style={{ borderRadius: 10 }}>
+                            <Box p={10} bg="gray.0" style={{ borderRadius: 10 }}>
                                 <Heart size={24} color="#1D0098" />
                             </Box>
                             <Text fw={600}>함께하는 마음</Text>
