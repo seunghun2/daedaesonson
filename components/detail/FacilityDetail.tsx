@@ -555,6 +555,17 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
     // 상담 신청 모달 - URL 파라미터로 관리 + 뒤로가기 지원
     const searchParams = useSearchParams();
     const [consultModalOpenState, setConsultModalOpenState] = useState(false);
+    const nameInputRef = useRef<HTMLInputElement>(null);
+
+    // 상담 모달 열릴 때 이름 입력에 포커스
+    useEffect(() => {
+        if (consultModalOpenState && nameInputRef.current) {
+            // Drawer 애니메이션 후 포커스
+            setTimeout(() => {
+                nameInputRef.current?.focus();
+            }, 350);
+        }
+    }, [consultModalOpenState]);
 
     // URL에서 초기 상태 읽기 또는 prop에서 받은 초기 상태 사용
     useEffect(() => {
@@ -1988,6 +1999,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                     <Collapse in={consultStep === 0 || consultStep === 1}>
                                         <Box mt="md">
                                             <TextInput
+                                                ref={nameInputRef}
                                                 placeholder="이름을 입력해 주세요."
                                                 variant="unstyled"
                                                 size="lg"
@@ -1995,7 +2007,6 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                                 onChange={(e) => setConsultForm({ ...consultForm, name: e.currentTarget.value })}
                                                 styles={{ input: { borderBottom: '1px solid #dee2e6', borderRadius: 0, paddingBottom: 8 } }}
                                                 onClick={(e) => e.stopPropagation()}
-                                                autoFocus
                                             />
                                         </Box>
                                     </Collapse>
@@ -2439,6 +2450,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                     <Collapse in={consultStep === 0 || consultStep === 1}>
                                         <Box mt="md">
                                             <TextInput
+                                                ref={nameInputRef}
                                                 placeholder="이름을 입력해 주세요."
                                                 variant="unstyled"
                                                 size="md"
@@ -2446,7 +2458,6 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                                 onChange={(e) => setConsultForm({ ...consultForm, name: e.currentTarget.value })}
                                                 styles={{ input: { borderBottom: '1px solid #dee2e6', borderRadius: 0, paddingBottom: 8 } }}
                                                 onClick={(e) => e.stopPropagation()}
-                                                autoFocus
                                             />
                                         </Box>
                                     </Collapse>
