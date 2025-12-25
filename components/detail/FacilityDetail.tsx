@@ -436,9 +436,10 @@ interface FacilityDetailProps {
     allFacilities?: Facility[];
     onSelectFacility?: (id: string) => void;
     onMapView?: (lat: number, lng: number) => void;
+    initialConsultOpen?: boolean; // 상담 모달 초기 열림 상태
 }
 
-export default function FacilityDetail({ facility: initialFacility, onClose, allFacilities = [], onSelectFacility, onMapView }: FacilityDetailProps) {
+export default function FacilityDetail({ facility: initialFacility, onClose, allFacilities = [], onSelectFacility, onMapView, initialConsultOpen = false }: FacilityDetailProps) {
     const router = useRouter();
     const [facility, setFacility] = useState<Facility>(initialFacility);
     const [isFetchingDetail] = useState(false);
@@ -555,16 +556,23 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
     const searchParams = useSearchParams();
     const [consultModalOpenState, setConsultModalOpenState] = useState(false);
 
-    // URL에서 초기 상태 읽기
+    // URL에서 초기 상태 읽기 또는 prop에서 받은 초기 상태 사용
     useEffect(() => {
-        setConsultModalOpenState(searchParams.get('consult') === 'true');
-    }, [searchParams]);
+        if (initialConsultOpen) {
+            setConsultModalOpenState(true);
+        } else {
+            // URL에서 /consult가 있는지 확인
+            const idParam = searchParams.get('id') || '';
+            setConsultModalOpenState(idParam.endsWith('/consult'));
+        }
+    }, [searchParams, initialConsultOpen]);
 
     // popstate 이벤트 리스너 (뒤로가기 감지)
     useEffect(() => {
         const handlePopState = () => {
             const params = new URLSearchParams(window.location.search);
-            setConsultModalOpenState(params.get('consult') === 'true');
+            const idParam = params.get('id') || '';
+            setConsultModalOpenState(idParam.endsWith('/consult'));
         };
         window.addEventListener('popstate', handlePopState);
         return () => window.removeEventListener('popstate', handlePopState);
@@ -574,13 +582,16 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
 
     const setConsultModalOpened = (open: boolean) => {
         const url = new URL(window.location.href);
+        const currentId = searchParams.get('id') || facility.id;
+        const baseId = currentId.replace(/\/consult$/, ''); // /consult 제거
+
         if (open) {
-            url.searchParams.set('consult', 'true');
+            url.searchParams.set('id', `${baseId}/consult`);
             // pushState로 히스토리 추가 → 뒤로가기 시 모달만 닫힘
             window.history.pushState({ modal: 'consult' }, '', url.toString());
             setConsultModalOpenState(true);
         } else {
-            url.searchParams.delete('consult');
+            url.searchParams.set('id', baseId);
             // 닫을 때는 replaceState로 현재 히스토리만 업데이트
             window.history.replaceState({}, '', url.toString());
             setConsultModalOpenState(false);
@@ -1766,6 +1777,11 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                     zIndex={10000}
                     padding={0}
                     lockScroll={false}
+                    transitionProps={{
+                        transition: 'slide-left',
+                        duration: 300,
+                        timingFunction: 'ease-out'
+                    }}
                     styles={{
                         inner: {
                             height: '100%'
