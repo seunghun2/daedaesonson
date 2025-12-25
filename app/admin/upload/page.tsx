@@ -1251,7 +1251,7 @@ export default function AdminPage() {
                                         <Table.Td>
                                             <Text size="xs" c="dimmed">
                                                 {(item as any).updatedAt
-                                                    ? new Date((item as any).updatedAt).toLocaleDateString('ko-KR', { month: 'short', day: 'numeric' })
+                                                    ? new Date((item as any).updatedAt).toLocaleString('ko-KR', { month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit' })
                                                     : '-'}
                                             </Text>
                                         </Table.Td>
