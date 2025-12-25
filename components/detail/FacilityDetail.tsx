@@ -1995,6 +1995,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                                 onChange={(e) => setConsultForm({ ...consultForm, name: e.currentTarget.value })}
                                                 styles={{ input: { borderBottom: '1px solid #dee2e6', borderRadius: 0, paddingBottom: 8 } }}
                                                 onClick={(e) => e.stopPropagation()}
+                                                autoFocus
                                             />
                                         </Box>
                                     </Collapse>
@@ -2445,6 +2446,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                                 onChange={(e) => setConsultForm({ ...consultForm, name: e.currentTarget.value })}
                                                 styles={{ input: { borderBottom: '1px solid #dee2e6', borderRadius: 0, paddingBottom: 8 } }}
                                                 onClick={(e) => e.stopPropagation()}
+                                                autoFocus
                                             />
                                         </Box>
                                     </Collapse>

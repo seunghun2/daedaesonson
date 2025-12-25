@@ -393,6 +393,7 @@ export default function InquiriesClient({ initialInquiries, facilities = [] }: I
                                     styles={{
                                         input: { textAlign: 'right', color: inquiryForm.type ? '#495057' : '#adb5bd' },
                                     }}
+                                    comboboxProps={{ withinPortal: true, zIndex: 10001 }}
                                 />
                             </Group>
                         </Box>
