@@ -157,10 +157,16 @@ export default function FacilityEditPage() {
         setSaving(true);
 
         try {
+            // updatedAt을 명시적으로 현재 시간으로 설정
+            const updatedFacility = {
+                ...facility,
+                updatedAt: new Date().toISOString()
+            };
+
             const res = await fetch('/api/facilities', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(facility)
+                body: JSON.stringify(updatedFacility)
             });
 
             if (res.ok) {
