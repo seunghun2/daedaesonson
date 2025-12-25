@@ -24,6 +24,9 @@ async function getFacilities(): Promise<Facility[]> {
     return data
       .filter((f: any) => f.category !== 'FUNERAL_HOME' && f.category !== 'CREMATORIUM' && f.isActive !== false)
       .map((f: any) => {
+        // 좌표 구조 안전하게 처리 (f.coordinates 또는 f.lat/lng)
+        const coords = f.coordinates || { lat: f.lat, lng: f.lng };
+
         // 대표 이미지 1장 추출
         let thumbnail = '';
         if (f.images) {
@@ -36,11 +39,11 @@ async function getFacilities(): Promise<Facility[]> {
           id: f.id,
           name: f.name,
           address: f.address,
-          coordinates: f.coordinates,
+          coordinates: coords,
           category: f.category,
           priceRange: f.priceRange,
-          priceInfo: f.priceInfo,  // 🔥 priceInfo 포함!
-          representativePricing: f.representativePricing,  // 🔥 representativePricing 포함!
+          priceInfo: f.priceInfo,
+          representativePricing: f.representativePricing,
           operatorType: f.operatorType,
           isPublic: f.isPublic,
           thumbnail,
