@@ -12,7 +12,8 @@ import {
     ChevronLeft,
     ChevronRight,
     MessageCircle as IconMessage,
-    PhoneCall as IconPhoneCall
+    PhoneCall as IconPhoneCall,
+    Briefcase as IconBriefcase
 } from 'lucide-react';
 
 import { usePathname, useRouter } from 'next/navigation';
@@ -43,6 +44,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         { label: '시설 데이터 관리', icon: IconDatabase, link: '/admin/upload' },
         { label: '상담신청관리', icon: IconPhoneCall, link: '/admin/consults' },
         { label: '댓글문의관리', icon: IconMessage, link: '/admin/inquiries' },
+        { label: '제휴문의관리', icon: IconBriefcase, link: '/admin/partnership' },
         { label: '설정', icon: IconSettings, link: '/admin/settings' },
     ];
 
