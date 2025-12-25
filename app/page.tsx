@@ -2,17 +2,15 @@ import { Suspense } from 'react';
 import HomeClient from './HomeClient';
 import { Facility } from '@/types';
 
-// 🔥 API에서 데이터 로드 (priceInfo 포함)
-export const dynamic = 'force-dynamic';
-export const revalidate = 0;
+// 🚀 ISR: 5분(300초)마다 데이터 갱신, 그 사이엔 캐싱된 빠른 데이터 사용
+export const revalidate = 300;
 
-// 서버에서 시설 데이터 미리 로드 (API 호출)
+// 서버에서 시설 데이터 미리 로드 (API 호출 + 캐싱)
 async function getFacilities(): Promise<Facility[]> {
   try {
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
     const res = await fetch(`${baseUrl}/api/facilities`, {
-      cache: 'no-store',
-      next: { revalidate: 0 }
+      next: { revalidate: 300 }  // 5분 캐싱
     });
 
     if (!res.ok) {
