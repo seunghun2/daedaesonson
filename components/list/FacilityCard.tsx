@@ -31,15 +31,17 @@ export default function FacilityCard({ facility, onClick }: FacilityCardProps) {
     let isRepFromPricing = false;
 
     // Check for Representative Price in pricing table (상세페이지와 동일한 로직)
-    if (facility.pricing) {
+    // 🔥 priceInfo.priceTable 우선 확인 (NaverMap, FacilityDetail과 동일)
+    const priceTable = (facility as any).priceInfo?.priceTable || facility.pricing;
+    if (priceTable) {
         // Collection for sub-items (Label, Price in Won)
         const subRepItems: { label: string; price: number }[] = [];
 
         // 1. Collect all representative items
-        Object.keys(facility.pricing).forEach(key => {
-            const cat = facility.pricing[key];
+        Object.keys(priceTable).forEach(key => {
+            const cat = priceTable[key];
             // Skip 'Others' or Option-like categories
-            if (key.includes('옵션') || key.includes('관리비')) return;
+            if (/옵션|관리비|기타|공통|제외|석물|비고|안내|별도/.test(key)) return;
 
             if (cat && Array.isArray(cat.rows)) {
                 const rep = cat.rows.find((r: any) => r.isRepresentative);
@@ -59,8 +61,8 @@ export default function FacilityCard({ facility, onClick }: FacilityCardProps) {
 
         // 2. Pick Main Display Price (Preferred Category matching - 상세페이지와 동일)
         let preferredKeywords: string[] = [];
-        if (facility.category === 'FAMILY_GRAVE') preferredKeywords = ['매장', '묘지'];
-        else if (facility.category === 'CHARNEL_HOUSE') preferredKeywords = ['봉안', '납골'];
+        if (facility.category === 'FAMILY_GRAVE') preferredKeywords = ['매장', '묘지', '분양'];
+        else if (facility.category === 'CHARNEL_HOUSE') preferredKeywords = ['봉안', '납골', '안치'];
         else if (facility.category === 'NATURAL_BURIAL') preferredKeywords = ['수목', '자연', '잔디', '화초'];
 
         // Find first item that matches ANY of the keywords

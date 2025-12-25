@@ -736,18 +736,24 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
 
             const { lat, lng } = fac.fixedCoordinates;
 
-            // [Price Logic] Check for Representative Price first
+            // [Price Logic] 상세페이지와 동일한 로직 - priceInfo.priceTable 우선 확인
             let priceText = '문의';
             let formattedPrice = 0;
             let isRep = false;
 
-            if (fac.pricing) {
-                for (const catKey of Object.keys(fac.pricing)) {
-                    const category = fac.pricing[catKey];
+            // 1순위: priceInfo.priceTable에서 대표 가격 찾기
+            const priceTable = (fac as any).priceInfo?.priceTable || fac.pricing;
+            if (priceTable) {
+                for (const catKey of Object.keys(priceTable)) {
+                    // 기타/옵션/관리비 등 제외
+                    if (/옵션|관리비|기타|공통|제외|석물|비고|안내|별도/.test(catKey)) continue;
+
+                    const category = priceTable[catKey];
                     if (category && Array.isArray(category.rows)) {
                         const repItem = category.rows.find((r: any) => r.isRepresentative);
                         if (repItem && repItem.price > 0) {
-                            formattedPrice = repItem.price;
+                            // price가 10000 미만이면 만원 단위로 간주, 이상이면 원 단위로 간주
+                            formattedPrice = repItem.price < 10000 ? repItem.price : Math.round(repItem.price / 10000);
                             isRep = true;
                             break;
                         }
@@ -755,9 +761,28 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
                 }
             }
 
-            if (!isRep && fac.priceRange?.min) {
-                // priceRange.min은 이제 원 단위 - 만원으로 변환
-                formattedPrice = Math.round(fac.priceRange.min / 10000);
+            // 2순위: representativePricing (원 단위 실제 가격) 폴백
+            if (!isRep) {
+                const repPricing = (fac as any).representativePricing;
+                if (repPricing) {
+                    // 카테고리별 최소 가격 찾기 (enshrinement, natural 등)
+                    const categories = Object.keys(repPricing);
+                    for (const cat of categories) {
+                        const pricing = repPricing[cat];
+                        if (pricing?.min && pricing.min > 0) {
+                            // representativePricing.min은 원 단위이므로 만원으로 변환
+                            formattedPrice = Math.round(pricing.min / 10000);
+                            isRep = true;
+                            break;
+                        }
+                    }
+                }
+            }
+
+            // 3순위: priceRange.min 폴백 (1000 이상일 때만 - 더미값 320 같은 것 제외)
+            if (!isRep && fac.priceRange?.min && fac.priceRange.min >= 1000) {
+                // priceRange.min이 10000 미만이면 만원 단위, 이상이면 원 단위로 간주
+                formattedPrice = fac.priceRange.min < 10000 ? fac.priceRange.min : Math.round(fac.priceRange.min / 10000);
             }
 
             if (formattedPrice > 0) {

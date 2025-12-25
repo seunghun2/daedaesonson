@@ -1,23 +1,30 @@
 import { Suspense } from 'react';
 import HomeClient from './HomeClient';
 import { Facility } from '@/types';
-import facilitiesData from '@/data/facilities.json';
 
-// 🔥 정적 데이터 사용 - 빌드 시 포함됨 (매우 빠름)
-export const dynamic = 'force-static';
+// 🔥 API에서 데이터 로드 (priceInfo 포함)
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
 
-// 서버에서 시설 데이터 미리 로드 (정적 JSON)
-function getFacilities(): Facility[] {
+// 서버에서 시설 데이터 미리 로드 (API 호출)
+async function getFacilities(): Promise<Facility[]> {
   try {
-    // 가격 단위 정규화
-    const normalizePrice = (p: number): number => {
-      if (!p || p <= 0) return 0;
-      return p < 10000 ? p * 10000 : p;
-    };
+    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
+    const res = await fetch(`${baseUrl}/api/facilities`, {
+      cache: 'no-store',
+      next: { revalidate: 0 }
+    });
 
-    // 장례식장, 화장시설 제외 + isActive=false 제외 + 0원 제외
-    return (facilitiesData as any[])
-      .filter((f: any) => f.category !== 'FUNERAL_HOME' && f.category !== 'CREMATORIUM' && f.isActive !== false && f.minPrice > 0)
+    if (!res.ok) {
+      console.error('API fetch failed:', res.status);
+      return [];
+    }
+
+    const data = await res.json();
+
+    // 장례식장, 화장시설 제외 + isActive=false 제외
+    return data
+      .filter((f: any) => f.category !== 'FUNERAL_HOME' && f.category !== 'CREMATORIUM' && f.isActive !== false)
       .map((f: any) => {
         // 대표 이미지 1장 추출
         let thumbnail = '';
@@ -31,9 +38,11 @@ function getFacilities(): Facility[] {
           id: f.id,
           name: f.name,
           address: f.address,
-          coordinates: { lat: f.lat || f.coordinates?.lat || 0, lng: f.lng || f.coordinates?.lng || 0 },
+          coordinates: f.coordinates,
           category: f.category,
-          priceRange: { min: normalizePrice(f.minPrice), max: normalizePrice(f.maxPrice) },
+          priceRange: f.priceRange,
+          priceInfo: f.priceInfo,  // 🔥 priceInfo 포함!
+          representativePricing: f.representativePricing,  // 🔥 representativePricing 포함!
           operatorType: f.operatorType,
           isPublic: f.isPublic,
           thumbnail,
@@ -45,9 +54,9 @@ function getFacilities(): Facility[] {
   }
 }
 
-export default function Home() {
-  // 정적 JSON에서 데이터 로드 (빌드 시 포함됨)
-  const initialFacilities = getFacilities();
+export default async function Home() {
+  // API에서 데이터 로드 (priceInfo 포함)
+  const initialFacilities = await getFacilities();
 
   return (
     <Suspense fallback={<div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100vh' }}>로딩 중...</div>}>

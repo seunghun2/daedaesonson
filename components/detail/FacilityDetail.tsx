@@ -902,14 +902,12 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
     // 🔥 랜덤 조회수 설정 제거됨 - API 호출로 대체 (line 341-354)
 
     // 갤러리 이미지 처리 (엄격한 필터링)
-    // 🔥 thumbnail이 있으면 imageGallery 폴백으로 사용 (즉시 표시)
-    let rawImages = facility.imageGallery || [];
-    if (rawImages.length === 0 && (facility as any).thumbnail) {
-        rawImages = [(facility as any).thumbnail];
-    }
+    // 🔥 실제 시설 사진만 표시 (thumbnail/로고 제외)
+    const rawImages = facility.imageGallery || [];
     const galleryImages = rawImages
         .filter(img => img && typeof img === 'string' && img.trim() !== '')
-        .filter(img => img.startsWith('http') || img.startsWith('/') || img.startsWith('blob:') || img.startsWith('data:'));
+        .filter(img => img.startsWith('http') || img.startsWith('blob:') || img.startsWith('data:'))
+        .filter(img => !img.includes('/logos/') && !img.includes('logo')); // 로고 이미지 제외
 
     const visibleImages = galleryImages.slice(0, 2);
     const extraInfoCount = galleryImages.length > 2 ? galleryImages.length - 2 : 0;
