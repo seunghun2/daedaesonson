@@ -561,9 +561,8 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
         if (initialConsultOpen) {
             setConsultModalOpenState(true);
         } else {
-            // URL에서 /consult가 있는지 확인
-            const idParam = searchParams.get('id') || '';
-            setConsultModalOpenState(idParam.endsWith('/consult'));
+            // URL에서 consult=true가 있는지 확인
+            setConsultModalOpenState(searchParams.get('consult') === 'true');
         }
     }, [searchParams, initialConsultOpen]);
 
@@ -571,8 +570,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
     useEffect(() => {
         const handlePopState = () => {
             const params = new URLSearchParams(window.location.search);
-            const idParam = params.get('id') || '';
-            setConsultModalOpenState(idParam.endsWith('/consult'));
+            setConsultModalOpenState(params.get('consult') === 'true');
         };
         window.addEventListener('popstate', handlePopState);
         return () => window.removeEventListener('popstate', handlePopState);
@@ -582,16 +580,14 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
 
     const setConsultModalOpened = (open: boolean) => {
         const url = new URL(window.location.href);
-        const currentId = searchParams.get('id') || facility.id;
-        const baseId = currentId.replace(/\/consult$/, ''); // /consult 제거
 
         if (open) {
-            url.searchParams.set('id', `${baseId}/consult`);
+            url.searchParams.set('consult', 'true');
             // pushState로 히스토리 추가 → 뒤로가기 시 모달만 닫힘
             window.history.pushState({ modal: 'consult' }, '', url.toString());
             setConsultModalOpenState(true);
         } else {
-            url.searchParams.set('id', baseId);
+            url.searchParams.delete('consult');
             // 닫을 때는 replaceState로 현재 히스토리만 업데이트
             window.history.replaceState({}, '', url.toString());
             setConsultModalOpenState(false);
@@ -1393,7 +1389,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                             size="md"
                             radius="md"
                             styles={{ root: { height: 32, fontSize: 13 } }}
-                            onClick={() => setConsultModalOpened(true)}
+                            onClick={() => router.push(`/facility/${facility.id}/consult`)}
                         >
                             이용 비용 확인
                         </Button>
@@ -3540,7 +3536,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
 
             {/* 🔴 플로팅 상담 버튼 (FAB) */}
             <Box
-                onClick={() => setConsultModalOpened(true)}
+                onClick={() => router.push(`/facility/${facility.id}/consult`)}
                 style={{
                     position: 'fixed',
                     bottom: isMobile ? 16 : 16,
