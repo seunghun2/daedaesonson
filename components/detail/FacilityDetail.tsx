@@ -1393,7 +1393,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                             size="md"
                             radius="md"
                             styles={{ root: { height: 32, fontSize: 13 } }}
-                            onClick={() => router.push(`/facility/${facility.id}/consult`)}
+                            onClick={() => setConsultModalOpened(true)}
                         >
                             이용 비용 확인
                         </Button>
@@ -3540,7 +3540,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
 
             {/* 🔴 플로팅 상담 버튼 (FAB) */}
             <Box
-                onClick={() => router.push(`/facility/${facility.id}/consult`)}
+                onClick={() => setConsultModalOpened(true)}
                 style={{
                     position: 'fixed',
                     bottom: isMobile ? 16 : 16,
