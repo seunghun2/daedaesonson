@@ -327,7 +327,9 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
 
             // 1. 구 단위 검색 (geomGuRef)
             if (geomGuRef.current && geomGuRef.current.features) {
-                const targetName = normKeyword.replace(/시|군|구/g, '');
+                // 🔧 수정: "서울특별시 도봉구" → "도봉" 추출 (마지막 구/군/시 이름만)
+                const guMatch = normKeyword.match(/([가-힣]+)(구|군|시)(?:\s|$)/);
+                const targetName = guMatch ? guMatch[1] : normKeyword.replace(/시|군|구/g, '');
                 console.log(`   - Gu Search Target: "${targetName}"`);
 
                 // 🔒 최소 2글자 이상
@@ -337,8 +339,8 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
                     const match = geomGuRef.current.features.find((f: any) => {
                         const fName = (f.properties.name || '').normalize('NFC');
                         const fNameClean = fName.replace(/시|군|구/g, '');
-                        // 🔒 정확한 매칭: 이름이 검색어로 시작하거나, 검색어가 정확히 이름과 같음
-                        return fNameClean === targetName || fNameClean.startsWith(targetName) || targetName.startsWith(fNameClean);
+                        // 🔧 수정: 정확한 매칭만 허용 (부분 매칭 제거)
+                        return fNameClean === targetName;
                     });
 
                     if (match) {

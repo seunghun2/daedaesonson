@@ -97,6 +97,12 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
     } catch { }
   };
 
+  // 🗺️ 지역 데이터 미리 로드 (첫 검색 시 좌표 오류 방지)
+  useEffect(() => {
+    import('@/lib/regionSearch').then(mod => {
+      mod.ensureRegionDataLoaded();
+    });
+  }, []);
 
   // 🚀 SSR로 미리 로드된 데이터 사용 (API fetch 없음!)
   const [dbFacilities, setDbFacilities] = useState<Facility[]>(() => {
@@ -336,6 +342,13 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
 
   // 검색 결과 선택 (지역)
   const handleSelectRegion = (region: RegionResult) => {
+    console.log('🗺️ handleSelectRegion called:', {
+      fullName: region.fullName,
+      name: region.name,
+      type: region.type,
+      center: region.center
+    });
+
     setSearchQuery(region.fullName);
     setSubmittedQuery(region.fullName); // Also update submitted query
     saveRecentSearch(region.fullName); // 최근 검색어 저장
@@ -343,6 +356,7 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
 
     if (mapRef.current) {
       const zoom = region.type === 'gu' ? 12 : 14;
+      console.log('🗺️ Calling highlightRegion with:', region.center.lat, region.center.lng, zoom);
       mapRef.current.highlightRegion(
         region.center.lat,
         region.center.lng,
