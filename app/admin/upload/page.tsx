@@ -160,6 +160,9 @@ export default function AdminPage() {
     const [cropping, setCropping] = useState(false);
     const [useOcr] = useState(false); // Force OCR Checkbox -- MOVED HERE
 
+    // 정렬 상태
+    const [sortOrder, setSortOrder] = useState<'id-asc' | 'id-desc' | 'updated-desc'>('id-asc');
+
     const [itemsPerPage, setItemsPerPage] = useState(() => {
         if (typeof window !== 'undefined') {
             return Number(localStorage.getItem('adminItemsPerPage')) || 100;
@@ -239,13 +242,39 @@ export default function AdminPage() {
     // Filter Logic
     const filteredData = useMemo(() => {
         const query = searchQuery.trim().toLowerCase();
-        return facilities.filter(item => {
+        let result = facilities.filter(item => {
             if (!query) return categoryFilter ? item.category === categoryFilter : true;
             const matchSearch = item.name.toLowerCase().includes(query) || item.address.toLowerCase().includes(query);
             const matchCategory = categoryFilter ? item.category === categoryFilter : true;
             return matchSearch && matchCategory;
         });
-    }, [facilities, searchQuery, categoryFilter]);
+
+        // 정렬
+        if (sortOrder === 'id-asc') {
+            // ID 오름차순 (park-0001, park-0002, ...)
+            result = result.sort((a, b) => {
+                const numA = parseInt(a.id.replace(/\D/g, '')) || 0;
+                const numB = parseInt(b.id.replace(/\D/g, '')) || 0;
+                return numA - numB;
+            });
+        } else if (sortOrder === 'id-desc') {
+            // ID 내림차순 (park-1498, park-1497, ...)
+            result = result.sort((a, b) => {
+                const numA = parseInt(a.id.replace(/\D/g, '')) || 0;
+                const numB = parseInt(b.id.replace(/\D/g, '')) || 0;
+                return numB - numA;
+            });
+        } else if (sortOrder === 'updated-desc') {
+            // 수정일 최신순
+            result = result.sort((a, b) => {
+                const dateA = (a as any).updatedAt ? new Date((a as any).updatedAt).getTime() : 0;
+                const dateB = (b as any).updatedAt ? new Date((b as any).updatedAt).getTime() : 0;
+                return dateB - dateA;
+            });
+        }
+
+        return result;
+    }, [facilities, searchQuery, categoryFilter, sortOrder]);
 
     // Pagination Logic
     const paginatedData = useMemo(() => {
@@ -1132,6 +1161,17 @@ export default function AdminPage() {
                     value={String(itemsPerPage)}
                     onChange={(val) => { setItemsPerPage(Number(val) || 100); setActivePage(1); }}
                     style={{ width: 100 }}
+                />
+                <Select
+                    placeholder="정렬"
+                    data={[
+                        { value: 'id-asc', label: 'ID 오름차순 ↑' },
+                        { value: 'id-desc', label: 'ID 내림차순 ↓' },
+                        { value: 'updated-desc', label: '수정일 최신순' },
+                    ]}
+                    value={sortOrder}
+                    onChange={(val) => { setSortOrder((val as any) || 'id-asc'); setActivePage(1); }}
+                    style={{ width: 140 }}
                 />
             </Group>
 
