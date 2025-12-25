@@ -1192,7 +1192,10 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                 } else {
                     return (
                         <Box bg="white" p="md" style={{ borderBottom: '8px solid #f8f9fa' }}>
-                            <Text size="lg" fw={700} c="gray.6">전화 문의 필요</Text>
+                            <Text size="sm" c="gray.6" mb={8} fw={500}>예상 이용 비용</Text>
+                            <Text style={{ fontSize: '26px', fontWeight: 800, color: 'var(--mantine-color-brand-8)', lineHeight: 1, fontFamily: 'Pretendard' }}>
+                                가격문의
+                            </Text>
                         </Box>
                     );
                 }
