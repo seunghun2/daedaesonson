@@ -324,10 +324,8 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
 
   // 검색 결과 선택 (시설)
   const handleSelectFacility = (facility: Facility) => {
-    // Update URL to open detail modal (supports back button)
-    const params = new URLSearchParams(searchParams.toString());
-    params.set('id', facility.id);
-    router.push(`${pathname}?${params.toString()}`, { scroll: false });
+    // Update URL to open detail page (supports back button)
+    router.push(`/facility/${facility.id}`, { scroll: false });
 
     // Map movement logic
     if (mapRef.current && facility.coordinates) {
@@ -370,9 +368,7 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
   };
 
   const handleMarkerClick = (facility: Facility) => {
-    const params = new URLSearchParams(searchParams.toString());
-    params.set('id', facility.id);
-    router.push(`${pathname}?${params.toString()}`, { scroll: false });
+    router.push(`/facility/${facility.id}`, { scroll: false });
     if (isMobile) setMobileView('map');
 
     // 📝 기록 저장
