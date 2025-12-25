@@ -190,9 +190,12 @@ export async function POST(req: Request) {
                 return NextResponse.json({ error: 'Missing facility ID' }, { status: 400 });
             }
 
-            // 이미지 처리
-            const imgSource = f.imageGallery || f.images || [];
-            const imageStr = JSON.stringify(Array.isArray(imgSource) ? imgSource : []);
+            // 이미지 처리 (필드가 있을 때만 업데이트)
+            let imageStr: string | undefined = undefined;
+            if (f.imageGallery !== undefined || f.images !== undefined) {
+                const imgSource = f.imageGallery || f.images || [];
+                imageStr = JSON.stringify(Array.isArray(imgSource) ? imgSource : []);
+            }
 
             // 🔥 priceTable에서 대표가격 계산
             // 가격 단위 통일: 10000 미만이면 만원 단위로 가정 → 원 단위로 변환
