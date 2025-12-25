@@ -579,17 +579,18 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
     const consultModalOpened = consultModalOpenState;
 
     const setConsultModalOpened = (open: boolean) => {
+        const url = new URL(window.location.href);
+
         if (open) {
-            // 상담 페이지로 이동
-            router.push(`/facility/${facility.id}/consult`);
+            url.searchParams.set('consult', 'true');
+            // pushState로 히스토리 추가 → 뒤로가기 시 모달만 닫힘
+            window.history.pushState({ modal: 'consult' }, '', url.toString());
             setConsultModalOpenState(true);
         } else {
-            // 닫기: /consult 경로이면 뒤로가기, 아니면 상태만 변경
-            if (window.location.pathname.endsWith('/consult')) {
-                router.back();
-            } else {
-                setConsultModalOpenState(false);
-            }
+            url.searchParams.delete('consult');
+            // 닫을 때는 replaceState로 현재 히스토리만 업데이트
+            window.history.replaceState({}, '', url.toString());
+            setConsultModalOpenState(false);
         }
     };
     const [consultForm, setConsultForm] = useState({
@@ -1388,7 +1389,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                             size="md"
                             radius="md"
                             styles={{ root: { height: 32, fontSize: 13 } }}
-                            onClick={() => router.push(`/facility/${facility.id}/consult`)}
+                            onClick={() => setConsultModalOpened(true)}
                         >
                             이용 비용 확인
                         </Button>
@@ -3535,7 +3536,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
 
             {/* 🔴 플로팅 상담 버튼 (FAB) */}
             <Box
-                onClick={() => router.push(`/facility/${facility.id}/consult`)}
+                onClick={() => setConsultModalOpened(true)}
                 style={{
                     position: 'fixed',
                     bottom: isMobile ? 16 : 16,
