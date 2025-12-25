@@ -160,6 +160,7 @@ export async function GET() {
                 viewCount: f.viewCount || 0,
                 description: f.description || '',
                 originalName: f.originalName,
+                updatedAt: f.updatedAt,  // 실제 수정 시간
             };
         });
 

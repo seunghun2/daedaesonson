@@ -1210,7 +1210,9 @@ export default function AdminPage() {
                                         </Table.Td>
                                         <Table.Td>
                                             <Text size="xs" c="dimmed">
-                                                {(item as any).lastUpdated || '-'}
+                                                {(item as any).updatedAt
+                                                    ? new Date((item as any).updatedAt).toLocaleDateString('ko-KR', { month: 'short', day: 'numeric' })
+                                                    : '-'}
                                             </Text>
                                         </Table.Td>
                                         <Table.Td>
