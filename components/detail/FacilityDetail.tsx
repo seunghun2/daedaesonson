@@ -3494,6 +3494,39 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                     </Box>
                 )}
             </Modal>
+
+            {/* 🔴 플로팅 상담 버튼 (FAB) */}
+            <Box
+                onClick={() => setConsultModalOpened(true)}
+                style={{
+                    position: 'fixed',
+                    bottom: isMobile ? 16 : 16,
+                    right: 16,
+                    width: 56,
+                    height: 56,
+                    borderRadius: '50%',
+                    background: 'linear-gradient(135deg, #1D0098 0%, #4B3FD3 100%)',
+                    boxShadow: '0 4px 16px rgba(29, 0, 152, 0.4)',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    cursor: 'pointer',
+                    zIndex: 100,
+                    transition: 'transform 0.2s, box-shadow 0.2s',
+                }}
+                onMouseEnter={(e) => {
+                    e.currentTarget.style.transform = 'scale(1.1)';
+                    e.currentTarget.style.boxShadow = '0 6px 24px rgba(29, 0, 152, 0.5)';
+                }}
+                onMouseLeave={(e) => {
+                    e.currentTarget.style.transform = 'scale(1)';
+                    e.currentTarget.style.boxShadow = '0 4px 16px rgba(29, 0, 152, 0.4)';
+                }}
+            >
+                <Text size="xs" fw={700} c="white" ta="center" lh={1.2}>
+                    상담<br />하기
+                </Text>
+            </Box>
         </Box >
     );
 }
