@@ -697,7 +697,7 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
         if (!map || !window.naver || !window.naver.maps) return;
 
         const currentZoom = map.getZoom();
-        console.log(`NaverMap - 줌 레벨: ${currentZoom}`);
+        // 잡음 방지: 로그 제거
 
         // 🔄 필터 변경 감지 (facilities 개수가 바뀌면 마커 재생성)
         if (isMarkersInitializedRef.current && prevFacilitiesCountRef.current !== processedFacilities.length) {
@@ -708,7 +708,7 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
 
         // 🔒 이미 마커가 초기화되었으면 재생성하지 않음 (위치 고정)
         if (isMarkersInitializedRef.current) {
-            console.log('🔒 마커 이미 초기화됨 - 재생성 스킵');
+            // 잡음 방지: 로그 제거
             return;
         }
 
@@ -932,28 +932,12 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
 
     }, [processedFacilities, regionGroups, onMarkerClick]);
 
-    // 🚀 Effect: 데이터 변경 시 업데이트
+    // 🚀 Effect: 데이터 변경 시 업데이트 (최적화: 즉시 1회만 호출)
     useEffect(() => {
-        if (isMapLoaded) {
-            // 1. 즉시 업데이트
+        if (isMapLoaded && processedFacilities.length > 0) {
             updateVisibleMarkers();
-
-            // 2. 빠른 재시도 (50ms)
-            const timer1 = setTimeout(() => {
-                updateVisibleMarkers();
-            }, 50);
-
-            // 3. 안전장치 (150ms)
-            const timer2 = setTimeout(() => {
-                updateVisibleMarkers();
-            }, 150);
-
-            return () => {
-                clearTimeout(timer1);
-                clearTimeout(timer2);
-            };
         }
-    }, [facilities, isMapLoaded, updateVisibleMarkers]);
+    }, [facilities, isMapLoaded, updateVisibleMarkers, processedFacilities.length]);
 
     const initMap = () => {
         if (!window.naver || !window.naver.maps) {
