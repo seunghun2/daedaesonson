@@ -74,6 +74,29 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
     facilities: Facility[];
   }>({ regions: [], facilities: [] });
 
+  // 🔍 최근 검색어 상태
+  const [recentSearches, setRecentSearches] = useState<string[]>([]);
+
+  // localStorage에서 최근 검색어 불러오기
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      try {
+        const saved = localStorage.getItem('recentSearches');
+        if (saved) setRecentSearches(JSON.parse(saved));
+      } catch { }
+    }
+  }, []);
+
+  // 최근 검색어 저장 함수
+  const saveRecentSearch = (query: string) => {
+    if (!query.trim()) return;
+    const updated = [query, ...recentSearches.filter(s => s !== query)].slice(0, 5);
+    setRecentSearches(updated);
+    try {
+      localStorage.setItem('recentSearches', JSON.stringify(updated));
+    } catch { }
+  };
+
 
   // 🚀 SSR로 미리 로드된 데이터 사용 (API fetch 없음!)
   const [dbFacilities, setDbFacilities] = useState<Facility[]>(() => {
@@ -308,12 +331,14 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
     setSearchFocused(false);
     setSearchQuery(facility.name); // Update search input with selected facility name
     setSubmittedQuery(facility.name); // Also update submitted query
+    saveRecentSearch(facility.name); // 최근 검색어 저장
   };
 
   // 검색 결과 선택 (지역)
   const handleSelectRegion = (region: RegionResult) => {
     setSearchQuery(region.fullName);
     setSubmittedQuery(region.fullName); // Also update submitted query
+    saveRecentSearch(region.fullName); // 최근 검색어 저장
     setIsRegionSelected(true);
 
     if (mapRef.current) {
@@ -445,6 +470,7 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
                     e.preventDefault(); // Prevent form submission if in a form
                     setSubmittedQuery(searchQuery); // Trigger immediate search
                     setSearchFocused(false); // Close autocomplete
+                    saveRecentSearch(searchQuery); // 최근 검색어 저장
                     (document.activeElement as HTMLElement)?.blur(); // Hide keyboard on mobile
                   }
                 }}
@@ -593,6 +619,45 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
                           {FACILITY_CATEGORY_LABELS[fac.category]}
                         </Text>
                       </Group>
+                    </Box>
+                  ))}
+                </Box>
+              )}
+
+              {/* 🔍 최근 검색어 (검색어 없고 포커스 상태일 때) */}
+              {searchFocused && !searchQuery.trim() && recentSearches.length > 0 && (
+                <Box
+                  pos="absolute"
+                  top="calc(100% + 8px)"
+                  left={0}
+                  w="100%"
+                  bg="white"
+                  style={{
+                    zIndex: 2100,
+                    borderRadius: 12,
+                    boxShadow: '0 8px 30px rgba(0,0,0,0.12), 0 4px 10px rgba(0,0,0,0.05)',
+                    border: '1px solid #f1f3f5',
+                    overflow: 'hidden'
+                  }}
+                >
+                  <Box px="md" py="xs" bg="gray.0">
+                    <Text size="xs" c="dimmed" fw={500}>최근 검색</Text>
+                  </Box>
+                  {recentSearches.map((query, i) => (
+                    <Box
+                      key={`recent-${i}`}
+                      px="md"
+                      py={12}
+                      style={{ cursor: 'pointer', borderBottom: i === recentSearches.length - 1 ? 'none' : '1px solid #f8f9fa' }}
+                      className="hover:bg-gray-50"
+                      onClick={() => {
+                        setSearchQuery(query);
+                        setSubmittedQuery(query);
+                        setSearchFocused(false);
+                      }}
+                      onMouseDown={(e) => e.preventDefault()}
+                    >
+                      <Text size="sm" c="dark.7" truncate>{query}</Text>
                     </Box>
                   ))}
                 </Box>
@@ -753,6 +818,7 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
                         e.preventDefault();
                         setSubmittedQuery(searchQuery);
                         setSearchFocused(false);
+                        saveRecentSearch(searchQuery); // 최근 검색어 저장
                         (document.activeElement as HTMLElement)?.blur();
                       }
                     }}
@@ -859,6 +925,44 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
                         >
                           <Text size="sm" fw={500} c="dark.9">{fac.name}</Text>
                           <Text size="xs" c="dimmed" truncate>{fac.address}</Text>
+                        </Box>
+                      ))}
+                    </Box>
+                  )}
+
+                  {/* 🔍 모바일 최근 검색어 */}
+                  {searchFocused && !searchQuery.trim() && recentSearches.length > 0 && (
+                    <Box
+                      pos="absolute"
+                      top="calc(100% + 4px)"
+                      left={0}
+                      w="100%"
+                      bg="white"
+                      style={{
+                        zIndex: 2100,
+                        borderRadius: 8,
+                        boxShadow: '0 4px 20px rgba(0,0,0,0.15)',
+                        maxHeight: '300px',
+                        overflowY: 'auto'
+                      }}
+                    >
+                      <Box px="md" py="xs" bg="gray.0">
+                        <Text size="xs" c="dimmed" fw={500}>최근 검색</Text>
+                      </Box>
+                      {recentSearches.map((query, i) => (
+                        <Box
+                          key={`mob-recent-${i}`}
+                          px="md"
+                          py={12}
+                          style={{ cursor: 'pointer', borderBottom: i === recentSearches.length - 1 ? 'none' : '1px solid #f8f9fa' }}
+                          onClick={() => {
+                            setSearchQuery(query);
+                            setSubmittedQuery(query);
+                            setSearchFocused(false);
+                          }}
+                          onMouseDown={(e) => e.preventDefault()}
+                        >
+                          <Text size="sm" c="dark.7" truncate>{query}</Text>
                         </Box>
                       ))}
                     </Box>
