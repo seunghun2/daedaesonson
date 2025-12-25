@@ -271,73 +271,80 @@ function PriceInfoSection({ priceInfo, hasPrice }: { priceInfo: any, hasPrice: b
                                                                             ))}
                                                                         </Tabs.List>
 
-                                                                        {groupNames.map((gName, idx) => (
-                                                                            <Tabs.Panel key={idx} value={gName}>
-                                                                                <Stack gap="sm">
-                                                                                    {groupedRows[gName].map((row: any, rowIdx: number) => (
-                                                                                        <Box key={`${gName}-${rowIdx}`}
-                                                                                            style={{
-                                                                                                borderBottom: '1px solid #e9ecef',
-                                                                                                padding: '10px 0',
-                                                                                                display: 'flex',
-                                                                                                alignItems: 'center',
-                                                                                                gap: 8
-                                                                                            }}
-                                                                                        >
-                                                                                            {/* 상품명 - 고정 너비 */}
-                                                                                            <Text fw={600} size="12px" c="dark.9"
+                                                                        {groupNames.map((gName, idx) => {
+                                                                            // 현재 그룹의 관리비만 필터링
+                                                                            const groupOptions = optionRows.filter((r: any) => r.groupType === gName);
+
+                                                                            return (
+                                                                                <Tabs.Panel key={idx} value={gName}>
+                                                                                    <Stack gap="sm">
+                                                                                        {groupedRows[gName].map((row: any, rowIdx: number) => (
+                                                                                            <Box key={`${gName}-${rowIdx}`}
                                                                                                 style={{
-                                                                                                    width: 125,
-                                                                                                    flexShrink: 0,
-                                                                                                    overflow: 'hidden',
-                                                                                                    textOverflow: 'ellipsis',
-                                                                                                    whiteSpace: 'nowrap'
+                                                                                                    borderBottom: '1px solid #e9ecef',
+                                                                                                    padding: '10px 0',
+                                                                                                    display: 'flex',
+                                                                                                    alignItems: 'center',
+                                                                                                    gap: 8
                                                                                                 }}
                                                                                             >
-                                                                                                {formatName(row.name)}
-                                                                                            </Text>
-                                                                                            {/* 세부정보 - 유연 너비 */}
-                                                                                            <Text size="12px" c="dark.9"
-                                                                                                style={{
-                                                                                                    flex: 1,
-                                                                                                    overflow: 'hidden',
-                                                                                                    textOverflow: 'ellipsis',
-                                                                                                    whiteSpace: 'nowrap'
-                                                                                                }}
-                                                                                            >
-                                                                                                {(row.grade || '-').length > 10 ? (row.grade || '-').slice(0, 10) + '...' : (row.grade || '-')}
-                                                                                            </Text>
-                                                                                            {/* 가격 - 오른쪽 고정 */}
-                                                                                            <Text fw={700} size="12px" c="black"
-                                                                                                style={{
-                                                                                                    flexShrink: 0,
-                                                                                                    whiteSpace: 'nowrap',
-                                                                                                    textAlign: 'right'
-                                                                                                }}
-                                                                                            >
-                                                                                                {formatKoreanCurrency(row.price)}
-                                                                                            </Text>
+                                                                                                {/* 상품명 - 고정 너비 */}
+                                                                                                <Text fw={600} size="12px" c="dark.9"
+                                                                                                    style={{
+                                                                                                        width: 125,
+                                                                                                        flexShrink: 0,
+                                                                                                        overflow: 'hidden',
+                                                                                                        textOverflow: 'ellipsis',
+                                                                                                        whiteSpace: 'nowrap'
+                                                                                                    }}
+                                                                                                >
+                                                                                                    {formatName(row.name)}
+                                                                                                </Text>
+                                                                                                {/* 세부정보 - 유연 너비 */}
+                                                                                                <Text size="12px" c="dark.9"
+                                                                                                    style={{
+                                                                                                        flex: 1,
+                                                                                                        overflow: 'hidden',
+                                                                                                        textOverflow: 'ellipsis',
+                                                                                                        whiteSpace: 'nowrap'
+                                                                                                    }}
+                                                                                                >
+                                                                                                    {(row.grade || '-').length > 10 ? (row.grade || '-').slice(0, 10) + '...' : (row.grade || '-')}
+                                                                                                </Text>
+                                                                                                {/* 가격 - 오른쪽 고정 */}
+                                                                                                <Text fw={700} size="12px" c="black"
+                                                                                                    style={{
+                                                                                                        flexShrink: 0,
+                                                                                                        whiteSpace: 'nowrap',
+                                                                                                        textAlign: 'right'
+                                                                                                    }}
+                                                                                                >
+                                                                                                    {formatKoreanCurrency(row.price)}
+                                                                                                </Text>
+                                                                                            </Box>
+                                                                                        ))}
+                                                                                    </Stack>
+
+                                                                                    {/* 💡 부가 옵션: 현재 그룹의 관리비만 */}
+                                                                                    {groupOptions.length > 0 && (
+                                                                                        <Box bg="white" p="xs" style={{ borderRadius: 6, border: '1px solid #f1f3f5' }} mt="md">
+                                                                                            <Group justify="space-between" mb="xs">
+                                                                                                <Text size="11px" fw={700} c="dimmed">💡 부가 옵션</Text>
+                                                                                            </Group>
+                                                                                            <Stack gap="xs">
+                                                                                                {groupOptions.map((row: any, optIdx: number) => (
+                                                                                                    <Group key={`opt-${gName}-${optIdx}`} justify="space-between">
+                                                                                                        <Text size="xs" c="dark.5">{row.name}</Text>
+                                                                                                        <Text size="xs" fw={600} c="dark.7">{formatKoreanCurrency(row.price)}</Text>
+                                                                                                    </Group>
+                                                                                                ))}
+                                                                                            </Stack>
                                                                                         </Box>
-                                                                                    ))}
-                                                                                </Stack>
-                                                                            </Tabs.Panel>
-                                                                        ))}
+                                                                                    )}
+                                                                                </Tabs.Panel>
+                                                                            );
+                                                                        })}
                                                                     </Tabs>
-                                                                    {optionRows.length > 0 && (
-                                                                        <Box bg="white" p="xs" style={{ borderRadius: 6, border: '1px solid #f1f3f5' }} mt="md">
-                                                                            <Group justify="space-between" mb="xs">
-                                                                                <Text size="11px" fw={700} c="dimmed">💡 부가 옵션</Text>
-                                                                            </Group>
-                                                                            <Stack gap="xs">
-                                                                                {optionRows.map((row: any, idx: number) => (
-                                                                                    <Group key={`opt-${idx}`} justify="space-between">
-                                                                                        <Text size="xs" c="dark.5">{row.name}</Text>
-                                                                                        <Text size="xs" fw={600} c="dark.7">{formatKoreanCurrency(row.price)}</Text>
-                                                                                    </Group>
-                                                                                ))}
-                                                                            </Stack>
-                                                                        </Box>
-                                                                    )}
                                                                 </>
                                                             );
                                                         }
