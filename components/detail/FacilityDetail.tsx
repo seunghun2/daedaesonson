@@ -551,17 +551,40 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
     const [showAllInquiries, setShowAllInquiries] = useState(false);
     const [totalInquiryCount, setTotalInquiryCount] = useState(0);
 
-    // 상담 신청 모달 - URL 파라미터로 관리
+    // 상담 신청 모달 - URL 파라미터로 관리 + 뒤로가기 지원
     const searchParams = useSearchParams();
-    const consultModalOpened = searchParams.get('consult') === 'true';
+    const [consultModalOpenState, setConsultModalOpenState] = useState(false);
+
+    // URL에서 초기 상태 읽기
+    useEffect(() => {
+        setConsultModalOpenState(searchParams.get('consult') === 'true');
+    }, [searchParams]);
+
+    // popstate 이벤트 리스너 (뒤로가기 감지)
+    useEffect(() => {
+        const handlePopState = () => {
+            const params = new URLSearchParams(window.location.search);
+            setConsultModalOpenState(params.get('consult') === 'true');
+        };
+        window.addEventListener('popstate', handlePopState);
+        return () => window.removeEventListener('popstate', handlePopState);
+    }, []);
+
+    const consultModalOpened = consultModalOpenState;
+
     const setConsultModalOpened = (open: boolean) => {
         const url = new URL(window.location.href);
         if (open) {
             url.searchParams.set('consult', 'true');
+            // pushState로 히스토리 추가 → 뒤로가기 시 모달만 닫힘
+            window.history.pushState({ modal: 'consult' }, '', url.toString());
+            setConsultModalOpenState(true);
         } else {
             url.searchParams.delete('consult');
+            // 닫을 때는 replaceState로 현재 히스토리만 업데이트
+            window.history.replaceState({}, '', url.toString());
+            setConsultModalOpenState(false);
         }
-        window.history.replaceState({}, '', url.toString());
     };
     const [consultForm, setConsultForm] = useState({
         name: '',
