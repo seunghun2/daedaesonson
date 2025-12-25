@@ -1154,6 +1154,7 @@ export default function AdminPage() {
                                     <Table.Th>주소</Table.Th>
                                     <Table.Th>대표가격</Table.Th>
                                     <Table.Th>상세 상태</Table.Th>
+                                    <Table.Th>최종수정</Table.Th>
                                     <Table.Th>마커표시</Table.Th>
                                     <Table.Th>관리</Table.Th>
                                 </Table.Tr>
@@ -1206,6 +1207,11 @@ export default function AdminPage() {
                                             ) : (
                                                 <Badge size="sm" variant="dot" color="gray">이미지 없음</Badge>
                                             )}
+                                        </Table.Td>
+                                        <Table.Td>
+                                            <Text size="xs" c="dimmed">
+                                                {(item as any).lastUpdated || '-'}
+                                            </Text>
                                         </Table.Td>
                                         <Table.Td>
                                             <Switch
