@@ -1393,7 +1393,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                             size="md"
                             radius="md"
                             styles={{ root: { height: 32, fontSize: 13 } }}
-                            onClick={() => setConsultModalOpened(true)}
+                            onClick={() => router.push(`/facility/${facility.id}/consult`)}
                         >
                             이용 비용 확인
                         </Button>
@@ -1777,6 +1777,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                     zIndex={10000}
                     padding={0}
                     lockScroll={false}
+                    keepMounted
                     transitionProps={{
                         transition: 'slide-left',
                         duration: 300,
@@ -1797,6 +1798,9 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                             display: 'flex',
                             flexDirection: 'column',
                             overflow: 'hidden'
+                        },
+                        overlay: {
+                            backgroundColor: 'transparent' // 오버레이 투명화로 깜빡임 방지
                         }
                     }}
                 >
@@ -3536,7 +3540,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
 
             {/* 🔴 플로팅 상담 버튼 (FAB) */}
             <Box
-                onClick={() => setConsultModalOpened(true)}
+                onClick={() => router.push(`/facility/${facility.id}/consult`)}
                 style={{
                     position: 'fixed',
                     bottom: isMobile ? 16 : 16,
