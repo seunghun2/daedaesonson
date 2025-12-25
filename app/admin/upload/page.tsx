@@ -1250,9 +1250,22 @@ export default function AdminPage() {
                                         </Table.Td>
                                         <Table.Td>
                                             <Text size="xs" c="dimmed">
-                                                {(item as any).updatedAt
-                                                    ? new Date((item as any).updatedAt).toLocaleString('ko-KR', { month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit' })
-                                                    : '-'}
+                                                {(() => {
+                                                    const updated = item.lastUpdated;
+                                                    if (!updated) return '-';
+                                                    // ISO 형식이면 날짜+시간으로 표시
+                                                    if (updated.includes('T')) {
+                                                        return new Date(updated).toLocaleString('ko-KR', {
+                                                            timeZone: 'Asia/Seoul',
+                                                            month: 'numeric',
+                                                            day: 'numeric',
+                                                            hour: '2-digit',
+                                                            minute: '2-digit'
+                                                        });
+                                                    }
+                                                    // 기존 YYYY-MM-DD 형식은 그대로
+                                                    return updated;
+                                                })()}
                                             </Text>
                                         </Table.Td>
                                         <Table.Td>

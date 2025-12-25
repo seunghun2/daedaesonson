@@ -279,7 +279,7 @@ export async function POST(req: Request) {
                 isActive: f.isActive ?? true,
                 operatorType: f.operatorType,
                 originalName: f.originalName,
-                lastUpdated: f.lastUpdated,
+                lastUpdated: new Date().toISOString(),
             };
 
             // undefined 필드 제거 (기존 DB값 유지)
