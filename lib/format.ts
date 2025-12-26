@@ -45,20 +45,15 @@ export function formatRelativeTime(dateStr: string | undefined): string {
         return dateStr;
     }
 
-    // YYYY-MM-DD 형식인지 확인
-    const dateMatch = dateStr.match(/^(\d{4})-(\d{2})-(\d{2})$/);
-    if (!dateMatch) {
-        return dateStr; // 알 수 없는 형식은 그대로 반환
-    }
-
+    // Date 객체로 파싱 시도 (ISO 8601, YYYY-MM-DD 등 모두 지원)
     const targetDate = new Date(dateStr);
-    const now = new Date();
 
     // 유효한 날짜인지 확인
     if (isNaN(targetDate.getTime())) {
-        return dateStr;
+        return dateStr; // 파싱 실패시 원본 반환
     }
 
+    const now = new Date();
     const diffMs = now.getTime() - targetDate.getTime();
     const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
 

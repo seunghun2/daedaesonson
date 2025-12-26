@@ -262,7 +262,7 @@ export async function POST(req: Request) {
                 category: f.category || 'OTHER',
                 description: f.description,
                 images: imageStr,
-                updatedAt: new Date().toISOString(),
+                updatedAt: new Date().toISOString(),  // 항상 갱신 (우리가 수정한 시간)
                 rating: f.rating || 0,
                 reviewCount: f.reviewCount || 0,
                 isPublic: f.isPublic ?? false,
@@ -282,7 +282,7 @@ export async function POST(req: Request) {
                 isActive: f.isActive ?? true,
                 operatorType: f.operatorType,
                 originalName: f.originalName,
-                lastUpdated: new Date().toISOString(),
+                lastUpdated: f.lastUpdated,  // 명시적으로 전달된 경우만 업데이트 (기존 값 유지)
             };
 
             // undefined 필드 제거 (기존 DB값 유지)

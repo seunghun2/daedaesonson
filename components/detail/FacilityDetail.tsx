@@ -1443,12 +1443,14 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                         </Group>
                     )}
 
+                    {/* 업데이트 날짜 - 숨김 처리
                     <Group justify="space-between">
                         <Text size="sm" c="gray.6">업데이트</Text>
                         <Text size="sm" fw={500} c="dark.9">
                             {formatRelativeTime(facility.lastUpdated)}
                         </Text>
                     </Group>
+                    */}
                 </Stack>
             </Box>
 
