@@ -159,6 +159,10 @@ export default function AdminPage() {
     const [pdfLoading, setPdfLoading] = useState(false);
     const [cropping, setCropping] = useState(false);
     const [useOcr] = useState(false); // Force OCR Checkbox -- MOVED HERE
+    const [lastSavedTime, setLastSavedTime] = useState<string | null>(() => {
+        const now = new Date();
+        return `${now.getMonth() + 1}/${now.getDate()} ${now.getHours()}:${String(now.getMinutes()).padStart(2, '0')}`;
+    }); // 마지막 저장 시간
 
     // 정렬 상태
     const [sortOrder, setSortOrder] = useState<'id-asc' | 'id-desc' | 'updated-desc'>('id-asc');
@@ -220,6 +224,10 @@ export default function AdminPage() {
                 const txt = await res.text();
                 throw new Error(txt);
             }
+            // 저장 성공 시 시간 기록
+            const now = new Date();
+            const timeStr = `${now.getMonth() + 1}/${now.getDate()} ${now.getHours()}:${String(now.getMinutes()).padStart(2, '0')}`;
+            setLastSavedTime(timeStr);
         } catch (e) {
             console.error('Save failed:', e);
             alert('서버 저장에 실패했습니다: ' + String(e));
@@ -536,7 +544,8 @@ export default function AdminPage() {
             imageGallery: processedGallery,
             // Sync legacy 'images' with 'imageGallery' to prevent stale data resurrection
             images: processedGallery,
-            priceRange: calculatedPriceRange
+            priceRange: calculatedPriceRange,
+            lastUpdated: new Date().toISOString() // 저장 시간 기록
         };
 
         let newFacilities;
@@ -1073,7 +1082,14 @@ export default function AdminPage() {
     return (
         <Box p="lg">
             <Group justify="space-between" mb="lg">
-                <Title order={2}>시설 데이터 관리 (Admin)</Title>
+                <Group>
+                    <Title order={2}>시설 데이터 관리 (Admin)</Title>
+                    {lastSavedTime && (
+                        <Badge color="green" variant="light">
+                            최종수정: {lastSavedTime}
+                        </Badge>
+                    )}
+                </Group>
                 <Button leftSection={<Plus size={16} />} onClick={handleCreate}>새 시설 등록</Button>
             </Group>
 
@@ -1966,16 +1982,23 @@ export default function AdminPage() {
 
                                                                                                             if (currentCat && currentCat.rows) {
                                                                                                                 let updatedRows = [...currentCat.rows];
-                                                                                                                const wasActive = updatedRows[itemIdx].isRepresentative;
+
+                                                                                                                // Find the actual index in the full array
+                                                                                                                const targetRow = rows[itemIdx];
+                                                                                                                const actualIndex = updatedRows.findIndex((r: any) => r === targetRow);
+
+                                                                                                                if (actualIndex === -1) return;
+
+                                                                                                                const wasActive = updatedRows[actualIndex].isRepresentative;
 
                                                                                                                 if (wasActive) {
                                                                                                                     // Toggle Off
-                                                                                                                    updatedRows[itemIdx] = { ...updatedRows[itemIdx], isRepresentative: false };
+                                                                                                                    updatedRows[actualIndex] = { ...updatedRows[actualIndex], isRepresentative: false };
                                                                                                                 } else {
                                                                                                                     // Toggle On (Radio Style in this category)
                                                                                                                     updatedRows = updatedRows.map((r, i) => ({
                                                                                                                         ...r,
-                                                                                                                        isRepresentative: i === itemIdx
+                                                                                                                        isRepresentative: i === actualIndex
                                                                                                                     }));
                                                                                                                 }
 
