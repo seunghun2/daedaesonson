@@ -123838,7 +123838,7 @@
     },
     "phone": "054-553-0336",
     "capacity": null,
-    "lastUpdated": "1개월전",
+    "lastUpdated": "2025-12-26T07:57:56.461Z",
     "originalName": "703.천주사 영탑공원_price_info.png",
     "location": {
       "lat": 36.746993,
@@ -123929,6 +123929,36 @@
       "categoryCount": 2,
       "itemCount": 5,
       "representativeCount": 2
+    },
+    "pricing": {
+      "봉안당": {
+        "rows": [
+          {
+            "name": "유해납골",
+            "grade": "1기",
+            "price": 2500000,
+            "description": "유해납골 1기",
+            "isRepresentative": true
+          },
+          {
+            "name": "유골함",
+            "grade": "1기",
+            "price": 270000,
+            "description": "유골함 1기",
+            "isRepresentative": false
+          }
+        ]
+      },
+      "옵션": {
+        "rows": [
+          {
+            "name": "관리비",
+            "price": 50000,
+            "description": "1년",
+            "isRepresentative": false
+          }
+        ]
+      }
     }
   },
   {

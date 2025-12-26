@@ -109,6 +109,15 @@ export async function GET() {
 
         // 4. 데이터 변환 (DB 필드 → 프론트엔드 형식)
         const liteData = facilitiesFromDb.map(f => {
+            // 🔍 디버그: updatedAt 필드 확인
+            if (f.id === 'park-0537') {
+                console.log('🔍 DB Record for park-0537:', {
+                    updatedAt: f.updatedAt,
+                    updated_at: f.updated_at,
+                    allKeys: Object.keys(f)
+                });
+            }
+
             // 이미지 파싱
             let parsedImages: string[] = [];
             if (f.images) {
@@ -282,7 +291,7 @@ export async function POST(req: Request) {
                 isActive: f.isActive ?? true,
                 operatorType: f.operatorType,
                 originalName: f.originalName,
-                lastUpdated: f.lastUpdated,  // 명시적으로 전달된 경우만 업데이트 (기존 값 유지)
+                lastUpdated: f.lastUpdated || new Date().toISOString(),  // 자동으로 현재 시간 설정
             };
 
             // undefined 필드 제거 (기존 DB값 유지)
