@@ -1,0 +1,79 @@
+{
+  "id": "park-0510",
+  "name": "분당추모공원휴",
+  "address": "경기도 광주시 오포읍 오포로 211-49 (능평리)",
+  "category": "CHARNEL_HOUSE",
+  "coordinates": {"lat": 37.4324234262179, "lng": 127.267426329154},
+  "isPublic": false,
+  "isActive": true,
+  "priceInfo": {
+    "priceTable": {
+      "봉안당": {
+        "category": "charnel",
+        "unit": "원",
+        "rows": [
+          {"name": "5단", "grade": "측면", "price": 1100000, "isRepresentative": true, "groupType": "1실"},
+          {"name": "5단", "grade": "중앙", "price": 1300000, "groupType": "1실"},
+          {"name": "4단", "grade": "측면", "price": 1200000, "groupType": "1실"},
+          {"name": "4단", "grade": "중앙", "price": 1500000, "groupType": "1실"},
+          {"name": "3단", "grade": "측면", "price": 1200000, "groupType": "1실"},
+          {"name": "3단", "grade": "중앙", "price": 1600000, "groupType": "1실"},
+          
+          {"name": "5단", "grade": "측면", "price": 1400000, "groupType": "2실"},
+          {"name": "5단", "grade": "중앙", "price": 1600000, "groupType": "2실"},
+          {"name": "4단", "grade": "측면", "price": 1500000, "groupType": "2실"},
+          {"name": "4단", "grade": "중앙", "price": 1800000, "groupType": "2실"},
+          {"name": "3단", "grade": "측면", "price": 1500000, "groupType": "2실"},
+          {"name": "3단", "grade": "중앙", "price": 1900000, "groupType": "2실"},
+          
+          {"name": "5단", "grade": "측면", "price": 1700000, "groupType": "3실"},
+          {"name": "5단", "grade": "중앙", "price": 1900000, "groupType": "3실"},
+          {"name": "4단", "grade": "측면", "price": 1800000, "groupType": "3실"},
+          {"name": "4단", "grade": "중앙", "price": 2100000, "groupType": "3실"},
+          {"name": "3단", "grade": "측면", "price": 1800000, "groupType": "3실"},
+          {"name": "3단", "grade": "중앙", "price": 2200000, "groupType": "3실"}
+        ]
+      },
+      "봉안묘": {
+        "category": "charnel",
+        "unit": "원",
+        "rows": [
+          {"name": "1기", "grade": "", "price": 3800000, "groupType": "A-1묘역"},
+          {"name": "2기", "grade": "", "price": 4200000, "groupType": "A-1묘역"},
+          {"name": "3기", "grade": "", "price": 4500000, "groupType": "A-1묘역"},
+          {"name": "4기", "grade": "", "price": 4800000, "groupType": "A-1묘역"},
+          {"name": "5기", "grade": "", "price": 5200000, "groupType": "A-1묘역"},
+          {"name": "6기", "grade": "", "price": 5500000, "groupType": "A-1묘역"},
+          
+          {"name": "1기", "grade": "", "price": 4000000, "groupType": "A-2묘역"},
+          {"name": "2기", "grade": "", "price": 4500000, "groupType": "A-2묘역"},
+          {"name": "3기", "grade": "", "price": 4800000, "groupType": "A-2묘역"},
+          {"name": "4기", "grade": "", "price": 5100000, "groupType": "A-2묘역"},
+          {"name": "5기", "grade": "", "price": 5500000, "groupType": "A-2묘역"},
+          {"name": "6기", "grade": "", "price": 5800000, "groupType": "A-2묘역"},
+          
+          {"name": "1기", "grade": "", "price": 4200000, "groupType": "A-3묘역"},
+          {"name": "2기", "grade": "", "price": 4700000, "groupType": "A-3묘역"},
+          {"name": "3기", "grade": "", "price": 5000000, "groupType": "A-3묘역"},
+          {"name": "4기", "grade": "", "price": 5400000, "groupType": "A-3묘역"},
+          {"name": "5기", "grade": "", "price": 5800000, "groupType": "A-3묘역"},
+          {"name": "6기", "grade": "", "price": 6200000, "groupType": "A-3묘역"},
+          
+          {"name": "1기", "grade": "", "price": 4400000, "groupType": "A-4묘역"},
+          {"name": "2기", "grade": "", "price": 4900000, "groupType": "A-4묘역"},
+          {"name": "3기", "grade": "", "price": 5300000, "groupType": "A-4묘역"},
+          {"name": "4기", "grade": "", "price": 5700000, "groupType": "A-4묘역"},
+          {"name": "5기", "grade": "", "price": 6100000, "groupType": "A-4묘역"},
+          {"name": "6기", "grade": "", "price": 6500000, "groupType": "A-4묘역"},
+          
+          {"name": "1기", "grade": "", "price": 4600000, "groupType": "A-5묘역"},
+          {"name": "2기", "grade": "", "price": 5100000, "groupType": "A-5묘역"},
+          {"name": "3기", "grade": "", "price": 5500000, "groupType": "A-5묘역"},
+          {"name": "4기", "grade": "", "price": 6000000, "groupType": "A-5묘역"},
+          {"name": "5기", "grade": "", "price": 6500000, "groupType": "A-5묘역"},
+          {"name": "6기", "grade": "", "price": 7000000, "groupType": "A-5묘역"}
+        ]
+      }
+    }
+  }
+}
