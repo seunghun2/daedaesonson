@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
+import Script from 'next/script';
 import { Image, Text, Badge, Group, Button, Stack, Box, Paper, Modal, Tabs, Collapse, ActionIcon, Rating, Textarea, TextInput, LoadingOverlay, useMantineTheme, Accordion, Table, Switch, Select, Drawer } from '@mantine/core';
 import { useDisclosure, useMediaQuery } from '@mantine/hooks';
 import { Car, Utensils, Accessibility, Store, Navigation, Globe, ChevronLeft, ChevronRight, TrendingUp, ChevronDown, ChevronUp, Star, Pencil, Camera, X, ImageIcon, Plus, Trash, Archive, Mountain, Trees, Layers, Lock, Unlock, Check } from 'lucide-react';
@@ -943,12 +944,48 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
         return () => window.removeEventListener('keydown', handleKeyDown);
     }, [opened, galleryImages.length]);
 
+    // Schema.org JSON-LD 구조화된 데이터 생성
+    const jsonLd = {
+        "@context": "https://schema.org",
+        "@type": "Cemetery",
+        "name": facility.name,
+        "address": {
+            "@type": "PostalAddress",
+            "addressCountry": "KR",
+            "addressRegion": facility.address?.split(' ')[0] || '',
+            "addressLocality": facility.address?.split(' ')[1] || '',
+            "streetAddress": facility.address || ''
+        },
+        "telephone": facility.phone || '',
+        "priceRange": facility.priceRange?.min ? `${formatKoreanCurrency(facility.priceRange.min * 10000)}~` : '가격 문의',
+        "aggregateRating": facility.rating && facility.reviewCount ? {
+            "@type": "AggregateRating",
+            "ratingValue": facility.rating,
+            "reviewCount": facility.reviewCount
+        } : undefined,
+        "amenityFeature": [
+            facility.hasParking && { "@type": "LocationFeatureSpecification", "name": "주차장", "value": true },
+            facility.hasRestaurant && { "@type": "LocationFeatureSpecification", "name": "식당", "value": true },
+            facility.hasStore && { "@type": "LocationFeatureSpecification", "name": "매점", "value": true },
+            facility.hasAccessibility && { "@type": "LocationFeatureSpecification", "name": "장애인 편의시설", "value": true }
+        ].filter(Boolean),
+        "image": galleryImages[0] || '',
+        "url": typeof window !== 'undefined' ? window.location.href : `https://daedaesonson.com/facility/${facility.id}`,
+        "description": facility.description || `${facility.name} - ${FACILITY_CATEGORY_LABELS[facility.category] || '장례시설'} 정보`
+    };
+
     return (
         <Box
             ref={containerRef}
             style={{ backgroundColor: '#f8f9fa', height: '100%', position: 'relative', overflowY: 'auto', touchAction: 'pan-y' }}
             onTouchStart={(e) => e.stopPropagation()} // 🚀 지도 터치 간섭 방지 (재적용)
         >
+            {/* Schema.org JSON-LD for SEO */}
+            <Script
+                id="facility-jsonld"
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+            />
             {/* 1. 호갱노노 스타일 헤더 (Brand Color - Deep Indigo) */}
             <Box bg="brand.8" p="md" style={{ position: 'sticky', top: 0, zIndex: 1000 }}>
                 <Group justify="space-between" align="center" wrap="nowrap">

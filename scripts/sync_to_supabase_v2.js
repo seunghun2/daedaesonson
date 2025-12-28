@@ -60,8 +60,12 @@ async function syncToSupabase() {
             minPrice: f.priceRange?.min || 0,
             maxPrice: f.priceRange?.max || 0,
 
-            // phone, websiteUrl 필드는 Supabase 스키마에 없어서 제거
-            // 필요시 Supabase 대시보드에서 컬럼 추가 후 활성화
+            // 추가 정보
+            capacity: f.capacity || null,
+            phone: f.phone || '',
+            websiteUrl: f.websiteUrl || f.website || '',
+            operatorType: f.operatorType || 'OTHER',
+            lastUpdated: f.lastUpdated || null
         };
     });
 
