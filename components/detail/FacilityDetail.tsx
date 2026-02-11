@@ -455,8 +455,12 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
     const containerRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
-        // 🚀 즉시 초기 데이터로 렌더링 (API 기다리지 않음)
-        setFacility(initialFacility);
+        // 🚀 초기 데이터로 렌더링 + thumbnail → imageGallery 매핑
+        const enriched = { ...initialFacility };
+        if (!enriched.imageGallery?.length && (enriched as any).thumbnail) {
+            enriched.imageGallery = [(enriched as any).thumbnail];
+        }
+        setFacility(enriched);
 
         // 스크롤 맨 위로
         containerRef.current?.scrollTo({ top: 0 });
@@ -476,7 +480,6 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
         }
 
         // 🔥 상세 정보 백그라운드 로딩 (UI 블로킹 없음)
-        // 이미 priceInfo가 있으면 추가 로딩 스킵
         if (!initialFacility.priceInfo && !initialFacility.pricing) {
             fetch(`/api/facilities/${initialFacility.id}`)
                 .then(res => res.json())
@@ -484,7 +487,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                     if (!fullData || fullData.error) return;
                     setFacility(prev => ({ ...prev, ...fullData }));
                 })
-                .catch(() => { }); // 실패해도 무시
+                .catch(() => { });
         }
     }, [initialFacility]);
     const [opened, setOpened] = useState(false); // Image Modal state
