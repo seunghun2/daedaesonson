@@ -8,8 +8,18 @@ import Link from 'next/link';
 import { useRouter, useSearchParams, usePathname } from 'next/navigation';
 import { useDebouncedCallback } from 'use-debounce';
 import Image from 'next/image';
+import dynamic from 'next/dynamic';
 
-import NaverMap, { NaverMapRef } from '@/components/map/NaverMap';
+// 🚀 지도 컴포넌트 지연 로딩 (초기 JS 번들에서 분리)
+const NaverMap = dynamic(() => import('@/components/map/NaverMap'), {
+  ssr: false,
+  loading: () => (
+    <Box style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: '#f8f9fa' }}>
+      <Text c="dimmed" size="sm">지도 로딩 중...</Text>
+    </Box>
+  ),
+});
+import type { NaverMapRef } from '@/components/map/NaverMap';
 import FacilityList from '@/components/list/FacilityList';
 import FilterBar from '@/components/list/FilterBar';
 import FacilityDetail from '@/components/detail/FacilityDetail';
