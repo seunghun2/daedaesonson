@@ -1,6 +1,7 @@
 'use client';
 
-import { Card, Text, Badge, Group, Flex, ThemeIcon, Box, Image } from '@mantine/core';
+import { Card, Text, Badge, Group, Flex, ThemeIcon, Box } from '@mantine/core';
+import NextImage from 'next/image';
 import { MapPin, Building, Trees, Cross, User } from 'lucide-react';
 import { Facility, FACILITY_CATEGORY_LABELS, FacilityCategory } from '@/types';
 import { formatKoreanCurrency } from '@/lib/format';
@@ -140,13 +141,14 @@ export default function FacilityCard({ facility, onClick }: FacilityCardProps) {
 
                         if (validUrl) {
                             return (
-                                <Image
+                                <NextImage
                                     src={validUrl}
-                                    h="100%"
-                                    w="100%"
-                                    fit="cover"
+                                    width={200}
+                                    height={200}
                                     alt={facility.name}
-                                // fallbackSrc removed
+                                    style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                                    loading="lazy"
+                                    sizes="100px"
                                 />
                             );
                         } else {

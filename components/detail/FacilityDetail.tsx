@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Script from 'next/script';
+import NextImage from 'next/image';
 import { Image, Text, Badge, Group, Button, Stack, Box, Paper, Modal, Tabs, Collapse, ActionIcon, Rating, Textarea, TextInput, LoadingOverlay, useMantineTheme, Accordion, Table, Switch, Select, Drawer } from '@mantine/core';
 import { useDisclosure, useMediaQuery } from '@mantine/hooks';
 import { Car, Utensils, Accessibility, Store, Navigation, Globe, ChevronLeft, ChevronRight, TrendingUp, ChevronDown, ChevronUp, Star, Pencil, Camera, X, ImageIcon, Plus, Trash, Archive, Mountain, Trees, Layers, Lock, Unlock, Check } from 'lucide-react';
@@ -1324,18 +1325,13 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                     onClick={() => handleImageClick(idx)}
                                     style={{ position: 'relative', paddingBottom: '100%', borderRadius: 8, overflow: 'hidden', cursor: 'pointer' }}
                                 >
-                                    <Image
+                                    <NextImage
                                         src={getSingleFacilityImageUrl(img)}
-                                        // fallbackSrc removed to avoid showing random fake images
                                         alt={`${facility.name} ${idx + 1}`}
-                                        style={{
-                                            position: 'absolute',
-                                            top: 0,
-                                            left: 0,
-                                            width: '100%',
-                                            height: '100%',
-                                            objectFit: 'cover'
-                                        }}
+                                        fill
+                                        sizes="50vw"
+                                        style={{ objectFit: 'cover' }}
+                                        loading="lazy"
                                     />
                                     {/* 오버레이 (+7) */}
                                     {isLastAndMore && (
