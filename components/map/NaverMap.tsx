@@ -1208,6 +1208,14 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
             window.naver.maps.Event.addListener(map, 'dragend', () => {
                 // 드래그 끝난 후 약간 지연 (클릭 이벤트와 분리)
                 setTimeout(() => { isDragging = false; }, 100);
+
+                // 🚀 드래그 후 새 영역 마커 표시 (individual 모드에서만)
+                if (prevZoomModeRef.current === 'individual') {
+                    const bounds = map.getBounds();
+                    markersRef.current.forEach(m => {
+                        m.setVisible(bounds.hasPoint(m.getPosition()));
+                    });
+                }
             });
             window.naver.maps.Event.addListener(map, 'click', (e: any) => {
                 if (isDragging) return; // 드래그 중이면 무시
