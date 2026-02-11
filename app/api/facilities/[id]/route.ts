@@ -12,8 +12,8 @@ const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_KEY, {
     auth: { persistSession: false }
 });
 
-export const revalidate = 0;
-export const dynamic = 'force-dynamic';
+// 🚀 60초 ISR 캐싱 (같은 시설 반복 조회 시 CDN에서 즉시 응답)
+export const revalidate = 60;
 
 const DATA_DIR = path.join(process.cwd(), 'data');
 
@@ -91,11 +91,10 @@ export async function GET(
         console.log(`[Detail API] Fetching ${id} from Supabase...`);
 
         // 🔥 Supabase 쿼리 + CSV 로딩을 병렬 실행
-        const [facilityResult, reviewsResult, inquiriesResult, pricingMap] = await Promise.all([
+        const [facilityResult, reviewsResult, inquiriesResult] = await Promise.all([
             supabase.from('Facility').select('*').eq('id', id).single(),
             supabase.from('Review').select('*, replies:Reply(*)').eq('facilityId', id).order('createdAt', { ascending: false }),
             supabase.from('Inquiry').select('*, replies:InquiryReply(*)').eq('facilityId', id).order('createdAt', { ascending: false }),
-            loadPricingData()
         ]);
 
         const { data: dbData, error } = facilityResult;
@@ -148,7 +147,7 @@ export async function GET(
             imageGallery: parsedImages,
             priceInfo: parsedPriceInfo,
             pricing: parsedPriceInfo,
-            representativePricing: pricingMap.get(id),
+            representativePricing: null,
             reviewCount: dbData.reviewCount || 0,
             rating: dbData.rating || 0,
             phone: dbData.phone || '',
@@ -165,7 +164,11 @@ export async function GET(
         };
 
         console.log(`✅ [Detail API] ${id} from Supabase`);
-        return NextResponse.json(facility);
+        return NextResponse.json(facility, {
+            headers: {
+                'Cache-Control': 'public, s-maxage=60, stale-while-revalidate=300',
+            }
+        });
 
     } catch (e) {
         console.error('Detail API Error:', e);
