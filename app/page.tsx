@@ -8,7 +8,7 @@ export const revalidate = 300;
 // 서버에서 시설 데이터 미리 로드 (API 호출 + 캐싱)
 async function getFacilities(): Promise<Facility[]> {
   try {
-    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
+    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3001';
     const res = await fetch(`${baseUrl}/api/facilities`, {
       next: { revalidate: 300 }  // 5분 캐싱
     });
@@ -19,6 +19,12 @@ async function getFacilities(): Promise<Facility[]> {
     }
 
     const data = await res.json();
+
+    // data가 배열이 아니면 빈 배열 반환
+    if (!Array.isArray(data)) {
+      console.error('API response is not an array:', typeof data);
+      return [];
+    }
 
     // 장례식장, 화장시설 제외 + isActive=false 제외
     return data
