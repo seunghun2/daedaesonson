@@ -912,11 +912,14 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
 
     // 갤러리 이미지 처리 (엄격한 필터링)
     // 🔥 실제 시설 사진만 표시 (thumbnail/로고 제외)
-    const rawImages = facility.imageGallery || [];
+    // 🚀 imageGallery가 아직 없으면 thumbnail로 즉시 표시 (API 응답 전)
+    const rawImages = (facility.imageGallery && facility.imageGallery.length > 0)
+        ? facility.imageGallery
+        : ((facility as any).thumbnail ? [(facility as any).thumbnail] : []);
     const galleryImages = rawImages
-        .filter(img => img && typeof img === 'string' && img.trim() !== '')
-        .filter(img => img.startsWith('http') || img.startsWith('blob:') || img.startsWith('data:'))
-        .filter(img => !img.includes('/logos/') && !img.includes('logo')); // 로고 이미지 제외
+        .filter((img: string) => img && typeof img === 'string' && img.trim() !== '')
+        .filter((img: string) => img.startsWith('http') || img.startsWith('blob:') || img.startsWith('data:'))
+        .filter((img: string) => !img.includes('/logos/') && !img.includes('logo')); // 로고 이미지 제외
 
     const visibleImages = galleryImages.slice(0, 2);
     const extraInfoCount = galleryImages.length > 2 ? galleryImages.length - 2 : 0;
@@ -1331,7 +1334,8 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                         fill
                                         sizes="50vw"
                                         style={{ objectFit: 'cover' }}
-                                        loading="lazy"
+                                        priority={idx === 0}
+                                        loading={idx === 0 ? undefined : 'lazy'}
                                     />
                                     {/* 오버레이 (+7) */}
                                     {isLastAndMore && (
