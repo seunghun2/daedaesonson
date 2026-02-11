@@ -179,10 +179,10 @@ export default function AdminPage() {
         localStorage.setItem('adminItemsPerPage', String(itemsPerPage));
     }, [itemsPerPage]);
 
-    // 원래 API 사용
+    // 🚀 경량 API 사용 (id, name, address, category 등만 → 이미지/pricing 제외!)
     useEffect(() => {
         // 1. 캐시에서 즉시 로드
-        const cached = localStorage.getItem('admin_facilities_cache');
+        const cached = sessionStorage.getItem('admin_facilities_lite');
         if (cached) {
             try {
                 const data = JSON.parse(cached);
@@ -193,13 +193,14 @@ export default function AdminPage() {
             } catch (e) { /* 캐시 파싱 실패 시 무시 */ }
         }
 
-        // 2. 전체 데이터 가져오기
-        fetch('/api/facilities', { cache: 'no-store' })
+        // 2. 경량 데이터만 가져오기 (이미지, pricing 등 제외)
+        fetch('/api/admin/facilities?limit=2000&sortBy=id&sortOrder=asc')
             .then(res => res.json())
-            .then(data => {
+            .then(json => {
+                const data = json.data || [];
                 if (Array.isArray(data)) {
                     setFacilities(data);
-                    localStorage.setItem('admin_facilities_cache', JSON.stringify(data));
+                    sessionStorage.setItem('admin_facilities_lite', JSON.stringify(data));
                 }
                 setIsLoadingData(false);
             })
