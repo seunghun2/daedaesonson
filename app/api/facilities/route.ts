@@ -7,7 +7,7 @@ import { RepresentativePricing } from '@/types';
 import { randomUUID } from 'crypto';
 
 const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://jbydmhfuqnpukfutvrgs.supabase.co';
-const SUPABASE_SERVICE_KEY = process.env.SUPABASE_SERVICE_KEY || 'sb_secret_CDAM3cyG1RBEmjvSIaHOPA_If4LP8u3';
+const SUPABASE_SERVICE_KEY = process.env.SUPABASE_SERVICE_KEY || '';
 
 const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_KEY, {
     auth: { persistSession: false }
@@ -263,6 +263,24 @@ export async function POST(req: Request) {
                 if (max > 0) maxPrice = normalizePriceForSave(max);
             }
 
+            // 🚀 대표가격 precomputed 값 저장 (메인 페이지 SSR에서 pricing JSON 파싱 불필요!)
+            const computedRepPrice = normalizePriceForSave(
+                f.priceInfo?.priceTable ? (() => {
+                    let rp = 0;
+                    Object.values(f.priceInfo.priceTable).forEach((cat: any) => {
+                        cat?.rows?.forEach((row: any) => {
+                            const p = typeof row.price === 'string' ? parseInt(row.price.replace(/,/g, '')) : row.price;
+                            if (row.isRepresentative && p > 0 && rp === 0) rp = p;
+                        });
+                    });
+                    return rp;
+                })() : 0
+            ) || minPrice;
+
+            // 🚀 대표 이미지 (썸네일) 추출
+            const imgArr = f.imageGallery || f.images || [];
+            const computedThumbnail = Array.isArray(imgArr) && imgArr.length > 0 ? imgArr[0] : '';
+
             // DB Record 준비
             const dbRecord: any = {
                 id: f.id,
@@ -283,6 +301,8 @@ export async function POST(req: Request) {
                 lng: f.coordinates?.lng,
                 minPrice: minPrice,
                 maxPrice: maxPrice,
+                representativePrice: computedRepPrice,
+                thumbnail: computedThumbnail || undefined,
                 pricing: f.priceInfo?.priceTable ? JSON.stringify(f.priceInfo) : undefined,
                 phone: f.phone,
                 fax: f.fax,
@@ -291,7 +311,7 @@ export async function POST(req: Request) {
                 isActive: f.isActive ?? true,
                 operatorType: f.operatorType,
                 originalName: f.originalName,
-                lastUpdated: f.lastUpdated || new Date().toISOString(),  // 자동으로 현재 시간 설정
+                lastUpdated: f.lastUpdated || new Date().toISOString(),
             };
 
             // undefined 필드 제거 (기존 DB값 유지)
