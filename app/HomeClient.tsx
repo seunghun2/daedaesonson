@@ -157,24 +157,26 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
   useEffect(() => {
     const facilityId = searchParams.get('id');
     if (facilityId && dbFacilities.length > 0) {
-      // Fetch full detail with inquiries
+      // 🚀 1단계: 로컬 데이터로 즉시 표시 (0ms)
+      if (!selectedFacility || selectedFacility.id !== facilityId) {
+        const localFac = dbFacilities.find(f => f.id === facilityId);
+        if (localFac) {
+          setSelectedFacility(localFac);
+        }
+      }
+
+      // 🚀 2단계: 백그라운드에서 API 상세 데이터 보강 (리뷰, 문의 등)
       fetch(`/api/facilities/${facilityId}`)
         .then(res => res.json())
         .then(data => {
           if (data && data.id) {
             setSelectedFacility(data);
-          } else {
-            // If facility not found, clear ID from URL
-            router.push(pathname, { scroll: false });
           }
         })
         .catch(() => {
-          // Fallback to local data
-          const fac = dbFacilities.find(f => f.id === facilityId);
-          if (fac) setSelectedFacility(fac);
+          // API 실패해도 로컬 데이터로 이미 표시 중이니 무시
         });
     } else if (!facilityId) {
-      // If no ID in URL, ensure selectedFacility is null
       setSelectedFacility(null);
     }
   }, [searchParams, dbFacilities, pathname, router]);
