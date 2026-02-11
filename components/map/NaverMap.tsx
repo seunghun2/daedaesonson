@@ -104,24 +104,27 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
         propsRef.current = { facilities, onMarkerClick, onBoundsChanged };
     }, [facilities, onMarkerClick, onBoundsChanged]);
 
-    // GeoJSON 로드 (동단위 경계)
-    useEffect(() => {
-        fetch('/data/skorea_dong.json')
-            .then(res => res.json())
-            .then(data => {
-                geomRef.current = data;
-                console.log('✅ 행정동 경계 데이터 로드 완료');
-            })
-            .catch(err => console.error('❌ 행정동 데이터 로드 실패:', err));
+    // 🚀 GeoJSON lazy load 플래그 (첫 사용 시에만 로드, 초기 로딩 50MB 제거!)
+    const geomLoadingRef = useRef<{ dong: boolean; gu: boolean }>({ dong: false, gu: false });
 
-        fetch('/data/skorea_gu.json')
-            .then(res => res.json())
-            .then(data => {
-                geomGuRef.current = data;
-                console.log('✅ 시군구 경계 데이터 로드 완료');
-            })
-            .catch(err => console.error('❌ 시군구 데이터 로드 실패:', err));
-    }, []);
+    const ensureGeoJsonLoaded = async (type: 'dong' | 'gu') => {
+        if (type === 'dong' && !geomRef.current && !geomLoadingRef.current.dong) {
+            geomLoadingRef.current.dong = true;
+            try {
+                const res = await fetch('/data/skorea_dong.json');
+                geomRef.current = await res.json();
+                console.log('✅ 행정동 경계 데이터 로드 완료 (lazy)');
+            } catch (err) { console.error('❌ 행정동 데이터 로드 실패:', err); }
+        }
+        if (type === 'gu' && !geomGuRef.current && !geomLoadingRef.current.gu) {
+            geomLoadingRef.current.gu = true;
+            try {
+                const res = await fetch('/data/skorea_gu.json');
+                geomGuRef.current = await res.json();
+                console.log('✅ 시군구 경계 데이터 로드 완료 (lazy)');
+            } catch (err) { console.error('❌ 시군구 데이터 로드 실패:', err); }
+        }
+    };
 
     useImperativeHandle(ref, () => ({
         panTo: (lat: number, lng: number, zoom?: number, facilityId?: string) => {
@@ -174,7 +177,7 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
             }
         },
 
-        highlightRegion: (lat: number, lng: number, zoom: number, type: 'gu' | 'dong' = 'dong', regionName?: string) => {
+        highlightRegion: async (lat: number, lng: number, zoom: number, type: 'gu' | 'dong' = 'dong', regionName?: string) => {
             if (mapInstanceRef.current && window.naver) {
                 const map = mapInstanceRef.current;
 
@@ -184,6 +187,9 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
 
                 const center = new window.naver.maps.LatLng(lat, lng);
                 map.morph(center, zoom);
+
+                // 🚀 GeoJSON lazy load (필요할 때만 로드)
+                await ensureGeoJsonLoaded(type);
 
                 let polygonDrawn = false;
                 const isSi = regionName?.endsWith('시');

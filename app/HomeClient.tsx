@@ -22,7 +22,15 @@ const NaverMap = dynamic(() => import('@/components/map/NaverMap'), {
 import type { NaverMapRef } from '@/components/map/NaverMap';
 import FacilityList from '@/components/list/FacilityList';
 import FilterBar from '@/components/list/FilterBar';
-import FacilityDetail from '@/components/detail/FacilityDetail';
+// 🚀 FacilityDetail 지연 로딩 (210KB → 마커 클릭 시에만 로드)
+const FacilityDetail = dynamic(() => import('@/components/detail/FacilityDetail'), {
+  ssr: false,
+  loading: () => (
+    <Box style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%', backgroundColor: '#f8f9fa' }}>
+      <Text c="dimmed" size="sm">로딩 중...</Text>
+    </Box>
+  ),
+});
 import { Facility, FACILITY_CATEGORY_LABELS } from '@/types';
 
 import { searchRegions, RegionResult } from '@/lib/regionSearch';
