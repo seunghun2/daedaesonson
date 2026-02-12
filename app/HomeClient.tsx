@@ -3,7 +3,7 @@
 import { useState, useMemo, useEffect, useRef, Suspense } from 'react';
 import { Box, Flex, useMantineTheme, TextInput, Group, Text, ThemeIcon, ActionIcon } from '@mantine/core';
 import { useMediaQuery } from '@mantine/hooks';
-import { Search, MapPin, Building, MessageCircle, Clock, Info } from 'lucide-react';
+import { Search, MapPin, Building, MessageCircle, Clock, Info, User } from 'lucide-react';
 import Link from 'next/link';
 import { useRouter, useSearchParams, usePathname } from 'next/navigation';
 import { useDebouncedCallback } from 'use-debounce';
@@ -1023,14 +1023,19 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
                 <button
                   style={{
                     background: 'transparent',
-                    border: 'none',
+                    border: '1.5px solid rgba(255,255,255,0.5)',
+                    borderRadius: '50%',
                     cursor: 'pointer',
-                    padding: '4px',
+                    padding: '5px',
                     display: 'flex',
-                    alignItems: 'center'
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    width: 32,
+                    height: 32,
+                    flexShrink: 0,
                   }}
                 >
-                  <span className="material-symbols-outlined" style={{ fontSize: '24px', color: 'white' }}>person</span>
+                  <User size={16} color="white" strokeWidth={2} />
                 </button>
               </Group>
             </Box>
@@ -1066,7 +1071,7 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
                     transition: 'all 0.2s',
                     paddingLeft: '14px',
                     paddingRight: '14px',
-                    whiteSpace: 'nowrap'
+                    whiteSpace: 'nowrap',
                   }}
                 >
                   전체
@@ -1116,7 +1121,7 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
                         transition: 'all 0.2s',
                         paddingLeft: '14px',
                         paddingRight: '14px',
-                        whiteSpace: 'nowrap'
+                        whiteSpace: 'nowrap',
                       }}
                     >
                       {tab.label}

@@ -1,8 +1,9 @@
 'use client';
 
 import { Box, Group, Text } from '@mantine/core';
-import { usePathname, useRouter } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 import { Home, Clock, MessageCircle, Menu } from 'lucide-react';
+import Link from 'next/link';
 
 interface BottomNavProps {
     historyCount?: number;
@@ -11,7 +12,6 @@ interface BottomNavProps {
 
 export default function BottomNav({ historyCount = 0, hidden = false }: BottomNavProps) {
     const pathname = usePathname();
-    const router = useRouter();
 
     const tabs = [
         { id: 'home', label: '홈', icon: Home, path: '/' },
@@ -27,58 +27,65 @@ export default function BottomNav({ historyCount = 0, hidden = false }: BottomNa
                 bottom: 0,
                 left: 0,
                 right: 0,
-                height: 56,
-                backgroundColor: 'white',
-                borderTop: '1px solid #e9ecef',
+                height: 52,
+                backgroundColor: 'rgba(255,255,255,0.97)',
+                backdropFilter: 'blur(12px)',
+                WebkitBackdropFilter: 'blur(12px)',
+                borderTop: '1px solid rgba(0,0,0,0.06)',
                 zIndex: 2000,
                 paddingBottom: 'env(safe-area-inset-bottom)',
                 transform: hidden ? 'translateY(100%)' : 'translateY(0)',
                 transition: 'transform 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
             }}
         >
-            <Group h={56} justify="space-around" align="center" px="md">
+            <Group h={52} justify="space-around" align="center" px="xs">
                 {tabs.map((tab) => {
                     const isActive = pathname === tab.path || (tab.path === '/' && pathname === '/');
                     const Icon = tab.icon;
 
                     return (
-                        <Box
+                        <Link
                             key={tab.id}
-                            onClick={() => router.push(tab.path)}
+                            href={tab.path}
+                            prefetch={true}
                             style={{
                                 display: 'flex',
                                 flexDirection: 'column',
                                 alignItems: 'center',
-                                cursor: 'pointer',
-                                padding: '4px 20px',
+                                justifyContent: 'center',
+                                textDecoration: 'none',
+                                padding: '6px 16px 2px',
                                 position: 'relative',
+                                WebkitTapHighlightColor: 'transparent',
+                                gap: 0,
                             }}
                         >
                             <Box style={{ position: 'relative' }}>
                                 <Icon
-                                    size={22}
-                                    color={isActive ? '#1D0098' : '#adb5bd'}
-                                    fill={'none'}
-                                    strokeWidth={isActive ? 1.8 : 1.5}
+                                    size={20}
+                                    color={isActive ? '#1D0098' : '#868e96'}
+                                    fill={isActive ? '#1D0098' : 'none'}
+                                    strokeWidth={isActive ? 2 : 1.5}
                                 />
                                 {/* 기록 카운트 뱃지 */}
                                 {tab.id === 'history' && historyCount > 0 && (
                                     <Box
                                         style={{
                                             position: 'absolute',
-                                            top: -6,
-                                            right: -10,
-                                            backgroundColor: '#1D0098',
+                                            top: -5,
+                                            right: -9,
+                                            backgroundColor: '#ff3b30',
                                             color: 'white',
-                                            fontSize: 10,
+                                            fontSize: 9,
                                             fontWeight: 700,
-                                            minWidth: 16,
-                                            height: 16,
-                                            borderRadius: 8,
+                                            minWidth: 14,
+                                            height: 14,
+                                            borderRadius: 7,
                                             display: 'flex',
                                             alignItems: 'center',
                                             justifyContent: 'center',
-                                            padding: '0 4px',
+                                            padding: '0 3px',
+                                            lineHeight: 1,
                                         }}
                                     >
                                         {historyCount > 99 ? '99+' : historyCount}
@@ -86,14 +93,18 @@ export default function BottomNav({ historyCount = 0, hidden = false }: BottomNa
                                 )}
                             </Box>
                             <Text
-                                size="xs"
-                                c={isActive ? '#1D0098' : 'dimmed'}
-                                fw={isActive ? 600 : 400}
-                                style={{ marginTop: -2 }}
+                                style={{
+                                    fontSize: 11,
+                                    fontWeight: isActive ? 600 : 400,
+                                    color: isActive ? '#1D0098' : '#868e96',
+                                    lineHeight: 1.2,
+                                    letterSpacing: '-0.02em',
+                                    marginTop: -2,
+                                }}
                             >
                                 {tab.label}
                             </Text>
-                        </Box>
+                        </Link>
                     );
                 })}
             </Group>
