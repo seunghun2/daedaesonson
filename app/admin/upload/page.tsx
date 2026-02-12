@@ -179,7 +179,7 @@ export default function AdminPage() {
         localStorage.setItem('adminItemsPerPage', String(itemsPerPage));
     }, [itemsPerPage]);
 
-    // 🚀 경량 API 사용 (id, name, address, category 등만 → 이미지/pricing 제외!)
+    // 🚀 경량 API 사용 (id, name, address, category 등만 → pricing 제외!)
     useEffect(() => {
         // 1. 캐시에서 즉시 로드
         const cached = sessionStorage.getItem('admin_facilities_lite');
@@ -193,24 +193,44 @@ export default function AdminPage() {
             } catch (e) { /* 캐시 파싱 실패 시 무시 */ }
         }
 
-        // 2. 경량 데이터만 가져오기 (이미지, pricing 등 제외)
-        fetch('/api/admin/facilities?limit=2000&sortBy=id&sortOrder=asc')
-            .then(res => res.json())
-            .then(json => {
-                const data = json.data || [];
-                if (Array.isArray(data)) {
-                    setFacilities(data);
-                    sessionStorage.setItem('admin_facilities_lite', JSON.stringify(data));
+        // 2. 전체 데이터 가져오기 (Supabase 1000행 제한 우회 - 페이지네이션)
+        const fetchAllFacilities = async () => {
+            try {
+                const PAGE_SIZE = 1000;
+                // 첫 페이지 + 총 개수 확인
+                const res1 = await fetch(`/api/admin/facilities?limit=${PAGE_SIZE}&page=1&sortBy=id&sortOrder=asc`);
+                const json1 = await res1.json();
+                let allData = json1.data || [];
+                const total = json1.pagination?.total || allData.length;
+
+                // 1000개 초과 시 나머지 페이지 병렬 요청
+                if (total > PAGE_SIZE) {
+                    const totalPages = Math.ceil(total / PAGE_SIZE);
+                    const promises = [];
+                    for (let p = 2; p <= totalPages; p++) {
+                        promises.push(
+                            fetch(`/api/admin/facilities?limit=${PAGE_SIZE}&page=${p}&sortBy=id&sortOrder=asc`)
+                                .then(r => r.json())
+                                .then(j => j.data || [])
+                        );
+                    }
+                    const results = await Promise.all(promises);
+                    results.forEach(pageData => { allData = allData.concat(pageData); });
                 }
+
+                setFacilities(allData);
+                sessionStorage.setItem('admin_facilities_lite', JSON.stringify(allData));
                 setIsLoadingData(false);
-            })
-            .catch(e => {
+            } catch (e) {
                 console.error('Data load failed:', e);
                 if (!cached) {
                     alert('데이터를 불러오지 못했습니다.');
                 }
                 setIsLoadingData(false);
-            });
+            }
+        };
+
+        fetchAllFacilities();
     }, []);
 
     // Save to Server Helper
