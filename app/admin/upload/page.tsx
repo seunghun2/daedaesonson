@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useMemo, useEffect, memo, useCallback } from 'react';
+import React, { useState, useMemo, useEffect, memo, useCallback, useRef } from 'react';
 import {
     Title, Text, Group, Button, Paper, TextInput, ActionIcon,
     Table, Badge, Modal, NumberInput, Select, ScrollArea,
@@ -34,6 +34,7 @@ const GroupEditorInner = memo(({ groupName, groupData, onRename, onUpdateRows, o
 }) => {
     const [localName, setLocalName] = useState(groupName);
     const [localRows, setLocalRows] = useState(groupData.rows || []);
+    const commitTimerRef = useRef<NodeJS.Timeout | null>(null);
 
     // Sync with parent when groupData changes (e.g. after save)
     useEffect(() => {
@@ -57,6 +58,21 @@ const GroupEditorInner = memo(({ groupName, groupData, onRename, onUpdateRows, o
     const commitRows = () => {
         onUpdateRows(groupName, localRows);
     };
+
+    // 행 추가/삭제 시 디바운스로 부모에 전달 (즉시 리렌더 방지)
+    const debouncedCommit = (newRows: any[]) => {
+        if (commitTimerRef.current) clearTimeout(commitTimerRef.current);
+        commitTimerRef.current = setTimeout(() => {
+            onUpdateRows(groupName, newRows);
+        }, 300);
+    };
+
+    // cleanup
+    useEffect(() => {
+        return () => {
+            if (commitTimerRef.current) clearTimeout(commitTimerRef.current);
+        };
+    }, []);
 
     return (
         <Paper withBorder p="sm" radius="md" mb="sm">
@@ -111,7 +127,7 @@ const GroupEditorInner = memo(({ groupName, groupData, onRename, onUpdateRows, o
                             onClick={() => {
                                 const newRows = localRows.filter((_: any, i: number) => i !== idx);
                                 setLocalRows(newRows);
-                                onUpdateRows(groupName, newRows);
+                                debouncedCommit(newRows);
                             }}
                         >
                             <Trash size={16} />
@@ -125,7 +141,7 @@ const GroupEditorInner = memo(({ groupName, groupData, onRename, onUpdateRows, o
                     onClick={() => {
                         const newRows = [...localRows, { name: '새 상품', price: 0 }];
                         setLocalRows(newRows);
-                        onUpdateRows(groupName, newRows);
+                        debouncedCommit(newRows);
                     }}
                 >
                     상품 추가
@@ -924,9 +940,9 @@ export default function AdminPage() {
             finalTabs.push([OTHER_TAB_CATEGORY.label, tabCategories[OTHER_TAB_CATEGORY.key]]);
         }
 
-        // Helper to update table
+        // Helper to update table - functional updater로 stale closure 방지
         const updateTable = (newTable: any) => {
-            setEditForm({ ...editForm, priceInfo: { ...editForm.priceInfo!, priceTable: newTable } });
+            setEditForm(prev => ({ ...prev, priceInfo: { ...prev.priceInfo!, priceTable: newTable } }));
         };
 
         const handleRename = (oldName: string, newName: string) => {
