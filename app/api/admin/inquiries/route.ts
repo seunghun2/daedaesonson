@@ -1,12 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { createClient } from '@supabase/supabase-js';
+import { getSupabaseServer } from '@/lib/supabaseServer';
 
-const SUPABASE_URL = 'https://jbydmhfuqnpukfutvrgs.supabase.co';
-const SUPABASE_KEY = process.env.SUPABASE_SERVICE_KEY || 'sb_secret_CDAM3cyG1RBEmjvSIaHOPA_If4LP8u3';
-
-const supabase = createClient(SUPABASE_URL, SUPABASE_KEY, {
-    auth: { persistSession: false }
-});
+const supabase = getSupabaseServer();
 
 // GET: 모든 문의 조회 (어드민용) - 최적화
 export async function GET() {

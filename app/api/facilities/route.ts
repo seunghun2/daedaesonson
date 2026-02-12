@@ -2,24 +2,28 @@ import { NextResponse } from 'next/server';
 import { readFileSync, existsSync } from 'fs';
 import path from 'path';
 import { parse } from 'csv-parse/sync';
-import { createClient } from '@supabase/supabase-js';
+import { getSupabaseServer } from '@/lib/supabaseServer';
 import { RepresentativePricing } from '@/types';
 import { randomUUID } from 'crypto';
 
-const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://jbydmhfuqnpukfutvrgs.supabase.co';
-const SUPABASE_SERVICE_KEY = process.env.SUPABASE_SERVICE_KEY || '';
-
-const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_KEY, {
-    auth: { persistSession: false }
-});
+const supabase = getSupabaseServer();
 
 export const revalidate = 0;
 export const dynamic = 'force-dynamic';
 
 const DATA_DIR = path.join(process.cwd(), 'data');
 
+// 🚀 CSV 가격 데이터 메모리 캐싱 (5분)
+let _pricingCache: { data: Map<string, RepresentativePricing>; timestamp: number } | null = null;
+const PRICING_CACHE_TTL = 5 * 60 * 1000; // 5분
+
 // Helper: Load and parse pricing CSVs
 async function loadPricingData(): Promise<Map<string, RepresentativePricing>> {
+    // 🚀 캐시가 유효하면 바로 반환
+    if (_pricingCache && (Date.now() - _pricingCache.timestamp) < PRICING_CACHE_TTL) {
+        return _pricingCache.data;
+    }
+
     const map = new Map<string, RepresentativePricing>();
     const analyzedDir = path.join(DATA_DIR, 'analyzed');
 
@@ -58,6 +62,8 @@ async function loadPricingData(): Promise<Map<string, RepresentativePricing>> {
         console.error('Error loading pricing CSVs:', e);
     }
 
+    // 🚀 캐시 저장
+    _pricingCache = { data: map, timestamp: Date.now() };
     return map;
 }
 
@@ -66,9 +72,9 @@ async function loadPricingData(): Promise<Map<string, RepresentativePricing>> {
 // ==========================================
 export async function GET() {
     try {
-        console.log('[API] Fetching facilities from Supabase Only...');
+        // 🚀 필요 컬럼만 선택 (pricing, images 등 무거운 JSONB 제외)
+        const FACILITY_COLUMNS = 'id,name,address,lat,lng,category,minPrice,maxPrice,representativePrice,operatorType,hasParking,hasRestaurant,hasStore,hasAccessibility,isPublic,isActive,reviewCount,rating,phone,fax,capacity,lastUpdated,websiteUrl,viewCount,description,originalName,updatedAt';
 
-        // 1. Supabase에서 모든 시설 가져오기 (페이지네이션)
         let facilitiesFromDb: any[] = [];
         let from = 0;
         const PAGE_SIZE = 1000;
@@ -76,7 +82,7 @@ export async function GET() {
         while (true) {
             const { data, error } = await supabase
                 .from('Facility')
-                .select('*')
+                .select(FACILITY_COLUMNS)
                 .order('id', { ascending: true })
                 .range(from, from + PAGE_SIZE - 1);
 
@@ -89,8 +95,6 @@ export async function GET() {
             if (!data || data.length < PAGE_SIZE) break;
             from += PAGE_SIZE;
         }
-
-        console.log(`[API] Loaded ${facilitiesFromDb.length} facilities from Supabase`);
 
         // 2. 가격 카테고리 개수 (hasDetailedPrices 용)
         const { data: categories } = await supabase
@@ -108,72 +112,41 @@ export async function GET() {
         const pricingMap = await loadPricingData();
 
         // 4. 데이터 변환 (DB 필드 → 프론트엔드 형식)
-        const liteData = facilitiesFromDb.map(f => {
-            // 🔍 디버그: updatedAt 필드 확인
-            if (f.id === 'park-0537') {
-                console.log('🔍 DB Record for park-0537:', {
-                    updatedAt: f.updatedAt,
-                    updated_at: f.updated_at,
-                    allKeys: Object.keys(f)
-                });
-            }
+        // 🚀 가격 정규화 함수 (루프 바깥에서 1회 정의)
+        const normalizePrice = (p: number): number => {
+            if (!p || p <= 0) return 0;
+            return p < 10000 ? p * 10000 : p;
+        };
 
-            // 이미지 파싱
-            let parsedImages: string[] = [];
-            if (f.images) {
-                try {
-                    parsedImages = typeof f.images === 'string' ? JSON.parse(f.images) : f.images;
-                } catch (e) { parsedImages = []; }
-            }
+        const liteData = facilitiesFromDb.map(f => ({
+            id: f.id,
+            name: f.name,
+            address: f.address || '',
+            coordinates: { lat: f.lat || 0, lng: f.lng || 0 },
+            category: f.category || 'OTHER',
+            priceRange: { min: normalizePrice(f.minPrice), max: normalizePrice(f.maxPrice) },
+            operatorType: f.operatorType,
+            hasParking: f.hasParking ?? false,
+            hasRestaurant: f.hasRestaurant ?? false,
+            hasStore: f.hasStore ?? false,
+            hasAccessibility: f.hasAccessibility ?? false,
+            isPublic: f.isPublic ?? false,
+            isActive: f.isActive ?? true,
+            hasDetailedPrices: (categoryCountMap.get(f.id) || 0) > 0,
+            representativePricing: pricingMap.get(f.id),
+            reviewCount: f.reviewCount || 0,
+            rating: f.rating || 0,
+            phone: f.phone || '',
+            fax: f.fax || '',
+            capacity: f.capacity,
+            lastUpdated: f.lastUpdated,
+            websiteUrl: f.websiteUrl || '',
+            viewCount: f.viewCount || 0,
+            description: f.description || '',
+            originalName: f.originalName,
+            updatedAt: f.updatedAt,
+        }));
 
-            // pricing JSON 파싱
-            let parsedPriceInfo = null;
-            if (f.pricing) {
-                try {
-                    parsedPriceInfo = typeof f.pricing === 'string' ? JSON.parse(f.pricing) : f.pricing;
-                } catch (e) { parsedPriceInfo = null; }
-            }
-
-            // 가격 단위 통일: 10000 미만이면 만원 단위로 가정 → 원 단위로 변환
-            const normalizePrice = (p: number): number => {
-                if (!p || p <= 0) return 0;
-                return p < 10000 ? p * 10000 : p;  // 만원 → 원
-            };
-
-            return {
-                id: f.id,
-                name: f.name,
-                address: f.address || '',
-                coordinates: { lat: f.lat || 0, lng: f.lng || 0 },
-                category: f.category || 'OTHER',
-                priceRange: { min: normalizePrice(f.minPrice), max: normalizePrice(f.maxPrice) },
-                operatorType: f.operatorType,
-                hasParking: f.hasParking ?? false,
-                hasRestaurant: f.hasRestaurant ?? false,
-                hasStore: f.hasStore ?? false,
-                hasAccessibility: f.hasAccessibility ?? false,
-                isPublic: f.isPublic ?? false,
-                isActive: f.isActive ?? true,
-                hasDetailedPrices: (categoryCountMap.get(f.id) || 0) > 0,
-                images: parsedImages,
-                imageGallery: parsedImages,
-                priceInfo: parsedPriceInfo,
-                representativePricing: pricingMap.get(f.id),
-                reviewCount: f.reviewCount || 0,
-                rating: f.rating || 0,
-                phone: f.phone || '',
-                fax: f.fax || '',
-                capacity: f.capacity,
-                lastUpdated: f.lastUpdated,
-                websiteUrl: f.websiteUrl || '',
-                viewCount: f.viewCount || 0,
-                description: f.description || '',
-                originalName: f.originalName,
-                updatedAt: f.updatedAt,  // 실제 수정 시간
-            };
-        });
-
-        console.log(`[API] Returned ${liteData.length} facilities (Supabase Only)`);
         return NextResponse.json(liteData);
 
     } catch (e) {
@@ -190,7 +163,7 @@ export async function POST(req: Request) {
         const payloadRaw = await req.json();
         const isBulk = Array.isArray(payloadRaw);
 
-        console.log('[API POST] Received:', isBulk ? `${payloadRaw.length} items (bulk)` : `Single item: ${payloadRaw.id}`);
+
 
         if (!isBulk) {
             const f = payloadRaw;
@@ -321,7 +294,7 @@ export async function POST(req: Request) {
                 }
             });
 
-            console.log('[API POST] Saving to Supabase:', f.id, 'websiteUrl:', f.websiteUrl, 'dbRecord.websiteUrl:', dbRecord.websiteUrl);
+
 
             const { error } = await supabase
                 .from('Facility')
@@ -334,7 +307,7 @@ export async function POST(req: Request) {
 
             // Pricing 동기화 (PriceCategory/PriceItem)
             if (f.priceInfo?.priceTable) {
-                console.log(`[API POST] Syncing pricing data for ${f.id}...`);
+
 
                 try {
                     await supabase.from('PriceCategory').delete().eq('facilityId', f.id);
@@ -376,12 +349,12 @@ export async function POST(req: Request) {
                 }
             }
 
-            console.log(`✅ [API POST] Saved ${f.id} to Supabase`);
+
             return NextResponse.json({ success: true, mode: 'single', id: f.id, source: 'supabase' });
 
         } else {
             // Bulk Update
-            console.log('[API POST] Bulk update...');
+
 
             const dbRecords = payloadRaw.map((f: any) => {
                 const imgSource = f.imageGallery || f.images || [];
@@ -424,7 +397,7 @@ export async function POST(req: Request) {
                 return NextResponse.json({ error: 'Bulk save failed', details: error.message }, { status: 500 });
             }
 
-            console.log(`✅ [API POST] Bulk saved ${dbRecords.length} items`);
+
             return NextResponse.json({ success: true, mode: 'bulk', count: dbRecords.length, source: 'supabase' });
         }
 
@@ -446,7 +419,7 @@ export async function DELETE(req: Request) {
             return NextResponse.json({ error: 'Missing facility id' }, { status: 400 });
         }
 
-        console.log('[API DELETE] Deleting facility:', id);
+
 
         // 관련 데이터 먼저 삭제
         await supabase.from('PriceCategory').delete().eq('facilityId', id);
@@ -460,7 +433,7 @@ export async function DELETE(req: Request) {
             return NextResponse.json({ error: 'Delete failed', details: error.message }, { status: 500 });
         }
 
-        console.log('[API DELETE] Successfully deleted:', id);
+
         return NextResponse.json({ success: true, deletedId: id });
 
     } catch (e) {

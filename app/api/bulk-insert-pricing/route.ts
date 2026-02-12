@@ -1,13 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { createClient } from '@supabase/supabase-js';
+import { getSupabaseServer } from '@/lib/supabaseServer';
 import { randomUUID } from 'crypto';
 
-const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://jbydmhfuqnpukfutvrgs.supabase.co';
-const SUPABASE_SERVICE_KEY = process.env.SUPABASE_SERVICE_KEY || 'sb_secret_CDAM3cyG1RBEmjvSIaHOPA_If4LP8u3';
-
-const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_KEY, {
-    auth: { persistSession: false }
-});
+const supabase = getSupabaseServer();
 
 export async function POST(request: NextRequest) {
     try {
@@ -21,7 +16,7 @@ export async function POST(request: NextRequest) {
             );
         }
 
-        console.log('[API] Deleting existing categories for:', facilityId);
+
 
         // 1. 기존 가격 카테고리 삭제 (Cascade로 PriceItem도 자동 삭제)
         const { error: deleteError } = await supabase
@@ -30,15 +25,15 @@ export async function POST(request: NextRequest) {
             .eq('facilityId', facilityId);
 
         if (deleteError) {
-            console.log('[API] Delete warning:', deleteError);
+
         }
 
         const results = [];
 
-        console.log('[API] Processing categories:', Object.keys(pricing));
+
 
         for (const [key, categoryData] of Object.entries(pricing) as [string, any][]) {
-            console.log(`[API] Category: ${key}`, categoryData);
+
 
             // 2-1. PriceCategory 삽입
             const categoryId = randomUUID();
@@ -60,7 +55,7 @@ export async function POST(request: NextRequest) {
                 continue;
             }
 
-            console.log(`[API] Created category ID: ${category.id}`);
+
 
             // 2-2. PriceItem 삽입
             const items = categoryData.rows.map((row: any, index: number) => {
@@ -85,7 +80,7 @@ export async function POST(request: NextRequest) {
                 };
             });
 
-            console.log(`[API] Inserting ${items.length} items`);
+
 
             const { data: insertedItems, error: itemError } = await supabase
                 .from('PriceItem')
@@ -104,7 +99,7 @@ export async function POST(request: NextRequest) {
             });
         }
 
-        console.log('[API] Insert complete:', results);
+
 
         return NextResponse.json({
             success: true,

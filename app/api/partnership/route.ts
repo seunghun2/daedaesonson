@@ -60,13 +60,8 @@ export async function POST(request: NextRequest) {
         inquiries.unshift(newInquiry);
         writeInquiries(inquiries);
 
-        // 📊 로깅
-        console.log('📩 Partnership inquiry received:', {
-            type,
-            companyName,
-            email,
-            phone,
-        });
+
+
 
         return NextResponse.json({ success: true, inquiry: newInquiry });
     } catch (error) {

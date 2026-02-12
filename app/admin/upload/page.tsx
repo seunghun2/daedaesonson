@@ -2102,7 +2102,7 @@ export default function AdminPage() {
                                                                                                         const targetIndex = fullRows.findIndex((r: any) => r === targetRow);
                                                                                                         if (targetIndex === -1) return;
                                                                                                         const newRows = [...fullRows];
-                                                                                                        newRows[targetIndex] = { ...newRows[targetIndex], price: val };
+                                                                                                        newRows[targetIndex] = { ...newRows[targetIndex], price: Number(val) || 0 };
                                                                                                         setEditForm({
                                                                                                             ...editForm,
                                                                                                             priceInfo: {

@@ -1,12 +1,7 @@
 import { NextResponse } from 'next/server';
-import { createClient } from '@supabase/supabase-js';
+import { getSupabaseServer } from '@/lib/supabaseServer';
 
-const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://jbydmhfuqnpukfutvrgs.supabase.co';
-const SUPABASE_SERVICE_KEY = process.env.SUPABASE_SERVICE_KEY || 'sb_secret_CDAM3cyG1RBEmjvSIaHOPA_If4LP8u3';
-
-const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_KEY, {
-    auth: { persistSession: false }
-});
+const supabase = getSupabaseServer();
 
 export const revalidate = 0;
 export const dynamic = 'force-dynamic';
@@ -27,7 +22,7 @@ export async function GET(request: Request) {
         const sortBy = searchParams.get('sortBy') || 'id';
         const sortOrder = searchParams.get('sortOrder') || 'asc';
 
-        console.log(`[Admin API] page=${page}, limit=${limit}, search="${search}", category=${category}`);
+
 
         // 기본 쿼리 - 필요한 필드만 선택 (pricing 제외!)
         let query = supabase
@@ -77,7 +72,7 @@ export async function GET(request: Request) {
             return NextResponse.json({ error: error.message }, { status: 500 });
         }
 
-        console.log(`[Admin API] Returned ${data?.length || 0} of ${count} total`);
+
 
         return NextResponse.json({
             data: data || [],

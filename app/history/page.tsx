@@ -151,7 +151,7 @@ export default function HistoryPage() {
                                             {item.name}
                                         </Text>
                                         <Badge size="xs" variant="light" color="gray">
-                                            {FACILITY_CATEGORY_LABELS[item.category] || item.category}
+                                            {(FACILITY_CATEGORY_LABELS as Record<string, string>)[item.category] || item.category}
                                         </Badge>
                                     </Group>
                                     <Text size="xs" c="dimmed" lineClamp={1}>

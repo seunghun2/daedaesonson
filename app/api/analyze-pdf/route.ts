@@ -4,16 +4,11 @@ import { GoogleGenerativeAI } from '@google/generative-ai';
 // API Key 설정 (환경변수 체크)
 const API_KEY = process.env.GEMINI_API_KEY;
 
-console.log('---------------------------------------------------');
-console.log('Server-side Environment Check:');
-console.log('NODE_ENV:', process.env.NODE_ENV);
-console.log('GEMINI_API_KEY Present:', !!API_KEY);
-if (!API_KEY) console.log('Current Env Vars Keys:', Object.keys(process.env).filter(k => k.includes('API')));
-console.log('---------------------------------------------------');
+
 
 export async function POST(req: NextRequest) {
     if (!API_KEY) {
-        console.warn('⚠️ GEMINI_API_KEY가 설정되지 않았습니다. 테스트용 Mock Data를 반환합니다.');
+
         // Mock Data 반환 (프론트엔드 UI 테스트용)
         const mockData = {
             "facilityName": "[테스트] 예시 추모공원 (API 키 미설정)",
@@ -180,7 +175,7 @@ export async function POST(req: NextRequest) {
         ]);
 
         const responseText = result.response.text();
-        console.log('Gemini Analyzed:', responseText.slice(0, 100) + '...');
+
 
         const parsedData = JSON.parse(responseText);
         return NextResponse.json(parsedData);

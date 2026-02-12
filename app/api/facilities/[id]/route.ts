@@ -2,15 +2,10 @@ import { NextRequest, NextResponse } from 'next/server';
 import { readFileSync, existsSync } from 'fs';
 import path from 'path';
 import { parse } from 'csv-parse/sync';
-import { createClient } from '@supabase/supabase-js';
+import { getSupabaseServer } from '@/lib/supabaseServer';
 import { RepresentativePricing } from '@/types';
 
-const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://jbydmhfuqnpukfutvrgs.supabase.co';
-const SUPABASE_SERVICE_KEY = process.env.SUPABASE_SERVICE_KEY || 'sb_secret_CDAM3cyG1RBEmjvSIaHOPA_If4LP8u3';
-
-const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_KEY, {
-    auth: { persistSession: false }
-});
+const supabase = getSupabaseServer();
 
 // 🚀 60초 ISR 캐싱 (같은 시설 반복 조회 시 CDN에서 즉시 응답)
 export const revalidate = 60;
@@ -88,7 +83,7 @@ export async function GET(
     try {
         const { id } = await params;
 
-        console.log(`[Detail API] Fetching ${id} from Supabase...`);
+
 
         // 🔥 Supabase 쿼리 + CSV 로딩을 병렬 실행
         const [facilityResult, reviewsResult, inquiriesResult] = await Promise.all([
@@ -163,7 +158,7 @@ export async function GET(
             inquiries: inquiries || [],
         };
 
-        console.log(`✅ [Detail API] ${id} from Supabase`);
+
         return NextResponse.json(facility, {
             headers: {
                 'Cache-Control': 'public, s-maxage=60, stale-while-revalidate=300',

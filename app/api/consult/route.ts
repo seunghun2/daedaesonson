@@ -1,12 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { createClient } from '@supabase/supabase-js';
+import { getSupabaseServer } from '@/lib/supabaseServer';
 
-const SUPABASE_URL = 'https://jbydmhfuqnpukfutvrgs.supabase.co';
-const SUPABASE_KEY = process.env.SUPABASE_SERVICE_KEY || 'sb_secret_CDAM3cyG1RBEmjvSIaHOPA_If4LP8u3';
-
-const supabase = createClient(SUPABASE_URL, SUPABASE_KEY, {
-    auth: { persistSession: false }
-});
+const supabase = getSupabaseServer();
 
 // POST: 상담 신청
 export async function POST(request: NextRequest) {

@@ -1,15 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { createClient } from '@supabase/supabase-js';
+import { getSupabaseServer } from '@/lib/supabaseServer';
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
 
-const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://jbydmhfuqnpukfutvrgs.supabase.co';
-const SUPABASE_SERVICE_KEY = process.env.SUPABASE_SERVICE_KEY || 'sb_secret_CDAM3cyG1RBEmjvSIaHOPA_If4LP8u3';
-
-const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_KEY, {
-    auth: { persistSession: false }
-});
+const supabase = getSupabaseServer();
 
 export async function GET(
     request: NextRequest,
@@ -54,7 +49,7 @@ export async function GET(
             });
         }
 
-        console.log(`✅ [Prices API] ${facilityId}: ${Object.keys(finalPriceTable || {}).length} categories, ${itemCount} items from Supabase`);
+
 
         return NextResponse.json({
             facility: {

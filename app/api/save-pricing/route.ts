@@ -1,11 +1,7 @@
 import { NextResponse } from 'next/server';
-import { createClient } from '@supabase/supabase-js';
+import { getSupabaseServer } from '@/lib/supabaseServer';
 
-const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://jbydmhfuqnpukfutvrgs.supabase.co';
-const SUPABASE_SERVICE_KEY = process.env.SUPABASE_SERVICE_KEY || 'sb_secret_CDAM3cyG1RBEmjvSIaHOPA_If4LP8u3';
-const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_KEY, {
-    auth: { persistSession: false }
-});
+const supabase = getSupabaseServer();
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
@@ -15,7 +11,7 @@ export async function POST(request: Request) {
         const body = await request.json();
         const { facilityId, rows } = body;
 
-        console.log(`[Save Pricing] Saving ${rows?.length || 0} items for ${facilityId} to Supabase...`);
+
 
         // 1. pricing 객체 생성
         const newPricing: any = {};
@@ -55,7 +51,7 @@ export async function POST(request: Request) {
             }
         }
 
-        console.log(`✅ [Save Pricing] Saved to Supabase for ${facilityId}`);
+
         return NextResponse.json({ success: true, source: 'supabase' });
 
     } catch (error) {

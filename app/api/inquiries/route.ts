@@ -1,8 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { createClient } from '@supabase/supabase-js';
+import { getSupabaseServer } from '@/lib/supabaseServer';
 
-const SUPABASE_URL = 'https://jbydmhfuqnpukfutvrgs.supabase.co';
-const SUPABASE_KEY = process.env.SUPABASE_SERVICE_KEY || 'sb_secret_CDAM3cyG1RBEmjvSIaHOPA_If4LP8u3';
+const supabase = getSupabaseServer();
 
 export async function POST(request: NextRequest) {
     try {
@@ -13,9 +12,6 @@ export async function POST(request: NextRequest) {
             return NextResponse.json({ error: '필수 항목 누락' }, { status: 400 });
         }
 
-        const supabase = createClient(SUPABASE_URL, SUPABASE_KEY, {
-            auth: { persistSession: false }
-        });
 
         const { data, error } = await supabase
             .from('Inquiry')
