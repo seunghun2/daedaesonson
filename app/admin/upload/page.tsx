@@ -1257,13 +1257,16 @@ export default function AdminPage() {
                                             </Badge>
                                         </Table.Td>
                                         <Table.Td style={{ maxWidth: 200 }}><Text truncate>{item.address}</Text></Table.Td>
-                                        <Table.Td>{item.priceRange?.min ? formatKoreanCurrency(item.priceRange.min) : '0원'}</Table.Td>
+                                        <Table.Td>{(item as any).representativePrice ? formatKoreanCurrency((item as any).representativePrice) : (item as any).minPrice ? formatKoreanCurrency((item as any).minPrice) : '0원'}</Table.Td>
                                         <Table.Td>
-                                            {item.imageGallery && item.imageGallery.length > 0 ? (
-                                                <Badge size="sm" variant="dot" color="teal">이미지 {item.imageGallery.length}</Badge>
-                                            ) : (
-                                                <Badge size="sm" variant="dot" color="gray">이미지 없음</Badge>
-                                            )}
+                                            {(() => {
+                                                const imgs = typeof item.images === 'string' ? (() => { try { return JSON.parse(item.images as string); } catch { return []; } })() : (item.images || []);
+                                                return Array.isArray(imgs) && imgs.length > 0 ? (
+                                                    <Badge size="sm" variant="dot" color="teal">이미지 {imgs.length}</Badge>
+                                                ) : (
+                                                    <Badge size="sm" variant="dot" color="gray">이미지 없음</Badge>
+                                                );
+                                            })()}
                                         </Table.Td>
                                         <Table.Td>
                                             <Text size="xs" c="dimmed">
