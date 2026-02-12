@@ -25,6 +25,214 @@ import { getSingleFacilityImageUrl } from '@/lib/supabaseImage';
 
 // Sub-component for Group Editing to prevent focus loss
 // 🚀 최적화: memo로 감싸서 불필요한 리렌더링 방지
+
+// 🚀 PriceEditor: 완전 독립 컴포넌트 - 자체 priceTable 상태 관리
+// 부모 컴포넌트의 리렌더를 차단하여 가격 편집 시 체감 속도 대폭 개선
+const PriceEditor = memo(({ initialPriceTable, onChange }: {
+    initialPriceTable: any;
+    onChange: (newTable: any) => void;
+}) => {
+    const [priceTable, setPriceTable] = useState<any>(initialPriceTable || {});
+    const debounceRef = useRef<NodeJS.Timeout | null>(null);
+
+    // 부모에서 초기 데이터 변경 시 동기화 (모달 열 때)
+    useEffect(() => {
+        setPriceTable(initialPriceTable || {});
+    }, [initialPriceTable]);
+
+    // 디바운스 부모 전달
+    const commitToParent = useCallback((newTable: any) => {
+        if (debounceRef.current) clearTimeout(debounceRef.current);
+        debounceRef.current = setTimeout(() => {
+            onChange(newTable);
+        }, 500);
+    }, [onChange]);
+
+    useEffect(() => {
+        return () => { if (debounceRef.current) clearTimeout(debounceRef.current); };
+    }, []);
+
+    const updateTable = useCallback((newTable: any) => {
+        setPriceTable(newTable);
+        commitToParent(newTable);
+    }, [commitToParent]);
+
+    // 데이터 분류
+    const { mainGroups, installationGroups, managementGroups } = useMemo(() => {
+        const main: any[] = [];
+        const installation: any[] = [];
+        const management: any[] = [];
+        Object.entries(priceTable).forEach(([groupName, groupData]: [string, any]) => {
+            if (groupName.includes('[별도]') || groupName.includes('시설') || groupName.includes('석물')) {
+                installation.push({ groupName, groupData });
+            } else if (groupName.includes('[안내]') || groupName.includes('관리비') || groupName.includes('용역')) {
+                management.push({ groupName, groupData });
+            } else {
+                main.push({ groupName, groupData });
+            }
+        });
+        return { mainGroups: main, installationGroups: installation, managementGroups: management };
+    }, [priceTable]);
+
+    // 탭 카테고리 로직
+    const finalTabs = useMemo(() => {
+        const tabCategories: Record<string, any[]> = {};
+        const usedItems = new Set<any>();
+
+        PRICE_TAB_CATEGORIES.forEach(cat => {
+            const filtered = mainGroups.filter(g => {
+                if (g.groupData.category === cat.key) { usedItems.add(g); return true; }
+                if (!g.groupData.category && !usedItems.has(g)) {
+                    const matches = cat.keywords.some((k: string) => g.groupName.includes(k));
+                    if (matches) { usedItems.add(g); return true; }
+                }
+                return false;
+            });
+            tabCategories[cat.key] = filtered;
+        });
+
+        const others = mainGroups.filter(g => {
+            if (g.groupData.category === OTHER_TAB_CATEGORY.key) return true;
+            return !usedItems.has(g);
+        });
+        if (others.length > 0) tabCategories[OTHER_TAB_CATEGORY.key] = others;
+
+        const tabs: [string, any[]][] = [];
+        PRICE_TAB_CATEGORIES.forEach(cat => { tabs.push([cat.label, tabCategories[cat.key] || []]); });
+        if (tabCategories[OTHER_TAB_CATEGORY.key]?.length > 0) {
+            tabs.push([OTHER_TAB_CATEGORY.label, tabCategories[OTHER_TAB_CATEGORY.key]]);
+        }
+        return tabs;
+    }, [mainGroups]);
+
+    const handleRename = useCallback((oldName: string, newName: string) => {
+        setPriceTable((prev: any) => {
+            const newTable: any = {};
+            Object.keys(prev).forEach(k => {
+                if (k === oldName) {
+                    const group = prev[oldName];
+                    if (!group.category) {
+                        let deducedCategory = OTHER_TAB_CATEGORY.key;
+                        for (const cat of PRICE_TAB_CATEGORIES) {
+                            if (cat.keywords.some((keyword: string) => oldName.includes(keyword))) {
+                                deducedCategory = cat.key; break;
+                            }
+                        }
+                        newTable[newName] = { ...group, category: deducedCategory };
+                    } else {
+                        newTable[newName] = group;
+                    }
+                } else {
+                    newTable[k] = prev[k];
+                }
+            });
+            commitToParent(newTable);
+            return newTable;
+        });
+    }, [commitToParent]);
+
+    const handleUpdateRows = useCallback((name: string, newRows: any[]) => {
+        setPriceTable((prev: any) => {
+            const newTable = { ...prev };
+            if (newTable[name]) newTable[name] = { ...newTable[name], rows: newRows };
+            commitToParent(newTable);
+            return newTable;
+        });
+    }, [commitToParent]);
+
+    const handleDeleteGroup = useCallback((targetGroupName: string) => {
+        if (!confirm(`'${targetGroupName}' 그룹을 삭제하시겠습니까?`)) return;
+        setPriceTable((prev: any) => {
+            const newTable = { ...prev };
+            delete newTable[targetGroupName];
+            commitToParent(newTable);
+            return newTable;
+        });
+    }, [commitToParent]);
+
+    const handleAddGroupToTab = useCallback((tabLabel: string) => {
+        const catKey = PRICE_TAB_CATEGORIES.find(c => c.label === tabLabel)?.key || OTHER_TAB_CATEGORY.key;
+        const newGroupName = `${tabLabel} 새 그룹 ${Date.now().toString().slice(-4)}`;
+        setPriceTable((prev: any) => {
+            const newTable = { ...prev, [newGroupName]: { unit: '개', rows: [], category: catKey } };
+            commitToParent(newTable);
+            return newTable;
+        });
+    }, [commitToParent]);
+
+    return (
+        <Stack gap="md">
+            <Tabs defaultValue={finalTabs[0] ? finalTabs[0][0] as string : '전체'}>
+                <Tabs.List mb="md">
+                    {finalTabs.map(([tabName]: [string, any]) => (
+                        <Tabs.Tab key={tabName} value={tabName}>{tabName}</Tabs.Tab>
+                    ))}
+                </Tabs.List>
+                {finalTabs.map(([tabName, groups]: [string, any]) => (
+                    <Tabs.Panel key={tabName} value={tabName}>
+                        {groups.length > 0 ? (
+                            groups.map((g: any, idx: number) => (
+                                <GroupEditorInner
+                                    key={g.groupName}
+                                    groupName={g.groupName}
+                                    groupData={g.groupData}
+                                    onRename={handleRename}
+                                    onUpdateRows={handleUpdateRows}
+                                    onDeleteGroup={handleDeleteGroup}
+                                />
+                            ))
+                        ) : (
+                            <Paper p="md" withBorder style={{ borderStyle: 'dashed', textAlign: 'center' }}>
+                                <Text c="dimmed" mb="sm">이 카테고리에 등록된 가격 정보가 없습니다.</Text>
+                                <Button variant="light" size="xs" leftSection={<Plus size={14} />}
+                                    onClick={() => handleAddGroupToTab(tabName)}>
+                                    {tabName} 그룹 추가하기
+                                </Button>
+                            </Paper>
+                        )}
+                        {groups.length > 0 && (
+                            <Button variant="subtle" size="xs" leftSection={<Plus size={14} />}
+                                onClick={() => handleAddGroupToTab(tabName)}>
+                                + {tabName} 그룹 추가하기
+                            </Button>
+                        )}
+                    </Tabs.Panel>
+                ))}
+            </Tabs>
+
+            {installationGroups.length > 0 && (
+                <Box mt="md" p="xs" bg="gray.0" style={{ borderRadius: 8 }}>
+                    <Text size="sm" fw={700} mb="xs">➕ 별도 시설 설치비용 편집</Text>
+                    {installationGroups.map((g: any) => (
+                        <GroupEditorInner key={g.groupName} groupName={g.groupName} groupData={g.groupData}
+                            onRename={handleRename} onUpdateRows={handleUpdateRows} onDeleteGroup={handleDeleteGroup} />
+                    ))}
+                </Box>
+            )}
+
+            {managementGroups.length > 0 && (
+                <Box mt="md" p="xs" bg="blue.0" style={{ borderRadius: 8 }}>
+                    <Text size="sm" fw={700} mb="xs" c="blue.9">ℹ️ 관리비 및 안내사항 편집</Text>
+                    {managementGroups.map((g: any) => (
+                        <GroupEditorInner key={g.groupName} groupName={g.groupName} groupData={g.groupData}
+                            onRename={handleRename} onUpdateRows={handleUpdateRows} onDeleteGroup={handleDeleteGroup} />
+                    ))}
+                </Box>
+            )}
+
+            <Button variant="outline" size="xs" onClick={() => {
+                setPriceTable((prev: any) => {
+                    const newTable = { ...prev, [`새 그룹 ${Date.now().toString().slice(-4)}`]: { unit: '개', rows: [], category: OTHER_TAB_CATEGORY.key } };
+                    commitToParent(newTable);
+                    return newTable;
+                });
+            }}>
+                새 그룹 추가 (미분류)
+            </Button>
+        </Stack>
+    );
+});
+PriceEditor.displayName = 'PriceEditor';
 const GroupEditorInner = memo(({ groupName, groupData, onRename, onUpdateRows, onDeleteGroup }: {
     groupName: string;
     groupData: any;
@@ -874,238 +1082,7 @@ export default function AdminPage() {
     };
 
     // --- Sub-components (Editor) ---
-
-    const renderPriceEditor = () => {
-        // priceTable이 없으면 빈 객체로 초기화
-        const priceTable = editForm.priceInfo?.priceTable || {};
-        const mainGroups: any[] = [];
-        const installationGroups: any[] = [];
-        const managementGroups: any[] = [];
-
-        // 데이터 분류
-        Object.entries(priceTable).forEach(([groupName, groupData]: [string, any]) => {
-            if (groupName.includes('[별도]') || groupName.includes('시설') || groupName.includes('석물')) {
-                installationGroups.push({ groupName, groupData });
-            } else if (groupName.includes('[안내]') || groupName.includes('관리비') || groupName.includes('용역')) {
-                managementGroups.push({ groupName, groupData });
-            } else {
-                mainGroups.push({ groupName, groupData });
-            }
-        });
-
-        // 탭 카테고리 로직 (상수 기반 + Sticky Category)
-        const tabCategories: Record<string, any[]> = {};
-        const usedItems = new Set<any>();
-
-        // 1. 고정 카테고리
-        PRICE_TAB_CATEGORIES.forEach(cat => {
-            const filtered = mainGroups.filter(g => {
-                // 1. Explicit Category Match (Sticky)
-                if (g.groupData.category === cat.key) {
-                    usedItems.add(g);
-                    return true;
-                }
-
-                // 2. Fallback: Keyword Match (if no category set and not used yet)
-                if (!g.groupData.category && !usedItems.has(g)) {
-                    const matches = cat.keywords.some(k => g.groupName.includes(k));
-                    if (matches) {
-                        usedItems.add(g);
-                        return true;
-                    }
-                }
-                return false;
-            });
-            tabCategories[cat.key] = filtered;
-        });
-
-        // 2. 기타 (나머지 전부)
-        // Explicitly 'other' or simply not caught by above
-        const others = mainGroups.filter(g => {
-            if (g.groupData.category === OTHER_TAB_CATEGORY.key) return true;
-            return !usedItems.has(g);
-        });
-
-        if (others.length > 0) {
-            tabCategories[OTHER_TAB_CATEGORY.key] = others;
-        }
-
-        // 활성 탭 (데이터가 없어도 고정 카테고리는 무조건 노출)
-        const finalTabs: [string, any[]][] = [];
-        PRICE_TAB_CATEGORIES.forEach(cat => {
-            finalTabs.push([cat.label, tabCategories[cat.key] || []]);
-        });
-
-        if (tabCategories[OTHER_TAB_CATEGORY.key] && tabCategories[OTHER_TAB_CATEGORY.key].length > 0) {
-            finalTabs.push([OTHER_TAB_CATEGORY.label, tabCategories[OTHER_TAB_CATEGORY.key]]);
-        }
-
-        // Helper to update table - functional updater로 stale closure 방지
-        const updateTable = (newTable: any) => {
-            setEditForm(prev => ({ ...prev, priceInfo: { ...prev.priceInfo!, priceTable: newTable } }));
-        };
-
-        const handleRename = (oldName: string, newName: string) => {
-            const table = editForm.priceInfo?.priceTable || {};
-            const newTable: any = {};
-            Object.keys(table).forEach(k => {
-                if (k === oldName) {
-                    const group = table[oldName];
-                    // *** Sticky Logic for Legacy Data ***
-                    // If category is missing, deduce it from oldName using the same logic as render loop
-                    if (!group.category) {
-                        let deducedCategory = OTHER_TAB_CATEGORY.key;
-                        // Check Price Tab Categories
-                        for (const cat of PRICE_TAB_CATEGORIES) {
-                            if (cat.keywords.some(keyword => oldName.includes(keyword))) {
-                                deducedCategory = cat.key;
-                                break;
-                            }
-                        }
-                        newTable[newName] = { ...group, category: deducedCategory };
-                    } else {
-                        newTable[newName] = group;
-                    }
-                } else {
-                    newTable[k] = table[k];
-                }
-            });
-            updateTable(newTable);
-        };
-
-        const handleUpdateRows = (name: string, newRows: any[]) => {
-            const table = editForm.priceInfo?.priceTable || {};
-            const newTable = { ...table };
-            if (newTable[name]) {
-                newTable[name].rows = newRows;
-            }
-            updateTable(newTable);
-        };
-
-        const handleDeleteGroup = (targetGroupName: string) => {
-            if (!confirm(`'${targetGroupName}' 그룹을 삭제하시겠습니까?`)) return;
-            const table = editForm.priceInfo?.priceTable || {};
-            const newTable = { ...table };
-            delete newTable[targetGroupName];
-            updateTable(newTable);
-        };
-
-        const handleAddGroupToTab = (tabLabel: string) => {
-            // Find category key from label
-            const catKey = PRICE_TAB_CATEGORIES.find(c => c.label === tabLabel)?.key || OTHER_TAB_CATEGORY.key;
-            const newGroupName = `${tabLabel} 새 그룹 ${Date.now().toString().slice(-4)}`;
-
-            const newTable = {
-                ...editForm.priceInfo!.priceTable,
-                [newGroupName]: {
-                    unit: '개',
-                    rows: [],
-                    category: catKey // *** 핵심: 생성 시 카테고리 고정 ***
-                }
-            };
-            updateTable(newTable);
-        };
-
-        return (
-            <Stack gap="md">
-                <Tabs defaultValue={finalTabs[0] ? finalTabs[0][0] as string : '전체'}>
-                    <Tabs.List mb="md">
-                        {finalTabs.map(([tabName]: [string, any]) => (
-                            <Tabs.Tab key={tabName} value={tabName}>{tabName}</Tabs.Tab>
-                        ))}
-                    </Tabs.List>
-                    {finalTabs.map(([tabName, groups]: [string, any]) => (
-                        <Tabs.Panel key={tabName} value={tabName}>
-                            {groups.length > 0 ? (
-                                groups.map((g: any, idx: number) => (
-                                    <GroupEditorInner
-                                        key={idx}
-                                        groupName={g.groupName}
-                                        groupData={g.groupData}
-                                        onRename={handleRename}
-                                        onUpdateRows={handleUpdateRows}
-                                        onDeleteGroup={handleDeleteGroup}
-                                    />
-                                ))
-                            ) : (
-                                <Paper p="md" withBorder style={{ borderStyle: 'dashed', textAlign: 'center' }}>
-                                    <Text c="dimmed" mb="sm">이 카테고리에 등록된 가격 정보가 없습니다.</Text>
-                                    <Button
-                                        variant="light"
-                                        size="xs"
-                                        leftSection={<Plus size={14} />}
-                                        onClick={() => handleAddGroupToTab(tabName)}
-                                    >
-                                        {tabName} 그룹 추가하기
-                                    </Button>
-                                </Paper>
-                            )}
-                            {groups.length > 0 && (
-                                <Button
-                                    variant="subtle"
-                                    size="xs"
-                                    leftSection={<Plus size={14} />}
-                                    onClick={() => handleAddGroupToTab(tabName)}
-                                >
-                                    + {tabName} 그룹 추가하기
-                                </Button>
-                            )}
-                        </Tabs.Panel>
-                    ))}
-                </Tabs>
-
-                {installationGroups.length > 0 && (
-                    <Box mt="md" p="xs" bg="gray.0" style={{ borderRadius: 8 }}>
-                        <Text size="sm" fw={700} mb="xs">➕ 별도 시설 설치비용 편집</Text>
-                        {installationGroups.map((g: any, idx: number) => (
-                            <GroupEditorInner
-                                key={idx}
-                                groupName={g.groupName}
-                                groupData={g.groupData}
-                                onRename={handleRename}
-                                onUpdateRows={handleUpdateRows}
-                                onDeleteGroup={handleDeleteGroup}
-                            />
-                        ))}
-                    </Box>
-                )}
-
-                {managementGroups.length > 0 && (
-                    <Box mt="md" p="xs" bg="blue.0" style={{ borderRadius: 8 }}>
-                        <Text size="sm" fw={700} mb="xs" c="blue.9">ℹ️ 관리비 및 안내사항 편집</Text>
-                        {managementGroups.map((g: any, idx: number) => (
-                            <GroupEditorInner
-                                key={idx}
-                                groupName={g.groupName}
-                                groupData={g.groupData}
-                                onRename={handleRename}
-                                onUpdateRows={handleUpdateRows}
-                                onDeleteGroup={handleDeleteGroup}
-                            />
-                        ))}
-                    </Box>
-                )}
-
-                <Button
-                    variant="outline"
-                    size="xs"
-                    onClick={() => {
-                        const newTable = {
-                            ...editForm.priceInfo!.priceTable,
-                            [`새 그룹 ${Date.now().toString().slice(-4)}`]: {
-                                unit: '개',
-                                rows: [],
-                                category: OTHER_TAB_CATEGORY.key
-                            }
-                        };
-                        updateTable(newTable);
-                    }}
-                >
-                    새 그룹 추가 (미분류)
-                </Button>
-            </Stack>
-        );
-    };
+    // 🚀 PriceEditor는 파일 상단에 독립 컴포넌트로 분리됨
 
     // 🔧 Hydration 에러 방지: 클라이언트 마운트 확인
     if (isLoadingData) {
@@ -2256,8 +2233,13 @@ export default function AdminPage() {
                                     })()}
                                 </Box>
                             ) : (
-                                // 기존 JSON 데이터 렌더링
-                                renderPriceEditor()
+                                <PriceEditor
+                                    initialPriceTable={editForm.priceInfo?.priceTable}
+                                    onChange={(newTable) => setEditForm(prev => ({
+                                        ...prev,
+                                        priceInfo: { ...prev.priceInfo!, priceTable: newTable }
+                                    }))}
+                                />
                             )}
                             <Alert title="알림" color="blue" mt="md">
                                 DB 데이터는 실시간 편집이 가능합니다. 변경사항은 저장 버튼을 눌러주세요.
