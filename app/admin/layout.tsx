@@ -17,6 +17,7 @@ import {
 } from 'lucide-react';
 
 import { usePathname, useRouter } from 'next/navigation';
+import Link from 'next/link';
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
     const [opened, { toggle, close }] = useDisclosure();
@@ -92,16 +93,15 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                 {navItems.map((item) => (
                     <Tooltip key={item.link} label={item.label} position="right" disabled={!collapsed}>
                         <NavLink
+                            component={Link}
+                            href={item.link}
+                            prefetch={true}
                             label={collapsed ? '' : item.label}
                             leftSection={<item.icon size={20} strokeWidth={1.5} />}
-                            href={item.link}
                             active={pathname === item.link}
                             variant="filled"
                             color="blue"
-                            onClick={(e) => {
-                                e.preventDefault();
-                                handleNavClick(item.link);
-                            }}
+                            onClick={() => { if (isMobile) close(); }}
                             styles={{
                                 root: { color: '#adb5bd', borderRadius: 8, marginBottom: 4, justifyContent: collapsed ? 'center' : 'flex-start' },
                                 label: { fontSize: 15, fontWeight: 500 },

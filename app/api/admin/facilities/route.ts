@@ -24,10 +24,11 @@ export async function GET(request: Request) {
 
 
 
-        // 기본 쿼리 - 어드민 목록에 필요한 필드 선택
+        // 기본 쿼리 - 목록 표시에 필요한 경량 필드만 선택
+        // pricing, images 등 대용량 JSONB는 편집 시 /api/facilities/[id]에서 개별 로드
         let query = supabase
             .from('Facility')
-            .select('id, name, address, category, isPublic, capacity, lastUpdated, minPrice, maxPrice, representativePrice, images, pricing, operatorType, phone, rating, reviewCount, description, websiteUrl, viewCount', { count: 'exact' });
+            .select('id, name, address, category, isPublic, capacity, lastUpdated, minPrice, maxPrice, representativePrice, operatorType, phone, rating, reviewCount, description, websiteUrl, viewCount, isActive, images', { count: 'exact' });
 
         // 카테고리 필터
         if (category !== 'all') {
