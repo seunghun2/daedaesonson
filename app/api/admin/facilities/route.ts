@@ -24,10 +24,10 @@ export async function GET(request: Request) {
 
 
 
-        // 기본 쿼리 - 필요한 필드만 선택 (pricing 제외!)
+        // 기본 쿼리 - 어드민 목록에 필요한 필드 선택
         let query = supabase
             .from('Facility')
-            .select('id, name, address, category, isPublic, capacity, lastUpdated', { count: 'exact' });
+            .select('id, name, address, category, isPublic, capacity, lastUpdated, minPrice, maxPrice, representativePrice, images, imageGallery, pricing, operatorType, phone, rating, reviewCount, description, websiteUrl, viewCount', { count: 'exact' });
 
         // 카테고리 필터
         if (category !== 'all') {
