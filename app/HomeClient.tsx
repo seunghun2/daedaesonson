@@ -78,6 +78,9 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
   const [mobileView, setMobileView] = useState<'map' | 'list'>('map');
   const [sortBy, setSortBy] = useState('rating');
 
+  // 🚀 모바일 상세 슬라이드아웃 애니메이션 상태
+  const [isDetailClosing, setIsDetailClosing] = useState(false);
+
   // 검색어 상태
   const [searchQuery, setSearchQuery] = useState('');
   const [submittedQuery, setSubmittedQuery] = useState(''); // 엔터 친 검색어
@@ -115,21 +118,33 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
     } catch { }
   };
 
-  // 🗺️ 지역 데이터 미리 로드 (첫 검색 시 좌표 오류 방지)
-  useEffect(() => {
-    import('@/lib/regionSearch').then(mod => {
-      mod.ensureRegionDataLoaded();
-    });
-  }, []);
+  // 🗺️ 지역 데이터 지연 로드 (검색 포커스 시점에 로드)
+  const regionDataLoadedRef = useRef(false);
+  const loadRegionDataOnce = () => {
+    if (!regionDataLoadedRef.current) {
+      regionDataLoadedRef.current = true;
+      import('@/lib/regionSearch').then(mod => {
+        mod.ensureRegionDataLoaded();
+      });
+    }
+  };
 
   // 🚀 SSR로 미리 로드된 데이터 사용 (API fetch 없음!)
-  const [dbFacilities, setDbFacilities] = useState<Facility[]>(() => {
-    // 캐시에도 저장 (list 페이지에서 사용)
-    if (typeof window !== 'undefined' && initialFacilities.length > 0) {
-      sessionStorage.setItem('facilitiesCache', JSON.stringify(initialFacilities));
+  const [dbFacilities, setDbFacilities] = useState<Facility[]>(initialFacilities);
+
+  // 🚀 캐시 저장은 비동기로 (메인스레드 블로킹 방지)
+  useEffect(() => {
+    if (initialFacilities.length > 0) {
+      const save = () => {
+        try { sessionStorage.setItem('facilitiesCache', JSON.stringify(initialFacilities)); } catch { }
+      };
+      if ('requestIdleCallback' in window) {
+        (window as any).requestIdleCallback(save);
+      } else {
+        setTimeout(save, 100);
+      }
     }
-    return initialFacilities;
-  });
+  }, [initialFacilities]);
   const [isLoading, setIsLoading] = useState(false); // 이미 로드됨
 
   // 현재 지도 좌표
@@ -167,6 +182,7 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
     if (facilityId && dbFacilities.length > 0) {
       // 🚀 1단계: 로컬 데이터로 즉시 표시 (0ms)
       if (!selectedFacility || selectedFacility.id !== facilityId) {
+        setIsDetailClosing(false); // 새 시설 열 때 애니메이션 리셋
         const localFac = dbFacilities.find(f => f.id === facilityId);
         if (localFac) {
           setSelectedFacility(localFac);
@@ -185,9 +201,17 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
           // API 실패해도 로컬 데이터로 이미 표시 중이니 무시
         });
     } else if (!facilityId) {
-      setSelectedFacility(null);
+      // 🚀 모바일에서 상세가 열려있을 때 뒤로가기 → 슬라이드아웃 애니메이션 트리거
+      if (isMobile && selectedFacility && !isDetailClosing) {
+        setIsDetailClosing(true);
+        // onAnimationEnd에서 실제 cleanup 처리
+      } else if (!isDetailClosing) {
+        // PC이거나 애니메이션 불필요한 경우 즉시 정리
+        setSelectedFacility(null);
+      }
     }
-  }, [searchParams, dbFacilities, pathname, router]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [searchParams, dbFacilities]);
 
   // Debounced handler - 자동완성용 (지역 이동은 엔터/클릭에서만!)
   // Note: 이제 여기서는 submittedQuery 설정 안 함
@@ -246,7 +270,6 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
 
     // 2. 시설 검색 (최소 2글자 이상)
     if (query.length < 2) {
-      console.log('검색어가 너무 짧음 (2글자 미만)');
       return;
     }
 
@@ -362,12 +385,6 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
 
   // 검색 결과 선택 (지역)
   const handleSelectRegion = (region: RegionResult) => {
-    console.log('🗺️ handleSelectRegion called:', {
-      fullName: region.fullName,
-      name: region.name,
-      type: region.type,
-      center: region.center
-    });
 
     setSearchQuery(region.fullName);
     setSubmittedQuery(region.fullName); // Also update submitted query
@@ -376,7 +393,6 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
 
     if (mapRef.current) {
       const zoom = region.type === 'gu' ? 12 : 14;
-      console.log('🗺️ Calling highlightRegion with:', region.center.lat, region.center.lng, zoom);
       mapRef.current.highlightRegion(
         region.center.lat,
         region.center.lng,
@@ -536,7 +552,7 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
                     fontSize: '16px' // iOS 자동 확대 방지
                   }
                 }}
-                onFocus={() => setSearchFocused(true)}
+                onFocus={() => { setSearchFocused(true); loadRegionDataOnce(); }}
                 onBlur={() => setTimeout(() => setSearchFocused(false), 250)} // 250ms for mobile touch stability
               />
               {/* 롤링 Placeholder 오버레이 */}
@@ -881,7 +897,7 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
                         '::placeholder': { color: 'rgba(255,255,255,0.7)' }
                       }
                     }}
-                    onFocus={() => setSearchFocused(true)}
+                    onFocus={() => { setSearchFocused(true); loadRegionDataOnce(); }}
                     onBlur={() => setTimeout(() => setSearchFocused(false), 250)}
                   />
                   {/* 모바일 롤링 Placeholder */}
@@ -1005,7 +1021,6 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
 
                 {/* 내 정보 아이콘 */}
                 <button
-                  onClick={() => console.log('내 정보 클릭')}
                   style={{
                     background: 'transparent',
                     border: 'none',
@@ -1130,7 +1145,7 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
         />
       </Box>
 
-      {/* 모바일 상세 팝업 (Full Page Overlay with Slide Animation) */}
+      {/* 모바일 상세 팝업 (Full Page Overlay with Slide In/Out Animation) */}
       {
         isMobile && selectedFacility && (
           <>
@@ -1138,6 +1153,10 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
               @keyframes slideInRight {
                 from { transform: translateX(100%); }
                 to { transform: translateX(0); }
+              }
+              @keyframes slideOutRight {
+                from { transform: translateX(0); }
+                to { transform: translateX(100%); }
               }
             `}</style>
             <Box
@@ -1154,19 +1173,41 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
                 overflow: 'hidden',
                 touchAction: 'pan-y',
                 overscrollBehavior: 'contain',
-                animation: 'slideInRight 0.25s ease-out forwards',
+                animation: isDetailClosing
+                  ? 'slideOutRight 0.2s ease-in forwards'
+                  : 'slideInRight 0.25s ease-out forwards',
+              }}
+              onAnimationEnd={() => {
+                if (isDetailClosing) {
+                  // 슬라이드아웃 완료 후 상태 정리
+                  const currentId = new URLSearchParams(window.location.search).get('id');
+                  // 브라우저 뒤로가기로 이미 URL에서 id 제거된 경우 router.push 불필요
+                  if (currentId) {
+                    router.push(pathname, { scroll: false });
+                  }
+                  // 지도 panTo는 다음 프레임에 처리
+                  const coords = selectedFacility?.coordinates;
+                  // 상태 즉시 정리
+                  setSelectedFacility(null);
+                  setIsDetailClosing(false);
+                  // panTo는 cleanup 후 처리
+                  if (coords && mapRef.current) {
+                    requestAnimationFrame(() => {
+                      mapRef.current?.panTo(coords.lat, coords.lng);
+                    });
+                  }
+                }
               }}
             >
               <Box style={{ flex: 1, overflow: 'hidden' }}>
                 <FacilityDetail
                   facility={selectedFacility}
                   onClose={() => {
-                    // URL에서 모든 파라미터 정리 후 홈으로 이동 (히스토리 문제 방지)
-                    router.push(pathname, { scroll: false });
+                    // 🚀 슬라이드아웃 먼저 실행 → 애니메이션 끝나면 상태 정리
+                    setIsDetailClosing(true);
                   }}
-                  allFacilities={finalFacilities}
                   onSelectFacility={(id) => {
-                    const fac = finalFacilities.find(f => f.id === id);
+                    const fac = dbFacilities.find(f => f.id === id);
                     if (fac) handleMarkerClick(fac);
                   }}
                   onMapView={(lat, lng) => {

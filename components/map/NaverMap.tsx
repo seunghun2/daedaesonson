@@ -6,7 +6,10 @@ import { MapPin } from 'lucide-react';
 import Script from 'next/script';
 import Link from 'next/link';
 import { Facility, FACILITY_CATEGORY_LABELS, FacilityCategory } from '@/types';
-import * as turf from '@turf/turf';
+// 🚀 개별 임포트로 번들 5MB → ~50KB 절감 (import * as turf 제거)
+import { featureCollection } from '@turf/helpers';
+import { union as turfUnion } from '@turf/union';
+import centerOfMass from '@turf/center-of-mass';
 
 // Naver Maps 타입 선언
 declare global {
@@ -113,7 +116,6 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
             try {
                 const res = await fetch('/data/skorea_dong.json');
                 geomRef.current = await res.json();
-                console.log('✅ 행정동 경계 데이터 로드 완료 (lazy)');
             } catch (err) { console.error('❌ 행정동 데이터 로드 실패:', err); }
         }
         if (type === 'gu' && !geomGuRef.current && !geomLoadingRef.current.gu) {
@@ -121,7 +123,6 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
             try {
                 const res = await fetch('/data/skorea_gu.json');
                 geomGuRef.current = await res.json();
-                console.log('✅ 시군구 경계 데이터 로드 완료 (lazy)');
             } catch (err) { console.error('❌ 시군구 데이터 로드 실패:', err); }
         }
     };
@@ -209,7 +210,6 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
                             drawFeature(map, targetFeature);
                         });
                         polygonDrawn = true;
-                        console.log(`✅ Gu Polygon Drawn: ${validFeatures.length} features for ${regionName}`);
                     }
                 }
 
@@ -254,8 +254,8 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
                         if (filteredCandidates.length > 1) {
                             try {
                                 // Turf v7 대응: FeatureCollection 전달
-                                const collection = turf.featureCollection(filteredCandidates);
-                                mergedFeature = turf.union(collection as any);
+                                const collection = featureCollection(filteredCandidates);
+                                mergedFeature = turfUnion(collection as any);
                             } catch (e) {
                                 console.error('Polygon merge failed', e);
                                 // 실패 시 개별 그리기
@@ -268,7 +268,6 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
                         if (mergedFeature) {
                             drawFeature(map, mergedFeature);
                             polygonDrawn = true;
-                            console.log(`✅ Merged Polygon Drawn for ${regionName}`);
                         }
                     }
                 }
@@ -324,23 +323,19 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
 
         searchRegion: (keyword: string) => {
             if (!keyword || !window.naver) {
-                console.log('❌ searchRegion aborted: no keyword or naver obj');
                 return null;
             }
 
             const normKeyword = keyword.normalize('NFC');
-            console.log(`🔍 searchRegion called with: "${normKeyword}"`);
 
             // 1. 구 단위 검색 (geomGuRef)
             if (geomGuRef.current && geomGuRef.current.features) {
                 // 🔧 수정: "서울특별시 도봉구" → "도봉" 추출 (마지막 구/군/시 이름만)
                 const guMatch = normKeyword.match(/([가-힣]+)(구|군|시)(?:\s|$)/);
                 const targetName = guMatch ? guMatch[1] : normKeyword.replace(/시|군|구/g, '');
-                console.log(`   - Gu Search Target: "${targetName}"`);
 
                 // 🔒 최소 2글자 이상
                 if (targetName.length < 2) {
-                    console.log('   - 검색어가 너무 짧음 (2글자 미만)');
                 } else {
                     const match = geomGuRef.current.features.find((f: any) => {
                         const fName = (f.properties.name || '').normalize('NFC');
@@ -350,9 +345,8 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
                     });
 
                     if (match) {
-                        console.log(`   ✅ Gu Match Found: ${match.properties.name}`);
                         try {
-                            const center = turf.centerOfMass(match);
+                            const center = centerOfMass(match);
                             const [lng, lat] = center.geometry.coordinates;
                             return {
                                 lat: lat,
@@ -365,11 +359,9 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
                             console.error('   ❌ Centroid calc failed', e);
                         }
                     } else {
-                        console.log('   - No Gu match found');
                     }
                 }
             } else {
-                console.warn('   ⚠️ geomGuRef is missing or empty');
             }
 
             // 2. 동 단위 검색 (geomRef)
@@ -384,7 +376,6 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
                         const fName = (f.properties.name || '').normalize('NFC');
                         return keywords.some(k => fName.includes(k));
                     });
-                    console.log(`   - Mapping Found for ${normKeyword}: ${targetFeatures.length} features`);
                 }
 
                 // 2-2. 매핑 없으면 일반 검색
@@ -394,7 +385,6 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
 
                     // 🔒 최소 2글자 이상이어야 검색 (너무 짧으면 이상한 매칭 방지)
                     if (cleanKeyword.length < 2) {
-                        console.log('   - 검색어가 너무 짧음 (2글자 미만)');
                         return null;
                     }
 
@@ -415,7 +405,6 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
                     // 여러 개가 검색되면(수유1동, 수유2동 등) 그 중 하나를 대표로 쓰거나 중심점 계산
                     // 여기선 첫 번째 매칭을 사용하되, highlightRegion에서 다시 병합하여 그림.
                     const representative = targetFeatures[0];
-                    console.log(`   ✅ Dong Match Found: ${representative.properties.name} (+${targetFeatures.length - 1} others)`);
 
                     try {
                         // 단순 첫 번째 요소의 중심점보다는, 전체 Feature들의 중심점(bounds center)이 더 정확하겠으나,
@@ -423,16 +412,16 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
                         // But for better centering, let's use turf on the collection if multiple.
                         let centerFeature = representative;
                         if (targetFeatures.length > 1) {
-                            const fc = turf.featureCollection(targetFeatures);
+                            const fc = featureCollection(targetFeatures);
                             // Center of mass for the whole collection
-                            const center = turf.centerOfMass(fc as any);
+                            const center = centerOfMass(fc as any);
                             const [lng, lat] = center.geometry.coordinates;
                             return {
                                 lat, lng, zoom: 14, type: 'dong' as const, name: normKeyword // Use input keyword so highlightRegion uses mapping
                             };
                         }
 
-                        const center = turf.centerOfMass(representative);
+                        const center = centerOfMass(representative);
                         const [lng, lat] = center.geometry.coordinates;
 
                         return {
@@ -446,13 +435,10 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
                         console.error('   ❌ Centroid calc failed', e);
                     }
                 } else {
-                    console.log('   - No Dong match found');
                 }
             } else {
-                console.warn('   ⚠️ geomRef is missing or empty');
             }
 
-            console.log('❌ searchRegion: No match found anywhere.');
             return null;
         }
     }));
@@ -536,7 +522,6 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
             ].join(',')
         }, (status: any, response: any) => {
             if (status !== window.naver.maps.Service.Status.OK) {
-                console.warn('Reverse Geocoding Failed:', status);
                 setCenterAddress('주변');
                 return;
             }
@@ -753,7 +738,6 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
 
         // 🔄 필터 변경 감지 (facilities 개수가 바뀌면 마커 재생성)
         if (isMarkersInitializedRef.current && prevFacilitiesCountRef.current !== processedFacilities.length) {
-            console.log(`🔄 필터 변경 감지: ${prevFacilitiesCountRef.current} → ${processedFacilities.length}개`);
             isMarkersInitializedRef.current = false; // 재초기화 허용
         }
         prevFacilitiesCountRef.current = processedFacilities.length;
@@ -766,11 +750,9 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
 
         // 🔒 데이터가 없으면 초기화하지 않음
         if (processedFacilities.length === 0) {
-            console.log('⏳ 데이터 로딩 중...');
             return;
         }
 
-        console.log('🚀 마커 초기 생성...');
 
         // 1. 기존 마커/클러스터 제거
         if (clustererRef.current) {
@@ -1034,7 +1016,6 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
 
         // 🔒 초기화 완료 플래그
         isMarkersInitializedRef.current = true;
-        console.log(`✅ 마커 생성 완료: 개별 ${createdMarkers.length} / 지역 ${regionMarkersArrayRef.current.length} / 시도 ${provinceMarkersArrayRef.current.length}`);
 
     }, [processedFacilities, regionGroups, provinceGroups, regionGroupCenters, onMarkerClick]);
 
@@ -1099,7 +1080,6 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
 
                     // 화면에 보이는 마커들만 레이블 생성
                     const bounds = map.getBounds();
-                    console.log(`🏷️ 레이블 표시 시도 - 마커 수: ${markersRef.current.length}, 줌: ${currentZoom}`);
                     markersRef.current.forEach((marker, idx) => {
                         const pos = marker.getPosition();
                         if (!bounds.hasPoint(pos)) return;
@@ -1261,7 +1241,6 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
                     strategy="afterInteractive"
                     src={`https://oapi.map.naver.com/openapi/v3/maps.js?ncpKeyId=${N_CLIENT_ID}&submodules=geocoder`}
                     onReady={() => {
-                        console.log('📜 메인 지도 스크립트 로드 완료 via ncpKeyId');
                         setIsMainLoaded(true);
                     }}
                     onError={() => {
@@ -1276,7 +1255,6 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
                     strategy="afterInteractive"
                     src="/MarkerClustering.js?v=2"
                     onReady={() => {
-                        console.log('📜 클러스터링 스크립트 로드 완료 (Local), 지도 초기화');
                         initMap();
                     }}
                     onError={() => {

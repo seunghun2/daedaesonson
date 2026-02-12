@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
+import Script from 'next/script';
 import './globals.css';
 import '@mantine/core/styles.css';
 import { ColorSchemeScript, MantineProvider, createTheme } from '@mantine/core';
@@ -75,18 +76,6 @@ export default function RootLayout({
     <html lang="ko" suppressHydrationWarning>
       <head>
         <ColorSchemeScript />
-        {/* Google Analytics GA4 */}
-        <script async src="https://www.googletagmanager.com/gtag/js?id=G-XHCFVSDRDY"></script>
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              window.dataLayer = window.dataLayer || [];
-              function gtag(){dataLayer.push(arguments);}
-              gtag('js', new Date());
-              gtag('config', 'G-XHCFVSDRDY');
-            `,
-          }}
-        />
         {/* JSON-LD 구조화 데이터 (검색 엔진 최적화) */}
         <script
           type="application/ld+json"
@@ -109,35 +98,55 @@ export default function RootLayout({
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
         {/* 🚫 iOS Safari 전화번호/주소 자동링크 비활성화 */}
         <meta name="format-detection" content="telephone=no, address=no, date=no" />
-        {/* Google Material Symbols Outlined */}
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
-        {/* 네이버 지도 API 스크립트 (클라이언트 ID는 환경변수에서 로드) */}
-        {/* 실제 운영 시에는 strategy="beforeInteractive" 등을 고려 */}
-        {/* 🚫 더블탭/dblclick 이벤트 기본 동작 차단 스크립트 */}
-        <script dangerouslySetInnerHTML={{
-          __html: `
-          (function() {
-            var lastTouchEnd = 0;
-            // touchend 기반 더블탭 감지 및 차단 (iOS Safari / Android WebView)
-            document.addEventListener('touchend', function(e) {
-              var now = Date.now();
-              if (now - lastTouchEnd <= 300) {
-                e.preventDefault();
-              }
-              lastTouchEnd = now;
-            }, { passive: false });
-            
-            // dblclick 이벤트 기본 동작 방지
-            document.addEventListener('dblclick', function(e) {
-              e.preventDefault();
-            }, { passive: false });
-          })();
-        ` }} />
+        {/* 🚀 Google Material Symbols - 필수 아이콘만 로드 + display=swap */}
+        <link
+          rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL@24,400,0&display=swap"
+        />
       </head>
       <body className={inter.className}>
         <MantineProvider theme={theme}>
           {children}
         </MantineProvider>
+        {/* 🚀 GA4: afterInteractive로 변경 → 렌더 차단 제거 */}
+        <Script
+          strategy="afterInteractive"
+          src="https://www.googletagmanager.com/gtag/js?id=G-XHCFVSDRDY"
+        />
+        <Script
+          id="ga4-init"
+          strategy="afterInteractive"
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', 'G-XHCFVSDRDY');
+            `,
+          }}
+        />
+        {/* 🚀 더블탭 차단: afterInteractive로 이동 */}
+        <Script
+          id="prevent-doubletap"
+          strategy="afterInteractive"
+          dangerouslySetInnerHTML={{
+            __html: `
+            (function() {
+              var lastTouchEnd = 0;
+              document.addEventListener('touchend', function(e) {
+                var now = Date.now();
+                if (now - lastTouchEnd <= 300) {
+                  e.preventDefault();
+                }
+                lastTouchEnd = now;
+              }, { passive: false });
+              document.addEventListener('dblclick', function(e) {
+                e.preventDefault();
+              }, { passive: false });
+            })()
+          `,
+          }}
+        />
       </body>
     </html>
   );

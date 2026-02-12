@@ -761,9 +761,7 @@ function FacilityEditModal({ facilityToEdit, opened, onClose, onSaved }: Facilit
                 </Tabs.Panel>
 
                 <Tabs.Panel value="price" pt="md">
-                    {(editForm as any)._detailedSource === 'prisma' ? renderPrismaPrice() : (
-                        <PriceEditor initialPriceTable={editForm.priceInfo?.priceTable} onChange={(newTable) => setEditForm(prev => ({ ...prev, priceInfo: { ...prev.priceInfo!, priceTable: newTable } }))} />
-                    )}
+                    {renderPrismaPrice()}
                     <Alert title="알림" color="blue" mt="md">DB 데이터는 실시간 편집이 가능합니다. 변경사항은 저장 버튼을 눌러주세요.</Alert>
                 </Tabs.Panel>
 

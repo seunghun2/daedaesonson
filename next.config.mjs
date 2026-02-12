@@ -23,7 +23,7 @@ const nextConfig = {
     serverExternalPackages: ['@prisma/client', 'prisma'],
     // 🚀 번들 최적화
     experimental: {
-        optimizePackageImports: ['@mantine/core', '@mantine/hooks'],
+        optimizePackageImports: ['@mantine/core', '@mantine/hooks', '@turf/helpers', '@turf/union', '@turf/center-of-mass', 'lucide-react'],
     },
 };
 
