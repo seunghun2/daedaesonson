@@ -2,15 +2,54 @@
 
 import { useEffect, useState, useRef } from 'react';
 import { useRouter } from 'next/navigation';
-import { Box, Center, Loader } from '@mantine/core';
+import { Box, Center, Loader, Skeleton, Stack, Group } from '@mantine/core';
 import dynamic from 'next/dynamic';
+
+const FacilityDetailSkeleton = () => (
+    <Box bg="white" style={{ height: '100dvh', overflow: 'hidden' }}>
+        {/* 헤더 영역 */}
+        <Skeleton h={56} radius={0} />
+        {/* 액션 바 */}
+        <Skeleton h={48} radius={0} />
+        {/* 카테고리 뱃지 + 조회수 */}
+        <Group justify="space-between" px="md" py="sm">
+            <Skeleton w={70} h={24} radius="xl" />
+            <Skeleton w={160} h={16} radius="sm" />
+        </Group>
+        {/* 예상 이용 비용 */}
+        <Box px="md" py="md">
+            <Skeleton w={90} h={14} mb="sm" radius="sm" />
+            <Skeleton w={200} h={22} mb={6} radius="sm" />
+            <Skeleton w={170} h={22} mb="xs" radius="sm" />
+            <Skeleton w={260} h={12} mt="sm" radius="sm" />
+        </Box>
+        {/* 시설 정보 아이콘 */}
+        <Box px="md" py="lg" style={{ borderTop: '8px solid #f8f9fa' }}>
+            <Skeleton w={70} h={18} mb="md" radius="sm" />
+            <Group justify="space-around">
+                {[1, 2, 3, 4].map(i => (
+                    <Stack key={i} align="center" gap={6}>
+                        <Skeleton circle h={52} w={52} />
+                        <Skeleton w={36} h={12} radius="sm" />
+                    </Stack>
+                ))}
+            </Group>
+        </Box>
+        {/* 시설 사진 */}
+        <Box px="md" py="md" style={{ borderTop: '8px solid #f8f9fa' }}>
+            <Skeleton w={70} h={18} mb="md" radius="sm" />
+            <Group gap="sm" wrap="nowrap">
+                <Skeleton w="50%" h={180} radius="md" />
+                <Skeleton w="50%" h={180} radius="md" />
+            </Group>
+        </Box>
+    </Box>
+);
 
 // 🚀 FacilityDetail 지연 로딩
 const FacilityDetail = dynamic(() => import('@/components/detail/FacilityDetail'), {
     ssr: false,
-    loading: () => (
-        <Center h="100dvh"><Loader color="brand" size="lg" /></Center>
-    ),
+    loading: () => <FacilityDetailSkeleton />,
 });
 
 interface FacilityPageClientProps {

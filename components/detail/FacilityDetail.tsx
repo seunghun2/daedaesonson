@@ -115,16 +115,17 @@ function PriceInfoSection({ priceInfo, hasPrice }: { priceInfo: any, hasPrice: b
         const getMinPriceForService = (serviceType: string) => {
             const groups = standardizedPrices!.filter(g => g.serviceType === serviceType);
             const usageRows = groups.flatMap(g =>
-                g.rows.filter(r => !r.feeType || r.feeType === 'USAGE')
+                g.rows.filter(r => !r.feeType || r.feeType === 'USAGE' || (r.feeType === 'MAINTENANCE' && r.groupType))
             );
-            const repItem = usageRows.find(r => r.isRepresentative);
-            if (repItem && repItem.price > 0) return repItem.price;
+            // isRepresentative 항목들 중 최저가 우선, 없으면 전체 최저가
+            const repItems = usageRows.filter(r => r.isRepresentative && r.price > 0);
+            if (repItems.length > 0) return Math.min(...repItems.map(r => r.price));
             const prices = usageRows.map(r => r.price).filter(p => p > 0);
             return prices.length > 0 ? Math.min(...prices) : 0;
         };
 
         return (
-            <Box bg="white" p="md" pb="xl" style={{ borderBottom: '8px solid #f8f9fa' }}>
+            <Box bg="white" p="md" pb="xl" style={{ borderBottom: '8px solid #f8f9fa', boxShadow: 'inset 0 -1px 0 #e9ecef' }}>
                 <Text size="xl" fw={800} mb="xl" style={{ letterSpacing: '-1px' }}>
                     사용료
                 </Text>
@@ -175,10 +176,15 @@ function PriceInfoSection({ priceInfo, hasPrice }: { priceInfo: any, hasPrice: b
                                         }}
                                     >
                                         {groups.map(group => {
-                                            const usageRows = group.rows.filter(r => !r.feeType || r.feeType === 'USAGE');
-                                            const mgmtRows = group.rows.filter(r => r.feeType === 'MANAGEMENT');
+                                            // groupType이 있는 MAINTENANCE rows (봉안담 개인단/부부단 등)는 사실상 사용료
+                                            const usageRows = group.rows.filter(r =>
+                                                !r.feeType || r.feeType === 'USAGE' || (r.feeType === 'MAINTENANCE' && r.groupType)
+                                            );
+                                            const mgmtRows = group.rows.filter(r =>
+                                                r.feeType === 'MAINTENANCE' && !r.groupType
+                                            );
                                             const otherRows = group.rows.filter(r =>
-                                                r.feeType && !['USAGE', 'MANAGEMENT'].includes(r.feeType)
+                                                r.feeType && !['USAGE', 'MAINTENANCE'].includes(r.feeType)
                                             );
 
                                             // groupType별 탭 분류
@@ -266,20 +272,20 @@ function PriceInfoSection({ priceInfo, hasPrice }: { priceInfo: any, hasPrice: b
 
                                                         {/* 관리비 섹션 */}
                                                         {mgmtRows.length > 0 && (
-                                                            <Box bg="blue.0" p="sm" style={{ borderRadius: 6, border: '1px solid #d0ebff' }} mt="md">
-                                                                <Text size="11px" fw={700} c="blue.7" mb="xs">📋 관리비 안내</Text>
+                                                            <Box p="sm" style={{ borderRadius: 6, border: '1px solid #e9ecef' }} mt="md">
+                                                                <Text size="11px" fw={700} c="dimmed" mb="xs">관리비 안내</Text>
                                                                 <Stack gap="xs">
                                                                     {mgmtRows.map((row, idx) => (
                                                                         <Group key={`mgmt-${idx}`} justify="space-between">
                                                                             <Group gap={4}>
                                                                                 <Text size="xs" c="dark.5">{row.name}</Text>
                                                                                 {row.paymentCycle && (
-                                                                                    <Badge size="xs" variant="outline" color="blue">
+                                                                                    <Badge size="xs" variant="outline" color="gray">
                                                                                         {row.paymentCycle === 'MONTHLY' ? '월납' : row.paymentCycle === 'YEARLY' ? '연납' : '일시납'}
                                                                                     </Badge>
                                                                                 )}
                                                                             </Group>
-                                                                            <Text size="xs" fw={600} c="blue.7">{formatKoreanCurrency(row.price)}</Text>
+                                                                            <Text size="xs" fw={600} c="dark.7">{formatKoreanCurrency(row.price)}</Text>
                                                                         </Group>
                                                                     ))}
                                                                 </Stack>
@@ -289,7 +295,7 @@ function PriceInfoSection({ priceInfo, hasPrice }: { priceInfo: any, hasPrice: b
                                                         {/* 기타 비용 (석물, 작업비 등) */}
                                                         {otherRows.length > 0 && (
                                                             <Box bg="white" p="xs" style={{ borderRadius: 6, border: '1px solid #f1f3f5' }} mt="md">
-                                                                <Text size="11px" fw={700} c="dimmed" mb="xs">💡 부가 옵션</Text>
+                                                                <Text size="11px" fw={700} c="dimmed" mb="xs">부가 옵션</Text>
                                                                 <Stack gap="xs">
                                                                     {otherRows.map((row, idx) => (
                                                                         <Group key={`other-${idx}`} justify="space-between">
@@ -332,7 +338,7 @@ function PriceInfoSection({ priceInfo, hasPrice }: { priceInfo: any, hasPrice: b
 
     if (!priceTable) {
         return hasPrice ? (
-            <Box bg="white" p="md" style={{ borderBottom: '8px solid #f8f9fa' }}>
+            <Box bg="white" p="md" style={{ borderBottom: '8px solid #f8f9fa', boxShadow: 'inset 0 -1px 0 #e9ecef' }}>
                 <Text size="sm" fw={700} mb="xs">가격 상세 정보</Text>
                 <Text size="xs" c="dimmed">아직 등록된 상세 가격 정보가 없습니다. 관리실로 문의해주세요.</Text>
             </Box>
@@ -398,7 +404,7 @@ function PriceInfoSection({ priceInfo, hasPrice }: { priceInfo: any, hasPrice: b
     const displayGroups = visibleGroups.filter(g => !g.label.includes('기타'));
 
     return (
-        <Box bg="white" p="md" pb="xl" style={{ borderBottom: '8px solid #f8f9fa' }}>
+        <Box bg="white" p="md" pb="xl" style={{ borderBottom: '8px solid #f8f9fa', boxShadow: 'inset 0 -1px 0 #e9ecef' }}>
             <Text size="xl" fw={800} mb="xl" style={{ letterSpacing: '-1px' }}>
                 사용료
             </Text>
@@ -507,7 +513,7 @@ function PriceInfoSection({ priceInfo, hasPrice }: { priceInfo: any, hasPrice: b
                                                                         </Stack>
                                                                         {groupOptions.length > 0 && (
                                                                             <Box bg="white" p="xs" style={{ borderRadius: 6, border: '1px solid #f1f3f5' }} mt="md">
-                                                                                <Text size="11px" fw={700} c="dimmed" mb="xs">💡 부가 옵션</Text>
+                                                                                <Text size="11px" fw={700} c="dimmed" mb="xs">부가 옵션</Text>
                                                                                 <Stack gap="xs">
                                                                                     {groupOptions.map((row: any, optIdx: number) => (
                                                                                         <Group key={`opt-${gName}-${optIdx}`} justify="space-between">
@@ -543,7 +549,7 @@ function PriceInfoSection({ priceInfo, hasPrice }: { priceInfo: any, hasPrice: b
                                                             </Stack>
                                                             {optionRows.length > 0 && (
                                                                 <Box bg="white" p="xs" style={{ borderRadius: 6, border: '1px solid #f1f3f5' }}>
-                                                                    <Text size="11px" fw={700} c="dimmed" mb="xs">💡 부가 옵션</Text>
+                                                                    <Text size="11px" fw={700} c="dimmed" mb="xs">부가 옵션</Text>
                                                                     <Stack gap="xs">
                                                                         {optionRows.map((row: any, idx: number) => (
                                                                             <Group key={`opt-${idx}`} justify="space-between">
@@ -699,6 +705,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
     const [replyContent, setReplyContent] = useState('');
     const [likedReviews, setLikedReviews] = useState<Set<string>>(new Set());
     const [inquiryOpen, setInquiryOpen] = useState(false);
+    const [isFavorited, setIsFavorited] = useState(false);
     const [showAllInquiries, setShowAllInquiries] = useState(false);
     const [totalInquiryCount, setTotalInquiryCount] = useState(0);
 
@@ -1131,15 +1138,31 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                 type="application/ld+json"
                 dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
             />
-            {/* 1. 호갱노노 스타일 헤더 (Brand Color - Deep Indigo) */}
-            <Box bg="brand.8" p="md" style={{ position: 'sticky', top: 0, zIndex: 1000 }}>
+            {/* 1. 헤더 (← 민간/공설 시설명 + 📍 + 공유) */}
+            <Box bg="brand.8" p="md" pb={8} style={{ position: 'sticky', top: 0, zIndex: 1000 }}>
                 <Group justify="space-between" align="center" wrap="nowrap">
                     <Group gap={4} wrap="nowrap" style={{ flex: 1, minWidth: 0 }}>
                         <ActionIcon variant="transparent" color="white" w={32} h={32} onClick={onClose} style={{ flexShrink: 0 }}>
-                            <span className="material-symbols-outlined" style={{ fontSize: '24px' }}>arrow_back_ios_new</span>
+                            <span className="material-symbols-outlined" style={{ fontSize: '22px', fontVariationSettings: "'FILL' 1" }}>arrow_back_ios_new</span>
                         </ActionIcon>
-                        <Group gap={4} wrap="nowrap" style={{ overflow: 'hidden' }}>
-                            <Text size="lg" fw={600} c="white" ml={4} truncate>
+                        <Group gap={6} wrap="nowrap" style={{ overflow: 'hidden' }}>
+                            <Badge
+                                size="sm" radius="sm" variant="light"
+                                style={{
+                                    textTransform: 'none',
+                                    color: 'white',
+                                    backgroundColor: 'rgba(255,255,255,0.2)',
+                                    fontSize: '12px',
+                                    fontWeight: 600,
+                                    height: '22px',
+                                    border: '1px solid rgba(255,255,255,0.3)',
+                                    padding: '0 6px',
+                                    flexShrink: 0
+                                }}
+                            >
+                                {facility.isPublic ? '공설' : '민간'}
+                            </Badge>
+                            <Text size="md" fw={600} c="white" truncate style={{ fontSize: '16px' }}>
                                 {facility.name}
                             </Text>
                         </Group>
@@ -1153,23 +1176,20 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                             onClick={(e) => {
                                 e.stopPropagation();
                                 e.preventDefault();
-                                // 📊 GA4: 지도로 이동 클릭
                                 if ((window as any).gtag) {
                                     (window as any).gtag('event', 'map_navigate', {
                                         facility_id: facility.id,
                                         facility_name: facility.name
                                     });
                                 }
-                                // 지도에서 해당 위치로 이동
                                 if (onMapView && facility.coordinates) {
                                     onMapView(facility.coordinates.lat, facility.coordinates.lng);
-                                    // onMapView가 자체적으로 라우팅 처리하므로 onClose 호출 안 함
                                 } else {
                                     onClose();
                                 }
                             }}
                         >
-                            <span className="material-symbols-outlined" style={{ fontSize: '24px' }}>location_on</span>
+                            <span className="material-symbols-outlined" style={{ fontSize: '22px' }}>location_on</span>
                         </ActionIcon>
                         <ActionIcon
                             variant="transparent"
@@ -1180,7 +1200,6 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                 e.stopPropagation();
                                 e.preventDefault();
                                 navigator.clipboard.writeText(`https://daedaesonson.com/facility/${facility.id}`);
-                                // 📊 GA4: 공유하기 클릭
                                 if ((window as any).gtag) {
                                     (window as any).gtag('event', 'share_click', {
                                         facility_id: facility.id,
@@ -1189,31 +1208,67 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                 }
                             }}
                         >
-                            <span className="material-symbols-outlined" style={{ fontSize: '24px' }}>share</span>
-                        </ActionIcon>
-                        <ActionIcon variant="transparent" color="white" w={36} h={36} onClick={onClose} ml={4}>
-                            <span className="material-symbols-outlined" style={{ fontSize: '24px' }}>close</span>
+                            <span className="material-symbols-outlined" style={{ fontSize: '22px' }}>share</span>
                         </ActionIcon>
                     </Group>
                 </Group>
             </Box>
 
-            {/* 3. 정보 요약 & 소셜 데이터 */}
+            {/* 2. 액션바 3등분 (직접전화 / ♡ / 이야기) */}
+            <Box bg="brand.8" px={0} style={{
+                borderTop: '1px solid rgba(255,255,255,0.12)',
+                borderBottom: '1px solid rgba(255,255,255,0.12)',
+            }}>
+                <div style={{
+                    display: 'flex',
+                    alignItems: 'stretch',
+                    justifyContent: 'space-around',
+                    width: '100%',
+                }}>
+                    <div
+                        style={{ display: 'flex', alignItems: 'center', gap: '6px', cursor: 'pointer', padding: '10px 12px', flex: 1, justifyContent: 'center' }}
+                        onClick={() => {
+                            if (facility.phone) {
+                                window.location.href = `tel:${facility.phone}`;
+                            }
+                        }}
+                    >
+                        <span className="material-symbols-outlined" style={{ fontSize: '18px', color: 'white', fontVariationSettings: "'FILL' 1" }}>call</span>
+                        <span style={{ fontSize: '16px', color: 'white', fontWeight: 500 }}>직접전화</span>
+                    </div>
+
+                    <div style={{ width: '1px', backgroundColor: 'rgba(255,255,255,0.12)', alignSelf: 'stretch' }} />
+
+                    <div
+                        style={{ display: 'flex', alignItems: 'center', gap: '6px', cursor: 'pointer', padding: '10px 12px', flex: 1, justifyContent: 'center' }}
+                        onClick={() => {
+                            setIsFavorited(prev => !prev);
+                        }}
+                    >
+                        <span className="material-symbols-outlined" style={{ fontSize: '18px', color: isFavorited ? '#ff6b6b' : 'white', fontVariationSettings: isFavorited ? "'FILL' 1" : "'FILL' 0", transition: 'all 0.2s ease' }}>favorite</span>
+                        <span style={{ fontSize: '16px', color: isFavorited ? '#ff6b6b' : 'white', fontWeight: 500, transition: 'color 0.2s ease' }}>{isFavorited ? 1 : 0}</span>
+                    </div>
+
+                    <div style={{ width: '1px', backgroundColor: 'rgba(255,255,255,0.12)', alignSelf: 'stretch' }} />
+
+                    <div
+                        style={{ display: 'flex', alignItems: 'center', gap: '6px', cursor: 'pointer', padding: '10px 12px', flex: 1, justifyContent: 'center' }}
+                        onClick={() => {
+                            setInquiryOpen(true);
+                        }}
+                    >
+                        <span className="material-symbols-outlined" style={{ fontSize: '18px', color: 'white', fontVariationSettings: "'FILL' 1" }}>chat_bubble</span>
+                        <span style={{ fontSize: '16px', color: 'white', fontWeight: 500 }}>이야기</span>
+                    </div>
+                </div>
+            </Box>
+
+            {/* 3. 정보 요약 */}
             <Box bg="white">
-                <Box pt="md" px="md" pb="xs">
-                    <Group align="center" gap={4} mb="xs">
-                        <Text size="sm" c="gray.7" style={{ letterSpacing: '-0.3px' }}>{facility.address}</Text>
-
-                    </Group>
-
-                    {/* 상단 태그 영역 제거됨 -> 하단 통계 섹션으로 이동 */}
-                </Box>
-
-                {/* 방문자 통계 & 태그 섹션 (수정됨) */}
-                {/* 방문자 통계 & 태그 섹션 (단일 라인 스크롤) */}
+                {/* 태그 + 방문자 통계 */}
                 <Box
                     py="sm" px="md"
-                    style={{ borderTop: '1px solid #f1f3f5', borderBottom: '8px solid #f8f9fa' }}
+                    style={{ borderBottom: '8px solid #f8f9fa', boxShadow: 'inset 0 -1px 0 #e9ecef' }}
                 >
                     <div style={{
                         display: 'flex',
@@ -1222,7 +1277,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                         width: '100%',
                         gap: '8px'
                     }}>
-                        {/* 태그 그룹 (왼쪽 정렬, 필요시 스크롤) */}
+                        {/* 태그 그룹 - 카테고리만 (복수 카테고리 지원) */}
                         <div style={{
                             display: 'flex',
                             gap: '6px',
@@ -1232,42 +1287,31 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                             whiteSpace: 'nowrap',
                             alignItems: 'center'
                         }}>
-                            <Badge
-                                size="md" radius="md" variant="light"
-                                style={{
-                                    textTransform: 'none',
-                                    color: '#495057',
-                                    backgroundColor: '#f1f3f5',
-                                    fontSize: '13px',
-                                    fontWeight: 500,
-                                    height: '28px',
-                                    border: 'none',
-                                    padding: '0 10px',
-                                    flexShrink: 0
-                                }}
-                            >
-                                {facility.isPublic ? '지자체 운영' : '민간 운영'}
-                            </Badge>
-
-                            <Badge
-                                size="md" radius="md" variant="light"
-                                style={{
-                                    textTransform: 'none',
-                                    color: '#495057',
-                                    backgroundColor: '#f1f3f5',
-                                    fontSize: '13px',
-                                    fontWeight: 500,
-                                    height: '28px',
-                                    border: 'none',
-                                    padding: '0 10px',
-                                    flexShrink: 0
-                                }}
-                            >
-                                {FACILITY_CATEGORY_LABELS[facility.category]}
-                            </Badge>
+                            {(facility.categories && facility.categories.length > 0
+                                ? facility.categories
+                                : [facility.category]
+                            ).map((cat) => (
+                                <Badge
+                                    key={cat}
+                                    size="md" radius="md" variant="light"
+                                    style={{
+                                        textTransform: 'none',
+                                        color: '#495057',
+                                        backgroundColor: '#f1f3f5',
+                                        fontSize: '13px',
+                                        fontWeight: 500,
+                                        height: '28px',
+                                        border: 'none',
+                                        padding: '0 10px',
+                                        flexShrink: 0
+                                    }}
+                                >
+                                    {FACILITY_CATEGORY_LABELS[cat]}
+                                </Badge>
+                            ))}
                         </div>
 
-                        {/* 방문자 통계 텍스트 (오른쪽 정렬) - 슬라이드 업 애니메이션 */}
+                        {/* 방문자 통계 */}
                         <Text
                             key={`viewcount-${facility.id}`}
                             size="xs"
@@ -1276,9 +1320,10 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                 whiteSpace: 'nowrap',
                                 flexShrink: 0,
                                 animation: 'slideUpFade 0.5s ease-out',
+                                fontSize: '12px',
                             }}
                         >
-                            최근 {viewCount}명이 찾아봤어요
+                            최근 {viewCount}명이 {FACILITY_CATEGORY_LABELS[facility.category]} 찾아봤어요
                         </Text>
                         <style jsx>{`
                             @keyframes slideUpFade {
@@ -1307,6 +1352,20 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                 // Collection for sub-items (Label, Price in Won)
                 const subRepItems: { label: string; price: number }[] = [];
 
+                // 대표 메뉴 3가지로 그룹핑
+                const menuGroups: Record<string, number[]> = {
+                    '봉안당': [],
+                    '매장묘지': [],
+                    '수목장': [],
+                };
+                const menuKeywords: Record<string, string[]> = {
+                    '봉안당': ['봉안', '납골', '안치'],
+                    '매장묘지': ['매장', '평장', '단장', '합장', '쌍분', '묘지', '묘원', '분양'],
+                    '수목장': ['수목', '자연', '잔디', '화초', '암석'],
+                };
+                // 대표 메뉴 그룹에서 제외할 키 (부가시설)
+                const excludeKeys = ['봉안벽'];
+
                 // 실제 가격 데이터는 priceInfo.priceTable에 있음
                 const priceTable = facility.priceInfo?.priceTable || facility.pricing;
 
@@ -1314,7 +1373,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                     // 1. Collect all representative items
                     Object.keys(priceTable).forEach(key => {
                         const cat = priceTable[key];
-                        // Skip non-main categories: 기타/공통, 제외됨, 옵션, 관리비, 석물, 비고 등
+                        // Skip non-main categories
                         if (/옵션|관리비|기타|공통|제외|석물|비고|안내|별도/.test(key)) return;
 
                         if (cat && Array.isArray(cat.rows)) {
@@ -1323,12 +1382,20 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                 let priceVal = Number(rep.price);
                                 if (isNaN(priceVal) || priceVal <= 0) return;
 
-                                // Heuristic: Process Unit
-                                // If < 10000, assume Man-won -> Convert to Won
-                                // If >= 10000, assume Won -> Keep as Won
-                                // Special case: very small numbers < 5 might be noise, but let's keep for now if user entered '2' (20000 won)
                                 const val = priceVal < 10000 ? priceVal * 10000 : priceVal;
 
+                                // 대표 메뉴에 매핑 (부가시설 키는 제외)
+                                let matched = false;
+                                if (!excludeKeys.includes(key)) {
+                                    for (const [menu, keywords] of Object.entries(menuKeywords)) {
+                                        if (keywords.some(kw => key.includes(kw))) {
+                                            menuGroups[menu].push(val);
+                                            matched = true;
+                                            break;
+                                        }
+                                    }
+                                }
+                                // 매핑 안 된 항목도 subRepItems에 보관 (fallback)
                                 subRepItems.push({ label: key, price: val });
                             }
                         }
@@ -1346,7 +1413,6 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                     ) || subRepItems[0];
 
                     if (mainItem) {
-                        // Convert back to Man-won for the *existing* render logic below which multiplies by 10000
                         displayPriceNum = mainItem.price / 10000;
                         isRep = true;
                     }
@@ -1354,7 +1420,6 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
 
                 // Fallback: Use priceRange.min if no representative price found
                 if (displayPriceNum === 0) {
-                    // priceRange.min은 이제 원 단위 - 만원으로 변환
                     displayPriceNum = facility.priceRange?.min ? Math.round(facility.priceRange.min / 10000) : 0;
                 }
 
@@ -1363,27 +1428,81 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                     // (Legacy logic omitted for brevity, keeping existing flow if pricing empty)
                 }
 
-                if (displayPriceNum > 0) {
-                    return (
-                        <Box bg="white" p="md" style={{ borderBottom: '8px solid #f8f9fa' }}>
-                            <Text size="sm" c="gray.6" mb={8} fw={500}>예상 이용 비용</Text>
-                            <Group align="flex-end" gap="xs">
-                                <Text style={{ fontSize: '26px', fontWeight: 800, color: 'var(--mantine-color-brand-8)', lineHeight: 1, fontFamily: 'Pretendard' }}>
-                                    {formatKoreanCurrency(displayPriceNum * 10000)}~
-                                </Text>
-                            </Group>
+                // 대표 메뉴 항목 계산
+                const menuItems: { label: string; price: number }[] = [];
+                for (const [menu, prices] of Object.entries(menuGroups)) {
+                    if (prices.length > 0) {
+                        menuItems.push({ label: menu, price: Math.min(...prices) });
+                    }
+                }
+                const displayItems = menuItems.length > 0 ? menuItems : subRepItems;
 
-                            <Text size="xs" c="dimmed" mt={8}>
+                if (displayItems.length > 0) {
+                    return (
+                        <Box p="md" style={{
+                            borderBottom: '8px solid #f8f9fa',
+                            boxShadow: 'inset 0 -1px 0 #e9ecef',
+                            background: 'white',
+                        }}>
+                            <Text size="xs" c="gray.5" mb={10} fw={500} style={{ fontSize: '12px' }}>예상 이용 비용</Text>
+                            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                                {displayItems.map((item, idx) => (
+                                    <div key={idx} style={{ display: 'flex', alignItems: 'baseline', gap: '12px' }}>
+                                        <Text style={{ fontSize: '16px', fontWeight: 700, color: '#212529' }}>
+                                            {item.label}
+                                        </Text>
+                                        <Text style={{ fontSize: '16px', fontWeight: 500, color: 'var(--mantine-color-brand-7)', letterSpacing: '-0.3px' }}>
+                                            {formatKoreanCurrency(item.price)}~
+                                        </Text>
+                                    </div>
+                                ))}
+                            </div>
+                            <Text size="xs" c="gray.6" mt={10} style={{ fontSize: '11px' }}>
+                                ※ 실제 비용은 선택 옵션에 따라 달라질 수 있습니다.
+                            </Text>
+                        </Box>
+                    );
+                } else if (displayPriceNum > 0) {
+                    return (
+                        <Box p="md" style={{
+                            borderBottom: '8px solid #f8f9fa',
+                            boxShadow: 'inset 0 -1px 0 #e9ecef',
+                            background: 'white',
+                        }}>
+                            <Text size="xs" c="gray.5" mb={10} fw={500} style={{ fontSize: '12px' }}>예상 이용 비용</Text>
+                            <Text style={{
+                                fontSize: '20px',
+                                fontWeight: 800,
+                                color: 'var(--mantine-color-brand-8)',
+                                lineHeight: 1,
+                                letterSpacing: '-0.5px',
+                            }}>
+                                {formatKoreanCurrency(displayPriceNum * 10000)}~
+                            </Text>
+                            <Text size="xs" c="gray.6" mt={8} style={{ fontSize: '11px' }}>
                                 ※ 실제 비용은 선택 옵션에 따라 달라질 수 있습니다.
                             </Text>
                         </Box>
                     );
                 } else {
                     return (
-                        <Box bg="white" p="md" style={{ borderBottom: '8px solid #f8f9fa' }}>
-                            <Text size="sm" c="gray.6" mb={8} fw={500}>예상 이용 비용</Text>
-                            <Text style={{ fontSize: '26px', fontWeight: 800, color: 'var(--mantine-color-brand-8)', lineHeight: 1, fontFamily: 'Pretendard' }}>
+                        <Box p="md" style={{
+                            borderBottom: '8px solid #f8f9fa',
+                            boxShadow: 'inset 0 -1px 0 #e9ecef',
+                            background: 'white',
+                        }}>
+                            <Text size="xs" c="gray.5" mb={10} fw={500} style={{ fontSize: '12px' }}>예상 이용 비용</Text>
+                            <Text style={{
+                                fontSize: '20px',
+                                fontWeight: 800,
+                                color: 'var(--mantine-color-brand-8)',
+                                lineHeight: 1,
+                                letterSpacing: '-0.5px',
+                            }}>
                                 가격문의
+                            </Text>
+                            <Text size="xs" c="gray.6" mt={8} style={{ fontSize: '11px' }}>
+                                시설에 직접 문의하여 정확한 비용을 확인하세요.
                             </Text>
                         </Box>
                     );
@@ -1393,7 +1512,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
             {/* 4. 핵심 지표 (Highlight) */}
             {
                 facility.highlight && (
-                    <Box bg="white" p="md" style={{ borderBottom: '8px solid #f8f9fa' }}>
+                    <Box bg="white" p="md" style={{ borderBottom: '8px solid #f8f9fa', boxShadow: 'inset 0 -1px 0 #e9ecef' }}>
                         <Group gap="xs" mb="sm">
                             <TrendingUp size={16} color="var(--mantine-color-brand-6)" />
                             <Text size="sm" fw={700} c="brand.8">핵심 지표</Text>
@@ -1423,7 +1542,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
             }
 
             {/* 5. 시설 정보 카드 */}
-            <Box bg="white" p="md" style={{ borderBottom: '8px solid #f8f9fa' }}>
+            <Box bg="white" p="md" style={{ borderBottom: '8px solid #f8f9fa', boxShadow: 'inset 0 -1px 0 #e9ecef' }}>
                 <Text size="sm" fw={700} mb="md">시설 정보</Text>
                 <Group gap="lg" grow>
                     <Box ta="center">
@@ -1460,7 +1579,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
 
             {/* 6. 사진 갤러리 (수정됨: 2개 노출 + 오버레이 + 클릭 시 팝업) */}
             {galleryImages.length > 0 && (
-                <Box bg="white" p="md" style={{ borderBottom: '8px solid #f8f9fa' }}>
+                <Box bg="white" p="md" style={{ borderBottom: '8px solid #f8f9fa', boxShadow: 'inset 0 -1px 0 #e9ecef' }}>
                     <Text size="sm" fw={700} mb="md">시설 사진</Text>
                     <Box style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 8 }}>
                         {visibleImages.map((img, idx) => {
@@ -1511,7 +1630,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
             {/* 7. 시설 소개 */}
             {
                 facility.description && facility.description !== phoneNumber && (
-                    <Box bg="white" p="md" style={{ borderBottom: '8px solid #f8f9fa' }}>
+                    <Box bg="white" p="md" style={{ borderBottom: '8px solid #f8f9fa', boxShadow: 'inset 0 -1px 0 #e9ecef' }}>
                         <Text size="sm" fw={700} mb="sm">시설 소개</Text>
                         <Text size="sm" lh={1.6} c="dark.7">{facility.description}</Text>
                     </Box>
@@ -1525,7 +1644,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
 
 
             {/* 9. 위치 및 교통 (홈페이지 바로가기 버튼 추가됨) */}
-            <Box bg="white" p="md" style={{ borderBottom: '8px solid #f8f9fa' }}>
+            <Box bg="white" p="md" style={{ borderBottom: '8px solid #f8f9fa', boxShadow: 'inset 0 -1px 0 #e9ecef' }}>
                 <Text size="sm" fw={700} mb="sm">위치</Text>
                 <Text size="sm" mb="md" c="dark.7">{facility.address}</Text>
 
@@ -1552,7 +1671,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
 
 
             {/* 전화상담 + 상담하기 */}
-            <Box bg="white" p="md" style={{ borderBottom: '8px solid #f8f9fa' }}>
+            <Box bg="white" p="md" style={{ borderBottom: '8px solid #f8f9fa', boxShadow: 'inset 0 -1px 0 #e9ecef' }}>
                 <Group grow align="flex-start">
                     {/* 왼쪽: 전화상담 */}
                     <Box>
@@ -1597,7 +1716,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
             </Box>
 
             {/* 시설 정보 */}
-            <Box bg="white" p="md" style={{ borderBottom: '8px solid #f8f9fa' }}>
+            <Box bg="white" p="md" style={{ borderBottom: '8px solid #f8f9fa', boxShadow: 'inset 0 -1px 0 #e9ecef' }}>
                 <Text size="sm" fw={700} mb="md">시설 정보</Text>
                 <Stack gap="sm">
                     <Group justify="space-between">
