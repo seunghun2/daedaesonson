@@ -2,7 +2,8 @@
 
 import { useEffect, useState, useRef } from 'react';
 import { useRouter } from 'next/navigation';
-import { Box, Center, Loader, Skeleton, Stack, Group } from '@mantine/core';
+import { Box, Center, Loader, Skeleton, Stack, Group, useMantineTheme } from '@mantine/core';
+import { useMediaQuery } from '@mantine/hooks';
 import dynamic from 'next/dynamic';
 
 const FacilityDetailSkeleton = () => (
@@ -58,13 +59,30 @@ interface FacilityPageClientProps {
 
 export default function FacilityPageClient({ facilityBasic }: FacilityPageClientProps) {
     const router = useRouter();
+    const theme = useMantineTheme();
+    const isMobile = useMediaQuery(`(max-width: ${theme.breakpoints.sm})`);
     const [facility, setFacility] = useState<any>(facilityBasic);
     const [mounted, setMounted] = useState(false);
     const enriched = useRef(false);
+    const redirected = useRef(false);
 
     useEffect(() => {
-        // 슬라이드인 애니메이션
-        requestAnimationFrame(() => setMounted(true));
+        // 🖥️ PC에서 직접 접근 시: 메인으로 리다이렉트 → 사이드 패널에서 열기
+        // isMobile이 아직 undefined(hydration 중)이면 대기
+        if (isMobile === undefined) return;
+
+        // 실제 PC인지 window.innerWidth로 이중 검증 (useMediaQuery 타이밍 이슈 방지)
+        if (isMobile === false && window.innerWidth >= 768 && !redirected.current) {
+            redirected.current = true;
+            sessionStorage.setItem('openFacilityId', facilityBasic.id);
+            router.replace('/');
+            return;
+        }
+
+        // 📱 모바일: 슬라이드인 애니메이션
+        if (isMobile) {
+            requestAnimationFrame(() => setMounted(true));
+        }
 
         // 🚀 SSR 기본 데이터 위에 상세 데이터 보강 (pricing, reviews 등)
         if (!enriched.current) {
@@ -76,7 +94,7 @@ export default function FacilityPageClient({ facilityBasic }: FacilityPageClient
                 })
                 .catch(() => { /* SSR 데이터로 폴백 */ });
         }
-    }, [facilityBasic.id]);
+    }, [facilityBasic.id, isMobile]);
 
     // 브라우저 기록에 따른 뒤로가기 처리
     const handleClose = () => {

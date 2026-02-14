@@ -57,3 +57,16 @@ body {
     flex-direction: row;
   }
 }
+
+/* 🖥️ PC 상세 패널 스크롤바 숨김 */
+.facility-detail-container {
+  scrollbar-width: none;
+  /* Firefox */
+  -ms-overflow-style: none;
+  /* IE/Edge */
+}
+
+.facility-detail-container::-webkit-scrollbar {
+  display: none;
+  /* Chrome, Safari */
+}

@@ -182,6 +182,27 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
     return () => clearInterval(interval);
   }, []);
 
+  // 🖥️ PC: /facility/[id]에서 리다이렉트 되었을 때 사이드 패널에서 시설 상세 열기
+  useEffect(() => {
+    if (isMobile) return;
+    const openId = sessionStorage.getItem('openFacilityId');
+    if (openId) {
+      sessionStorage.removeItem('openFacilityId');
+      // dbFacilities에서 기본 정보로 먼저 열고
+      const fac = dbFacilities.find(f => f.id === openId);
+      if (fac) {
+        setSelectedFacility(fac);
+      }
+      // API에서 상세 데이터 보강
+      fetch(`/api/facilities/${openId}`)
+        .then(res => res.ok ? res.json() : null)
+        .then(data => {
+          if (data) setSelectedFacility(data);
+        })
+        .catch(() => { });
+    }
+  }, [isMobile, dbFacilities]);
+
   // Sync URL with State (activeFacilityId)
   useEffect(() => {
     const facilityId = searchParams.get('id');
@@ -408,9 +429,21 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
   };
 
   const handleMarkerClick = (facility: Facility) => {
-    // 🚀 /facility/[id] 라우트로 이동 (호갱노노 스타일)
-    router.push(`/facility/${facility.id}`);
-    if (isMobile) setMobileView('map');
+    if (isMobile) {
+      // 📱 모바일: /facility/[id] 라우트로 이동 (풀스크린)
+      router.push(`/facility/${facility.id}`);
+      setMobileView('map');
+    } else {
+      // 🖥️ PC: 왼쪽 패널에 상세 표시 (주변시설보기 스타일)
+      setSelectedFacility(facility);
+      // 상세 데이터 보강 (pricing, reviews 등)
+      fetch(`/api/facilities/${facility.id}`)
+        .then(res => res.ok ? res.json() : null)
+        .then(data => {
+          if (data) setSelectedFacility(data);
+        })
+        .catch(() => { /* 기본 데이터로 폴백 */ });
+    }
 
     // 📝 기록 저장
     try {
@@ -439,8 +472,7 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
     if (selectedFacility?.coordinates && mapRef.current) {
       mapRef.current.panTo(selectedFacility.coordinates.lat, selectedFacility.coordinates.lng);
     }
-    // Remove 'id' parameter from URL to close the detail view
-    router.push(pathname, { scroll: false });
+    setSelectedFacility(null);
   };
 
   // 🎯 지도 탭 핸들러 - UI 숨김/표시 토글 (호갱노노 스타일)
@@ -476,10 +508,15 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
         }}
       >
         {/* 검색창 및 카테고리 필터 */}
-        <Box p="md" style={{ borderBottom: '1px solid #e9ecef', flexShrink: 0 }}>
+        <Box p="md" style={{
+          borderBottom: (!isMobile && selectedFacility) ? 'none' : '1px solid #e9ecef',
+          flexShrink: 0,
+          backgroundColor: (!isMobile && selectedFacility) ? '#1D0098' : undefined,
+          transition: 'background-color 0.2s ease',
+        }}>
 
 
-          <Group wrap="nowrap" align="center" mb="sm">
+          <Group wrap="nowrap" align="center" mb={(!isMobile && selectedFacility) ? 0 : 'sm'}>
             {/* 모바일 목록뷰: 뒤로가기 버튼, PC/지도뷰: 로고 */}
             {isMobile && mobileView === 'list' ? (
               <button
@@ -498,9 +535,9 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
                 <span className="material-symbols-outlined" style={{ fontSize: '24px', color: '#495057' }}>arrow_back</span>
               </button>
             ) : (
-              <Link href="/" style={{ display: 'flex', alignItems: 'center', marginRight: 8 }}>
+              <Link href="/" style={{ display: 'flex', alignItems: 'center', marginRight: 8 }} onClick={(e) => { if (!isMobile && selectedFacility) { e.preventDefault(); handleCloseDetail(); } }}>
                 <Image
-                  src="/logo-horizontal.svg?v=4"
+                  src={(!isMobile && selectedFacility) ? '/logo-horizontal-white.svg' : '/logo-horizontal.svg?v=4'}
                   alt="대대손손"
                   width={90}
                   height={26}
@@ -528,7 +565,7 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
                 rightSection={
                   <ActionIcon
                     variant="transparent"
-                    c={searchQuery ? 'brand.6' : 'gray.5'}
+                    c={(!isMobile && selectedFacility) ? 'white' : (searchQuery ? 'brand.6' : 'gray.5')}
                     onClick={() => {
                       if (searchQuery) {
                         setSubmittedQuery(searchQuery);
@@ -548,9 +585,10 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
                 }
                 styles={{
                   input: {
-                    backgroundColor: '#f8f9fa',
-                    border: '1px solid #e9ecef',
-                    fontSize: '16px' // iOS 자동 확대 방지
+                    backgroundColor: (!isMobile && selectedFacility) ? 'rgba(255,255,255,0.15)' : '#f8f9fa',
+                    border: (!isMobile && selectedFacility) ? '1px solid rgba(255,255,255,0.3)' : '1px solid #e9ecef',
+                    fontSize: '16px', // iOS 자동 확대 방지
+                    color: (!isMobile && selectedFacility) ? 'white' : undefined,
                   }
                 }}
                 onFocus={() => { setSearchFocused(true); loadRegionDataOnce(); }}
@@ -716,8 +754,8 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
             </Box>
           </Group>
 
-          {/* PC 필터 버튼 (다중 선택) */}
-          <Group gap={6} mt="sm" align="center">
+          {/* PC 필터 버튼 (다중 선택) - PC 상세보기 시 숨김 */}
+          <Group gap={6} mt="sm" align="center" style={{ display: (!isMobile && selectedFacility) ? 'none' : undefined }}>
             {/* 전체 버튼 */}
             <button
               onClick={() => setActiveCategory(['all'])}
@@ -794,6 +832,7 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
               facility={selectedFacility}
               onClose={handleCloseDetail}
               allFacilities={finalFacilities}
+              isDesktop={true}
               onSelectFacility={(id) => {
                 const fac = finalFacilities.find(f => f.id === id);
                 if (fac) handleMarkerClick(fac);

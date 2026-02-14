@@ -590,9 +590,10 @@ interface FacilityDetailProps {
     onSelectFacility?: (id: string) => void;
     onMapView?: (lat: number, lng: number) => void;
     initialConsultOpen?: boolean; // 상담 모달 초기 열림 상태
+    isDesktop?: boolean; // PC 사이드 패널 모드
 }
 
-export default function FacilityDetail({ facility: initialFacility, onClose, allFacilities = [], onSelectFacility, onMapView, initialConsultOpen = false }: FacilityDetailProps) {
+export default function FacilityDetail({ facility: initialFacility, onClose, allFacilities = [], onSelectFacility, onMapView, initialConsultOpen = false, isDesktop = false }: FacilityDetailProps) {
     const router = useRouter();
     const [facility, setFacility] = useState<Facility>(initialFacility);
     const [isFetchingDetail] = useState(false);
@@ -1129,6 +1130,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
     return (
         <Box
             ref={containerRef}
+            className="facility-detail-container"
             style={{ backgroundColor: '#f8f9fa', height: '100%', position: 'relative', overflowY: 'auto', touchAction: 'pan-y' }}
             onTouchStart={(e) => e.stopPropagation()} // 🚀 지도 터치 간섭 방지 (재적용)
         >
@@ -1138,130 +1140,150 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                 type="application/ld+json"
                 dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
             />
-            {/* 1. 헤더 (← 민간/공설 시설명 + 📍 + 공유) */}
-            <Box bg="brand.8" p="md" pb={8} style={{ position: 'sticky', top: 0, zIndex: 1000 }}>
-                <Group justify="space-between" align="center" wrap="nowrap">
-                    <Group gap={4} wrap="nowrap" style={{ flex: 1, minWidth: 0 }}>
-                        <ActionIcon variant="transparent" color="white" w={32} h={32} onClick={onClose} style={{ flexShrink: 0 }}>
-                            <span className="material-symbols-outlined" style={{ fontSize: '22px', fontVariationSettings: "'FILL' 1" }}>arrow_back_ios_new</span>
-                        </ActionIcon>
-                        <Group gap={6} wrap="nowrap" style={{ overflow: 'hidden' }}>
-                            <Badge
-                                size="sm" radius="sm" variant="light"
-                                style={{
-                                    textTransform: 'none',
-                                    color: 'white',
-                                    backgroundColor: 'rgba(255,255,255,0.2)',
-                                    fontSize: '12px',
-                                    fontWeight: 600,
-                                    height: '22px',
-                                    border: '1px solid rgba(255,255,255,0.3)',
-                                    padding: '0 6px',
-                                    flexShrink: 0
+            {/* 1. 헤더 + 액션바 고정 컨테이너 */}
+            <div style={{ position: 'sticky', top: 0, zIndex: 1000 }}>
+                {/* 1-1. 헤더 (← 민간/공설 시설명 + 📍 + 공유) */}
+                <Box bg="brand.8" px="md" py={10}>
+                    <Group justify="space-between" align="center" wrap="nowrap">
+                        <Group gap={4} wrap="nowrap" style={{ flex: 1, minWidth: 0 }}>
+                            <ActionIcon variant="transparent" color="white" w={32} h={32} onClick={onClose} style={{ flexShrink: 0 }}>
+                                <span className="material-symbols-outlined" style={{ fontSize: '22px', fontVariationSettings: "'FILL' 1" }}>arrow_back_ios_new</span>
+                            </ActionIcon>
+                            <Group gap={6} wrap="nowrap" style={{ overflow: 'hidden' }}>
+                                <Badge
+                                    size="sm" radius="sm" variant="light"
+                                    style={{
+                                        textTransform: 'none',
+                                        color: 'white',
+                                        backgroundColor: 'rgba(255,255,255,0.2)',
+                                        fontSize: '12px',
+                                        fontWeight: 600,
+                                        height: '22px',
+                                        border: '1px solid rgba(255,255,255,0.3)',
+                                        padding: '0 6px',
+                                        flexShrink: 0
+                                    }}
+                                >
+                                    {facility.isPublic ? '공설' : '민간'}
+                                </Badge>
+                                <Text size="md" fw={600} c="white" truncate style={{ fontSize: '16px' }}>
+                                    {facility.name}
+                                </Text>
+                            </Group>
+                        </Group>
+                        <Group gap={0} style={{ flexShrink: 0 }}>
+                            {!isDesktop && (
+                                <ActionIcon
+                                    variant="transparent"
+                                    color="white"
+                                    w={36}
+                                    h={36}
+                                    onClick={(e) => {
+                                        e.stopPropagation();
+                                        e.preventDefault();
+                                        if ((window as any).gtag) {
+                                            (window as any).gtag('event', 'map_navigate', {
+                                                facility_id: facility.id,
+                                                facility_name: facility.name
+                                            });
+                                        }
+                                        if (onMapView && facility.coordinates) {
+                                            onMapView(facility.coordinates.lat, facility.coordinates.lng);
+                                        } else {
+                                            onClose();
+                                        }
+                                    }}
+                                >
+                                    <span className="material-symbols-outlined" style={{ fontSize: '22px' }}>location_on</span>
+                                </ActionIcon>
+                            )}
+                            <ActionIcon
+                                variant="transparent"
+                                color="white"
+                                w={36}
+                                h={36}
+                                onClick={(e) => {
+                                    e.stopPropagation();
+                                    e.preventDefault();
+                                    navigator.clipboard.writeText(`https://daedaesonson.com/facility/${facility.id}`);
+                                    if ((window as any).gtag) {
+                                        (window as any).gtag('event', 'share_click', {
+                                            facility_id: facility.id,
+                                            facility_name: facility.name
+                                        });
+                                    }
                                 }}
                             >
-                                {facility.isPublic ? '공설' : '민간'}
-                            </Badge>
-                            <Text size="md" fw={600} c="white" truncate style={{ fontSize: '16px' }}>
-                                {facility.name}
-                            </Text>
+                                <span className="material-symbols-outlined" style={{ fontSize: '22px' }}>share</span>
+                            </ActionIcon>
+                            {isDesktop && (
+                                <ActionIcon
+                                    variant="transparent"
+                                    color="white"
+                                    w={36}
+                                    h={36}
+                                    onClick={(e) => {
+                                        e.stopPropagation();
+                                        e.preventDefault();
+                                        onClose();
+                                    }}
+                                >
+                                    <span className="material-symbols-outlined" style={{ fontSize: '22px' }}>close</span>
+                                </ActionIcon>
+                            )}
                         </Group>
                     </Group>
-                    <Group gap={0} style={{ flexShrink: 0 }}>
-                        <ActionIcon
-                            variant="transparent"
-                            color="white"
-                            w={36}
-                            h={36}
-                            onClick={(e) => {
-                                e.stopPropagation();
-                                e.preventDefault();
-                                if ((window as any).gtag) {
-                                    (window as any).gtag('event', 'map_navigate', {
-                                        facility_id: facility.id,
-                                        facility_name: facility.name
-                                    });
-                                }
-                                if (onMapView && facility.coordinates) {
-                                    onMapView(facility.coordinates.lat, facility.coordinates.lng);
-                                } else {
-                                    onClose();
-                                }
-                            }}
-                        >
-                            <span className="material-symbols-outlined" style={{ fontSize: '22px' }}>location_on</span>
-                        </ActionIcon>
-                        <ActionIcon
-                            variant="transparent"
-                            color="white"
-                            w={36}
-                            h={36}
-                            onClick={(e) => {
-                                e.stopPropagation();
-                                e.preventDefault();
-                                navigator.clipboard.writeText(`https://daedaesonson.com/facility/${facility.id}`);
-                                if ((window as any).gtag) {
-                                    (window as any).gtag('event', 'share_click', {
-                                        facility_id: facility.id,
-                                        facility_name: facility.name
-                                    });
-                                }
-                            }}
-                        >
-                            <span className="material-symbols-outlined" style={{ fontSize: '22px' }}>share</span>
-                        </ActionIcon>
-                    </Group>
-                </Group>
-            </Box>
+                </Box>
 
-            {/* 2. 액션바 3등분 (직접전화 / ♡ / 이야기) */}
-            <Box bg="brand.8" px={0} style={{
-                borderTop: '1px solid rgba(255,255,255,0.12)',
-                borderBottom: '1px solid rgba(255,255,255,0.12)',
-            }}>
-                <div style={{
-                    display: 'flex',
-                    alignItems: 'stretch',
-                    justifyContent: 'space-around',
-                    width: '100%',
+                {/* 2. 액션바 3등분 (직접전화 / ♡ / 이야기) */}
+                <Box bg="brand.8" px={0} style={{
+                    borderTop: '1px solid rgba(255,255,255,0.12)',
+                    borderBottom: '1px solid rgba(255,255,255,0.12)',
                 }}>
-                    <div
-                        style={{ display: 'flex', alignItems: 'center', gap: '6px', cursor: 'pointer', padding: '10px 12px', flex: 1, justifyContent: 'center' }}
-                        onClick={() => {
-                            if (facility.phone) {
-                                window.location.href = `tel:${facility.phone}`;
-                            }
-                        }}
-                    >
-                        <span className="material-symbols-outlined" style={{ fontSize: '18px', color: 'white', fontVariationSettings: "'FILL' 1" }}>call</span>
-                        <span style={{ fontSize: '16px', color: 'white', fontWeight: 500 }}>직접전화</span>
+                    <div style={{
+                        display: 'flex',
+                        alignItems: 'stretch',
+                        justifyContent: 'space-around',
+                        width: '100%',
+                    }}>
+                        <div
+                            style={{ display: 'flex', alignItems: 'center', gap: '6px', cursor: 'pointer', padding: '10px 12px', flex: 1, justifyContent: 'center' }}
+                            onClick={() => {
+                                if (facility.phone) {
+                                    window.location.href = `tel:${facility.phone}`;
+                                }
+                            }}
+                        >
+                            <span className="material-symbols-outlined" style={{ fontSize: '18px', color: 'white', fontVariationSettings: "'FILL' 1" }}>call</span>
+                            <span style={{ fontSize: '16px', color: 'white', fontWeight: 500 }}>직접전화</span>
+                        </div>
+
+                        <div style={{ width: '1px', backgroundColor: 'rgba(255,255,255,0.12)', alignSelf: 'stretch' }} />
+
+                        <div
+                            style={{ display: 'flex', alignItems: 'center', gap: '6px', cursor: 'pointer', padding: '10px 12px', flex: 1, justifyContent: 'center' }}
+                            onClick={() => {
+                                setIsFavorited(prev => !prev);
+                            }}
+                        >
+                            <span className="material-symbols-outlined" style={{ fontSize: '18px', color: isFavorited ? '#ff6b6b' : 'white', fontVariationSettings: isFavorited ? "'FILL' 1" : "'FILL' 0", transition: 'all 0.2s ease' }}>favorite</span>
+                            <span style={{ fontSize: '16px', color: isFavorited ? '#ff6b6b' : 'white', fontWeight: 500, transition: 'color 0.2s ease' }}>{isFavorited ? 1 : 0}</span>
+                        </div>
+
+                        <div style={{ width: '1px', backgroundColor: 'rgba(255,255,255,0.12)', alignSelf: 'stretch' }} />
+
+                        <div
+                            style={{ display: 'flex', alignItems: 'center', gap: '6px', cursor: 'pointer', padding: '10px 12px', flex: 1, justifyContent: 'center' }}
+                            onClick={() => {
+                                setInquiryOpen(true);
+                            }}
+                        >
+                            <span className="material-symbols-outlined" style={{ fontSize: '18px', color: 'white', fontVariationSettings: "'FILL' 1" }}>chat_bubble</span>
+                            <span style={{ fontSize: '16px', color: 'white', fontWeight: 500 }}>이야기</span>
+                        </div>
                     </div>
-
-                    <div style={{ width: '1px', backgroundColor: 'rgba(255,255,255,0.12)', alignSelf: 'stretch' }} />
-
-                    <div
-                        style={{ display: 'flex', alignItems: 'center', gap: '6px', cursor: 'pointer', padding: '10px 12px', flex: 1, justifyContent: 'center' }}
-                        onClick={() => {
-                            setIsFavorited(prev => !prev);
-                        }}
-                    >
-                        <span className="material-symbols-outlined" style={{ fontSize: '18px', color: isFavorited ? '#ff6b6b' : 'white', fontVariationSettings: isFavorited ? "'FILL' 1" : "'FILL' 0", transition: 'all 0.2s ease' }}>favorite</span>
-                        <span style={{ fontSize: '16px', color: isFavorited ? '#ff6b6b' : 'white', fontWeight: 500, transition: 'color 0.2s ease' }}>{isFavorited ? 1 : 0}</span>
-                    </div>
-
-                    <div style={{ width: '1px', backgroundColor: 'rgba(255,255,255,0.12)', alignSelf: 'stretch' }} />
-
-                    <div
-                        style={{ display: 'flex', alignItems: 'center', gap: '6px', cursor: 'pointer', padding: '10px 12px', flex: 1, justifyContent: 'center' }}
-                        onClick={() => {
-                            setInquiryOpen(true);
-                        }}
-                    >
-                        <span className="material-symbols-outlined" style={{ fontSize: '18px', color: 'white', fontVariationSettings: "'FILL' 1" }}>chat_bubble</span>
-                        <span style={{ fontSize: '16px', color: 'white', fontWeight: 500 }}>이야기</span>
-                    </div>
-                </div>
-            </Box>
+                </Box>
+            </div> {/* sticky 컨테이너 닫기 */}
 
             {/* 3. 정보 요약 */}
             <Box bg="white">
