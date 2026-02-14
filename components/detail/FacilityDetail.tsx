@@ -1192,7 +1192,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
         <Box
             ref={containerRef}
             className="facility-detail-container"
-            style={{ backgroundColor: '#f8f9fa', height: '100%', position: 'relative', overflowY: 'auto', touchAction: 'pan-y' }}
+            style={{ backgroundColor: '#4B3FD3', height: '100%', position: 'relative', overflowY: 'auto', touchAction: 'pan-y' }}
             onTouchStart={(e) => e.stopPropagation()} // 🚀 지도 터치 간섭 방지 (재적용)
         >
             {/* Schema.org JSON-LD for SEO */}
@@ -2155,9 +2155,82 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                         실제 가격과 정보는 시기에 따라 변동될 수 있으므로, 방문 전 반드시 해당 시설에 확인하시기 바랍니다.
                     </Text>
                 </Box>
+            </Box>
+            {/* 🔵 하단 공유 & 정보수정 섹션 */}
+            <Box px="md" pb={30} style={{
+                background: 'linear-gradient(135deg, #1D0098 0%, #4B3FD3 100%)',
+                textAlign: 'center',
+            }}>
+                {/* 공유 안내 */}
+                <Box py="lg">
+                    <Text size="sm" fw={600} c="white" mb="sm">
+                        이 {facility.category === 'CREMATION' ? '화장장' : facility.category === 'OSSUARY' ? '봉안시설' : '시설'} 정보를 다른 사람들과 같이 볼래요?
+                    </Text>
 
-                {/* 하단 여백 */}
-                <Box h={100} />
+                    {/* URL 복사 */}
+                    <Box
+                        mx="auto"
+                        px="md"
+                        py={10}
+                        style={{
+                            backgroundColor: 'rgba(255,255,255,0.12)',
+                            borderRadius: 8,
+                            maxWidth: 320,
+                            cursor: 'pointer',
+                            border: '1px solid rgba(255,255,255,0.2)',
+                        }}
+                        onClick={() => {
+                            const url = `https://daedaesonson.com/facility/${facility.id}`;
+                            navigator.clipboard.writeText(url);
+                            alert('링크가 복사되었습니다!');
+                        }}
+                    >
+                        <Group justify="center" gap={6}>
+                            <span className="material-symbols-outlined" style={{ fontSize: 16, color: 'rgba(255,255,255,0.6)' }}>content_copy</span>
+                            <Text size="xs" c="rgba(255,255,255,0.8)" lineClamp={1}>
+                                daedaesonson.com/facility/{facility.id}
+                            </Text>
+                        </Group>
+                    </Box>
+                </Box>
+                {/* ── 구분선 ── */}
+                <Box style={{ height: 1, backgroundColor: 'rgba(255,255,255,0.08)' }} />
+
+                {/* 정보수정 요청 */}
+                <Box py="lg">
+                    <Text size="xs" c="rgba(255,255,255,0.75)" lh={1.6}>
+                        정보가 틀리다면 알려주세요.<br />
+                        확인 후 바로 수정해 드리겠습니다.
+                    </Text>
+                </Box>
+                {/* ── 구분선 ── */}
+                <Box style={{ height: 1, backgroundColor: 'rgba(255,255,255,0.08)' }} />
+
+                {/* 시설 정보수정 요청 버튼 */}
+                <Box py="lg">
+                    <Box
+                        component="a"
+                        href={`mailto:seunghun.dev@gmail.com?subject=${encodeURIComponent(`[정보수정] ${facility.name}`)}&body=${encodeURIComponent(`시설명: ${facility.name}\n\n수정이 필요한 내용:\n\n`)}`}
+                        style={{ textDecoration: 'none', cursor: 'pointer' }}
+                    >
+                        <Text size="sm" fw={600} c="white">시설 정보수정 요청</Text>
+                    </Box>
+                </Box>
+                {/* ── 구분선 ── */}
+                <Box style={{ height: 1, backgroundColor: 'rgba(255,255,255,0.08)' }} />
+
+                {/* 맨위로 이동 */}
+                <Box
+                    py="md"
+                    onClick={() => {
+                        const container = document.querySelector('.facility-detail-container');
+                        if (container) container.scrollTo({ top: 0, behavior: 'smooth' });
+                        else window.scrollTo({ top: 0, behavior: 'smooth' });
+                    }}
+                    style={{ cursor: 'pointer' }}
+                >
+                    <span className="material-symbols-outlined" style={{ fontSize: 28, color: 'rgba(255,255,255,0.6)' }}>keyboard_arrow_up</span>
+                </Box>
             </Box>
 
 
