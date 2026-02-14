@@ -73,7 +73,7 @@ async function loadPricingData(): Promise<Map<string, RepresentativePricing>> {
 export async function GET() {
     try {
         // 🚀 필요 컬럼만 선택 (pricing, images 등 무거운 JSONB 제외)
-        const FACILITY_COLUMNS = 'id,name,address,lat,lng,category,minPrice,maxPrice,representativePrice,operatorType,hasParking,hasRestaurant,hasStore,hasAccessibility,isPublic,isActive,reviewCount,rating,phone,fax,capacity,lastUpdated,websiteUrl,viewCount,description,originalName,updatedAt';
+        const FACILITY_COLUMNS = 'id,name,address,lat,lng,category,minPrice,maxPrice,representativePrice,operatorType,hasParking,hasRestaurant,hasStore,hasAccessibility,isPublic,isActive,reviewCount,rating,phone,fax,capacity,lastUpdated,websiteUrl,viewCount,description,originalName,updatedAt,thumbnail';
 
         let facilitiesFromDb: any[] = [];
         let from = 0;
@@ -145,6 +145,7 @@ export async function GET() {
             description: f.description || '',
             originalName: f.originalName,
             updatedAt: f.updatedAt,
+            thumbnail: f.thumbnail || '',
         }));
 
         return NextResponse.json(liteData);
@@ -189,7 +190,10 @@ export async function POST(req: Request) {
             let minPrice = normalizePriceForSave(f.priceRange?.min || 0);
             let maxPrice = normalizePriceForSave(f.priceRange?.max || 0);
 
-            if (f.priceInfo?.priceTable) {
+            const hasPriceTable = f.priceInfo?.priceTable && Object.keys(f.priceInfo.priceTable).length > 0;
+            const hasStandardized = f.priceInfo?.standardizedPrices && f.priceInfo.standardizedPrices.length > 0;
+
+            if (hasPriceTable) {
                 // 시설 카테고리에 맞는 키워드
                 const categoryKeywords: Record<string, string[]> = {
                     'FAMILY_GRAVE': ['묘지', '공원묘지', '매장', '분묘'],
@@ -234,11 +238,20 @@ export async function POST(req: Request) {
 
                 if (representativePrice > 0) minPrice = normalizePriceForSave(representativePrice);
                 if (max > 0) maxPrice = normalizePriceForSave(max);
+            } else if (hasStandardized && !hasPriceTable) {
+                // V2만 있을 때 대표가격 계산
+                for (const group of f.priceInfo.standardizedPrices) {
+                    for (const row of group.rows || []) {
+                        const p = typeof row.price === 'string' ? parseInt(row.price.replace(/,/g, '')) : row.price;
+                        if (row.isRepresentative && p > 0 && minPrice === 0) minPrice = normalizePriceForSave(p);
+                        if (p > maxPrice) maxPrice = normalizePriceForSave(p);
+                    }
+                }
             }
 
             // 🚀 대표가격 precomputed 값 저장 (메인 페이지 SSR에서 pricing JSON 파싱 불필요!)
             const computedRepPrice = normalizePriceForSave(
-                f.priceInfo?.priceTable ? (() => {
+                hasPriceTable ? (() => {
                     let rp = 0;
                     Object.values(f.priceInfo.priceTable).forEach((cat: any) => {
                         cat?.rows?.forEach((row: any) => {
@@ -246,6 +259,15 @@ export async function POST(req: Request) {
                             if (row.isRepresentative && p > 0 && rp === 0) rp = p;
                         });
                     });
+                    return rp;
+                })() : hasStandardized ? (() => {
+                    let rp = 0;
+                    for (const group of f.priceInfo.standardizedPrices) {
+                        for (const row of group.rows || []) {
+                            const p = typeof row.price === 'string' ? parseInt(row.price.replace(/,/g, '')) : row.price;
+                            if (row.isRepresentative && p > 0 && rp === 0) rp = p;
+                        }
+                    }
                     return rp;
                 })() : 0
             ) || minPrice;
@@ -276,7 +298,7 @@ export async function POST(req: Request) {
                 maxPrice: maxPrice,
                 representativePrice: computedRepPrice,
                 thumbnail: computedThumbnail || undefined,
-                pricing: f.priceInfo?.priceTable ? JSON.stringify(f.priceInfo) : undefined,
+                pricing: (hasPriceTable || hasStandardized) ? JSON.stringify(f.priceInfo) : undefined,
                 phone: f.phone,
                 fax: f.fax,
                 capacity: f.capacity ?? undefined,
@@ -306,7 +328,7 @@ export async function POST(req: Request) {
             }
 
             // Pricing 동기화 (PriceCategory/PriceItem)
-            if (f.priceInfo?.priceTable) {
+            if (hasPriceTable) {
 
 
                 try {
@@ -379,7 +401,7 @@ export async function POST(req: Request) {
                     lng: f.coordinates?.lng || 0,
                     minPrice: f.priceRange?.min || 0,
                     maxPrice: f.priceRange?.max || 0,
-                    pricing: f.priceInfo?.priceTable ? JSON.stringify(f.priceInfo) : null,
+                    pricing: (f.priceInfo?.priceTable || f.priceInfo?.standardizedPrices) ? JSON.stringify(f.priceInfo) : null,
                     phone: f.phone || '',
                     fax: f.fax || '',
                     capacity: f.capacity ?? null,

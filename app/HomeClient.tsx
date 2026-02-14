@@ -1,9 +1,9 @@
 'use client';
 
 import { useState, useMemo, useEffect, useRef, Suspense } from 'react';
-import { Box, Flex, useMantineTheme, TextInput, Group, Text, ThemeIcon, ActionIcon } from '@mantine/core';
+import { Box, Flex, useMantineTheme, TextInput, Group, Text, ThemeIcon, ActionIcon, ScrollArea, Stack, Loader, Center, Button } from '@mantine/core';
 import { useMediaQuery } from '@mantine/hooks';
-import { Search, MapPin, Building, MessageCircle, Clock, Info, User } from 'lucide-react';
+import { Search, MapPin, Building, MessageCircle, Clock, Info, User, ChevronLeft } from 'lucide-react';
 import Link from 'next/link';
 import { useRouter, useSearchParams, usePathname } from 'next/navigation';
 import { useDebouncedCallback } from 'use-debounce';
@@ -22,6 +22,7 @@ const NaverMap = dynamic(() => import('@/components/map/NaverMap'), {
 import type { NaverMapRef } from '@/components/map/NaverMap';
 import FacilityList from '@/components/list/FacilityList';
 import FilterBar from '@/components/list/FilterBar';
+import FacilityCard from '@/components/list/FacilityCard';
 // 🚀 FacilityDetail 지연 로딩 (210KB → 마커 클릭 시에만 로드)
 const FacilityDetail = dynamic(() => import('@/components/detail/FacilityDetail'), {
   ssr: false,
@@ -88,6 +89,11 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
 
   // 지역 선택 모드인지 여부 (텍스트 필터링 건너뛰기 위함)
   const [isRegionSelected, setIsRegionSelected] = useState(false);
+
+  // 🗺️ PC용 "주변 시설 보기" 오버레이 상태
+  const [nearbyList, setNearbyList] = useState<{ region: string; lat: number; lng: number } | null>(null);
+  const [nearbyCategory, setNearbyCategory] = useState<string[]>(['all']);
+  const [nearbyVisibleCount, setNearbyVisibleCount] = useState(20);
 
   // 자동완성 결과 상태
   const [completionResults, setCompletionResults] = useState<{
@@ -179,28 +185,13 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
   // Sync URL with State (activeFacilityId)
   useEffect(() => {
     const facilityId = searchParams.get('id');
-    if (facilityId && dbFacilities.length > 0) {
-      // 🚀 1단계: 로컬 데이터로 즉시 표시 (0ms)
-      if (!selectedFacility || selectedFacility.id !== facilityId) {
-        setIsDetailClosing(false); // 새 시설 열 때 애니메이션 리셋
-        const localFac = dbFacilities.find(f => f.id === facilityId);
-        if (localFac) {
-          setSelectedFacility(localFac);
-        }
-      }
+    if (facilityId) {
+      // 🔀 기존 /?id=xxx URL을 /facility/xxx로 리디렉트 (하위 호환성)
+      router.replace(`/facility/${facilityId}`);
+      return;
+    }
 
-      // 🚀 2단계: 백그라운드에서 API 상세 데이터 보강 (리뷰, 문의 등)
-      fetch(`/api/facilities/${facilityId}`)
-        .then(res => res.json())
-        .then(data => {
-          if (data && data.id) {
-            setSelectedFacility(data);
-          }
-        })
-        .catch(() => {
-          // API 실패해도 로컬 데이터로 이미 표시 중이니 무시
-        });
-    } else if (!facilityId) {
+    if (!facilityId) {
       // 🚀 모바일에서 상세가 열려있을 때 뒤로가기 → 슬라이드아웃 애니메이션 트리거
       if (isMobile && selectedFacility && !isDetailClosing) {
         setIsDetailClosing(true);
@@ -210,6 +201,26 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
         setSelectedFacility(null);
       }
     }
+
+    // 🗺️ /search에서 지역 선택하고 돌아왔을 때 처리
+    const regionName = searchParams.get('region');
+    const regionLat = searchParams.get('lat');
+    const regionLng = searchParams.get('lng');
+    const regionType = searchParams.get('type');
+    const regionShortName = searchParams.get('name');
+    if (regionName && regionLat && regionLng && mapRef.current) {
+      const lat = parseFloat(regionLat);
+      const lng = parseFloat(regionLng);
+      const zoom = regionType === 'gu' ? 12 : 14;
+      setSearchQuery(regionName);
+      setSubmittedQuery(regionName);
+      setIsRegionSelected(true);
+      mapRef.current.highlightRegion(lat, lng, zoom, (regionType as 'gu' | 'dong') || 'gu', regionShortName || '');
+      if (isMobile) setMobileView('map');
+      // URL에서 region 파라미터 제거 (깔끔하게)
+      router.replace('/', { scroll: false });
+    }
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchParams, dbFacilities]);
 
@@ -365,22 +376,13 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
 
   // 현재 지역명은 NaverMap에서 onCenterAddressChange 콜백으로 받음
 
-  // 검색 결과 선택 (시설)
+  // 검색 결과 선택 (시설) → /facility/[id] 라우트로 이동 (호갱노노 스타일)
   const handleSelectFacility = (facility: Facility) => {
-    // Update URL to open detail modal (supports back button)
-    const params = new URLSearchParams(searchParams.toString());
-    params.set('id', facility.id);
-    router.push(`${pathname}?${params.toString()}`, { scroll: false });
-
-    // Map movement logic
-    if (mapRef.current && facility.coordinates) {
-      mapRef.current.panTo(facility.coordinates.lat, facility.coordinates.lng, 17, facility.id);
-      if (isMobile) setMobileView('map');
-    }
     setSearchFocused(false);
-    setSearchQuery(facility.name); // Update search input with selected facility name
-    setSubmittedQuery(facility.name); // Also update submitted query
-    saveRecentSearch(facility.name); // 최근 검색어 저장
+    setSearchQuery(facility.name);
+    setSubmittedQuery(facility.name);
+    saveRecentSearch(facility.name);
+    router.push(`/facility/${facility.id}`);
   };
 
   // 검색 결과 선택 (지역)
@@ -406,9 +408,8 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
   };
 
   const handleMarkerClick = (facility: Facility) => {
-    const params = new URLSearchParams(searchParams.toString());
-    params.set('id', facility.id);
-    router.push(`${pathname}?${params.toString()}`, { scroll: false });
+    // 🚀 /facility/[id] 라우트로 이동 (호갱노노 스타일)
+    router.push(`/facility/${facility.id}`);
     if (isMobile) setMobileView('map');
 
     // 📝 기록 저장
@@ -851,172 +852,30 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
                     height={22}
                     style={{
                       objectFit: 'contain',
-                      filter: 'brightness(0) invert(1)' // 흰색으로 변환
+                      filter: 'brightness(0) invert(1)'
                     }}
                     priority
                   />
                 </Link>
-                <Box style={{ flex: 1, position: 'relative' }}>
-                  <TextInput
-                    placeholder=""
-                    value={searchQuery}
-                    onChange={handleSearchInput}
-                    onKeyDown={(e) => {
-                      // 한글 IME 조합 중이면 무시 (글자 중복 방지)
-                      if (e.nativeEvent.isComposing) return;
-                      if (e.key === 'Enter') {
-                        e.preventDefault();
-                        setSubmittedQuery(searchQuery);
-                        setSearchFocused(false);
-                        saveRecentSearch(searchQuery); // 최근 검색어 저장
-                        (document.activeElement as HTMLElement)?.blur();
-                      }
-                    }}
-                    size="sm"
-                    rightSection={
-                      <ActionIcon
-                        variant="transparent"
-                        c={searchQuery ? 'white' : 'rgba(255,255,255,0.6)'}
-                        onClick={() => {
-                          if (searchQuery) {
-                            setSubmittedQuery(searchQuery);
-                            setSearchFocused(false);
-                            (document.activeElement as HTMLElement)?.blur();
-                          }
-                        }}
-                      >
-                        <Search size={16} />
-                      </ActionIcon>
-                    }
-                    styles={{
-                      input: {
-                        backgroundColor: 'rgba(255,255,255,0.15)',
-                        border: 'none',
-                        fontSize: '16px', // iOS 자동 확대 방지
-                        color: 'white',
-                        '::placeholder': { color: 'rgba(255,255,255,0.7)' }
-                      }
-                    }}
-                    onFocus={() => { setSearchFocused(true); loadRegionDataOnce(); }}
-                    onBlur={() => setTimeout(() => setSearchFocused(false), 250)}
-                  />
-                  {/* 모바일 롤링 Placeholder */}
-                  {!searchQuery && (
-                    <Box
-                      style={{
-                        position: 'absolute',
-                        top: '50%',
-                        left: '12px',
-                        transform: 'translateY(-50%)',
-                        pointerEvents: 'none',
-                        overflow: 'hidden',
-                        height: '18px',
-                        width: '120px'
-                      }}
-                    >
-                      <Box
-                        key={placeholderIndex}
-                        style={{
-                          animation: 'slideUpMobile 0.4s ease-out forwards',
-                          color: 'rgba(255,255,255,0.7)',
-                          fontSize: '14px',
-                          lineHeight: '18px'
-                        }}
-                      >
-                        {placeholderTexts[placeholderIndex]}
-                      </Box>
-                    </Box>
-                  )}
-                  <style>{`
-                    @keyframes slideUpMobile {
-                      0% { transform: translateY(100%); opacity: 0; }
-                      20% { opacity: 1; }
-                      80% { opacity: 1; }
-                      100% { transform: translateY(0); opacity: 1; }
-                    }
-                  `}</style>
 
-                  {/* 모바일 자동완성 팝업 */}
-                  {searchFocused && searchQuery.trim() && (completionResults.regions.length > 0 || completionResults.facilities.length > 0) && (
-                    <Box
-                      pos="absolute"
-                      top="calc(100% + 4px)"
-                      left={0}
-                      w="100%"
-                      bg="white"
-                      style={{
-                        zIndex: 2100,
-                        borderRadius: 8,
-                        boxShadow: '0 4px 20px rgba(0,0,0,0.15)',
-                        maxHeight: '300px',
-                        overflowY: 'auto'
-                      }}
-                    >
-                      {completionResults.regions.map((region, i) => (
-                        <Box
-                          key={`mob-reg-${i}`}
-                          px="md"
-                          py={12}
-                          style={{ cursor: 'pointer', borderBottom: '1px solid #f1f3f5' }}
-                          onClick={() => handleSelectRegion(region)}
-                          onMouseDown={(e) => e.preventDefault()}
-                        >
-                          <Text size="sm" c="dark.9">{region.fullName}</Text>
-                        </Box>
-                      ))}
-                      {completionResults.facilities.map((fac, i) => (
-                        <Box
-                          key={`mob-fac-${fac.id}-${i}`}
-                          px="md"
-                          py={12}
-                          style={{ cursor: 'pointer', borderBottom: i === completionResults.facilities.length - 1 ? 'none' : '1px solid #f1f3f5' }}
-                          onClick={() => handleSelectFacility(fac)}
-                          onMouseDown={(e) => e.preventDefault()}
-                        >
-                          <Text size="sm" fw={500} c="dark.9">{fac.name}</Text>
-                          <Text size="xs" c="dimmed" truncate>{fac.address}</Text>
-                        </Box>
-                      ))}
-                    </Box>
-                  )}
-
-                  {/* 🔍 모바일 최근 검색어 */}
-                  {searchFocused && !searchQuery.trim() && recentSearches.length > 0 && (
-                    <Box
-                      pos="absolute"
-                      top="calc(100% + 4px)"
-                      left={0}
-                      w="100%"
-                      bg="white"
-                      style={{
-                        zIndex: 2100,
-                        borderRadius: 8,
-                        boxShadow: '0 4px 20px rgba(0,0,0,0.15)',
-                        maxHeight: '300px',
-                        overflowY: 'auto'
-                      }}
-                    >
-                      <Box px="md" py="xs" bg="gray.0">
-                        <Text size="xs" c="dimmed" fw={500}>최근 검색</Text>
-                      </Box>
-                      {recentSearches.map((query, i) => (
-                        <Box
-                          key={`mob-recent-${i}`}
-                          px="md"
-                          py={12}
-                          style={{ cursor: 'pointer', borderBottom: i === recentSearches.length - 1 ? 'none' : '1px solid #f8f9fa' }}
-                          onClick={() => {
-                            setSearchQuery(query);
-                            setSubmittedQuery(query);
-                            setSearchFocused(false);
-                          }}
-                          onMouseDown={(e) => e.preventDefault()}
-                        >
-                          <Text size="sm" c="dark.7" truncate>{query}</Text>
-                        </Box>
-                      ))}
-                    </Box>
-                  )}
+                {/* 검색 버튼 → /search 페이지로 이동 */}
+                <Box
+                  onClick={() => router.push('/search')}
+                  style={{
+                    flex: 1,
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '8px',
+                    backgroundColor: 'rgba(255,255,255,0.15)',
+                    borderRadius: '8px',
+                    padding: '8px 12px',
+                    cursor: 'pointer',
+                  }}
+                >
+                  <Search size={16} color="rgba(255,255,255,0.7)" />
+                  <Text size="sm" c="rgba(255,255,255,0.6)" style={{ flex: 1 }}>
+                    {searchQuery || '시설명, 지역 검색'}
+                  </Text>
                 </Box>
 
                 {/* 내 정보 아이콘 */}
@@ -1143,12 +1002,173 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
           onBoundsChanged={handleBoundsChanged}
           onCenterAddressChange={setCurrentRegionName}
           isMobile={isMobile}
-          onViewList={() => router.push('/list')}
+          onViewList={(region, lat, lng) => {
+            if (isMobile) {
+              router.push(`/list?region=${encodeURIComponent(region)}&lat=${lat}&lng=${lng}`);
+            } else {
+              setNearbyList({ region, lat, lng });
+              setNearbyCategory(['all']);
+              setNearbyVisibleCount(20);
+            }
+          }}
           onMapTap={handleMapTap}
           onMapDrag={() => setSearchFocused(false)}
           uiHidden={uiHidden}
         />
       </Box>
+
+      {/* PC: 주변 시설 보기 오버레이 패널 (지도 위 왼쪽) */}
+      {!isMobile && nearbyList && (() => {
+        // 거리 계산 (Haversine)
+        const getDistance = (lat1: number, lng1: number, lat2: number, lng2: number) => {
+          const R = 6371;
+          const dLat = (lat2 - lat1) * Math.PI / 180;
+          const dLng = (lng2 - lng1) * Math.PI / 180;
+          const a = Math.sin(dLat / 2) ** 2 + Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) * Math.sin(dLng / 2) ** 2;
+          return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        };
+
+        // 필터링: 반경 30km + 카테고리
+        let nearby = dbFacilities
+          .filter(f => f.isActive !== false)
+          .filter(f => f.category !== 'FUNERAL_HOME' && f.category !== 'CREMATORIUM' && f.category !== 'OTHER')
+          .filter(f => {
+            if (!f.coordinates) return false;
+            return getDistance(nearbyList.lat, nearbyList.lng, f.coordinates.lat, f.coordinates.lng) <= 30;
+          });
+
+        if (!nearbyCategory.includes('all')) {
+          const catMap: Record<string, string> = { 'charnel': 'CHARNEL_HOUSE', 'natural': 'NATURAL_BURIAL', 'park': 'FAMILY_GRAVE' };
+          const selected = nearbyCategory.filter(c => catMap[c]).map(c => catMap[c]);
+          if (selected.length > 0) nearby = nearby.filter(f => selected.includes(f.category));
+        }
+
+        nearby.sort((a, b) => {
+          if (!a.coordinates || !b.coordinates) return 0;
+          return getDistance(nearbyList.lat, nearbyList.lng, a.coordinates.lat, a.coordinates.lng)
+            - getDistance(nearbyList.lat, nearbyList.lng, b.coordinates.lat, b.coordinates.lng);
+        });
+
+        return (
+          <Box
+            pos="fixed"
+            top={0}
+            left={0}
+            w={400}
+            h="100dvh"
+            bg="white"
+            style={{
+              zIndex: 2000,
+              display: 'flex',
+              flexDirection: 'column',
+              borderRight: '1px solid #e9ecef',
+              boxShadow: '4px 0 20px rgba(0,0,0,0.1)',
+              animation: 'slideInLeft 0.3s ease-out forwards',
+            }}
+          >
+            <style>{`
+              @keyframes slideInLeft {
+                from { transform: translateX(-100%); }
+                to { transform: translateX(0); }
+              }
+            `}</style>
+
+            {/* 헤더 */}
+            <Box style={{ padding: '14px 16px', borderBottom: '1px solid #e9ecef', flexShrink: 0 }}>
+              <Group wrap="nowrap" align="center" justify="space-between">
+                <ActionIcon variant="transparent" onClick={() => setNearbyList(null)} style={{ color: '#495057' }}>
+                  <ChevronLeft size={28} strokeWidth={2} />
+                </ActionIcon>
+                <Text fw={600} size="md" c="dark.9" style={{ flex: 1, textAlign: 'center' }}>
+                  {nearbyList.region} 주변 시설 보기
+                </Text>
+                <Box w={28} />
+              </Group>
+            </Box>
+
+            {/* 필터 바 */}
+            <Box style={{ padding: '8px 16px', borderBottom: '1px solid #e9ecef', flexShrink: 0 }}>
+              <Group gap={6} wrap="nowrap" align="center">
+                <button
+                  onClick={() => setNearbyCategory(['all'])}
+                  style={{
+                    height: '30px', fontSize: '12px',
+                    fontWeight: nearbyCategory.includes('all') ? 700 : 500,
+                    backgroundColor: nearbyCategory.includes('all') ? '#1D0098' : 'white',
+                    color: nearbyCategory.includes('all') ? 'white' : '#495057',
+                    border: nearbyCategory.includes('all') ? 'none' : '1px solid #dee2e6',
+                    borderRadius: '6px', cursor: 'pointer', transition: 'all 0.2s',
+                    paddingLeft: '14px', paddingRight: '14px', whiteSpace: 'nowrap',
+                  }}
+                >전체</button>
+                <div style={{ width: '1px', height: '20px', backgroundColor: '#dee2e6' }} />
+                {[{ value: 'charnel', label: '봉안당' }, { value: 'natural', label: '수목장' }, { value: 'park', label: '공원묘지' }].map(tab => {
+                  const sel = nearbyCategory.includes(tab.value);
+                  return (
+                    <button key={tab.value}
+                      onClick={() => {
+                        if (nearbyCategory.includes('all')) setNearbyCategory([tab.value]);
+                        else if (sel) {
+                          const nc = nearbyCategory.filter(c => c !== tab.value);
+                          setNearbyCategory(nc.length === 0 ? ['all'] : nc);
+                        } else {
+                          const nc = [...nearbyCategory, tab.value];
+                          setNearbyCategory(nc.length === 3 ? ['all'] : nc);
+                        }
+                      }}
+                      style={{
+                        height: '30px', fontSize: '12px',
+                        fontWeight: sel ? 700 : 500,
+                        backgroundColor: sel ? '#1D0098' : 'white',
+                        color: sel ? 'white' : '#495057',
+                        border: sel ? 'none' : '1px solid #dee2e6',
+                        borderRadius: '6px', cursor: 'pointer', transition: 'all 0.2s',
+                        paddingLeft: '14px', paddingRight: '14px', whiteSpace: 'nowrap',
+                      }}
+                    >{tab.label}</button>
+                  );
+                })}
+              </Group>
+            </Box>
+
+            {/* 시설 리스트 */}
+            <ScrollArea style={{ flex: 1 }}>
+              {nearby.length === 0 ? (
+                <Center h="200px" px="md">
+                  <Text c="dimmed" ta="center">해당 지역에 시설이 없습니다.</Text>
+                </Center>
+              ) : (
+                <Stack p="md" gap="md">
+                  <Text size="sm" c="dimmed" fw={500}>검색 결과 {nearby.length}개</Text>
+                  {nearby.slice(0, nearbyVisibleCount).map(facility => (
+                    <Box key={facility.id}
+                      onClick={() => {
+                        // 시설 클릭 → 기존 상세보기 열기 + 지도 이동
+                        const params = new URLSearchParams(searchParams.toString());
+                        params.set('id', facility.id);
+                        router.push(`${pathname}?${params.toString()}`, { scroll: false });
+                        if (mapRef.current && facility.coordinates) {
+                          mapRef.current.panTo(facility.coordinates.lat, facility.coordinates.lng, 17, facility.id);
+                        }
+                        setNearbyList(null); // 리스트 닫기
+                      }}
+                      style={{ cursor: 'pointer', borderRadius: '8px', transition: 'all 0.2s ease' }}
+                    >
+                      <FacilityCard facility={facility} onClick={() => { }} />
+                    </Box>
+                  ))}
+                  {nearbyVisibleCount < nearby.length && (
+                    <Button variant="light" color="gray" fullWidth
+                      onClick={() => setNearbyVisibleCount(p => p + 20)} mt="md"
+                    >더 보기 ({Math.min(nearby.length - nearbyVisibleCount, 20)}개)</Button>
+                  )}
+                  <Box h={50} />
+                </Stack>
+              )}
+            </ScrollArea>
+          </Box>
+        );
+      })()}
 
       {/* 모바일 상세 팝업 (Full Page Overlay with Slide In/Out Animation) */}
       {

@@ -7,6 +7,37 @@ import { RepresentativePricing } from '@/types';
 
 const supabase = getSupabaseServer();
 
+// 레거시 카테고리 → serviceType 매핑
+const SERVICE_TYPE_MAP: Record<string, string> = {
+    '매장묘': 'BURIAL', '단장형': 'BURIAL', '합장형': 'BURIAL',
+    '쌍분형': 'BURIAL', '복합묘': 'BURIAL', '평장묘': 'BURIAL',
+    '봉안당': 'BONGSAN', '봉안담': 'BONGSAN', '봉안묘': 'BONGSAN',
+    '수목형': 'NATURAL', '잔디형': 'NATURAL', '화초형': 'NATURAL',
+    '암석형': 'NATURAL', '가족형': 'NATURAL', '수목장': 'NATURAL',
+};
+
+function transformToStandardized(priceTable: Record<string, any>) {
+    const groups: any[] = [];
+    for (const [name, data] of Object.entries(priceTable)) {
+        const rows = (data as any)?.rows;
+        if (!rows || rows.length === 0) continue;
+        if (name === '제외됨' || name === '기타') continue;
+        groups.push({
+            serviceType: SERVICE_TYPE_MAP[name] || 'OTHER',
+            subType: name,
+            unit: (data as any).unit || '원',
+            rows: rows.map((r: any) => ({
+                name: r.name || name, price: r.price || 0,
+                feeType: r.feeType || 'USAGE', grade: r.grade || '',
+                note: r.note || '', isRepresentative: r.isRepresentative || false,
+                area: r.area, areaUnit: r.areaUnit, duration: r.duration,
+                durationType: r.durationType, capacity: r.capacity, residency: r.residency,
+            })),
+        });
+    }
+    return groups;
+}
+
 // 🚀 60초 ISR 캐싱 (같은 시설 반복 조회 시 CDN에서 즉시 응답)
 export const revalidate = 60;
 
@@ -111,13 +142,20 @@ export async function GET(
             } catch (e) { parsedImages = []; }
         }
 
-        // 3. pricing JSON 파싱
+        // 3. pricing JSON 파싱 + standardizedPrices 자동 변환
         let parsedPriceInfo = null;
         if (dbData.pricing) {
             try {
                 parsedPriceInfo = typeof dbData.pricing === 'string'
                     ? JSON.parse(dbData.pricing)
                     : dbData.pricing;
+                // standardizedPrices가 없으면 레거시 priceTable에서 자동 변환
+                if (!parsedPriceInfo.standardizedPrices) {
+                    const pt = parsedPriceInfo.priceTable || parsedPriceInfo;
+                    if (pt && typeof pt === 'object') {
+                        parsedPriceInfo.standardizedPrices = transformToStandardized(pt);
+                    }
+                }
             } catch (e) {
                 console.error('Failed to parse pricing:', e);
             }

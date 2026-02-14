@@ -5,17 +5,20 @@ import {
     Text, Group, Button, Paper, TextInput, ActionIcon,
     Modal, NumberInput, Select, ScrollArea,
     Stack, Tabs, SimpleGrid, Card, Image, FileButton,
-    Box, Alert, ThemeIcon, Switch, SegmentedControl, Accordion, Badge
+    Box, Alert, ThemeIcon, Switch, SegmentedControl, Accordion, Badge,
+    MultiSelect, Chip, Progress
 } from '@mantine/core';
 import {
     Plus, Trash, Save, X, Image as ImageIcon,
     DollarSign, Building2, CloudDownload, FileText, Wand2, Scissors,
-    TrendingUp, TrendingDown, List, Star
+    TrendingUp, TrendingDown, List, Star,
+    ChevronLeft, ChevronRight, CheckCircle2
 } from 'lucide-react';
-import { Facility, FACILITY_CATEGORY_LABELS } from '@/types';
+import { Facility, FACILITY_CATEGORY_LABELS, FacilityCategory, SERVICE_TYPE_LABELS, ServiceType } from '@/types';
 import { cropImagesFromScreenshot } from '@/lib/imageCropper';
 import { PRICE_TAB_CATEGORIES, OTHER_TAB_CATEGORY } from '@/lib/constants';
 import { getSingleFacilityImageUrl } from '@/lib/supabaseImage';
+import StandardPriceEditor from './StandardPriceEditor';
 
 // ============================================================
 // PriceEditor (memo) - 자체 priceTable 상태 관리
@@ -193,9 +196,12 @@ interface FacilityEditModalProps {
     opened: boolean;
     onClose: () => void;
     onSaved: (facility: Facility, isNew: boolean) => void;
+    onNavigate?: (direction: 'prev' | 'next') => void;
+    currentIndex?: number;
+    totalCount?: number;
 }
 
-function FacilityEditModal({ facilityToEdit, opened, onClose, onSaved }: FacilityEditModalProps) {
+function FacilityEditModal({ facilityToEdit, opened, onClose, onSaved, onNavigate, currentIndex, totalCount }: FacilityEditModalProps) {
     // 모든 모달 내부 상태
     const [editForm, setEditForm] = useState<Partial<Facility>>({});
     const [editingId, setEditingId] = useState<string | null>(null);
@@ -237,7 +243,7 @@ function FacilityEditModal({ facilityToEdit, opened, onClose, onSaved }: Facilit
                     }
                     if (priceRes.ok) {
                         const detailed = await priceRes.json();
-                        merged = { ...merged, priceInfo: { priceTable: detailed.priceTable } } as any;
+                        merged = { ...merged, priceInfo: { priceTable: detailed.priceTable, standardizedPrices: detailed.standardizedPrices } } as any;
                         (merged as any)._detailedSource = 'prisma';
                         (merged as any)._meta = detailed._meta;
                     }
@@ -474,7 +480,30 @@ function FacilityEditModal({ facilityToEdit, opened, onClose, onSaved }: Facilit
         } catch (e) { alert('저장 실패: ' + String(e)); return; }
 
         onSaved(finalForm as Facility, isNew);
-        onClose();
+        // 네비게이션 모드(다음으로 이동)가 아닌 경우에만 닫기
+        if (!onNavigate) onClose();
+    };
+
+    // === 검토완료 마킹 + 다음 시설 이동 ===
+    const handleMarkReviewed = async () => {
+        // priceVerified를 true로 설정
+        setEditForm(prev => ({
+            ...prev,
+            priceInfo: { ...prev.priceInfo, priceVerified: true }
+        }));
+        // 저장 로직 간소화 - pricing JSON만 업데이트
+        try {
+            const currentPriceInfo = { ...editForm.priceInfo, priceVerified: true };
+            const saveData = { ...editForm, priceInfo: currentPriceInfo, lastUpdated: new Date().toISOString() };
+            const res = await fetch('/api/facilities', {
+                method: 'POST', headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(saveData)
+            });
+            if (!res.ok) throw new Error(await res.text());
+            onSaved(saveData as Facility, false);
+            // 다음 시설로 이동
+            if (onNavigate) onNavigate('next');
+        } catch (e) { alert('저장 실패: ' + String(e)); }
     };
 
     // === Prisma DB 가격표 렌더 (기존 _detailedSource === 'prisma' 경로) ===
@@ -675,7 +704,17 @@ function FacilityEditModal({ facilityToEdit, opened, onClose, onSaved }: Facilit
     if (!opened) return null;
 
     return (
-        <Modal opened={opened} onClose={onClose} title={editingId ? '시설 정보 수정' : '새 시설 등록'} size="lg" scrollAreaComponent={ScrollArea.Autosize}>
+        <Modal opened={opened} onClose={onClose} title={
+            <Group gap="xs">
+                <Text fw={600}>{editingId ? '시설 정보 수정' : '새 시설 등록'}</Text>
+                {currentIndex != null && totalCount != null && (
+                    <Badge color="blue" variant="light" size="sm">{currentIndex + 1} / {totalCount}</Badge>
+                )}
+                {editForm.priceInfo?.priceVerified && (
+                    <Badge color="green" variant="filled" size="sm">✅ 검토완료</Badge>
+                )}
+            </Group>
+        } size="lg" scrollAreaComponent={ScrollArea.Autosize}>
             <Group justify="flex-end" mb="md">
                 <Button variant="subtle" color="green" leftSection={<CloudDownload size={16} />} onClick={handleSync} loading={syncing} disabled={!editingId?.startsWith('esky-')} size="xs">
                     e하늘 실시간 동기화
@@ -724,7 +763,25 @@ function FacilityEditModal({ facilityToEdit, opened, onClose, onSaved }: Facilit
                             <SegmentedControl fullWidth size="xs" value={editForm.isPublic ? 'public' : 'private'} onChange={(val) => setEditForm(prev => ({ ...prev, isPublic: val === 'public' }))}
                                 data={[{ label: '🏢 사설', value: 'private' }, { label: '🏛️ 공설', value: 'public' }]} color={editForm.isPublic ? 'blue' : 'green'} />
                         </Box>
-                        <Select label="카테고리" data={Object.entries(FACILITY_CATEGORY_LABELS).map(([k, v]) => ({ value: k, label: v }))} value={editForm.category} onChange={(val) => setEditForm(prev => ({ ...prev, category: val as any }))} />
+                        <Select label="주 카테고리" data={Object.entries(FACILITY_CATEGORY_LABELS).map(([k, v]) => ({ value: k, label: v }))} value={editForm.category} onChange={(val) => setEditForm(prev => ({ ...prev, category: val as any }))} />
+                        <MultiSelect
+                            label="추가 카테고리 (복수 서비스 제공 시)"
+                            description="이 시설이 봉안당+수목장 등 여러 서비스를 함께 제공하면 선택하세요."
+                            data={Object.entries(FACILITY_CATEGORY_LABELS).map(([k, v]) => ({ value: k, label: v }))}
+                            value={editForm.categories || (editForm.category ? [editForm.category] : [])}
+                            onChange={(val) => setEditForm(prev => ({ ...prev, categories: val as FacilityCategory[] }))}
+                        />
+                        <Box>
+                            <Text size="sm" fw={500} mb={3}>제공 서비스</Text>
+                            <Text size="xs" c="dimmed" mb="xs">이 시설에서 제공하는 장법을 선택하세요. 가격표 편집에 반영됩니다.</Text>
+                            <Chip.Group multiple value={editForm.services || []} onChange={(val) => setEditForm(prev => ({ ...prev, services: val as ServiceType[] }))}>
+                                <Group gap="xs">
+                                    {Object.entries(SERVICE_TYPE_LABELS).map(([k, v]) => (
+                                        <Chip key={k} value={k} variant="outline" size="sm">{v}</Chip>
+                                    ))}
+                                </Group>
+                            </Chip.Group>
+                        </Box>
                         <NumberInput label="총매장능력 (단위: 기)" value={editForm.capacity} onChange={(val) => setEditForm(prev => ({ ...prev, capacity: typeof val === 'number' ? val : undefined }))} thousandSeparator="," min={0} />
                         <Group align="flex-end" grow>
                             <TextInput label="주소" value={editForm.address} onChange={(e) => setEditForm(prev => ({ ...prev, address: e.target.value }))} style={{ flex: 1 }} />
@@ -761,8 +818,25 @@ function FacilityEditModal({ facilityToEdit, opened, onClose, onSaved }: Facilit
                 </Tabs.Panel>
 
                 <Tabs.Panel value="price" pt="md">
-                    {renderPrismaPrice()}
-                    <Alert title="알림" color="blue" mt="md">DB 데이터는 실시간 편집이 가능합니다. 변경사항은 저장 버튼을 눌러주세요.</Alert>
+                    <StandardPriceEditor
+                        priceInfo={editForm.priceInfo || { priceTable: {} }}
+                        onChange={(newPriceInfo) => setEditForm(prev => ({ ...prev, priceInfo: newPriceInfo }))}
+                    />
+
+                    <Accordion variant="separated" mt="xl">
+                        <Accordion.Item value="legacy">
+                            <Accordion.Control icon={<List size={16} />}>
+                                <Group gap="xs">
+                                    <Text size="sm" fw={600}>📋 기존 가격 데이터 (참고/편집)</Text>
+                                    <Badge size="xs" color="gray" variant="light">레거시</Badge>
+                                </Group>
+                            </Accordion.Control>
+                            <Accordion.Panel>
+                                {renderPrismaPrice()}
+                            </Accordion.Panel>
+                        </Accordion.Item>
+                    </Accordion>
+                    <Alert title="알림" color="blue" mt="md">표준화 편집기에서 가격을 세팅하세요. 기존 데이터는 참고용으로 아래에 접혀 있습니다.</Alert>
                 </Tabs.Panel>
 
                 <Tabs.Panel value="images" pt="md">
@@ -792,8 +866,47 @@ function FacilityEditModal({ facilityToEdit, opened, onClose, onSaved }: Facilit
                 </Tabs.Panel>
             </Tabs>
 
-            <Group justify="flex-end" mt="xl">
+            {/* 네비게이션 바 */}
+            {onNavigate && currentIndex != null && totalCount != null && (
+                <Paper withBorder p="sm" radius="md" mt="lg" bg="gray.0">
+                    <Group justify="space-between">
+                        <Button
+                            variant="subtle" size="sm"
+                            leftSection={<ChevronLeft size={16} />}
+                            disabled={currentIndex <= 0}
+                            onClick={() => onNavigate('prev')}
+                        >
+                            이전 시설
+                        </Button>
+                        <Group gap="xs">
+                            <Text size="sm" fw={600} c="dimmed">
+                                {currentIndex + 1} / {totalCount}
+                            </Text>
+                            <Progress value={(currentIndex + 1) / totalCount * 100} size="sm" w={100} radius="xl" />
+                        </Group>
+                        <Button
+                            variant="subtle" size="sm"
+                            rightSection={<ChevronRight size={16} />}
+                            disabled={currentIndex >= totalCount - 1}
+                            onClick={() => onNavigate('next')}
+                        >
+                            다음 시설
+                        </Button>
+                    </Group>
+                </Paper>
+            )}
+
+            <Group justify="flex-end" mt="md">
                 <Button variant="default" onClick={onClose}>취소</Button>
+                {onNavigate && (
+                    <Button
+                        color="green"
+                        leftSection={<CheckCircle2 size={16} />}
+                        onClick={handleMarkReviewed}
+                    >
+                        검토완료 ✅ → 다음
+                    </Button>
+                )}
                 <Button onClick={handleSave} leftSection={<Save size={16} />}>저장</Button>
             </Group>
         </Modal>

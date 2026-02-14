@@ -1,42 +1,18 @@
 import { Suspense } from 'react';
 import HomeClient from './HomeClient';
 import { Facility } from '@/types';
-import { createClient } from '@supabase/supabase-js';
+import fs from 'fs';
+import path from 'path';
 
 // 🚀 ISR: 5분(300초)마다 데이터 갱신
 export const revalidate = 300;
 
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://jbydmhfuqnpukfutvrgs.supabase.co',
-  process.env.SUPABASE_SERVICE_KEY || '',
-  { auth: { persistSession: false } }
-);
-
-// 🚀 직접 Supabase 쿼리 — pricing/images 컬럼 제거로 SSR HTML 90% 감소!
-async function getFacilities(): Promise<Facility[]> {
+// 📁 로컬 JSON에서 시설 데이터 로드 (Supabase 왕복 제거 → 즉시 렌더링)
+function getFacilities(): Facility[] {
   try {
-    // 🔥 초경량 컬럼만! (pricing, images 제외 → DB precomputed 값 사용)
-    const LITE_COLUMNS = 'id,name,address,lat,lng,category,minPrice,maxPrice,representativePrice,thumbnail,isPublic,isActive,operatorType,rating,reviewCount';
-
-    let all: any[] = [];
-    let from = 0;
-    const PAGE_SIZE = 1000;
-
-    while (true) {
-      const { data, error } = await supabase
-        .from('Facility')
-        .select(LITE_COLUMNS)
-        .order('id', { ascending: true })
-        .range(from, from + PAGE_SIZE - 1);
-
-      if (error) {
-        console.error('Supabase fetch error:', error);
-        break;
-      }
-      if (data) all.push(...data);
-      if (!data || data.length < PAGE_SIZE) break;
-      from += PAGE_SIZE;
-    }
+    const filePath = path.join(process.cwd(), 'data', 'facilities.json');
+    const raw = fs.readFileSync(filePath, 'utf-8');
+    const all = JSON.parse(raw);
 
     // 장례식장, 화장시설 제외 + isActive=false 제외
     return all
@@ -48,14 +24,14 @@ async function getFacilities(): Promise<Facility[]> {
         };
 
         const repPrice = normalizePrice(f.representativePrice || 0);
-        const minP = normalizePrice(f.minPrice);
-        const maxP = normalizePrice(f.maxPrice);
+        const minP = normalizePrice(f.minPrice || f.priceRange?.min || 0);
+        const maxP = normalizePrice(f.maxPrice || f.priceRange?.max || 0);
 
         return {
           id: f.id,
           name: f.name,
           address: f.address || '',
-          coordinates: { lat: f.lat || 0, lng: f.lng || 0 },
+          coordinates: f.coordinates || { lat: f.lat || 0, lng: f.lng || 0 },
           category: f.category,
           priceRange: {
             min: repPrice || minP,
@@ -63,7 +39,7 @@ async function getFacilities(): Promise<Facility[]> {
           },
           operatorType: f.operatorType,
           isPublic: f.isPublic ?? false,
-          thumbnail: f.thumbnail || '',
+          thumbnail: f.thumbnail || (f.images?.[0]) || '',
         };
       });
   } catch (error) {
@@ -73,7 +49,7 @@ async function getFacilities(): Promise<Facility[]> {
 }
 
 export default async function Home() {
-  const initialFacilities = await getFacilities();
+  const initialFacilities = getFacilities();
 
   return (
     <Suspense fallback={<div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100vh' }}>로딩 중...</div>}>

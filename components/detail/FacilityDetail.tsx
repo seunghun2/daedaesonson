@@ -70,7 +70,258 @@ const getDisplayName = (name: string) => {
 function PriceInfoSection({ priceInfo, hasPrice }: { priceInfo: any, hasPrice: boolean }) {
     if (!priceInfo) return null;
 
-    // 1. Data Prep & Fallback
+    // === V2: 표준화 데이터가 있으면 새 형식으로 렌더링 ===
+    const standardizedPrices = priceInfo.standardizedPrices as Array<{
+        serviceType: string; subType: string; unit: string;
+        rows: Array<{
+            name: string; price: number; feeType?: string; residency?: string;
+            area?: number; areaUnit?: string; duration?: number; durationType?: string;
+            capacity?: string; paymentCycle?: string; taxIncluded?: boolean;
+            grade?: string; note?: string; isRepresentative?: boolean; groupType?: string;
+        }>;
+    }> | undefined;
+
+    const hasStandardized = standardizedPrices && standardizedPrices.length > 0 &&
+        standardizedPrices.some(g => g.rows.length > 0);
+
+    // === 공통 헬퍼 ===
+    const getServiceIcon = (type: string) => {
+        if (/BURIAL|매장/.test(type)) return <Mountain size={24} color="#495057" />;
+        if (/BONGSAN|봉안/.test(type)) return <Archive size={24} color="#495057" />;
+        if (/NATURAL|수목/.test(type)) return <Trees size={24} color="#495057" />;
+        return <Layers size={24} color="#495057" />;
+    };
+
+    const getServiceLabel = (type: string) => {
+        if (type === 'BONGSAN') return '봉안(납골)';
+        if (type === 'NATURAL') return '수목장(자연장)';
+        if (type === 'BURIAL') return '매장묘';
+        return type;
+    };
+
+    const formatName = (name: string) => {
+        return name
+            .replace(/(\d+)위/g, '$1분 안치')
+            .replace(/1분 안치/g, '1분 안치 (개인형)')
+            .replace(/2분 안치/g, '2분 안치 (부부형)');
+    };
+
+    // === V2 렌더링: 표준화 데이터 ===
+    if (hasStandardized) {
+        // 서비스 타입별로 그룹핑
+        const serviceTypes = [...new Set(standardizedPrices!.map(g => g.serviceType))];
+
+        // 서비스 타입별 최저가 계산
+        const getMinPriceForService = (serviceType: string) => {
+            const groups = standardizedPrices!.filter(g => g.serviceType === serviceType);
+            const usageRows = groups.flatMap(g =>
+                g.rows.filter(r => !r.feeType || r.feeType === 'USAGE')
+            );
+            const repItem = usageRows.find(r => r.isRepresentative);
+            if (repItem && repItem.price > 0) return repItem.price;
+            const prices = usageRows.map(r => r.price).filter(p => p > 0);
+            return prices.length > 0 ? Math.min(...prices) : 0;
+        };
+
+        return (
+            <Box bg="white" p="md" pb="xl" style={{ borderBottom: '8px solid #f8f9fa' }}>
+                <Text size="xl" fw={800} mb="xl" style={{ letterSpacing: '-1px' }}>
+                    사용료
+                </Text>
+
+                <Accordion
+                    variant="default" radius="md" multiple
+                    styles={{
+                        item: { borderBottom: '1px solid #f1f3f5' },
+                        control: { padding: '20px 0', '&:hover': { backgroundColor: 'transparent' } },
+                        content: { padding: '0 0 24px 0' },
+                        chevron: { display: 'none' }
+                    }}
+                >
+                    {serviceTypes.map(serviceType => {
+                        const groups = standardizedPrices!.filter(g => g.serviceType === serviceType);
+                        const minPrice = getMinPriceForService(serviceType);
+                        const hasMinPrice = minPrice > 0;
+
+                        return (
+                            <Accordion.Item key={serviceType} value={serviceType}>
+                                <Accordion.Control>
+                                    <Group justify="space-between" wrap="nowrap">
+                                        <Group gap="md">
+                                            {getServiceIcon(serviceType)}
+                                            <Text fw={700} size="lg" c="dark.9">{getServiceLabel(serviceType)}</Text>
+                                        </Group>
+                                        <Group gap="xs">
+                                            {hasMinPrice ? (
+                                                <Text fw={800} c="#1D0098" size="lg">
+                                                    {formatKoreanCurrency(minPrice)}부터
+                                                </Text>
+                                            ) : (
+                                                <Text size="sm" c="dimmed">가격 문의</Text>
+                                            )}
+                                            <ChevronRight size={18} color="#adb5bd" />
+                                        </Group>
+                                    </Group>
+                                </Accordion.Control>
+
+                                <Accordion.Panel>
+                                    <Accordion
+                                        variant="separated" radius="md" multiple
+                                        defaultValue={groups.length === 1 ? [groups[0].subType] : []}
+                                        styles={{
+                                            item: { backgroundColor: '#f8f9fa', border: 'none' },
+                                            control: { padding: '12px 16px' },
+                                            content: { padding: '0 16px 16px 16px' },
+                                        }}
+                                    >
+                                        {groups.map(group => {
+                                            const usageRows = group.rows.filter(r => !r.feeType || r.feeType === 'USAGE');
+                                            const mgmtRows = group.rows.filter(r => r.feeType === 'MANAGEMENT');
+                                            const otherRows = group.rows.filter(r =>
+                                                r.feeType && !['USAGE', 'MANAGEMENT'].includes(r.feeType)
+                                            );
+
+                                            // groupType별 탭 분류
+                                            const groupedUsage: Record<string, typeof usageRows> = {};
+                                            usageRows.forEach(row => {
+                                                const g = row.groupType || '미분류';
+                                                if (!groupedUsage[g]) groupedUsage[g] = [];
+                                                groupedUsage[g].push(row);
+                                            });
+                                            const usageGroupNames = Object.keys(groupedUsage);
+
+                                            const renderRow = (row: typeof usageRows[0], idx: number, prefix: string) => (
+                                                <Box key={`${prefix}-${idx}`}
+                                                    style={{
+                                                        borderBottom: '1px solid #e9ecef',
+                                                        padding: '10px 0',
+                                                        display: 'flex',
+                                                        alignItems: 'center',
+                                                        gap: 8
+                                                    }}
+                                                >
+                                                    <Text fw={600} size="12px" c="dark.9"
+                                                        style={{ width: 125, flexShrink: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}
+                                                    >
+                                                        {formatName(row.name)}
+                                                    </Text>
+                                                    <Text size="12px" c="dark.9"
+                                                        style={{ flex: 1, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}
+                                                    >
+                                                        {row.grade && row.grade.length > 10 ? row.grade.slice(0, 10) + '...' : (row.grade || '-')}
+                                                    </Text>
+                                                    {/* 뱃지들 */}
+                                                    {row.residency && row.residency !== 'ALL' && (
+                                                        <Badge size="xs" variant="light"
+                                                            color={row.residency === 'LOCAL' ? 'blue' : row.residency === 'VETERAN' ? 'grape' : 'orange'}
+                                                        >
+                                                            {row.residency === 'LOCAL' ? '관내' : row.residency === 'NON_LOCAL' ? '관외' : '유공자'}
+                                                        </Badge>
+                                                    )}
+                                                    {row.paymentCycle && (
+                                                        <Badge size="xs" variant="outline" color="gray">
+                                                            {row.paymentCycle === 'MONTHLY' ? '월납' : row.paymentCycle === 'YEARLY' ? '연납' : '일시납'}
+                                                        </Badge>
+                                                    )}
+                                                    <Text fw={700} size="12px" c="black"
+                                                        style={{ flexShrink: 0, whiteSpace: 'nowrap', textAlign: 'right' }}
+                                                    >
+                                                        {formatKoreanCurrency(row.price)}
+                                                        {row.taxIncluded === false && <Text span size="9px" c="dimmed"> +VAT</Text>}
+                                                    </Text>
+                                                </Box>
+                                            );
+
+                                            return (
+                                                <Accordion.Item key={group.subType} value={group.subType}>
+                                                    <Accordion.Control>
+                                                        <Group justify="space-between" wrap="nowrap">
+                                                            <Text fw={600} size="sm" c="dark.7">{group.subType}</Text>
+                                                            <Badge color="gray" variant="light" size="sm">
+                                                                {usageRows.length} 항목
+                                                            </Badge>
+                                                        </Group>
+                                                    </Accordion.Control>
+                                                    <Accordion.Panel>
+                                                        {usageGroupNames.length > 1 ? (
+                                                            <Tabs defaultValue={usageGroupNames[0]}>
+                                                                <Tabs.List grow mb="md">
+                                                                    {usageGroupNames.map(gn => (
+                                                                        <Tabs.Tab key={gn} value={gn}>{gn}</Tabs.Tab>
+                                                                    ))}
+                                                                </Tabs.List>
+                                                                {usageGroupNames.map(gn => (
+                                                                    <Tabs.Panel key={gn} value={gn}>
+                                                                        <Stack gap="sm">
+                                                                            {groupedUsage[gn].map((row, idx) => renderRow(row, idx, gn))}
+                                                                        </Stack>
+                                                                    </Tabs.Panel>
+                                                                ))}
+                                                            </Tabs>
+                                                        ) : (
+                                                            <Stack gap="sm">
+                                                                {usageRows.map((row, idx) => renderRow(row, idx, 'main'))}
+                                                            </Stack>
+                                                        )}
+
+                                                        {/* 관리비 섹션 */}
+                                                        {mgmtRows.length > 0 && (
+                                                            <Box bg="blue.0" p="sm" style={{ borderRadius: 6, border: '1px solid #d0ebff' }} mt="md">
+                                                                <Text size="11px" fw={700} c="blue.7" mb="xs">📋 관리비 안내</Text>
+                                                                <Stack gap="xs">
+                                                                    {mgmtRows.map((row, idx) => (
+                                                                        <Group key={`mgmt-${idx}`} justify="space-between">
+                                                                            <Group gap={4}>
+                                                                                <Text size="xs" c="dark.5">{row.name}</Text>
+                                                                                {row.paymentCycle && (
+                                                                                    <Badge size="xs" variant="outline" color="blue">
+                                                                                        {row.paymentCycle === 'MONTHLY' ? '월납' : row.paymentCycle === 'YEARLY' ? '연납' : '일시납'}
+                                                                                    </Badge>
+                                                                                )}
+                                                                            </Group>
+                                                                            <Text size="xs" fw={600} c="blue.7">{formatKoreanCurrency(row.price)}</Text>
+                                                                        </Group>
+                                                                    ))}
+                                                                </Stack>
+                                                            </Box>
+                                                        )}
+
+                                                        {/* 기타 비용 (석물, 작업비 등) */}
+                                                        {otherRows.length > 0 && (
+                                                            <Box bg="white" p="xs" style={{ borderRadius: 6, border: '1px solid #f1f3f5' }} mt="md">
+                                                                <Text size="11px" fw={700} c="dimmed" mb="xs">💡 부가 옵션</Text>
+                                                                <Stack gap="xs">
+                                                                    {otherRows.map((row, idx) => (
+                                                                        <Group key={`other-${idx}`} justify="space-between">
+                                                                            <Text size="xs" c="dark.5">{row.name}</Text>
+                                                                            <Text size="xs" fw={600} c="dark.7">{formatKoreanCurrency(row.price)}</Text>
+                                                                        </Group>
+                                                                    ))}
+                                                                </Stack>
+                                                            </Box>
+                                                        )}
+                                                    </Accordion.Panel>
+                                                </Accordion.Item>
+                                            );
+                                        })}
+                                    </Accordion>
+                                </Accordion.Panel>
+                            </Accordion.Item>
+                        );
+                    })}
+                </Accordion>
+
+                <Box mt="xl" p="lg" bg="gray.0" style={{ borderRadius: 8 }}>
+                    <Text size="xs" c="dimmed" style={{ lineHeight: 1.6 }}>
+                        사용료는 <b>e하늘 장사정보 시스템</b>에 등록되어 있는 가격정보를 바탕으로 안내해드리고 있어 상이할 수 있습니다.<br />
+                        사용료 정보가 안내되지 않은 시설은 <b>해당 시설에 직접 문의</b>바랍니다.
+                    </Text>
+                </Box>
+            </Box>
+        );
+    }
+
+    // === V1 렌더링: 레거시 priceTable ===
     let priceTable = priceInfo.priceTable;
     if (!priceTable && (priceInfo.products || priceInfo.installationCosts || priceInfo.managementCosts)) {
         priceTable = {};
@@ -114,20 +365,14 @@ function PriceInfoSection({ priceInfo, hasPrice }: { priceInfo: any, hasPrice: b
 
     // 3. Min Price Calculation (Prioritize Representative)
     const getMinPrice = (items: any[]) => {
-        // [New Logic] Check Representative First
         const repItem = items.find(i => i.isRepresentative);
-        if (repItem && repItem.price > 0) {
-            return repItem.price;
-        }
+        if (repItem && repItem.price > 0) return repItem.price;
 
-        // [Legacy Logic] Calculate Min Price
         const candidates = items.filter(i => {
             const n = i.name || '';
-            // 관리비, 석물, 제례비 등 부대비용 제외 (본상품 가격만)
             if (/관리|석물|작업|각자|제례|상석/.test(n)) return false;
             return true;
         });
-
         if (candidates.length === 0) return 0;
 
         const prices = candidates.map(i => {
@@ -139,15 +384,6 @@ function PriceInfoSection({ priceInfo, hasPrice }: { priceInfo: any, hasPrice: b
         return Math.min(...prices);
     };
 
-    // 4. Name Formatter
-    const formatName = (name: string) => {
-        return name
-            .replace(/(\d+)위/g, '$1분 안치')
-            .replace(/1분 안치/g, '1분 안치 (개인형)')
-            .replace(/2분 안치/g, '2분 안치 (부부형)');
-    };
-
-    // 5. Icons Mapping
     const getIcon = (type: string) => {
         switch (type) {
             case 'burial': return <Mountain size={24} color="#495057" />;
@@ -159,7 +395,6 @@ function PriceInfoSection({ priceInfo, hasPrice }: { priceInfo: any, hasPrice: b
 
     if (visibleGroups.length === 0) return null;
 
-    // Filter out '기타' group as per user request
     const displayGroups = visibleGroups.filter(g => !g.label.includes('기타'));
 
     return (
@@ -169,10 +404,7 @@ function PriceInfoSection({ priceInfo, hasPrice }: { priceInfo: any, hasPrice: b
             </Text>
 
             <Accordion
-                variant="default"
-                radius="md"
-                multiple  // 🔓 여러 개 동시에 열 수 있음
-                // 🔒 초기 상태: 모두 닫힘
+                variant="default" radius="md" multiple
                 styles={{
                     item: { borderBottom: '1px solid #f1f3f5' },
                     control: { padding: '20px 0', '&:hover': { backgroundColor: 'transparent' } },
@@ -184,7 +416,6 @@ function PriceInfoSection({ priceInfo, hasPrice }: { priceInfo: any, hasPrice: b
                     const minPrice = getMinPrice(group.items);
                     const hasMinPrice = minPrice > 0 && minPrice < Infinity;
 
-                    // Identify key for icon
                     let groupKey = 'etc';
                     if (group.label.includes('매장')) groupKey = 'burial';
                     else if (group.label.includes('봉안')) groupKey = 'charnel';
@@ -214,10 +445,8 @@ function PriceInfoSection({ priceInfo, hasPrice }: { priceInfo: any, hasPrice: b
 
                             <Accordion.Panel>
                                 <Accordion
-                                    variant="separated"
-                                    radius="md"
-                                    multiple  // 🔓 여러 개 동시에 열 수 있음
-                                    defaultValue={group.categories.length === 1 ? group.categories : []}  // 🔓 1개면 자동 열림
+                                    variant="separated" radius="md" multiple
+                                    defaultValue={group.categories.length === 1 ? group.categories : []}
                                     styles={{
                                         item: { backgroundColor: '#f8f9fa', border: 'none' },
                                         control: { padding: '12px 16px' },
@@ -228,17 +457,14 @@ function PriceInfoSection({ priceInfo, hasPrice }: { priceInfo: any, hasPrice: b
                                         const rows = priceTable[cat].rows;
                                         const mainRows = rows.filter((r: any) => !/관리|석물|작업|각자|제례|상석/.test(r.name));
                                         const optionRows = rows.filter((r: any) => /관리|석물|작업|각자|제례|상석/.test(r.name));
-                                        const catMinPrice = getMinPrice(rows);
-                                        const hasCatMinPrice = catMinPrice > 0 && catMinPrice < Infinity;
 
-                                        // Helper for Type Display
-                                        const getTypeLabel = (name: string) => {
-                                            if (/부부|쌍/.test(name)) return <Badge size="xs" variant="light" color="blue">부부형</Badge>;
-                                            if (/합장/.test(name)) return <Badge size="xs" variant="light" color="teal">합장형</Badge>;
-                                            if (/가족/.test(name)) return <Badge size="xs" variant="light" color="grape">가족형</Badge>;
-                                            if (/개인|1위/.test(name)) return <Badge size="xs" variant="light" color="gray">개인형</Badge>;
-                                            return null;
-                                        };
+                                        const groupedRows: Record<string, any[]> = {};
+                                        mainRows.forEach((row: any) => {
+                                            const gType = row.groupType || '미분류';
+                                            if (!groupedRows[gType]) groupedRows[gType] = [];
+                                            groupedRows[gType].push(row);
+                                        });
+                                        const groupNames = Object.keys(groupedRows);
 
                                         return (
                                             <Accordion.Item key={cat} value={cat}>
@@ -251,173 +477,85 @@ function PriceInfoSection({ priceInfo, hasPrice }: { priceInfo: any, hasPrice: b
                                                     </Group>
                                                 </Accordion.Control>
                                                 <Accordion.Panel>
-                                                    {(() => {
-                                                        // 그룹별로 묶기
-                                                        const groupedRows: Record<string, any[]> = {};
-                                                        mainRows.forEach((row: any) => {
-                                                            const gType = row.groupType || '미분류';
-                                                            if (!groupedRows[gType]) groupedRows[gType] = [];
-                                                            groupedRows[gType].push(row);
-                                                        });
-                                                        const groupNames = Object.keys(groupedRows);
-
-                                                        if (groupNames.length > 1) {
-                                                            return (
-                                                                <>
-                                                                    <Tabs defaultValue={groupNames[0]}>
-                                                                        <Tabs.List grow mb="md">
-                                                                            {groupNames.map((gName, idx) => (
-                                                                                <Tabs.Tab key={idx} value={gName}>
-                                                                                    {gName}
-                                                                                </Tabs.Tab>
-                                                                            ))}
-                                                                        </Tabs.List>
-
-                                                                        {groupNames.map((gName, idx) => {
-                                                                            // 현재 그룹의 관리비만 필터링
-                                                                            const groupOptions = optionRows.filter((r: any) => r.groupType === gName);
-
-                                                                            return (
-                                                                                <Tabs.Panel key={idx} value={gName}>
-                                                                                    <Stack gap="sm">
-                                                                                        {groupedRows[gName].map((row: any, rowIdx: number) => (
-                                                                                            <Box key={`${gName}-${rowIdx}`}
-                                                                                                style={{
-                                                                                                    borderBottom: '1px solid #e9ecef',
-                                                                                                    padding: '10px 0',
-                                                                                                    display: 'flex',
-                                                                                                    alignItems: 'center',
-                                                                                                    gap: 8
-                                                                                                }}
-                                                                                            >
-                                                                                                {/* 상품명 - 고정 너비 */}
-                                                                                                <Text fw={600} size="12px" c="dark.9"
-                                                                                                    style={{
-                                                                                                        width: 125,
-                                                                                                        flexShrink: 0,
-                                                                                                        overflow: 'hidden',
-                                                                                                        textOverflow: 'ellipsis',
-                                                                                                        whiteSpace: 'nowrap'
-                                                                                                    }}
-                                                                                                >
-                                                                                                    {formatName(row.name)}
-                                                                                                </Text>
-                                                                                                {/* 세부정보 - 유연 너비 */}
-                                                                                                <Text size="12px" c="dark.9"
-                                                                                                    style={{
-                                                                                                        flex: 1,
-                                                                                                        overflow: 'hidden',
-                                                                                                        textOverflow: 'ellipsis',
-                                                                                                        whiteSpace: 'nowrap'
-                                                                                                    }}
-                                                                                                >
-                                                                                                    {(row.grade || '-').length > 10 ? (row.grade || '-').slice(0, 10) + '...' : (row.grade || '-')}
-                                                                                                </Text>
-                                                                                                {/* 가격 - 오른쪽 고정 */}
-                                                                                                <Text fw={700} size="12px" c="black"
-                                                                                                    style={{
-                                                                                                        flexShrink: 0,
-                                                                                                        whiteSpace: 'nowrap',
-                                                                                                        textAlign: 'right'
-                                                                                                    }}
-                                                                                                >
-                                                                                                    {formatKoreanCurrency(row.price)}
-                                                                                                </Text>
-                                                                                            </Box>
-                                                                                        ))}
-                                                                                    </Stack>
-
-                                                                                    {/* 💡 부가 옵션: 현재 그룹의 관리비만 */}
-                                                                                    {groupOptions.length > 0 && (
-                                                                                        <Box bg="white" p="xs" style={{ borderRadius: 6, border: '1px solid #f1f3f5' }} mt="md">
-                                                                                            <Group justify="space-between" mb="xs">
-                                                                                                <Text size="11px" fw={700} c="dimmed">💡 부가 옵션</Text>
-                                                                                            </Group>
-                                                                                            <Stack gap="xs">
-                                                                                                {groupOptions.map((row: any, optIdx: number) => (
-                                                                                                    <Group key={`opt-${gName}-${optIdx}`} justify="space-between">
-                                                                                                        <Text size="xs" c="dark.5">{row.name}</Text>
-                                                                                                        <Text size="xs" fw={600} c="dark.7">{formatKoreanCurrency(row.price)}</Text>
-                                                                                                    </Group>
-                                                                                                ))}
-                                                                                            </Stack>
-                                                                                        </Box>
-                                                                                    )}
-                                                                                </Tabs.Panel>
-                                                                            );
-                                                                        })}
-                                                                    </Tabs>
-                                                                </>
-                                                            );
-                                                        }
-
-                                                        return (
-                                                            <>
-                                                                <Stack gap="sm" mb={optionRows.length > 0 ? "lg" : 0}>
-                                                                    {mainRows.map((row: any, idx: number) => (
-                                                                        <Box key={`main-${idx}`}
-                                                                            style={{
-                                                                                borderBottom: '1px solid #e9ecef',
-                                                                                padding: '10px 0',
-                                                                                display: 'flex',
-                                                                                alignItems: 'center',
-                                                                                gap: 8
-                                                                            }}
-                                                                        >
-                                                                            {/* 상품명 - 고정 너비 */}
-                                                                            <Text fw={600} size="12px" c="dark.9"
-                                                                                style={{
-                                                                                    width: 125,
-                                                                                    flexShrink: 0,
-                                                                                    overflow: 'hidden',
-                                                                                    textOverflow: 'ellipsis',
-                                                                                    whiteSpace: 'nowrap'
-                                                                                }}
-                                                                            >
-                                                                                {formatName(row.name)}
-                                                                            </Text>
-                                                                            {/* 세부정보 - 유연 너비 */}
-                                                                            <Text size="12px" c="dark.9"
-                                                                                style={{
-                                                                                    flex: 1,
-                                                                                    overflow: 'hidden',
-                                                                                    textOverflow: 'ellipsis',
-                                                                                    whiteSpace: 'nowrap'
-                                                                                }}
-                                                                            >
-                                                                                {(row.grade || '-').length > 10 ? (row.grade || '-').slice(0, 10) + '...' : (row.grade || '-')}
-                                                                            </Text>
-                                                                            {/* 가격 - 오른쪽 고정 */}
-                                                                            <Text fw={700} size="12px" c="black"
-                                                                                style={{
-                                                                                    flexShrink: 0,
-                                                                                    whiteSpace: 'nowrap',
-                                                                                    textAlign: 'right'
-                                                                                }}
-                                                                            >
-                                                                                {formatKoreanCurrency(row.price)}
-                                                                            </Text>
-                                                                        </Box>
-                                                                    ))}
-                                                                </Stack>
-                                                                {optionRows.length > 0 && (
-                                                                    <Box bg="white" p="xs" style={{ borderRadius: 6, border: '1px solid #f1f3f5' }}>
-                                                                        <Group justify="space-between" mb="xs">
-                                                                            <Text size="11px" fw={700} c="dimmed">💡 부가 옵션</Text>
-                                                                        </Group>
-                                                                        <Stack gap="xs">
-                                                                            {optionRows.map((row: any, idx: number) => (
-                                                                                <Group key={`opt-${idx}`} justify="space-between">
-                                                                                    <Text size="xs" c="dark.5">{row.name}</Text>
-                                                                                    <Text size="xs" fw={600} c="dark.7">{formatKoreanCurrency(row.price)}</Text>
-                                                                                </Group>
+                                                    {groupNames.length > 1 ? (
+                                                        <Tabs defaultValue={groupNames[0]}>
+                                                            <Tabs.List grow mb="md">
+                                                                {groupNames.map((gName, idx) => (
+                                                                    <Tabs.Tab key={idx} value={gName}>{gName}</Tabs.Tab>
+                                                                ))}
+                                                            </Tabs.List>
+                                                            {groupNames.map((gName, idx) => {
+                                                                const groupOptions = optionRows.filter((r: any) => r.groupType === gName);
+                                                                return (
+                                                                    <Tabs.Panel key={idx} value={gName}>
+                                                                        <Stack gap="sm">
+                                                                            {groupedRows[gName].map((row: any, rowIdx: number) => (
+                                                                                <Box key={`${gName}-${rowIdx}`}
+                                                                                    style={{ borderBottom: '1px solid #e9ecef', padding: '10px 0', display: 'flex', alignItems: 'center', gap: 8 }}
+                                                                                >
+                                                                                    <Text fw={600} size="12px" c="dark.9" style={{ width: 125, flexShrink: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                                                                                        {formatName(row.name)}
+                                                                                    </Text>
+                                                                                    <Text size="12px" c="dark.9" style={{ flex: 1, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                                                                                        {(row.grade || '-').length > 10 ? (row.grade || '-').slice(0, 10) + '...' : (row.grade || '-')}
+                                                                                    </Text>
+                                                                                    <Text fw={700} size="12px" c="black" style={{ flexShrink: 0, whiteSpace: 'nowrap', textAlign: 'right' }}>
+                                                                                        {formatKoreanCurrency(row.price)}
+                                                                                    </Text>
+                                                                                </Box>
                                                                             ))}
                                                                         </Stack>
+                                                                        {groupOptions.length > 0 && (
+                                                                            <Box bg="white" p="xs" style={{ borderRadius: 6, border: '1px solid #f1f3f5' }} mt="md">
+                                                                                <Text size="11px" fw={700} c="dimmed" mb="xs">💡 부가 옵션</Text>
+                                                                                <Stack gap="xs">
+                                                                                    {groupOptions.map((row: any, optIdx: number) => (
+                                                                                        <Group key={`opt-${gName}-${optIdx}`} justify="space-between">
+                                                                                            <Text size="xs" c="dark.5">{row.name}</Text>
+                                                                                            <Text size="xs" fw={600} c="dark.7">{formatKoreanCurrency(row.price)}</Text>
+                                                                                        </Group>
+                                                                                    ))}
+                                                                                </Stack>
+                                                                            </Box>
+                                                                        )}
+                                                                    </Tabs.Panel>
+                                                                );
+                                                            })}
+                                                        </Tabs>
+                                                    ) : (
+                                                        <>
+                                                            <Stack gap="sm" mb={optionRows.length > 0 ? "lg" : 0}>
+                                                                {mainRows.map((row: any, idx: number) => (
+                                                                    <Box key={`main-${idx}`}
+                                                                        style={{ borderBottom: '1px solid #e9ecef', padding: '10px 0', display: 'flex', alignItems: 'center', gap: 8 }}
+                                                                    >
+                                                                        <Text fw={600} size="12px" c="dark.9" style={{ width: 125, flexShrink: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                                                                            {formatName(row.name)}
+                                                                        </Text>
+                                                                        <Text size="12px" c="dark.9" style={{ flex: 1, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                                                                            {(row.grade || '-').length > 10 ? (row.grade || '-').slice(0, 10) + '...' : (row.grade || '-')}
+                                                                        </Text>
+                                                                        <Text fw={700} size="12px" c="black" style={{ flexShrink: 0, whiteSpace: 'nowrap', textAlign: 'right' }}>
+                                                                            {formatKoreanCurrency(row.price)}
+                                                                        </Text>
                                                                     </Box>
-                                                                )}
-                                                            </>
-                                                        );
-                                                    })()}
+                                                                ))}
+                                                            </Stack>
+                                                            {optionRows.length > 0 && (
+                                                                <Box bg="white" p="xs" style={{ borderRadius: 6, border: '1px solid #f1f3f5' }}>
+                                                                    <Text size="11px" fw={700} c="dimmed" mb="xs">💡 부가 옵션</Text>
+                                                                    <Stack gap="xs">
+                                                                        {optionRows.map((row: any, idx: number) => (
+                                                                            <Group key={`opt-${idx}`} justify="space-between">
+                                                                                <Text size="xs" c="dark.5">{row.name}</Text>
+                                                                                <Text size="xs" fw={600} c="dark.7">{formatKoreanCurrency(row.price)}</Text>
+                                                                            </Group>
+                                                                        ))}
+                                                                    </Stack>
+                                                                </Box>
+                                                            )}
+                                                        </>
+                                                    )}
                                                 </Accordion.Panel>
                                             </Accordion.Item>
                                         );
@@ -1025,8 +1163,10 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                 // 지도에서 해당 위치로 이동
                                 if (onMapView && facility.coordinates) {
                                     onMapView(facility.coordinates.lat, facility.coordinates.lng);
+                                    // onMapView가 자체적으로 라우팅 처리하므로 onClose 호출 안 함
+                                } else {
+                                    onClose();
                                 }
-                                onClose();
                             }}
                         >
                             <span className="material-symbols-outlined" style={{ fontSize: '24px' }}>location_on</span>
@@ -1039,7 +1179,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                             onClick={(e) => {
                                 e.stopPropagation();
                                 e.preventDefault();
-                                navigator.clipboard.writeText(`https://daedaesonson.com/?id=${facility.id}`);
+                                navigator.clipboard.writeText(`https://daedaesonson.com/facility/${facility.id}`);
                                 // 📊 GA4: 공유하기 클릭
                                 if ((window as any).gtag) {
                                     (window as any).gtag('event', 'share_click', {

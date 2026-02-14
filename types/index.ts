@@ -9,29 +9,116 @@ export const FACILITY_CATEGORY_LABELS: Record<FacilityCategory, string> = {
     OTHER: '기타',
 };
 
-// 가격 정보 (상세)
+// ===== 가격 표준 스키마 v2 =====
+
+// 서비스 대분류 (시설이 제공하는 장법)
+export type ServiceType = 'BONGSAN' | 'NATURAL' | 'BURIAL';
+
+export const SERVICE_TYPE_LABELS: Record<ServiceType, string> = {
+    BONGSAN: '봉안',     // 봉안당, 봉안묘, 봉안담
+    NATURAL: '자연장',   // 수목형, 잔디형, 화초형, 암석형
+    BURIAL: '매장',      // 단장형, 합장형, 쌍분형, 평장묘
+};
+
+// 서비스 세부 타입
+export type BongsanSubType = '봉안당' | '봉안묘' | '봉안담';
+export type NaturalSubType = '수목형' | '잔디형' | '화초형' | '암석형';
+export type BurialSubType = '단장형' | '합장형' | '쌍분형' | '평장묘' | '복합묘';
+export type ServiceSubType = BongsanSubType | NaturalSubType | BurialSubType;
+
+export const SERVICE_SUB_TYPES: Record<ServiceType, string[]> = {
+    BONGSAN: ['봉안당', '봉안묘', '봉안담'],
+    NATURAL: ['수목형', '잔디형', '화초형', '암석형'],
+    BURIAL: ['단장형', '합장형', '쌍분형', '평장묘', '복합묘'],
+};
+
+// 거주지 구분
+export type ResidencyType = 'LOCAL' | 'NON_LOCAL' | 'VETERAN' | 'ALL';
+export const RESIDENCY_LABELS: Record<ResidencyType, string> = {
+    LOCAL: '관내',
+    NON_LOCAL: '관외',
+    VETERAN: '유공자',
+    ALL: '공통',
+};
+
+// 면적 단위
+export type AreaUnit = 'PYEONG' | 'M2';
+export const AREA_UNIT_LABELS: Record<AreaUnit, string> = {
+    PYEONG: '평',
+    M2: '㎡',
+};
+
+// 사용 기간 유형
+export type DurationType = 'YEAR' | 'PERMANENT';
+
+// 비용 유형
+export type FeeType = 'USAGE' | 'MANAGEMENT' | 'STONE' | 'WORK' | 'ACCESSORY' | 'SERVICE' | 'OTHER';
+export const FEE_TYPE_LABELS: Record<FeeType, string> = {
+    USAGE: '사용료',
+    MANAGEMENT: '관리비',
+    STONE: '석물/비석',
+    WORK: '작업비',
+    ACCESSORY: '부속품',
+    SERVICE: '서비스',
+    OTHER: '기타',
+};
+
+// ===== 표준화된 가격 항목 =====
 export interface PriceRow {
-    name: string;
-    grade?: string; // 관내/관외/유공자 등
-    userFee?: number; // 사용료 (분양가)
-    managementFee?: number; // 관리비
+    // === 핵심 필드 ===
+    name: string;               // 항목명 (예: "개인 봉안", "1단", "A형")
+    price: number;              // 가격 (원)
+
+    // === 구조화 필드 (v2) ===
+    feeType?: FeeType;          // 비용 유형: 사용료/관리비/석물 등
+    residency?: ResidencyType;  // 관내/관외/유공자/공통
+    area?: number;              // 면적 값
+    areaUnit?: AreaUnit;        // 면적 단위: 평/㎡
+    duration?: number;          // 사용 기간 (년 수)
+    durationType?: DurationType; // 기간 유형: N년/영구
+    capacity?: '개인' | '부부' | '가족'; // 안치 인원
+    paymentCycle?: 'MONTHLY' | 'YEARLY' | 'LUMP_SUM'; // 관리비 납부 주기
+    taxIncluded?: boolean;      // 부가세 포함 여부
+
+    // === 레거시 호환 ===
+    grade?: string;             // 기존 등급/설명 (관내/관외/유공자 등)
+    userFee?: number;           // 사용료 (분양가) - 레거시
+    managementFee?: number;     // 관리비 - 레거시
     count?: number;
-    price: number; // 합계
-    size?: string; // 규격 (면적, 평수 등)
-    description?: string; // 상세 설명
+    size?: string;              // 규격 (면적, 평수 등) - 레거시
+    description?: string;       // 상세 설명
     isRepresentative?: boolean; // 대표 가격 여부
+
+    // === 추가 메타 ===
+    groupType?: string;         // 기존 groupType 호환
+    note?: string;              // 비고 (예: "석물+매장비=안장시")
 }
 
+// 서비스별 가격 그룹
+export interface ServicePriceGroup {
+    serviceType: ServiceType;   // 대분류: BONGSAN/NATURAL/BURIAL
+    subType: string;            // 세부 타입: 봉안당, 수목형, 단장형 등
+    unit: string;               // 가격 단위: '원'
+    rows: PriceRow[];           // 가격 항목들
+}
+
+// ===== 가격 테이블 (레거시 호환) =====
 export interface PriceTable {
     [key: string]: {
         unit: string;
         rows: PriceRow[];
-        category?: string; // Tab persistence key
+        category?: string;      // Tab persistence key
+        serviceType?: ServiceType; // v2: 대분류
+        subType?: string;       // v2: 세부 타입
     };
 }
 
 export interface PriceInfo {
     priceTable: PriceTable;
+    // v2: 표준화된 서비스별 가격 (신규)
+    standardizedPrices?: ServicePriceGroup[];
+    priceVerified?: boolean;    // 수동 검토 완료 여부
+    lastVerifiedAt?: string;    // 마지막 검토 일시
     additionalCosts?: {
         managementFee?: number;
         usagePeriod?: string;
@@ -92,7 +179,9 @@ export interface RepresentativePricing {
 export interface Facility {
     id: string;
     name: string;
-    category: FacilityCategory;
+    category: FacilityCategory;             // 주 카테고리 (레거시 호환)
+    categories?: FacilityCategory[];        // v2: 복수 카테고리 (봉안당+수목장 등)
+    services?: ServiceType[];               // v2: 제공 서비스 대분류
     address: string;
     phone?: string;
     fax?: string; // 팩스번호

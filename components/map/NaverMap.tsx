@@ -4,7 +4,7 @@ import { useEffect, useRef, useState, useImperativeHandle, forwardRef, useCallba
 import { Box, Text, Center, Button } from '@mantine/core';
 import { MapPin } from 'lucide-react';
 import Script from 'next/script';
-import Link from 'next/link';
+
 import { Facility, FACILITY_CATEGORY_LABELS, FacilityCategory } from '@/types';
 // 🚀 개별 임포트로 번들 5MB → ~50KB 절감 (import * as turf 제거)
 import { featureCollection } from '@turf/helpers';
@@ -25,7 +25,7 @@ interface NaverMapProps {
     onBoundsChanged?: (bounds: { south: number; north: number; west: number; east: number }) => void;
     onCenterAddressChange?: (address: string) => void; // 지도 중심 주소 변경 콜백
     isMobile?: boolean;
-    onViewList?: () => void;
+    onViewList?: (region: string, lat: number, lng: number) => void;
     onMapTap?: () => void; // 빈 지도 탭 시 호출 (UI 토글용)
     onMapDrag?: () => void; // 지도 드래그 시 호출 (검색창 닫기용)
     uiHidden?: boolean; // UI 숨김 상태 (호갱노노 스타일 애니메이션)
@@ -139,6 +139,14 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
 
                 // 🎯 시설 ID로 마커 찾아서 bounce 애니메이션
                 setTimeout(() => {
+                    // 0. 현재 viewport에 있는 마커들 보이게 (morph 후 idle 전에 마커가 숨겨져 있을 수 있음)
+                    if (prevZoomModeRef.current === 'individual' && mapInstanceRef.current) {
+                        const bounds = mapInstanceRef.current.getBounds();
+                        markersRef.current.forEach(m => {
+                            m.setVisible(bounds.hasPoint(m.getPosition()));
+                        });
+                    }
+
                     // 1. 모든 마커 애니메이션 초기화
                     markersRef.current.forEach(m => {
                         const el = m.getElement();
@@ -167,6 +175,7 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
                     }
 
                     if (targetMarker) {
+                        targetMarker.setVisible(true); // 🔥 강제로 보이게
                         const el = targetMarker.getElement();
                         if (el) {
                             el.style.animation = 'markerBounce 1.2s ease-in-out infinite';
@@ -1037,11 +1046,28 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
         }
 
         try {
-            // 사용자 요청: 사당/관악(서울 남부) 인근을 중심으로 시작
-            const location = new window.naver.maps.LatLng(37.4760, 126.9810);
+            // 🗺️ pendingMapView가 있으면 해당 좌표로 시작 (시설 상세 → 지도보기)
+            let initLat = 37.4760;
+            let initLng = 126.9810;
+            let initZoom = 12;
+            let pendingFacilityId: string | null = null;
+
+            try {
+                const pending = sessionStorage.getItem('pendingMapView');
+                if (pending) {
+                    const parsed = JSON.parse(pending);
+                    initLat = parsed.lat;
+                    initLng = parsed.lng;
+                    initZoom = parsed.zoom || 17;
+                    pendingFacilityId = parsed.facilityId || null;
+                    sessionStorage.removeItem('pendingMapView');
+                }
+            } catch { /* ignore */ }
+
+            const location = new window.naver.maps.LatLng(initLat, initLng);
             const map = new window.naver.maps.Map(mapRef.current, {
                 center: location,
-                zoom: 12, // 11~12 정도가 적당
+                zoom: initZoom,
                 minZoom: 6,
                 scaleControl: false,
                 logoControl: false,
@@ -1146,7 +1172,7 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
                     nameLabelMarkersRef.current = [];
                 }
 
-                // 🔒 줌 레벨에 따라 마커 전환 (setVisible = CSS 토글, 모드 변경 시에만)
+                // 🔒 줌 레벨에 따라 마커 전환 (setVisible = CSS 토글)
                 const newMode = currentZoom <= 9 ? 'province' : currentZoom <= 11 ? 'region' : 'individual';
                 if (newMode !== prevZoomModeRef.current) {
                     const oldMode = prevZoomModeRef.current;
@@ -1172,6 +1198,12 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
                             m.setVisible(bounds.hasPoint(m.getPosition()));
                         });
                     }
+                } else if (newMode === 'individual') {
+                    // 🔥 같은 모드에서도 줌/이동 시 viewport 마커 갱신 (CSS 토글만이라 빠름)
+                    const bounds = map.getBounds();
+                    markersRef.current.forEach(m => {
+                        m.setVisible(bounds.hasPoint(m.getPosition()));
+                    });
                 }
             });
 
@@ -1321,13 +1353,17 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
                         zIndex: 200,
                         pointerEvents: 'auto',
                     }}>
-                        <Link
-                            href={`/list?region=${encodeURIComponent(centerAddress)}&lat=${centerCoords?.lat ?? ''}&lng=${centerCoords?.lng ?? ''}`}
+                        <div
+                            onClick={() => {
+                                if (onViewList) {
+                                    onViewList(centerAddress, centerCoords?.lat ?? 37.5, centerCoords?.lng ?? 127);
+                                }
+                            }}
                             style={{
                                 display: 'flex',
                                 alignItems: 'center',
                                 gap: '6px',
-                                backgroundColor: '#1D0098', // Brand Color
+                                backgroundColor: '#1D0098',
                                 color: 'white',
                                 padding: isMobile ? '10px 14px' : '12px 20px',
                                 borderRadius: '30px',
@@ -1341,7 +1377,7 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
                         >
                             <span className="material-symbols-outlined" style={{ fontSize: isMobile ? '16px' : '20px' }}>menu</span>
                             <span>{centerAddress} 주변 시설 보기</span>
-                        </Link>
+                        </div>
                     </div>
                 )}
 
