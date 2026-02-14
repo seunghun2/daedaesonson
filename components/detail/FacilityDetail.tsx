@@ -125,8 +125,8 @@ function PriceInfoSection({ priceInfo, hasPrice }: { priceInfo: any, hasPrice: b
         };
 
         return (
-            <Box bg="white" p="md" pb="xl" style={{ borderBottom: '8px solid #f8f9fa', boxShadow: 'inset 0 -1px 0 #e9ecef' }}>
-                <Text size="xl" fw={800} mb="xl" style={{ letterSpacing: '-1px' }}>
+            <Box bg="white" p="md" pb="md" style={{ borderBottom: '8px solid #f8f9fa', boxShadow: 'inset 0 -1px 0 #e9ecef' }}>
+                <Text size="sm" fw={700} mb="md">
                     사용료
                 </Text>
 
@@ -134,8 +134,8 @@ function PriceInfoSection({ priceInfo, hasPrice }: { priceInfo: any, hasPrice: b
                     variant="default" radius="md" multiple
                     styles={{
                         item: { borderBottom: '1px solid #f1f3f5' },
-                        control: { padding: '20px 0', '&:hover': { backgroundColor: 'transparent' } },
-                        content: { padding: '0 0 24px 0' },
+                        control: { padding: '12px 0', '&:hover': { backgroundColor: 'transparent' } },
+                        content: { padding: '0 0 16px 0' },
                         chevron: { display: 'none' }
                     }}
                 >
@@ -404,8 +404,8 @@ function PriceInfoSection({ priceInfo, hasPrice }: { priceInfo: any, hasPrice: b
     const displayGroups = visibleGroups.filter(g => !g.label.includes('기타'));
 
     return (
-        <Box bg="white" p="md" pb="xl" style={{ borderBottom: '8px solid #f8f9fa', boxShadow: 'inset 0 -1px 0 #e9ecef' }}>
-            <Text size="xl" fw={800} mb="xl" style={{ letterSpacing: '-1px' }}>
+        <Box bg="white" p="md" pb="md" style={{ borderBottom: '8px solid #f8f9fa', boxShadow: 'inset 0 -1px 0 #e9ecef' }}>
+            <Text size="sm" fw={700} mb="md">
                 사용료
             </Text>
 
@@ -413,8 +413,8 @@ function PriceInfoSection({ priceInfo, hasPrice }: { priceInfo: any, hasPrice: b
                 variant="default" radius="md" multiple
                 styles={{
                     item: { borderBottom: '1px solid #f1f3f5' },
-                    control: { padding: '20px 0', '&:hover': { backgroundColor: 'transparent' } },
-                    content: { padding: '0 0 24px 0' },
+                    control: { padding: '12px 0', '&:hover': { backgroundColor: 'transparent' } },
+                    content: { padding: '0 0 16px 0' },
                     chevron: { display: 'none' }
                 }}
             >
