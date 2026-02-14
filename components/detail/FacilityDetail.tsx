@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Script from 'next/script';
 import NextImage from 'next/image';
-import { Image, Text, Badge, Group, Button, Stack, Box, Paper, Modal, Tabs, Collapse, ActionIcon, Rating, Textarea, TextInput, LoadingOverlay, useMantineTheme, Accordion, Table, Switch, Select, Drawer } from '@mantine/core';
+import { Image, Text, Badge, Group, Button, Stack, Box, Paper, Modal, Tabs, Collapse, ActionIcon, Rating, Textarea, TextInput, LoadingOverlay, useMantineTheme, Accordion, Table, Switch, Select, Drawer, Tooltip, Popover } from '@mantine/core';
 import { useDisclosure, useMediaQuery } from '@mantine/hooks';
 import { Car, Utensils, Accessibility, Store, Navigation, Globe, ChevronLeft, ChevronRight, TrendingUp, ChevronDown, ChevronUp, Star, Pencil, Camera, X, ImageIcon, Plus, Trash, Archive, Mountain, Trees, Layers, Lock, Unlock, Check } from 'lucide-react';
 import InquiryPanel from './InquiryPanel';
@@ -111,6 +111,22 @@ function PriceInfoSection({ priceInfo, hasPrice }: { priceInfo: any, hasPrice: b
         // 서비스 타입별로 그룹핑
         const serviceTypes = [...new Set(standardizedPrices!.map(g => g.serviceType))];
 
+        const getSubTypeDescription = (subType: string) => {
+            const map: Record<string, string> = {
+                '매장묘': '시신을 땅에 묻는 전통 장법입니다. 단분(1인), 합장(2인 1기), 쌍분(나란히 2기) 등으로 나뉩니다.',
+                '평장묘': '봉분(흙무덤)을 만들지 않고 평평하게 조성하는 묘지입니다. 잔디장이라고도 합니다.',
+                '봉안담': '화장 후 유골함을 담 형태의 시설에 안치하는 방식입니다. 봉안당보다 저렴한 편입니다.',
+                '봉안당': '화장 후 유골을 봉안당(납골당)에 안치하는 방식입니다. 단수가 높을수록 가격이 낮아지는 경향이 있습니다.',
+                '수목장': '화장 후 유골을 나무 밑에 매장하는 친환경 장법입니다.',
+                '잔디장': '화장 후 유골을 잔디밭 아래에 매장하는 친환경 장법입니다.',
+                '자연장': '화장 후 유골을 나무 밑이나 잔디밭 등 자연에 매장하는 친환경 장법입니다.',
+            };
+            for (const [key, desc] of Object.entries(map)) {
+                if (subType.includes(key) || key.includes(subType)) return desc;
+            }
+            return '';
+        };
+
         // 서비스 타입별 최저가 계산
         const getMinPriceForService = (serviceType: string) => {
             const groups = standardizedPrices!.filter(g => g.serviceType === serviceType);
@@ -124,48 +140,219 @@ function PriceInfoSection({ priceInfo, hasPrice }: { priceInfo: any, hasPrice: b
             return prices.length > 0 ? Math.min(...prices) : 0;
         };
 
-        return (
-            <Box bg="white" p="md" pb="md" style={{ borderBottom: '8px solid #f8f9fa', boxShadow: 'inset 0 -1px 0 #e9ecef' }}>
-                <Text size="sm" fw={700} mb="md">
-                    사용료
-                </Text>
+        // 서브타입 설명 토글 상태
+        const [openDescSubType, setOpenDescSubType] = useState<string | null>(null);
 
-                <Accordion
-                    variant="default" radius="md" multiple
-                    styles={{
-                        item: { borderBottom: '1px solid #f1f3f5' },
-                        control: { padding: '12px 0', '&:hover': { backgroundColor: 'transparent' } },
-                        content: { padding: '0 0 16px 0' },
-                        chevron: { display: 'none' }
+        // 서브타입 아코디언 아이템 렌더링
+        const renderSubTypeAccordionItem = (group: typeof standardizedPrices[0]) => {
+            const usageRows = group.rows.filter(r =>
+                !r.feeType || r.feeType === 'USAGE' || (r.feeType === 'MAINTENANCE' && r.groupType)
+            );
+            const mgmtRows = group.rows.filter(r =>
+                r.feeType === 'MAINTENANCE' && !r.groupType
+            );
+            const otherRows = group.rows.filter(r =>
+                r.feeType && !['USAGE', 'MAINTENANCE'].includes(r.feeType)
+            );
+
+            // groupType별 탭 분류
+            const groupedUsage: Record<string, typeof usageRows> = {};
+            usageRows.forEach(row => {
+                const g = row.groupType || '미분류';
+                if (!groupedUsage[g]) groupedUsage[g] = [];
+                groupedUsage[g].push(row);
+            });
+            const usageGroupNames = Object.keys(groupedUsage);
+
+            const renderRow = (row: typeof usageRows[0], idx: number, prefix: string) => (
+                <Box key={`${prefix}-${idx}`}
+                    style={{
+                        borderBottom: '1px solid #f1f3f5',
+                        padding: '10px 0',
                     }}
                 >
-                    {serviceTypes.map(serviceType => {
+                    <Group justify="space-between" align="center" wrap="nowrap" gap={8}>
+                        <Group gap={6} wrap="nowrap" style={{ flex: 1, minWidth: 0 }}>
+                            <Text fw={600} size="13px" c="dark.9" style={{ whiteSpace: 'nowrap' }}>
+                                {formatName(row.name)}
+                            </Text>
+                            {row.residency && row.residency !== 'ALL' && (
+                                <Badge size="xs" variant="light"
+                                    color={row.residency === 'LOCAL' ? 'blue' : row.residency === 'VETERAN' ? 'grape' : 'orange'}
+                                >
+                                    {row.residency === 'LOCAL' ? '관내' : row.residency === 'NON_LOCAL' ? '관외' : '유공자'}
+                                </Badge>
+                            )}
+                            {row.paymentCycle && (
+                                <Badge size="xs" variant="outline" color="gray">
+                                    {row.paymentCycle === 'MONTHLY' ? '월납' : row.paymentCycle === 'YEARLY' ? '연납' : '일시납'}
+                                </Badge>
+                            )}
+                        </Group>
+                        <Text fw={700} size="13px" c="black" style={{ flexShrink: 0, whiteSpace: 'nowrap' }}>
+                            {formatKoreanCurrency(row.price)}
+                            {row.taxIncluded === false && <Text span size="9px" c="dimmed"> +VAT</Text>}
+                        </Text>
+                    </Group>
+                    {row.grade && row.grade !== '-' && (
+                        <Text size="11px" c="dimmed" mt={4} style={{ lineHeight: 1.4 }}>
+                            {row.grade}
+                        </Text>
+                    )}
+                </Box>
+            );
+
+            const desc = getSubTypeDescription(group.subType);
+            const isDescOpen = openDescSubType === group.subType;
+
+            return (
+                <Accordion.Item key={group.subType} value={group.subType}>
+                    <Accordion.Control styles={{ chevron: { marginLeft: 4 } }}>
+                        <Group justify="space-between" wrap="nowrap">
+                            <Group gap={6} align="center" wrap="nowrap">
+                                <Text fw={600} size="sm" c="dark.7">{group.subType}</Text>
+                                {desc && (
+                                    <span
+                                        role="button"
+                                        tabIndex={0}
+                                        onClick={(e) => {
+                                            e.stopPropagation();
+                                            e.preventDefault();
+                                            setOpenDescSubType(isDescOpen ? null : group.subType);
+                                        }}
+                                        style={{
+                                            display: 'inline-flex',
+                                            alignItems: 'center',
+                                            justifyContent: 'center',
+                                            width: 20,
+                                            height: 20,
+                                            borderRadius: '50%',
+                                            backgroundColor: isDescOpen ? '#868e96' : '#ced4da',
+                                            cursor: 'pointer',
+                                            flexShrink: 0,
+                                            transition: 'background-color 0.2s',
+                                        }}
+                                    >
+                                        <span style={{ fontSize: '11px', color: '#fff', fontWeight: 500, lineHeight: 1 }}>?</span>
+                                    </span>
+                                )}
+                            </Group>
+                            <Group gap={4} wrap="nowrap">
+                                <Badge color="gray" variant="light" size="sm">
+                                    {usageRows.length} 항목
+                                </Badge>
+                            </Group>
+                        </Group>
+                    </Accordion.Control>
+                    {desc && isDescOpen && (
+                        <Box mx="md" mb="xs" mt={4} py={8} px={10} style={{ backgroundColor: '#fff', borderRadius: 6, border: '1px solid #e9ecef' }}>
+                            <Text size="xs" c="dark.6" style={{ lineHeight: 1.6 }}>
+                                {desc}
+                            </Text>
+                        </Box>
+                    )}
+                    <Accordion.Panel>
+                        {usageGroupNames.length > 1 ? (
+                            <Tabs defaultValue={usageGroupNames[0]}>
+                                <Tabs.List grow mb="md">
+                                    {usageGroupNames.map(gn => (
+                                        <Tabs.Tab key={gn} value={gn}>{gn}</Tabs.Tab>
+                                    ))}
+                                </Tabs.List>
+                                {usageGroupNames.map(gn => (
+                                    <Tabs.Panel key={gn} value={gn}>
+                                        <Stack gap="sm">
+                                            {groupedUsage[gn].map((row, idx) => renderRow(row, idx, gn))}
+                                        </Stack>
+                                    </Tabs.Panel>
+                                ))}
+                            </Tabs>
+                        ) : (
+                            <Stack gap="sm">
+                                {usageRows.map((row, idx) => renderRow(row, idx, 'main'))}
+                            </Stack>
+                        )}
+
+                        {/* 관리비 */}
+                        {mgmtRows.length > 0 && (
+                            <Box p="sm" style={{ borderRadius: 6, border: '1px solid #e9ecef' }} mt="md">
+                                <Text size="11px" fw={700} c="dimmed" mb="xs">관리비 안내</Text>
+                                <Stack gap="xs">
+                                    {mgmtRows.map((row, idx) => (
+                                        <Group key={`mgmt-${idx}`} justify="space-between">
+                                            <Group gap={4}>
+                                                <Text size="xs" c="dark.5">{row.name}</Text>
+                                                {row.paymentCycle && (
+                                                    <Badge size="xs" variant="outline" color="gray">
+                                                        {row.paymentCycle === 'MONTHLY' ? '월납' : row.paymentCycle === 'YEARLY' ? '연납' : '일시납'}
+                                                    </Badge>
+                                                )}
+                                            </Group>
+                                            <Text size="xs" fw={600} c="dark.7">{formatKoreanCurrency(row.price)}</Text>
+                                        </Group>
+                                    ))}
+                                </Stack>
+                            </Box>
+                        )}
+
+                        {/* 기타 비용 */}
+                        {otherRows.length > 0 && (
+                            <Box bg="white" p="xs" style={{ borderRadius: 6, border: '1px solid #f1f3f5' }} mt="md">
+                                <Text size="11px" fw={700} c="dimmed" mb="xs">부가 옵션</Text>
+                                <Stack gap="xs">
+                                    {otherRows.map((row, idx) => (
+                                        <Group key={`other-${idx}`} justify="space-between">
+                                            <Text size="xs" c="dark.5">{row.name}</Text>
+                                            <Text size="xs" fw={600} c="dark.7">{formatKoreanCurrency(row.price)}</Text>
+                                        </Group>
+                                    ))}
+                                </Stack>
+                            </Box>
+                        )}
+                    </Accordion.Panel>
+                </Accordion.Item>
+            );
+        };
+
+        return (
+            <Box bg="white" p="md" pb="md" style={{ borderBottom: '8px solid #f8f9fa', boxShadow: 'inset 0 -1px 0 #e9ecef' }}>
+
+                {/* 서비스 타입이 1개면 탭 없이 바로, 2개 이상이면 탭 */}
+                {serviceTypes.length <= 1 ? (
+                    (() => {
+                        const serviceType = serviceTypes[0];
                         const groups = standardizedPrices!.filter(g => g.serviceType === serviceType);
-                        const minPrice = getMinPriceForService(serviceType);
-                        const hasMinPrice = minPrice > 0;
-
                         return (
-                            <Accordion.Item key={serviceType} value={serviceType}>
-                                <Accordion.Control>
-                                    <Group justify="space-between" wrap="nowrap">
-                                        <Group gap="md">
-                                            {getServiceIcon(serviceType)}
-                                            <Text fw={700} size="lg" c="dark.9">{getServiceLabel(serviceType)}</Text>
-                                        </Group>
-                                        <Group gap="xs">
-                                            {hasMinPrice ? (
-                                                <Text fw={800} c="#1D0098" size="lg">
-                                                    {formatKoreanCurrency(minPrice)}부터
-                                                </Text>
-                                            ) : (
-                                                <Text size="sm" c="dimmed">가격 문의</Text>
-                                            )}
-                                            <ChevronRight size={18} color="#adb5bd" />
-                                        </Group>
+                            <Accordion
+                                variant="separated" radius="md" multiple
+                                defaultValue={groups.length === 1 ? [groups[0].subType] : []}
+                                styles={{
+                                    item: { backgroundColor: '#f8f9fa', border: 'none' },
+                                    control: { padding: '12px 16px' },
+                                    content: { padding: '0 16px 16px 16px' },
+                                }}
+                            >
+                                {groups.map(group => renderSubTypeAccordionItem(group))}
+                            </Accordion>
+                        );
+                    })()
+                ) : (
+                    <Tabs defaultValue={serviceTypes[0]}>
+                        <Tabs.List grow mb="md">
+                            {serviceTypes.map(st => (
+                                <Tabs.Tab key={st} value={st} style={{ padding: '10px 0' }}>
+                                    <Group gap={6} align="center" justify="center">
+                                        {getServiceIcon(st)}
+                                        <Text size="sm" fw={600}>{getServiceLabel(st)}</Text>
                                     </Group>
-                                </Accordion.Control>
+                                </Tabs.Tab>
+                            ))}
+                        </Tabs.List>
 
-                                <Accordion.Panel>
+                        {serviceTypes.map(st => {
+                            const groups = standardizedPrices!.filter(g => g.serviceType === st);
+                            return (
+                                <Tabs.Panel key={st} value={st}>
                                     <Accordion
                                         variant="separated" radius="md" multiple
                                         defaultValue={groups.length === 1 ? [groups[0].subType] : []}
@@ -175,147 +362,13 @@ function PriceInfoSection({ priceInfo, hasPrice }: { priceInfo: any, hasPrice: b
                                             content: { padding: '0 16px 16px 16px' },
                                         }}
                                     >
-                                        {groups.map(group => {
-                                            // groupType이 있는 MAINTENANCE rows (봉안담 개인단/부부단 등)는 사실상 사용료
-                                            const usageRows = group.rows.filter(r =>
-                                                !r.feeType || r.feeType === 'USAGE' || (r.feeType === 'MAINTENANCE' && r.groupType)
-                                            );
-                                            const mgmtRows = group.rows.filter(r =>
-                                                r.feeType === 'MAINTENANCE' && !r.groupType
-                                            );
-                                            const otherRows = group.rows.filter(r =>
-                                                r.feeType && !['USAGE', 'MAINTENANCE'].includes(r.feeType)
-                                            );
-
-                                            // groupType별 탭 분류
-                                            const groupedUsage: Record<string, typeof usageRows> = {};
-                                            usageRows.forEach(row => {
-                                                const g = row.groupType || '미분류';
-                                                if (!groupedUsage[g]) groupedUsage[g] = [];
-                                                groupedUsage[g].push(row);
-                                            });
-                                            const usageGroupNames = Object.keys(groupedUsage);
-
-                                            const renderRow = (row: typeof usageRows[0], idx: number, prefix: string) => (
-                                                <Box key={`${prefix}-${idx}`}
-                                                    style={{
-                                                        borderBottom: '1px solid #e9ecef',
-                                                        padding: '10px 0',
-                                                        display: 'flex',
-                                                        alignItems: 'center',
-                                                        gap: 8
-                                                    }}
-                                                >
-                                                    <Text fw={600} size="12px" c="dark.9"
-                                                        style={{ width: 125, flexShrink: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}
-                                                    >
-                                                        {formatName(row.name)}
-                                                    </Text>
-                                                    <Text size="12px" c="dark.9"
-                                                        style={{ flex: 1, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}
-                                                    >
-                                                        {row.grade && row.grade.length > 10 ? row.grade.slice(0, 10) + '...' : (row.grade || '-')}
-                                                    </Text>
-                                                    {/* 뱃지들 */}
-                                                    {row.residency && row.residency !== 'ALL' && (
-                                                        <Badge size="xs" variant="light"
-                                                            color={row.residency === 'LOCAL' ? 'blue' : row.residency === 'VETERAN' ? 'grape' : 'orange'}
-                                                        >
-                                                            {row.residency === 'LOCAL' ? '관내' : row.residency === 'NON_LOCAL' ? '관외' : '유공자'}
-                                                        </Badge>
-                                                    )}
-                                                    {row.paymentCycle && (
-                                                        <Badge size="xs" variant="outline" color="gray">
-                                                            {row.paymentCycle === 'MONTHLY' ? '월납' : row.paymentCycle === 'YEARLY' ? '연납' : '일시납'}
-                                                        </Badge>
-                                                    )}
-                                                    <Text fw={700} size="12px" c="black"
-                                                        style={{ flexShrink: 0, whiteSpace: 'nowrap', textAlign: 'right' }}
-                                                    >
-                                                        {formatKoreanCurrency(row.price)}
-                                                        {row.taxIncluded === false && <Text span size="9px" c="dimmed"> +VAT</Text>}
-                                                    </Text>
-                                                </Box>
-                                            );
-
-                                            return (
-                                                <Accordion.Item key={group.subType} value={group.subType}>
-                                                    <Accordion.Control>
-                                                        <Group justify="space-between" wrap="nowrap">
-                                                            <Text fw={600} size="sm" c="dark.7">{group.subType}</Text>
-                                                            <Badge color="gray" variant="light" size="sm">
-                                                                {usageRows.length} 항목
-                                                            </Badge>
-                                                        </Group>
-                                                    </Accordion.Control>
-                                                    <Accordion.Panel>
-                                                        {usageGroupNames.length > 1 ? (
-                                                            <Tabs defaultValue={usageGroupNames[0]}>
-                                                                <Tabs.List grow mb="md">
-                                                                    {usageGroupNames.map(gn => (
-                                                                        <Tabs.Tab key={gn} value={gn}>{gn}</Tabs.Tab>
-                                                                    ))}
-                                                                </Tabs.List>
-                                                                {usageGroupNames.map(gn => (
-                                                                    <Tabs.Panel key={gn} value={gn}>
-                                                                        <Stack gap="sm">
-                                                                            {groupedUsage[gn].map((row, idx) => renderRow(row, idx, gn))}
-                                                                        </Stack>
-                                                                    </Tabs.Panel>
-                                                                ))}
-                                                            </Tabs>
-                                                        ) : (
-                                                            <Stack gap="sm">
-                                                                {usageRows.map((row, idx) => renderRow(row, idx, 'main'))}
-                                                            </Stack>
-                                                        )}
-
-                                                        {/* 관리비 섹션 */}
-                                                        {mgmtRows.length > 0 && (
-                                                            <Box p="sm" style={{ borderRadius: 6, border: '1px solid #e9ecef' }} mt="md">
-                                                                <Text size="11px" fw={700} c="dimmed" mb="xs">관리비 안내</Text>
-                                                                <Stack gap="xs">
-                                                                    {mgmtRows.map((row, idx) => (
-                                                                        <Group key={`mgmt-${idx}`} justify="space-between">
-                                                                            <Group gap={4}>
-                                                                                <Text size="xs" c="dark.5">{row.name}</Text>
-                                                                                {row.paymentCycle && (
-                                                                                    <Badge size="xs" variant="outline" color="gray">
-                                                                                        {row.paymentCycle === 'MONTHLY' ? '월납' : row.paymentCycle === 'YEARLY' ? '연납' : '일시납'}
-                                                                                    </Badge>
-                                                                                )}
-                                                                            </Group>
-                                                                            <Text size="xs" fw={600} c="dark.7">{formatKoreanCurrency(row.price)}</Text>
-                                                                        </Group>
-                                                                    ))}
-                                                                </Stack>
-                                                            </Box>
-                                                        )}
-
-                                                        {/* 기타 비용 (석물, 작업비 등) */}
-                                                        {otherRows.length > 0 && (
-                                                            <Box bg="white" p="xs" style={{ borderRadius: 6, border: '1px solid #f1f3f5' }} mt="md">
-                                                                <Text size="11px" fw={700} c="dimmed" mb="xs">부가 옵션</Text>
-                                                                <Stack gap="xs">
-                                                                    {otherRows.map((row, idx) => (
-                                                                        <Group key={`other-${idx}`} justify="space-between">
-                                                                            <Text size="xs" c="dark.5">{row.name}</Text>
-                                                                            <Text size="xs" fw={600} c="dark.7">{formatKoreanCurrency(row.price)}</Text>
-                                                                        </Group>
-                                                                    ))}
-                                                                </Stack>
-                                                            </Box>
-                                                        )}
-                                                    </Accordion.Panel>
-                                                </Accordion.Item>
-                                            );
-                                        })}
+                                        {groups.map(group => renderSubTypeAccordionItem(group))}
                                     </Accordion>
-                                </Accordion.Panel>
-                            </Accordion.Item>
-                        );
-                    })}
-                </Accordion>
+                                </Tabs.Panel>
+                            );
+                        })}
+                    </Tabs>
+                )}
 
                 <Box mt="xl" p="lg" bg="gray.0" style={{ borderRadius: 8 }}>
                     <Text size="xs" c="dimmed" style={{ lineHeight: 1.6 }}>
@@ -497,17 +550,21 @@ function PriceInfoSection({ priceInfo, hasPrice }: { priceInfo: any, hasPrice: b
                                                                         <Stack gap="sm">
                                                                             {groupedRows[gName].map((row: any, rowIdx: number) => (
                                                                                 <Box key={`${gName}-${rowIdx}`}
-                                                                                    style={{ borderBottom: '1px solid #e9ecef', padding: '10px 0', display: 'flex', alignItems: 'center', gap: 8 }}
+                                                                                    style={{ borderBottom: '1px solid #f1f3f5', padding: '10px 0' }}
                                                                                 >
-                                                                                    <Text fw={600} size="12px" c="dark.9" style={{ width: 125, flexShrink: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
-                                                                                        {formatName(row.name)}
-                                                                                    </Text>
-                                                                                    <Text size="12px" c="dark.9" style={{ flex: 1, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
-                                                                                        {(row.grade || '-').length > 10 ? (row.grade || '-').slice(0, 10) + '...' : (row.grade || '-')}
-                                                                                    </Text>
-                                                                                    <Text fw={700} size="12px" c="black" style={{ flexShrink: 0, whiteSpace: 'nowrap', textAlign: 'right' }}>
-                                                                                        {formatKoreanCurrency(row.price)}
-                                                                                    </Text>
+                                                                                    <Group justify="space-between" align="center" wrap="nowrap" gap={8}>
+                                                                                        <Text fw={600} size="13px" c="dark.9" style={{ whiteSpace: 'nowrap' }}>
+                                                                                            {formatName(row.name)}
+                                                                                        </Text>
+                                                                                        <Text fw={700} size="13px" c="black" style={{ flexShrink: 0, whiteSpace: 'nowrap' }}>
+                                                                                            {formatKoreanCurrency(row.price)}
+                                                                                        </Text>
+                                                                                    </Group>
+                                                                                    {row.grade && row.grade !== '-' && (
+                                                                                        <Text size="11px" c="dimmed" mt={4} style={{ lineHeight: 1.4 }}>
+                                                                                            {row.grade}
+                                                                                        </Text>
+                                                                                    )}
                                                                                 </Box>
                                                                             ))}
                                                                         </Stack>
@@ -533,17 +590,21 @@ function PriceInfoSection({ priceInfo, hasPrice }: { priceInfo: any, hasPrice: b
                                                             <Stack gap="sm" mb={optionRows.length > 0 ? "lg" : 0}>
                                                                 {mainRows.map((row: any, idx: number) => (
                                                                     <Box key={`main-${idx}`}
-                                                                        style={{ borderBottom: '1px solid #e9ecef', padding: '10px 0', display: 'flex', alignItems: 'center', gap: 8 }}
+                                                                        style={{ borderBottom: '1px solid #f1f3f5', padding: '10px 0' }}
                                                                     >
-                                                                        <Text fw={600} size="12px" c="dark.9" style={{ width: 125, flexShrink: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
-                                                                            {formatName(row.name)}
-                                                                        </Text>
-                                                                        <Text size="12px" c="dark.9" style={{ flex: 1, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
-                                                                            {(row.grade || '-').length > 10 ? (row.grade || '-').slice(0, 10) + '...' : (row.grade || '-')}
-                                                                        </Text>
-                                                                        <Text fw={700} size="12px" c="black" style={{ flexShrink: 0, whiteSpace: 'nowrap', textAlign: 'right' }}>
-                                                                            {formatKoreanCurrency(row.price)}
-                                                                        </Text>
+                                                                        <Group justify="space-between" align="center" wrap="nowrap" gap={8}>
+                                                                            <Text fw={600} size="13px" c="dark.9" style={{ whiteSpace: 'nowrap' }}>
+                                                                                {formatName(row.name)}
+                                                                            </Text>
+                                                                            <Text fw={700} size="13px" c="black" style={{ flexShrink: 0, whiteSpace: 'nowrap' }}>
+                                                                                {formatKoreanCurrency(row.price)}
+                                                                            </Text>
+                                                                        </Group>
+                                                                        {row.grade && row.grade !== '-' && (
+                                                                            <Text size="11px" c="dimmed" mt={4} style={{ lineHeight: 1.4 }}>
+                                                                                {row.grade}
+                                                                            </Text>
+                                                                        )}
                                                                     </Box>
                                                                 ))}
                                                             </Stack>
