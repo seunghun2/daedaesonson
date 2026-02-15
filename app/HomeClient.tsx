@@ -193,6 +193,8 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
       if (fac) {
         setSelectedFacility(fac);
       }
+      // 🔑 URL을 /facility/[id]로 복원 (리다이렉트로 사라진 URL 복구)
+      window.history.replaceState({ facilityId: openId }, '', `/facility/${openId}`);
       // API에서 상세 데이터 보강
       fetch(`/api/facilities/${openId}`)
         .then(res => res.ok ? res.json() : null)
