@@ -1,0 +1,13 @@
+{
+    "functions": {
+        "app/api/upload/route.ts": {
+            "maxDuration": 60
+        },
+        "app/api/facilities/route.ts": {
+            "maxDuration": 60
+        },
+        "app/api/analyze-pdf/route.ts": {
+            "maxDuration": 60
+        }
+    }
+}

@@ -10,6 +10,7 @@ const supabase = getSupabaseServer();
 
 export const revalidate = 0;
 export const dynamic = 'force-dynamic';
+export const maxDuration = 60; // Vercel 타임아웃 60초
 
 const DATA_DIR = path.join(process.cwd(), 'data');
 

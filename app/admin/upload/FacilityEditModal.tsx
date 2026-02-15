@@ -479,17 +479,31 @@ function FacilityEditModal({ facilityToEdit, opened, onClose, onSaved, onNavigat
             priceRange: calculatedPriceRange, lastUpdated: new Date().toISOString()
         };
 
+        // 불필요한 메타 필드 제거 (서버 전송 사이즈 줄이기)
+        delete (finalForm as any)._detailedSource;
+        delete (finalForm as any)._meta;
+
         const isNew = !editingId;
         if (!editingId) { (finalForm as any).id = finalForm.id || `new-${Date.now()}`; }
 
         // 서버 저장
         try {
+            const bodyStr = JSON.stringify(finalForm);
+            console.log(`[Save] 전송 크기: ${(bodyStr.length / 1024).toFixed(0)}KB`);
             const res = await fetch('/api/facilities', {
                 method: 'POST', headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(finalForm)
+                body: bodyStr
             });
-            if (!res.ok) throw new Error(await res.text());
-        } catch (e) { alert('저장 실패: ' + String(e)); return; }
+            if (!res.ok) {
+                const errText = await res.text();
+                console.error('[Save] 서버 응답:', res.status, errText);
+                throw new Error(errText);
+            }
+        } catch (e) {
+            console.error('[Save] 에러:', e);
+            alert('저장 실패: ' + String(e));
+            return;
+        }
 
         onSaved(finalForm as Facility, isNew);
         // 네비게이션 모드(다음으로 이동)가 아닌 경우에만 닫기
