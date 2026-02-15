@@ -2157,7 +2157,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                 {/* 공유 안내 */}
                 <Box py="lg">
                     <Text size="sm" fw={600} c="white" mb="sm">
-                        이 {facility.category === 'CREMATION' ? '화장장' : facility.category === 'OSSUARY' ? '봉안시설' : '시설'} 정보를 다른 사람들과 같이 볼래요?
+                        이 시설이 도움이 되셨나요? 가족에게 공유해 보세요
                     </Text>
 
                     {/* URL 복사 */}
@@ -2192,8 +2192,8 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                 {/* 정보수정 요청 */}
                 <Box py="lg">
                     <Text size="xs" c="rgba(255,255,255,0.75)" lh={1.6}>
-                        정보가 틀리다면 알려주세요.<br />
-                        확인 후 바로 수정해 드리겠습니다.
+                        혹시 잘못된 정보가 있다면 알려주세요.<br />
+                        빠르게 확인 후 수정하겠습니다.
                     </Text>
                 </Box>
                 {/* ── 구분선 ── */}
@@ -2206,7 +2206,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                         href={`mailto:seunghun.dev@gmail.com?subject=${encodeURIComponent(`[정보수정] ${facility.name}`)}&body=${encodeURIComponent(`시설명: ${facility.name}\n\n수정이 필요한 내용:\n\n`)}`}
                         style={{ textDecoration: 'none', cursor: 'pointer' }}
                     >
-                        <Text size="sm" fw={600} c="white">시설 정보수정 요청</Text>
+                        <Text size="sm" fw={600} c="white">정보 수정 요청하기</Text>
                     </Box>
                 </Box>
                 {/* ── 구분선 ── */}
