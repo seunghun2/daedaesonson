@@ -85,15 +85,36 @@ export default function FacilityPageClient({ facilityBasic }: FacilityPageClient
         }
 
         // 🚀 SSR 기본 데이터 위에 상세 데이터 보강 (pricing, reviews 등)
-        if (!enriched.current) {
-            enriched.current = true;
-            fetch(`/api/facilities/${facilityBasic.id}`)
+        const fetchFacilityData = () => {
+            fetch(`/api/facilities/${facilityBasic.id}`, { cache: 'no-store' })
                 .then(res => res.ok ? res.json() : null)
                 .then(data => {
                     if (data) setFacility(data);
                 })
                 .catch(() => { /* SSR 데이터로 폴백 */ });
+        };
+
+        if (!enriched.current) {
+            enriched.current = true;
+            fetchFacilityData();
         }
+
+        // 뒤로가기 등으로 페이지가 다시 보일 때 데이터 새로고침
+        const handleVisibility = () => {
+            if (document.visibilityState === 'visible') {
+                fetchFacilityData();
+            }
+        };
+        document.addEventListener('visibilitychange', handleVisibility);
+
+        // popstate (뒤로가기)로 돌아올 때도 새로고침
+        const handlePopState = () => fetchFacilityData();
+        window.addEventListener('popstate', handlePopState);
+
+        return () => {
+            document.removeEventListener('visibilitychange', handleVisibility);
+            window.removeEventListener('popstate', handlePopState);
+        };
     }, [facilityBasic.id, isMobile]);
 
     // 브라우저 기록에 따른 뒤로가기 처리
@@ -106,13 +127,24 @@ export default function FacilityPageClient({ facilityBasic }: FacilityPageClient
         }
     };
 
+    const [animationDone, setAnimationDone] = useState(false);
+
+    useEffect(() => {
+        if (mounted) {
+            const timer = setTimeout(() => setAnimationDone(true), 350);
+            return () => clearTimeout(timer);
+        }
+    }, [mounted]);
+
     return (
         <Box
             style={{
                 height: '100dvh',
                 overflow: 'hidden',
-                transform: mounted ? 'translateX(0)' : 'translateX(100%)',
-                transition: 'transform 0.3s ease-out',
+                ...(animationDone ? {} : {
+                    transform: mounted ? 'translateX(0)' : 'translateX(100%)',
+                    transition: 'transform 0.3s ease-out',
+                }),
                 position: 'fixed',
                 top: 0,
                 left: 0,

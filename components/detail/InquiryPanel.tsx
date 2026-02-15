@@ -4,6 +4,7 @@ import { Drawer, Box, Text, Group, Button, Stack, TextInput, Textarea, Switch, P
 import { useDisclosure, useMediaQuery } from '@mantine/hooks';
 import { ChevronRight, PenLine, Lock, Unlock, X, MessageCircle } from 'lucide-react';
 import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import { Facility } from '@/types';
 
 interface Inquiry {
@@ -33,6 +34,7 @@ interface InquiryPanelProps {
 }
 
 export default function InquiryPanel({ facility, isOpen, onClose, allFacilities = [] }: InquiryPanelProps) {
+    const router = useRouter();
     // 모바일 감지 (기본값 true - SSR 대응)
     const isMobileQuery = useMediaQuery('(max-width: 800px)');
     const isMobile = isMobileQuery ?? true;
@@ -211,8 +213,8 @@ export default function InquiryPanel({ facility, isOpen, onClose, allFacilities 
                 onClose={onClose}
                 position={isMobile ? 'bottom' : 'left'}
                 size={isMobile ? '90%' : 400}
+                zIndex={10010}
                 styles={{
-                    root: { zIndex: isMobile ? 10010 : 2050 },
                     overlay: {
                         backgroundColor: isMobile ? 'rgba(0,0,0,0.5)' : 'transparent',
                         pointerEvents: isMobile ? 'auto' : 'none'
@@ -235,9 +237,24 @@ export default function InquiryPanel({ facility, isOpen, onClose, allFacilities 
                     <Box p="md" style={{ borderBottom: '1px solid #f1f3f5' }}>
                         <Group justify="space-between">
                             <Text fw={700} size="lg">문의 ({inquiries.length})</Text>
-                            <ActionIcon variant="subtle" color="dark" onClick={onClose}>
-                                <X size={20} />
-                            </ActionIcon>
+                            <Group gap={8}>
+                                <Button
+                                    size="xs"
+                                    variant="light"
+                                    color="brand"
+                                    leftSection={<PenLine size={14} />}
+                                    radius="xl"
+                                    onClick={() => {
+                                        onClose();
+                                        router.push(`/inquiries?write=true&facilityId=${facility.id}&facilityName=${encodeURIComponent(facility.name)}`);
+                                    }}
+                                >
+                                    글쓰기
+                                </Button>
+                                <ActionIcon variant="subtle" color="dark" onClick={onClose}>
+                                    <X size={20} />
+                                </ActionIcon>
+                            </Group>
                         </Group>
                     </Box>
 
@@ -410,6 +427,8 @@ export default function InquiryPanel({ facility, isOpen, onClose, allFacilities 
                     </Button>
                 </Stack>
             </Modal>
+
+
         </>
     );
 }

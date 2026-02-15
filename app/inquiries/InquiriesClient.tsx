@@ -4,7 +4,7 @@ import { Box, Text, Group, Stack, Button, ScrollArea, Modal, TextInput, Drawer, 
 import { useDisclosure } from '@mantine/hooks';
 import { ChevronLeft, Lock, Unlock, Pencil, X, ChevronDown, Check, Camera } from 'lucide-react';
 import { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import BottomNav from '@/components/common/BottomNav';
 
 // 문의 유형
@@ -48,6 +48,7 @@ const formatPhoneNumber = (value: string) => {
 
 export default function InquiriesClient({ initialInquiries, facilities = [] }: InquiriesClientProps) {
     const router = useRouter();
+    const searchParams = useSearchParams();
     const [inquiries, setInquiries] = useState<Inquiry[]>(initialInquiries);
 
     // 비밀번호 모달
@@ -71,6 +72,28 @@ export default function InquiriesClient({ initialInquiries, facilities = [] }: I
         privacyAgreed: true,
     });
     const [isSubmitting, setIsSubmitting] = useState(false);
+
+    // 🔗 URL 파라미터로 글쓰기 자동 열기 (시설 상세에서 넘어온 경우)
+    useEffect(() => {
+        const shouldWrite = searchParams.get('write');
+        const facilityId = searchParams.get('facilityId');
+        const facilityName = searchParams.get('facilityName');
+
+        if (shouldWrite === 'true') {
+            // 시설 자동 세팅
+            if (facilityId && facilityName) {
+                setInquiryForm(prev => ({
+                    ...prev,
+                    facilityId,
+                    facilityName: decodeURIComponent(facilityName),
+                }));
+            }
+            // 글쓰기 Drawer 열기
+            setTimeout(() => {
+                openWrite();
+            }, 300);
+        }
+    }, [searchParams]);
 
     // 📊 GA4: 문의 페이지뷰
     useEffect(() => {

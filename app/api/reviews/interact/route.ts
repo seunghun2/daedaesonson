@@ -7,7 +7,7 @@ const supabase = getSupabaseServer();
 export async function POST(request: NextRequest) {
     try {
         const body = await request.json();
-        const { facilityId, reviewId, action, content, author, password, replyId, isAdmin } = body;
+        const { facilityId, reviewId, action, content, author, password, replyId, isAdmin, photos } = body;
 
         // Base validation
         if (!reviewId || !action) {
@@ -51,14 +51,28 @@ export async function POST(request: NextRequest) {
             if (!content) {
                 return NextResponse.json({ error: 'Reply content required' }, { status: 400 });
             }
+            if (!author) {
+                return NextResponse.json({ error: '닉네임을 입력해주세요.' }, { status: 400 });
+            }
+            if (!password && !isAdmin) {
+                return NextResponse.json({ error: '비밀번호를 입력해주세요.' }, { status: 400 });
+            }
+
+            // Hash password
+            let hashedPassword = null;
+            if (password) {
+                hashedPassword = await bcrypt.hash(password, 10);
+            }
 
             // Insert reply to Reply table
             const { data: newReply, error } = await supabase
                 .from('Reply')
                 .insert({
                     reviewId: reviewId,
-                    author: author || '관리자',
+                    author: author,
                     content: content,
+                    photos: photos || [],
+                    password: hashedPassword,
                     createdAt: new Date().toISOString()
                 })
                 .select()
@@ -66,7 +80,9 @@ export async function POST(request: NextRequest) {
 
             if (error) throw error;
 
-            return NextResponse.json({ success: true, reply: newReply });
+            // password 제거 후 반환
+            const { password: _, ...safeReply } = newReply;
+            return NextResponse.json({ success: true, reply: safeReply });
 
         } else if (action === 'DELETE_REVIEW') {
             // Check permission
@@ -109,6 +125,28 @@ export async function POST(request: NextRequest) {
         } else if (action === 'DELETE_REPLY') {
             if (!replyId) {
                 return NextResponse.json({ error: 'Reply ID required' }, { status: 400 });
+            }
+
+            // 관리자가 아니면 비밀번호 확인
+            if (!isAdmin) {
+                if (!password) {
+                    return NextResponse.json({ error: '비밀번호를 입력해주세요.' }, { status: 400 });
+                }
+
+                const { data: reply } = await supabase
+                    .from('Reply')
+                    .select('password')
+                    .eq('id', replyId)
+                    .single();
+
+                if (!reply) {
+                    return NextResponse.json({ error: '댓글을 찾을 수 없습니다.' }, { status: 404 });
+                }
+
+                const isMatch = await bcrypt.compare(password, reply.password || '');
+                if (!isMatch) {
+                    return NextResponse.json({ error: '비밀번호가 일치하지 않습니다.' }, { status: 403 });
+                }
             }
 
             const { error } = await supabase.from('Reply').delete().eq('id', replyId);
