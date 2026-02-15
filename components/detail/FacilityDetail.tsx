@@ -1748,54 +1748,20 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                 </Group>
             </Box>
 
-            {/* 10. 전화 상담 */}
-
-
-
-
-            {/* 전화상담 + 상담하기 */}
+            {/* 상담하기 */}
             <Box bg="white" p="md" style={{ borderBottom: '8px solid #f8f9fa', boxShadow: 'inset 0 -1px 0 #e9ecef' }}>
-                <Group grow align="flex-start">
-                    {/* 왼쪽: 전화상담 */}
-                    <Box>
-                        <Text size="sm" fw={700} mb="md">전화상담</Text>
-                        <Text
-                            size="lg"
-                            fw={700}
-                            c={facility.phone ? 'brand.8' : 'gray.6'}
-                            style={{ cursor: facility.phone ? 'pointer' : 'default' }}
-                            onClick={() => {
-                                if (facility.phone) {
-                                    if ((window as any).gtag) {
-                                        (window as any).gtag('event', 'phone_click', {
-                                            facility_id: facility.id,
-                                            facility_name: facility.name
-                                        });
-                                    }
-                                    window.location.href = `tel:${facility.phone.replace(/-/g, '')}`;
-                                }
-                            }}
-                        >
-                            {facility.phone || '문의 필요'}
-                        </Text>
-                    </Box>
-
-                    {/* 오른쪽: 상담하기 */}
-                    <Box>
-                        <Text size="sm" fw={700} mb="md">상담하기</Text>
-                        <Button
-                            fullWidth
-                            variant="outline"
-                            color="brand"
-                            size="md"
-                            radius="md"
-                            styles={{ root: { height: 32, fontSize: 13 } }}
-                            onClick={() => setConsultModalOpened(true)}
-                        >
-                            이용 비용 확인
-                        </Button>
-                    </Box>
-                </Group>
+                <Text size="sm" fw={700} mb="md">상담하기</Text>
+                <Button
+                    fullWidth
+                    variant="outline"
+                    color="brand"
+                    size="md"
+                    radius="md"
+                    styles={{ root: { height: 32, fontSize: 13 } }}
+                    onClick={() => setConsultModalOpened(true)}
+                >
+                    이용 비용 확인
+                </Button>
             </Box>
 
             {/* 시설 정보 */}
