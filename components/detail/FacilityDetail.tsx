@@ -2150,13 +2150,13 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
 
             </Box>
             {/* 🔵 하단 공유 & 정보수정 섹션 */}
-            <Box px="md" pb={30} style={{
+            <Box px="md" pt={10} pb={30} style={{
                 background: 'linear-gradient(135deg, #1D0098 0%, #4B3FD3 100%)',
                 textAlign: 'center',
             }}>
                 {/* 공유 안내 */}
                 <Box py="lg">
-                    <Text size="sm" fw={600} c="white" mb="sm">
+                    <Text size="sm" fw={600} c="rgba(255,255,255,0.85)" mb="sm">
                         이 시설이 도움이 되셨나요? 가족에게 공유해 보세요
                     </Text>
 
@@ -2187,17 +2187,17 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                     </Box>
                 </Box>
                 {/* ── 구분선 ── */}
-                <Box style={{ height: 1, backgroundColor: 'rgba(255,255,255,0.08)' }} />
+                <Box mx={-16} style={{ height: 1, backgroundColor: 'rgba(255,255,255,0.08)' }} />
 
                 {/* 정보수정 요청 */}
                 <Box py="lg">
-                    <Text size="xs" c="rgba(255,255,255,0.75)" lh={1.6}>
+                    <Text style={{ fontSize: 14 }} c="rgba(255,255,255,0.75)" lh={1.6}>
                         혹시 잘못된 정보가 있다면 알려주세요.<br />
                         빠르게 확인 후 수정하겠습니다.
                     </Text>
                 </Box>
                 {/* ── 구분선 ── */}
-                <Box style={{ height: 1, backgroundColor: 'rgba(255,255,255,0.08)' }} />
+                <Box mx={-16} style={{ height: 1, backgroundColor: 'rgba(255,255,255,0.08)' }} />
 
                 {/* 시설 정보수정 요청 버튼 */}
                 <Box py="lg">
@@ -2206,11 +2206,11 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                         href={`mailto:seunghun.dev@gmail.com?subject=${encodeURIComponent(`[정보수정] ${facility.name}`)}&body=${encodeURIComponent(`시설명: ${facility.name}\n\n수정이 필요한 내용:\n\n`)}`}
                         style={{ textDecoration: 'none', cursor: 'pointer' }}
                     >
-                        <Text size="sm" fw={600} c="white">정보 수정 요청하기</Text>
+                        <Text style={{ fontSize: 16 }} fw={600} c="rgba(255,255,255,0.85)">정보 수정 요청하기</Text>
                     </Box>
                 </Box>
                 {/* ── 구분선 ── */}
-                <Box style={{ height: 1, backgroundColor: 'rgba(255,255,255,0.08)' }} />
+                <Box mx={-16} style={{ height: 1, backgroundColor: 'rgba(255,255,255,0.08)' }} />
 
                 {/* 맨위로 이동 */}
                 <Box
