@@ -2147,14 +2147,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                         </Box>
                     );
                 })()}
-                {/* 14. 면책 조항 (법적 보호) */}
-                <Box mt="xl" pt="xl" style={{ borderTop: '1px solid #f1f3f5' }}>
-                    <Text size="xs" c="dimmed" ta="center" lh={1.6}>
-                        [면책 공고]<br />
-                        대대손손은 정보 제공 플랫폼이며, 해당 시설과의 계약 및 서비스 이용에 대한 책임은 각 시설 제공자에게 있습니다.<br />
-                        실제 가격과 정보는 시기에 따라 변동될 수 있으므로, 방문 전 반드시 해당 시설에 확인하시기 바랍니다.
-                    </Text>
-                </Box>
+
             </Box>
             {/* 🔵 하단 공유 & 정보수정 섹션 */}
             <Box px="md" pb={30} style={{
