@@ -248,8 +248,9 @@ function FacilityEditModal({ facilityToEdit, opened, onClose, onSaved, onNavigat
                             isPublic: _ip, isActive: _ia, operatorType: _ot, capacity: _cap,
                             websiteUrl: _wu, lastUpdated: _lu, fax: _fx,
                             hasParking: _hp, hasRestaurant: _hr, hasStore: _hs, hasAccessibility: _ha,
+                            imageGallery: _ig2, images: _im2, thumbnail: _th,
                             ...detailOnly } = latest;
-                        merged = { ...merged, ...detailOnly, imageGallery: latest.imageGallery || merged.imageGallery };
+                        merged = { ...merged, ...detailOnly };
                     }
                     if (priceRes.ok) {
                         const detailed = await priceRes.json();
