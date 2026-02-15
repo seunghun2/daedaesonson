@@ -1797,7 +1797,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                     }}
                     onClick={() => setConsultModalOpened(true)}
                 >
-                    <Text style={{ fontSize: 16 }} fw={600} c="brand.6">이 시설에 대해 궁금하신게 있으신가요?</Text>
+                    <Text style={{ fontSize: 16 }} fw={600} c="brand.6">이 시설에 대해 더 자세히 알아보기</Text>
                 </Box>
             </Box>
 
