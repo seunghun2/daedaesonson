@@ -209,15 +209,21 @@ export default function AdminPage() {
 
     // 모달에서 저장 완료 시 콜백
     const handleModalSaved = useCallback((savedFacility: Facility, isNew: boolean) => {
+        let updatedList: Facility[];
         if (isNew) {
-            setFacilities(prev => [savedFacility, ...prev]);
+            updatedList = [savedFacility, ...facilities];
         } else {
-            setFacilities(prev => prev.map(f => f.id === savedFacility.id ? { ...f, ...savedFacility } : f));
+            updatedList = facilities.map(f => f.id === savedFacility.id ? { ...f, ...savedFacility } : f);
         }
-        // 캐시 업데이트
+        setFacilities(updatedList);
+        // 🔑 sessionStorage 캐시도 즉시 업데이트 (새로고침 시 최신 데이터 반영)
+        try {
+            sessionStorage.setItem('admin_facilities_lite', JSON.stringify(updatedList));
+        } catch { /* 캐시 실패 무시 */ }
+        // 저장 시간 기록
         const now = new Date();
         setLastSavedTime(`${now.getMonth() + 1}/${now.getDate()} ${now.getHours()}:${String(now.getMinutes()).padStart(2, '0')}`);
-    }, []);
+    }, [facilities]);
 
     // 모달 네비게이션 (이전/다음 시설)
     const handleNavigate = useCallback((direction: 'prev' | 'next') => {

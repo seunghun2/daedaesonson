@@ -245,6 +245,19 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchParams, dbFacilities]);
 
+  // 🖥️ PC: 브라우저 뒤로가기 시 사이드 패널 닫기
+  useEffect(() => {
+    if (isMobile) return;
+    const handlePopState = () => {
+      // URL이 /facility/로 시작하지 않으면 사이드패널 닫기
+      if (!window.location.pathname.startsWith('/facility/')) {
+        setSelectedFacility(null);
+      }
+    };
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, [isMobile]);
+
   // Debounced handler - 자동완성용 (지역 이동은 엔터/클릭에서만!)
   // Note: 이제 여기서는 submittedQuery 설정 안 함
 
@@ -434,8 +447,10 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
       router.push(`/facility/${facility.id}`);
       setMobileView('map');
     } else {
-      // 🖥️ PC: 왼쪽 패널에 상세 표시 (주변시설보기 스타일)
+      // 🖥️ PC: 왼쪽 패널에 상세 표시 + URL 업데이트
       setSelectedFacility(facility);
+      // URL을 /facility/[id]로 변경 (페이지 전환 없이)
+      window.history.pushState({ facilityId: facility.id }, '', `/facility/${facility.id}`);
       // 상세 데이터 보강 (pricing, reviews 등)
       fetch(`/api/facilities/${facility.id}`)
         .then(res => res.ok ? res.json() : null)
@@ -473,6 +488,8 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
       mapRef.current.panTo(selectedFacility.coordinates.lat, selectedFacility.coordinates.lng);
     }
     setSelectedFacility(null);
+    // URL을 /로 복원 (페이지 전환 없이)
+    window.history.pushState({}, '', '/');
   };
 
   // 🎯 지도 탭 핸들러 - UI 숨김/표시 토글 (호갱노노 스타일)
