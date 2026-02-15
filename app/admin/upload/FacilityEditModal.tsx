@@ -405,16 +405,26 @@ function FacilityEditModal({ facilityToEdit, opened, onClose, onSaved, onNavigat
             img.onerror = () => resolve(blob);
         });
 
-        const uploadImage = async (url: string) => {
+        const uploadImage = async (url: string, idx: number) => {
             try {
                 const response = await fetch(url);
                 const original = await response.blob();
                 const compressed = await compressAndResizeImage(original);
+                console.log(`[Upload ${idx + 1}] 원본: ${(original.size / 1024).toFixed(0)}KB → 압축: ${(compressed.size / 1024).toFixed(0)}KB`);
                 const fd = new FormData(); fd.append('file', compressed, 'image.jpg');
                 const res = await fetch('/api/upload', { method: 'POST', body: fd });
-                if (!res.ok) throw new Error('Upload failed');
-                return (await res.json()).url;
-            } catch { return null; }
+                if (!res.ok) {
+                    const errText = await res.text();
+                    console.error(`[Upload ${idx + 1}] 실패:`, res.status, errText);
+                    throw new Error(`업로드 실패 (${res.status}): ${errText}`);
+                }
+                const result = await res.json();
+                console.log(`[Upload ${idx + 1}] 성공:`, result.url);
+                return result.url;
+            } catch (e) {
+                console.error(`[Upload ${idx + 1}] 에러:`, e);
+                return null;
+            }
         };
 
         let processedGallery = [...(editForm.imageGallery || [])];
@@ -423,15 +433,17 @@ function FacilityEditModal({ facilityToEdit, opened, onClose, onSaved, onNavigat
             if (!confirm(`${total}장의 새 이미지를 업로드하고 저장하시겠습니까?`)) return;
             try {
                 const newGallery: string[] = [];
+                let uploadIdx = 0;
                 for (const img of processedGallery) {
                     if (img.startsWith('blob:') || img.startsWith('data:')) {
-                        const newUrl = await uploadImage(img);
-                        if (!newUrl) throw new Error('업로드 실패');
+                        const newUrl = await uploadImage(img, uploadIdx);
+                        if (!newUrl) throw new Error(`${uploadIdx + 1}번째 이미지 업로드 실패`);
                         newGallery.push(newUrl);
+                        uploadIdx++;
                     } else { newGallery.push(img); }
                 }
                 processedGallery = newGallery;
-            } catch { alert('이미지 업로드 중 오류'); return; }
+            } catch (e: any) { alert(`이미지 업로드 중 오류: ${e?.message || e}`); return; }
         }
 
         // 가격 범위 재계산
