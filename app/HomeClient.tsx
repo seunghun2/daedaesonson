@@ -219,6 +219,8 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
       if (isMobile && selectedFacility && !isDetailClosing) {
         setIsDetailClosing(true);
         // onAnimationEnd에서 실제 cleanup 처리
+      } else if (!isDetailClosing && !isMobile && window.location.pathname.startsWith('/facility/')) {
+        // 🖥️ PC: pushState로 URL이 /facility/[id]인 상태 → 패널 유지 (닫지 않음)
       } else if (!isDetailClosing) {
         // PC이거나 애니메이션 불필요한 경우 즉시 정리
         setSelectedFacility(null);
