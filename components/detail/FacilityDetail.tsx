@@ -1748,22 +1748,6 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                 </Group>
             </Box>
 
-            {/* 상담하기 */}
-            <Box bg="white" p="md" style={{ borderBottom: '8px solid #f8f9fa', boxShadow: 'inset 0 -1px 0 #e9ecef' }}>
-                <Text size="sm" fw={700} mb="md">상담하기</Text>
-                <Button
-                    fullWidth
-                    variant="outline"
-                    color="brand"
-                    size="md"
-                    radius="md"
-                    styles={{ root: { height: 32, fontSize: 13 } }}
-                    onClick={() => setConsultModalOpened(true)}
-                >
-                    이용 비용 확인
-                </Button>
-            </Box>
-
             {/* 시설 정보 */}
             <Box bg="white" p="md" style={{ borderBottom: '8px solid #f8f9fa', boxShadow: 'inset 0 -1px 0 #e9ecef' }}>
                 <Text size="sm" fw={700} mb="md">시설 정보</Text>
@@ -1800,6 +1784,21 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                     </Group>
                     */}
                 </Stack>
+
+                {/* 상세 상담 받기 버튼 */}
+                <Box
+                    mt="lg"
+                    py={12}
+                    style={{
+                        backgroundColor: '#f8f9fa',
+                        borderRadius: 8,
+                        cursor: 'pointer',
+                        textAlign: 'center',
+                    }}
+                    onClick={() => setConsultModalOpened(true)}
+                >
+                    <Text size="sm" fw={600} c="brand.6">상세 상담 받기</Text>
+                </Box>
             </Box>
 
             {/* 13. 문의하기 */}
