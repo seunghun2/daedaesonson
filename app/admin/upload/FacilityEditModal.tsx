@@ -243,7 +243,13 @@ function FacilityEditModal({ facilityToEdit, opened, onClose, onSaved, onNavigat
                     let merged = { ...parsed };
                     if (detailRes.ok) {
                         const latest = await detailRes.json();
-                        merged = { ...merged, ...latest, imageGallery: latest.imageGallery || merged.imageGallery };
+                        // 🔑 기본 필드는 리스트에서 이미 최신 → 덮어쓰지 않음 (ISR 캐시 stale 데이터 방지)
+                        const { name: _n, address: _a, phone: _p, description: _d, category: _c,
+                            isPublic: _ip, isActive: _ia, operatorType: _ot, capacity: _cap,
+                            websiteUrl: _wu, lastUpdated: _lu, fax: _fx,
+                            hasParking: _hp, hasRestaurant: _hr, hasStore: _hs, hasAccessibility: _ha,
+                            ...detailOnly } = latest;
+                        merged = { ...merged, ...detailOnly, imageGallery: latest.imageGallery || merged.imageGallery };
                     }
                     if (priceRes.ok) {
                         const detailed = await priceRes.json();
