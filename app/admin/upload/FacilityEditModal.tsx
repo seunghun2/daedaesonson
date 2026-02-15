@@ -213,7 +213,8 @@ function FacilityEditModal({ facilityToEdit, opened, onClose, onSaved, onNavigat
     const [activeGroupTab, setActiveGroupTab] = useState<Record<string, string>>({});
     const userModified = useRef(false); // 유저가 수정했는지 추적 (백그라운드 덮어쓰기 방지)
 
-    // opened + facilityToEdit 변경 시 내부 상태 초기화
+    // opened + 시설 ID 변경 시에만 내부 상태 초기화 (facilityToEdit 객체 참조 변경은 무시)
+    const facilityId = facilityToEdit?.id;
     useEffect(() => {
         if (!opened) return;
         userModified.current = false; // 새 시설 열 때 리셋
@@ -272,7 +273,8 @@ function FacilityEditModal({ facilityToEdit, opened, onClose, onSaved, onNavigat
                 priceInfo: { priceTable: {}, additionalCosts: {} }, tags: [], imageGallery: []
             });
         }
-    }, [opened, facilityToEdit]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [opened, facilityId]);
 
     // === e하늘 동기화 ===
     const handleSync = async () => {
