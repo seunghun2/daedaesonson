@@ -521,8 +521,7 @@ function FacilityEditModal({ facilityToEdit, opened, onClose, onSaved, onNavigat
         }
 
         onSaved(finalForm as Facility, isNew);
-        // 네비게이션 모드(다음으로 이동)가 아닌 경우에만 닫기
-        if (!onNavigate) onClose();
+        onClose();
     };
 
     // === 검토완료 마킹 + 다음 시설 이동 ===
