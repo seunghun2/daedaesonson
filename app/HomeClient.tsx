@@ -452,6 +452,7 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
       setMobileView('map');
     } else {
       // 🖥️ PC: 왼쪽 패널에 상세 표시 + URL 업데이트
+      setNearbyList(null); // 주변 시설 패널 닫기
       const wasAlreadyOpen = !!selectedFacility;
       setSelectedFacility(facility);
       // 이미 상세가 열려있으면 replaceState (히스토리 안 쌓음), 처음이면 pushState
@@ -1208,14 +1209,12 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
                   {nearby.slice(0, nearbyVisibleCount).map(facility => (
                     <Box key={facility.id}
                       onClick={() => {
-                        // 시설 클릭 → 기존 상세보기 열기 + 지도 이동
-                        const params = new URLSearchParams(searchParams.toString());
-                        params.set('id', facility.id);
-                        router.push(`${pathname}?${params.toString()}`, { scroll: false });
+                        // 주변 시설 리스트 닫기 + 상세 열기
+                        setNearbyList(null);
                         if (mapRef.current && facility.coordinates) {
                           mapRef.current.panTo(facility.coordinates.lat, facility.coordinates.lng, 17, facility.id);
                         }
-                        setNearbyList(null); // 리스트 닫기
+                        handleMarkerClick(facility);
                       }}
                       style={{ cursor: 'pointer', borderRadius: '8px', transition: 'all 0.2s ease' }}
                     >

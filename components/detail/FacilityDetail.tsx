@@ -2234,7 +2234,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                 if (recommendations.length === 0) return null;
 
                 return (
-                    <Box mt="lg">
+                    <Box bg="white" p="md" style={{ borderBottom: '8px solid #f8f9fa', boxShadow: 'inset 0 -1px 0 #e9ecef' }}>
                         <Text size="sm" fw={700} mb="md">주변 시설</Text>
                         <Stack gap="xs">
                             {recommendations.map(rec => {
