@@ -13,6 +13,8 @@ export async function POST(request: NextRequest) {
         }
 
 
+        const passwordLast4 = phone.replace(/\D/g, '').slice(-4);
+
         const { data, error } = await supabase
             .from('Inquiry')
             .insert({
@@ -21,6 +23,7 @@ export async function POST(request: NextRequest) {
                 title,
                 content,
                 phone,
+                passwordLast4,
                 isPrivate: isPrivate ?? true,
                 createdAt: new Date().toISOString(),
             })

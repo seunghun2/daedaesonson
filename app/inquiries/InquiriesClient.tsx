@@ -189,9 +189,9 @@ export default function InquiriesClient({ initialInquiries, facilities = [] }: I
 
     return (
         <Box h="100vh" bg="white">
-            {/* 헤더 - 심플 */}
+            {/* 헤더 */}
             <Box
-                p="md"
+                px="lg" py={14}
                 style={{
                     position: 'sticky',
                     top: 0,
@@ -204,8 +204,8 @@ export default function InquiriesClient({ initialInquiries, facilities = [] }: I
             </Box>
 
             {/* 안내 메시지 */}
-            <Box p="md" bg="gray.0">
-                <Text size="xs" c="dimmed">
+            <Box px="lg" py="md" bg="gray.0">
+                <Text size="sm" c="dimmed" lh={1.5}>
                     💡 시설에 대해 궁금한 점을 문의하세요. 비공개 설정 시 제목만 공개됩니다.
                 </Text>
             </Box>
@@ -214,10 +214,10 @@ export default function InquiriesClient({ initialInquiries, facilities = [] }: I
             <ScrollArea h="calc(100vh - 130px - 56px)">
                 {inquiries.length === 0 ? (
                     <Box p="xl" ta="center">
-                        <Text c="dimmed">등록된 문의가 없습니다.</Text>
+                        <Text c="dimmed" size="sm">등록된 문의가 없습니다.</Text>
                     </Box>
                 ) : (
-                    <Stack gap={0} p="md">
+                    <Stack gap={0} px="lg" py="sm">
                         {inquiries.map(inquiry => {
                             const isUnlocked = unlockedIds.has(inquiry.id);
                             const showBlur = inquiry.isPrivate && !isUnlocked;
@@ -225,7 +225,7 @@ export default function InquiriesClient({ initialInquiries, facilities = [] }: I
                             return (
                                 <Box
                                     key={inquiry.id}
-                                    py="md"
+                                    py="lg"
                                     style={{
                                         borderBottom: '1px solid #f1f3f5',
                                         cursor: inquiry.isPrivate && !isUnlocked ? 'pointer' : 'default'
@@ -233,10 +233,10 @@ export default function InquiriesClient({ initialInquiries, facilities = [] }: I
                                     onClick={() => handleInquiryClick(inquiry)}
                                 >
                                     {/* [시설명] 카테고리 + 날짜 */}
-                                    <Group justify="space-between" mb={4}>
-                                        <Group gap={4}>
+                                    <Group justify="space-between" mb={8}>
+                                        <Group gap={6}>
                                             <Text size="xs" c="dimmed">[{inquiry.facilityName || '시설'}]</Text>
-                                            <Text size="xs" c="brand" fw={500}>
+                                            <Text size="xs" c="brand" fw={600}>
                                                 {inquiry.type === 'price' ? '가격 문의' :
                                                     inquiry.type === 'reservation' ? '예약/절차' :
                                                         inquiry.type === 'facility' ? '시설' : '기타'}
@@ -248,25 +248,26 @@ export default function InquiriesClient({ initialInquiries, facilities = [] }: I
                                     </Group>
 
                                     {/* 자물쇠 + 제목 */}
-                                    <Group gap={6} mb={4}>
+                                    <Group gap={8} mb={8}>
                                         {inquiry.isPrivate && (
                                             isUnlocked ?
-                                                <Unlock size={14} color="#22c55e" /> :
-                                                <Lock size={14} color="#adb5bd" />
+                                                <Unlock size={15} color="#22c55e" /> :
+                                                <Lock size={15} color="#adb5bd" />
                                         )}
-                                        <Text size="sm" fw={500} c="dark">{inquiry.title}</Text>
+                                        <Text size="md" fw={600} c="dark.8">{inquiry.title}</Text>
                                         {inquiry.replies && inquiry.replies.length > 0 && (
-                                            <Box px={6} py={2} bg="brand.0" style={{ borderRadius: 4 }}>
-                                                <Text size="xs" c="brand" fw={500}>답변완료</Text>
+                                            <Box px={8} py={3} bg="brand.0" style={{ borderRadius: 6 }}>
+                                                <Text size="xs" c="brand" fw={600}>답변완료</Text>
                                             </Box>
                                         )}
                                     </Group>
 
                                     {/* 내용 (비공개면 블러) */}
                                     <Text
-                                        size="xs"
-                                        c="dimmed"
-                                        lineClamp={3}
+                                        size="sm"
+                                        c="gray.6"
+                                        lineClamp={6}
+                                        lh={1.6}
                                         style={{
                                             whiteSpace: 'pre-wrap',
                                             ...(showBlur ? {
