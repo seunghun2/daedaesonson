@@ -275,6 +275,8 @@ export async function POST(req: Request) {
 
             // 🚀 대표 이미지 (썸네일) 추출
             const imgArr = f.imageGallery || f.images || [];
+            // imageGallery가 명시적으로 보내졌으면 (빈 배열 포함) thumbnail도 반드시 업데이트
+            const hasImageField = f.imageGallery !== undefined || f.images !== undefined;
             const computedThumbnail = Array.isArray(imgArr) && imgArr.length > 0 ? imgArr[0] : '';
 
             // DB Record 준비
@@ -298,7 +300,7 @@ export async function POST(req: Request) {
                 minPrice: minPrice,
                 maxPrice: maxPrice,
                 representativePrice: computedRepPrice,
-                thumbnail: computedThumbnail || undefined,
+                thumbnail: hasImageField ? (computedThumbnail || '') : undefined,
                 pricing: (hasPriceTable || hasStandardized) ? JSON.stringify(f.priceInfo) : undefined,
                 phone: f.phone,
                 fax: f.fax,

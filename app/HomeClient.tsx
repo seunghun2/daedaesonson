@@ -450,9 +450,14 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
       setMobileView('map');
     } else {
       // 🖥️ PC: 왼쪽 패널에 상세 표시 + URL 업데이트
+      const wasAlreadyOpen = !!selectedFacility;
       setSelectedFacility(facility);
-      // URL을 /facility/[id]로 변경 (페이지 전환 없이)
-      window.history.pushState({ facilityId: facility.id }, '', `/facility/${facility.id}`);
+      // 이미 상세가 열려있으면 replaceState (히스토리 안 쌓음), 처음이면 pushState
+      if (wasAlreadyOpen) {
+        window.history.replaceState({ facilityId: facility.id }, '', `/facility/${facility.id}`);
+      } else {
+        window.history.pushState({ facilityId: facility.id }, '', `/facility/${facility.id}`);
+      }
       // 상세 데이터 보강 (pricing, reviews 등)
       fetch(`/api/facilities/${facility.id}`)
         .then(res => res.ok ? res.json() : null)

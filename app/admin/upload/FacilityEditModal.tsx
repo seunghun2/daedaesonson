@@ -211,10 +211,12 @@ function FacilityEditModal({ facilityToEdit, opened, onClose, onSaved, onNavigat
     const [useOcr] = useState(false);
     const [activeMajorTab, setActiveMajorTab] = useState<string>('매장묘');
     const [activeGroupTab, setActiveGroupTab] = useState<Record<string, string>>({});
+    const userModified = useRef(false); // 유저가 수정했는지 추적 (백그라운드 덮어쓰기 방지)
 
     // opened + facilityToEdit 변경 시 내부 상태 초기화
     useEffect(() => {
         if (!opened) return;
+        userModified.current = false; // 새 시설 열 때 리셋
 
         if (facilityToEdit) {
             // 수정 모드
@@ -230,6 +232,7 @@ function FacilityEditModal({ facilityToEdit, opened, onClose, onSaved, onNavigat
             setEditForm(JSON.parse(JSON.stringify(parsed)));
 
             // 백그라운드 상세 데이터 로딩
+            const fetchId = parsed.id; // 클로저에서 ID 캡처
             (async () => {
                 try {
                     const [detailRes, priceRes] = await Promise.all([
@@ -247,7 +250,16 @@ function FacilityEditModal({ facilityToEdit, opened, onClose, onSaved, onNavigat
                         (merged as any)._detailedSource = 'prisma';
                         (merged as any)._meta = detailed._meta;
                     }
-                    setEditForm(prev => (prev as any)?.id === parsed.id ? JSON.parse(JSON.stringify(merged)) : prev);
+                    // 🔑 유저가 이미 수정했으면 이미지를 덮어쓰지 않음
+                    setEditForm(prev => {
+                        if ((prev as any)?.id !== fetchId) return prev;
+                        if (userModified.current) {
+                            // 유저가 수정한 이미지는 보존, 나머지만 업데이트
+                            const { imageGallery: _ig, images: _im, ...rest } = merged;
+                            return JSON.parse(JSON.stringify({ ...prev, ...rest }));
+                        }
+                        return JSON.parse(JSON.stringify(merged));
+                    });
                 } catch (e) { console.error('Detail fetch error:', e); }
             })();
         } else {
@@ -377,6 +389,7 @@ function FacilityEditModal({ facilityToEdit, opened, onClose, onSaved, onNavigat
         try {
             const croppedImages = await cropImagesFromScreenshot(file);
             if (croppedImages.length > 0) {
+                userModified.current = true;
                 setEditForm(prev => ({ ...prev, imageGallery: [...(prev.imageGallery || []), ...croppedImages] }));
                 alert(`${croppedImages.length}개의 사진을 잘라냈습니다!`);
             } else { alert('사진을 분리하지 못했습니다.'); }
@@ -873,7 +886,7 @@ function FacilityEditModal({ facilityToEdit, opened, onClose, onSaved, onNavigat
                                 <Box pos="relative" h={100}>
                                     <Image src={getSingleFacilityImageUrl(img)} h={100} w="100%" fit="cover" fallbackSrc="https://placehold.co/400x300?text=No+Image" />
                                     <ActionIcon pos="absolute" top={4} right={4} color="red" variant="filled" size="xs"
-                                        onClick={() => setEditForm(prev => ({ ...prev, imageGallery: prev.imageGallery!.filter((_, i) => i !== idx) }))}>
+                                        onClick={() => { userModified.current = true; setEditForm(prev => ({ ...prev, imageGallery: prev.imageGallery!.filter((_, i) => i !== idx) })); }}>
                                         <X size={12} />
                                     </ActionIcon>
                                 </Box>
@@ -881,7 +894,7 @@ function FacilityEditModal({ facilityToEdit, opened, onClose, onSaved, onNavigat
                         ))}
                     </SimpleGrid>
                     <Group mt="xl" grow>
-                        <FileButton onChange={(files) => { if (files) { const urls = files.map(f => URL.createObjectURL(f)); setEditForm(prev => ({ ...prev, imageGallery: [...(prev.imageGallery || []), ...urls] })); } }} accept="image/png,image/jpeg" multiple>
+                        <FileButton onChange={(files) => { if (files) { userModified.current = true; const urls = files.map(f => URL.createObjectURL(f)); setEditForm(prev => ({ ...prev, imageGallery: [...(prev.imageGallery || []), ...urls] })); } }} accept="image/png,image/jpeg" multiple>
                             {(props) => <Button {...props} variant="outline" h={50} color="gray" leftSection={<ImageIcon size={20} />}>이미지 추가 (여러장 가능)</Button>}
                         </FileButton>
                         <FileButton onChange={handleSmartCrop} accept="image/png,image/jpeg">
