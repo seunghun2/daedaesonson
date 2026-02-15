@@ -826,7 +826,7 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
         </Box>
 
         {/* 상세 보기 or 리스트 */}
-        <Box flex={1} h="100%" style={{ position: 'relative', overflowY: 'auto' }}>
+        <Box flex={1} h="100%" style={{ position: 'relative', overflow: 'hidden' }}>
           {selectedFacility && !isMobile ? (
             <FacilityDetail
               facility={selectedFacility}

@@ -1192,7 +1192,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
         <Box
             ref={containerRef}
             className="facility-detail-container"
-            style={{ backgroundColor: '#4B3FD3', height: '100%', position: 'relative', overflowY: 'auto', touchAction: 'pan-y' }}
+            style={{ backgroundColor: '#4B3FD3', height: '100%', position: 'relative', overflowY: 'auto', touchAction: 'pan-y', overscrollBehavior: 'contain', WebkitOverflowScrolling: 'touch' } as React.CSSProperties}
             onTouchStart={(e) => e.stopPropagation()} // 🚀 지도 터치 간섭 방지 (재적용)
         >
             {/* Schema.org JSON-LD for SEO */}

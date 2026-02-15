@@ -110,7 +110,7 @@ export default function FacilityPageClient({ facilityBasic }: FacilityPageClient
         <Box
             style={{
                 height: '100dvh',
-                overflow: 'auto',
+                overflow: 'hidden',
                 transform: mounted ? 'translateX(0)' : 'translateX(100%)',
                 transition: 'transform 0.3s ease-out',
                 position: 'fixed',
