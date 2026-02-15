@@ -330,44 +330,52 @@ export async function POST(req: Request) {
                 return NextResponse.json({ error: 'Database save failed', details: error.message }, { status: 500 });
             }
 
-            // Pricing 동기화 (PriceCategory/PriceItem)
+            // Pricing 동기화 (PriceCategory/PriceItem) - 🚀 Bulk Insert로 최적화
             if (hasPriceTable) {
-
-
                 try {
-                    await supabase.from('PriceCategory').delete().eq('facilityId', f.id);
+                    // 1. 기존 데이터 삭제 (병렬)
+                    await Promise.all([
+                        supabase.from('PriceItem').delete().eq('facilityId', f.id),
+                        supabase.from('PriceCategory').delete().eq('facilityId', f.id),
+                    ]);
+
+                    // 2. 카테고리 + 아이템 배열 한번에 구성
+                    const allCategories: any[] = [];
+                    const allItems: any[] = [];
 
                     for (const [key, categoryData] of Object.entries(f.priceInfo.priceTable) as [string, any][]) {
                         const categoryId = randomUUID();
-                        const { data: category, error: catError } = await supabase
-                            .from('PriceCategory')
-                            .insert({
-                                id: categoryId,
-                                facilityId: f.id,
-                                name: key,
-                                normalizedName: categoryData.category || key,
-                                orderNo: 0
-                            })
-                            .select()
-                            .single();
-
-                        if (catError || !category) continue;
+                        allCategories.push({
+                            id: categoryId,
+                            facilityId: f.id,
+                            name: key,
+                            normalizedName: categoryData.category || key,
+                            orderNo: 0
+                        });
 
                         if (categoryData.rows && categoryData.rows.length > 0) {
-                            const items = categoryData.rows.map((row: any) => ({
-                                id: randomUUID(),
-                                categoryId: category.id,
-                                facilityId: f.id,
-                                itemName: row.name,
-                                price: String(row.price).replace(/,/g, ''),
-                                description: row.description || row.grade || '',
-                                groupType: row.groupType || null,
-                                unit: categoryData.unit || '1기',
-                                isRepresentative: row.isRepresentative || false
-                            }));
-
-                            await supabase.from('PriceItem').insert(items);
+                            for (const row of categoryData.rows) {
+                                allItems.push({
+                                    id: randomUUID(),
+                                    categoryId: categoryId,
+                                    facilityId: f.id,
+                                    itemName: row.name,
+                                    price: String(row.price).replace(/,/g, ''),
+                                    description: row.description || row.grade || '',
+                                    groupType: row.groupType || null,
+                                    unit: categoryData.unit || '1기',
+                                    isRepresentative: row.isRepresentative || false
+                                });
+                            }
                         }
+                    }
+
+                    // 3. Bulk Insert (각 1회씩만!)
+                    if (allCategories.length > 0) {
+                        await supabase.from('PriceCategory').insert(allCategories);
+                    }
+                    if (allItems.length > 0) {
+                        await supabase.from('PriceItem').insert(allItems);
                     }
                 } catch (e) {
                     console.error('Pricing sync error:', e);
