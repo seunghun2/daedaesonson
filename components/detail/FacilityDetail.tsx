@@ -6,6 +6,7 @@ import { Image, Text, Badge, Group, Button, Stack, Box, Paper, Modal, Tabs, Coll
 import { useDisclosure, useMediaQuery } from '@mantine/hooks';
 import { Car, Utensils, Accessibility, Store, Navigation, Globe, ChevronLeft, ChevronRight, TrendingUp, ChevronDown, ChevronUp, Star, Pencil, Camera, X, ImageIcon, Plus, Trash, Archive, Mountain, Trees, Layers, Lock, Unlock, Check } from 'lucide-react';
 import InquiryPanel from './InquiryPanel';
+import ReviewsPanel from './ReviewsPanel';
 import { Facility, FACILITY_CATEGORY_LABELS, Review } from '@/types';
 import { PRICE_TAB_CATEGORIES, OTHER_TAB_CATEGORY } from '@/lib/constants';
 import { formatKoreanCurrency, formatRelativeTime } from '@/lib/format';
@@ -774,6 +775,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
     const [replyPassword, setReplyPassword] = useState('');
     const [likedReviews, setLikedReviews] = useState<Set<string>>(new Set());
     const [inquiryOpen, setInquiryOpen] = useState(false);
+    const [reviewsOpen, setReviewsOpen] = useState(false);
 
     // 대댓글 삭제 모달 상태
     const [deleteReplyModal, setDeleteReplyModal] = useState<{ reviewId: string; replyId: string } | null>(null);
@@ -1406,11 +1408,13 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
         "description": facility.description || `${facility.name} - ${FACILITY_CATEGORY_LABELS[facility.category] || '장례시설'} 정보`
     };
 
+
+
     return (
         <Box
             ref={containerRef}
             className="facility-detail-container"
-            style={{ backgroundColor: '#4B3FD3', height: '100%', position: 'relative', overflowY: 'auto', touchAction: 'pan-y', overscrollBehavior: 'contain', WebkitOverflowScrolling: 'touch' } as React.CSSProperties}
+            style={{ backgroundColor: '#302E92', height: '100%', position: 'relative', overflowY: 'auto', touchAction: 'pan-y', overscrollBehavior: 'contain', WebkitOverflowScrolling: 'touch' } as React.CSSProperties}
             onTouchStart={(e) => e.stopPropagation()} // 🚀 지도 터치 간섭 방지 (재적용)
         >
             {/* Schema.org JSON-LD for SEO */}
@@ -1554,7 +1558,11 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                         <div
                             style={{ display: 'flex', alignItems: 'center', gap: '6px', cursor: 'pointer', padding: '10px 12px', flex: 1, justifyContent: 'center' }}
                             onClick={() => {
-                                router.push(`/facility/${facility.id}/reviews`);
+                                if (isDesktop) {
+                                    setReviewsOpen(!reviewsOpen);
+                                } else {
+                                    router.push(`/facility/${facility.id}/reviews`);
+                                }
                             }}
                         >
                             <span className="material-symbols-outlined" style={{ fontSize: '18px', color: 'white', fontVariationSettings: "'FILL' 1" }}>chat_bubble</span>
@@ -2026,7 +2034,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                 {/* 후기 작성 입력 */}
                 <Paper
                     withBorder radius="md" p="md" mb="lg"
-                    onClick={openReviewModal}
+                    onClick={() => reviewModalOpened ? closeReviewModal() : openReviewModal()}
                     style={{ cursor: 'pointer', borderColor: '#e9ecef', backgroundColor: '#f8f9fa' }}
                 >
                     <Group justify="space-between">
@@ -2177,7 +2185,13 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                 cursor: 'pointer',
                                 textAlign: 'center',
                             }}
-                            onClick={() => router.push(`/facility/${facility.id}/reviews`)}
+                            onClick={() => {
+                                if (isDesktop) {
+                                    setReviewsOpen(!reviewsOpen);
+                                } else {
+                                    router.push(`/facility/${facility.id}/reviews`);
+                                }
+                            }}
                         >
                             <Text style={{ fontSize: 15 }} fw={500} c="dimmed">
                                 총 {reviews.length - 3}개의 이야기가 더있습니다
@@ -2305,7 +2319,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
 
             {/* 🔵 하단 공유 & 정보수정 섹션 */}
             <Box px="md" pt={10} pb={30} style={{
-                background: 'linear-gradient(135deg, #1D0098 0%, #4B3FD3 100%)',
+                background: '#302E92',
                 textAlign: 'center',
             }}>
                 {/* 공유 안내 */}
@@ -2383,6 +2397,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
 
             {/* Story Panel Overlay */}
             <InquiryPanel facility={facility} isOpen={inquiryOpen} onClose={() => setInquiryOpen(false)} allFacilities={allFacilities} />
+            <ReviewsPanel facility={facility} isOpen={reviewsOpen} onClose={() => setReviewsOpen(false)} />
 
             {/* 상담 신청 - 모바일: Modal fullScreen, PC: Drawer 스타일 */}
             {
@@ -3704,9 +3719,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                 height: 56,
                             }}
                         >
-                            <ActionIcon variant="subtle" color="dark" size="lg" onClick={closeReviewModal}>
-                                <X size={22} />
-                            </ActionIcon>
+                            <Box w={36} />
 
                             <Text size="md" fw={600}>후기 작성</Text>
 

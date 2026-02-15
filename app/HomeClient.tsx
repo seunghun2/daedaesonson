@@ -536,9 +536,9 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
       >
         {/* 검색창 및 카테고리 필터 */}
         <Box p="md" style={{
-          borderBottom: (!isMobile && selectedFacility) ? 'none' : '1px solid #e9ecef',
+          borderBottom: (!isMobile && selectedFacility) ? '1px solid rgba(255,255,255,0.12)' : '1px solid #e9ecef',
           flexShrink: 0,
-          backgroundColor: (!isMobile && selectedFacility) ? '#1D0098' : undefined,
+          backgroundColor: (!isMobile && selectedFacility) ? '#302E92' : undefined,
           transition: 'background-color 0.2s ease',
         }}>
 

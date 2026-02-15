@@ -902,10 +902,10 @@ function FacilityEditModal({ facilityToEdit, opened, onClose, onSaved, onNavigat
                         ))}
                     </SimpleGrid>
                     <Group mt="xl" grow>
-                        <FileButton onChange={(files) => { if (files) { userModified.current = true; const urls = files.map(f => URL.createObjectURL(f)); setEditForm(prev => ({ ...prev, imageGallery: [...(prev.imageGallery || []), ...urls] })); } }} accept="image/png,image/jpeg" multiple>
+                        <FileButton onChange={(files) => { if (files) { userModified.current = true; const urls = files.map(f => URL.createObjectURL(f)); setEditForm(prev => ({ ...prev, imageGallery: [...(prev.imageGallery || []), ...urls] })); } }} accept="image/*" multiple>
                             {(props) => <Button {...props} variant="outline" h={50} color="gray" leftSection={<ImageIcon size={20} />}>이미지 추가 (여러장 가능)</Button>}
                         </FileButton>
-                        <FileButton onChange={handleSmartCrop} accept="image/png,image/jpeg">
+                        <FileButton onChange={handleSmartCrop} accept="image/*">
                             {(props) => <Button {...props} variant="filled" h={50} color="grape" leftSection={<Scissors size={20} />} loading={cropping}>갤러리 스크린샷 자동 자르기</Button>}
                         </FileButton>
                     </Group>

@@ -214,6 +214,7 @@ export default function InquiryPanel({ facility, isOpen, onClose, allFacilities 
                 position={isMobile ? 'bottom' : 'left'}
                 size={isMobile ? '90%' : 400}
                 zIndex={10010}
+                transitionProps={{ duration: 0 }}
                 styles={{
                     overlay: {
                         backgroundColor: isMobile ? 'rgba(0,0,0,0.5)' : 'transparent',
