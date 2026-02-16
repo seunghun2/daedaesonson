@@ -90,9 +90,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
             .filter((f: any) => f.category !== 'FUNERAL_HOME' && f.category !== 'CREMATORIUM' && f.priceRange?.min > 0)
             .map((f: any) => {
                 let lastMod = new Date();
-                if (f.lastUpdated) {
+                if (f.lastUpdated && /^\d{4}-\d{2}-\d{2}/.test(f.lastUpdated)) {
                     const parsed = new Date(f.lastUpdated);
-                    if (!isNaN(parsed.getTime())) {
+                    if (!isNaN(parsed.getTime()) && parsed.getFullYear() >= 2020 && parsed.getFullYear() <= 2030) {
                         lastMod = parsed;
                     }
                 }
