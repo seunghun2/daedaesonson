@@ -46,6 +46,10 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     return {
         title,
         description,
+        keywords: [data.name, categoryLabel, '가격', '비용', data.address?.split(' ')[0], data.address?.split(' ')[1]].filter(Boolean),
+        alternates: {
+            canonical: `/facility/${id}`,
+        },
         openGraph: {
             title,
             description,
@@ -53,6 +57,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
             images: thumbnail ? [{ url: thumbnail, width: 600, height: 400 }] : [],
             type: 'website',
             siteName: '대대손손',
+            locale: 'ko_KR',
         },
         twitter: {
             card: 'summary_large_image',
@@ -87,6 +92,38 @@ export default async function FacilityPage({ params }: PageProps) {
         description: data.description || '',
         phone: data.phone || '',
     };
+    // JSON-LD 구조화 데이터 (검색 엔진 리치 스니펫)
+    const categoryLabel = FACILITY_CATEGORY_LABELS[data.category as FacilityCategory] || '';
+    const coords = data.coordinates || { lat: data.lat || 0, lng: data.lng || 0 };
+    const jsonLd = {
+        '@context': 'https://schema.org',
+        '@type': 'LocalBusiness',
+        name: data.name,
+        description: data.description || `${data.name} ${categoryLabel} 시설 정보`,
+        address: {
+            '@type': 'PostalAddress',
+            streetAddress: data.address || '',
+            addressCountry: 'KR',
+        },
+        ...(coords.lat && coords.lng ? {
+            geo: {
+                '@type': 'GeoCoordinates',
+                latitude: coords.lat,
+                longitude: coords.lng,
+            }
+        } : {}),
+        ...(data.phone ? { telephone: data.phone } : {}),
+        ...(data.thumbnail || data.images?.[0] ? { image: data.thumbnail || data.images[0] } : {}),
+        url: `https://daedaesonson.com/facility/${id}`,
+    };
 
-    return <FacilityPageClient facilityBasic={facilityBasic} />;
+    return (
+        <>
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+            />
+            <FacilityPageClient facilityBasic={facilityBasic} />
+        </>
+    );
 }

@@ -75,6 +75,15 @@ export default function FacilityPageClient({ facilityBasic }: FacilityPageClient
         if (isMobile === false && window.innerWidth >= 768 && !redirected.current) {
             redirected.current = true;
             sessionStorage.setItem('openFacilityId', facilityBasic.id);
+            // 🗺️ 지도 초기 center를 시설 좌표로 설정 (NaverMap initMap에서 pendingMapView 읽음)
+            if (facilityBasic.coordinates) {
+                sessionStorage.setItem('pendingMapView', JSON.stringify({
+                    lat: facilityBasic.coordinates.lat,
+                    lng: facilityBasic.coordinates.lng,
+                    zoom: 17,
+                    facilityId: facilityBasic.id,
+                }));
+            }
             router.replace('/');
             return;
         }

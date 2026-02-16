@@ -61,8 +61,10 @@ interface HomeClientProps {
 
 function HomeContent({ initialFacilities }: HomeClientProps) {
   const theme = useMantineTheme();
-  // isMobile: 초기값 true로 설정하여 모바일 레이아웃 먼저 표시 (모바일에서 깜빡임 방지)
-  const isMobile = useMediaQuery(`(max-width: ${theme.breakpoints.sm})`, true);
+  // isMobile: 초기값 undefined → 확정될 때까지 opacity:0으로 깜빡임 방지
+  const isMobileQuery = useMediaQuery(`(max-width: ${theme.breakpoints.sm})`);
+  const isLayoutReady = isMobileQuery !== undefined;
+  const isMobile = isMobileQuery ?? true;
 
   // 지도 컨트롤 Ref
   const mapRef = useRef<NaverMapRef>(null);
@@ -492,11 +494,21 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
     } catch { }
   };
 
+  // 🗺️ PC: 시설 선택될 때마다 지도를 해당 위치로 자동 이동
+  useEffect(() => {
+    if (isMobile || !selectedFacility?.coordinates) return;
+    const coords = selectedFacility.coordinates;
+    const tryPanTo = (retry: number) => {
+      if (mapRef.current) {
+        mapRef.current.panTo(coords.lat, coords.lng, 17);
+      } else if (retry < 30) {
+        setTimeout(() => tryPanTo(retry + 1), 100);
+      }
+    };
+    tryPanTo(0);
+  }, [selectedFacility?.id, isMobile]);
+
   const handleCloseDetail = () => {
-    // 상세페이지 닫을 때 해당 시설 위치로 지도 이동
-    if (selectedFacility?.coordinates && mapRef.current) {
-      mapRef.current.panTo(selectedFacility.coordinates.lat, selectedFacility.coordinates.lng);
-    }
     setSelectedFacility(null);
     // URL을 /로 복원 (페이지 전환 없이)
     window.history.pushState({}, '', '/');
@@ -513,7 +525,7 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
   };
 
   return (
-    <Flex h="100dvh" className="home-container">
+    <Flex h="100dvh" className="home-container" style={{ opacity: isLayoutReady ? 1 : 0, transition: 'opacity 0.05s' }}>
 
       {/* 1. 좌측 검색/필터/리스트 (PC: 400px, 모바일: 100%) - CSS로 초기 크기 결정 */}
       <Box

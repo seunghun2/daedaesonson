@@ -97,7 +97,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
                     }
                 }
                 return {
-                    url: `${baseUrl}/facilities/${f.id}`,
+                    url: `${baseUrl}/facility/${f.id}`,
                     lastModified: lastMod,
                     changeFrequency: 'weekly' as const,
                     priority: 0.8,
