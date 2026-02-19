@@ -8,6 +8,25 @@ import Image from 'next/image';
 import { Facility, FACILITY_CATEGORY_LABELS } from '@/types';
 import { searchRegions, ensureRegionDataLoaded, RegionResult } from '@/lib/regionSearch';
 import { useDebouncedCallback } from 'use-debounce';
+import React from 'react';
+
+const BRAND_COLOR = '#1D0098';
+
+function highlightKeyword(text: string, keyword: string): React.ReactNode {
+    if (!keyword.trim()) return text;
+    const escapedKeyword = keyword.trim().replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    const regex = new RegExp(`(${escapedKeyword})`, 'gi');
+    const parts = text.split(regex);
+    if (parts.length === 1) return text;
+    const lowerKeyword = keyword.trim().toLowerCase();
+    return parts.map((part, i) =>
+        part.toLowerCase() === lowerKeyword ? (
+            <span key={i} style={{ color: BRAND_COLOR, fontWeight: 700 }}>{part}</span>
+        ) : (
+            <React.Fragment key={i}>{part}</React.Fragment>
+        )
+    );
+}
 
 function SearchPageContent() {
     const router = useRouter();
@@ -226,13 +245,13 @@ function SearchPageContent() {
                 {/* 검색 결과 */}
                 {!isLoading && hasResults && (
                     <Box>
-                        {/* 지역 결과 */}
+                        {/* 지역 결과 (최대 4개) */}
                         {regionResults.length > 0 && (
                             <Box>
                                 <Box px="md" py={8} bg="#f8f9fa">
                                     <Text size="xs" c="dimmed" fw={600}>지역</Text>
                                 </Box>
-                                {regionResults.map((region, i) => (
+                                {regionResults.slice(0, 4).map((region, i) => (
                                     <Box
                                         key={`reg-${i}`}
                                         px="md"
@@ -244,17 +263,9 @@ function SearchPageContent() {
                                             transition: 'background-color 0.15s',
                                         }}
                                     >
-                                        <Group gap={10} wrap="nowrap">
-                                            <MapPin size={16} color="#868e96" style={{ flexShrink: 0 }} />
-                                            <Box style={{ flex: 1, minWidth: 0 }}>
-                                                <Text size="sm" c="dark.9" fw={500} truncate>
-                                                    {region.fullName}
-                                                </Text>
-                                                <Text size="11px" c="dimmed">
-                                                    {region.type === 'gu' ? '구/시' : '동/읍/면'}
-                                                </Text>
-                                            </Box>
-                                        </Group>
+                                        <Text size="md" c="dark.9" fw={500} truncate>
+                                            {highlightKeyword(region.fullName, query)}
+                                        </Text>
                                     </Box>
                                 ))}
                             </Box>
@@ -280,15 +291,15 @@ function SearchPageContent() {
                                     >
                                         <Group gap={10} wrap="nowrap" justify="space-between">
                                             <Box style={{ flex: 1, minWidth: 0 }}>
-                                                <Text size="sm" c="dark.9" fw={500} truncate>
-                                                    {fac.name}
+                                                <Text size="md" c="dark.9" fw={500} truncate>
+                                                    {highlightKeyword(fac.name, query)}
                                                 </Text>
-                                                <Text size="11px" c="dimmed" truncate>
+                                                <Text size="13px" c="dimmed" truncate>
                                                     {fac.address}
                                                 </Text>
                                             </Box>
                                             <Text
-                                                size="10px"
+                                                size="12px"
                                                 c="gray.6"
                                                 style={{
                                                     whiteSpace: 'nowrap',

@@ -69,6 +69,12 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
   // 지도 컨트롤 Ref
   const mapRef = useRef<NaverMapRef>(null);
 
+  // 🗺️ 맵 준비 전에 도착한 region 파라미터를 보관하는 Ref
+  const pendingRegionRef = useRef<{
+    lat: number; lng: number; zoom: number;
+    type: 'gu' | 'dong'; name: string; fullName: string;
+  } | null>(null);
+
   // Router hooks
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -235,21 +241,59 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
     const regionLng = searchParams.get('lng');
     const regionType = searchParams.get('type');
     const regionShortName = searchParams.get('name');
-    if (regionName && regionLat && regionLng && mapRef.current) {
+    if (regionName && regionLat && regionLng) {
       const lat = parseFloat(regionLat);
       const lng = parseFloat(regionLng);
-      const zoom = regionType === 'gu' ? 12 : 14;
+      const zoom = regionType === 'gu' ? 12 : (regionShortName?.endsWith('리') ? 16 : 14);
+      const type = (regionType as 'gu' | 'dong') || 'gu';
+      const name = regionShortName || '';
+
       setSearchQuery(regionName);
       setSubmittedQuery(regionName);
       setIsRegionSelected(true);
-      mapRef.current.highlightRegion(lat, lng, zoom, (regionType as 'gu' | 'dong') || 'gu', regionShortName || '');
       if (isMobile) setMobileView('map');
+
+      // highlightRegion은 async → await으로 실제 성공 여부 확인
+      (async () => {
+        const success = mapRef.current
+          ? await mapRef.current.highlightRegion(lat, lng, zoom, type, name)
+          : false;
+        if (!success) {
+          // 맵이 아직 준비 안 된 경우 → pending에 저장 (맵 초기화 후 실행)
+          pendingRegionRef.current = { lat, lng, zoom, type, name, fullName: regionName };
+        }
+      })();
+
       // URL에서 region 파라미터 제거 (깔끔하게)
       router.replace('/', { scroll: false });
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchParams, dbFacilities]);
+
+  // 🗺️ 맵 초기화 후 pending region 실행 (맵 준비 전에 도착한 region 파라미터 처리)
+  useEffect(() => {
+    if (!pendingRegionRef.current) return;
+    const interval = setInterval(async () => {
+      if (mapRef.current && pendingRegionRef.current) {
+        const { lat, lng, zoom, type, name } = pendingRegionRef.current;
+        const success = await mapRef.current.highlightRegion(lat, lng, zoom, type, name);
+        if (success) {
+          pendingRegionRef.current = null;
+          clearInterval(interval);
+        }
+      }
+    }, 500);
+    // 최대 15초 후 포기
+    const timeout = setTimeout(() => {
+      clearInterval(interval);
+      pendingRegionRef.current = null;
+    }, 15000);
+    return () => {
+      clearInterval(interval);
+      clearTimeout(timeout);
+    };
+  }, [searchParams]);
 
   // 🖥️ PC: 브라우저 뒤로가기 시 사이드 패널 닫기
   useEffect(() => {
@@ -434,7 +478,7 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
     setIsRegionSelected(true);
 
     if (mapRef.current) {
-      const zoom = region.type === 'gu' ? 12 : 14;
+      const zoom = region.type === 'gu' ? 12 : (region.name.endsWith('리') ? 16 : 14);
       mapRef.current.highlightRegion(
         region.center.lat,
         region.center.lng,
@@ -494,13 +538,14 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
     } catch { }
   };
 
-  // 🗺️ PC: 시설 선택될 때마다 지도를 해당 위치로 자동 이동
+  // 🗺️ PC: 시설 선택될 때마다 지도를 해당 위치로 자동 이동 (줌 유지)
   useEffect(() => {
     if (isMobile || !selectedFacility?.coordinates) return;
     const coords = selectedFacility.coordinates;
     const tryPanTo = (retry: number) => {
       if (mapRef.current) {
-        mapRef.current.panTo(coords.lat, coords.lng, 17);
+        // 줌 레벨 변경 없이 center만 이동
+        mapRef.current.panTo(coords.lat, coords.lng);
       } else if (retry < 30) {
         setTimeout(() => tryPanTo(retry + 1), 100);
       }
@@ -950,8 +995,8 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
                     cursor: 'pointer',
                   }}
                 >
-                  <Search size={16} color="rgba(255,255,255,0.7)" />
-                  <Text size="sm" c="rgba(255,255,255,0.6)" style={{ flex: 1 }}>
+                  <Search size={16} color="rgba(255,255,255,0.7)" style={{ flexShrink: 0 }} />
+                  <Text size="sm" c="rgba(255,255,255,0.6)" style={{ flex: 1, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
                     {searchQuery || '시설명, 지역 검색'}
                   </Text>
                 </Box>

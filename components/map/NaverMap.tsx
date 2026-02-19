@@ -33,7 +33,7 @@ interface NaverMapProps {
 
 export interface NaverMapRef {
     panTo: (lat: number, lng: number, zoom?: number, facilityId?: string) => void;
-    highlightRegion: (lat: number, lng: number, zoom: number, type?: 'gu' | 'dong', regionName?: string) => void;
+    highlightRegion: (lat: number, lng: number, zoom: number, type?: 'gu' | 'dong', regionName?: string) => Promise<boolean>;
     searchRegion: (keyword: string) => { lat: number, lng: number, zoom: number, type: 'gu' | 'dong', name: string } | null;
 }
 
@@ -187,7 +187,7 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
             }
         },
 
-        highlightRegion: async (lat: number, lng: number, zoom: number, type: 'gu' | 'dong' = 'dong', regionName?: string) => {
+        highlightRegion: async (lat: number, lng: number, zoom: number, type: 'gu' | 'dong' = 'dong', regionName?: string): Promise<boolean> => {
             if (mapInstanceRef.current && window.naver) {
                 const map = mapInstanceRef.current;
 
@@ -195,7 +195,40 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
                 highlightOverlaysRef.current.forEach(overlay => overlay.setMap(null));
                 highlightOverlaysRef.current = [];
 
-                const center = new window.naver.maps.LatLng(lat, lng);
+                let finalLat = lat;
+                let finalLng = lng;
+
+                // 리 단위인 경우, Naver 지오코딩으로 정확한 좌표 획득
+                if (regionName?.endsWith('리') && window.naver.maps.Service) {
+                    // URL에서 fullName(예: "전라남도 진도군 진도읍 수유리") 가져오기
+                    const urlParams = new URLSearchParams(window.location.search);
+                    const fullName = urlParams.get('region') || '';
+                    const geocodeQuery = fullName || regionName;
+
+                    try {
+                        const geocodedCenter = await new Promise<{ lat: number, lng: number } | null>((resolve) => {
+                            window.naver.maps.Service.geocode(
+                                { query: geocodeQuery },
+                                (status: any, response: any) => {
+                                    if (status === window.naver.maps.Service.Status.OK && response.v2?.addresses?.length > 0) {
+                                        const addr = response.v2.addresses[0];
+                                        resolve({ lat: parseFloat(addr.y), lng: parseFloat(addr.x) });
+                                    } else {
+                                        resolve(null);
+                                    }
+                                }
+                            );
+                        });
+                        if (geocodedCenter) {
+                            finalLat = geocodedCenter.lat;
+                            finalLng = geocodedCenter.lng;
+                        }
+                    } catch (e) {
+                        console.warn('Geocoding failed for ri, using fallback center', e);
+                    }
+                }
+
+                const center = new window.naver.maps.LatLng(finalLat, finalLng);
                 map.morph(center, zoom);
 
                 // 🚀 GeoJSON lazy load (필요할 때만 로드)
@@ -226,20 +259,30 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
                 if (!polygonDrawn && type === 'dong' && geomRef.current && regionName) {
                     let candidates: any[] = [];
 
+                    // 리 단위인 경우 부모 읍/면 이름으로 매칭
+                    // 예: "진도읍 수유리" → "진도읍"
+                    let matchName = regionName;
+                    if (regionName.endsWith('리')) {
+                        const eupMyeonMatch = regionName.match(/^(.+[읍면])\s/);
+                        if (eupMyeonMatch) {
+                            matchName = eupMyeonMatch[1];
+                        }
+                    }
+
                     // 매핑 확인
-                    if (REGION_MAPPINGS[regionName]) {
-                        const keywords = REGION_MAPPINGS[regionName];
+                    if (REGION_MAPPINGS[matchName]) {
+                        const keywords = REGION_MAPPINGS[matchName];
                         candidates = geomRef.current.features.filter((f: any) => {
                             const fName = f.properties.name || '';
                             return keywords.some(k => fName.includes(k));
                         });
                     } else {
                         // 기본 퍼지 매칭
-                        const targetBase = regionName.replace(/[0-9]/g, '');
+                        const targetBase = matchName.replace(/[0-9]/g, '');
                         candidates = geomRef.current.features.filter((f: any) => {
                             const fName = f.properties.name || '';
                             const fBase = fName.replace(/[0-9]/g, '');
-                            return fName === regionName || fBase === targetBase;
+                            return fName === matchName || fBase === targetBase;
                         });
                     }
 
@@ -282,26 +325,9 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
                 }
 
                 // 폴리곤 실패 시 원형 펄백
-                if (!polygonDrawn) {
-                    let radius = 1000;
-                    if (isSi) radius = 5000;
-                    else if (type === 'gu') radius = 3000;
-
-                    const circle = new window.naver.maps.Circle({
-                        map: map,
-                        center: center,
-                        radius: radius,
-                        fillColor: '#FF0000',
-                        fillOpacity: 0.05,
-                        strokeColor: '#000000',
-                        strokeOpacity: 0.7,
-                        strokeWeight: 2,
-                        clickable: false,
-                        zIndex: 10
-                    });
-                    highlightOverlaysRef.current.push(circle);
-                }
+                return true;
             }
+            return false;
 
             function drawFeature(map: any, feature: any) {
                 const paths = [];
