@@ -6,6 +6,7 @@ import { Image, Text, Badge, Group, Button, Stack, Box, Paper, Modal, Tabs, Coll
 import { useDisclosure, useMediaQuery } from '@mantine/hooks';
 import { Car, Utensils, Accessibility, Store, Navigation, Globe, ChevronLeft, ChevronRight, TrendingUp, ChevronDown, ChevronUp, Star, Pencil, Camera, X, ImageIcon, Plus, Trash, Archive, Mountain, Trees, Layers, Lock, Unlock, Check } from 'lucide-react';
 import InquiryPanel from './InquiryPanel';
+import ScrollableTabsList from '@/components/ScrollableTabsList';
 import ReviewsPanel from './ReviewsPanel';
 import { Facility, FACILITY_CATEGORY_LABELS, Review } from '@/types';
 import { PRICE_TAB_CATEGORIES, OTHER_TAB_CATEGORY } from '@/lib/constants';
@@ -94,8 +95,8 @@ function PriceInfoSection({ priceInfo, hasPrice }: { priceInfo: any, hasPrice: b
     };
 
     const getServiceLabel = (type: string) => {
-        if (type === 'BONGSAN') return '봉안(납골)';
-        if (type === 'NATURAL') return '수목장(자연장)';
+        if (type === 'BONGSAN') return '봉안당';
+        if (type === 'NATURAL') return '수목장';
         if (type === 'BURIAL') return '매장묘';
         return type;
     };
@@ -110,7 +111,14 @@ function PriceInfoSection({ priceInfo, hasPrice }: { priceInfo: any, hasPrice: b
     // === V2 렌더링: 표준화 데이터 ===
     if (hasStandardized) {
         // 서비스 타입별로 그룹핑
-        const serviceTypes = [...new Set(standardizedPrices!.map(g => g.serviceType))];
+        const serviceTypesRaw = [...new Set(standardizedPrices!.map(g => g.serviceType))];
+        // 탭 순서: 봉안당 → 매장묘 → 수목장 → 기타
+        const serviceTypeOrder = ['BONGSAN', 'BURIAL', 'NATURAL'];
+        const serviceTypes = serviceTypesRaw.sort((a, b) => {
+            const ai = serviceTypeOrder.indexOf(a);
+            const bi = serviceTypeOrder.indexOf(b);
+            return (ai === -1 ? 999 : ai) - (bi === -1 ? 999 : bi);
+        });
 
         const getSubTypeDescription = (subType: string) => {
             const map: Record<string, string> = {
@@ -163,7 +171,12 @@ function PriceInfoSection({ priceInfo, hasPrice }: { priceInfo: any, hasPrice: b
                 if (!groupedUsage[g]) groupedUsage[g] = [];
                 groupedUsage[g].push(row);
             });
-            const usageGroupNames = Object.keys(groupedUsage);
+            // 관리비를 맨 뒤로 정렬
+            const usageGroupNames = Object.keys(groupedUsage).sort((a, b) => {
+                const aIsMgmt = /관리비/.test(a) ? 1 : 0;
+                const bIsMgmt = /관리비/.test(b) ? 1 : 0;
+                return aIsMgmt - bIsMgmt;
+            });
 
             const renderRow = (row: typeof usageRows[0], idx: number, prefix: string) => (
                 <Box key={`${prefix}-${idx}`}
@@ -255,11 +268,11 @@ function PriceInfoSection({ priceInfo, hasPrice }: { priceInfo: any, hasPrice: b
                     <Accordion.Panel>
                         {usageGroupNames.length > 1 ? (
                             <Tabs defaultValue={usageGroupNames[0]}>
-                                <Tabs.List grow mb="md">
+                                <ScrollableTabsList mb="md">
                                     {usageGroupNames.map(gn => (
-                                        <Tabs.Tab key={gn} value={gn}>{gn}</Tabs.Tab>
+                                        <Tabs.Tab key={gn} value={gn} style={{ flexShrink: 0 }}>{gn}</Tabs.Tab>
                                     ))}
-                                </Tabs.List>
+                                </ScrollableTabsList>
                                 {usageGroupNames.map(gn => (
                                     <Tabs.Panel key={gn} value={gn}>
                                         <Stack gap="sm">
@@ -339,7 +352,7 @@ function PriceInfoSection({ priceInfo, hasPrice }: { priceInfo: any, hasPrice: b
                     })()
                 ) : (
                     <Tabs defaultValue={serviceTypes[0]}>
-                        <Tabs.List grow mb="md">
+                        <ScrollableTabsList grow mb="md">
                             {serviceTypes.map(st => (
                                 <Tabs.Tab key={st} value={st} style={{ padding: '10px 0' }}>
                                     <Group gap={6} align="center" justify="center">
@@ -348,7 +361,7 @@ function PriceInfoSection({ priceInfo, hasPrice }: { priceInfo: any, hasPrice: b
                                     </Group>
                                 </Tabs.Tab>
                             ))}
-                        </Tabs.List>
+                        </ScrollableTabsList>
 
                         {serviceTypes.map(st => {
                             const groups = standardizedPrices!.filter(g => g.serviceType === st);
@@ -401,9 +414,9 @@ function PriceInfoSection({ priceInfo, hasPrice }: { priceInfo: any, hasPrice: b
 
     // 2. Grouping Logic (Burial / Charnel / Natural / Etc)
     const groups: Record<string, { label: string, items: any[], categories: string[] }> = {
+        charnel: { label: '봉안당', items: [], categories: [] },
         burial: { label: '매장묘', items: [], categories: [] },
-        charnel: { label: '봉안(납골)', items: [], categories: [] },
-        natural: { label: '수목장(자연장)', items: [], categories: [] },
+        natural: { label: '수목장', items: [], categories: [] },
         etc: { label: '기타/공통', items: [], categories: [] }
     };
 
@@ -539,11 +552,11 @@ function PriceInfoSection({ priceInfo, hasPrice }: { priceInfo: any, hasPrice: b
                                                 <Accordion.Panel>
                                                     {groupNames.length > 1 ? (
                                                         <Tabs defaultValue={groupNames[0]}>
-                                                            <Tabs.List grow mb="md">
+                                                            <ScrollableTabsList mb="md">
                                                                 {groupNames.map((gName, idx) => (
-                                                                    <Tabs.Tab key={idx} value={gName}>{gName}</Tabs.Tab>
+                                                                    <Tabs.Tab key={idx} value={gName} style={{ flexShrink: 0 }}>{gName}</Tabs.Tab>
                                                                 ))}
-                                                            </Tabs.List>
+                                                            </ScrollableTabsList>
                                                             {groupNames.map((gName, idx) => {
                                                                 const groupOptions = optionRows.filter((r: any) => r.groupType === gName);
                                                                 return (

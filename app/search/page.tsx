@@ -437,14 +437,14 @@ function SearchPageContent() {
                                                     {fac.address}
                                                 </Text>
                                             </Box>
-                                            {fac.minPrice > 0 && (
-                                                <Text size="xs" c="brand.6" fw={600} style={{ flexShrink: 0 }}>
-                                                    {fac.minPrice >= 10000
+                                            <Text size="xs" c={fac.minPrice > 0 ? "brand.6" : "dimmed"} fw={600} style={{ flexShrink: 0 }}>
+                                                {fac.minPrice > 0
+                                                    ? (fac.minPrice >= 10000
                                                         ? `${Math.floor(fac.minPrice / 10000)}만원~`
-                                                        : `${fac.minPrice.toLocaleString()}원~`
-                                                    }
-                                                </Text>
-                                            )}
+                                                        : `${fac.minPrice.toLocaleString()}원~`)
+                                                    : '가격문의'
+                                                }
+                                            </Text>
                                         </Group>
                                     </Box>
                                 ))}

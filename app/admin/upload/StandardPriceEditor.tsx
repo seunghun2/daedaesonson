@@ -10,6 +10,7 @@ import {
     Plus, Trash, X, Star, Check, AlertTriangle, Copy,
     ChevronUp, ChevronDown
 } from 'lucide-react';
+import ScrollableTabsList from '@/components/ScrollableTabsList';
 import {
     ServiceType, SERVICE_TYPE_LABELS, SERVICE_SUB_TYPES,
     ResidencyType, RESIDENCY_LABELS,
@@ -238,7 +239,11 @@ const ServiceGroupEditor = memo(({ group, groupIndex, onUpdate, onDelete }: {
         return typeMap;
     }, [group.rows]);
 
-    const tabNames = Object.keys(groupTypes);
+    const tabNames = Object.keys(groupTypes).sort((a, b) => {
+        const aIsMgmt = /관리비/.test(a) ? 1 : 0;
+        const bIsMgmt = /관리비/.test(b) ? 1 : 0;
+        return aIsMgmt - bIsMgmt;
+    });
     const hasMultipleTabs = tabNames.length > 1 || (tabNames.length === 1 && tabNames[0] !== '기본');
     const [activeGroupTab, setActiveGroupTab] = useState<string>(tabNames[0] || '기본');
 
@@ -310,16 +315,16 @@ const ServiceGroupEditor = memo(({ group, groupIndex, onUpdate, onDelete }: {
             {/* groupType 탭 */}
             {hasMultipleTabs && (
                 <Tabs value={activeGroupTab} onChange={(v) => v && setActiveGroupTab(v)} mb="sm">
-                    <Tabs.List>
+                    <ScrollableTabsList>
                         {tabNames.map(name => (
-                            <Tabs.Tab key={name} value={name}>
+                            <Tabs.Tab key={name} value={name} style={{ flexShrink: 0 }}>
                                 {name} <Badge size="xs" variant="light" ml={4}>{groupTypes[name].length}</Badge>
                             </Tabs.Tab>
                         ))}
                         <Button variant="subtle" size="xs" leftSection={<Plus size={12} />} onClick={addGroupTab} ml="xs">
                             + 새 그룹
                         </Button>
-                    </Tabs.List>
+                    </ScrollableTabsList>
                 </Tabs>
             )}
 
@@ -537,9 +542,9 @@ function StandardPriceEditor({ priceInfo, onChange }: StandardPriceEditorProps) 
                 value={activeTab}
                 onChange={setActiveTab}
                 data={[
-                    { label: `봉안 (${getGroupsForTab('BONGSAN').length})`, value: 'BONGSAN' },
-                    { label: `자연장 (${getGroupsForTab('NATURAL').length})`, value: 'NATURAL' },
-                    { label: `매장 (${getGroupsForTab('BURIAL').length})`, value: 'BURIAL' },
+                    { label: `봉안당 (${getGroupsForTab('BONGSAN').length})`, value: 'BONGSAN' },
+                    { label: `매장묘 (${getGroupsForTab('BURIAL').length})`, value: 'BURIAL' },
+                    { label: `수목장 (${getGroupsForTab('NATURAL').length})`, value: 'NATURAL' },
                 ]}
                 mb="md"
                 color={activeTab === 'BONGSAN' ? 'blue' : activeTab === 'NATURAL' ? 'green' : 'orange'}

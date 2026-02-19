@@ -19,6 +19,7 @@ import { cropImagesFromScreenshot } from '@/lib/imageCropper';
 import { PRICE_TAB_CATEGORIES, OTHER_TAB_CATEGORY } from '@/lib/constants';
 import { getSingleFacilityImageUrl } from '@/lib/supabaseImage';
 import StandardPriceEditor from './StandardPriceEditor';
+import ScrollableTabsList from '@/components/ScrollableTabsList';
 
 // ============================================================
 // PriceEditor (memo) - 자체 priceTable 상태 관리
@@ -209,7 +210,7 @@ function FacilityEditModal({ facilityToEdit, opened, onClose, onSaved, onNavigat
     const [pdfLoading, setPdfLoading] = useState(false);
     const [cropping, setCropping] = useState(false);
     const [useOcr] = useState(false);
-    const [activeMajorTab, setActiveMajorTab] = useState<string>('매장묘');
+    const [activeMajorTab, setActiveMajorTab] = useState<string>('봉안');
     const [activeGroupTab, setActiveGroupTab] = useState<Record<string, string>>({});
     const userModified = useRef(false); // 유저가 수정했는지 추적 (백그라운드 덮어쓰기 방지)
 
@@ -247,7 +248,6 @@ function FacilityEditModal({ facilityToEdit, opened, onClose, onSaved, onNavigat
                         const { name: _n, address: _a, phone: _p, description: _d, category: _c,
                             isPublic: _ip, isActive: _ia, operatorType: _ot, capacity: _cap,
                             websiteUrl: _wu, lastUpdated: _lu, fax: _fx,
-                            hasParking: _hp, hasRestaurant: _hr, hasStore: _hs, hasAccessibility: _ha,
                             imageGallery: _ig2, images: _im2, thumbnail: _th,
                             ...detailOnly } = latest;
                         merged = { ...merged, ...detailOnly };
@@ -595,9 +595,9 @@ function FacilityEditModal({ facilityToEdit, opened, onClose, onSaved, onNavigat
                 )}
                 <SegmentedControl fullWidth value={activeMajorTab} onChange={setActiveMajorTab}
                     data={[
-                        { label: '매장묘 (Burial)', value: '매장묘' },
-                        { label: '봉안(납골) (Charnel)', value: '봉안' },
-                        { label: '수목장(자연장) (Natural)', value: '수목장' },
+                        { label: '봉안당', value: '봉안' },
+                        { label: '매장묘', value: '매장묘' },
+                        { label: '수목장', value: '수목장' },
                         { label: '기타/공통', value: '기타' },
                         { label: '제외됨', value: '제외됨' },
                     ]} mb="md" />
@@ -620,7 +620,12 @@ function FacilityEditModal({ facilityToEdit, opened, onClose, onSaved, onNavigat
                             if (!itemsByGroup[g]) itemsByGroup[g] = [];
                             itemsByGroup[g].push(row);
                         });
-                        const groupNames = Object.keys(itemsByGroup);
+                        // 관리비를 맨 뒤로 정렬
+                        const groupNames = Object.keys(itemsByGroup).sort((a, b) => {
+                            const aIsMgmt = /관리비/.test(a) ? 1 : 0;
+                            const bIsMgmt = /관리비/.test(b) ? 1 : 0;
+                            return aIsMgmt - bIsMgmt;
+                        });
 
                         const updateCatRows = (newRows: any[]) => {
                             setEditForm({ ...editForm, priceInfo: { ...editForm.priceInfo, priceTable: { ...priceTable, [catName]: { ...catData, rows: newRows } } } });
@@ -637,16 +642,16 @@ function FacilityEditModal({ facilityToEdit, opened, onClose, onSaved, onNavigat
                                 <Accordion.Panel>
                                     <Tabs value={activeGroupTab[catName] || groupNames[0] || '미분류'}
                                         onChange={(val) => setActiveGroupTab(prev => ({ ...prev, [catName]: val || '' }))}>
-                                        <Tabs.List mb="md">
+                                        <ScrollableTabsList mb="md">
                                             {groupNames.map((gn, idx) => (
-                                                <Tabs.Tab key={idx} value={gn} rightSection={<Badge size="xs" variant="light">{itemsByGroup[gn].length}</Badge>}>{gn}</Tabs.Tab>
+                                                <Tabs.Tab key={idx} value={gn} style={{ flexShrink: 0 }} rightSection={<Badge size="xs" variant="light">{itemsByGroup[gn].length}</Badge>}>{gn}</Tabs.Tab>
                                             ))}
                                             <Button variant="subtle" size="xs" leftSection={<Plus size={14} />} ml="xs"
                                                 onClick={() => {
                                                     const newGroupName = `새 그룹 ${groupNames.length + 1}`;
                                                     updateCatRows([...(catData.rows || []), { name: '', price: 0, groupType: newGroupName }]);
                                                 }}>새 그룹</Button>
-                                        </Tabs.List>
+                                        </ScrollableTabsList>
                                         {groupNames.map((groupName, groupIdx) => {
                                             const rows = itemsByGroup[groupName];
                                             return (
