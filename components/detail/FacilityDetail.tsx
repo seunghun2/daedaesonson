@@ -98,6 +98,7 @@ function PriceInfoSection({ priceInfo, hasPrice }: { priceInfo: any, hasPrice: b
         if (type === 'BONGSAN') return '봉안당';
         if (type === 'NATURAL') return '수목장';
         if (type === 'BURIAL') return '매장묘';
+        if (type === 'OTHER') return '기타';
         return type;
     };
 
@@ -110,8 +111,27 @@ function PriceInfoSection({ priceInfo, hasPrice }: { priceInfo: any, hasPrice: b
 
     // === V2 렌더링: 표준화 데이터 ===
     if (hasStandardized) {
+        // 🔧 OTHER serviceType 재분류 + 필터링
+        const EXCLUDE_SUBTYPES = /석물|부대시설|옵션|무연고|제례|조경|용품/;
+        const reclassifiedPrices = standardizedPrices!.map(g => {
+            if (g.serviceType === 'OTHER') {
+                const st = g.subType || '';
+                // 자연장/수목장 → NATURAL
+                if (/자연장|수목|잔디|화초/.test(st)) return { ...g, serviceType: 'NATURAL' };
+                // 봉안담/봉안묘 → BONGSAN
+                if (/봉안|납골/.test(st)) return { ...g, serviceType: 'BONGSAN' };
+                // 매장 관련 → BURIAL
+                if (/매장|평장/.test(st)) return { ...g, serviceType: 'BURIAL' };
+            }
+            return g;
+        }).filter(g => {
+            // 석물/부대시설 등 제외
+            if (g.serviceType === 'OTHER' && EXCLUDE_SUBTYPES.test(g.subType || '')) return false;
+            return true;
+        });
+
         // 서비스 타입별로 그룹핑
-        const serviceTypesRaw = [...new Set(standardizedPrices!.map(g => g.serviceType))];
+        const serviceTypesRaw = [...new Set(reclassifiedPrices.map(g => g.serviceType))];
         // 탭 순서: 봉안당 → 매장묘 → 수목장 → 기타
         const serviceTypeOrder = ['BONGSAN', 'BURIAL', 'NATURAL'];
         const serviceTypes = serviceTypesRaw.sort((a, b) => {
@@ -139,7 +159,7 @@ function PriceInfoSection({ priceInfo, hasPrice }: { priceInfo: any, hasPrice: b
 
         // 서비스 타입별 최저가 계산
         const getMinPriceForService = (serviceType: string) => {
-            const groups = standardizedPrices!.filter(g => g.serviceType === serviceType);
+            const groups = reclassifiedPrices.filter(g => g.serviceType === serviceType);
             const usageRows = groups.flatMap(g =>
                 g.rows.filter(r => !r.feeType || r.feeType === 'USAGE' || (r.feeType === 'MAINTENANCE' && r.groupType))
             );
@@ -355,7 +375,7 @@ function PriceInfoSection({ priceInfo, hasPrice }: { priceInfo: any, hasPrice: b
                 {serviceTypes.length <= 1 ? (
                     (() => {
                         const serviceType = serviceTypes[0];
-                        const groups = standardizedPrices!.filter(g => g.serviceType === serviceType);
+                        const groups = reclassifiedPrices.filter(g => g.serviceType === serviceType);
                         return (
                             <Accordion
                                 variant="separated" radius="md" multiple
@@ -386,7 +406,7 @@ function PriceInfoSection({ priceInfo, hasPrice }: { priceInfo: any, hasPrice: b
                         </ScrollableTabsList>
 
                         {serviceTypes.map(st => {
-                            const groups = standardizedPrices!.filter(g => g.serviceType === st);
+                            const groups = reclassifiedPrices.filter(g => g.serviceType === st);
                             return (
                                 <Tabs.Panel key={st} value={st}>
                                     <Accordion

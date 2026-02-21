@@ -33,6 +33,7 @@ interface NaverMapProps {
 
 export interface NaverMapRef {
     panTo: (lat: number, lng: number, zoom?: number, facilityId?: string) => void;
+    getCurrentView: () => { lat: number; lng: number; zoom: number } | null;
     highlightRegion: (lat: number, lng: number, zoom: number, type?: 'gu' | 'dong', regionName?: string) => Promise<boolean>;
     searchRegion: (keyword: string) => { lat: number, lng: number, zoom: number, type: 'gu' | 'dong', name: string } | null;
 }
@@ -185,6 +186,15 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
                     }
                 }, 400);
             }
+        },
+
+        // 🗺️ 현재 지도 위치/줌 반환 (뒤로가기 시 복원용)
+        getCurrentView: () => {
+            if (mapInstanceRef.current) {
+                const center = mapInstanceRef.current.getCenter();
+                return { lat: center.lat(), lng: center.lng(), zoom: mapInstanceRef.current.getZoom() };
+            }
+            return null;
         },
 
         highlightRegion: async (lat: number, lng: number, zoom: number, type: 'gu' | 'dong' = 'dong', regionName?: string): Promise<boolean> => {

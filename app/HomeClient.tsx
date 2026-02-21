@@ -466,6 +466,11 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
     setSearchQuery(facility.name);
     setSubmittedQuery(facility.name);
     saveRecentSearch(facility.name);
+    // 🗺️ 지도 위치 저장 (뒤로가기 시 복원)
+    if (mapRef.current) {
+      const view = mapRef.current.getCurrentView();
+      if (view) sessionStorage.setItem('pendingMapView', JSON.stringify(view));
+    }
     router.push(`/facility/${facility.id}`);
   };
 
@@ -493,7 +498,13 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
 
   const handleMarkerClick = (facility: Facility) => {
     if (isMobile) {
-      // 📱 모바일: /facility/[id] 라우트로 이동 (풀스크린)
+      // 📱 모바일: 현재 지도 위치 저장 (뒤로가기 시 복원)
+      if (mapRef.current) {
+        const view = mapRef.current.getCurrentView();
+        if (view) {
+          sessionStorage.setItem('pendingMapView', JSON.stringify(view));
+        }
+      }
       router.push(`/facility/${facility.id}`);
       setMobileView('map');
     } else {
