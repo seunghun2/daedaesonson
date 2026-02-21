@@ -124,6 +124,7 @@ function PriceInfoSection({ priceInfo, hasPrice }: { priceInfo: any, hasPrice: b
             const map: Record<string, string> = {
                 '매장묘': '시신을 땅에 묻는 전통 장법입니다. 단분(1인), 합장(2인 1기), 쌍분(나란히 2기) 등으로 나뉩니다.',
                 '평장묘': '봉분(흙무덤)을 만들지 않고 평평하게 조성하는 묘지입니다. 잔디장이라고도 합니다.',
+                '봉안묘': '화장 후 유골을 묘지 형태로 안치하는 방식입니다.',
                 '봉안담': '화장 후 유골함을 담 형태의 시설에 안치하는 방식입니다. 봉안당보다 저렴한 편입니다.',
                 '봉안당': '화장 후 유골을 봉안당(납골당)에 안치하는 방식입니다. 단수가 높을수록 가격이 낮아지는 경향이 있습니다.',
                 '수목장': '화장 후 유골을 나무 밑에 매장하는 친환경 장법입니다.',
@@ -151,6 +152,21 @@ function PriceInfoSection({ priceInfo, hasPrice }: { priceInfo: any, hasPrice: b
 
         // 서브타입 설명 토글 상태
         const [openDescSubType, setOpenDescSubType] = useState<string | null>(null);
+        // 아코디언 열림 상태 (controlled) - 초기값은 아래에서 설정
+        const [openAccItems, setOpenAccItems] = useState<string[]>(() => {
+            // 초기값: 카테고리가 1개인 서비스타입은 자동 열기
+            if (!standardizedPrices) return [];
+            const byService: Record<string, string[]> = {};
+            standardizedPrices.forEach(g => {
+                if (!byService[g.serviceType]) byService[g.serviceType] = [];
+                byService[g.serviceType].push(g.subType);
+            });
+            const autoOpen: string[] = [];
+            Object.values(byService).forEach(subs => {
+                if (subs.length === 1) autoOpen.push(subs[0]);
+            });
+            return autoOpen;
+        });
 
         // 서브타입 아코디언 아이템 렌더링
         const renderSubTypeAccordionItem = (group: typeof standardizedPrices[0]) => {
@@ -233,6 +249,10 @@ function PriceInfoSection({ priceInfo, hasPrice }: { priceInfo: any, hasPrice: b
                                             e.stopPropagation();
                                             e.preventDefault();
                                             setOpenDescSubType(isDescOpen ? null : group.subType);
+                                            // 닫혀있으면 아코디언도 열기
+                                            if (!isDescOpen && !openAccItems.includes(group.subType)) {
+                                                setOpenAccItems(prev => [...prev, group.subType]);
+                                            }
                                         }}
                                         style={{
                                             display: 'inline-flex',
@@ -258,14 +278,14 @@ function PriceInfoSection({ priceInfo, hasPrice }: { priceInfo: any, hasPrice: b
                             </Group>
                         </Group>
                     </Accordion.Control>
-                    {desc && isDescOpen && (
-                        <Box mx="md" mb="xs" mt={4} py={8} px={10} style={{ backgroundColor: '#fff', borderRadius: 6, border: '1px solid #e9ecef' }}>
-                            <Text size="xs" c="dark.6" style={{ lineHeight: 1.6 }}>
-                                {desc}
-                            </Text>
-                        </Box>
-                    )}
                     <Accordion.Panel>
+                        {desc && isDescOpen && (
+                            <Box mb={12} py={10} px={12} style={{ backgroundColor: '#ffffff', borderRadius: 8, border: '1.5px solid #ced4da', boxShadow: '0 1px 4px rgba(0,0,0,0.06)' }}>
+                                <Text size="xs" c="dark.6" style={{ lineHeight: 1.6 }}>
+                                    {desc}
+                                </Text>
+                            </Box>
+                        )}
                         {usageGroupNames.length > 1 ? (
                             <Tabs defaultValue={usageGroupNames[0]}>
                                 <ScrollableTabsList mb="md">
@@ -339,11 +359,13 @@ function PriceInfoSection({ priceInfo, hasPrice }: { priceInfo: any, hasPrice: b
                         return (
                             <Accordion
                                 variant="separated" radius="md" multiple
-                                defaultValue={groups.length === 1 ? [groups[0].subType] : []}
+                                defaultValue={undefined}
+                                value={openAccItems}
+                                onChange={setOpenAccItems}
                                 styles={{
                                     item: { backgroundColor: '#f8f9fa', border: 'none' },
                                     control: { padding: '12px 16px' },
-                                    content: { padding: '0 16px 16px 16px' },
+                                    content: { padding: '0 24px 16px 24px' },
                                 }}
                             >
                                 {groups.map(group => renderSubTypeAccordionItem(group))}
@@ -369,11 +391,13 @@ function PriceInfoSection({ priceInfo, hasPrice }: { priceInfo: any, hasPrice: b
                                 <Tabs.Panel key={st} value={st}>
                                     <Accordion
                                         variant="separated" radius="md" multiple
-                                        defaultValue={groups.length === 1 ? [groups[0].subType] : []}
+                                        defaultValue={undefined}
+                                        value={openAccItems}
+                                        onChange={setOpenAccItems}
                                         styles={{
                                             item: { backgroundColor: '#f8f9fa', border: 'none' },
                                             control: { padding: '12px 16px' },
-                                            content: { padding: '0 16px 16px 16px' },
+                                            content: { padding: '0 24px 16px 24px' },
                                         }}
                                     >
                                         {groups.map(group => renderSubTypeAccordionItem(group))}
@@ -481,7 +505,7 @@ function PriceInfoSection({ priceInfo, hasPrice }: { priceInfo: any, hasPrice: b
                 styles={{
                     item: { borderBottom: '1px solid #f1f3f5' },
                     control: { padding: '12px 0', '&:hover': { backgroundColor: 'transparent' } },
-                    content: { padding: '0 0 16px 0' },
+                    content: { padding: '0 8px 16px 8px' },
                     chevron: { display: 'none' }
                 }}
             >
@@ -523,7 +547,7 @@ function PriceInfoSection({ priceInfo, hasPrice }: { priceInfo: any, hasPrice: b
                                     styles={{
                                         item: { backgroundColor: '#f8f9fa', border: 'none' },
                                         control: { padding: '12px 16px' },
-                                        content: { padding: '0 16px 16px 16px' },
+                                        content: { padding: '0 24px 16px 24px' },
                                     }}
                                 >
                                     {group.categories.map(cat => {
@@ -539,17 +563,64 @@ function PriceInfoSection({ priceInfo, hasPrice }: { priceInfo: any, hasPrice: b
                                         });
                                         const groupNames = Object.keys(groupedRows);
 
+                                        const catDescMap: Record<string, string> = {
+                                            '매장묘': '시신을 땅에 묻는 전통 장법입니다. 단분(1인), 합장(2인 1기), 쌍분(나란히 2기) 등으로 나뉩니다.',
+                                            '평장묘': '봉분(흙무덤)을 만들지 않고 평평하게 조성하는 묘지입니다. 잔디장이라고도 합니다.',
+                                            '봉안담': '화장 후 유골함을 담 형태의 시설에 안치하는 방식입니다. 봉안당보다 저렴한 편입니다.',
+                                            '봉안당': '화장 후 유골을 봉안당(납골당)에 안치하는 방식입니다. 단수가 높을수록 가격이 낮아지는 경향이 있습니다.',
+                                            '봉안묘': '화장 후 유골을 묘지 형태로 안치하는 방식입니다.',
+                                            '수목형': '화장 후 유골을 나무 밑에 매장하는 친환경 장법입니다.',
+                                            '잔디형': '화장 후 유골을 잔디밭 아래에 매장하는 친환경 장법입니다.',
+                                            '화초형': '화장 후 유골을 화초 밑에 매장하는 친환경 장법입니다.',
+                                            '자연장': '화장 후 유골을 나무 밑이나 잔디밭 등 자연에 매장하는 친환경 장법입니다.',
+                                        };
+                                        const catDesc = Object.entries(catDescMap).find(([k]) => cat.includes(k))?.[1] || '';
+
                                         return (
                                             <Accordion.Item key={cat} value={cat}>
                                                 <Accordion.Control>
                                                     <Group justify="space-between" wrap="nowrap">
-                                                        <Text fw={600} size="sm" c="dark.7">{cat}</Text>
+                                                        <Group gap={6} align="center" wrap="nowrap">
+                                                            <Text fw={600} size="sm" c="dark.7">{cat}</Text>
+                                                            {catDesc && (
+                                                                <span
+                                                                    role="button"
+                                                                    tabIndex={0}
+                                                                    onClick={(e) => {
+                                                                        e.stopPropagation();
+                                                                        e.preventDefault();
+                                                                        const el = document.getElementById(`desc-${cat}`);
+                                                                        if (el) el.style.display = el.style.display === 'none' ? 'block' : 'none';
+                                                                    }}
+                                                                    style={{
+                                                                        display: 'inline-flex',
+                                                                        alignItems: 'center',
+                                                                        justifyContent: 'center',
+                                                                        width: 20,
+                                                                        height: 20,
+                                                                        borderRadius: '50%',
+                                                                        backgroundColor: '#ced4da',
+                                                                        cursor: 'pointer',
+                                                                        flexShrink: 0,
+                                                                    }}
+                                                                >
+                                                                    <span style={{ fontSize: '11px', color: '#fff', fontWeight: 500, lineHeight: 1 }}>?</span>
+                                                                </span>
+                                                            )}
+                                                        </Group>
                                                         <Badge color="gray" variant="light" size="sm">
                                                             {mainRows.length} 항목
                                                         </Badge>
                                                     </Group>
                                                 </Accordion.Control>
                                                 <Accordion.Panel>
+                                                    {catDesc && (
+                                                        <Box id={`desc-${cat}`} mb={12} py={10} px={12} style={{ display: 'none', backgroundColor: '#ffffff', borderRadius: 8, border: '1.5px solid #ced4da', boxShadow: '0 1px 4px rgba(0,0,0,0.06)' }}>
+                                                            <Text size="xs" c="dark.6" style={{ lineHeight: 1.6 }}>
+                                                                {catDesc}
+                                                            </Text>
+                                                        </Box>
+                                                    )}
                                                     {groupNames.length > 1 ? (
                                                         <Tabs defaultValue={groupNames[0]}>
                                                             <ScrollableTabsList mb="md">
