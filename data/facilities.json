@@ -553,174 +553,6 @@
       },
       "standardizedPrices": [
         {
-          "serviceType": "BURIAL",
-          "subType": "매장묘",
-          "unit": "원",
-          "rows": [
-            {
-              "name": "사용료",
-              "price": 3000000,
-              "feeType": "USAGE",
-              "grade": "",
-              "note": "",
-              "isRepresentative": true,
-              "area": 3.31,
-              "areaUnit": "SQM"
-            },
-            {
-              "name": "관리비",
-              "price": 25000,
-              "feeType": "MAINTENANCE",
-              "grade": "연관리비",
-              "note": "",
-              "isRepresentative": false
-            },
-            {
-              "name": "매장묘",
-              "price": 20275000,
-              "feeType": "USAGE",
-              "grade": "",
-              "note": "",
-              "isRepresentative": false,
-              "capacity": "개인"
-            },
-            {
-              "name": "부부 매장묘",
-              "price": 31150000,
-              "feeType": "USAGE",
-              "grade": "기본",
-              "note": "",
-              "isRepresentative": false,
-              "capacity": "부부"
-            },
-            {
-              "name": "부부 매장묘",
-              "price": 64650000,
-              "feeType": "USAGE",
-              "grade": "6~",
-              "note": "",
-              "isRepresentative": false,
-              "area": 39.67,
-              "areaUnit": "SQM",
-              "capacity": "부부"
-            }
-          ]
-        },
-        {
-          "serviceType": "BURIAL",
-          "subType": "평장묘",
-          "unit": "원",
-          "rows": [
-            {
-              "name": "평장묘",
-              "price": 15000000,
-              "feeType": "USAGE",
-              "grade": "기본",
-              "note": "",
-              "isRepresentative": true
-            },
-            {
-              "name": "평장묘",
-              "price": 18000000,
-              "feeType": "USAGE",
-              "grade": "2구형",
-              "note": "",
-              "isRepresentative": false
-            },
-            {
-              "name": "평장묘",
-              "price": 12500000,
-              "feeType": "USAGE",
-              "grade": "담장묘",
-              "note": "",
-              "isRepresentative": false
-            },
-            {
-              "name": "평장묘",
-              "price": 8500000,
-              "feeType": "USAGE",
-              "grade": "수목형",
-              "note": "",
-              "isRepresentative": false,
-              "capacity": "부부"
-            },
-            {
-              "name": "정원형 평장",
-              "price": 9500000,
-              "feeType": "USAGE",
-              "grade": "기본(2구)",
-              "note": "",
-              "isRepresentative": false
-            },
-            {
-              "name": "정원형 평장",
-              "price": 17500000,
-              "feeType": "USAGE",
-              "grade": "단품(2구)",
-              "note": "",
-              "isRepresentative": false
-            },
-            {
-              "name": "정원형 평장",
-              "price": 25000000,
-              "feeType": "USAGE",
-              "grade": "백합(3구)",
-              "note": "",
-              "isRepresentative": false
-            },
-            {
-              "name": "정원형 평장",
-              "price": 30000000,
-              "feeType": "USAGE",
-              "grade": "고급(6구),백합 (3구)",
-              "note": "",
-              "isRepresentative": false
-            },
-            {
-              "name": "테마형 평장묘",
-              "price": 4100000,
-              "feeType": "USAGE",
-              "grade": "아이리스",
-              "note": "",
-              "isRepresentative": false
-            },
-            {
-              "name": "테마형 평장묘",
-              "price": 3500000,
-              "feeType": "USAGE",
-              "grade": "다알리아",
-              "note": "",
-              "isRepresentative": false
-            },
-            {
-              "name": "테마형 평장묘",
-              "price": 5100000,
-              "feeType": "USAGE",
-              "grade": "플라타너스",
-              "note": "",
-              "isRepresentative": false
-            },
-            {
-              "name": "가족 평장묘",
-              "price": 21800000,
-              "feeType": "USAGE",
-              "grade": "프리미엄(담장포함)",
-              "note": "",
-              "isRepresentative": false,
-              "capacity": "가족"
-            },
-            {
-              "name": "부부 평장묘",
-              "price": 28950000,
-              "feeType": "USAGE",
-              "grade": "프리미엄(담장포함)",
-              "note": "",
-              "isRepresentative": false,
-              "capacity": "부부"
-            }
-          ]
-        },
-        {
           "serviceType": "BONGSAN",
           "subType": "봉안당",
           "unit": "원",
@@ -1044,7 +876,71 @@
         },
         {
           "serviceType": "BURIAL",
-          "subType": "가족형",
+          "subType": "매장묘 (부부 포함)",
+          "unit": "원",
+          "rows": [
+            {
+              "name": "기본 시설 사용료",
+              "price": 3000000,
+              "feeType": "USAGE",
+              "grade": "1평형 기준",
+              "unit": "평/년",
+              "residency": "ALL"
+            },
+            {
+              "name": "연 관리비",
+              "price": 25000,
+              "feeType": "MAINTENANCE",
+              "grade": "1평형 / 1년 기준",
+              "unit": "년",
+              "residency": "ALL"
+            },
+            {
+              "name": "단장묘 분양 패키지",
+              "price": 20275000,
+              "feeType": "USAGE",
+              "grade": "1구 안치 (최초 사용료 포함)",
+              "unit": "세트",
+              "isRepresentative": true,
+              "residency": "ALL"
+            },
+            {
+              "name": "합장묘 분양 패키지(기본)",
+              "price": 31150000,
+              "feeType": "USAGE",
+              "grade": "부부 2구 안치",
+              "unit": "세트",
+              "residency": "ALL"
+            },
+            {
+              "name": "합장묘 분양 패키지(고급)",
+              "price": 64650000,
+              "feeType": "USAGE",
+              "grade": "부부 2구 안치 (6평~)",
+              "unit": "세트",
+              "residency": "ALL"
+            },
+            {
+              "name": "사용료 반환 규정",
+              "price": 0,
+              "feeType": "OTHER",
+              "grade": "미사용 후 묘지 반환 시 납부 사용료 전액 환불",
+              "unit": "환불",
+              "residency": "ALL"
+            },
+            {
+              "name": "관리비 반환 규정",
+              "price": 0,
+              "feeType": "OTHER",
+              "grade": "남은 기간 월 단위 계산 환불",
+              "unit": "환불",
+              "residency": "ALL"
+            }
+          ]
+        },
+        {
+          "serviceType": "BURIAL",
+          "subType": "매장묘 (가족형)",
           "unit": "원",
           "rows": [
             {
@@ -1100,6 +996,120 @@
               "note": "",
               "isRepresentative": false,
               "capacity": "가족"
+            }
+          ]
+        },
+        {
+          "serviceType": "BURIAL",
+          "subType": "평장묘",
+          "unit": "원",
+          "rows": [
+            {
+              "name": "평장묘",
+              "price": 15000000,
+              "feeType": "USAGE",
+              "grade": "기본",
+              "note": "",
+              "isRepresentative": true
+            },
+            {
+              "name": "평장묘",
+              "price": 18000000,
+              "feeType": "USAGE",
+              "grade": "2구형",
+              "note": "",
+              "isRepresentative": false
+            },
+            {
+              "name": "평장묘",
+              "price": 12500000,
+              "feeType": "USAGE",
+              "grade": "담장묘",
+              "note": "",
+              "isRepresentative": false
+            },
+            {
+              "name": "평장묘",
+              "price": 8500000,
+              "feeType": "USAGE",
+              "grade": "수목형",
+              "note": "",
+              "isRepresentative": false,
+              "capacity": "부부"
+            },
+            {
+              "name": "정원형 평장",
+              "price": 9500000,
+              "feeType": "USAGE",
+              "grade": "기본(2구)",
+              "note": "",
+              "isRepresentative": false
+            },
+            {
+              "name": "정원형 평장",
+              "price": 17500000,
+              "feeType": "USAGE",
+              "grade": "단품(2구)",
+              "note": "",
+              "isRepresentative": false
+            },
+            {
+              "name": "정원형 평장",
+              "price": 25000000,
+              "feeType": "USAGE",
+              "grade": "백합(3구)",
+              "note": "",
+              "isRepresentative": false
+            },
+            {
+              "name": "정원형 평장",
+              "price": 30000000,
+              "feeType": "USAGE",
+              "grade": "고급(6구),백합 (3구)",
+              "note": "",
+              "isRepresentative": false
+            },
+            {
+              "name": "테마형 평장묘",
+              "price": 4100000,
+              "feeType": "USAGE",
+              "grade": "아이리스",
+              "note": "",
+              "isRepresentative": false
+            },
+            {
+              "name": "테마형 평장묘",
+              "price": 3500000,
+              "feeType": "USAGE",
+              "grade": "다알리아",
+              "note": "",
+              "isRepresentative": false
+            },
+            {
+              "name": "테마형 평장묘",
+              "price": 5100000,
+              "feeType": "USAGE",
+              "grade": "플라타너스",
+              "note": "",
+              "isRepresentative": false
+            },
+            {
+              "name": "가족 평장묘",
+              "price": 21800000,
+              "feeType": "USAGE",
+              "grade": "프리미엄(담장포함)",
+              "note": "",
+              "isRepresentative": false,
+              "capacity": "가족"
+            },
+            {
+              "name": "부부 평장묘",
+              "price": 28950000,
+              "feeType": "USAGE",
+              "grade": "프리미엄(담장포함)",
+              "note": "",
+              "isRepresentative": false,
+              "capacity": "부부"
             }
           ]
         }
@@ -1294,131 +1304,131 @@
       },
       "standardizedPrices": [
         {
-          "serviceType": "BURIAL",
-          "subType": "매장묘",
-          "unit": "원",
-          "rows": [
-            {
-              "name": "사용료",
-              "price": 2160000,
-              "feeType": "USAGE",
-              "grade": "",
-              "note": "",
-              "isRepresentative": true,
-              "area": 3.31,
-              "areaUnit": "SQM"
-            },
-            {
-              "name": "관리비",
-              "price": 16000,
-              "feeType": "MAINTENANCE",
-              "grade": "연관리비",
-              "note": "",
-              "isRepresentative": false
-            },
-            {
-              "name": "매장묘 단봉형",
-              "price": 12000000,
-              "feeType": "USAGE",
-              "grade": "2.5평 패키지",
-              "note": "",
-              "isRepresentative": false,
-              "area": 2.5,
-              "areaUnit": "PYEONG"
-            },
-            {
-              "name": "매장묘 쌍봉형",
-              "price": 18000000,
-              "feeType": "USAGE",
-              "grade": "2.5평 패키지",
-              "note": "",
-              "isRepresentative": false,
-              "area": 2.5,
-              "areaUnit": "PYEONG"
-            },
-            {
-              "name": "매장묘 단봉형",
-              "price": 15339000,
-              "feeType": "USAGE",
-              "grade": "4평 패키지",
-              "note": "",
-              "isRepresentative": false,
-              "area": 4,
-              "areaUnit": "PYEONG"
-            },
-            {
-              "name": "매장묘 쌍봉형",
-              "price": 23823000,
-              "feeType": "USAGE",
-              "grade": "4평 패키지",
-              "note": "",
-              "isRepresentative": false,
-              "area": 4,
-              "areaUnit": "PYEONG"
-            }
-          ]
-        },
-        {
-          "serviceType": "BURIAL",
-          "subType": "평장묘",
-          "unit": "원",
-          "rows": [
-            {
-              "name": "평장묘 2구 세트",
-              "price": 5273180,
-              "feeType": "USAGE",
-              "grade": "2구 안치",
-              "note": "",
-              "isRepresentative": false,
-              "area": 8.26,
-              "areaUnit": "SQM"
-            }
-          ]
-        },
-        {
           "serviceType": "BONGSAN",
           "subType": "봉안묘",
           "unit": "원",
           "rows": [
             {
-              "name": "봉안묘 2기 세트",
+              "name": "봉안묘 분양 (2기)",
               "price": 15200000,
               "feeType": "USAGE",
-              "grade": "2기 안치",
-              "note": "",
-              "isRepresentative": false
+              "grade": "부부 2기 안치",
+              "capacity": "부부"
             },
             {
-              "name": "봉안묘 4기 세트",
+              "name": "봉안묘 분양 (4기)",
               "price": 19200000,
               "feeType": "USAGE",
-              "grade": "4기 안치",
-              "note": "",
-              "isRepresentative": false
+              "grade": "가족 4기 안치",
+              "capacity": "가족"
             },
             {
-              "name": "봉안묘 6기 세트",
+              "name": "봉안묘 분양 (6기)",
               "price": 24000000,
               "feeType": "USAGE",
-              "grade": "6기 안치",
-              "note": "",
-              "isRepresentative": false
+              "grade": "가족 6기 안치",
+              "capacity": "가족"
             },
             {
-              "name": "봉안묘 9기 세트",
+              "name": "봉안묘 분양 (9기)",
               "price": 28000000,
               "feeType": "USAGE",
-              "grade": "9기 안치",
-              "note": "",
-              "isRepresentative": false
+              "grade": "가족 9기 안치",
+              "capacity": "가족"
             },
             {
-              "name": "봉안묘 16기 세트",
+              "name": "봉안묘 분양 (16기)",
               "price": 35000000,
               "feeType": "USAGE",
-              "grade": "16기 안치",
-              "note": "",
-              "isRepresentative": false
+              "grade": "문중 16기 안치",
+              "capacity": "문중"
+            }
+          ]
+        },
+        {
+          "serviceType": "BURIAL",
+          "subType": "매장묘 (단장형)",
+          "unit": "원",
+          "rows": [
+            {
+              "name": "기본 시설 사용료",
+              "price": 2160000,
+              "feeType": "USAGE",
+              "grade": "1평 기준",
+              "isRepresentative": true,
+              "capacity": "1인"
+            },
+            {
+              "name": "연 관리비",
+              "price": 16000,
+              "feeType": "MAINTENANCE",
+              "grade": "1평 / 1년 기준",
+              "capacity": "1인"
+            },
+            {
+              "name": "단장묘 분양 패키지(소형)",
+              "price": 12000000,
+              "feeType": "USAGE",
+              "grade": "1구 안치 (2.5평형)",
+              "capacity": "1인"
+            },
+            {
+              "name": "단장묘 분양 패키지(중형)",
+              "price": 15339000,
+              "feeType": "USAGE",
+              "grade": "1구 안치 (4평형)",
+              "capacity": "1인"
+            }
+          ]
+        },
+        {
+          "serviceType": "BURIAL",
+          "subType": "매장묘 (합장형)",
+          "unit": "원",
+          "rows": [
+            {
+              "name": "기본 시설 사용료",
+              "price": 2160000,
+              "feeType": "USAGE",
+              "grade": "1평 기준",
+              "isRepresentative": true,
+              "capacity": "부부"
+            },
+            {
+              "name": "연 관리비",
+              "price": 16000,
+              "feeType": "MAINTENANCE",
+              "grade": "1평 / 1년 기준",
+              "capacity": "부부"
+            },
+            {
+              "name": "합장묘 분양 패키지(소형)",
+              "price": 18000000,
+              "feeType": "USAGE",
+              "grade": "부부 2구 안치 (2.5평형)",
+              "capacity": "부부"
+            },
+            {
+              "name": "합장묘 분양 패키지(중형)",
+              "price": 23823000,
+              "feeType": "USAGE",
+              "grade": "부부 2구 안치 (4평형)",
+              "capacity": "부부"
+            }
+          ]
+        },
+        {
+          "serviceType": "BURIAL",
+          "subType": "평장묘 (부부형)",
+          "unit": "원",
+          "rows": [
+            {
+              "name": "평장묘 분양 패키지",
+              "price": 5273180,
+              "feeType": "USAGE",
+              "grade": "부부 2구 안치 (2.5평형)",
+              "isRepresentative": true,
+              "capacity": "부부"
             }
           ]
         }
@@ -1595,77 +1605,156 @@
           "unit": "원",
           "rows": [
             {
-              "name": "묘지 사용료",
+              "name": "기본 시설 사용료 (토지)",
               "price": 1600000,
               "feeType": "USAGE",
-              "grade": "",
-              "note": "",
+              "grade": "1평 기준",
               "isRepresentative": true,
-              "area": 3.31,
-              "areaUnit": "SQM"
+              "capacity": "공통"
             },
             {
-              "name": "관리비",
+              "name": "연 관리비 (토지)",
               "price": 19000,
               "feeType": "MAINTENANCE",
-              "grade": "연관리비",
-              "note": "",
-              "isRepresentative": false
+              "grade": "1평 / 1년 기준",
+              "capacity": "공통"
+            },
+            {
+              "name": "원형 매장묘 (기본 세트)",
+              "price": 5600000,
+              "feeType": "USAGE",
+              "grade": "전통 봉분 등 기본 제공",
+              "isRepresentative": false,
+              "capacity": "1인/부부"
+            },
+            {
+              "name": "원형 매장묘 (조각 세트)",
+              "price": 7200000,
+              "feeType": "USAGE",
+              "grade": "둘레석 등 조각 장식 포함",
+              "isRepresentative": false,
+              "capacity": "1인/부부"
+            },
+            {
+              "name": "가족 6위 조각 매장 세트",
+              "price": 10900000,
+              "feeType": "USAGE",
+              "grade": "석물 장식 포함 가족 세트",
+              "isRepresentative": false,
+              "capacity": "가족(6위)"
             }
           ]
         },
         {
           "serviceType": "BURIAL",
-          "subType": "평장묘",
+          "subType": "평장묘 (개인/부부형)",
           "unit": "원",
           "rows": [
             {
-              "name": "평장묘",
+              "name": "기본 시설 사용료 (토지)",
+              "price": 1600000,
+              "feeType": "USAGE",
+              "grade": "1평 기준",
+              "isRepresentative": true,
+              "capacity": "공통"
+            },
+            {
+              "name": "연 관리비 (토지)",
+              "price": 19000,
+              "feeType": "MAINTENANCE",
+              "grade": "1평 / 1년 기준",
+              "capacity": "공통"
+            },
+            {
+              "name": "개인 1위 평장 세트",
               "price": 2500000,
               "feeType": "USAGE",
-              "grade": "1구 안치",
-              "note": "",
-              "isRepresentative": true
+              "grade": "개인용 평장 시설물 패키지",
+              "isRepresentative": false,
+              "capacity": "1인"
             },
             {
-              "name": "평장묘",
+              "name": "부부 2위 평장 세트",
               "price": 7000000,
               "feeType": "USAGE",
-              "grade": "2구 안치",
-              "note": "",
-              "isRepresentative": false
-            },
-            {
-              "name": "평장묘",
-              "price": 9600000,
-              "feeType": "USAGE",
-              "grade": "4구 안치",
-              "note": "",
-              "isRepresentative": false
-            },
-            {
-              "name": "평장묘",
-              "price": 12200000,
-              "feeType": "USAGE",
-              "grade": "6구 안치",
-              "note": "",
-              "isRepresentative": false
+              "grade": "부부형 평장 시설물 패키지",
+              "capacity": "부부(2인)"
             }
           ]
         },
         {
-          "serviceType": "BONGSAN",
+          "serviceType": "BURIAL",
+          "subType": "평장묘 (가족형)",
+          "unit": "원",
+          "rows": [
+            {
+              "name": "기본 시설 사용료 (토지)",
+              "price": 1600000,
+              "feeType": "USAGE",
+              "grade": "1평 기준",
+              "isRepresentative": true,
+              "capacity": "공통"
+            },
+            {
+              "name": "연 관리비 (토지)",
+              "price": 19000,
+              "feeType": "MAINTENANCE",
+              "grade": "1평 / 1년 기준",
+              "capacity": "공통"
+            },
+            {
+              "name": "가족 4위 평장 세트",
+              "price": 9600000,
+              "feeType": "USAGE",
+              "grade": "4인 가족형 시설물 패키지",
+              "isRepresentative": false,
+              "capacity": "가족(4위)"
+            },
+            {
+              "name": "가족 6위 평장 세트",
+              "price": 12200000,
+              "feeType": "USAGE",
+              "grade": "6인 가족형 시설물 패키지",
+              "isRepresentative": false,
+              "capacity": "가족(6위)"
+            }
+          ]
+        },
+        {
+          "serviceType": "BURIAL",
           "subType": "봉안묘",
           "unit": "원",
           "rows": [
             {
-              "name": "봉안묘",
+              "name": "기본 시설 사용료 (토지)",
+              "price": 1600000,
+              "feeType": "USAGE",
+              "grade": "1평 기준",
+              "isRepresentative": true,
+              "capacity": "공통"
+            },
+            {
+              "name": "연 관리비 (토지)",
+              "price": 19000,
+              "feeType": "MAINTENANCE",
+              "grade": "1평 / 1년 기준",
+              "capacity": "공통"
+            },
+            {
+              "name": "부부 2위 봉안묘 패키지",
               "price": 4200000,
               "feeType": "USAGE",
-              "grade": "부부 봉안묘",
-              "note": "",
+              "grade": "석물 및 봉안 시설 패키지",
               "isRepresentative": false,
-              "capacity": "부부"
+              "capacity": "부부(2인)"
+            },
+            {
+              "name": "12위 사각돌뚜껑 가족세트",
+              "price": 9900000,
+              "feeType": "USAGE",
+              "grade": "가족 전용 석물 패키지",
+              "isRepresentative": false,
+              "capacity": "가족(12위)"
             }
           ]
         }
@@ -1943,218 +2032,285 @@
           "unit": "원",
           "rows": [
             {
-              "name": "묘지 사용료",
+              "name": "기본 시설 사용료 (토지)",
               "price": 4950000,
               "feeType": "USAGE",
-              "grade": "기준/사용",
-              "note": "",
+              "grade": "1평/30년 기준",
               "isRepresentative": true,
-              "duration": 30,
-              "durationType": "YEAR",
-              "area": 3.31,
-              "areaUnit": "SQM"
+              "capacity": "1평 단위가",
+              "groupType": "일반"
             },
             {
-              "name": "관리비",
+              "name": "연 관리비 (토지)",
               "price": 46000,
               "feeType": "MAINTENANCE",
-              "grade": "연관리비",
-              "note": "",
+              "grade": "1평/1년 기준",
+              "capacity": "1평 단위가",
+              "groupType": "일반"
+            },
+            {
+              "name": "총 분양대금 (올인원 패키지)",
+              "feeType": "USAGE",
+              "grade": "1.5평 기준",
+              "price": 22520000,
+              "capacity": "토지 + 5년관리비 + 석물비/작업비 포함",
+              "groupType": "일반",
               "isRepresentative": false
             },
             {
-              "name": "일반 매장묘",
-              "price": 22520000,
+              "name": "총 분양대금 (올인원 패키지)",
               "feeType": "USAGE",
-              "grade": "",
-              "note": "",
-              "isRepresentative": false,
-              "area": 4.96,
-              "areaUnit": "SQM"
-            },
-            {
-              "name": "일반 매장묘",
+              "grade": "2평 기준",
               "price": 32400000,
-              "feeType": "USAGE",
-              "grade": "",
-              "note": "",
-              "isRepresentative": false,
-              "area": 6.61,
-              "areaUnit": "SQM"
+              "capacity": "토지 + 5년관리비 + 석물비/작업비 포함",
+              "groupType": "일반",
+              "isRepresentative": false
             },
             {
-              "name": "일반 매장묘",
+              "name": "총 분양대금 (올인원 패키지)",
+              "feeType": "USAGE",
+              "grade": "3평 기준",
               "price": 40500000,
-              "feeType": "USAGE",
-              "grade": "",
-              "note": "",
-              "isRepresentative": false,
-              "area": 9.92,
-              "areaUnit": "SQM"
+              "capacity": "토지 + 5년관리비 + 석물비/작업비 포함",
+              "groupType": "일반",
+              "isRepresentative": false
             },
             {
-              "name": "부부 매장묘",
+              "name": "기본 시설 사용료 (토지)",
+              "price": 4950000,
+              "feeType": "USAGE",
+              "grade": "1평/30년 기준",
+              "isRepresentative": true,
+              "capacity": "1평 단위가",
+              "groupType": "부부"
+            },
+            {
+              "name": "연 관리비 (토지)",
+              "price": 46000,
+              "feeType": "MAINTENANCE",
+              "grade": "1평/1년 기준",
+              "capacity": "1평 단위가",
+              "groupType": "부부"
+            },
+            {
+              "name": "총 분양대금 (올인원 패키지)",
+              "feeType": "USAGE",
+              "grade": "4평 기준",
               "price": 75440000,
-              "feeType": "USAGE",
-              "grade": "",
-              "note": "",
-              "isRepresentative": false,
-              "area": 13.22,
-              "areaUnit": "SQM",
-              "capacity": "부부"
+              "capacity": "토지 + 5년관리비 + 석물비/작업비 포함",
+              "groupType": "부부",
+              "isRepresentative": false
             },
             {
-              "name": "부부 매장묘",
+              "name": "총 분양대금 (올인원 패키지)",
+              "feeType": "USAGE",
+              "grade": "5평 기준",
               "price": 105760000,
-              "feeType": "USAGE",
-              "grade": "",
-              "note": "",
-              "isRepresentative": false,
-              "area": 16.53,
-              "areaUnit": "SQM",
-              "capacity": "부부"
+              "capacity": "토지 + 5년관리비 + 석물비/작업비 포함",
+              "groupType": "부부",
+              "isRepresentative": false
             },
             {
-              "name": "부부 매장묘",
+              "name": "총 분양대금 (올인원 패키지)",
+              "feeType": "USAGE",
+              "grade": "6평 기준",
               "price": 121560000,
-              "feeType": "USAGE",
-              "grade": "",
-              "note": "",
-              "isRepresentative": false,
-              "area": 19.83,
-              "areaUnit": "SQM",
-              "capacity": "부부"
+              "capacity": "토지 + 5년관리비 + 석물비/작업비 포함",
+              "groupType": "부부",
+              "isRepresentative": false
             },
             {
-              "name": "고급 매장묘",
+              "name": "기본 시설 사용료 (토지)",
+              "price": 4950000,
+              "feeType": "USAGE",
+              "grade": "1평/30년 기준",
+              "isRepresentative": true,
+              "capacity": "1평 단위가",
+              "groupType": "고급"
+            },
+            {
+              "name": "연 관리비 (토지)",
+              "price": 46000,
+              "feeType": "MAINTENANCE",
+              "grade": "1평/1년 기준",
+              "capacity": "1평 단위가",
+              "groupType": "고급"
+            },
+            {
+              "name": "총 분양대금 (올인원 패키지)",
+              "feeType": "USAGE",
+              "grade": "4평 기준",
               "price": 88860000,
-              "feeType": "USAGE",
-              "grade": "",
-              "note": "",
-              "isRepresentative": false,
-              "area": 13.22,
-              "areaUnit": "SQM"
+              "capacity": "토지 + 5년관리비 + 석물비/작업비 포함",
+              "groupType": "고급",
+              "isRepresentative": false
             },
             {
-              "name": "고급 매장묘",
+              "name": "총 분양대금 (올인원 패키지)",
+              "feeType": "USAGE",
+              "grade": "5평 기준",
               "price": 140300000,
-              "feeType": "USAGE",
-              "grade": "",
-              "note": "",
-              "isRepresentative": false,
-              "area": 16.53,
-              "areaUnit": "SQM"
+              "capacity": "토지 + 5년관리비 + 석물비/작업비 포함",
+              "groupType": "고급",
+              "isRepresentative": false
             },
             {
-              "name": "고급 매장묘",
-              "price": 162700000,
+              "name": "총 분양대금 (올인원 패키지)",
               "feeType": "USAGE",
-              "grade": "",
-              "note": "",
-              "isRepresentative": false,
-              "area": 19.83,
-              "areaUnit": "SQM"
+              "grade": "6평 기준",
+              "price": 162700000,
+              "capacity": "토지 + 5년관리비 + 석물비/작업비 포함",
+              "groupType": "고급",
+              "isRepresentative": false
+            },
+            {
+              "name": "[올인원 패키지란?]",
+              "feeType": "OTHER",
+              "grade": "토지 사용료 + 관리비 5년 선납 + 특수작업비 + 석물비/설치비가 모두 포함된 원스톱 분양가로, 별도의 추가 비용이 발생하지 않습니다.",
+              "isRepresentative": false
             }
           ]
         },
         {
           "serviceType": "BURIAL",
-          "subType": "평장묘",
+          "subType": "평장묘 (리모델링 패키지)",
           "unit": "원",
           "rows": [
             {
-              "name": "평장묘",
+              "name": "기본 시설 사용료 (토지)",
+              "price": 4950000,
+              "feeType": "USAGE",
+              "grade": "1평/30년 기준",
+              "isRepresentative": true,
+              "capacity": "1평 단위가"
+            },
+            {
+              "name": "연 관리비 (토지)",
+              "price": 46000,
+              "feeType": "MAINTENANCE",
+              "grade": "1평/1년 기준",
+              "capacity": "1평 단위가"
+            },
+            {
+              "name": "총 분양대금 (올인원 패키지)",
+              "feeType": "USAGE",
+              "grade": "2위형 기준",
               "price": 11800000,
-              "feeType": "USAGE",
-              "grade": "2구형",
-              "note": "",
-              "isRepresentative": true
+              "capacity": "토지 + 5년관리비 + 석물비/작업비 포함",
+              "isRepresentative": false
             },
             {
-              "name": "평장묘",
+              "name": "총 분양대금 (올인원 패키지)",
+              "feeType": "USAGE",
+              "grade": "4위형 기준",
               "price": 14000000,
-              "feeType": "USAGE",
-              "grade": "4구형",
-              "note": "",
+              "capacity": "토지 + 5년관리비 + 석물비/작업비 포함",
               "isRepresentative": false
             },
             {
-              "name": "평장묘",
+              "name": "총 분양대금 (올인원 패키지)",
+              "feeType": "USAGE",
+              "grade": "6위형 기준",
               "price": 16200000,
-              "feeType": "USAGE",
-              "grade": "6구형",
-              "note": "",
+              "capacity": "토지 + 5년관리비 + 석물비/작업비 포함",
               "isRepresentative": false
             },
             {
-              "name": "평장묘",
-              "price": 18400000,
+              "name": "총 분양대금 (올인원 패키지)",
               "feeType": "USAGE",
-              "grade": "8구형",
-              "note": "",
+              "grade": "8위형 기준",
+              "price": 18400000,
+              "capacity": "토지 + 5년관리비 + 석물비/작업비 포함",
+              "isRepresentative": false
+            },
+            {
+              "name": "[올인원 패키지란?]",
+              "feeType": "OTHER",
+              "grade": "토지 사용료 + 관리비 5년 선납 + 특수작업비 + 석물비/설치비가 모두 포함된 원스톱 분양가로, 별도의 추가 비용이 발생하지 않습니다.",
               "isRepresentative": false
             }
           ]
         },
         {
-          "serviceType": "BONGSAN",
-          "subType": "봉안묘",
+          "serviceType": "BURIAL",
+          "subType": "봉안묘 (리모델링 패키지)",
           "unit": "원",
           "rows": [
             {
-              "name": "봉안묘",
+              "name": "기본 시설 사용료 (토지)",
+              "price": 4950000,
+              "feeType": "USAGE",
+              "grade": "1평/30년 기준",
+              "isRepresentative": true,
+              "capacity": "1평 단위가"
+            },
+            {
+              "name": "연 관리비 (토지)",
+              "price": 46000,
+              "feeType": "MAINTENANCE",
+              "grade": "1평/1년 기준",
+              "capacity": "1평 단위가"
+            },
+            {
+              "name": "총 분양대금 (올인원 패키지)",
+              "feeType": "USAGE",
+              "grade": "2위형 기준",
               "price": 14000000,
-              "feeType": "USAGE",
-              "grade": "2기형",
-              "note": "",
-              "isRepresentative": true
+              "capacity": "토지 + 5년관리비 + 석물비/작업비 포함",
+              "isRepresentative": false
             },
             {
-              "name": "봉안묘",
+              "name": "총 분양대금 (올인원 패키지)",
+              "feeType": "USAGE",
+              "grade": "4위형 기준",
               "price": 16200000,
-              "feeType": "USAGE",
-              "grade": "4기형",
-              "note": "",
+              "capacity": "토지 + 5년관리비 + 석물비/작업비 포함",
               "isRepresentative": false
             },
             {
-              "name": "봉안묘",
+              "name": "총 분양대금 (올인원 패키지)",
+              "feeType": "USAGE",
+              "grade": "6위형 기준",
               "price": 18400000,
-              "feeType": "USAGE",
-              "grade": "6기형",
-              "note": "",
+              "capacity": "토지 + 5년관리비 + 석물비/작업비 포함",
               "isRepresentative": false
             },
             {
-              "name": "봉안묘",
+              "name": "총 분양대금 (올인원 패키지)",
+              "feeType": "USAGE",
+              "grade": "8위형 기준",
               "price": 21700000,
-              "feeType": "USAGE",
-              "grade": "8기형",
-              "note": "",
+              "capacity": "토지 + 5년관리비 + 석물비/작업비 포함",
               "isRepresentative": false
             },
             {
-              "name": "봉안묘",
+              "name": "총 분양대금 (올인원 패키지)",
+              "feeType": "USAGE",
+              "grade": "12위형 기준",
               "price": 25000000,
-              "feeType": "USAGE",
-              "grade": "12기형",
-              "note": "",
+              "capacity": "토지 + 5년관리비 + 석물비/작업비 포함",
               "isRepresentative": false
             },
             {
-              "name": "봉안묘",
+              "name": "총 분양대금 (올인원 패키지)",
+              "feeType": "USAGE",
+              "grade": "24위형 기준",
               "price": 36000000,
-              "feeType": "USAGE",
-              "grade": "24기형",
-              "note": "",
+              "capacity": "토지 + 5년관리비 + 석물비/작업비 포함",
               "isRepresentative": false
             },
             {
-              "name": "봉안묘",
-              "price": 47000000,
+              "name": "총 분양대금 (올인원 패키지)",
               "feeType": "USAGE",
-              "grade": "48기형",
-              "note": "",
+              "grade": "48위형 기준",
+              "price": 47000000,
+              "capacity": "토지 + 5년관리비 + 석물비/작업비 포함",
+              "isRepresentative": false
+            },
+            {
+              "name": "[올인원 패키지란?]",
+              "feeType": "OTHER",
+              "grade": "토지 사용료 + 관리비 5년 선납 + 특수작업비 + 석물비/설치비가 모두 포함된 원스톱 분양가로, 별도의 추가 비용이 발생하지 않습니다.",
               "isRepresentative": false
             }
           ]
@@ -2670,20 +2826,16 @@
           "rows": [
             {
               "name": "묘지 사용료",
-              "price": 750000,
               "feeType": "USAGE",
-              "grade": "",
-              "note": "",
-              "isRepresentative": true,
-              "area": 3.31,
-              "areaUnit": "SQM"
+              "price": 750000,
+              "grade": "1평",
+              "isRepresentative": true
             },
             {
               "name": "묘지 관리비",
-              "price": 17000,
               "feeType": "MAINTENANCE",
+              "price": 17000,
               "grade": "연관리비",
-              "note": "",
               "isRepresentative": false
             }
           ]
@@ -2694,190 +2846,124 @@
           "unit": "원",
           "rows": [
             {
-              "name": "관리비(개인단)",
-              "price": 50000,
-              "feeType": "MAINTENANCE",
-              "grade": "",
-              "note": "",
-              "isRepresentative": false,
-              "groupType": "관리비"
-            },
-            {
-              "name": "관리비(부부단,vip)",
-              "price": 80000,
-              "feeType": "MAINTENANCE",
-              "grade": "",
-              "note": "",
-              "isRepresentative": false,
-              "groupType": "관리비"
-            },
-            {
               "name": "1단",
               "price": 2000000,
               "feeType": "USAGE",
-              "grade": "",
-              "note": "",
-              "isRepresentative": false,
+              "grade": "개인단",
               "groupType": "일반실(개인단)",
-              "capacity": "개인"
+              "isRepresentative": false
             },
             {
               "name": "2단",
               "price": 2500000,
               "feeType": "USAGE",
-              "grade": "",
-              "note": "",
-              "isRepresentative": false,
-              "groupType": "일반실(개인단)",
-              "capacity": "개인"
+              "grade": "개인단",
+              "groupType": "일반실(개인단)"
             },
             {
               "name": "3단",
               "price": 3000000,
               "feeType": "USAGE",
-              "grade": "",
-              "note": "",
-              "isRepresentative": false,
-              "groupType": "일반실(개인단)",
-              "capacity": "개인"
+              "grade": "개인단",
+              "groupType": "일반실(개인단)"
             },
             {
               "name": "4단",
               "price": 4000000,
               "feeType": "USAGE",
-              "grade": "",
-              "note": "",
-              "isRepresentative": false,
-              "groupType": "일반실(개인단)",
-              "capacity": "개인"
+              "grade": "개인단",
+              "groupType": "일반실(개인단)"
             },
             {
               "name": "5단",
               "price": 5000000,
               "feeType": "USAGE",
-              "grade": "",
-              "note": "",
-              "isRepresentative": false,
-              "groupType": "일반실(개인단)",
-              "capacity": "개인"
+              "grade": "개인단",
+              "groupType": "일반실(개인단)"
             },
             {
               "name": "6단",
               "price": 4000000,
               "feeType": "USAGE",
-              "grade": "",
-              "note": "",
-              "isRepresentative": false,
-              "groupType": "일반실(개인단)",
-              "capacity": "개인"
+              "grade": "개인단",
+              "groupType": "일반실(개인단)"
             },
             {
               "name": "7단",
               "price": 3000000,
               "feeType": "USAGE",
-              "grade": "",
-              "note": "",
-              "isRepresentative": false,
-              "groupType": "일반실(개인단)",
-              "capacity": "개인"
+              "grade": "개인단",
+              "groupType": "일반실(개인단)"
             },
             {
               "name": "8단",
               "price": 1500000,
               "feeType": "USAGE",
-              "grade": "",
-              "note": "",
-              "isRepresentative": false,
+              "grade": "개인단",
               "groupType": "일반실(개인단)",
-              "capacity": "개인"
+              "isRepresentative": true
             },
             {
               "name": "1단",
               "price": 3000000,
               "feeType": "USAGE",
-              "grade": "",
-              "note": "",
-              "isRepresentative": false,
-              "groupType": "일반실(부부단)",
-              "capacity": "부부"
+              "grade": "부부단",
+              "groupType": "일반실(부부단)"
             },
             {
               "name": "2단",
               "price": 4000000,
               "feeType": "USAGE",
-              "grade": "",
-              "note": "",
-              "isRepresentative": false,
-              "groupType": "일반실(부부단)",
-              "capacity": "부부"
+              "grade": "부부단",
+              "groupType": "일반실(부부단)"
             },
             {
               "name": "3단",
               "price": 5000000,
               "feeType": "USAGE",
-              "grade": "",
-              "note": "",
-              "isRepresentative": false,
-              "groupType": "일반실(부부단)",
-              "capacity": "부부"
+              "grade": "부부단",
+              "groupType": "일반실(부부단)"
             },
             {
               "name": "4단",
               "price": 7000000,
               "feeType": "USAGE",
-              "grade": "",
-              "note": "",
-              "isRepresentative": false,
-              "groupType": "일반실(부부단)",
-              "capacity": "부부"
+              "grade": "부부단",
+              "groupType": "일반실(부부단)"
             },
             {
               "name": "5단",
               "price": 9000000,
               "feeType": "USAGE",
-              "grade": "",
-              "note": "",
-              "isRepresentative": false,
-              "groupType": "일반실(부부단)",
-              "capacity": "부부"
+              "grade": "부부단",
+              "groupType": "일반실(부부단)"
             },
             {
               "name": "6단",
               "price": 7000000,
               "feeType": "USAGE",
-              "grade": "",
-              "note": "",
-              "isRepresentative": false,
-              "groupType": "일반실(부부단)",
-              "capacity": "부부"
+              "grade": "부부단",
+              "groupType": "일반실(부부단)"
             },
             {
               "name": "7단",
               "price": 4000000,
               "feeType": "USAGE",
-              "grade": "",
-              "note": "",
-              "isRepresentative": false,
-              "groupType": "일반실(부부단)",
-              "capacity": "부부"
+              "grade": "부부단",
+              "groupType": "일반실(부부단)"
             },
             {
               "name": "8단",
               "price": 2000000,
               "feeType": "USAGE",
-              "grade": "",
-              "note": "",
-              "isRepresentative": false,
-              "groupType": "일반실(부부단)",
-              "capacity": "부부"
+              "grade": "부부단",
+              "groupType": "일반실(부부단)"
             },
             {
               "name": "1단",
               "price": 4000000,
               "feeType": "USAGE",
               "grade": "VIP단",
-              "note": "",
-              "isRepresentative": false,
               "groupType": "일반실(VIP단)"
             },
             {
@@ -2885,8 +2971,6 @@
               "price": 5000000,
               "feeType": "USAGE",
               "grade": "VIP단",
-              "note": "",
-              "isRepresentative": false,
               "groupType": "일반실(VIP단)"
             },
             {
@@ -2894,8 +2978,6 @@
               "price": 6000000,
               "feeType": "USAGE",
               "grade": "VIP단",
-              "note": "",
-              "isRepresentative": false,
               "groupType": "일반실(VIP단)"
             },
             {
@@ -2903,8 +2985,6 @@
               "price": 8000000,
               "feeType": "USAGE",
               "grade": "VIP단",
-              "note": "",
-              "isRepresentative": false,
               "groupType": "일반실(VIP단)"
             },
             {
@@ -2912,8 +2992,6 @@
               "price": 10000000,
               "feeType": "USAGE",
               "grade": "VIP단",
-              "note": "",
-              "isRepresentative": false,
               "groupType": "일반실(VIP단)"
             },
             {
@@ -2921,8 +2999,6 @@
               "price": 8000000,
               "feeType": "USAGE",
               "grade": "VIP단",
-              "note": "",
-              "isRepresentative": false,
               "groupType": "일반실(VIP단)"
             },
             {
@@ -2930,8 +3006,6 @@
               "price": 6000000,
               "feeType": "USAGE",
               "grade": "VIP단",
-              "note": "",
-              "isRepresentative": false,
               "groupType": "일반실(VIP단)"
             },
             {
@@ -2939,219 +3013,255 @@
               "price": 3000000,
               "feeType": "USAGE",
               "grade": "VIP단",
-              "note": "",
-              "isRepresentative": false,
               "groupType": "일반실(VIP단)"
+            },
+            {
+              "name": "1단",
+              "price": 3000000,
+              "feeType": "USAGE",
+              "grade": "개인단",
+              "groupType": "일반실3층(개인단)"
             },
             {
               "name": "2단",
               "price": 3500000,
               "feeType": "USAGE",
-              "grade": "",
-              "note": "",
-              "isRepresentative": false,
-              "groupType": "일반실3층(개인단)",
-              "capacity": "개인"
+              "grade": "개인단",
+              "groupType": "일반실3층(개인단)"
             },
             {
               "name": "3단",
               "price": 4000000,
               "feeType": "USAGE",
-              "grade": "",
-              "note": "",
-              "isRepresentative": false,
-              "groupType": "일반실3층(개인단)",
-              "capacity": "개인"
+              "grade": "개인단",
+              "groupType": "일반실3층(개인단)"
             },
             {
               "name": "4단",
               "price": 5000000,
               "feeType": "USAGE",
-              "grade": "",
-              "note": "",
-              "isRepresentative": false,
-              "groupType": "일반실3층(개인단)",
-              "capacity": "개인"
+              "grade": "개인단",
+              "groupType": "일반실3층(개인단)"
             },
             {
               "name": "5단",
               "price": 6000000,
               "feeType": "USAGE",
-              "grade": "",
-              "note": "",
-              "isRepresentative": false,
-              "groupType": "일반실3층(개인단)",
-              "capacity": "개인"
+              "grade": "개인단",
+              "groupType": "일반실3층(개인단)"
             },
             {
               "name": "6단",
               "price": 4500000,
               "feeType": "USAGE",
-              "grade": "",
-              "note": "",
-              "isRepresentative": false,
-              "groupType": "일반실3층(개인단)",
-              "capacity": "개인"
+              "grade": "개인단",
+              "groupType": "일반실3층(개인단)"
             },
             {
               "name": "7단",
               "price": 3500000,
               "feeType": "USAGE",
-              "grade": "",
-              "note": "",
-              "isRepresentative": false,
-              "groupType": "일반실3층(개인단)",
-              "capacity": "개인"
+              "grade": "개인단",
+              "groupType": "일반실3층(개인단)"
             },
             {
               "name": "8단",
               "price": 2500000,
               "feeType": "USAGE",
-              "grade": "",
-              "note": "",
-              "isRepresentative": false,
-              "groupType": "일반실3층(개인단)",
-              "capacity": "개인"
+              "grade": "개인단",
+              "groupType": "일반실3층(개인단)"
+            },
+            {
+              "name": "1단",
+              "price": 4000000,
+              "feeType": "USAGE",
+              "grade": "부부단",
+              "groupType": "일반실4층(부부단)"
+            },
+            {
+              "name": "2단",
+              "price": 5000000,
+              "feeType": "USAGE",
+              "grade": "부부단",
+              "groupType": "일반실4층(부부단)"
+            },
+            {
+              "name": "3단",
+              "price": 6000000,
+              "feeType": "USAGE",
+              "grade": "부부단",
+              "groupType": "일반실4층(부부단)"
+            },
+            {
+              "name": "4단",
+              "price": 8000000,
+              "feeType": "USAGE",
+              "grade": "부부단",
+              "groupType": "일반실4층(부부단)"
+            },
+            {
+              "name": "5단",
+              "price": 10000000,
+              "feeType": "USAGE",
+              "grade": "부부단",
+              "groupType": "일반실4층(부부단)"
             },
             {
               "name": "6단",
               "price": 7500000,
               "feeType": "USAGE",
-              "grade": "",
-              "note": "",
-              "isRepresentative": false,
-              "groupType": "일반실4층(부부단)",
-              "capacity": "부부"
+              "grade": "부부단",
+              "groupType": "일반실4층(부부단)"
             },
             {
               "name": "7단",
               "price": 4500000,
               "feeType": "USAGE",
-              "grade": "",
-              "note": "",
-              "isRepresentative": false,
-              "groupType": "일반실4층(부부단)",
-              "capacity": "부부"
+              "grade": "부부단",
+              "groupType": "일반실4층(부부단)"
+            },
+            {
+              "name": "8단",
+              "price": 3000000,
+              "feeType": "USAGE",
+              "grade": "부부단",
+              "groupType": "일반실4층(부부단)"
+            },
+            {
+              "name": "1단",
+              "price": 4000000,
+              "feeType": "USAGE",
+              "grade": "VIP개인",
+              "groupType": "일반실3층(VIP개인)"
             },
             {
               "name": "2단",
               "price": 4500000,
               "feeType": "USAGE",
-              "grade": "VIP",
-              "note": "",
-              "isRepresentative": false,
-              "groupType": "일반실3층(VIP개인)",
-              "capacity": "개인"
+              "grade": "VIP개인",
+              "groupType": "일반실3층(VIP개인)"
+            },
+            {
+              "name": "3단",
+              "price": 5000000,
+              "feeType": "USAGE",
+              "grade": "VIP개인",
+              "groupType": "일반실3층(VIP개인)"
             },
             {
               "name": "4단",
               "price": 6000000,
               "feeType": "USAGE",
-              "grade": "VIP",
-              "note": "",
-              "isRepresentative": false,
-              "groupType": "일반실3층(VIP개인)",
-              "capacity": "개인"
+              "grade": "VIP개인",
+              "groupType": "일반실3층(VIP개인)"
             },
             {
               "name": "5단",
               "price": 7000000,
               "feeType": "USAGE",
-              "grade": "VIP",
-              "note": "",
-              "isRepresentative": false,
-              "groupType": "일반실3층(VIP개인)",
-              "capacity": "개인"
+              "grade": "VIP개인",
+              "groupType": "일반실3층(VIP개인)"
             },
             {
               "name": "6단",
               "price": 5000000,
               "feeType": "USAGE",
-              "grade": "VIP",
-              "note": "",
-              "isRepresentative": false,
-              "groupType": "일반실3층(VIP개인)",
-              "capacity": "개인"
+              "grade": "VIP개인",
+              "groupType": "일반실3층(VIP개인)"
+            },
+            {
+              "name": "7단",
+              "price": 4000000,
+              "feeType": "USAGE",
+              "grade": "VIP개인",
+              "groupType": "일반실3층(VIP개인)"
+            },
+            {
+              "name": "8단",
+              "price": 3000000,
+              "feeType": "USAGE",
+              "grade": "VIP개인",
+              "groupType": "일반실3층(VIP개인)"
             },
             {
               "name": "1단",
               "price": 5000000,
               "feeType": "USAGE",
-              "grade": "VIP",
-              "note": "",
-              "isRepresentative": false,
-              "groupType": "일반실3층(VIP부부)",
-              "capacity": "부부"
+              "grade": "VIP부부",
+              "groupType": "일반실3층(VIP부부)"
             },
             {
               "name": "2단",
               "price": 6000000,
               "feeType": "USAGE",
-              "grade": "VIP",
-              "note": "",
-              "isRepresentative": false,
-              "groupType": "일반실3층(VIP부부)",
-              "capacity": "부부"
+              "grade": "VIP부부",
+              "groupType": "일반실3층(VIP부부)"
             },
             {
               "name": "3단",
               "price": 7000000,
               "feeType": "USAGE",
-              "grade": "VIP",
-              "note": "",
-              "isRepresentative": false,
-              "groupType": "일반실3층(VIP부부)",
-              "capacity": "부부"
+              "grade": "VIP부부",
+              "groupType": "일반실3층(VIP부부)"
             },
             {
               "name": "4단",
               "price": 9000000,
               "feeType": "USAGE",
-              "grade": "VIP",
-              "note": "",
-              "isRepresentative": false,
-              "groupType": "일반실3층(VIP부부)",
-              "capacity": "부부"
+              "grade": "VIP부부",
+              "groupType": "일반실3층(VIP부부)"
             },
             {
               "name": "5단",
               "price": 11000000,
               "feeType": "USAGE",
-              "grade": "VIP",
-              "note": "",
-              "isRepresentative": false,
-              "groupType": "일반실3층(VIP부부)",
-              "capacity": "부부"
+              "grade": "VIP부부",
+              "groupType": "일반실3층(VIP부부)"
             },
             {
               "name": "6단",
               "price": 9000000,
               "feeType": "USAGE",
-              "grade": "VIP",
-              "note": "",
-              "isRepresentative": false,
-              "groupType": "일반실3층(VIP부부)",
-              "capacity": "부부"
+              "grade": "VIP부부",
+              "groupType": "일반실3층(VIP부부)"
             },
             {
               "name": "7단",
               "price": 7000000,
               "feeType": "USAGE",
-              "grade": "VIP",
-              "note": "",
-              "isRepresentative": false,
-              "groupType": "일반실3층(VIP부부)",
-              "capacity": "부부"
+              "grade": "VIP부부",
+              "groupType": "일반실3층(VIP부부)"
             },
             {
               "name": "8단",
               "price": 4000000,
               "feeType": "USAGE",
-              "grade": "VIP",
-              "note": "",
-              "isRepresentative": false,
-              "groupType": "일반실3층(VIP부부)",
-              "capacity": "부부"
+              "grade": "VIP부부",
+              "groupType": "일반실3층(VIP부부)"
+            },
+            {
+              "name": "[일반실 안내]",
+              "feeType": "OTHER",
+              "grade": "가장 표준적이고 아늑하게 구성된 합리적인 가격의 기본 봉안 공간입니다.",
+              "isRepresentative": false
+            },
+            {
+              "name": "[VIP실 안내]",
+              "feeType": "OTHER",
+              "grade": "고급스러운 자재와 넓은 공간이 함께 제공되는 프리미엄 안치 공간입니다.",
+              "isRepresentative": false
+            },
+            {
+              "name": "연 관리비 (개인단)",
+              "price": 50000,
+              "feeType": "MAINTENANCE",
+              "grade": "1년 기준"
+            },
+            {
+              "name": "연 관리비 (부부단/VIP단)",
+              "price": 80000,
+              "feeType": "MAINTENANCE",
+              "grade": "1년 기준"
             }
           ]
         }
@@ -3971,277 +4081,653 @@
       },
       "standardizedPrices": [
         {
-          "serviceType": "BURIAL",
-          "subType": "매장묘",
-          "unit": "원",
-          "rows": [
-            {
-              "name": "묘지 임대료",
-              "price": 1070000,
-              "feeType": "USAGE",
-              "grade": "",
-              "note": "",
-              "isRepresentative": true,
-              "area": 3.31,
-              "areaUnit": "SQM"
-            },
-            {
-              "name": "묘지 관리비",
-              "price": 17000,
-              "feeType": "MAINTENANCE",
-              "grade": "",
-              "note": "",
-              "isRepresentative": false
-            },
-            {
-              "name": "재봉작업",
-              "price": 500000,
-              "feeType": "USAGE",
-              "grade": "",
-              "note": "",
-              "isRepresentative": false,
-              "area": 4.96,
-              "areaUnit": "SQM"
-            },
-            {
-              "name": "재봉작업",
-              "price": 550000,
-              "feeType": "USAGE",
-              "grade": "",
-              "note": "",
-              "isRepresentative": false,
-              "area": 9.92,
-              "areaUnit": "SQM"
-            },
-            {
-              "name": "평토작업비",
-              "price": 150000,
-              "feeType": "USAGE",
-              "grade": "",
-              "note": "",
-              "isRepresentative": false
-            },
-            {
-              "name": "개장정리비",
-              "price": 420000,
-              "feeType": "USAGE",
-              "grade": "",
-              "note": "",
-              "isRepresentative": false
-            },
-            {
-              "name": "봉분작업비",
-              "price": 500000,
-              "feeType": "USAGE",
-              "grade": "",
-              "note": "",
-              "isRepresentative": false
-            },
-            {
-              "name": "개장정리비",
-              "price": 520000,
-              "feeType": "USAGE",
-              "grade": "",
-              "note": "",
-              "isRepresentative": false
-            },
-            {
-              "name": "개장정리비",
-              "price": 620000,
-              "feeType": "USAGE",
-              "grade": "",
-              "note": "",
-              "isRepresentative": false
-            }
-          ]
-        },
-        {
           "serviceType": "BONGSAN",
           "subType": "봉안당",
           "unit": "원",
           "rows": [
             {
-              "name": "관리비(1기/1년)",
-              "price": 32000,
-              "feeType": "MAINTENANCE",
-              "grade": "",
-              "note": "",
-              "isRepresentative": false,
-              "groupType": "관리비"
-            },
-            {
-              "name": "봉안당",
-              "price": 0,
-              "feeType": "USAGE",
-              "grade": "",
-              "note": "",
-              "isRepresentative": false,
-              "groupType": "삼매실"
-            },
-            {
               "name": "1단",
-              "price": 0,
+              "price": 2000000,
               "feeType": "USAGE",
-              "grade": "",
-              "note": "",
-              "isRepresentative": false,
-              "groupType": "금강실"
+              "groupType": "개인단 (로얄실)",
+              "isRepresentative": false
             },
             {
               "name": "2단",
-              "price": 0,
+              "price": 3000000,
               "feeType": "USAGE",
-              "grade": "",
-              "note": "",
-              "isRepresentative": false,
-              "groupType": "금강실"
+              "groupType": "개인단 (로얄실)",
+              "isRepresentative": false
             },
             {
               "name": "3단",
-              "price": 0,
+              "price": 3500000,
               "feeType": "USAGE",
-              "grade": "",
-              "note": "",
-              "isRepresentative": false,
-              "groupType": "금강실"
+              "groupType": "개인단 (로얄실)",
+              "isRepresentative": true
             },
             {
               "name": "4단",
-              "price": 0,
+              "price": 5000000,
               "feeType": "USAGE",
-              "grade": "",
-              "note": "",
-              "isRepresentative": false,
-              "groupType": "금강실"
+              "groupType": "개인단 (로얄실)",
+              "isRepresentative": false
             },
             {
               "name": "5단",
-              "price": 0,
+              "price": 5000000,
               "feeType": "USAGE",
-              "grade": "",
-              "note": "",
-              "isRepresentative": false,
-              "groupType": "금강실"
+              "groupType": "개인단 (로얄실)",
+              "isRepresentative": false
             },
             {
               "name": "6단",
-              "price": 0,
+              "price": 5000000,
               "feeType": "USAGE",
-              "grade": "",
-              "note": "",
-              "isRepresentative": false,
-              "groupType": "금강실"
+              "groupType": "개인단 (로얄실)",
+              "isRepresentative": false
             },
             {
               "name": "7단",
-              "price": 0,
+              "price": 3500000,
               "feeType": "USAGE",
-              "grade": "",
-              "note": "",
-              "isRepresentative": false,
-              "groupType": "금강실"
+              "groupType": "개인단 (로얄실)",
+              "isRepresentative": false
             },
             {
               "name": "8단",
-              "price": 0,
+              "price": 2500000,
               "feeType": "USAGE",
-              "grade": "",
-              "note": "",
-              "isRepresentative": false,
-              "groupType": "금강실"
+              "groupType": "개인단 (로얄실)",
+              "isRepresentative": false
+            },
+            {
+              "name": "1단",
+              "price": 4000000,
+              "feeType": "USAGE",
+              "groupType": "부부단 (로얄실)",
+              "isRepresentative": false
+            },
+            {
+              "name": "2단",
+              "price": 6000000,
+              "feeType": "USAGE",
+              "groupType": "부부단 (로얄실)",
+              "isRepresentative": false
+            },
+            {
+              "name": "3단",
+              "price": 7000000,
+              "feeType": "USAGE",
+              "groupType": "부부단 (로얄실)",
+              "isRepresentative": true
+            },
+            {
+              "name": "4단",
+              "price": 10000000,
+              "feeType": "USAGE",
+              "groupType": "부부단 (로얄실)",
+              "isRepresentative": false
+            },
+            {
+              "name": "5단",
+              "price": 10000000,
+              "feeType": "USAGE",
+              "groupType": "부부단 (로얄실)",
+              "isRepresentative": false
+            },
+            {
+              "name": "6단",
+              "price": 10000000,
+              "feeType": "USAGE",
+              "groupType": "부부단 (로얄실)",
+              "isRepresentative": false
+            },
+            {
+              "name": "7단",
+              "price": 7000000,
+              "feeType": "USAGE",
+              "groupType": "부부단 (로얄실)",
+              "isRepresentative": false
+            },
+            {
+              "name": "8단",
+              "price": 5000000,
+              "feeType": "USAGE",
+              "groupType": "부부단 (로얄실)",
+              "isRepresentative": false
+            },
+            {
+              "name": "1단",
+              "price": 1200000,
+              "feeType": "USAGE",
+              "groupType": "개인단 (일반실)",
+              "isRepresentative": false
+            },
+            {
+              "name": "2단",
+              "price": 1800000,
+              "feeType": "USAGE",
+              "groupType": "개인단 (일반실)",
+              "isRepresentative": false
+            },
+            {
+              "name": "3단",
+              "price": 2100000,
+              "feeType": "USAGE",
+              "groupType": "개인단 (일반실)",
+              "isRepresentative": false
+            },
+            {
+              "name": "4단",
+              "price": 3000000,
+              "feeType": "USAGE",
+              "groupType": "개인단 (일반실)",
+              "isRepresentative": false
+            },
+            {
+              "name": "5단",
+              "price": 3000000,
+              "feeType": "USAGE",
+              "groupType": "개인단 (일반실)",
+              "isRepresentative": false
+            },
+            {
+              "name": "6단",
+              "price": 3000000,
+              "feeType": "USAGE",
+              "groupType": "개인단 (일반실)",
+              "isRepresentative": false
+            },
+            {
+              "name": "7단",
+              "price": 2100000,
+              "feeType": "USAGE",
+              "groupType": "개인단 (일반실)",
+              "isRepresentative": false
+            },
+            {
+              "name": "1단",
+              "price": 3200000,
+              "feeType": "USAGE",
+              "groupType": "부부단 (일반실)",
+              "isRepresentative": false
+            },
+            {
+              "name": "2단",
+              "price": 4800000,
+              "feeType": "USAGE",
+              "groupType": "부부단 (일반실)",
+              "isRepresentative": false
+            },
+            {
+              "name": "3단",
+              "price": 5600000,
+              "feeType": "USAGE",
+              "groupType": "부부단 (일반실)",
+              "isRepresentative": false
+            },
+            {
+              "name": "4단",
+              "price": 8000000,
+              "feeType": "USAGE",
+              "groupType": "부부단 (일반실)",
+              "isRepresentative": false
+            },
+            {
+              "name": "5단",
+              "price": 8000000,
+              "feeType": "USAGE",
+              "groupType": "부부단 (일반실)",
+              "isRepresentative": false
+            },
+            {
+              "name": "6단",
+              "price": 8000000,
+              "feeType": "USAGE",
+              "groupType": "부부단 (일반실)",
+              "isRepresentative": false
+            },
+            {
+              "name": "7단",
+              "price": 5600000,
+              "feeType": "USAGE",
+              "groupType": "부부단 (일반실)",
+              "isRepresentative": false
+            },
+            {
+              "name": "1단",
+              "price": 1600000,
+              "feeType": "USAGE",
+              "groupType": "개인단 (특별실/기독교관)",
+              "isRepresentative": false
+            },
+            {
+              "name": "2단",
+              "price": 2400000,
+              "feeType": "USAGE",
+              "groupType": "개인단 (특별실/기독교관)",
+              "isRepresentative": false
+            },
+            {
+              "name": "3단",
+              "price": 2800000,
+              "feeType": "USAGE",
+              "groupType": "개인단 (특별실/기독교관)",
+              "isRepresentative": false
+            },
+            {
+              "name": "4단",
+              "price": 4000000,
+              "feeType": "USAGE",
+              "groupType": "개인단 (특별실/기독교관)",
+              "isRepresentative": false
+            },
+            {
+              "name": "5단",
+              "price": 4000000,
+              "feeType": "USAGE",
+              "groupType": "개인단 (특별실/기독교관)",
+              "isRepresentative": false
+            },
+            {
+              "name": "6단",
+              "price": 4000000,
+              "feeType": "USAGE",
+              "groupType": "개인단 (특별실/기독교관)",
+              "isRepresentative": false
+            },
+            {
+              "name": "7단",
+              "price": 2800000,
+              "feeType": "USAGE",
+              "groupType": "개인단 (특별실/기독교관)",
+              "isRepresentative": false
+            },
+            {
+              "name": "연 관리비 (개인단)",
+              "price": 32000,
+              "feeType": "MAINTENANCE",
+              "grade": "1년 기준"
+            },
+            {
+              "name": "연 관리비 (부부단)",
+              "price": 64000,
+              "feeType": "MAINTENANCE",
+              "grade": "1년 기준"
+            }
+          ]
+        },
+        {
+          "serviceType": "BURIAL",
+          "subType": "매장묘",
+          "unit": "원",
+          "rows": [
+            {
+              "name": "묘지 임대사용료",
+              "price": 1070000,
+              "feeType": "USAGE",
+              "grade": "1평 기준"
+            },
+            {
+              "name": "묘지 공동관리비",
+              "price": 17000,
+              "feeType": "MAINTENANCE",
+              "grade": "1평/1년 기준"
+            }
+          ]
+        },
+        {
+          "serviceType": "BURIAL",
+          "subType": "기타 석물 및 추가비용",
+          "unit": "원",
+          "rows": [
+            {
+              "name": "봉분작업비",
+              "price": 500000,
+              "feeType": "USAGE",
+              "grade": "흙 운반 및 봉분 작업비용"
+            },
+            {
+              "name": "평토작업비",
+              "price": 150000,
+              "feeType": "USAGE",
+              "grade": "바닥 다지기 작업/1평 기준"
+            },
+            {
+              "name": "재봉작업 (1.5평)",
+              "price": 500000,
+              "feeType": "USAGE",
+              "grade": "사각묘태석 봉분"
+            },
+            {
+              "name": "재봉작업 (3.0평)",
+              "price": 550000,
+              "feeType": "USAGE",
+              "grade": "타원묘태석 봉분"
+            },
+            {
+              "name": "개장정리비 (소)",
+              "price": 420000,
+              "feeType": "USAGE",
+              "grade": "1.5~2.5평 원상복구"
+            },
+            {
+              "name": "개장정리비 (중)",
+              "price": 520000,
+              "feeType": "USAGE",
+              "grade": "3.0~4.5평 원상복구"
+            },
+            {
+              "name": "개장정리비 (대)",
+              "price": 620000,
+              "feeType": "USAGE",
+              "grade": "5.0~6.0평 원상복구"
+            },
+            {
+              "name": "조각묘태석 3단",
+              "price": 5544000,
+              "feeType": "USAGE",
+              "groupType": "석물 비용"
+            },
+            {
+              "name": "사각묘태석 3단",
+              "price": 4059000,
+              "feeType": "USAGE",
+              "groupType": "석물 비용"
+            },
+            {
+              "name": "사각묘태석 2단",
+              "price": 1859000,
+              "feeType": "USAGE",
+              "groupType": "석물 비용"
+            },
+            {
+              "name": "사각묘태석 1단",
+              "price": 1496000,
+              "feeType": "USAGE",
+              "groupType": "석물 비용"
+            },
+            {
+              "name": "타원묘태석",
+              "price": 1496000,
+              "feeType": "USAGE",
+              "groupType": "석물 비용"
+            },
+            {
+              "name": "월석",
+              "price": 154000,
+              "feeType": "USAGE",
+              "groupType": "석물 비용"
+            },
+            {
+              "name": "화강상석 (3자)",
+              "price": 1309000,
+              "feeType": "USAGE",
+              "groupType": "석물 비용"
+            },
+            {
+              "name": "화강상석 (2.5자)",
+              "price": 759000,
+              "feeType": "USAGE",
+              "groupType": "석물 비용"
+            },
+            {
+              "name": "북석 대",
+              "price": 374000,
+              "feeType": "USAGE",
+              "groupType": "석물 비용"
+            },
+            {
+              "name": "북석 소",
+              "price": 297000,
+              "feeType": "USAGE",
+              "groupType": "석물 비용"
+            },
+            {
+              "name": "혼유석",
+              "price": 286000,
+              "feeType": "USAGE",
+              "groupType": "석물 비용"
+            },
+            {
+              "name": "갓비석",
+              "price": 1199000,
+              "feeType": "USAGE",
+              "groupType": "석물 비용"
+            },
+            {
+              "name": "갓석",
+              "price": 847000,
+              "feeType": "USAGE",
+              "groupType": "석물 비용"
+            },
+            {
+              "name": "오석비석 (3.5자)",
+              "price": 1122000,
+              "feeType": "USAGE",
+              "groupType": "석물 비용"
+            },
+            {
+              "name": "오석비석 (3자)",
+              "price": 946000,
+              "feeType": "USAGE",
+              "groupType": "석물 비용"
+            },
+            {
+              "name": "오석비석 (2.5자)",
+              "price": 759000,
+              "feeType": "USAGE",
+              "groupType": "석물 비용"
+            },
+            {
+              "name": "연꽃좌대",
+              "price": 638000,
+              "feeType": "USAGE",
+              "groupType": "석물 비용"
+            },
+            {
+              "name": "무지좌대",
+              "price": 264000,
+              "feeType": "USAGE",
+              "groupType": "석물 비용"
+            },
+            {
+              "name": "와비",
+              "price": 1100000,
+              "feeType": "USAGE",
+              "groupType": "석물 비용"
+            },
+            {
+              "name": "연꽃와비좌대",
+              "price": 924000,
+              "feeType": "USAGE",
+              "groupType": "석물 비용"
+            },
+            {
+              "name": "조각꽃병",
+              "price": 682000,
+              "feeType": "USAGE",
+              "groupType": "석물 비용"
+            },
+            {
+              "name": "광택꽃병",
+              "price": 341000,
+              "feeType": "USAGE",
+              "groupType": "석물 비용"
+            },
+            {
+              "name": "조각상향로",
+              "price": 517000,
+              "feeType": "USAGE",
+              "groupType": "석물 비용"
+            },
+            {
+              "name": "단향로",
+              "price": 198000,
+              "feeType": "USAGE",
+              "groupType": "석물 비용"
+            },
+            {
+              "name": "석문",
+              "price": 1353000,
+              "feeType": "USAGE",
+              "groupType": "석물 비용"
+            },
+            {
+              "name": "석주",
+              "price": 198000,
+              "feeType": "USAGE",
+              "groupType": "석물 비용"
+            },
+            {
+              "name": "경계석",
+              "price": 198000,
+              "feeType": "USAGE",
+              "groupType": "석물 비용"
+            },
+            {
+              "name": "각자 비용 (합비)",
+              "price": 407000,
+              "feeType": "USAGE",
+              "groupType": "추가 비용"
+            },
+            {
+              "name": "각자 비용 (외비)",
+              "price": 330000,
+              "feeType": "USAGE",
+              "groupType": "추가 비용"
+            },
+            {
+              "name": "각자 비용 (별세일 추가)",
+              "price": 121000,
+              "feeType": "USAGE",
+              "groupType": "추가 비용"
+            },
+            {
+              "name": "각자 비용 (이름 추가)",
+              "price": 55000,
+              "feeType": "USAGE",
+              "groupType": "추가 비용"
+            },
+            {
+              "name": "각자 비용 (봉안묘 뚜껑)",
+              "price": 110000,
+              "feeType": "USAGE",
+              "groupType": "추가 비용"
             }
           ]
         },
         {
           "serviceType": "NATURAL",
-          "subType": "수목형",
+          "subType": "수목장",
           "unit": "원",
           "rows": [
             {
-              "name": "에메랄드그린",
+              "name": "수목장지 (1위)",
               "price": 2000000,
               "feeType": "USAGE",
-              "grade": "4위",
-              "note": "",
-              "isRepresentative": false,
-              "groupType": "수목"
+              "groupType": "개인, 부부형",
+              "isRepresentative": true
             },
             {
-              "name": "반송(소)",
-              "price": 2000000,
+              "name": "개인, 부부형",
+              "price": 3000000,
               "feeType": "USAGE",
-              "grade": "4위",
-              "note": "",
-              "isRepresentative": false,
-              "groupType": "수목"
+              "groupType": "개인, 부부형",
+              "isRepresentative": false
             },
             {
-              "name": "반송(대)",
-              "price": 2000000,
+              "name": "개인,부부형 (양산시민/수급자)",
+              "price": 2700000,
               "feeType": "USAGE",
-              "grade": "12위",
-              "note": "",
-              "isRepresentative": false,
-              "groupType": "수목"
+              "groupType": "개인, 부부형",
+              "grade": "양산시민 기초생활수급자(10%할인)"
             },
             {
-              "name": "소나무",
-              "price": 2000000,
+              "name": "수목 잔디 가족장지",
+              "price": 4000000,
               "feeType": "USAGE",
-              "grade": "12위",
-              "note": "",
-              "isRepresentative": false,
-              "groupType": "수목"
+              "groupType": "가족형",
+              "isRepresentative": false
             },
             {
-              "name": "관리비(수목)",
+              "name": "수목 가족장지",
+              "price": 5000000,
+              "feeType": "USAGE",
+              "groupType": "가족형",
+              "isRepresentative": false
+            },
+            {
+              "name": "수목 가족장지 (중)",
+              "price": 9000000,
+              "feeType": "USAGE",
+              "groupType": "가족형",
+              "isRepresentative": false
+            },
+            {
+              "name": "가족형",
+              "price": 15000000,
+              "feeType": "USAGE",
+              "groupType": "가족형",
+              "isRepresentative": false
+            },
+            {
+              "name": "가족형 (소)",
+              "price": 5000000,
+              "feeType": "USAGE",
+              "groupType": "가족형",
+              "isRepresentative": false
+            },
+            {
+              "name": "대가족형",
+              "price": 17000000,
+              "feeType": "USAGE",
+              "groupType": "대가족형",
+              "grade": "17,000,000 ~ 24,000,000",
+              "isRepresentative": false
+            },
+            {
+              "name": "연 관리비 (기본)",
               "price": 21400,
               "feeType": "MAINTENANCE",
-              "grade": "",
-              "note": "",
-              "isRepresentative": false,
-              "groupType": "관리비"
+              "groupType": "개인, 부부형"
             },
             {
-              "name": "관리비(자연)",
-              "price": 0,
+              "name": "연 관리비 (소)",
+              "price": 42600,
               "feeType": "MAINTENANCE",
-              "grade": "",
-              "note": "",
-              "isRepresentative": false,
-              "groupType": "관리비"
-            }
-          ]
-        },
-        {
-          "serviceType": "NATURAL",
-          "subType": "잔디형",
-          "unit": "원",
-          "rows": [
+              "groupType": "개인, 부부형"
+            },
             {
-              "name": "잔디",
-              "price": 2000000,
-              "feeType": "USAGE",
-              "grade": "2위안치",
-              "note": "",
-              "isRepresentative": false,
-              "groupType": "잔디형"
-            }
-          ]
-        },
-        {
-          "serviceType": "NATURAL",
-          "subType": "화초형",
-          "unit": "원",
-          "rows": [
+              "name": "연 관리비 (중소)",
+              "price": 64000,
+              "feeType": "MAINTENANCE",
+              "groupType": "가족형"
+            },
             {
-              "name": "옥향",
-              "price": 2000000,
-              "feeType": "USAGE",
-              "grade": "2위안치",
-              "note": "",
-              "isRepresentative": false,
-              "groupType": "화초형"
+              "name": "연 관리비 (중)",
+              "price": 85400,
+              "feeType": "MAINTENANCE",
+              "groupType": "가족형"
+            },
+            {
+              "name": "연 관리비 (중대)",
+              "price": 106800,
+              "feeType": "MAINTENANCE",
+              "groupType": "가족형"
+            },
+            {
+              "name": "연 관리비 (대)",
+              "price": 213400,
+              "feeType": "MAINTENANCE",
+              "groupType": "가족형"
+            },
+            {
+              "name": "연 관리비 (특대)",
+              "price": 300000,
+              "feeType": "MAINTENANCE",
+              "groupType": "대가족형"
             }
           ]
         }
@@ -4260,7 +4746,660 @@
     "websiteUrl": "",
     "viewCount": 246,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/uploads/1766928213348_bvim5.jpg",
-    "representativePrice": 1070000
+    "representativePrice": 1070000,
+    "standardizedPrices": [
+      {
+        "serviceType": "BONGSAN",
+        "subType": "봉안당",
+        "unit": "원",
+        "rows": [
+          {
+            "name": "1단",
+            "price": 2000000,
+            "feeType": "USAGE",
+            "groupType": "개인단 (로얄실)",
+            "isRepresentative": false
+          },
+          {
+            "name": "2단",
+            "price": 3000000,
+            "feeType": "USAGE",
+            "groupType": "개인단 (로얄실)",
+            "isRepresentative": false
+          },
+          {
+            "name": "3단",
+            "price": 3500000,
+            "feeType": "USAGE",
+            "groupType": "개인단 (로얄실)",
+            "isRepresentative": true
+          },
+          {
+            "name": "4단",
+            "price": 5000000,
+            "feeType": "USAGE",
+            "groupType": "개인단 (로얄실)",
+            "isRepresentative": false
+          },
+          {
+            "name": "5단",
+            "price": 5000000,
+            "feeType": "USAGE",
+            "groupType": "개인단 (로얄실)",
+            "isRepresentative": false
+          },
+          {
+            "name": "6단",
+            "price": 5000000,
+            "feeType": "USAGE",
+            "groupType": "개인단 (로얄실)",
+            "isRepresentative": false
+          },
+          {
+            "name": "7단",
+            "price": 3500000,
+            "feeType": "USAGE",
+            "groupType": "개인단 (로얄실)",
+            "isRepresentative": false
+          },
+          {
+            "name": "8단",
+            "price": 2500000,
+            "feeType": "USAGE",
+            "groupType": "개인단 (로얄실)",
+            "isRepresentative": false
+          },
+          {
+            "name": "1단",
+            "price": 4000000,
+            "feeType": "USAGE",
+            "groupType": "부부단 (로얄실)",
+            "isRepresentative": false
+          },
+          {
+            "name": "2단",
+            "price": 6000000,
+            "feeType": "USAGE",
+            "groupType": "부부단 (로얄실)",
+            "isRepresentative": false
+          },
+          {
+            "name": "3단",
+            "price": 7000000,
+            "feeType": "USAGE",
+            "groupType": "부부단 (로얄실)",
+            "isRepresentative": true
+          },
+          {
+            "name": "4단",
+            "price": 10000000,
+            "feeType": "USAGE",
+            "groupType": "부부단 (로얄실)",
+            "isRepresentative": false
+          },
+          {
+            "name": "5단",
+            "price": 10000000,
+            "feeType": "USAGE",
+            "groupType": "부부단 (로얄실)",
+            "isRepresentative": false
+          },
+          {
+            "name": "6단",
+            "price": 10000000,
+            "feeType": "USAGE",
+            "groupType": "부부단 (로얄실)",
+            "isRepresentative": false
+          },
+          {
+            "name": "7단",
+            "price": 7000000,
+            "feeType": "USAGE",
+            "groupType": "부부단 (로얄실)",
+            "isRepresentative": false
+          },
+          {
+            "name": "8단",
+            "price": 5000000,
+            "feeType": "USAGE",
+            "groupType": "부부단 (로얄실)",
+            "isRepresentative": false
+          },
+          {
+            "name": "1단",
+            "price": 1200000,
+            "feeType": "USAGE",
+            "groupType": "개인단 (일반실)",
+            "isRepresentative": false
+          },
+          {
+            "name": "2단",
+            "price": 1800000,
+            "feeType": "USAGE",
+            "groupType": "개인단 (일반실)",
+            "isRepresentative": false
+          },
+          {
+            "name": "3단",
+            "price": 2100000,
+            "feeType": "USAGE",
+            "groupType": "개인단 (일반실)",
+            "isRepresentative": false
+          },
+          {
+            "name": "4단",
+            "price": 3000000,
+            "feeType": "USAGE",
+            "groupType": "개인단 (일반실)",
+            "isRepresentative": false
+          },
+          {
+            "name": "5단",
+            "price": 3000000,
+            "feeType": "USAGE",
+            "groupType": "개인단 (일반실)",
+            "isRepresentative": false
+          },
+          {
+            "name": "6단",
+            "price": 3000000,
+            "feeType": "USAGE",
+            "groupType": "개인단 (일반실)",
+            "isRepresentative": false
+          },
+          {
+            "name": "7단",
+            "price": 2100000,
+            "feeType": "USAGE",
+            "groupType": "개인단 (일반실)",
+            "isRepresentative": false
+          },
+          {
+            "name": "1단",
+            "price": 3200000,
+            "feeType": "USAGE",
+            "groupType": "부부단 (일반실)",
+            "isRepresentative": false
+          },
+          {
+            "name": "2단",
+            "price": 4800000,
+            "feeType": "USAGE",
+            "groupType": "부부단 (일반실)",
+            "isRepresentative": false
+          },
+          {
+            "name": "3단",
+            "price": 5600000,
+            "feeType": "USAGE",
+            "groupType": "부부단 (일반실)",
+            "isRepresentative": false
+          },
+          {
+            "name": "4단",
+            "price": 8000000,
+            "feeType": "USAGE",
+            "groupType": "부부단 (일반실)",
+            "isRepresentative": false
+          },
+          {
+            "name": "5단",
+            "price": 8000000,
+            "feeType": "USAGE",
+            "groupType": "부부단 (일반실)",
+            "isRepresentative": false
+          },
+          {
+            "name": "6단",
+            "price": 8000000,
+            "feeType": "USAGE",
+            "groupType": "부부단 (일반실)",
+            "isRepresentative": false
+          },
+          {
+            "name": "7단",
+            "price": 5600000,
+            "feeType": "USAGE",
+            "groupType": "부부단 (일반실)",
+            "isRepresentative": false
+          },
+          {
+            "name": "1단",
+            "price": 1600000,
+            "feeType": "USAGE",
+            "groupType": "개인단 (특별실/기독교관)",
+            "isRepresentative": false
+          },
+          {
+            "name": "2단",
+            "price": 2400000,
+            "feeType": "USAGE",
+            "groupType": "개인단 (특별실/기독교관)",
+            "isRepresentative": false
+          },
+          {
+            "name": "3단",
+            "price": 2800000,
+            "feeType": "USAGE",
+            "groupType": "개인단 (특별실/기독교관)",
+            "isRepresentative": false
+          },
+          {
+            "name": "4단",
+            "price": 4000000,
+            "feeType": "USAGE",
+            "groupType": "개인단 (특별실/기독교관)",
+            "isRepresentative": false
+          },
+          {
+            "name": "5단",
+            "price": 4000000,
+            "feeType": "USAGE",
+            "groupType": "개인단 (특별실/기독교관)",
+            "isRepresentative": false
+          },
+          {
+            "name": "6단",
+            "price": 4000000,
+            "feeType": "USAGE",
+            "groupType": "개인단 (특별실/기독교관)",
+            "isRepresentative": false
+          },
+          {
+            "name": "7단",
+            "price": 2800000,
+            "feeType": "USAGE",
+            "groupType": "개인단 (특별실/기독교관)",
+            "isRepresentative": false
+          },
+          {
+            "name": "연 관리비 (개인단)",
+            "price": 32000,
+            "feeType": "MAINTENANCE",
+            "grade": "1년 기준"
+          },
+          {
+            "name": "연 관리비 (부부단)",
+            "price": 64000,
+            "feeType": "MAINTENANCE",
+            "grade": "1년 기준"
+          }
+        ]
+      },
+      {
+        "serviceType": "BURIAL",
+        "subType": "매장묘",
+        "unit": "원",
+        "rows": [
+          {
+            "name": "묘지 임대사용료",
+            "price": 1070000,
+            "feeType": "USAGE",
+            "grade": "1평 기준"
+          },
+          {
+            "name": "묘지 공동관리비",
+            "price": 17000,
+            "feeType": "MAINTENANCE",
+            "grade": "1평/1년 기준"
+          }
+        ]
+      },
+      {
+        "serviceType": "BURIAL",
+        "subType": "기타 석물 및 추가비용",
+        "unit": "원",
+        "rows": [
+          {
+            "name": "봉분작업비",
+            "price": 500000,
+            "feeType": "USAGE",
+            "grade": "흙 운반 및 봉분 작업비용"
+          },
+          {
+            "name": "평토작업비",
+            "price": 150000,
+            "feeType": "USAGE",
+            "grade": "바닥 다지기 작업/1평 기준"
+          },
+          {
+            "name": "재봉작업 (1.5평)",
+            "price": 500000,
+            "feeType": "USAGE",
+            "grade": "사각묘태석 봉분"
+          },
+          {
+            "name": "재봉작업 (3.0평)",
+            "price": 550000,
+            "feeType": "USAGE",
+            "grade": "타원묘태석 봉분"
+          },
+          {
+            "name": "개장정리비 (소)",
+            "price": 420000,
+            "feeType": "USAGE",
+            "grade": "1.5~2.5평 원상복구"
+          },
+          {
+            "name": "개장정리비 (중)",
+            "price": 520000,
+            "feeType": "USAGE",
+            "grade": "3.0~4.5평 원상복구"
+          },
+          {
+            "name": "개장정리비 (대)",
+            "price": 620000,
+            "feeType": "USAGE",
+            "grade": "5.0~6.0평 원상복구"
+          },
+          {
+            "name": "조각묘태석 3단",
+            "price": 5544000,
+            "feeType": "USAGE",
+            "groupType": "석물 비용"
+          },
+          {
+            "name": "사각묘태석 3단",
+            "price": 4059000,
+            "feeType": "USAGE",
+            "groupType": "석물 비용"
+          },
+          {
+            "name": "사각묘태석 2단",
+            "price": 1859000,
+            "feeType": "USAGE",
+            "groupType": "석물 비용"
+          },
+          {
+            "name": "사각묘태석 1단",
+            "price": 1496000,
+            "feeType": "USAGE",
+            "groupType": "석물 비용"
+          },
+          {
+            "name": "타원묘태석",
+            "price": 1496000,
+            "feeType": "USAGE",
+            "groupType": "석물 비용"
+          },
+          {
+            "name": "월석",
+            "price": 154000,
+            "feeType": "USAGE",
+            "groupType": "석물 비용"
+          },
+          {
+            "name": "화강상석 (3자)",
+            "price": 1309000,
+            "feeType": "USAGE",
+            "groupType": "석물 비용"
+          },
+          {
+            "name": "화강상석 (2.5자)",
+            "price": 759000,
+            "feeType": "USAGE",
+            "groupType": "석물 비용"
+          },
+          {
+            "name": "북석 대",
+            "price": 374000,
+            "feeType": "USAGE",
+            "groupType": "석물 비용"
+          },
+          {
+            "name": "북석 소",
+            "price": 297000,
+            "feeType": "USAGE",
+            "groupType": "석물 비용"
+          },
+          {
+            "name": "혼유석",
+            "price": 286000,
+            "feeType": "USAGE",
+            "groupType": "석물 비용"
+          },
+          {
+            "name": "갓비석",
+            "price": 1199000,
+            "feeType": "USAGE",
+            "groupType": "석물 비용"
+          },
+          {
+            "name": "갓석",
+            "price": 847000,
+            "feeType": "USAGE",
+            "groupType": "석물 비용"
+          },
+          {
+            "name": "오석비석 (3.5자)",
+            "price": 1122000,
+            "feeType": "USAGE",
+            "groupType": "석물 비용"
+          },
+          {
+            "name": "오석비석 (3자)",
+            "price": 946000,
+            "feeType": "USAGE",
+            "groupType": "석물 비용"
+          },
+          {
+            "name": "오석비석 (2.5자)",
+            "price": 759000,
+            "feeType": "USAGE",
+            "groupType": "석물 비용"
+          },
+          {
+            "name": "연꽃좌대",
+            "price": 638000,
+            "feeType": "USAGE",
+            "groupType": "석물 비용"
+          },
+          {
+            "name": "무지좌대",
+            "price": 264000,
+            "feeType": "USAGE",
+            "groupType": "석물 비용"
+          },
+          {
+            "name": "와비",
+            "price": 1100000,
+            "feeType": "USAGE",
+            "groupType": "석물 비용"
+          },
+          {
+            "name": "연꽃와비좌대",
+            "price": 924000,
+            "feeType": "USAGE",
+            "groupType": "석물 비용"
+          },
+          {
+            "name": "조각꽃병",
+            "price": 682000,
+            "feeType": "USAGE",
+            "groupType": "석물 비용"
+          },
+          {
+            "name": "광택꽃병",
+            "price": 341000,
+            "feeType": "USAGE",
+            "groupType": "석물 비용"
+          },
+          {
+            "name": "조각상향로",
+            "price": 517000,
+            "feeType": "USAGE",
+            "groupType": "석물 비용"
+          },
+          {
+            "name": "단향로",
+            "price": 198000,
+            "feeType": "USAGE",
+            "groupType": "석물 비용"
+          },
+          {
+            "name": "석문",
+            "price": 1353000,
+            "feeType": "USAGE",
+            "groupType": "석물 비용"
+          },
+          {
+            "name": "석주",
+            "price": 198000,
+            "feeType": "USAGE",
+            "groupType": "석물 비용"
+          },
+          {
+            "name": "경계석",
+            "price": 198000,
+            "feeType": "USAGE",
+            "groupType": "석물 비용"
+          },
+          {
+            "name": "각자 비용 (합비)",
+            "price": 407000,
+            "feeType": "USAGE",
+            "groupType": "추가 비용"
+          },
+          {
+            "name": "각자 비용 (외비)",
+            "price": 330000,
+            "feeType": "USAGE",
+            "groupType": "추가 비용"
+          },
+          {
+            "name": "각자 비용 (별세일 추가)",
+            "price": 121000,
+            "feeType": "USAGE",
+            "groupType": "추가 비용"
+          },
+          {
+            "name": "각자 비용 (이름 추가)",
+            "price": 55000,
+            "feeType": "USAGE",
+            "groupType": "추가 비용"
+          },
+          {
+            "name": "각자 비용 (봉안묘 뚜껑)",
+            "price": 110000,
+            "feeType": "USAGE",
+            "groupType": "추가 비용"
+          }
+        ]
+      },
+      {
+        "serviceType": "NATURAL_BURIAL",
+        "subType": "수목장",
+        "unit": "원",
+        "rows": [
+          {
+            "name": "수목장지 (1위)",
+            "price": 2000000,
+            "feeType": "USAGE",
+            "groupType": "개인, 부부형",
+            "isRepresentative": true
+          },
+          {
+            "name": "개인, 부부형",
+            "price": 3000000,
+            "feeType": "USAGE",
+            "groupType": "개인, 부부형",
+            "isRepresentative": false
+          },
+          {
+            "name": "개인,부부형 (양산시민/수급자)",
+            "price": 2700000,
+            "feeType": "USAGE",
+            "groupType": "개인, 부부형",
+            "grade": "양산시민 기초생활수급자(10%할인)"
+          },
+          {
+            "name": "수목 잔디 가족장지",
+            "price": 4000000,
+            "feeType": "USAGE",
+            "groupType": "가족형",
+            "isRepresentative": false
+          },
+          {
+            "name": "수목 가족장지",
+            "price": 5000000,
+            "feeType": "USAGE",
+            "groupType": "가족형",
+            "isRepresentative": false
+          },
+          {
+            "name": "수목 가족장지 (중)",
+            "price": 9000000,
+            "feeType": "USAGE",
+            "groupType": "가족형",
+            "isRepresentative": false
+          },
+          {
+            "name": "가족형",
+            "price": 15000000,
+            "feeType": "USAGE",
+            "groupType": "가족형",
+            "isRepresentative": false
+          },
+          {
+            "name": "가족형 (소)",
+            "price": 5000000,
+            "feeType": "USAGE",
+            "groupType": "가족형",
+            "isRepresentative": false
+          },
+          {
+            "name": "대가족형",
+            "price": 17000000,
+            "feeType": "USAGE",
+            "groupType": "대가족형",
+            "grade": "17,000,000 ~ 24,000,000",
+            "isRepresentative": false
+          },
+          {
+            "name": "연 관리비 (기본)",
+            "price": 21400,
+            "feeType": "MAINTENANCE",
+            "groupType": "개인, 부부형"
+          },
+          {
+            "name": "연 관리비 (소)",
+            "price": 42600,
+            "feeType": "MAINTENANCE",
+            "groupType": "개인, 부부형"
+          },
+          {
+            "name": "연 관리비 (중소)",
+            "price": 64000,
+            "feeType": "MAINTENANCE",
+            "groupType": "가족형"
+          },
+          {
+            "name": "연 관리비 (중)",
+            "price": 85400,
+            "feeType": "MAINTENANCE",
+            "groupType": "가족형"
+          },
+          {
+            "name": "연 관리비 (중대)",
+            "price": 106800,
+            "feeType": "MAINTENANCE",
+            "groupType": "가족형"
+          },
+          {
+            "name": "연 관리비 (대)",
+            "price": 213400,
+            "feeType": "MAINTENANCE",
+            "groupType": "가족형"
+          },
+          {
+            "name": "연 관리비 (특대)",
+            "price": 300000,
+            "feeType": "MAINTENANCE",
+            "groupType": "대가족형"
+          }
+        ]
+      }
+    ]
   },
   {
     "id": "park-0007",
@@ -4623,10 +5762,10 @@
               "name": "사용료",
               "price": 1419000,
               "feeType": "USAGE",
-              "grade": "",
+              "grade": "안치기간 30년 기준",
               "note": "",
               "isRepresentative": true,
-              "groupType": "3년이상 주민등록",
+              "groupType": "관내 (3년 이상)",
               "duration": 30,
               "durationType": "YEAR",
               "residency": "LOCAL"
@@ -4635,12 +5774,13 @@
               "name": "관리비",
               "price": 552000,
               "feeType": "MAINTENANCE",
-              "grade": "",
+              "grade": "안치기간 30년 기준",
               "note": "",
               "isRepresentative": false,
-              "groupType": "관리비",
+              "groupType": "관내 (3년 이상)",
               "duration": 30,
-              "durationType": "YEAR"
+              "durationType": "YEAR",
+              "residency": "LOCAL"
             },
             {
               "name": "조경비",
@@ -4649,7 +5789,9 @@
               "grade": "",
               "note": "",
               "isRepresentative": false,
-              "groupType": "3년이상 주민등록",
+              "groupType": "관내 (3년 이상)",
+              "duration": 30,
+              "durationType": "YEAR",
               "residency": "LOCAL"
             },
             {
@@ -4659,17 +5801,19 @@
               "grade": "",
               "note": "",
               "isRepresentative": false,
-              "groupType": "3년이상 주민등록",
+              "groupType": "관내 (3년 이상)",
+              "duration": 30,
+              "durationType": "YEAR",
               "residency": "LOCAL"
             },
             {
               "name": "사용료",
               "price": 3618000,
               "feeType": "USAGE",
-              "grade": "",
+              "grade": "안치기간 30년 기준",
               "note": "",
               "isRepresentative": false,
-              "groupType": "6월~3년미만 주민등록",
+              "groupType": "관내 (6개월~3년 미만)",
               "duration": 30,
               "durationType": "YEAR",
               "residency": "LOCAL"
@@ -4678,23 +5822,49 @@
               "name": "관리비",
               "price": 1407000,
               "feeType": "MAINTENANCE",
+              "grade": "안치기간 30년 기준",
+              "note": "",
+              "isRepresentative": false,
+              "groupType": "관내 (6개월~3년 미만)",
+              "duration": 30,
+              "durationType": "YEAR",
+              "residency": "LOCAL"
+            },
+            {
+              "name": "조경비",
+              "price": 30000,
+              "feeType": "USAGE",
               "grade": "",
               "note": "",
               "isRepresentative": false,
-              "groupType": "관리비",
+              "groupType": "관내 (6개월~3년 미만)",
               "duration": 30,
-              "durationType": "YEAR"
+              "durationType": "YEAR",
+              "residency": "LOCAL"
+            },
+            {
+              "name": "기타비용",
+              "price": 2050000,
+              "feeType": "USAGE",
+              "grade": "",
+              "note": "",
+              "isRepresentative": false,
+              "groupType": "관내 (6개월~3년 미만)",
+              "duration": 30,
+              "durationType": "YEAR",
+              "residency": "LOCAL"
             },
             {
               "name": "관리비",
               "price": 2623000,
               "feeType": "MAINTENANCE",
-              "grade": "",
+              "grade": "안치기간 30년 기준",
               "note": "",
               "isRepresentative": false,
-              "groupType": "관리비",
+              "groupType": "관외",
               "duration": 30,
-              "durationType": "YEAR"
+              "durationType": "YEAR",
+              "residency": "NON_LOCAL"
             }
           ]
         },
@@ -4704,267 +5874,395 @@
           "unit": "원",
           "rows": [
             {
-              "name": "1회차1구 사용료",
+              "name": "최초 안치 시(1분) - 사용료",
               "price": 2394000,
               "feeType": "USAGE",
-              "grade": "",
+              "grade": "안치기간 30년 기준",
               "note": "",
               "isRepresentative": true,
-              "groupType": "3년이상 주민등록",
+              "groupType": "관내 (3년 이상)",
               "duration": 30,
               "durationType": "YEAR",
               "residency": "LOCAL"
             },
             {
-              "name": "1회차1구 관리비",
+              "name": "최초 안치 시(1분) - 관리비",
               "price": 930000,
               "feeType": "MAINTENANCE",
-              "grade": "",
+              "grade": "안치기간 30년 기준",
               "note": "",
               "isRepresentative": false,
-              "groupType": "관리비",
+              "groupType": "관내 (3년 이상)",
               "duration": 30,
-              "durationType": "YEAR"
+              "durationType": "YEAR",
+              "residency": "LOCAL"
             },
             {
-              "name": "1회차1구 조경비",
+              "name": "최초 안치 시(1분) - 조경비",
               "price": 30000,
               "feeType": "USAGE",
               "grade": "",
               "note": "",
               "isRepresentative": false,
-              "groupType": "3년이상 주민등록",
+              "groupType": "관내 (3년 이상)",
+              "duration": 30,
+              "durationType": "YEAR",
               "residency": "LOCAL"
             },
             {
-              "name": "1회차1구 기타비용",
+              "name": "최초 안치 시(1분) - 기타비용",
               "price": 2215000,
               "feeType": "USAGE",
               "grade": "",
               "note": "",
               "isRepresentative": false,
-              "groupType": "3년이상 주민등록",
+              "groupType": "관내 (3년 이상)",
+              "duration": 30,
+              "durationType": "YEAR",
               "residency": "LOCAL"
             },
             {
-              "name": "1회차1구 사용료",
+              "name": "최초 안치 시(1분) - 사용료",
               "price": 6103000,
               "feeType": "USAGE",
-              "grade": "",
+              "grade": "안치기간 30년 기준",
               "note": "",
               "isRepresentative": false,
-              "groupType": "6월~3년미만 주민등록",
+              "groupType": "관내 (6개월~3년 미만)",
               "duration": 30,
               "durationType": "YEAR",
               "residency": "LOCAL"
             },
             {
-              "name": "1회차1구 관리비",
+              "name": "최초 안치 시(1분) - 관리비",
               "price": 2371000,
               "feeType": "MAINTENANCE",
-              "grade": "",
+              "grade": "안치기간 30년 기준",
               "note": "",
               "isRepresentative": false,
-              "groupType": "관리비",
-              "duration": 30,
-              "durationType": "YEAR"
-            },
-            {
-              "name": "1회차1구 관리비",
-              "price": 3831000,
-              "feeType": "MAINTENANCE",
-              "grade": "",
-              "note": "",
-              "isRepresentative": false,
-              "groupType": "관리비",
-              "duration": 30,
-              "durationType": "YEAR"
-            },
-            {
-              "name": "1회차2구 사용료",
-              "price": 2394000,
-              "feeType": "USAGE",
-              "grade": "",
-              "note": "",
-              "isRepresentative": false,
-              "groupType": "3년이상 주민등록",
+              "groupType": "관내 (6개월~3년 미만)",
               "duration": 30,
               "durationType": "YEAR",
               "residency": "LOCAL"
             },
             {
-              "name": "1회차2구 관리비",
-              "price": 930000,
-              "feeType": "MAINTENANCE",
-              "grade": "",
-              "note": "",
-              "isRepresentative": false,
-              "groupType": "관리비",
-              "duration": 30,
-              "durationType": "YEAR"
-            },
-            {
-              "name": "1회차2구 조경비",
+              "name": "최초 안치 시(1분) - 조경비",
               "price": 30000,
               "feeType": "USAGE",
               "grade": "",
               "note": "",
               "isRepresentative": false,
-              "groupType": "3년이상 주민등록",
+              "groupType": "관내 (6개월~3년 미만)",
+              "duration": 30,
+              "durationType": "YEAR",
               "residency": "LOCAL"
             },
             {
-              "name": "1회차2구 기타비용",
+              "name": "최초 안치 시(1분) - 기타비용",
+              "price": 2215000,
+              "feeType": "USAGE",
+              "grade": "",
+              "note": "",
+              "isRepresentative": false,
+              "groupType": "관내 (6개월~3년 미만)",
+              "duration": 30,
+              "durationType": "YEAR",
+              "residency": "LOCAL"
+            },
+            {
+              "name": "최초 안치 시(1분) - 관리비",
+              "price": 3831000,
+              "feeType": "MAINTENANCE",
+              "grade": "안치기간 30년 기준",
+              "note": "",
+              "isRepresentative": false,
+              "groupType": "관외",
+              "duration": 30,
+              "durationType": "YEAR",
+              "residency": "NON_LOCAL"
+            },
+            {
+              "name": "합장 안치 시(2분) - 사용료",
+              "price": 2394000,
+              "feeType": "USAGE",
+              "grade": "안치기간 30년 기준",
+              "note": "",
+              "isRepresentative": false,
+              "groupType": "관내 (3년 이상)",
+              "duration": 30,
+              "durationType": "YEAR",
+              "residency": "LOCAL"
+            },
+            {
+              "name": "합장 안치 시(2분) - 관리비",
+              "price": 930000,
+              "feeType": "MAINTENANCE",
+              "grade": "안치기간 30년 기준",
+              "note": "",
+              "isRepresentative": false,
+              "groupType": "관내 (3년 이상)",
+              "duration": 30,
+              "durationType": "YEAR",
+              "residency": "LOCAL"
+            },
+            {
+              "name": "합장 안치 시(2분) - 조경비",
+              "price": 30000,
+              "feeType": "USAGE",
+              "grade": "",
+              "note": "",
+              "isRepresentative": false,
+              "groupType": "관내 (3년 이상)",
+              "duration": 30,
+              "durationType": "YEAR",
+              "residency": "LOCAL"
+            },
+            {
+              "name": "합장 안치 시(2분) - 기타비용",
               "price": 2290000,
               "feeType": "USAGE",
               "grade": "",
               "note": "",
               "isRepresentative": false,
-              "groupType": "3년이상 주민등록",
+              "groupType": "관내 (3년 이상)",
+              "duration": 30,
+              "durationType": "YEAR",
               "residency": "LOCAL"
             },
             {
-              "name": "1회차2구 사용료",
+              "name": "합장 안치 시(2분) - 사용료",
               "price": 6103000,
               "feeType": "USAGE",
-              "grade": "",
+              "grade": "안치기간 30년 기준",
               "note": "",
               "isRepresentative": false,
-              "groupType": "6월~3년미만 주민등록",
+              "groupType": "관내 (6개월~3년 미만)",
               "duration": 30,
               "durationType": "YEAR",
               "residency": "LOCAL"
             },
             {
-              "name": "1회차2구 관리비",
+              "name": "합장 안치 시(2분) - 관리비",
               "price": 2371000,
               "feeType": "MAINTENANCE",
-              "grade": "",
+              "grade": "안치기간 30년 기준",
               "note": "",
               "isRepresentative": false,
-              "groupType": "관리비",
-              "duration": 30,
-              "durationType": "YEAR"
-            },
-            {
-              "name": "1회차2구 관리비",
-              "price": 3831000,
-              "feeType": "MAINTENANCE",
-              "grade": "",
-              "note": "",
-              "isRepresentative": false,
-              "groupType": "관리비",
-              "duration": 30,
-              "durationType": "YEAR"
-            },
-            {
-              "name": "2회차 1구 기타비용",
-              "price": 715000,
-              "feeType": "USAGE",
-              "grade": "",
-              "note": "",
-              "isRepresentative": false
-            }
-          ]
-        },
-        {
-          "serviceType": "BONGSAN",
-          "subType": "봉안묘",
-          "unit": "원",
-          "rows": [
-            {
-              "name": "가족봉안묘 사용료",
-              "price": 2394000,
-              "feeType": "USAGE",
-              "grade": "",
-              "note": "",
-              "isRepresentative": true,
-              "groupType": "3년이상 주민등록",
+              "groupType": "관내 (6개월~3년 미만)",
               "duration": 30,
               "durationType": "YEAR",
-              "capacity": "가족",
               "residency": "LOCAL"
             },
             {
-              "name": "가족봉안묘 관리비",
-              "price": 930000,
-              "feeType": "MAINTENANCE",
-              "grade": "",
-              "note": "",
-              "isRepresentative": false,
-              "groupType": "관리비",
-              "duration": 30,
-              "durationType": "YEAR"
-            },
-            {
-              "name": "가족봉안묘 조경비",
+              "name": "합장 안치 시(2분) - 조경비",
               "price": 30000,
               "feeType": "USAGE",
               "grade": "",
               "note": "",
               "isRepresentative": false,
-              "groupType": "3년이상 주민등록",
-              "capacity": "가족",
+              "groupType": "관내 (6개월~3년 미만)",
+              "duration": 30,
+              "durationType": "YEAR",
               "residency": "LOCAL"
             },
             {
-              "name": "가족봉안묘 기타비용",
+              "name": "합장 안치 시(2분) - 기타비용",
+              "price": 2290000,
+              "feeType": "USAGE",
+              "grade": "",
+              "note": "",
+              "isRepresentative": false,
+              "groupType": "관내 (6개월~3년 미만)",
+              "duration": 30,
+              "durationType": "YEAR",
+              "residency": "LOCAL"
+            },
+            {
+              "name": "합장 안치 시(2분) - 관리비",
+              "price": 3831000,
+              "feeType": "MAINTENANCE",
+              "grade": "안치기간 30년 기준",
+              "note": "",
+              "isRepresentative": false,
+              "groupType": "관외",
+              "duration": 30,
+              "durationType": "YEAR",
+              "residency": "NON_LOCAL"
+            },
+            {
+              "name": "계약 연장 시(30년 후) - 기타비용",
+              "price": 715000,
+              "feeType": "USAGE",
+              "grade": "",
+              "note": "",
+              "isRepresentative": false,
+              "groupType": "공통 (연장 등)",
+              "duration": 30,
+              "durationType": "YEAR",
+              "residency": "ALL"
+            }
+          ]
+        },
+        {
+          "serviceType": "BONGSAN",
+          "subType": "가족봉안묘",
+          "unit": "원",
+          "rows": [
+            {
+              "name": "사용료",
+              "price": 2394000,
+              "feeType": "USAGE",
+              "grade": "안치기간 30년 기준",
+              "note": "",
+              "isRepresentative": true,
+              "groupType": "관내 (3년 이상)",
+              "duration": 30,
+              "durationType": "YEAR",
+              "residency": "LOCAL",
+              "capacity": "가족"
+            },
+            {
+              "name": "관리비",
+              "price": 930000,
+              "feeType": "MAINTENANCE",
+              "grade": "안치기간 30년 기준",
+              "note": "",
+              "isRepresentative": false,
+              "groupType": "관내 (3년 이상)",
+              "duration": 30,
+              "durationType": "YEAR",
+              "residency": "LOCAL",
+              "capacity": "가족"
+            },
+            {
+              "name": "조경비",
+              "price": 30000,
+              "feeType": "USAGE",
+              "grade": "",
+              "note": "",
+              "isRepresentative": false,
+              "groupType": "관내 (3년 이상)",
+              "duration": 30,
+              "durationType": "YEAR",
+              "residency": "LOCAL",
+              "capacity": "가족"
+            },
+            {
+              "name": "기타비용",
               "price": 5460000,
               "feeType": "USAGE",
               "grade": "",
               "note": "",
               "isRepresentative": false,
-              "groupType": "3년이상 주민등록",
-              "capacity": "가족",
-              "residency": "LOCAL"
+              "groupType": "관내 (3년 이상)",
+              "duration": 30,
+              "durationType": "YEAR",
+              "residency": "LOCAL",
+              "capacity": "가족"
             },
             {
-              "name": "가족봉안묘 사용료",
+              "name": "사용료",
               "price": 7180000,
               "feeType": "USAGE",
-              "grade": "",
+              "grade": "안치기간 30년 기준",
               "note": "",
               "isRepresentative": false,
-              "groupType": "6월~3년미만 주민등록",
+              "groupType": "관내 (6개월~3년 미만)",
               "duration": 30,
               "durationType": "YEAR",
-              "capacity": "가족",
-              "residency": "LOCAL"
+              "residency": "LOCAL",
+              "capacity": "가족"
             },
             {
-              "name": "가족봉안묘 관리비",
+              "name": "관리비",
               "price": 2790000,
               "feeType": "MAINTENANCE",
-              "grade": "",
+              "grade": "안치기간 30년 기준",
               "note": "",
               "isRepresentative": false,
-              "groupType": "관리비",
+              "groupType": "관내 (6개월~3년 미만)",
               "duration": 30,
-              "durationType": "YEAR"
+              "durationType": "YEAR",
+              "residency": "LOCAL",
+              "capacity": "가족"
             },
             {
-              "name": "가족봉안묘 사용료",
-              "price": 9481000,
+              "name": "조경비",
+              "price": 30000,
               "feeType": "USAGE",
               "grade": "",
               "note": "",
               "isRepresentative": false,
-              "groupType": "관외 (예산군 이외)",
+              "groupType": "관내 (6개월~3년 미만)",
               "duration": 30,
               "durationType": "YEAR",
-              "capacity": "가족",
-              "residency": "NON_LOCAL"
+              "residency": "LOCAL",
+              "capacity": "가족"
             },
             {
-              "name": "가족봉안묘 관리비",
-              "price": 3879000,
-              "feeType": "MAINTENANCE",
+              "name": "기타비용",
+              "price": 5460000,
+              "feeType": "USAGE",
               "grade": "",
               "note": "",
               "isRepresentative": false,
-              "groupType": "관리비",
+              "groupType": "관내 (6개월~3년 미만)",
               "duration": 30,
-              "durationType": "YEAR"
+              "durationType": "YEAR",
+              "residency": "LOCAL",
+              "capacity": "가족"
+            },
+            {
+              "name": "사용료",
+              "price": 9481000,
+              "feeType": "USAGE",
+              "grade": "안치기간 30년 기준",
+              "note": "",
+              "isRepresentative": false,
+              "groupType": "관외",
+              "duration": 30,
+              "durationType": "YEAR",
+              "residency": "NON_LOCAL",
+              "capacity": "가족"
+            },
+            {
+              "name": "관리비",
+              "price": 3879000,
+              "feeType": "MAINTENANCE",
+              "grade": "안치기간 30년 기준",
+              "note": "",
+              "isRepresentative": false,
+              "groupType": "관외",
+              "duration": 30,
+              "durationType": "YEAR",
+              "residency": "NON_LOCAL",
+              "capacity": "가족"
+            },
+            {
+              "name": "조경비",
+              "price": 30000,
+              "feeType": "USAGE",
+              "grade": "",
+              "note": "",
+              "isRepresentative": false,
+              "groupType": "관외",
+              "duration": 30,
+              "durationType": "YEAR",
+              "residency": "NON_LOCAL",
+              "capacity": "가족"
+            },
+            {
+              "name": "기타비용",
+              "price": 5460000,
+              "feeType": "USAGE",
+              "grade": "",
+              "note": "",
+              "isRepresentative": false,
+              "groupType": "관외",
+              "duration": 30,
+              "durationType": "YEAR",
+              "residency": "NON_LOCAL",
+              "capacity": "가족"
             }
           ]
         }
@@ -5573,11 +6871,13 @@
               "name": "묘지사용료",
               "price": 1200000,
               "feeType": "USAGE",
-              "grade": "평",
+              "grade": "3.3㎡ / 평",
               "note": "",
               "isRepresentative": true,
-              "area": 3.3,
-              "areaUnit": "SQM"
+              "groupType": null,
+              "duration": null,
+              "durationType": null,
+              "residency": "ALL"
             },
             {
               "name": "묘지관리비",
@@ -5585,76 +6885,427 @@
               "feeType": "MAINTENANCE",
               "grade": "",
               "note": "",
-              "isRepresentative": false
+              "isRepresentative": false,
+              "groupType": null,
+              "duration": null,
+              "durationType": null,
+              "residency": "ALL"
             }
           ]
         },
         {
           "serviceType": "BURIAL",
-          "subType": "합장형",
+          "subType": "봉안묘",
           "unit": "원",
           "rows": [
             {
-              "name": "대지 2구 납골 2구",
+              "name": "봉안묘(2분)",
               "price": 3000000,
               "feeType": "USAGE",
               "grade": "",
               "note": "",
-              "isRepresentative": false
+              "isRepresentative": true,
+              "groupType": null,
+              "duration": null,
+              "durationType": null,
+              "residency": "ALL",
+              "capacity": "부부"
             },
             {
-              "name": "대지 12구 납골 12구",
-              "price": 10000000,
-              "feeType": "USAGE",
-              "grade": "",
-              "note": "",
-              "isRepresentative": false
-            }
-          ]
-        },
-        {
-          "serviceType": "BONGSAN",
-          "subType": "봉안당",
-          "unit": "원",
-          "rows": [
-            {
-              "name": "대지 10기 납골 10기",
-              "price": 6000000,
-              "feeType": "USAGE",
-              "grade": "",
-              "note": "",
-              "isRepresentative": false
-            },
-            {
-              "name": "대지 16기 납골 16기",
-              "price": 11000000,
-              "feeType": "USAGE",
-              "grade": "",
-              "note": "",
-              "isRepresentative": false
-            }
-          ]
-        },
-        {
-          "serviceType": "NATURAL",
-          "subType": "가족형",
-          "unit": "원",
-          "rows": [
-            {
-              "name": "대지 4위 납골 4위",
+              "name": "봉안묘(4분)",
               "price": 5000000,
               "feeType": "USAGE",
               "grade": "",
               "note": "",
-              "isRepresentative": false
+              "isRepresentative": true,
+              "groupType": null,
+              "duration": null,
+              "durationType": null,
+              "residency": "ALL",
+              "capacity": "가족"
             },
             {
-              "name": "대지 24위 납골 24위",
+              "name": "봉안묘(10분)",
+              "price": 6000000,
+              "feeType": "USAGE",
+              "grade": "",
+              "note": "",
+              "isRepresentative": true,
+              "groupType": null,
+              "duration": null,
+              "durationType": null,
+              "residency": "ALL",
+              "capacity": "대가족"
+            },
+            {
+              "name": "봉안묘(12분)",
+              "price": 10000000,
+              "feeType": "USAGE",
+              "grade": "",
+              "note": "",
+              "isRepresentative": false,
+              "groupType": null,
+              "duration": null,
+              "durationType": null,
+              "residency": "ALL",
+              "capacity": "대가족"
+            },
+            {
+              "name": "봉안묘(16분)",
+              "price": 11000000,
+              "feeType": "USAGE",
+              "grade": "",
+              "note": "",
+              "isRepresentative": false,
+              "groupType": null,
+              "duration": null,
+              "durationType": null,
+              "residency": "ALL",
+              "capacity": "대가족"
+            },
+            {
+              "name": "봉안묘(24분)",
               "price": 13000000,
               "feeType": "USAGE",
               "grade": "",
               "note": "",
-              "isRepresentative": false
+              "isRepresentative": false,
+              "groupType": null,
+              "duration": null,
+              "durationType": null,
+              "residency": "ALL",
+              "capacity": "대가족"
+            }
+          ]
+        },
+        {
+          "serviceType": "BURIAL",
+          "subType": "선택항목 (석물 및 묘테)",
+          "unit": "원",
+          "rows": [
+            {
+              "name": "석물(301형) 단장용 1단 (화병)",
+              "price": 90000,
+              "feeType": "USAGE",
+              "grade": "",
+              "note": "",
+              "isRepresentative": false,
+              "groupType": "석물(301형)",
+              "duration": null,
+              "durationType": null,
+              "residency": "ALL"
+            },
+            {
+              "name": "석물(301형) 단장용 1단 (상석)",
+              "price": 110000,
+              "feeType": "USAGE",
+              "grade": "",
+              "note": "",
+              "isRepresentative": false,
+              "groupType": "석물(301형)",
+              "duration": null,
+              "durationType": null,
+              "residency": "ALL"
+            },
+            {
+              "name": "석물(503형) 단장용 3단 (화병)",
+              "price": 145000,
+              "feeType": "USAGE",
+              "grade": "",
+              "note": "",
+              "isRepresentative": false,
+              "groupType": "석물(503형)",
+              "duration": null,
+              "durationType": null,
+              "residency": "ALL"
+            },
+            {
+              "name": "석물(503형) 단장용 3단 (상석)",
+              "price": 284000,
+              "feeType": "USAGE",
+              "grade": "",
+              "note": "",
+              "isRepresentative": false,
+              "groupType": "석물(503형)",
+              "duration": null,
+              "durationType": null,
+              "residency": "ALL"
+            },
+            {
+              "name": "석물(301형) 단장용 1단 (비석)",
+              "price": 330000,
+              "feeType": "USAGE",
+              "grade": "",
+              "note": "",
+              "isRepresentative": false,
+              "groupType": "석물(301형)",
+              "duration": null,
+              "durationType": null,
+              "residency": "ALL"
+            },
+            {
+              "name": "비석(750*230*90)",
+              "price": 490000,
+              "feeType": "USAGE",
+              "grade": "",
+              "note": "",
+              "isRepresentative": false,
+              "groupType": "비석",
+              "duration": null,
+              "durationType": null,
+              "residency": "ALL"
+            },
+            {
+              "name": "상석(700*550*150)",
+              "price": 580000,
+              "feeType": "USAGE",
+              "grade": "",
+              "note": "",
+              "isRepresentative": false,
+              "groupType": "상석",
+              "duration": null,
+              "durationType": null,
+              "residency": "ALL"
+            },
+            {
+              "name": "비석(600*420*110)",
+              "price": 660000,
+              "feeType": "USAGE",
+              "grade": "",
+              "note": "",
+              "isRepresentative": false,
+              "groupType": "비석",
+              "duration": null,
+              "durationType": null,
+              "residency": "ALL"
+            },
+            {
+              "name": "석물(803형) 합장용 3단 (상석)",
+              "price": 705000,
+              "feeType": "USAGE",
+              "grade": "",
+              "note": "",
+              "isRepresentative": false,
+              "groupType": "석물(803형)",
+              "duration": null,
+              "durationType": null,
+              "residency": "ALL"
+            },
+            {
+              "name": "석물(503형) 단장용 3단 (비석)",
+              "price": 710000,
+              "feeType": "USAGE",
+              "grade": "",
+              "note": "",
+              "isRepresentative": false,
+              "groupType": "석물(503형)",
+              "duration": null,
+              "durationType": null,
+              "residency": "ALL"
+            },
+            {
+              "name": "석물(301형) 단장용 1단 (둘레석)",
+              "price": 792000,
+              "feeType": "USAGE",
+              "grade": "",
+              "note": "",
+              "isRepresentative": false,
+              "groupType": "석물(301형)",
+              "duration": null,
+              "durationType": null,
+              "residency": "ALL"
+            },
+            {
+              "name": "석물(102형) 합장용 3단 (상석)",
+              "price": 839000,
+              "feeType": "USAGE",
+              "grade": "",
+              "note": "",
+              "isRepresentative": false,
+              "groupType": "석물(102형)",
+              "duration": null,
+              "durationType": null,
+              "residency": "ALL"
+            },
+            {
+              "name": "비석(750*470*130)",
+              "price": 900000,
+              "feeType": "USAGE",
+              "grade": "",
+              "note": "",
+              "isRepresentative": false,
+              "groupType": "비석",
+              "duration": null,
+              "durationType": null,
+              "residency": "ALL"
+            },
+            {
+              "name": "석물(803형) 합장용 3단 (비석)",
+              "price": 1082000,
+              "feeType": "USAGE",
+              "grade": "",
+              "note": "",
+              "isRepresentative": false,
+              "groupType": "석물(803형)",
+              "duration": null,
+              "durationType": null,
+              "residency": "ALL"
+            },
+            {
+              "name": "상석(850*600*150)",
+              "price": 1100000,
+              "feeType": "USAGE",
+              "grade": "",
+              "note": "",
+              "isRepresentative": false,
+              "groupType": "상석",
+              "duration": null,
+              "durationType": null,
+              "residency": "ALL"
+            },
+            {
+              "name": "상석(960*600*200)",
+              "price": 1200000,
+              "feeType": "USAGE",
+              "grade": "",
+              "note": "",
+              "isRepresentative": false,
+              "groupType": "상석",
+              "duration": null,
+              "durationType": null,
+              "residency": "ALL"
+            },
+            {
+              "name": "석물(102형) 합장용 3단 (비석)",
+              "price": 1312000,
+              "feeType": "USAGE",
+              "grade": "",
+              "note": "",
+              "isRepresentative": false,
+              "groupType": "석물(102형)",
+              "duration": null,
+              "durationType": null,
+              "residency": "ALL"
+            },
+            {
+              "name": "석물(503형) 단장용 3단 (둘레석)",
+              "price": 2337000,
+              "feeType": "USAGE",
+              "grade": "",
+              "note": "",
+              "isRepresentative": false,
+              "groupType": "석물(503형)",
+              "duration": null,
+              "durationType": null,
+              "residency": "ALL"
+            },
+            {
+              "name": "갓비석4자",
+              "price": 2500000,
+              "feeType": "USAGE",
+              "grade": "",
+              "note": "",
+              "isRepresentative": false,
+              "groupType": "비석",
+              "duration": null,
+              "durationType": null,
+              "residency": "ALL"
+            },
+            {
+              "name": "석물(602형) 합장용 3단 (둘레석)",
+              "price": 2546000,
+              "feeType": "USAGE",
+              "grade": "",
+              "note": "",
+              "isRepresentative": false,
+              "groupType": "석물(602형)",
+              "duration": null,
+              "durationType": null,
+              "residency": "ALL"
+            },
+            {
+              "name": "석물(803형) 합장용 3단 (둘레석)",
+              "price": 2554000,
+              "feeType": "USAGE",
+              "grade": "",
+              "note": "",
+              "isRepresentative": false,
+              "groupType": "석물(803형)",
+              "duration": null,
+              "durationType": null,
+              "residency": "ALL"
+            },
+            {
+              "name": "석물(102형) 합장용 3단 (둘레석)",
+              "price": 2784000,
+              "feeType": "USAGE",
+              "grade": "",
+              "note": "",
+              "isRepresentative": false,
+              "groupType": "석물(102형)",
+              "duration": null,
+              "durationType": null,
+              "residency": "ALL"
+            },
+            {
+              "name": "묘테(1990*850*300) 1단",
+              "price": 980000,
+              "feeType": "USAGE",
+              "grade": "",
+              "note": "",
+              "isRepresentative": true,
+              "groupType": "묘테",
+              "duration": null,
+              "durationType": null,
+              "residency": "ALL"
+            },
+            {
+              "name": "묘테(2100*1100*430) 2단",
+              "price": 1600000,
+              "feeType": "USAGE",
+              "grade": "",
+              "note": "",
+              "isRepresentative": false,
+              "groupType": "묘테",
+              "duration": null,
+              "durationType": null,
+              "residency": "ALL"
+            },
+            {
+              "name": "묘테(2100*1100*560) 3단",
+              "price": 2300000,
+              "feeType": "USAGE",
+              "grade": "",
+              "note": "",
+              "isRepresentative": false,
+              "groupType": "묘테",
+              "duration": null,
+              "durationType": null,
+              "residency": "ALL"
+            },
+            {
+              "name": "묘테(2100*1400*560) 3단",
+              "price": 2600000,
+              "feeType": "USAGE",
+              "grade": "",
+              "note": "",
+              "isRepresentative": false,
+              "groupType": "묘테",
+              "duration": null,
+              "durationType": null,
+              "residency": "ALL"
+            },
+            {
+              "name": "묘테(2220*1440*600) 3단",
+              "price": 2900000,
+              "feeType": "USAGE",
+              "grade": "",
+              "note": "",
+              "isRepresentative": false,
+              "groupType": "묘테",
+              "duration": null,
+              "durationType": null,
+              "residency": "ALL"
             }
           ]
         }
@@ -5974,178 +7625,234 @@
           "unit": "원",
           "rows": [
             {
-              "name": "묘지사용료",
+              "name": "묘지사용료 (기본형)",
               "price": 1500000,
               "feeType": "USAGE",
-              "grade": "사용계약",
+              "grade": "영구사용계약",
               "note": "",
               "isRepresentative": true,
-              "duration": 0,
-              "durationType": "PERMANENT"
+              "groupType": null,
+              "duration": null,
+              "durationType": null,
+              "residency": "ALL"
             },
             {
-              "name": "묘지사용료",
+              "name": "묘지사용료 (상위 묘역 10%)",
               "price": 2500000,
               "feeType": "USAGE",
-              "grade": "사용계약",
+              "grade": "영구사용계약",
               "note": "",
               "isRepresentative": false,
-              "duration": 0,
-              "durationType": "PERMANENT"
+              "groupType": null,
+              "duration": null,
+              "durationType": null,
+              "residency": "ALL"
             },
             {
-              "name": "묘지사용료",
+              "name": "묘지사용료 (상위 묘역 7%)",
               "price": 3000000,
               "feeType": "USAGE",
-              "grade": "사용계약(전체묘역의 7%",
+              "grade": "영구사용계약",
               "note": "",
               "isRepresentative": false,
-              "duration": 0,
-              "durationType": "PERMANENT"
+              "groupType": null,
+              "duration": null,
+              "durationType": null,
+              "residency": "ALL"
             },
             {
-              "name": "묘지사용료",
+              "name": "묘지사용료 (상위 묘역 3%)",
               "price": 5000000,
               "feeType": "USAGE",
-              "grade": "사용계약(전체묘역의 3%",
+              "grade": "영구사용계약",
               "note": "",
               "isRepresentative": false,
-              "duration": 0,
-              "durationType": "PERMANENT"
+              "groupType": null,
+              "duration": null,
+              "durationType": null,
+              "residency": "ALL"
             },
             {
-              "name": "묘지관리비",
+              "name": "관리비 (1년납, 1평당)",
               "price": 13000,
               "feeType": "MAINTENANCE",
-              "grade": "평당 관리비(년납)",
+              "grade": "",
               "note": "",
-              "isRepresentative": false
+              "isRepresentative": false,
+              "groupType": null,
+              "duration": null,
+              "durationType": null,
+              "residency": "ALL"
             },
             {
-              "name": "묘지관리비",
+              "name": "관리비 (영구납, 1평당)",
               "price": 780000,
               "feeType": "MAINTENANCE",
-              "grade": "평당 관리비(납)60년납 기준",
+              "grade": "60년납 기준",
               "note": "",
               "isRepresentative": false,
-              "duration": 60,
-              "durationType": "YEAR"
+              "groupType": null,
+              "duration": null,
+              "durationType": null,
+              "residency": "ALL"
             },
             {
-              "name": "분묘설치비",
+              "name": "[필수] 분묘설치비 (3평)",
               "price": 1300000,
-              "feeType": "INSTALLATION",
-              "grade": "묘 (합장시 500,000 추가",
-              "note": "",
+              "feeType": "USAGE",
+              "grade": "",
+              "note": "합장시 500,000원 추가",
               "isRepresentative": false,
-              "area": 9.92,
-              "areaUnit": "SQM"
+              "groupType": null,
+              "duration": null,
+              "durationType": null,
+              "residency": "ALL"
             },
             {
-              "name": "분묘설치비",
+              "name": "[필수] 분묘설치비 (4평)",
               "price": 1500000,
-              "feeType": "INSTALLATION",
-              "grade": "묘 (합장시 500,000 추가",
-              "note": "",
+              "feeType": "USAGE",
+              "grade": "",
+              "note": "합장시 500,000원 추가",
               "isRepresentative": false,
-              "area": 13.22,
-              "areaUnit": "SQM"
+              "groupType": null,
+              "duration": null,
+              "durationType": null,
+              "residency": "ALL"
             },
             {
-              "name": "분묘설치비",
+              "name": "[필수] 분묘설치비 (5평)",
               "price": 1700000,
-              "feeType": "INSTALLATION",
-              "grade": "묘 (합장시 500,000 추가",
-              "note": "",
+              "feeType": "USAGE",
+              "grade": "",
+              "note": "합장시 500,000원 추가",
               "isRepresentative": false,
-              "area": 16.53,
-              "areaUnit": "SQM"
+              "groupType": null,
+              "duration": null,
+              "durationType": null,
+              "residency": "ALL"
             }
           ]
         },
         {
-          "serviceType": "BONGSAN",
+          "serviceType": "BURIAL",
           "subType": "봉안묘",
           "unit": "원",
           "rows": [
             {
-              "name": "납골묘 장례비",
+              "name": "장례비 - 매장식 (1위)",
               "price": 430000,
               "feeType": "USAGE",
-              "grade": "매장식 (1기기준)",
+              "grade": "",
               "note": "",
-              "isRepresentative": true
+              "isRepresentative": true,
+              "groupType": null,
+              "duration": null,
+              "durationType": null,
+              "residency": "ALL"
             },
             {
-              "name": "납골묘 장례비",
+              "name": "장례비 - 안치식 (1위)",
               "price": 300000,
               "feeType": "USAGE",
-              "grade": "안치식 (1기기준)",
+              "grade": "",
               "note": "",
-              "isRepresentative": false
+              "isRepresentative": false,
+              "groupType": null,
+              "duration": null,
+              "durationType": null,
+              "residency": "ALL"
             },
             {
-              "name": "1기용 납골묘 석물",
+              "name": "납골묘 석물 (1위용)",
               "price": 1090000,
-              "feeType": "STONE",
+              "feeType": "USAGE",
               "grade": "",
               "note": "",
-              "isRepresentative": false
+              "isRepresentative": false,
+              "groupType": null,
+              "duration": null,
+              "durationType": null,
+              "residency": "ALL"
             },
             {
-              "name": "2기용 납골묘 석물",
+              "name": "납골묘 석물 (2위용)",
               "price": 2040000,
-              "feeType": "STONE",
+              "feeType": "USAGE",
               "grade": "",
               "note": "",
-              "isRepresentative": false
+              "isRepresentative": false,
+              "groupType": null,
+              "duration": null,
+              "durationType": null,
+              "residency": "ALL"
             },
             {
-              "name": "1기용 납골묘 설치공사비",
+              "name": "설치공사비 (1위용)",
               "price": 950000,
               "feeType": "USAGE",
               "grade": "",
               "note": "",
-              "isRepresentative": false
+              "isRepresentative": false,
+              "groupType": null,
+              "duration": null,
+              "durationType": null,
+              "residency": "ALL"
             },
             {
-              "name": "2기용 납골묘 설치공사비",
+              "name": "설치공사비 (2위용)",
               "price": 1340000,
               "feeType": "USAGE",
               "grade": "",
               "note": "",
-              "isRepresentative": false
+              "isRepresentative": false,
+              "groupType": null,
+              "duration": null,
+              "durationType": null,
+              "residency": "ALL"
             }
           ]
         },
         {
-          "serviceType": "OTHER",
+          "serviceType": "NATURAL",
           "subType": "자연장",
           "unit": "원",
           "rows": [
             {
-              "name": "화초장",
+              "name": "화초장 (1위)",
               "price": 1200000,
               "feeType": "USAGE",
-              "grade": "1위기준",
-              "note": "",
-              "isRepresentative": true
+              "grade": "",
+              "note": "잔디를 10주 포함",
+              "isRepresentative": true,
+              "groupType": null,
+              "duration": null,
+              "durationType": null,
+              "residency": "ALL"
             },
             {
-              "name": "잔디장",
+              "name": "잔디장 (1위)",
               "price": 1000000,
               "feeType": "USAGE",
-              "grade": "1위기준",
+              "grade": "",
               "note": "",
-              "isRepresentative": false
+              "isRepresentative": false,
+              "groupType": null,
+              "duration": null,
+              "durationType": null,
+              "residency": "ALL"
             },
             {
-              "name": "산골장",
+              "name": "산골장 (1위)",
               "price": 600000,
               "feeType": "USAGE",
-              "grade": "1위기준",
+              "grade": "",
               "note": "",
-              "isRepresentative": false
+              "isRepresentative": false,
+              "groupType": null,
+              "duration": null,
+              "durationType": null,
+              "residency": "ALL"
             }
           ]
         },
@@ -6155,144 +7862,203 @@
           "unit": "원",
           "rows": [
             {
-              "name": "선산납골당 사용료",
+              "name": "납골당 사용료 (유연고, 30년)",
               "price": 1000000,
               "feeType": "USAGE",
-              "grade": "유연고",
+              "grade": "일반 가족단 정식 안치계약",
               "note": "",
               "isRepresentative": true,
+              "groupType": null,
               "duration": 30,
-              "durationType": "YEAR"
+              "durationType": "YEAR",
+              "residency": "ALL"
             },
             {
-              "name": "선산납골당 사용료",
+              "name": "납골당 사용료 (무연고, 10년)",
               "price": 300000,
               "feeType": "USAGE",
-              "grade": "무연고",
+              "grade": "무명묘 유골 10년 임시보관 전용",
               "note": "",
               "isRepresentative": false,
+              "groupType": null,
               "duration": 10,
-              "durationType": "YEAR"
+              "durationType": "YEAR",
+              "residency": "ALL"
             }
           ]
         },
         {
-          "serviceType": "OTHER",
-          "subType": "석물",
+          "serviceType": "BURIAL",
+          "subType": "선택항목 (석물)",
           "unit": "원",
           "rows": [
             {
-              "name": "기본형set",
+              "name": "기본형 세트",
               "price": 1000000,
               "feeType": "USAGE",
-              "grade": "비석,상석,향로석,화병1",
+              "grade": "비석+상석+향로석+화병",
               "note": "",
-              "isRepresentative": true
+              "isRepresentative": true,
+              "groupType": "세트 & 둘레석",
+              "duration": null,
+              "durationType": null,
+              "residency": "ALL"
             },
             {
-              "name": "A형둘레석(단분형)",
+              "name": "A형 둘레석 (단분형)",
               "price": 2300000,
               "feeType": "USAGE",
-              "grade": "영주석,수연마",
-              "note": "",
-              "isRepresentative": false
-            },
-            {
-              "name": "A형둘레석(합장형)",
-              "price": 2500000,
-              "feeType": "USAGE",
-              "grade": "영주석,수연마",
+              "grade": "영주석, 수연마",
               "note": "",
               "isRepresentative": false,
-              "capacity": "부부"
+              "groupType": "세트 & 둘레석",
+              "duration": null,
+              "durationType": null,
+              "residency": "ALL"
             },
             {
-              "name": "B형둘레석",
+              "name": "A형 둘레석 (합장형)",
+              "price": 2500000,
+              "feeType": "USAGE",
+              "grade": "영주석, 수연마",
+              "note": "",
+              "isRepresentative": false,
+              "groupType": "세트 & 둘레석",
+              "duration": null,
+              "durationType": null,
+              "residency": "ALL"
+            },
+            {
+              "name": "B형 둘레석",
               "price": 1500000,
               "feeType": "USAGE",
-              "grade": "영주석,수연마",
+              "grade": "영주석, 수연마",
               "note": "",
-              "isRepresentative": false
+              "isRepresentative": false,
+              "groupType": "세트 & 둘레석",
+              "duration": null,
+              "durationType": null,
+              "residency": "ALL"
             },
             {
-              "name": "C형둘레석",
+              "name": "C형 둘레석",
               "price": 1300000,
               "feeType": "USAGE",
-              "grade": "영주석,수연마",
+              "grade": "영주석, 수연마",
               "note": "",
-              "isRepresentative": false
+              "isRepresentative": false,
+              "groupType": "세트 & 둘레석",
+              "duration": null,
+              "durationType": null,
+              "residency": "ALL"
             },
             {
-              "name": "상석",
-              "price": 1000000,
-              "feeType": "STONE",
-              "grade": "90cm,영주석,수연마,고급향로석",
-              "note": "",
-              "isRepresentative": false
-            },
-            {
-              "name": "비석",
-              "price": 600000,
-              "feeType": "STONE",
-              "grade": "90cm,오석,수연마",
-              "note": "",
-              "isRepresentative": false
-            },
-            {
-              "name": "석등",
+              "name": "상석 (90cm)",
               "price": 1000000,
               "feeType": "USAGE",
-              "grade": "치등롱1쌍,영주석,수연마",
+              "grade": "영주석, 수연마, 고급향로석",
               "note": "",
-              "isRepresentative": false
+              "isRepresentative": false,
+              "groupType": "개별 석물",
+              "duration": null,
+              "durationType": null,
+              "residency": "ALL"
             },
             {
-              "name": "경계석",
+              "name": "비석 (90cm)",
+              "price": 600000,
+              "feeType": "USAGE",
+              "grade": "오석, 수연마",
+              "note": "",
+              "isRepresentative": false,
+              "groupType": "개별 석물",
+              "duration": null,
+              "durationType": null,
+              "residency": "ALL"
+            },
+            {
+              "name": "석등 (1쌍)",
+              "price": 1000000,
+              "feeType": "USAGE",
+              "grade": "치등롱, 영주석, 수연마",
+              "note": "",
+              "isRepresentative": false,
+              "groupType": "개별 석물",
+              "duration": null,
+              "durationType": null,
+              "residency": "ALL"
+            },
+            {
+              "name": "경계석 (1M)",
               "price": 75000,
               "feeType": "USAGE",
-              "grade": "1M,영주석,무광",
+              "grade": "영주석, 무광",
               "note": "",
-              "isRepresentative": false
+              "isRepresentative": false,
+              "groupType": "개별 석물",
+              "duration": null,
+              "durationType": null,
+              "residency": "ALL"
             },
             {
-              "name": "화병",
+              "name": "화병 (고급형)",
               "price": 100000,
-              "feeType": "STONE",
-              "grade": "고급형,수연마",
+              "feeType": "USAGE",
+              "grade": "수연마",
               "note": "",
-              "isRepresentative": false
+              "isRepresentative": false,
+              "groupType": "개별 석물",
+              "duration": null,
+              "durationType": null,
+              "residency": "ALL"
             },
             {
-              "name": "해미석",
+              "name": "해미석 (1Kg)",
               "price": 35000,
               "feeType": "USAGE",
-              "grade": "1Kg",
+              "grade": "",
               "note": "",
-              "isRepresentative": false
+              "isRepresentative": false,
+              "groupType": "개별 석물",
+              "duration": null,
+              "durationType": null,
+              "residency": "ALL"
             },
             {
-              "name": "와비(中)",
+              "name": "와비 中 (45cm)",
               "price": 500000,
               "feeType": "USAGE",
-              "grade": "45cm,오석,대석포함",
+              "grade": "오석, 대석포함",
               "note": "",
-              "isRepresentative": false
+              "isRepresentative": false,
+              "groupType": "기타",
+              "duration": null,
+              "durationType": null,
+              "residency": "ALL"
             },
             {
-              "name": "와비(大)",
+              "name": "와비 大 (60cm)",
               "price": 700000,
               "feeType": "USAGE",
-              "grade": "60cm,오석,대석포함",
+              "grade": "오석, 대석포함",
               "note": "",
-              "isRepresentative": false
+              "isRepresentative": false,
+              "groupType": "기타",
+              "duration": null,
+              "durationType": null,
+              "residency": "ALL"
             },
             {
               "name": "각자비",
               "price": 80000,
               "feeType": "USAGE",
-              "grade": "기본 80,000원 추가시 별도",
-              "note": "",
-              "isRepresentative": false
+              "grade": "",
+              "note": "추가시 별도",
+              "isRepresentative": false,
+              "groupType": "기타",
+              "duration": null,
+              "durationType": null,
+              "residency": "ALL"
             }
           ]
         }
@@ -6408,24 +8174,385 @@
           "unit": "원",
           "rows": [
             {
-              "name": "묘지임대사용료",
+              "name": "묘지임대사용료 (1평당)",
               "price": 1400000,
               "feeType": "USAGE",
-              "grade": "묘지임대사용료",
-              "note": "",
+              "grade": "",
+              "note": "3.3㎡ 기준",
               "isRepresentative": true,
-              "area": 3.3,
-              "areaUnit": "SQM"
+              "groupType": null,
+              "duration": null,
+              "durationType": null,
+              "residency": "ALL"
             },
             {
-              "name": "묘지공동관리비",
+              "name": "관리비 (1년납, 1평당)",
               "price": 20000,
               "feeType": "MAINTENANCE",
               "grade": "년간공동관리비",
-              "note": "",
+              "note": "3.3㎡ 기준",
               "isRepresentative": false,
-              "area": 3.3,
-              "areaUnit": "SQM"
+              "groupType": null,
+              "duration": 1,
+              "durationType": "YEAR",
+              "residency": "ALL"
+            },
+            {
+              "name": "[필수] 기본 매장작업비",
+              "price": 1500000,
+              "feeType": "USAGE",
+              "grade": "인건비, 봉분설치 등",
+              "note": "작업 난이도에 따라 추가 가능",
+              "isRepresentative": false,
+              "groupType": null,
+              "duration": null,
+              "durationType": null,
+              "residency": "ALL"
+            },
+            {
+              "name": "[필수] 1.5평형 매장 기본석물비",
+              "price": 4250000,
+              "feeType": "USAGE",
+              "grade": "둘레석, 비석, 상석 외",
+              "note": "부가세 별도",
+              "isRepresentative": false,
+              "groupType": null,
+              "duration": null,
+              "durationType": null,
+              "residency": "ALL"
+            },
+            {
+              "name": "[필수] 2평형 매장 기본석물비",
+              "price": 4500000,
+              "feeType": "USAGE",
+              "grade": "둘레석, 비석, 상석 외",
+              "note": "부가세 별도",
+              "isRepresentative": false,
+              "groupType": null,
+              "duration": null,
+              "durationType": null,
+              "residency": "ALL"
+            },
+            {
+              "name": "[필수] 3평형 매장 기본석물비",
+              "price": 5500000,
+              "feeType": "USAGE",
+              "grade": "둘레석, 비석, 상석 외",
+              "note": "부가세 별도",
+              "isRepresentative": false,
+              "groupType": null,
+              "duration": null,
+              "durationType": null,
+              "residency": "ALL"
+            }
+          ]
+        },
+        {
+          "serviceType": "BURIAL",
+          "subType": "평장묘",
+          "unit": "원",
+          "rows": [
+            {
+              "name": "평장 개인형 세트",
+              "price": 2900000,
+              "feeType": "USAGE",
+              "grade": "부속석물일체, 작업비 포함",
+              "note": "부가세 포함",
+              "isRepresentative": true,
+              "groupType": null,
+              "duration": null,
+              "durationType": null,
+              "residency": "ALL"
+            },
+            {
+              "name": "평장 합장형 세트",
+              "price": 3850000,
+              "feeType": "USAGE",
+              "grade": "부속석물일체, 작업비 포함",
+              "note": "부가세 포함",
+              "isRepresentative": false,
+              "groupType": null,
+              "duration": null,
+              "durationType": null,
+              "residency": "ALL"
+            },
+            {
+              "name": "[필수] 장례 작업비 (평장/봉안 기본)",
+              "price": 500000,
+              "feeType": "USAGE",
+              "grade": "매장 외 작업비용",
+              "note": "작업 난이도에 따라 추가 가능",
+              "isRepresentative": false,
+              "groupType": null,
+              "duration": null,
+              "durationType": null,
+              "residency": "ALL"
+            }
+          ]
+        },
+        {
+          "serviceType": "BURIAL",
+          "subType": "봉안묘",
+          "unit": "원",
+          "rows": [
+            {
+              "name": "4호 가족봉안묘 (6기형)",
+              "price": 12150000,
+              "feeType": "USAGE",
+              "grade": "석물설치비용 일체",
+              "note": "비석, 상석, 향로, 꽃병 세트 (부가세 별도)",
+              "isRepresentative": true,
+              "groupType": null,
+              "duration": null,
+              "durationType": null,
+              "residency": "ALL"
+            },
+            {
+              "name": "3호 가족봉안묘 (16기형)",
+              "price": 20200000,
+              "feeType": "USAGE",
+              "grade": "석물설치비용 일체",
+              "note": "비석, 상석, 향로, 꽃병 세트 (부가세 별도)",
+              "isRepresentative": false,
+              "groupType": null,
+              "duration": null,
+              "durationType": null,
+              "residency": "ALL"
+            },
+            {
+              "name": "2호 가족봉안묘 (20기형)",
+              "price": 24300000,
+              "feeType": "USAGE",
+              "grade": "석물설치비용 일체",
+              "note": "비석, 상석, 향로, 꽃병 세트 (부가세 별도)",
+              "isRepresentative": false,
+              "groupType": null,
+              "duration": null,
+              "durationType": null,
+              "residency": "ALL"
+            },
+            {
+              "name": "1호 가족봉안묘 (24기형)",
+              "price": 35600000,
+              "feeType": "USAGE",
+              "grade": "석물설치비용 일체",
+              "note": "비석, 상석, 향로, 꽃병 세트 (부가세 별도)",
+              "isRepresentative": false,
+              "groupType": null,
+              "duration": null,
+              "durationType": null,
+              "residency": "ALL"
+            },
+            {
+              "name": "[필수] 장례 장비대 및 부대비용",
+              "price": 1500000,
+              "feeType": "USAGE",
+              "grade": "매장 외 부대비용",
+              "note": "장례형태, 평수에 따라 상이 (부가세 별도)",
+              "isRepresentative": false,
+              "groupType": null,
+              "duration": null,
+              "durationType": null,
+              "residency": "ALL"
+            }
+          ]
+        },
+        {
+          "serviceType": "BURIAL",
+          "subType": "선택항목 (석물 및 추가작업)",
+          "unit": "원",
+          "rows": [
+            {
+              "name": "사각둘레석 2단 (전남 고흥석 A급)",
+              "price": 3100000,
+              "feeType": "USAGE",
+              "grade": "1.5~2.5평형 설치규격",
+              "note": "부가세 별도",
+              "isRepresentative": false,
+              "groupType": "사각 둘레석",
+              "duration": null,
+              "durationType": null,
+              "residency": "ALL"
+            },
+            {
+              "name": "사각둘레석 3단 (전남 고흥석 A급)",
+              "price": 3500000,
+              "feeType": "USAGE",
+              "grade": "3평 이상 설치규격",
+              "note": "부가세 별도",
+              "isRepresentative": false,
+              "groupType": "사각 둘레석",
+              "duration": null,
+              "durationType": null,
+              "residency": "ALL"
+            },
+            {
+              "name": "사각둘레석 4단 3면 무궁화 최고급형",
+              "price": 11000000,
+              "feeType": "USAGE",
+              "grade": "전남 고흥석 A급 조각",
+              "note": "부가세 별도",
+              "isRepresentative": false,
+              "groupType": "사각 둘레석",
+              "duration": null,
+              "durationType": null,
+              "residency": "ALL"
+            },
+            {
+              "name": "고흥석 A급 상석 (2.5자)",
+              "price": 300000,
+              "feeType": "USAGE",
+              "grade": "",
+              "note": "부가세 별도",
+              "isRepresentative": false,
+              "groupType": "상석 (제사상)",
+              "duration": null,
+              "durationType": null,
+              "residency": "ALL"
+            },
+            {
+              "name": "고흥석 A급 상석 (3.0자)",
+              "price": 800000,
+              "feeType": "USAGE",
+              "grade": "",
+              "note": "부가세 별도",
+              "isRepresentative": false,
+              "groupType": "상석 (제사상)",
+              "duration": null,
+              "durationType": null,
+              "residency": "ALL"
+            },
+            {
+              "name": "영주석(애석) 상석 (3.0자)",
+              "price": 950000,
+              "feeType": "USAGE",
+              "grade": "",
+              "note": "부가세 별도",
+              "isRepresentative": false,
+              "groupType": "상석 (제사상)",
+              "duration": null,
+              "durationType": null,
+              "residency": "ALL"
+            },
+            {
+              "name": "오석(중국산) 상석 (3.0자)",
+              "price": 1650000,
+              "feeType": "USAGE",
+              "grade": "",
+              "note": "부가세 별도",
+              "isRepresentative": false,
+              "groupType": "상석 (제사상)",
+              "duration": null,
+              "durationType": null,
+              "residency": "ALL"
+            },
+            {
+              "name": "혼유, 복석, 받침 세트 (3.0자)",
+              "price": 300000,
+              "feeType": "USAGE",
+              "grade": "부속석물",
+              "note": "부가세 별도",
+              "isRepresentative": false,
+              "groupType": "상석 (제사상)",
+              "duration": null,
+              "durationType": null,
+              "residency": "ALL"
+            },
+            {
+              "name": "중국산 오비석 (2.5자)",
+              "price": 500000,
+              "feeType": "USAGE",
+              "grade": "각지비 별도",
+              "note": "부가세 별도",
+              "isRepresentative": false,
+              "groupType": "오비석 (비석)",
+              "duration": null,
+              "durationType": null,
+              "residency": "ALL"
+            },
+            {
+              "name": "중국산 오비석 (3.0자)",
+              "price": 900000,
+              "feeType": "USAGE",
+              "grade": "각지비 별도",
+              "note": "부가세 별도",
+              "isRepresentative": false,
+              "groupType": "오비석 (비석)",
+              "duration": null,
+              "durationType": null,
+              "residency": "ALL"
+            },
+            {
+              "name": "중국산 오비석 (3.5자)",
+              "price": 1300000,
+              "feeType": "USAGE",
+              "grade": "각지비 별도",
+              "note": "부가세 별도",
+              "isRepresentative": false,
+              "groupType": "오비석 (비석)",
+              "duration": null,
+              "durationType": null,
+              "residency": "ALL"
+            },
+            {
+              "name": "중국산 오비석 (4.0자)",
+              "price": 1900000,
+              "feeType": "USAGE",
+              "grade": "각지비 별도",
+              "note": "부가세 별도",
+              "isRepresentative": false,
+              "groupType": "오비석 (비석)",
+              "duration": null,
+              "durationType": null,
+              "residency": "ALL"
+            },
+            {
+              "name": "비석 석각인비 (2.5~3.5자형)",
+              "price": 300000,
+              "feeType": "USAGE",
+              "grade": "고인 1분 기준 기본 각인",
+              "note": "4자 이상 별도 견적",
+              "isRepresentative": false,
+              "groupType": "오비석 (비석)",
+              "duration": null,
+              "durationType": null,
+              "residency": "ALL"
+            },
+            {
+              "name": "묘지사초작업",
+              "price": 600000,
+              "feeType": "USAGE",
+              "grade": "",
+              "note": "평수/작업난이도에 따라 상이",
+              "isRepresentative": false,
+              "groupType": "기타 부대비용 및 추가작업",
+              "duration": null,
+              "durationType": null,
+              "residency": "ALL"
+            },
+            {
+              "name": "개장정리비 (폐기물처리비)",
+              "price": 700000,
+              "feeType": "USAGE",
+              "grade": "",
+              "note": "묘지형태에 따라 40~70만",
+              "isRepresentative": false,
+              "groupType": "기타 부대비용 및 추가작업",
+              "duration": null,
+              "durationType": null,
+              "residency": "ALL"
+            },
+            {
+              "name": "추가 봉안료 및 비석각인비",
+              "price": 500000,
+              "feeType": "USAGE",
+              "grade": "",
+              "note": "부가세 별도",
+              "isRepresentative": false,
+              "groupType": "기타 부대비용 및 추가작업",
+              "duration": null,
+              "durationType": null,
+              "residency": "ALL"
             }
           ]
         }
@@ -6510,27 +8637,6 @@
     "updatedAt": "2025-12-28T05:26:02.638",
     "reviews": [],
     "priceInfo": {
-      "priceTable": {
-        "매장묘": {
-          "category": "grave",
-          "unit": "원",
-          "rows": [
-            {
-              "name": "평안 2단 일반형",
-              "grade": "",
-              "price": 5600000,
-              "groupType": "",
-              "isRepresentative": true
-            },
-            {
-              "name": "평안 3단 고급형",
-              "grade": "",
-              "price": 6400000,
-              "groupType": ""
-            }
-          ]
-        }
-      },
       "standardizedPrices": [
         {
           "serviceType": "BURIAL",
@@ -6538,20 +8644,325 @@
           "unit": "원",
           "rows": [
             {
-              "name": "평안 2단 일반형",
-              "price": 5600000,
+              "name": "묘지 사용료",
+              "price": 332900,
               "feeType": "USAGE",
-              "grade": "",
-              "note": "",
-              "isRepresentative": true
+              "grade": "1㎡ 면적 기준",
+              "note": "실제 분양받는 묘지 면적에 따라 곱하여 산정됩니다 (예: 1평 = 약 3.3㎡)",
+              "isRepresentative": false,
+              "groupType": null,
+              "duration": null,
+              "durationType": null,
+              "residency": "ALL"
             },
             {
-              "name": "평안 3단 고급형",
+              "name": "연간 관리비",
+              "price": 7000,
+              "feeType": "MAINTENANCE",
+              "grade": "1㎡당 1년 기준",
+              "note": "분양 면적에 비례하여 산정되며, 묘역 전체 조경 및 유지보수에 사용됩니다",
+              "isRepresentative": false,
+              "groupType": null,
+              "duration": 1,
+              "durationType": "YEAR",
+              "residency": "ALL"
+            },
+            {
+              "name": "[필수] 매장 안장 작업비",
+              "price": 1500000,
+              "feeType": "USAGE",
+              "grade": "안장 1회 기준액",
+              "note": "고인분을 관째로 흙 속에 매장할 때 발생하는 파묘 및 하관 인건비",
+              "isRepresentative": false,
+              "groupType": null,
+              "duration": null,
+              "durationType": null,
+              "residency": "ALL"
+            },
+            {
+              "name": "개장 작업비 (단장묘)",
+              "price": 1880000,
+              "feeType": "USAGE",
+              "grade": "묘지 이전 1회 기준",
+              "note": "기존 묘를 파묘하여 다른 곳이나 화장장으로 모실 때의 비용",
+              "isRepresentative": false,
+              "groupType": null,
+              "duration": null,
+              "durationType": null,
+              "residency": "ALL"
+            },
+            {
+              "name": "개장 작업비 (합장묘)",
+              "price": 2300000,
+              "feeType": "USAGE",
+              "grade": "묘지 이전 1회 기준",
+              "note": "기존 부부/합장묘를 파묘하여 다른 곳이나 화장장으로 모실 때의 비용",
+              "isRepresentative": false,
+              "groupType": null,
+              "duration": null,
+              "durationType": null,
+              "residency": "ALL"
+            }
+          ]
+        },
+        {
+          "serviceType": "BURIAL",
+          "subType": "봉안묘",
+          "unit": "원",
+          "rows": [
+            {
+              "name": "묘지 사용료",
+              "price": 332900,
+              "feeType": "USAGE",
+              "grade": "1㎡ 면적 기준",
+              "note": "실제 분양받는 묘지 면적에 따라 곱하여 산정됩니다 (예: 1평 = 약 3.3㎡)",
+              "isRepresentative": false,
+              "groupType": null,
+              "duration": null,
+              "durationType": null,
+              "residency": "ALL"
+            },
+            {
+              "name": "연간 관리비",
+              "price": 7000,
+              "feeType": "MAINTENANCE",
+              "grade": "1㎡당 1년 기준",
+              "note": "분양 면적에 비례하여 산정되며, 묘역 전체 조경 및 유지보수에 사용됩니다",
+              "isRepresentative": false,
+              "groupType": null,
+              "duration": 1,
+              "durationType": "YEAR",
+              "residency": "ALL"
+            },
+            {
+              "name": "[필수] 봉안 안장 작업비",
+              "price": 250000,
+              "feeType": "USAGE",
+              "grade": "안장 1회 기준액",
+              "note": "화장된 유골함을 다 지어진 석실(돌집) 안에 넣고 안치하는 인건비",
+              "isRepresentative": false,
+              "groupType": null,
+              "duration": null,
+              "durationType": null,
+              "residency": "ALL"
+            }
+          ]
+        },
+        {
+          "serviceType": "BURIAL",
+          "subType": "석물 (필수 택1)",
+          "unit": "원",
+          "rows": [
+            {
+              "name": "평안 1단 일반석물형",
+              "price": 4300000,
+              "feeType": "USAGE",
+              "grade": "기본 세트",
+              "note": "묘지사용료/관리비 별도 (평안 모델)",
+              "isRepresentative": false,
+              "groupType": "평안 모델",
+              "duration": null,
+              "durationType": null,
+              "residency": "ALL"
+            },
+            {
+              "name": "평안 2단 일반석물형",
+              "price": 5600000,
+              "feeType": "USAGE",
+              "grade": "기본 세트",
+              "note": "묘지사용료/관리비 별도 (평안 모델)",
+              "isRepresentative": true,
+              "groupType": "평안 모델",
+              "duration": null,
+              "durationType": null,
+              "residency": "ALL"
+            },
+            {
+              "name": "평안 3단 고급석물형",
               "price": 6400000,
               "feeType": "USAGE",
-              "grade": "",
+              "grade": "기본 세트",
+              "note": "묘지사용료/관리비 별도 (평안 모델)",
+              "isRepresentative": false,
+              "groupType": "평안 모델",
+              "duration": null,
+              "durationType": null,
+              "residency": "ALL"
+            },
+            {
+              "name": "공작 1단 일반석물형",
+              "price": 6500000,
+              "feeType": "USAGE",
+              "grade": "기본 세트",
+              "note": "묘지사용료/관리비 별도 (공작 모델)",
+              "isRepresentative": false,
+              "groupType": "공작 모델",
+              "duration": null,
+              "durationType": null,
+              "residency": "ALL"
+            },
+            {
+              "name": "공작 2단 일반석물형",
+              "price": 7300000,
+              "feeType": "USAGE",
+              "grade": "기본 세트",
+              "note": "묘지사용료/관리비 별도 (공작 모델)",
+              "isRepresentative": false,
+              "groupType": "공작 모델",
+              "duration": null,
+              "durationType": null,
+              "residency": "ALL"
+            },
+            {
+              "name": "공작 3단 일반석물형",
+              "price": 8300000,
+              "feeType": "USAGE",
+              "grade": "기본 세트",
+              "note": "묘지사용료/관리비 별도 (공작 모델)",
+              "isRepresentative": false,
+              "groupType": "공작 모델",
+              "duration": null,
+              "durationType": null,
+              "residency": "ALL"
+            },
+            {
+              "name": "공작 2단 고급석물형",
+              "price": 9000000,
+              "feeType": "USAGE",
+              "grade": "기본 세트",
+              "note": "묘지사용료/관리비 별도 (공작 모델)",
+              "isRepresentative": false,
+              "groupType": "공작 모델",
+              "duration": null,
+              "durationType": null,
+              "residency": "ALL"
+            },
+            {
+              "name": "공작 3단 고급석물형",
+              "price": 10400000,
+              "feeType": "USAGE",
+              "grade": "기본 세트",
+              "note": "묘지사용료/관리비 별도 (공작 모델)",
+              "isRepresentative": false,
+              "groupType": "공작 모델",
+              "duration": null,
+              "durationType": null,
+              "residency": "ALL"
+            }
+          ]
+        },
+        {
+          "serviceType": "BURIAL",
+          "subType": "선택 항목",
+          "unit": "원",
+          "rows": [
+            {
+              "name": "각지금입비 (외비)",
+              "price": 66000,
+              "feeType": "USAGE",
+              "grade": "작업 1건 기준",
+              "note": "비석 및 석재에 외부 추가 금입 작업이 들어갈 때 발생",
+              "isRepresentative": false,
+              "groupType": "선택항목",
+              "duration": null,
+              "durationType": null,
+              "residency": "ALL"
+            },
+            {
+              "name": "비석 각자비 (大)",
+              "price": 14000,
+              "feeType": "USAGE",
+              "grade": "큰 글씨 1글자 단위",
               "note": "",
-              "isRepresentative": false
+              "isRepresentative": false,
+              "groupType": "선택항목",
+              "duration": null,
+              "durationType": null,
+              "residency": "ALL"
+            },
+            {
+              "name": "비석 각자비 (中)",
+              "price": 7000,
+              "feeType": "USAGE",
+              "grade": "중간 글씨 1글자 단위",
+              "note": "",
+              "isRepresentative": false,
+              "groupType": "선택항목",
+              "duration": null,
+              "durationType": null,
+              "residency": "ALL"
+            },
+            {
+              "name": "비석 각자비 (小)",
+              "price": 3000,
+              "feeType": "USAGE",
+              "grade": "작은 글씨 1글자 단위",
+              "note": "",
+              "isRepresentative": false,
+              "groupType": "선택항목",
+              "duration": null,
+              "durationType": null,
+              "residency": "ALL"
+            },
+            {
+              "name": "비석 각자 (마크,무늬)",
+              "price": 66000,
+              "feeType": "USAGE",
+              "grade": "종교 등 문양 1개당",
+              "note": "",
+              "isRepresentative": false,
+              "groupType": "선택항목",
+              "duration": null,
+              "durationType": null,
+              "residency": "ALL"
+            },
+            {
+              "name": "개장 석물 폐기비",
+              "price": 490000,
+              "feeType": "USAGE",
+              "grade": "폐기 1건 기준",
+              "note": "이후 기존 묘 구조물을 철거하고 폐기물로 처리할 때의 비용",
+              "isRepresentative": false,
+              "groupType": "선택항목",
+              "duration": null,
+              "durationType": null,
+              "residency": "ALL"
+            },
+            {
+              "name": "석물 해체 및 재조립",
+              "price": 880000,
+              "feeType": "USAGE",
+              "grade": "작업 1건 기준",
+              "note": "기존 훼손되거나 이동해야 하는 석물을 해체 후 다시 세우는 인건비",
+              "isRepresentative": false,
+              "groupType": "선택항목",
+              "duration": null,
+              "durationType": null,
+              "residency": "ALL"
+            },
+            {
+              "name": "석물 준중보수",
+              "price": 220000,
+              "feeType": "USAGE",
+              "grade": "작업 1건 기준",
+              "note": "중간 정도의 석물 파손 및 보수 수리 비용",
+              "isRepresentative": false,
+              "groupType": "선택항목",
+              "duration": null,
+              "durationType": null,
+              "residency": "ALL"
+            },
+            {
+              "name": "석물 경보수",
+              "price": 88000,
+              "feeType": "USAGE",
+              "grade": "작업 1건 기준",
+              "note": "가벼운 스크래치나 석물 어긋남 수리 비용",
+              "isRepresentative": false,
+              "groupType": "선택항목",
+              "duration": null,
+              "durationType": null,
+              "residency": "ALL"
             }
           ]
         }

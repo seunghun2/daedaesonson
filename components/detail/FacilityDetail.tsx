@@ -88,7 +88,7 @@ function PriceInfoSection({ priceInfo, hasPrice }: { priceInfo: any, hasPrice: b
 
     // === 공통 헬퍼 ===
     const getServiceIcon = (type: string) => {
-        if (/BURIAL|매장/.test(type)) return <Mountain size={24} color="#495057" />;
+        if (/BURIAL|매장/.test(type) && !type.includes('NATURAL_BURIAL')) return <Mountain size={24} color="#495057" />;
         if (/BONGSAN|봉안/.test(type)) return <Archive size={24} color="#495057" />;
         if (/NATURAL|수목/.test(type)) return <Trees size={24} color="#495057" />;
         return <Layers size={24} color="#495057" />;
@@ -96,8 +96,8 @@ function PriceInfoSection({ priceInfo, hasPrice }: { priceInfo: any, hasPrice: b
 
     const getServiceLabel = (type: string) => {
         if (type === 'BONGSAN') return '봉안당';
-        if (type === 'NATURAL') return '수목장';
-        if (type === 'BURIAL') return '매장묘';
+        if (type === 'NATURAL' || type === 'NATURAL_BURIAL') return '수목장';
+        if (type === 'BURIAL') return '매장묘지';
         if (type === 'OTHER') return '기타';
         return type;
     };
@@ -105,8 +105,8 @@ function PriceInfoSection({ priceInfo, hasPrice }: { priceInfo: any, hasPrice: b
     const formatName = (name: string) => {
         return name
             .replace(/(\d+)위/g, '$1분 안치')
-            .replace(/1분 안치/g, '1분 안치 (개인형)')
-            .replace(/2분 안치/g, '2분 안치 (부부형)');
+            .replace(/(?<!\d)1분 안치/g, '1분 안치 (개인형)')
+            .replace(/(?<!\d)2분 안치/g, '2분 안치 (부부형)');
     };
 
     // === V2 렌더링: 표준화 데이터 ===
@@ -159,14 +159,18 @@ function PriceInfoSection({ priceInfo, hasPrice }: { priceInfo: any, hasPrice: b
 
         // 서비스 타입별 최저가 계산
         const getMinPriceForService = (serviceType: string) => {
-            const groups = reclassifiedPrices.filter(g => g.serviceType === serviceType);
+            const EXCLUDE_SUBTYPES = /석물|묘테|부대시설|옵션|선택|무연고|제례|조경|용품/;
+            const groups = reclassifiedPrices.filter(
+                g => g.serviceType === serviceType && !EXCLUDE_SUBTYPES.test(g.subType || '')
+            );
             const usageRows = groups.flatMap(g =>
                 g.rows.filter(r => !r.feeType || r.feeType === 'USAGE' || (r.feeType === 'MAINTENANCE' && r.groupType))
             );
-            // isRepresentative 항목들 중 최저가 우선, 없으면 전체 최저가
+            // isRepresentative 항목들 중 최저가 우선, 없으면 전체 최저가 (단 10만 원 미만 부대비용 필터링)
             const repItems = usageRows.filter(r => r.isRepresentative && r.price > 0);
             if (repItems.length > 0) return Math.min(...repItems.map(r => r.price));
-            const prices = usageRows.map(r => r.price).filter(p => p > 0);
+
+            const prices = usageRows.map(r => r.price).filter(p => p >= 100000);
             return prices.length > 0 ? Math.min(...prices) : 0;
         };
 
@@ -191,28 +195,33 @@ function PriceInfoSection({ priceInfo, hasPrice }: { priceInfo: any, hasPrice: b
         // 서브타입 아코디언 아이템 렌더링
         const renderSubTypeAccordionItem = (group: typeof standardizedPrices[0]) => {
             const usageRows = group.rows.filter(r =>
-                !r.feeType || r.feeType === 'USAGE' || (r.feeType === 'MAINTENANCE' && r.groupType)
+                !r.feeType || r.feeType === 'USAGE'
             );
             const mgmtRows = group.rows.filter(r =>
-                r.feeType === 'MAINTENANCE' && !r.groupType
+                r.feeType === 'MAINTENANCE'
             );
             const otherRows = group.rows.filter(r =>
                 r.feeType && !['USAGE', 'MAINTENANCE'].includes(r.feeType)
             );
 
-            // groupType별 탭 분류
+            // groupType별 탭 분류 (사용료)
             const groupedUsage: Record<string, typeof usageRows> = {};
             usageRows.forEach(row => {
                 const g = row.groupType || '미분류';
                 if (!groupedUsage[g]) groupedUsage[g] = [];
                 groupedUsage[g].push(row);
             });
-            // 관리비를 맨 뒤로 정렬
-            const usageGroupNames = Object.keys(groupedUsage).sort((a, b) => {
-                const aIsMgmt = /관리비/.test(a) ? 1 : 0;
-                const bIsMgmt = /관리비/.test(b) ? 1 : 0;
-                return aIsMgmt - bIsMgmt;
+            const usageGroupNames = Object.keys(groupedUsage);
+
+            // groupType별 탭 분류 (관리비)
+            const groupedMgmt: Record<string, typeof mgmtRows> = {};
+            const globalMgmtRows = mgmtRows.filter(r => !r.groupType);
+            mgmtRows.filter(r => r.groupType).forEach(row => {
+                const g = row.groupType!;
+                if (!groupedMgmt[g]) groupedMgmt[g] = [];
+                groupedMgmt[g].push(row);
             });
+
 
             const renderRow = (row: typeof usageRows[0], idx: number, prefix: string) => (
                 <Box key={`${prefix}-${idx}`}
@@ -245,7 +254,7 @@ function PriceInfoSection({ priceInfo, hasPrice }: { priceInfo: any, hasPrice: b
                         </Text>
                     </Group>
                     {row.grade && row.grade !== '-' && (
-                        <Text size="11px" c="dimmed" mt={4} style={{ lineHeight: 1.4 }}>
+                        <Text size="13px" c="gray.6" mt={4} style={{ lineHeight: 1.4, fontWeight: 500 }}>
                             {row.grade}
                         </Text>
                     )}
@@ -318,22 +327,60 @@ function PriceInfoSection({ priceInfo, hasPrice }: { priceInfo: any, hasPrice: b
                                         <Stack gap="sm">
                                             {groupedUsage[gn].map((row, idx) => renderRow(row, idx, gn))}
                                         </Stack>
+
+                                        {/* 그룹별 관리비 안내 */}
+                                        {groupedMgmt[gn] && groupedMgmt[gn].length > 0 && (
+                                            <Box p="sm" style={{ borderRadius: 6, border: '1px solid #e9ecef', backgroundColor: '#f8f9fa' }} mt="md">
+                                                <Text size="11px" fw={700} c="dimmed" mb="xs">관리비 안내</Text>
+                                                <Stack gap="xs">
+                                                    {groupedMgmt[gn].map((row, idx) => (
+                                                        <Group key={`mgmt-gn-${idx}`} justify="space-between">
+                                                            <Group gap={4}>
+                                                                <Text size="xs" c="dark.5">{row.name}</Text>
+                                                                {row.paymentCycle && (
+                                                                    <Badge size="xs" variant="outline" color="gray">
+                                                                        {row.paymentCycle === 'MONTHLY' ? '월납' : row.paymentCycle === 'YEARLY' ? '연납' : '일시납'}
+                                                                    </Badge>
+                                                                )}
+                                                            </Group>
+                                                            <Text size="xs" fw={600} c="dark.7">{formatKoreanCurrency(row.price)}</Text>
+                                                        </Group>
+                                                    ))}
+                                                </Stack>
+                                            </Box>
+                                        )}
                                     </Tabs.Panel>
                                 ))}
                             </Tabs>
                         ) : (
                             <Stack gap="sm">
                                 {usageRows.map((row, idx) => renderRow(row, idx, 'main'))}
+                                {/* 탭이 없는 경우 그룹별 관리비가 있다면 여기에 표시 */}
+                                {usageGroupNames.length === 1 && groupedMgmt[usageGroupNames[0]] && groupedMgmt[usageGroupNames[0]].length > 0 && (
+                                    <Box p="sm" style={{ borderRadius: 6, border: '1px solid #e9ecef', backgroundColor: '#f8f9fa' }} mt="md">
+                                        <Text size="11px" fw={700} c="dimmed" mb="xs">관리비 안내</Text>
+                                        <Stack gap="xs">
+                                            {groupedMgmt[usageGroupNames[0]].map((row, idx) => (
+                                                <Group key={`mgmt-single-${idx}`} justify="space-between">
+                                                    <Group gap={4}>
+                                                        <Text size="xs" c="dark.5">{row.name}</Text>
+                                                    </Group>
+                                                    <Text size="xs" fw={600} c="dark.7">{formatKoreanCurrency(row.price)}</Text>
+                                                </Group>
+                                            ))}
+                                        </Stack>
+                                    </Box>
+                                )}
                             </Stack>
                         )}
 
-                        {/* 관리비 */}
-                        {mgmtRows.length > 0 && (
+                        {/* 공통 관리비 (전체 적용) */}
+                        {globalMgmtRows.length > 0 && (
                             <Box p="sm" style={{ borderRadius: 6, border: '1px solid #e9ecef' }} mt="md">
                                 <Text size="11px" fw={700} c="dimmed" mb="xs">관리비 안내</Text>
                                 <Stack gap="xs">
-                                    {mgmtRows.map((row, idx) => (
-                                        <Group key={`mgmt-${idx}`} justify="space-between">
+                                    {globalMgmtRows.map((row, idx) => (
+                                        <Group key={`mgmt-global-${idx}`} justify="space-between">
                                             <Group gap={4}>
                                                 <Text size="xs" c="dark.5">{row.name}</Text>
                                                 {row.paymentCycle && (
@@ -349,17 +396,39 @@ function PriceInfoSection({ priceInfo, hasPrice }: { priceInfo: any, hasPrice: b
                             </Box>
                         )}
 
-                        {/* 기타 비용 */}
+                        {/* 기타 안내 및 규정 */}
                         {otherRows.length > 0 && (
-                            <Box bg="white" p="xs" style={{ borderRadius: 6, border: '1px solid #f1f3f5' }} mt="md">
-                                <Text size="11px" fw={700} c="dimmed" mb="xs">부가 옵션</Text>
-                                <Stack gap="xs">
-                                    {otherRows.map((row, idx) => (
-                                        <Group key={`other-${idx}`} justify="space-between">
-                                            <Text size="xs" c="dark.5">{row.name}</Text>
-                                            <Text size="xs" fw={600} c="dark.7">{formatKoreanCurrency(row.price)}</Text>
-                                        </Group>
-                                    ))}
+                            <Box bg="gray.0" p="sm" style={{ borderRadius: 8, border: '1px solid #e9ecef' }} mt="md">
+                                <Text size="12px" fw={700} c="dark.7" mb="xs">안내 및 규정</Text>
+                                <Stack gap={10}>
+                                    {otherRows.map((row, idx) => {
+                                        if (!row.price || row.price === 0) {
+                                            return (
+                                                <Box key={`other-${idx}`} mb={2}>
+                                                    <Text size="13px" fw={700} c="dark.7">{row.name.replace(/^\[|\]$/g, '')}</Text>
+                                                    {row.grade && row.grade !== '-' && (
+                                                        <Text size="12px" c="dark.6" mt={4} style={{ lineHeight: 1.5, wordBreak: 'keep-all' }}>
+                                                            {row.grade}
+                                                        </Text>
+                                                    )}
+                                                </Box>
+                                            );
+                                        }
+
+                                        return (
+                                            <Box key={`other-${idx}`}>
+                                                <Group justify="space-between" align="flex-start" wrap="nowrap">
+                                                    <Text size="13px" fw={600} c="dark.7">{row.name}</Text>
+                                                    <Text size="13px" fw={700} c="black">{formatKoreanCurrency(row.price)}</Text>
+                                                </Group>
+                                                {row.grade && row.grade !== '-' && (
+                                                    <Text size="12px" c="gray.6" mt={2} style={{ lineHeight: 1.4 }}>
+                                                        • {row.grade}
+                                                    </Text>
+                                                )}
+                                            </Box>
+                                        );
+                                    })}
                                 </Stack>
                             </Box>
                         )}
@@ -371,62 +440,40 @@ function PriceInfoSection({ priceInfo, hasPrice }: { priceInfo: any, hasPrice: b
         return (
             <Box bg="white" p="md" pb="md" style={{ borderBottom: '8px solid #f8f9fa', boxShadow: 'inset 0 -1px 0 #e9ecef' }}>
 
-                {/* 서비스 타입이 1개면 탭 없이 바로, 2개 이상이면 탭 */}
-                {serviceTypes.length <= 1 ? (
-                    (() => {
-                        const serviceType = serviceTypes[0];
-                        const groups = reclassifiedPrices.filter(g => g.serviceType === serviceType);
-                        return (
-                            <Accordion
-                                variant="separated" radius="md" multiple
-                                defaultValue={undefined}
-                                value={openAccItems}
-                                onChange={setOpenAccItems}
-                                styles={{
-                                    item: { backgroundColor: '#f8f9fa', border: 'none' },
-                                    control: { padding: '12px 16px' },
-                                    content: { padding: '0 24px 16px 24px' },
-                                }}
-                            >
-                                {groups.map(group => renderSubTypeAccordionItem(group))}
-                            </Accordion>
-                        );
-                    })()
-                ) : (
-                    <Tabs defaultValue={serviceTypes[0]}>
-                        <ScrollableTabsList grow mb="md">
-                            {serviceTypes.map(st => (
-                                <Tabs.Tab key={st} value={st} style={{ padding: '10px 0' }}>
-                                    <Group gap={6} align="center" justify="center">
-                                        {getServiceIcon(st)}
-                                        <Text size="sm" fw={600}>{getServiceLabel(st)}</Text>
-                                    </Group>
-                                </Tabs.Tab>
-                            ))}
-                        </ScrollableTabsList>
+                {/* 예약 탭 강제 노출: 서비스 타입이 1개여도 탭UI(아이콘 포함) 유지 */}
+                <Tabs defaultValue={serviceTypes[0]}>
+                    <ScrollableTabsList grow mb="md">
+                        {serviceTypes.map(st => (
+                            <Tabs.Tab key={st} value={st} style={{ padding: '10px 0' }}>
+                                <Group gap={6} align="center" justify="center">
+                                    {getServiceIcon(st)}
+                                    <Text size="sm" fw={600}>{getServiceLabel(st)}</Text>
+                                </Group>
+                            </Tabs.Tab>
+                        ))}
+                    </ScrollableTabsList>
 
-                        {serviceTypes.map(st => {
-                            const groups = reclassifiedPrices.filter(g => g.serviceType === st);
-                            return (
-                                <Tabs.Panel key={st} value={st}>
-                                    <Accordion
-                                        variant="separated" radius="md" multiple
-                                        defaultValue={undefined}
-                                        value={openAccItems}
-                                        onChange={setOpenAccItems}
-                                        styles={{
-                                            item: { backgroundColor: '#f8f9fa', border: 'none' },
-                                            control: { padding: '12px 16px' },
-                                            content: { padding: '0 24px 16px 24px' },
-                                        }}
-                                    >
-                                        {groups.map(group => renderSubTypeAccordionItem(group))}
-                                    </Accordion>
-                                </Tabs.Panel>
-                            );
-                        })}
-                    </Tabs>
-                )}
+                    {serviceTypes.map(st => {
+                        const groups = reclassifiedPrices.filter(g => g.serviceType === st);
+                        return (
+                            <Tabs.Panel key={st} value={st}>
+                                <Accordion
+                                    variant="separated" radius="md" multiple
+                                    defaultValue={undefined}
+                                    value={openAccItems}
+                                    onChange={setOpenAccItems}
+                                    styles={{
+                                        item: { backgroundColor: '#f8f9fa', border: 'none' },
+                                        control: { padding: '12px 16px' },
+                                        content: { padding: '0 24px 16px 24px' },
+                                    }}
+                                >
+                                    {groups.map(group => renderSubTypeAccordionItem(group))}
+                                </Accordion>
+                            </Tabs.Panel>
+                        );
+                    })}
+                </Tabs>
 
                 <Box mt="xl" p="lg" bg="gray.0" style={{ borderRadius: 8 }}>
                     <Text size="xs" c="dimmed" style={{ lineHeight: 1.6 }}>
@@ -1806,17 +1853,23 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                         if (/매장|평장/.test(st)) return 'BURIAL';
                         return 'OTHER';
                     };
-                    const EXCLUDE_SUBTYPES = /석물|부대시설|옵션|무연고|제례|조경|용품/;
-                    // 서비스타입별 ★ 항목 최저가 수집
-                    const byService: Record<string, number[]> = {};
+                    const EXCLUDE_SUBTYPES = /석물|묘테|부대시설|옵션|선택|무연고|제례|조경|용품/;
+                    // 서비스타입별 항목 수집
+                    const serviceRows: Record<string, any[]> = {};
                     stdPrices.forEach((g: any) => {
-                        // 석물/부대시설 등 제외
-                        if (g.serviceType === 'OTHER' && EXCLUDE_SUBTYPES.test(g.subType || '')) return;
+                        // 석물/부대시설 등 제외 (serviceType 무관하게 옵션 그룹은 메인 가격 산정에서 제외)
+                        if (EXCLUDE_SUBTYPES.test(g.subType || '') || EXCLUDE_SUBTYPES.test(g.serviceType || '')) return;
+
                         const actualType = reclassifyServiceType(g);
                         const label = serviceLabels[actualType] || actualType;
-                        if (!byService[label]) byService[label] = [];
-                        const rows = g.rows || [];
-                        // ★ 항목 우선
+                        if (!serviceRows[label]) serviceRows[label] = [];
+                        if (g.rows) serviceRows[label].push(...g.rows);
+                    });
+
+                    const byService: Record<string, number[]> = {};
+                    for (const [label, rows] of Object.entries(serviceRows)) {
+                        byService[label] = [];
+                        // ★ 항목 먼저 체크
                         const repItems = rows.filter((r: any) => r.isRepresentative && r.price > 0);
                         if (repItems.length > 0) {
                             repItems.forEach((r: any) => {
@@ -1824,15 +1877,17 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                 byService[label].push(val);
                             });
                         } else {
-                            // ★ 없으면 non-maintenance 최저가로 fallback
+                            // ★ 없으면 non-maintenance 최저가로 fallback (10만 원 미만 필터링)
                             const usagePrices = rows
                                 .filter((r: any) => r.feeType !== 'MAINTENANCE' && r.price > 0)
-                                .map((r: any) => r.price < 10000 ? r.price * 10000 : r.price);
+                                .map((r: any) => r.price < 10000 ? r.price * 10000 : r.price)
+                                .filter((p: number) => p >= 100000);
+
                             if (usagePrices.length > 0) {
                                 byService[label].push(Math.min(...usagePrices));
                             }
                         }
-                    });
+                    }
                     // byService → menuGroups 매핑
                     for (const [label, prices] of Object.entries(byService)) {
                         if (prices.length > 0) {
