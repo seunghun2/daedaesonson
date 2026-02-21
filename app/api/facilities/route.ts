@@ -119,35 +119,44 @@ export async function GET() {
             return p < 10000 ? p * 10000 : p;
         };
 
-        const liteData = facilitiesFromDb.map(f => ({
-            id: f.id,
-            name: f.name,
-            address: f.address || '',
-            coordinates: { lat: f.lat || 0, lng: f.lng || 0 },
-            category: f.category || 'OTHER',
-            priceRange: { min: normalizePrice(f.minPrice), max: normalizePrice(f.maxPrice) },
-            operatorType: f.operatorType,
-            hasParking: f.hasParking ?? false,
-            hasRestaurant: f.hasRestaurant ?? false,
-            hasStore: f.hasStore ?? false,
-            hasAccessibility: f.hasAccessibility ?? false,
-            isPublic: f.isPublic ?? false,
-            isActive: f.isActive ?? true,
-            hasDetailedPrices: (categoryCountMap.get(f.id) || 0) > 0,
-            representativePricing: pricingMap.get(f.id),
-            reviewCount: f.reviewCount || 0,
-            rating: f.rating || 0,
-            phone: f.phone || '',
-            fax: f.fax || '',
-            capacity: f.capacity,
-            lastUpdated: f.lastUpdated,
-            websiteUrl: f.websiteUrl || '',
-            viewCount: f.viewCount || 0,
-            description: f.description || '',
-            originalName: f.originalName,
-            updatedAt: f.updatedAt,
-            thumbnail: f.thumbnail || '',
-        }));
+        const liteData = facilitiesFromDb.map(f => {
+            // 🔥 대표가격 우선: representativePrice > minPrice
+            const repPrice = normalizePrice(f.representativePrice || 0);
+            const minP = normalizePrice(f.minPrice || 0);
+            const maxP = normalizePrice(f.maxPrice || 0);
+            const effectiveMin = repPrice > 0 ? repPrice : minP;
+
+            return {
+                id: f.id,
+                name: f.name,
+                address: f.address || '',
+                coordinates: { lat: f.lat || 0, lng: f.lng || 0 },
+                category: f.category || 'OTHER',
+                priceRange: { min: effectiveMin, max: maxP },
+                representativePrice: repPrice, // 🔥 마커에서 사용할 대표가격
+                operatorType: f.operatorType,
+                hasParking: f.hasParking ?? false,
+                hasRestaurant: f.hasRestaurant ?? false,
+                hasStore: f.hasStore ?? false,
+                hasAccessibility: f.hasAccessibility ?? false,
+                isPublic: f.isPublic ?? false,
+                isActive: f.isActive ?? true,
+                hasDetailedPrices: (categoryCountMap.get(f.id) || 0) > 0,
+                representativePricing: pricingMap.get(f.id),
+                reviewCount: f.reviewCount || 0,
+                rating: f.rating || 0,
+                phone: f.phone || '',
+                fax: f.fax || '',
+                capacity: f.capacity,
+                lastUpdated: f.lastUpdated,
+                websiteUrl: f.websiteUrl || '',
+                viewCount: f.viewCount || 0,
+                description: f.description || '',
+                originalName: f.originalName,
+                updatedAt: f.updatedAt,
+                thumbnail: f.thumbnail || '',
+            };
+        });
 
         return NextResponse.json(liteData);
 

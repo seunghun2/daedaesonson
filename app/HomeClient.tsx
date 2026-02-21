@@ -500,20 +500,30 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
       // 🖥️ PC: 왼쪽 패널에 상세 표시 + URL 업데이트
       setNearbyList(null); // 주변 시설 패널 닫기
       const wasAlreadyOpen = !!selectedFacility;
-      setSelectedFacility(facility);
       // 이미 상세가 열려있으면 replaceState (히스토리 안 쌓음), 처음이면 pushState
       if (wasAlreadyOpen) {
         window.history.replaceState({ facilityId: facility.id }, '', `/facility/${facility.id}`);
       } else {
         window.history.pushState({ facilityId: facility.id }, '', `/facility/${facility.id}`);
       }
-      // 상세 데이터 보강 (pricing, reviews 등)
+      // 🔥 기본 정보 즉시 표시 (이름, 이미지, 주소 등)  
+      // 가격은 FacilityDetail에서 priceTable 없으면 return null → flash 없음
+      setSelectedFacility(facility);
+      // 🗺️ SSR 정밀 좌표로 지도 이동 (DB 반올림 좌표가 아닌 원본 사용)
+      if (facility.coordinates && mapRef.current) {
+        mapRef.current.panTo(facility.coordinates.lat, facility.coordinates.lng);
+      }
+      // API로 상세 데이터(priceTable 등) 보강
       fetch(`/api/facilities/${facility.id}`)
         .then(res => res.ok ? res.json() : null)
         .then(data => {
-          if (data) setSelectedFacility(data);
+          if (data) {
+            // SSR의 정밀 좌표 유지 (DB 좌표는 소수점 2자리로 반올림됨)
+            data.coordinates = facility.coordinates || data.coordinates;
+            setSelectedFacility(data);
+          }
         })
-        .catch(() => { /* 기본 데이터로 폴백 */ });
+        .catch(() => { /* 기본 데이터로 유지 */ });
     }
 
     // 📝 기록 저장
@@ -538,20 +548,8 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
     } catch { }
   };
 
-  // 🗺️ PC: 시설 선택될 때마다 지도를 해당 위치로 자동 이동 (줌 유지)
-  useEffect(() => {
-    if (isMobile || !selectedFacility?.coordinates) return;
-    const coords = selectedFacility.coordinates;
-    const tryPanTo = (retry: number) => {
-      if (mapRef.current) {
-        // 줌 레벨 변경 없이 center만 이동
-        mapRef.current.panTo(coords.lat, coords.lng);
-      } else if (retry < 30) {
-        setTimeout(() => tryPanTo(retry + 1), 100);
-      }
-    };
-    tryPanTo(0);
-  }, [selectedFacility?.id, isMobile]);
+  // 🗺️ PC: 시설 선택 시 지도 자동 이동 제거 (사용자 지도 위치 유지)
+  // 마커 클릭 시 상세 패널만 열리고 지도는 현재 위치 그대로
 
   const handleCloseDetail = () => {
     setSelectedFacility(null);

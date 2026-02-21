@@ -26,15 +26,23 @@ export default function FacilityCard({ facility, onClick }: FacilityCardProps) {
     const config = CATEGORY_CONFIG[facility.category] || CATEGORY_CONFIG.OTHER;
     const Icon = config.icon;
 
-    // 가격 포맷팅 - 상세페이지와 동일한 로직 사용
+    // 가격 포맷팅 - 어드민 대표가격 → priceTable → CSV → priceRange 순서
     let displayPrice = '가격문의';
     let priceLabel = '';
     let isRepFromPricing = false;
 
-    // Check for Representative Price in pricing table (상세페이지와 동일한 로직)
-    // 🔥 priceInfo.priceTable 우선 확인 (NaverMap, FacilityDetail과 동일)
+    // 🔥 0순위: DB representativePrice (어드민에서 설정한 대표가격 - 원 단위)
+    const dbRepPrice = (facility as any).representativePrice;
+    if (dbRepPrice && dbRepPrice > 0) {
+        // 원 단위이므로 그대로 formatKoreanCurrency에 전달
+        const priceInWon = dbRepPrice < 10000 ? dbRepPrice * 10000 : dbRepPrice;
+        displayPrice = formatKoreanCurrency(priceInWon);
+        isRepFromPricing = true;
+    }
+
+    // 1순위: priceInfo.priceTable 확인 (상세페이지와 동일한 로직)
     const priceTable = (facility as any).priceInfo?.priceTable || facility.pricing;
-    if (priceTable) {
+    if (!isRepFromPricing && priceTable) {
         // Collection for sub-items (Label, Price in Won)
         const subRepItems: { label: string; price: number }[] = [];
 
@@ -104,8 +112,9 @@ export default function FacilityCard({ facility, onClick }: FacilityCardProps) {
         }
     }
 
-    // Fallback to legacy priceRange if no representative price found (or it was 0)
-    if (displayPrice === '가격문의' && facility.priceRange?.min) {
+    // Fallback to legacy priceRange if no representative price found (priceTable 없는 레거시만)
+    // 🔥 priceTable이 있으면 폴백 안 함 (stale minPrice 방지)
+    if (displayPrice === '가격문의' && !priceTable && facility.priceRange?.min) {
         displayPrice = formatKoreanCurrency(facility.priceRange.min);
     }
 

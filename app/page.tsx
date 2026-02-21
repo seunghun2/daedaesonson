@@ -23,8 +23,37 @@ function getFacilities(): Facility[] {
           return p < 10000 ? p * 10000 : p;
         };
 
-        const repPrice = normalizePrice(f.representativePrice || 0);
-        const minP = normalizePrice(f.minPrice || f.priceRange?.min || 0);
+        // 🔥 가격 결정 로직 (어드민 ★ 대표가격 최우선)
+        // 1순위: DB representativePrice (어드민 저장 시 precomputed)
+        // 2순위: priceTable에서 직접 계산 (★ isRepresentative 항목)
+        // 3순위: minPrice (priceTable이 아예 없는 레거시 시설만)
+        let repPrice = normalizePrice(f.representativePrice || 0);
+
+        // representativePrice가 없으면 priceTable에서 직접 계산
+        const pt = f.priceInfo?.priceTable || f.pricing;
+        let hasRepInTable = false; // priceTable에 대표항목이 존재하는지 여부
+
+        if (repPrice === 0 && pt && typeof pt === 'object') {
+          for (const catKey of Object.keys(pt)) {
+            if (/옵션|관리비|기타|공통|제외|석물|비고|안내|별도/.test(catKey)) continue;
+            const cat = pt[catKey];
+            if (cat && Array.isArray(cat.rows)) {
+              const rep = cat.rows.find((r: any) => r.isRepresentative);
+              if (rep) {
+                hasRepInTable = true;
+                if (rep.price > 0) {
+                  repPrice = normalizePrice(rep.price);
+                  break;
+                }
+              }
+            }
+          }
+        }
+
+        // minPrice 폴백: priceTable이 존재하면 사용 안 함 (stale minPrice 방지)
+        // priceTable이 아예 없는 레거시 시설만 minPrice 사용
+        const hasPriceTable = !!(pt && typeof pt === 'object' && Object.keys(pt).length > 0);
+        const minP = (repPrice > 0 || hasRepInTable || hasPriceTable) ? 0 : normalizePrice(f.minPrice || f.priceRange?.min || 0);
         const maxP = normalizePrice(f.maxPrice || f.priceRange?.max || 0);
 
         return {
@@ -37,6 +66,7 @@ function getFacilities(): Facility[] {
             min: repPrice || minP,
             max: maxP
           },
+          representativePrice: repPrice,
           operatorType: f.operatorType,
           isPublic: f.isPublic ?? false,
           thumbnail: f.thumbnail || (f.images?.[0]) || '',

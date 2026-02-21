@@ -1667,7 +1667,16 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
 
             {/* 가격 정보 섹션 (별도 카드 분리) */}
             {(() => {
-                // [Price Logic] Prioritize Representative Price from pricing object
+                // 🔥 priceTable이 아직 로드되지 않은 경우 (SSR 초기 데이터)
+                // → representativePrice로 간단히 표시 (API 로드 후 상세 표시로 전환)
+                const priceTable = facility.priceInfo?.priceTable || facility.pricing;
+
+                if (!priceTable) {
+                    // priceTable 로드 전에는 가격 섹션 숨김 (flash 방지)
+                    return null;
+                }
+
+                // [Price Logic] priceTable이 있는 경우 - 상세 표시
                 let displayPriceNum = 0;
                 let isRep = false;
 
@@ -1688,11 +1697,8 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                 // 대표 메뉴 그룹에서 제외할 키 (부가시설)
                 const excludeKeys = ['봉안벽'];
 
-                // 실제 가격 데이터는 priceInfo.priceTable에 있음
-                const priceTable = facility.priceInfo?.priceTable || facility.pricing;
-
                 if (priceTable) {
-                    // 1. Collect all representative items
+                    // 1. Collect representative items AND fallback min prices
                     Object.keys(priceTable).forEach(key => {
                         const cat = priceTable[key];
                         // Skip non-main categories
@@ -1719,6 +1725,23 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                 }
                                 // 매핑 안 된 항목도 subRepItems에 보관 (fallback)
                                 subRepItems.push({ label: key, price: val });
+                            } else {
+                                // 🔥 ★ 없는 카테고리 → 최저가를 자동으로 메뉴그룹에 추가
+                                const validPrices = cat.rows
+                                    .map((r: any) => Number(r.price))
+                                    .filter((p: number) => !isNaN(p) && p > 0);
+                                if (validPrices.length > 0) {
+                                    const minPrice = Math.min(...validPrices);
+                                    const val = minPrice < 10000 ? minPrice * 10000 : minPrice;
+                                    if (!excludeKeys.includes(key)) {
+                                        for (const [menu, keywords] of Object.entries(menuKeywords)) {
+                                            if (keywords.some(kw => key.includes(kw))) {
+                                                menuGroups[menu].push(val);
+                                                break;
+                                            }
+                                        }
+                                    }
+                                }
                             }
                         }
                     });
@@ -1740,8 +1763,9 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                     }
                 }
 
-                // Fallback: Use priceRange.min if no representative price found
-                if (displayPriceNum === 0) {
+                // Fallback: priceTable이 아예 없는 레거시 시설만 priceRange.min 사용
+                // 🔥 priceTable이 있으면 폴백 안 함 (stale minPrice 방지)
+                if (displayPriceNum === 0 && !priceTable) {
                     displayPriceNum = facility.priceRange?.min ? Math.round(facility.priceRange.min / 10000) : 0;
                 }
 
@@ -1785,6 +1809,14 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                         </Box>
                     );
                 } else if (displayPriceNum > 0) {
+                    // ★ 대표항목이 없는 경우 - 카테고리 라벨 + fallback 가격
+                    const categoryLabel: Record<string, string> = {
+                        'FAMILY_GRAVE': '매장묘지',
+                        'CHARNEL_HOUSE': '봉안당',
+                        'NATURAL_BURIAL': '수목장',
+                    };
+                    const fallbackLabel = categoryLabel[facility.category] || '';
+
                     return (
                         <Box p="md" style={{
                             borderBottom: '8px solid #f8f9fa',
@@ -1792,15 +1824,16 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                             background: 'white',
                         }}>
                             <Text size="xs" c="gray.5" mb={10} fw={500} style={{ fontSize: '12px' }}>예상 이용 비용</Text>
-                            <Text style={{
-                                fontSize: '20px',
-                                fontWeight: 800,
-                                color: 'var(--mantine-color-brand-8)',
-                                lineHeight: 1,
-                                letterSpacing: '-0.5px',
-                            }}>
-                                {formatKoreanCurrency(displayPriceNum * 10000)}~
-                            </Text>
+                            <div style={{ display: 'flex', alignItems: 'baseline', gap: '12px' }}>
+                                {fallbackLabel && (
+                                    <Text style={{ fontSize: '16px', fontWeight: 700, color: '#212529' }}>
+                                        {fallbackLabel}
+                                    </Text>
+                                )}
+                                <Text style={{ fontSize: '16px', fontWeight: 500, color: 'var(--mantine-color-brand-7)', letterSpacing: '-0.3px' }}>
+                                    {formatKoreanCurrency(displayPriceNum * 10000)}~
+                                </Text>
+                            </div>
                             <Text size="xs" c="gray.6" mt={8} style={{ fontSize: '11px' }}>
                                 ※ 실제 비용은 선택 옵션에 따라 달라질 수 있습니다.
                             </Text>
