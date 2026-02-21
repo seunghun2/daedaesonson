@@ -1,5 +1,5 @@
 export function formatKoreanCurrency(amount: number): string {
-    if (amount === 0) return '0원';
+    if (!amount || amount === 0) return '가격문의';
 
     // 1억 이상인 경우
     if (amount >= 100000000) {

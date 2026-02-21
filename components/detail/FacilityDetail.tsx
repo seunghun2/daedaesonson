@@ -1795,11 +1795,25 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                         'BONGSAN': '봉안당',
                         'BURIAL': '매장묘지',
                         'NATURAL': '수목장',
+                        'OTHER': '기타',
                     };
+                    // 🔧 OTHER 재분류 함수
+                    const reclassifyServiceType = (g: any) => {
+                        if (g.serviceType !== 'OTHER') return g.serviceType;
+                        const st = g.subType || '';
+                        if (/자연장|수목|잔디|화초/.test(st)) return 'NATURAL';
+                        if (/봉안|납골/.test(st)) return 'BONGSAN';
+                        if (/매장|평장/.test(st)) return 'BURIAL';
+                        return 'OTHER';
+                    };
+                    const EXCLUDE_SUBTYPES = /석물|부대시설|옵션|무연고|제례|조경|용품/;
                     // 서비스타입별 ★ 항목 최저가 수집
                     const byService: Record<string, number[]> = {};
                     stdPrices.forEach((g: any) => {
-                        const label = serviceLabels[g.serviceType] || g.serviceType;
+                        // 석물/부대시설 등 제외
+                        if (g.serviceType === 'OTHER' && EXCLUDE_SUBTYPES.test(g.subType || '')) return;
+                        const actualType = reclassifyServiceType(g);
+                        const label = serviceLabels[actualType] || actualType;
                         if (!byService[label]) byService[label] = [];
                         const rows = g.rows || [];
                         // ★ 항목 우선
@@ -1831,7 +1845,9 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                     // ★ 없는 서비스타입도 최저가로 추가
                     if (subRepItems.length === 0) {
                         stdPrices.forEach((g: any) => {
-                            const label = serviceLabels[g.serviceType] || g.serviceType;
+                            if (g.serviceType === 'OTHER' && EXCLUDE_SUBTYPES.test(g.subType || '')) return;
+                            const actualType = reclassifyServiceType(g);
+                            const label = serviceLabels[actualType] || actualType;
                             const rows = g.rows || [];
                             const prices = rows
                                 .filter((r: any) => r.feeType !== 'MAINTENANCE' && r.price > 0)

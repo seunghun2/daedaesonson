@@ -694,14 +694,6 @@
             },
             {
               "name": "테마형 평장묘",
-              "price": 3500000,
-              "feeType": "USAGE",
-              "grade": "클로버",
-              "note": "",
-              "isRepresentative": false
-            },
-            {
-              "name": "테마형 평장묘",
               "price": 5100000,
               "feeType": "USAGE",
               "grade": "플라타너스",
@@ -2952,16 +2944,6 @@
               "groupType": "일반실(VIP단)"
             },
             {
-              "name": "1단",
-              "price": 3000000,
-              "feeType": "USAGE",
-              "grade": "",
-              "note": "",
-              "isRepresentative": false,
-              "groupType": "일반실3층(개인단)",
-              "capacity": "개인"
-            },
-            {
               "name": "2단",
               "price": 3500000,
               "feeType": "USAGE",
@@ -3032,56 +3014,6 @@
               "capacity": "개인"
             },
             {
-              "name": "1단",
-              "price": 4000000,
-              "feeType": "USAGE",
-              "grade": "",
-              "note": "",
-              "isRepresentative": false,
-              "groupType": "일반실4층(부부단)",
-              "capacity": "부부"
-            },
-            {
-              "name": "2단",
-              "price": 5000000,
-              "feeType": "USAGE",
-              "grade": "",
-              "note": "",
-              "isRepresentative": false,
-              "groupType": "일반실4층(부부단)",
-              "capacity": "부부"
-            },
-            {
-              "name": "3단",
-              "price": 6000000,
-              "feeType": "USAGE",
-              "grade": "",
-              "note": "",
-              "isRepresentative": false,
-              "groupType": "일반실4층(부부단)",
-              "capacity": "부부"
-            },
-            {
-              "name": "4단",
-              "price": 8000000,
-              "feeType": "USAGE",
-              "grade": "",
-              "note": "",
-              "isRepresentative": false,
-              "groupType": "일반실4층(부부단)",
-              "capacity": "부부"
-            },
-            {
-              "name": "5단",
-              "price": 10000000,
-              "feeType": "USAGE",
-              "grade": "",
-              "note": "",
-              "isRepresentative": false,
-              "groupType": "일반실4층(부부단)",
-              "capacity": "부부"
-            },
-            {
               "name": "6단",
               "price": 7500000,
               "feeType": "USAGE",
@@ -3102,38 +3034,8 @@
               "capacity": "부부"
             },
             {
-              "name": "8단",
-              "price": 3000000,
-              "feeType": "USAGE",
-              "grade": "",
-              "note": "",
-              "isRepresentative": false,
-              "groupType": "일반실4층(부부단)",
-              "capacity": "부부"
-            },
-            {
-              "name": "1단",
-              "price": 4000000,
-              "feeType": "USAGE",
-              "grade": "VIP",
-              "note": "",
-              "isRepresentative": false,
-              "groupType": "일반실3층(VIP개인)",
-              "capacity": "개인"
-            },
-            {
               "name": "2단",
               "price": 4500000,
-              "feeType": "USAGE",
-              "grade": "VIP",
-              "note": "",
-              "isRepresentative": false,
-              "groupType": "일반실3층(VIP개인)",
-              "capacity": "개인"
-            },
-            {
-              "name": "3단",
-              "price": 5000000,
               "feeType": "USAGE",
               "grade": "VIP",
               "note": "",
@@ -3164,26 +3066,6 @@
             {
               "name": "6단",
               "price": 5000000,
-              "feeType": "USAGE",
-              "grade": "VIP",
-              "note": "",
-              "isRepresentative": false,
-              "groupType": "일반실3층(VIP개인)",
-              "capacity": "개인"
-            },
-            {
-              "name": "7단",
-              "price": 4000000,
-              "feeType": "USAGE",
-              "grade": "VIP",
-              "note": "",
-              "isRepresentative": false,
-              "groupType": "일반실3층(VIP개인)",
-              "capacity": "개인"
-            },
-            {
-              "name": "8단",
-              "price": 3000000,
               "feeType": "USAGE",
               "grade": "VIP",
               "note": "",
@@ -4197,51 +4079,6 @@
               "groupType": "삼매실"
             },
             {
-              "name": "봉안당",
-              "price": 0,
-              "feeType": "USAGE",
-              "grade": "",
-              "note": "",
-              "isRepresentative": false,
-              "groupType": "반야실"
-            },
-            {
-              "name": "봉안당",
-              "price": 0,
-              "feeType": "USAGE",
-              "grade": "",
-              "note": "",
-              "isRepresentative": false,
-              "groupType": "화엄실"
-            },
-            {
-              "name": "봉안당",
-              "price": 0,
-              "feeType": "USAGE",
-              "grade": "",
-              "note": "",
-              "isRepresentative": false,
-              "groupType": "연화,정토,안락실"
-            },
-            {
-              "name": "봉안당",
-              "price": 0,
-              "feeType": "USAGE",
-              "grade": "",
-              "note": "",
-              "isRepresentative": false,
-              "groupType": "극락실,선정실(내측,창측)"
-            },
-            {
-              "name": "봉안당",
-              "price": 0,
-              "feeType": "USAGE",
-              "grade": "",
-              "note": "",
-              "isRepresentative": false,
-              "groupType": "아미타실"
-            },
-            {
               "name": "1단",
               "price": 0,
               "feeType": "USAGE",
@@ -4849,26 +4686,6 @@
               "durationType": "YEAR"
             },
             {
-              "name": "조경비",
-              "price": 30000,
-              "feeType": "USAGE",
-              "grade": "",
-              "note": "",
-              "isRepresentative": false,
-              "groupType": "6월~3년미만 주민등록",
-              "residency": "LOCAL"
-            },
-            {
-              "name": "기타비용",
-              "price": 2050000,
-              "feeType": "USAGE",
-              "grade": "",
-              "note": "",
-              "isRepresentative": false,
-              "groupType": "6월~3년미만 주민등록",
-              "residency": "LOCAL"
-            },
-            {
               "name": "관리비",
               "price": 2623000,
               "feeType": "MAINTENANCE",
@@ -4953,26 +4770,6 @@
               "durationType": "YEAR"
             },
             {
-              "name": "1회차1구 조경비",
-              "price": 30000,
-              "feeType": "USAGE",
-              "grade": "",
-              "note": "",
-              "isRepresentative": false,
-              "groupType": "6월~3년미만 주민등록",
-              "residency": "LOCAL"
-            },
-            {
-              "name": "1회차1구 기타비용",
-              "price": 2215000,
-              "feeType": "USAGE",
-              "grade": "",
-              "note": "",
-              "isRepresentative": false,
-              "groupType": "6월~3년미만 주민등록",
-              "residency": "LOCAL"
-            },
-            {
               "name": "1회차1구 관리비",
               "price": 3831000,
               "feeType": "MAINTENANCE",
@@ -5048,26 +4845,6 @@
               "groupType": "관리비",
               "duration": 30,
               "durationType": "YEAR"
-            },
-            {
-              "name": "1회차2구 조경비",
-              "price": 30000,
-              "feeType": "USAGE",
-              "grade": "",
-              "note": "",
-              "isRepresentative": false,
-              "groupType": "6월~3년미만 주민등록",
-              "residency": "LOCAL"
-            },
-            {
-              "name": "1회차2구 기타비용",
-              "price": 2290000,
-              "feeType": "USAGE",
-              "grade": "",
-              "note": "",
-              "isRepresentative": false,
-              "groupType": "6월~3년미만 주민등록",
-              "residency": "LOCAL"
             },
             {
               "name": "1회차2구 관리비",
@@ -5166,28 +4943,6 @@
               "durationType": "YEAR"
             },
             {
-              "name": "가족봉안묘 조경비",
-              "price": 30000,
-              "feeType": "USAGE",
-              "grade": "",
-              "note": "",
-              "isRepresentative": false,
-              "groupType": "6월~3년미만 주민등록",
-              "capacity": "가족",
-              "residency": "LOCAL"
-            },
-            {
-              "name": "가족봉안묘 기타비용",
-              "price": 5460000,
-              "feeType": "USAGE",
-              "grade": "",
-              "note": "",
-              "isRepresentative": false,
-              "groupType": "6월~3년미만 주민등록",
-              "capacity": "가족",
-              "residency": "LOCAL"
-            },
-            {
               "name": "가족봉안묘 사용료",
               "price": 9481000,
               "feeType": "USAGE",
@@ -5210,28 +4965,6 @@
               "groupType": "관리비",
               "duration": 30,
               "durationType": "YEAR"
-            },
-            {
-              "name": "가족봉안묘 조경비",
-              "price": 30000,
-              "feeType": "USAGE",
-              "grade": "",
-              "note": "",
-              "isRepresentative": false,
-              "groupType": "관외 (예산군 이외)",
-              "capacity": "가족",
-              "residency": "NON_LOCAL"
-            },
-            {
-              "name": "가족봉안묘 기타비용",
-              "price": 5460000,
-              "feeType": "USAGE",
-              "grade": "",
-              "note": "",
-              "isRepresentative": false,
-              "groupType": "관외 (예산군 이외)",
-              "capacity": "가족",
-              "residency": "NON_LOCAL"
             }
           ]
         }
@@ -9466,15 +9199,6 @@
               "residency": "LOCAL"
             },
             {
-              "name": "안장시 (석물+매장비)",
-              "price": 2810000,
-              "feeType": "STONE",
-              "grade": "석물+매장비",
-              "note": "",
-              "isRepresentative": false,
-              "groupType": "합장B (36m2)"
-            },
-            {
               "name": "관외자 연장시",
               "price": 7200000,
               "feeType": "MAINTENANCE",
@@ -9503,15 +9227,6 @@
               "isRepresentative": false,
               "groupType": "합장C (42m2)",
               "residency": "LOCAL"
-            },
-            {
-              "name": "안장시 (석물+매장비)",
-              "price": 2810000,
-              "feeType": "STONE",
-              "grade": "석물+매장비",
-              "note": "",
-              "isRepresentative": false,
-              "groupType": "합장C (42m2)"
             },
             {
               "name": "관외자 연장시",
@@ -10587,28 +10302,6 @@
             },
             {
               "name": "관리비",
-              "price": 448000,
-              "feeType": "MAINTENANCE",
-              "grade": "",
-              "note": "",
-              "isRepresentative": false,
-              "groupType": "관리비",
-              "duration": 30,
-              "durationType": "YEAR"
-            },
-            {
-              "name": "관리비",
-              "price": 673000,
-              "feeType": "MAINTENANCE",
-              "grade": "",
-              "note": "",
-              "isRepresentative": false,
-              "groupType": "관리비",
-              "duration": 30,
-              "durationType": "YEAR"
-            },
-            {
-              "name": "관리비",
               "price": 300000,
               "feeType": "MAINTENANCE",
               "grade": "",
@@ -10650,14 +10343,6 @@
               "area": 15,
               "areaUnit": "SQM",
               "capacity": "부부"
-            },
-            {
-              "name": "석물비",
-              "price": 1366000,
-              "feeType": "STONE",
-              "grade": "동시합장",
-              "note": "",
-              "isRepresentative": false
             },
             {
               "name": "매장비",
@@ -10770,37 +10455,6 @@
               "note": "",
               "isRepresentative": false,
               "groupType": "부부단",
-              "duration": 30,
-              "durationType": "YEAR"
-            },
-            {
-              "name": "관리비",
-              "price": 0,
-              "feeType": "MAINTENANCE",
-              "grade": "",
-              "note": "",
-              "isRepresentative": false,
-              "groupType": "관리비"
-            },
-            {
-              "name": "사용료",
-              "price": 600000,
-              "feeType": "USAGE",
-              "grade": "",
-              "note": "",
-              "isRepresentative": false,
-              "groupType": "개인단 (연장)",
-              "duration": 30,
-              "durationType": "YEAR"
-            },
-            {
-              "name": "사용료",
-              "price": 1200000,
-              "feeType": "USAGE",
-              "grade": "",
-              "note": "",
-              "isRepresentative": false,
-              "groupType": "부부단 (연장)",
               "duration": 30,
               "durationType": "YEAR"
             },
@@ -16137,14 +15791,6 @@
               "isRepresentative": true
             },
             {
-              "name": "매장묘 사용료 (구단지)",
-              "price": 2960000,
-              "feeType": "USAGE",
-              "grade": "1구 / 구단지 8~9",
-              "note": "",
-              "isRepresentative": false
-            },
-            {
               "name": "매장묘 사용료 (신단지)",
               "price": 4260000,
               "feeType": "USAGE",
@@ -19450,15 +19096,6 @@
               "note": "",
               "isRepresentative": false,
               "groupType": "수급자,독립유공자,국가유공자,유가족"
-            },
-            {
-              "name": "관리비",
-              "price": 240000,
-              "feeType": "MAINTENANCE",
-              "grade": "",
-              "note": "",
-              "isRepresentative": false,
-              "groupType": "관리비"
             }
           ]
         },
@@ -19502,24 +19139,6 @@
               "note": "",
               "isRepresentative": false,
               "groupType": "일반"
-            },
-            {
-              "name": "사용료",
-              "price": 527170,
-              "feeType": "USAGE",
-              "grade": "",
-              "note": "",
-              "isRepresentative": false,
-              "groupType": "수급자,독립유공자,국가유공자,유가족"
-            },
-            {
-              "name": "관리비",
-              "price": 360000,
-              "feeType": "MAINTENANCE",
-              "grade": "",
-              "note": "",
-              "isRepresentative": false,
-              "groupType": "관리비"
             }
           ]
         }
@@ -23087,15 +22706,6 @@
               "note": "",
               "isRepresentative": false,
               "groupType": "부가옵션"
-            },
-            {
-              "name": "관리비",
-              "price": 18400,
-              "feeType": "MAINTENANCE",
-              "grade": "",
-              "note": "",
-              "isRepresentative": false,
-              "groupType": "일반"
             }
           ]
         }
@@ -29497,28 +29107,6 @@
             {
               "name": "공설묘지사용료",
               "price": 810000,
-              "feeType": "USAGE",
-              "grade": "묘지1구당 6.61제곱m",
-              "note": "",
-              "isRepresentative": false,
-              "groupType": "특례자",
-              "duration": 30,
-              "durationType": "YEAR"
-            },
-            {
-              "name": "공설묘지관리비",
-              "price": 360000,
-              "feeType": "MAINTENANCE",
-              "grade": "묘지1구당 6.61제곱m",
-              "note": "",
-              "isRepresentative": false,
-              "groupType": "특례자",
-              "duration": 30,
-              "durationType": "YEAR"
-            },
-            {
-              "name": "부대수수료",
-              "price": 702000,
               "feeType": "USAGE",
               "grade": "묘지1구당 6.61제곱m",
               "note": "",
@@ -96410,53 +95998,6 @@
               "groupType": "관외 (등록기준지 광양 또는 직계존비속 거주)",
               "duration": 15,
               "durationType": "YEAR"
-            },
-            {
-              "name": "묘지 관리비",
-              "price": 180000,
-              "feeType": "MAINTENANCE",
-              "grade": "3회연장가능",
-              "note": "",
-              "isRepresentative": false,
-              "groupType": "관외 (등록기준지 광양 또는 직계존비속 거주)",
-              "duration": 15,
-              "durationType": "YEAR"
-            },
-            {
-              "name": "석물비",
-              "price": 305000,
-              "feeType": "STONE",
-              "grade": "",
-              "note": "",
-              "isRepresentative": false,
-              "groupType": "관외 (등록기준지 광양 또는 직계존비속 거주)"
-            },
-            {
-              "name": "비석글씨",
-              "price": 70000,
-              "feeType": "STONE",
-              "grade": "",
-              "note": "",
-              "isRepresentative": false,
-              "groupType": "관외 (등록기준지 광양 또는 직계존비속 거주)"
-            },
-            {
-              "name": "인건비",
-              "price": 211000,
-              "feeType": "USAGE",
-              "grade": "",
-              "note": "",
-              "isRepresentative": false,
-              "groupType": "관외 (등록기준지 광양 또는 직계존비속 거주)"
-            },
-            {
-              "name": "잔디",
-              "price": 20000,
-              "feeType": "USAGE",
-              "grade": "",
-              "note": "",
-              "isRepresentative": false,
-              "groupType": "관외 (등록기준지 광양 또는 직계존비속 거주)"
             }
           ]
         },
@@ -96533,53 +96074,6 @@
               "groupType": "관외 (등록기준지 광양 또는 직계존비속 거주)",
               "duration": 15,
               "durationType": "YEAR"
-            },
-            {
-              "name": "묘지 관리비",
-              "price": 225000,
-              "feeType": "MAINTENANCE",
-              "grade": "3회연장가능",
-              "note": "",
-              "isRepresentative": false,
-              "groupType": "관외 (등록기준지 광양 또는 직계존비속 거주)",
-              "duration": 15,
-              "durationType": "YEAR"
-            },
-            {
-              "name": "석물비",
-              "price": 330000,
-              "feeType": "STONE",
-              "grade": "",
-              "note": "",
-              "isRepresentative": false,
-              "groupType": "관외 (등록기준지 광양 또는 직계존비속 거주)"
-            },
-            {
-              "name": "비석글씨",
-              "price": 70000,
-              "feeType": "STONE",
-              "grade": "",
-              "note": "",
-              "isRepresentative": false,
-              "groupType": "관외 (등록기준지 광양 또는 직계존비속 거주)"
-            },
-            {
-              "name": "인건비",
-              "price": 282000,
-              "feeType": "USAGE",
-              "grade": "",
-              "note": "",
-              "isRepresentative": false,
-              "groupType": "관외 (등록기준지 광양 또는 직계존비속 거주)"
-            },
-            {
-              "name": "잔디",
-              "price": 26000,
-              "feeType": "USAGE",
-              "grade": "",
-              "note": "",
-              "isRepresentative": false,
-              "groupType": "관외 (등록기준지 광양 또는 직계존비속 거주)"
             }
           ]
         },
@@ -100654,16 +100148,6 @@
               "capacity": "개인"
             },
             {
-              "name": "1,6단",
-              "price": 7000000,
-              "feeType": "USAGE",
-              "grade": "",
-              "note": "",
-              "isRepresentative": false,
-              "groupType": "이행실/삼학실C",
-              "capacity": "개인"
-            },
-            {
               "name": "3,4단",
               "price": 17000000,
               "feeType": "USAGE",
@@ -100676,16 +100160,6 @@
             {
               "name": "2,5단",
               "price": 15000000,
-              "feeType": "USAGE",
-              "grade": "",
-              "note": "",
-              "isRepresentative": false,
-              "groupType": "이행실/삼학실C",
-              "capacity": "부부"
-            },
-            {
-              "name": "1,6단",
-              "price": 14000000,
               "feeType": "USAGE",
               "grade": "",
               "note": "",
@@ -101873,27 +101347,9 @@
             },
             {
               "name": "1단",
-              "price": 4000000,
-              "feeType": "USAGE",
-              "grade": "3층고급실(측면)",
-              "note": "",
-              "isRepresentative": false,
-              "groupType": "3층고급실"
-            },
-            {
-              "name": "1단",
               "price": 4500000,
               "feeType": "USAGE",
               "grade": "3층고급실(정면)",
-              "note": "",
-              "isRepresentative": false,
-              "groupType": "3층고급실"
-            },
-            {
-              "name": "2단",
-              "price": 5000000,
-              "feeType": "USAGE",
-              "grade": "3층고급실(측면)",
               "note": "",
               "isRepresentative": false,
               "groupType": "3층고급실"
@@ -101957,15 +101413,6 @@
               "price": 9000000,
               "feeType": "USAGE",
               "grade": "3층고급실(정면)",
-              "note": "",
-              "isRepresentative": false,
-              "groupType": "3층고급실"
-            },
-            {
-              "name": "6단",
-              "price": 7500000,
-              "feeType": "USAGE",
-              "grade": "3층고급실(측면)",
               "note": "",
               "isRepresentative": false,
               "groupType": "3층고급실"
@@ -103313,16 +102760,6 @@
               "capacity": "개인"
             },
             {
-              "name": "3단",
-              "price": 4500000,
-              "feeType": "USAGE",
-              "grade": "",
-              "note": "",
-              "isRepresentative": false,
-              "groupType": "극락3호",
-              "capacity": "개인"
-            },
-            {
               "name": "4단",
               "price": 5000000,
               "feeType": "USAGE",
@@ -103345,16 +102782,6 @@
             {
               "name": "6단",
               "price": 4500000,
-              "feeType": "USAGE",
-              "grade": "",
-              "note": "",
-              "isRepresentative": false,
-              "groupType": "극락3호",
-              "capacity": "개인"
-            },
-            {
-              "name": "7단",
-              "price": 3500000,
               "feeType": "USAGE",
               "grade": "",
               "note": "",
@@ -103486,56 +102913,6 @@
               "groupType": "극락4호"
             },
             {
-              "name": "1단",
-              "price": 3000000,
-              "feeType": "USAGE",
-              "grade": "",
-              "note": "",
-              "isRepresentative": false,
-              "groupType": "극락5호",
-              "capacity": "개인"
-            },
-            {
-              "name": "2단",
-              "price": 3500000,
-              "feeType": "USAGE",
-              "grade": "",
-              "note": "",
-              "isRepresentative": false,
-              "groupType": "극락5호",
-              "capacity": "개인"
-            },
-            {
-              "name": "3단",
-              "price": 4500000,
-              "feeType": "USAGE",
-              "grade": "",
-              "note": "",
-              "isRepresentative": false,
-              "groupType": "극락5호",
-              "capacity": "개인"
-            },
-            {
-              "name": "4단",
-              "price": 5000000,
-              "feeType": "USAGE",
-              "grade": "",
-              "note": "",
-              "isRepresentative": false,
-              "groupType": "극락5호",
-              "capacity": "개인"
-            },
-            {
-              "name": "5단",
-              "price": 5000000,
-              "feeType": "USAGE",
-              "grade": "",
-              "note": "",
-              "isRepresentative": false,
-              "groupType": "극락5호",
-              "capacity": "개인"
-            },
-            {
               "name": "6단",
               "price": 5000000,
               "feeType": "USAGE",
@@ -103576,26 +102953,6 @@
               "capacity": "개인"
             },
             {
-              "name": "부부",
-              "price": 10000000,
-              "feeType": "USAGE",
-              "grade": "2-7단 비용의 두배",
-              "note": "",
-              "isRepresentative": false,
-              "groupType": "극락5호",
-              "capacity": "개인"
-            },
-            {
-              "name": "1단",
-              "price": 3500000,
-              "feeType": "USAGE",
-              "grade": "",
-              "note": "",
-              "isRepresentative": false,
-              "groupType": "극락6호",
-              "capacity": "개인"
-            },
-            {
               "name": "2단",
               "price": 4500000,
               "feeType": "USAGE",
@@ -103628,16 +102985,6 @@
             {
               "name": "5단",
               "price": 5500000,
-              "feeType": "USAGE",
-              "grade": "",
-              "note": "",
-              "isRepresentative": false,
-              "groupType": "극락6호",
-              "capacity": "개인"
-            },
-            {
-              "name": "6단",
-              "price": 5000000,
               "feeType": "USAGE",
               "grade": "",
               "note": "",
@@ -103656,16 +103003,6 @@
               "capacity": "개인"
             },
             {
-              "name": "8단",
-              "price": 3500000,
-              "feeType": "USAGE",
-              "grade": "",
-              "note": "",
-              "isRepresentative": false,
-              "groupType": "극락6호",
-              "capacity": "개인"
-            },
-            {
               "name": "부부",
               "price": 11000000,
               "feeType": "USAGE",
@@ -103673,56 +103010,6 @@
               "note": "",
               "isRepresentative": false,
               "groupType": "극락6호",
-              "capacity": "개인"
-            },
-            {
-              "name": "1단",
-              "price": 3500000,
-              "feeType": "USAGE",
-              "grade": "",
-              "note": "",
-              "isRepresentative": false,
-              "groupType": "극락7호",
-              "capacity": "개인"
-            },
-            {
-              "name": "2단",
-              "price": 4500000,
-              "feeType": "USAGE",
-              "grade": "",
-              "note": "",
-              "isRepresentative": false,
-              "groupType": "극락7호",
-              "capacity": "개인"
-            },
-            {
-              "name": "3단",
-              "price": 5000000,
-              "feeType": "USAGE",
-              "grade": "",
-              "note": "",
-              "isRepresentative": false,
-              "groupType": "극락7호",
-              "capacity": "개인"
-            },
-            {
-              "name": "4단",
-              "price": 5500000,
-              "feeType": "USAGE",
-              "grade": "",
-              "note": "",
-              "isRepresentative": false,
-              "groupType": "극락7호",
-              "capacity": "개인"
-            },
-            {
-              "name": "5단",
-              "price": 5500000,
-              "feeType": "USAGE",
-              "grade": "",
-              "note": "",
-              "isRepresentative": false,
-              "groupType": "극락7호",
               "capacity": "개인"
             },
             {
@@ -103770,16 +103057,6 @@
               "price": 3000000,
               "feeType": "USAGE",
               "grade": "",
-              "note": "",
-              "isRepresentative": false,
-              "groupType": "극락7호",
-              "capacity": "개인"
-            },
-            {
-              "name": "부부",
-              "price": 11000000,
-              "feeType": "USAGE",
-              "grade": "각 비용의 두배",
               "note": "",
               "isRepresentative": false,
               "groupType": "극락7호",
@@ -105388,16 +104665,6 @@
               "capacity": "부부"
             },
             {
-              "name": "7단",
-              "price": 6500000,
-              "feeType": "USAGE",
-              "grade": "",
-              "note": "",
-              "isRepresentative": false,
-              "groupType": "2B관",
-              "capacity": "부부"
-            },
-            {
               "name": "6단",
               "price": 8500000,
               "feeType": "USAGE",
@@ -105440,16 +104707,6 @@
             {
               "name": "2단",
               "price": 7500000,
-              "feeType": "USAGE",
-              "grade": "",
-              "note": "",
-              "isRepresentative": false,
-              "groupType": "2B관",
-              "capacity": "부부"
-            },
-            {
-              "name": "1단",
-              "price": 5500000,
               "feeType": "USAGE",
               "grade": "",
               "note": "",
@@ -110859,56 +110116,6 @@
               "capacity": "개인"
             },
             {
-              "name": "럭셔리 1/8단",
-              "price": 4000000,
-              "feeType": "USAGE",
-              "grade": "",
-              "note": "",
-              "isRepresentative": false,
-              "groupType": "3층",
-              "capacity": "개인"
-            },
-            {
-              "name": "럭셔리 2/7단",
-              "price": 5000000,
-              "feeType": "USAGE",
-              "grade": "",
-              "note": "",
-              "isRepresentative": false,
-              "groupType": "3층",
-              "capacity": "개인"
-            },
-            {
-              "name": "럭셔리 3단",
-              "price": 6000000,
-              "feeType": "USAGE",
-              "grade": "",
-              "note": "",
-              "isRepresentative": false,
-              "groupType": "3층",
-              "capacity": "개인"
-            },
-            {
-              "name": "럭셔리 4/5단",
-              "price": 7500000,
-              "feeType": "USAGE",
-              "grade": "",
-              "note": "",
-              "isRepresentative": false,
-              "groupType": "3층",
-              "capacity": "개인"
-            },
-            {
-              "name": "럭셔리 6단",
-              "price": 6500000,
-              "feeType": "USAGE",
-              "grade": "",
-              "note": "",
-              "isRepresentative": false,
-              "groupType": "3층",
-              "capacity": "개인"
-            },
-            {
               "name": "프리미엄가족4기-1 1/6단",
               "price": 32000000,
               "feeType": "USAGE",
@@ -111076,28 +110283,6 @@
             },
             {
               "name": "관리비",
-              "price": 250000,
-              "feeType": "MAINTENANCE",
-              "grade": "지하디럭스",
-              "note": "",
-              "isRepresentative": false,
-              "groupType": "부가옵션",
-              "duration": 5,
-              "durationType": "YEAR"
-            },
-            {
-              "name": "관리비",
-              "price": 250000,
-              "feeType": "MAINTENANCE",
-              "grade": "1층럭셔리",
-              "note": "",
-              "isRepresentative": false,
-              "groupType": "부가옵션",
-              "duration": 5,
-              "durationType": "YEAR"
-            },
-            {
-              "name": "관리비",
               "price": 2500000,
               "feeType": "MAINTENANCE",
               "grade": "2/3층럭셔리",
@@ -111117,18 +110302,6 @@
               "groupType": "부가옵션",
               "duration": 5,
               "durationType": "YEAR"
-            },
-            {
-              "name": "관리비",
-              "price": 250000,
-              "feeType": "MAINTENANCE",
-              "grade": "3층프리미엄",
-              "note": "",
-              "isRepresentative": false,
-              "groupType": "부가옵션",
-              "duration": 5,
-              "durationType": "YEAR",
-              "capacity": "가족"
             }
           ]
         }
@@ -113334,18 +112507,6 @@
             },
             {
               "name": "관리비",
-              "price": 50000,
-              "feeType": "MAINTENANCE",
-              "grade": "1기안치",
-              "note": "",
-              "isRepresentative": false,
-              "groupType": "부가옵션",
-              "duration": 1,
-              "durationType": "YEAR",
-              "capacity": "부부"
-            },
-            {
-              "name": "관리비",
               "price": 80000,
               "feeType": "MAINTENANCE",
               "grade": "2기안치",
@@ -114888,16 +114049,6 @@
               "capacity": "개인"
             },
             {
-              "name": "1단",
-              "price": 5000000,
-              "feeType": "USAGE",
-              "grade": "",
-              "note": "",
-              "isRepresentative": false,
-              "groupType": "일반실",
-              "capacity": "부부"
-            },
-            {
               "name": "2단",
               "price": 7000000,
               "feeType": "USAGE",
@@ -114919,16 +114070,6 @@
             },
             {
               "name": "4단",
-              "price": 10000000,
-              "feeType": "USAGE",
-              "grade": "",
-              "note": "",
-              "isRepresentative": false,
-              "groupType": "일반실",
-              "capacity": "부부"
-            },
-            {
-              "name": "5단",
               "price": 10000000,
               "feeType": "USAGE",
               "grade": "",
@@ -115607,16 +114748,6 @@
             {
               "name": "일반 4단",
               "price": 7500000,
-              "feeType": "USAGE",
-              "grade": "측면",
-              "note": "",
-              "isRepresentative": false,
-              "groupType": "별관2층",
-              "capacity": "개인"
-            },
-            {
-              "name": "일반 5단",
-              "price": 9000000,
               "feeType": "USAGE",
               "grade": "측면",
               "note": "",
@@ -116318,14 +115449,6 @@
               "grade": "기당",
               "note": "",
               "isRepresentative": false
-            },
-            {
-              "name": "봉안담 영구사용",
-              "price": 25850000,
-              "feeType": "USAGE",
-              "grade": "기당",
-              "note": "",
-              "isRepresentative": true
             }
           ]
         },
@@ -117277,18 +116400,6 @@
               "capacity": "부부"
             },
             {
-              "name": "7단",
-              "price": 2800000,
-              "feeType": "USAGE",
-              "grade": "임대",
-              "note": "",
-              "isRepresentative": false,
-              "groupType": "고급실",
-              "duration": 10,
-              "durationType": "YEAR",
-              "capacity": "부부"
-            },
-            {
               "name": "1단",
               "price": 1750000,
               "feeType": "USAGE",
@@ -117303,42 +116414,6 @@
             {
               "name": "2단",
               "price": 3150000,
-              "feeType": "USAGE",
-              "grade": "",
-              "note": "",
-              "isRepresentative": false,
-              "groupType": "고급실",
-              "duration": 0,
-              "durationType": "PERMANENT",
-              "capacity": "개인"
-            },
-            {
-              "name": "3단",
-              "price": 4200000,
-              "feeType": "USAGE",
-              "grade": "",
-              "note": "",
-              "isRepresentative": false,
-              "groupType": "고급실",
-              "duration": 0,
-              "durationType": "PERMANENT",
-              "capacity": "개인"
-            },
-            {
-              "name": "4단",
-              "price": 4200000,
-              "feeType": "USAGE",
-              "grade": "",
-              "note": "",
-              "isRepresentative": false,
-              "groupType": "고급실",
-              "duration": 0,
-              "durationType": "PERMANENT",
-              "capacity": "개인"
-            },
-            {
-              "name": "5단",
-              "price": 4200000,
               "feeType": "USAGE",
               "grade": "",
               "note": "",
@@ -120314,16 +119389,6 @@
               "residency": "LOW_INCOME"
             },
             {
-              "name": "개인단",
-              "price": 250000,
-              "feeType": "USAGE",
-              "grade": "",
-              "note": "",
-              "isRepresentative": false,
-              "groupType": "감면",
-              "residency": "VETERAN"
-            },
-            {
               "name": "부부단",
               "price": 500000,
               "feeType": "USAGE",
@@ -120332,16 +119397,6 @@
               "isRepresentative": false,
               "groupType": "감면",
               "residency": "LOW_INCOME"
-            },
-            {
-              "name": "부부단",
-              "price": 500000,
-              "feeType": "USAGE",
-              "grade": "",
-              "note": "",
-              "isRepresentative": false,
-              "groupType": "감면",
-              "residency": "VETERAN"
             }
           ]
         }
@@ -121587,16 +120642,6 @@
               "capacity": "개인"
             },
             {
-              "name": "마단",
-              "price": 5000000,
-              "feeType": "USAGE",
-              "grade": "",
-              "note": "",
-              "isRepresentative": false,
-              "groupType": "프리미엄관",
-              "capacity": "개인"
-            },
-            {
               "name": "바단",
               "price": 4500000,
               "feeType": "USAGE",
@@ -121648,16 +120693,6 @@
             },
             {
               "name": "라단",
-              "price": 10000000,
-              "feeType": "USAGE",
-              "grade": "",
-              "note": "",
-              "isRepresentative": false,
-              "groupType": "프리미엄관",
-              "capacity": "부부"
-            },
-            {
-              "name": "마단",
               "price": 10000000,
               "feeType": "USAGE",
               "grade": "",
@@ -123867,16 +122902,6 @@
             {
               "name": "1단",
               "price": 6000000,
-              "feeType": "USAGE",
-              "grade": "",
-              "note": "",
-              "isRepresentative": false,
-              "groupType": "VIP실",
-              "capacity": "개인"
-            },
-            {
-              "name": "2단",
-              "price": 7000000,
               "feeType": "USAGE",
               "grade": "",
               "note": "",
@@ -126526,26 +125551,6 @@
               "capacity": "부부"
             },
             {
-              "name": "4단",
-              "price": 10000000,
-              "feeType": "USAGE",
-              "grade": "49cm",
-              "note": "",
-              "isRepresentative": false,
-              "groupType": "소형",
-              "capacity": "부부"
-            },
-            {
-              "name": "5단",
-              "price": 10000000,
-              "feeType": "USAGE",
-              "grade": "49cm",
-              "note": "",
-              "isRepresentative": false,
-              "groupType": "소형",
-              "capacity": "부부"
-            },
-            {
               "name": "6단",
               "price": 4000000,
               "feeType": "USAGE",
@@ -127769,16 +126774,6 @@
               "isRepresentative": false,
               "groupType": "2봉안실(개인/부부)",
               "capacity": "부부"
-            },
-            {
-              "name": "1단",
-              "price": 2000000,
-              "feeType": "USAGE",
-              "grade": "",
-              "note": "",
-              "isRepresentative": false,
-              "groupType": "3,5,6봉안실(개인/부부)",
-              "capacity": "개인"
             },
             {
               "name": "2단",
@@ -134684,16 +133679,6 @@
             },
             {
               "name": "관리비",
-              "price": 750000,
-              "feeType": "MAINTENANCE",
-              "grade": "",
-              "note": "",
-              "isRepresentative": false,
-              "groupType": "관리비",
-              "capacity": "부부"
-            },
-            {
-              "name": "관리비",
               "price": 1400000,
               "feeType": "MAINTENANCE",
               "grade": "",
@@ -134701,30 +133686,6 @@
               "isRepresentative": false,
               "groupType": "관리비",
               "duration": 20,
-              "durationType": "YEAR",
-              "capacity": "개인"
-            },
-            {
-              "name": "관리비",
-              "price": 1400000,
-              "feeType": "MAINTENANCE",
-              "grade": "",
-              "note": "",
-              "isRepresentative": false,
-              "groupType": "관리비",
-              "duration": 20,
-              "durationType": "YEAR",
-              "capacity": "부부"
-            },
-            {
-              "name": "관리비",
-              "price": 2000000,
-              "feeType": "MAINTENANCE",
-              "grade": "",
-              "note": "",
-              "isRepresentative": false,
-              "groupType": "관리비",
-              "duration": 45,
               "durationType": "YEAR",
               "capacity": "개인"
             },
@@ -134738,7 +133699,7 @@
               "groupType": "관리비",
               "duration": 45,
               "durationType": "YEAR",
-              "capacity": "부부"
+              "capacity": "개인"
             }
           ]
         }
@@ -137146,16 +136107,6 @@
               "residency": "VETERAN"
             },
             {
-              "name": "신규 15년",
-              "price": 100000,
-              "feeType": "USAGE",
-              "grade": "관내 수급자",
-              "note": "",
-              "isRepresentative": false,
-              "groupType": "신규사용",
-              "residency": "LOW_INCOME"
-            },
-            {
               "name": "재사용 5년",
               "price": 100000,
               "feeType": "EXTENSION",
@@ -137194,16 +136145,6 @@
               "isRepresentative": false,
               "groupType": "재사용",
               "residency": "VETERAN"
-            },
-            {
-              "name": "재사용 5년",
-              "price": 50000,
-              "feeType": "EXTENSION",
-              "grade": "관내 수급자",
-              "note": "",
-              "isRepresentative": false,
-              "groupType": "재사용",
-              "residency": "LOW_INCOME"
             },
             {
               "name": "재사용 5년",
@@ -138257,16 +137198,6 @@
               "residency": "VETERAN"
             },
             {
-              "name": "신규 15년",
-              "price": 100000,
-              "feeType": "USAGE",
-              "grade": "관내 수급자",
-              "note": "",
-              "isRepresentative": false,
-              "groupType": "신규사용",
-              "residency": "LOW_INCOME"
-            },
-            {
               "name": "재사용 5년",
               "price": 100000,
               "feeType": "EXTENSION",
@@ -138305,16 +137236,6 @@
               "isRepresentative": false,
               "groupType": "재사용",
               "residency": "VETERAN"
-            },
-            {
-              "name": "재사용 5년",
-              "price": 50000,
-              "feeType": "EXTENSION",
-              "grade": "관내 수급자",
-              "note": "",
-              "isRepresentative": false,
-              "groupType": "재사용",
-              "residency": "LOW_INCOME"
             },
             {
               "name": "재사용 5년",
@@ -138947,16 +137868,6 @@
               "residency": "VETERAN"
             },
             {
-              "name": "신규 15년",
-              "price": 100000,
-              "feeType": "USAGE",
-              "grade": "관내 수급자",
-              "note": "",
-              "isRepresentative": false,
-              "groupType": "신규사용",
-              "residency": "LOW_INCOME"
-            },
-            {
               "name": "재사용 5년",
               "price": 100000,
               "feeType": "EXTENSION",
@@ -138995,16 +137906,6 @@
               "isRepresentative": false,
               "groupType": "재사용",
               "residency": "VETERAN"
-            },
-            {
-              "name": "재사용 5년",
-              "price": 50000,
-              "feeType": "EXTENSION",
-              "grade": "관내 수급자",
-              "note": "",
-              "isRepresentative": false,
-              "groupType": "재사용",
-              "residency": "LOW_INCOME"
             },
             {
               "name": "재사용 5년",
@@ -139264,16 +138165,6 @@
               "residency": "VETERAN"
             },
             {
-              "name": "신규 15년",
-              "price": 100000,
-              "feeType": "USAGE",
-              "grade": "관내 수급자",
-              "note": "",
-              "isRepresentative": false,
-              "groupType": "신규사용",
-              "residency": "LOW_INCOME"
-            },
-            {
               "name": "재사용 5년",
               "price": 100000,
               "feeType": "EXTENSION",
@@ -139312,16 +138203,6 @@
               "isRepresentative": false,
               "groupType": "재사용",
               "residency": "VETERAN"
-            },
-            {
-              "name": "재사용 5년",
-              "price": 50000,
-              "feeType": "EXTENSION",
-              "grade": "관내 수급자",
-              "note": "",
-              "isRepresentative": false,
-              "groupType": "재사용",
-              "residency": "LOW_INCOME"
             },
             {
               "name": "재사용 5년",
@@ -139591,16 +138472,6 @@
               "residency": "VETERAN"
             },
             {
-              "name": "신규 15년",
-              "price": 100000,
-              "feeType": "USAGE",
-              "grade": "관내 수급자",
-              "note": "",
-              "isRepresentative": false,
-              "groupType": "신규사용",
-              "residency": "LOW_INCOME"
-            },
-            {
               "name": "재사용 5년",
               "price": 100000,
               "feeType": "EXTENSION",
@@ -139639,16 +138510,6 @@
               "isRepresentative": false,
               "groupType": "재사용",
               "residency": "VETERAN"
-            },
-            {
-              "name": "재사용 5년",
-              "price": 50000,
-              "feeType": "EXTENSION",
-              "grade": "관내 수급자",
-              "note": "",
-              "isRepresentative": false,
-              "groupType": "재사용",
-              "residency": "LOW_INCOME"
             },
             {
               "name": "재사용 5년",
@@ -142568,46 +141429,6 @@
               "duration": 10,
               "durationType": "YEAR",
               "capacity": "COUPLE"
-            },
-            {
-              "name": "1단",
-              "price": 1600000,
-              "feeType": "USAGE",
-              "grade": "",
-              "note": "",
-              "isRepresentative": false,
-              "groupType": "영구",
-              "capacity": "개인"
-            },
-            {
-              "name": "2,8단",
-              "price": 2400000,
-              "feeType": "USAGE",
-              "grade": "",
-              "note": "",
-              "isRepresentative": false,
-              "groupType": "영구",
-              "capacity": "개인"
-            },
-            {
-              "name": "3,7단",
-              "price": 3200000,
-              "feeType": "USAGE",
-              "grade": "",
-              "note": "",
-              "isRepresentative": false,
-              "groupType": "영구",
-              "capacity": "개인"
-            },
-            {
-              "name": "4,5,6단",
-              "price": 4000000,
-              "feeType": "USAGE",
-              "grade": "",
-              "note": "",
-              "isRepresentative": false,
-              "groupType": "영구",
-              "capacity": "개인"
             },
             {
               "name": "1단",
@@ -146714,26 +145535,6 @@
               "capacity": "부부"
             },
             {
-              "name": "일반실",
-              "price": 2000000,
-              "feeType": "USAGE",
-              "grade": "",
-              "note": "",
-              "isRepresentative": false,
-              "groupType": "사랑관",
-              "capacity": "개인"
-            },
-            {
-              "name": "일반실",
-              "price": 4000000,
-              "feeType": "USAGE",
-              "grade": "",
-              "note": "",
-              "isRepresentative": false,
-              "groupType": "사랑관",
-              "capacity": "부부"
-            },
-            {
               "name": "특별단",
               "price": 4000000,
               "feeType": "USAGE",
@@ -147809,24 +146610,6 @@
               "note": "",
               "isRepresentative": false,
               "groupType": "일반실"
-            },
-            {
-              "name": "개인",
-              "price": 3500000,
-              "feeType": "USAGE",
-              "grade": "350만원 ~ 900만원",
-              "note": "",
-              "isRepresentative": false,
-              "groupType": "고급실"
-            },
-            {
-              "name": "부부",
-              "price": 7000000,
-              "feeType": "USAGE",
-              "grade": "700만원 ~ 1800만원",
-              "note": "",
-              "isRepresentative": false,
-              "groupType": "고급실"
             },
             {
               "name": "개인",
@@ -154022,15 +152805,6 @@
               "price": 6000000,
               "feeType": "USAGE",
               "grade": "50cm×29cm",
-              "note": "",
-              "isRepresentative": false,
-              "groupType": "부부"
-            },
-            {
-              "name": "관리비",
-              "price": 50000,
-              "feeType": "MAINTENANCE",
-              "grade": "",
               "note": "",
               "isRepresentative": false,
               "groupType": "부부"
@@ -160574,22 +159348,6 @@
               "grade": "1회",
               "note": "",
               "isRepresentative": false
-            },
-            {
-              "name": "연장 5년",
-              "price": 60000,
-              "feeType": "EXTENSION",
-              "grade": "2회",
-              "note": "",
-              "isRepresentative": false
-            },
-            {
-              "name": "연장 5년",
-              "price": 60000,
-              "feeType": "EXTENSION",
-              "grade": "3회",
-              "note": "",
-              "isRepresentative": false
             }
           ]
         }
@@ -161409,26 +160167,6 @@
               "price": 50000,
               "feeType": "MAINTENANCE",
               "grade": "4기",
-              "note": "",
-              "isRepresentative": false,
-              "groupType": "관리비",
-              "capacity": "가족"
-            },
-            {
-              "name": "관리비",
-              "price": 40000,
-              "feeType": "MAINTENANCE",
-              "grade": "6기",
-              "note": "",
-              "isRepresentative": false,
-              "groupType": "관리비",
-              "capacity": "가족"
-            },
-            {
-              "name": "관리비",
-              "price": 50000,
-              "feeType": "MAINTENANCE",
-              "grade": "8기",
               "note": "",
               "isRepresentative": false,
               "groupType": "관리비",
@@ -166960,15 +165698,6 @@
               "groupType": "개인"
             },
             {
-              "name": "개인단",
-              "price": 4500000,
-              "feeType": "USAGE",
-              "grade": "8~11단",
-              "note": "",
-              "isRepresentative": false,
-              "groupType": "개인"
-            },
-            {
               "name": "관리비",
               "price": 50000,
               "feeType": "MAINTENANCE",
@@ -168861,17 +167590,6 @@
               "groupType": "관외",
               "duration": 15,
               "durationType": "YEAR"
-            },
-            {
-              "name": "관리비",
-              "price": 75000,
-              "feeType": "MAINTENANCE",
-              "grade": "간",
-              "note": "",
-              "isRepresentative": false,
-              "groupType": "관외",
-              "duration": 15,
-              "durationType": "YEAR"
             }
           ]
         },
@@ -168906,17 +167624,6 @@
               "name": "사용료",
               "price": 100000,
               "feeType": "USAGE",
-              "grade": "간",
-              "note": "",
-              "isRepresentative": false,
-              "groupType": "관외",
-              "duration": 15,
-              "durationType": "YEAR"
-            },
-            {
-              "name": "관리비",
-              "price": 75000,
-              "feeType": "MAINTENANCE",
               "grade": "간",
               "note": "",
               "isRepresentative": false,
@@ -169383,17 +168090,6 @@
               "groupType": "부부",
               "duration": 0,
               "durationType": "PERMANENT"
-            },
-            {
-              "name": "관리비",
-              "price": 25000,
-              "feeType": "MAINTENANCE",
-              "grade": "",
-              "note": "",
-              "isRepresentative": false,
-              "groupType": "부부",
-              "duration": 1,
-              "durationType": "YEAR"
             }
           ]
         }
@@ -170735,16 +169431,6 @@
               "isRepresentative": false,
               "groupType": "관외",
               "capacity": "개인"
-            },
-            {
-              "name": "관리비 15년",
-              "price": 30000,
-              "feeType": "MAINTENANCE",
-              "grade": "",
-              "note": "",
-              "isRepresentative": false,
-              "groupType": "관외",
-              "capacity": "개인"
             }
           ]
         }
@@ -171859,28 +170545,6 @@
               "note": "",
               "isRepresentative": false,
               "groupType": "개인",
-              "duration": 5,
-              "durationType": "YEAR"
-            },
-            {
-              "name": "최초 15년",
-              "price": 330000,
-              "feeType": "USAGE",
-              "grade": "",
-              "note": "",
-              "isRepresentative": false,
-              "groupType": "부부",
-              "duration": 15,
-              "durationType": "YEAR"
-            },
-            {
-              "name": "연장 5년",
-              "price": 110000,
-              "feeType": "EXTENSION",
-              "grade": "",
-              "note": "",
-              "isRepresentative": false,
-              "groupType": "부부",
               "duration": 5,
               "durationType": "YEAR"
             }
@@ -194090,24 +192754,6 @@
               "groupType": "고급실"
             },
             {
-              "name": "9단",
-              "price": 2500000,
-              "feeType": "USAGE",
-              "grade": "봉안",
-              "note": "",
-              "isRepresentative": true,
-              "groupType": "일반실"
-            },
-            {
-              "name": "8단",
-              "price": 3500000,
-              "feeType": "USAGE",
-              "grade": "봉안",
-              "note": "",
-              "isRepresentative": false,
-              "groupType": "일반실"
-            },
-            {
               "name": "7단",
               "price": 6500000,
               "feeType": "USAGE",
@@ -194155,15 +192801,6 @@
             {
               "name": "2단",
               "price": 5000000,
-              "feeType": "USAGE",
-              "grade": "봉안",
-              "note": "",
-              "isRepresentative": false,
-              "groupType": "일반실"
-            },
-            {
-              "name": "1단",
-              "price": 4000000,
               "feeType": "USAGE",
               "grade": "봉안",
               "note": "",
@@ -199511,22 +198148,6 @@
               "grade": "미확인",
               "note": "",
               "isRepresentative": true
-            },
-            {
-              "name": "미확인",
-              "price": 0,
-              "feeType": "USAGE",
-              "grade": "미확인",
-              "note": "",
-              "isRepresentative": false
-            },
-            {
-              "name": "미확인",
-              "price": 0,
-              "feeType": "USAGE",
-              "grade": "미확인",
-              "note": "",
-              "isRepresentative": false
             }
           ]
         }
@@ -218890,14 +217511,6 @@
               "grade": "",
               "note": "",
               "isRepresentative": true
-            },
-            {
-              "name": "시설사용료",
-              "price": 0,
-              "feeType": "USAGE",
-              "grade": "",
-              "note": "",
-              "isRepresentative": false
             }
           ]
         }
@@ -219066,14 +217679,6 @@
               "grade": "",
               "note": "",
               "isRepresentative": false
-            },
-            {
-              "name": "시설사용료 항목",
-              "price": 0,
-              "feeType": "USAGE",
-              "grade": "",
-              "note": "",
-              "isRepresentative": false
             }
           ]
         }
@@ -219225,14 +217830,6 @@
               "grade": "",
               "note": "",
               "isRepresentative": true
-            },
-            {
-              "name": "시설사용료 항목",
-              "price": 0,
-              "feeType": "USAGE",
-              "grade": "",
-              "note": "",
-              "isRepresentative": false
             }
           ]
         }
@@ -220147,15 +218744,6 @@
             },
             {
               "name": "봉안",
-              "price": 1000000,
-              "feeType": "USAGE",
-              "grade": "",
-              "note": "",
-              "isRepresentative": false,
-              "groupType": "2층"
-            },
-            {
-              "name": "봉안",
               "price": 2000000,
               "feeType": "USAGE",
               "grade": "",
@@ -220171,42 +218759,6 @@
               "note": "",
               "isRepresentative": false,
               "groupType": "4층"
-            },
-            {
-              "name": "봉안",
-              "price": 3000000,
-              "feeType": "USAGE",
-              "grade": "",
-              "note": "",
-              "isRepresentative": false,
-              "groupType": "5층"
-            },
-            {
-              "name": "봉안",
-              "price": 2000000,
-              "feeType": "USAGE",
-              "grade": "",
-              "note": "",
-              "isRepresentative": false,
-              "groupType": "6층"
-            },
-            {
-              "name": "봉안",
-              "price": 1000000,
-              "feeType": "USAGE",
-              "grade": "",
-              "note": "",
-              "isRepresentative": false,
-              "groupType": "7층"
-            },
-            {
-              "name": "봉안",
-              "price": 1000000,
-              "feeType": "USAGE",
-              "grade": "",
-              "note": "",
-              "isRepresentative": false,
-              "groupType": "8층"
             }
           ]
         }
@@ -221716,14 +220268,6 @@
               "grade": "",
               "note": "",
               "isRepresentative": true
-            },
-            {
-              "name": "시설사용료",
-              "price": 0,
-              "feeType": "USAGE",
-              "grade": "",
-              "note": "",
-              "isRepresentative": false
             }
           ]
         }
@@ -222014,14 +220558,6 @@
               "grade": "",
               "note": "",
               "isRepresentative": true
-            },
-            {
-              "name": "시설사용료",
-              "price": 0,
-              "feeType": "USAGE",
-              "grade": "",
-              "note": "",
-              "isRepresentative": false
             }
           ]
         }
@@ -222456,14 +220992,6 @@
               "grade": "",
               "note": "",
               "isRepresentative": true
-            },
-            {
-              "name": "시설사용료",
-              "price": 0,
-              "feeType": "USAGE",
-              "grade": "",
-              "note": "",
-              "isRepresentative": false
             }
           ]
         }
@@ -222609,14 +221137,6 @@
               "grade": "",
               "note": "",
               "isRepresentative": true
-            },
-            {
-              "name": "시설사용료",
-              "price": 0,
-              "feeType": "USAGE",
-              "grade": "",
-              "note": "",
-              "isRepresentative": false
             }
           ]
         }
@@ -225115,14 +223635,6 @@
               "grade": "시설 사용료 내역 및 요금(단위:원) 정보 제공",
               "note": "",
               "isRepresentative": true
-            },
-            {
-              "name": "시설사용료",
-              "price": 0,
-              "feeType": "USAGE",
-              "grade": "서비스 내용 및 요금(단위:원) 정보 제공",
-              "note": "",
-              "isRepresentative": false
             }
           ]
         }
@@ -232569,15 +231081,6 @@
               "groupType": "관리비"
             },
             {
-              "name": "개인",
-              "price": 105000,
-              "feeType": "USAGE",
-              "grade": "",
-              "note": "",
-              "isRepresentative": false,
-              "groupType": "연장관리비"
-            },
-            {
               "name": "부부",
               "price": 824460,
               "feeType": "USAGE",
@@ -232609,15 +231112,6 @@
               "groupType": "관리비"
             },
             {
-              "name": "부부",
-              "price": 157500,
-              "feeType": "USAGE",
-              "grade": "",
-              "note": "",
-              "isRepresentative": false,
-              "groupType": "연장관리비"
-            },
-            {
               "name": "가족/법인/단체",
               "price": 1278940,
               "feeType": "USAGE",
@@ -232643,15 +231137,6 @@
               "note": "",
               "isRepresentative": false,
               "groupType": "관리비"
-            },
-            {
-              "name": "가족/법인/단체",
-              "price": 262500,
-              "feeType": "USAGE",
-              "grade": "",
-              "note": "",
-              "isRepresentative": false,
-              "groupType": "연장관리비"
             }
           ]
         }
@@ -238497,31 +236982,9 @@
               "durationType": "YEAR"
             },
             {
-              "name": "국가보훈대상자 (사용료)",
-              "price": 0,
-              "feeType": "USAGE",
-              "grade": "1위당",
-              "note": "",
-              "isRepresentative": false,
-              "groupType": "관외",
-              "duration": 30,
-              "durationType": "YEAR"
-            },
-            {
               "name": "국가보훈대상자 (관리비)",
               "price": 300000,
               "feeType": "MAINTENANCE",
-              "grade": "1위당",
-              "note": "",
-              "isRepresentative": false,
-              "groupType": "관외",
-              "duration": 30,
-              "durationType": "YEAR"
-            },
-            {
-              "name": "기초생활수급자 (사용료)",
-              "price": 0,
-              "feeType": "USAGE",
               "grade": "1위당",
               "note": "",
               "isRepresentative": false,
@@ -238660,31 +237123,9 @@
               "durationType": "YEAR"
             },
             {
-              "name": "국가보훈대상자 (사용료)",
-              "price": 0,
-              "feeType": "USAGE",
-              "grade": "1위당",
-              "note": "",
-              "isRepresentative": false,
-              "groupType": "관외",
-              "duration": 30,
-              "durationType": "YEAR"
-            },
-            {
               "name": "국가보훈대상자 (관리비)",
               "price": 300000,
               "feeType": "MAINTENANCE",
-              "grade": "1위당",
-              "note": "",
-              "isRepresentative": false,
-              "groupType": "관외",
-              "duration": 30,
-              "durationType": "YEAR"
-            },
-            {
-              "name": "기초생활수급자 (사용료)",
-              "price": 0,
-              "feeType": "USAGE",
               "grade": "1위당",
               "note": "",
               "isRepresentative": false,
@@ -239042,15 +237483,6 @@
               "price": 1300000,
               "feeType": "USAGE",
               "grade": "",
-              "note": "",
-              "isRepresentative": false,
-              "groupType": "관외"
-            },
-            {
-              "name": "가족",
-              "price": 5200000,
-              "feeType": "USAGE",
-              "grade": "4위",
               "note": "",
               "isRepresentative": false,
               "groupType": "관외"
@@ -244992,15 +243424,6 @@
               "residency": "NON_RESIDENT"
             },
             {
-              "name": "관외-잔디장(시신, 1구)",
-              "price": 1600000,
-              "feeType": "USAGE",
-              "grade": "사망일 기준 6개월 이상 연속하여 6개시(화성시 부천시 안산시 안양시·시흥시·광명시)에 주민등록이 되어 있는 사망자",
-              "note": "",
-              "isRepresentative": false,
-              "residency": "NON_RESIDENT"
-            },
-            {
               "name": "관내-잔디장(개장유골, 1구)",
               "price": 800000,
               "feeType": "USAGE",
@@ -245039,15 +243462,6 @@
               "price": 3600000,
               "feeType": "USAGE",
               "grade": "사망일 기준 6개월 이상 연속하여 화성시에 주민등록이 되어 있는 사람의 사망한 배우자",
-              "note": "",
-              "isRepresentative": false,
-              "residency": "NON_RESIDENT"
-            },
-            {
-              "name": "관외-수목장(시신, 1위)",
-              "price": 3600000,
-              "feeType": "USAGE",
-              "grade": "사망일 기준 6개월 이상 연속하여 6개시(화성시 부천시 안산시 안양시 시흥시·광명시)에 주민등록이 되어 있는 사망자",
               "note": "",
               "isRepresentative": false,
               "residency": "NON_RESIDENT"
@@ -253331,17 +251745,6 @@
             {
               "name": "소나무 수목장",
               "price": 16250000,
-              "feeType": "USAGE",
-              "grade": "",
-              "note": "",
-              "isRepresentative": false,
-              "groupType": "개인",
-              "area": 6.516,
-              "areaUnit": "SQM"
-            },
-            {
-              "name": "소나무 수목장",
-              "price": 16300000,
               "feeType": "USAGE",
               "grade": "",
               "note": "",
@@ -265316,14 +263719,6 @@
               "grade": "",
               "note": "",
               "isRepresentative": true
-            },
-            {
-              "name": "시설사용료",
-              "price": 0,
-              "feeType": "USAGE",
-              "grade": "",
-              "note": "",
-              "isRepresentative": false
             }
           ]
         }
@@ -265944,14 +264339,6 @@
               "grade": "",
               "note": "",
               "isRepresentative": false
-            },
-            {
-              "name": "시설사용료",
-              "price": 0,
-              "feeType": "USAGE",
-              "grade": "",
-              "note": "",
-              "isRepresentative": false
             }
           ]
         }
@@ -266529,14 +264916,6 @@
               "grade": "",
               "note": "",
               "isRepresentative": true
-            },
-            {
-              "name": "시설사용료",
-              "price": 0,
-              "feeType": "USAGE",
-              "grade": "",
-              "note": "",
-              "isRepresentative": false
             }
           ]
         }
@@ -267507,14 +265886,6 @@
               "grade": "",
               "note": "",
               "isRepresentative": true
-            },
-            {
-              "name": "시설사용료",
-              "price": 0,
-              "feeType": "USAGE",
-              "grade": "",
-              "note": "",
-              "isRepresentative": false
             }
           ]
         }
@@ -268090,14 +266461,6 @@
               "grade": "",
               "note": "",
               "isRepresentative": true
-            },
-            {
-              "name": "시설사용료",
-              "price": 0,
-              "feeType": "USAGE",
-              "grade": "",
-              "note": "",
-              "isRepresentative": false
             }
           ]
         }
@@ -268547,14 +266910,6 @@
               "grade": "",
               "note": "",
               "isRepresentative": true
-            },
-            {
-              "name": "시설사용료",
-              "price": 0,
-              "feeType": "USAGE",
-              "grade": "",
-              "note": "",
-              "isRepresentative": false
             }
           ]
         }
@@ -268853,14 +267208,6 @@
               "grade": "",
               "note": "",
               "isRepresentative": true
-            },
-            {
-              "name": "시설사용료",
-              "price": 0,
-              "feeType": "USAGE",
-              "grade": "",
-              "note": "",
-              "isRepresentative": false
             }
           ]
         }
@@ -269589,14 +267936,6 @@
               "grade": "",
               "note": "",
               "isRepresentative": true
-            },
-            {
-              "name": "시설사용료",
-              "price": 0,
-              "feeType": "USAGE",
-              "grade": "",
-              "note": "",
-              "isRepresentative": false
             }
           ]
         }
@@ -273743,14 +272082,6 @@
               "grade": "",
               "note": "",
               "isRepresentative": true
-            },
-            {
-              "name": "묘지 사용료",
-              "price": 0,
-              "feeType": "USAGE",
-              "grade": "",
-              "note": "",
-              "isRepresentative": false
             }
           ]
         }
@@ -274305,14 +272636,6 @@
               "grade": "",
               "note": "",
               "isRepresentative": true
-            },
-            {
-              "name": "시설사용료",
-              "price": 0,
-              "feeType": "USAGE",
-              "grade": "",
-              "note": "",
-              "isRepresentative": false
             }
           ]
         },
@@ -274328,14 +272651,6 @@
               "grade": "",
               "note": "",
               "isRepresentative": true
-            },
-            {
-              "name": "시설사용료",
-              "price": 0,
-              "feeType": "USAGE",
-              "grade": "",
-              "note": "",
-              "isRepresentative": false
             },
             {
               "name": "시설사용료",
@@ -277108,22 +275423,6 @@
               "grade": "",
               "note": "",
               "isRepresentative": true
-            },
-            {
-              "name": "시설사용료",
-              "price": 0,
-              "feeType": "USAGE",
-              "grade": "",
-              "note": "",
-              "isRepresentative": false
-            },
-            {
-              "name": "시설사용료",
-              "price": 0,
-              "feeType": "USAGE",
-              "grade": "",
-              "note": "",
-              "isRepresentative": false
             }
           ]
         }
@@ -277878,14 +276177,6 @@
               "grade": "",
               "note": "",
               "isRepresentative": true
-            },
-            {
-              "name": "시설사용료",
-              "price": 0,
-              "feeType": "USAGE",
-              "grade": "",
-              "note": "",
-              "isRepresentative": false
             }
           ]
         }
@@ -278150,14 +276441,6 @@
               "grade": "",
               "note": "",
               "isRepresentative": true
-            },
-            {
-              "name": "시설사용료",
-              "price": 0,
-              "feeType": "USAGE",
-              "grade": "",
-              "note": "",
-              "isRepresentative": false
             }
           ]
         }
@@ -278312,14 +276595,6 @@
               "grade": "",
               "note": "",
               "isRepresentative": true
-            },
-            {
-              "name": "시설사용료",
-              "price": 0,
-              "feeType": "USAGE",
-              "grade": "",
-              "note": "",
-              "isRepresentative": false
             }
           ]
         }
@@ -278474,22 +276749,6 @@
               "grade": "",
               "note": "",
               "isRepresentative": true
-            },
-            {
-              "name": "시설사용료",
-              "price": 0,
-              "feeType": "USAGE",
-              "grade": "",
-              "note": "",
-              "isRepresentative": false
-            },
-            {
-              "name": "시설사용료",
-              "price": 0,
-              "feeType": "USAGE",
-              "grade": "",
-              "note": "",
-              "isRepresentative": false
             }
           ]
         }
@@ -278644,14 +276903,6 @@
               "grade": "",
               "note": "",
               "isRepresentative": true
-            },
-            {
-              "name": "시설사용료",
-              "price": 0,
-              "feeType": "USAGE",
-              "grade": "",
-              "note": "",
-              "isRepresentative": false
             }
           ]
         }
@@ -281247,14 +279498,6 @@
               "grade": "",
               "note": "",
               "isRepresentative": true
-            },
-            {
-              "name": "시설사용료",
-              "price": 0,
-              "feeType": "USAGE",
-              "grade": "",
-              "note": "",
-              "isRepresentative": false
             }
           ]
         }
@@ -303910,17 +302153,6 @@
             {
               "name": "가족6위 (1위당)",
               "price": 1000000,
-              "feeType": "USAGE",
-              "grade": "최초",
-              "note": "",
-              "isRepresentative": false,
-              "groupType": "관외",
-              "duration": 30,
-              "durationType": "YEAR"
-            },
-            {
-              "name": "공동12위 (1위당)",
-              "price": 900000,
               "feeType": "USAGE",
               "grade": "최초",
               "note": "",
