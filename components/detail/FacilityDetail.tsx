@@ -1823,6 +1823,14 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                 const val = r.price < 10000 ? r.price * 10000 : r.price;
                                 byService[label].push(val);
                             });
+                        } else {
+                            // ★ 없으면 non-maintenance 최저가로 fallback
+                            const usagePrices = rows
+                                .filter((r: any) => r.feeType !== 'MAINTENANCE' && r.price > 0)
+                                .map((r: any) => r.price < 10000 ? r.price * 10000 : r.price);
+                            if (usagePrices.length > 0) {
+                                byService[label].push(Math.min(...usagePrices));
+                            }
                         }
                     });
                     // byService → menuGroups 매핑
@@ -1841,23 +1849,6 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                             }
                             subRepItems.push({ label, price: Math.min(...prices) });
                         }
-                    }
-                    // ★ 없는 서비스타입도 최저가로 추가
-                    if (subRepItems.length === 0) {
-                        stdPrices.forEach((g: any) => {
-                            if (g.serviceType === 'OTHER' && EXCLUDE_SUBTYPES.test(g.subType || '')) return;
-                            const actualType = reclassifyServiceType(g);
-                            const label = serviceLabels[actualType] || actualType;
-                            const rows = g.rows || [];
-                            const prices = rows
-                                .filter((r: any) => r.feeType !== 'MAINTENANCE' && r.price > 0)
-                                .map((r: any) => r.price < 10000 ? r.price * 10000 : r.price);
-                            if (prices.length > 0) {
-                                const min = Math.min(...prices);
-                                if (menuGroups[label]) menuGroups[label].push(min);
-                                subRepItems.push({ label, price: min });
-                            }
-                        });
                     }
                     isRep = subRepItems.length > 0;
                     if (isRep && subRepItems.length > 0) {
