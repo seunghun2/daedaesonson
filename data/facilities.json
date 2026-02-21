@@ -321,7 +321,8 @@
               "name": "8단",
               "price": 3500000,
               "groupType": "로얄관",
-              "grade": ""
+              "grade": "",
+              "isRepresentative": true
             },
             {
               "name": "1단",
@@ -512,7 +513,7 @@
               "name": "가족형 매장묘 B (소형)",
               "grade": "2~4기 안치",
               "price": 11900000,
-              "isRepresentative": false
+              "isRepresentative": true
             },
             {
               "name": "가족형 매장묘 B (중형)",
@@ -1186,7 +1187,8 @@
             {
               "name": "사용료",
               "grade": "1평",
-              "price": 2160000
+              "price": 2160000,
+              "isRepresentative": true
             },
             {
               "name": "관리비",
@@ -1236,7 +1238,8 @@
             {
               "name": "평장묘 2위 세트",
               "grade": "2.5평 / 2기 안치",
-              "price": 5273180
+              "price": 5273180,
+              "isRepresentative": true
             }
           ],
           "unit": "원"
@@ -1254,7 +1257,8 @@
             {
               "name": "봉안묘 2위 세트",
               "grade": "2기 안치",
-              "price": 15200000
+              "price": 15200000,
+              "isRepresentative": true
             },
             {
               "name": "봉안묘 4위 세트",
@@ -1569,7 +1573,8 @@
             {
               "name": "봉안묘",
               "grade": "부부 봉안묘",
-              "price": 4200000
+              "price": 4200000,
+              "isRepresentative": true
             }
           ],
           "unit": "원"
@@ -2346,7 +2351,8 @@
               "name": "8단",
               "grade": "개인단",
               "price": 1500000,
-              "groupType": "일반실(개인단)"
+              "groupType": "일반실(개인단)",
+              "isRepresentative": true
             },
             {
               "name": "1단",
@@ -3588,7 +3594,8 @@
               "name": "에메랄드그린",
               "price": 2000000,
               "groupType": "수목",
-              "grade": "4기"
+              "grade": "4기",
+              "isRepresentative": true
             },
             {
               "name": "반송(소)",
@@ -3629,7 +3636,8 @@
               "name": "잔디",
               "price": 2000000,
               "groupType": "잔디형",
-              "grade": "2기안치 "
+              "grade": "2기안치 ",
+              "isRepresentative": true
             }
           ],
           "unit": ""
@@ -3640,7 +3648,8 @@
               "name": "옥향",
               "price": 2000000,
               "groupType": "화초형",
-              "grade": "2기안치"
+              "grade": "2기안치",
+              "isRepresentative": true
             }
           ],
           "unit": ""
@@ -5341,7 +5350,7 @@
               "hasManagementFee": false,
               "includedYear": null,
               "discount": null,
-              "isRepresentative": false,
+              "isRepresentative": true,
               "raw": null
             },
             {
@@ -5384,7 +5393,7 @@
               "hasManagementFee": false,
               "includedYear": null,
               "discount": null,
-              "isRepresentative": false,
+              "isRepresentative": true,
               "raw": null
             },
             {
@@ -5439,7 +5448,7 @@
               "hasManagementFee": false,
               "includedYear": null,
               "discount": null,
-              "isRepresentative": false,
+              "isRepresentative": true,
               "raw": null
             },
             {
@@ -8445,7 +8454,7 @@
               "name": "매장용역비",
               "grade": "1기당 매장 작업 비용",
               "price": 1440000,
-              "isRepresentative": false
+              "isRepresentative": true
             }
           ],
           "unit": "원"
@@ -8631,7 +8640,7 @@
               "name": "매장묘 1기 세트",
               "grade": "1.5평 /1기 ",
               "price": 5600000,
-              "isRepresentative": false
+              "isRepresentative": true
             },
             {
               "name": "매장묘 1기 세트",
@@ -8654,7 +8663,7 @@
               "name": "매장묘 2기 세트",
               "grade": "1.5평 / 2기 ",
               "price": 8500000,
-              "isRepresentative": false
+              "isRepresentative": true
             },
             {
               "name": "매장묘 2기 세트",
@@ -8685,7 +8694,7 @@
               "name": "평장형 매장묘(부부)",
               "grade": "부부 평장형 매장묘",
               "price": 6000000,
-              "isRepresentative": false
+              "isRepresentative": true
             }
           ],
           "unit": "원"
@@ -9821,7 +9830,7 @@
               "name": "쌍묘 매장묘 6평 세트",
               "grade": "석물·설치비··5년관리비·최초안치비 포함",
               "price": 19500000,
-              "isRepresentative": false
+              "isRepresentative": true
             },
             {
               "name": "복합형 쌍묘 매장묘 10평",
@@ -9846,7 +9855,7 @@
               "name": "표준 평장형 매장묘",
               "grade": "평장형 / 세트",
               "price": 5100000,
-              "isRepresentative": false
+              "isRepresentative": true
             },
             {
               "name": "고급 평장형 매장묘",
@@ -9873,7 +9882,7 @@
               "name": "봉안담 개인형",
               "grade": "개인단 / 관리비 별도",
               "price": 2300000,
-              "isRepresentative": false
+              "isRepresentative": true
             },
             {
               "name": "봉안담 부부형",
@@ -10914,7 +10923,7 @@
               "name": "합장묘",
               "grade": "1평",
               "price": 17800000,
-              "isRepresentative": false
+              "isRepresentative": true
             }
           ],
           "unit": "원"
@@ -11128,7 +11137,7 @@
               "hasManagementFee": false,
               "includedYear": null,
               "discount": null,
-              "isRepresentative": false,
+              "isRepresentative": true,
               "raw": null
             }
           ],
@@ -11715,7 +11724,7 @@
               "hasManagementFee": false,
               "includedYear": null,
               "discount": null,
-              "isRepresentative": false,
+              "isRepresentative": true,
               "raw": null
             }
           ],
@@ -11749,7 +11758,7 @@
               "hasManagementFee": false,
               "includedYear": null,
               "discount": null,
-              "isRepresentative": false,
+              "isRepresentative": true,
               "raw": null
             }
           ],
@@ -12910,7 +12919,7 @@
               "hasManagementFee": false,
               "includedYear": null,
               "discount": null,
-              "isRepresentative": false,
+              "isRepresentative": true,
               "raw": null
             },
             {
@@ -12941,7 +12950,7 @@
               "hasManagementFee": false,
               "includedYear": null,
               "discount": null,
-              "isRepresentative": false,
+              "isRepresentative": true,
               "raw": null
             }
           ],
@@ -14567,7 +14576,7 @@
               "name": "시설 이용료",
               "grade": "편의시설 외 이용료 (매장 작업 시)",
               "price": 100000,
-              "isRepresentative": false
+              "isRepresentative": true
             },
             {
               "name": "시신 개장비 (단장)",
@@ -14872,7 +14881,7 @@
               "name": "매장묘 1단",
               "grade": "·석물비·작업비 포함 / 안장비 별도",
               "price": 18050000,
-              "isRepresentative": false
+              "isRepresentative": true
             },
             {
               "name": "매장묘 2단",
@@ -15700,7 +15709,7 @@
               "name": "평장형 매장묘 1기",
               "grade": "2.4㎡ / 1기",
               "price": 1050000,
-              "isRepresentative": false
+              "isRepresentative": true
             },
             {
               "name": "평장형 매장묘 2기",
@@ -15721,7 +15730,7 @@
               "name": "봉안담",
               "grade": "사용료·설치비·관리비(10년) 포함",
               "price": 1300000,
-              "isRepresentative": false
+              "isRepresentative": true
             }
           ],
           "unit": "원"
@@ -16054,7 +16063,7 @@
               "name": "봉안묘 사용료",
               "grade": "1기 / 영구(60년) 사용",
               "price": 2690000,
-              "isRepresentative": false
+              "isRepresentative": true
             }
           ],
           "unit": "원"
@@ -16476,7 +16485,7 @@
               "name": "복합묘 2+16위 set",
               "grade": "비석, 상석, 화병, 향로, 8평 5년 관리비 포함, (각자비 별도)",
               "price": 40440000,
-              "isRepresentative": false
+              "isRepresentative": true
             },
             {
               "name": "복합묘 2+24위 set",
@@ -16507,7 +16516,8 @@
               "name": "쌍분형 set",
               "price": 39970000,
               "groupType": "새 그룹 1",
-              "grade": "비석, 상석, 화병, 향로, 12평 5년 관리비 포함, (각자비 별도)"
+              "grade": "비석, 상석, 화병, 향로, 12평 5년 관리비 포함, (각자비 별도)",
+              "isRepresentative": true
             }
           ],
           "unit": ""
@@ -16551,7 +16561,7 @@
               "name": "단장형 set",
               "grade": "3단 소묘테, 비석, 상석, 화병, 향로, 6평 5년 관리비 포함, (각자비 별도)",
               "price": 21450000,
-              "isRepresentative": false
+              "isRepresentative": true
             },
             {
               "name": "합장형 set",
@@ -16572,7 +16582,7 @@
               "name": "봉안묘 2위 set",
               "grade": "비석, 상석, 화병, 향로, 3평 5년 관리비 포함, (각자비 별도)",
               "price": 10315000,
-              "isRepresentative": false
+              "isRepresentative": true
             },
             {
               "name": "봉안묘 4위 set",
@@ -17519,7 +17529,7 @@
               "name": "합장묘 (기존)",
               "grade": "묘데, 비석, 상석, 화병, 작업비",
               "price": 30000000,
-              "isRepresentative": false
+              "isRepresentative": true
             }
           ],
           "unit": "원"
@@ -18175,7 +18185,7 @@
               "name": "평장형 매장묘 2기",
               "grade": "2기 안치 기준",
               "price": 1650000,
-              "isRepresentative": false
+              "isRepresentative": true
             }
           ],
           "unit": "원"
@@ -18214,7 +18224,7 @@
               "name": "납골분묘 4기형",
               "grade": "4기 안치",
               "price": 6200000,
-              "isRepresentative": false
+              "isRepresentative": true
             }
           ],
           "unit": "원"
@@ -18416,7 +18426,7 @@
               "name": "합장 매장묘 1단 묘테",
               "grade": "1단 묘테·비석·상석·화병 포함",
               "price": 2880000,
-              "isRepresentative": false
+              "isRepresentative": true
             },
             {
               "name": "합장 매장묘 2단 묘테",
@@ -22652,7 +22662,7 @@
               "name": "장례비",
               "grade": "1평",
               "price": 500000,
-              "isRepresentative": false
+              "isRepresentative": true
             },
             {
               "name": "매장묘(보급형)",
@@ -28246,7 +28256,7 @@
               "hasManagementFee": false,
               "includedYear": null,
               "discount": null,
-              "isRepresentative": false,
+              "isRepresentative": true,
               "raw": null
             }
           ],
@@ -29687,7 +29697,7 @@
               "hasManagementFee": false,
               "includedYear": null,
               "discount": null,
-              "isRepresentative": false,
+              "isRepresentative": true,
               "raw": null
             },
             {
@@ -30238,7 +30248,7 @@
               "name": "매장묘 묘지 사용료",
               "grade": "1평",
               "price": 10000,
-              "isRepresentative": false
+              "isRepresentative": true
             },
             {
               "name": "관리비",
@@ -31204,7 +31214,7 @@
               "name": "봉안묘 2기형",
               "grade": "유골 2기 안치 / 6.6㎡",
               "price": 6000000,
-              "isRepresentative": false
+              "isRepresentative": true
             },
             {
               "name": "봉안묘 2기형 (특)",
@@ -33346,7 +33356,7 @@
               "name": "평장묘 1인용",
               "grade": "15년 관리비 포함",
               "price": 1000000,
-              "isRepresentative": false
+              "isRepresentative": true
             },
             {
               "name": "평장묘 2인용",
@@ -38015,7 +38025,7 @@
               "hasManagementFee": false,
               "includedYear": null,
               "discount": null,
-              "isRepresentative": false,
+              "isRepresentative": true,
               "raw": null
             }
           ],
@@ -40973,7 +40983,7 @@
               "name": "평장묘",
               "grade": "1평",
               "price": 500000,
-              "isRepresentative": false
+              "isRepresentative": true
             }
           ],
           "unit": "원"
@@ -47281,7 +47291,7 @@
               "hasManagementFee": false,
               "includedYear": null,
               "discount": null,
-              "isRepresentative": false,
+              "isRepresentative": true,
               "raw": null
             }
           ],
@@ -54709,7 +54719,8 @@
               "name": "매장묘",
               "price": 700000,
               "groupType": "새 그룹 1",
-              "grade": "1평"
+              "grade": "1평",
+              "isRepresentative": true
             },
             {
               "name": "관리비",
@@ -92378,7 +92389,7 @@
               "name": "평장묘 (1기)",
               "grade": "시설비 및 사용료 (관리비·각자비 별도)",
               "price": 4000000,
-              "isRepresentative": false
+              "isRepresentative": true
             },
             {
               "name": "평장묘 (2~4기)",
@@ -92403,7 +92414,7 @@
               "name": "봉안묘 (부부)",
               "grade": "시설비 및 사용료 (관리비·봉안비·각자비 별도)",
               "price": 10000000,
-              "isRepresentative": false
+              "isRepresentative": true
             }
           ],
           "unit": "원"
@@ -92430,7 +92441,7 @@
               "name": "수목장 (부부목 / 1~2기)",
               "grade": "사용료 및 관리비 (석물·봉안비·각자비 별도)",
               "price": 4750000,
-              "isRepresentative": false
+              "isRepresentative": true
             },
             {
               "name": "수목장 (1~4기)",
@@ -101189,7 +101200,8 @@
               "name": "1단",
               "grade": "2층고급실(측면)",
               "price": 3000000,
-              "groupType": "2층고급실"
+              "groupType": "2층고급실",
+              "isRepresentative": true
             },
             {
               "name": "1단",
@@ -137958,7 +137970,7 @@
               "name": "부부탑",
               "grade": "2기",
               "price": 15000000,
-              "isRepresentative": false
+              "isRepresentative": true
             },
             {
               "name": "문중탑",
@@ -144960,7 +144972,7 @@
               "name": "사용료",
               "price": 1577000,
               "grade": "3.3m2",
-              "isRepresentative": false
+              "isRepresentative": true
             },
             {
               "name": "관리비",
@@ -149934,7 +149946,7 @@
               "price": 4500000,
               "groupType": "가족",
               "description": "1단:8기형(관리비1기5만원,2기이상10만원)",
-              "isRepresentative": false
+              "isRepresentative": true
             },
             {
               "name": "2단,5단",
@@ -149964,7 +149976,7 @@
               "price": 15000000,
               "groupType": "가족",
               "description": "12기(관리비년10만원)",
-              "isRepresentative": false
+              "isRepresentative": true
             },
             {
               "name": "B형",
@@ -149986,7 +149998,7 @@
               "price": 2500000,
               "groupType": "수목",
               "description": "기(관리비년5만원)",
-              "isRepresentative": false
+              "isRepresentative": true
             }
           ]
         }
@@ -152147,7 +152159,7 @@
               "name": "개인.가족납골묘(평장)",
               "grade": "봉안",
               "price": 3000000,
-              "isRepresentative": false
+              "isRepresentative": true
             },
             {
               "name": "부부 납골묘(평장)",
@@ -162502,7 +162514,7 @@
               "hasManagementFee": false,
               "includedYear": null,
               "discount": null,
-              "isRepresentative": false,
+              "isRepresentative": true,
               "raw": null
             }
           ],
@@ -163468,7 +163480,7 @@
               "price": 5800000,
               "groupType": "개인",
               "description": "봉안담(개인) 580만원~",
-              "isRepresentative": false
+              "isRepresentative": true
             },
             {
               "name": "봉안담(부부)",
@@ -163490,7 +163502,7 @@
               "price": 5800000,
               "groupType": "일반",
               "description": "매장묘 580만원~",
-              "isRepresentative": false
+              "isRepresentative": true
             }
           ]
         }
@@ -164678,7 +164690,7 @@
               "hasManagementFee": false,
               "includedYear": null,
               "discount": null,
-              "isRepresentative": false,
+              "isRepresentative": true,
               "raw": null
             },
             {
@@ -166568,7 +166580,7 @@
               "price": 4600000,
               "groupType": "추모단",
               "description": "사용료(추모단) 봉안묘(기수별)",
-              "isRepresentative": false
+              "isRepresentative": true
             },
             {
               "name": "관리비",
@@ -178025,7 +178037,7 @@
               "name": "가족영탑12기(영구)",
               "grade": "봉안",
               "price": 30000000,
-              "isRepresentative": false
+              "isRepresentative": true
             }
           ],
           "unit": "원"
@@ -178044,7 +178056,7 @@
               "name": "잔디장(30년)",
               "grade": "봉안",
               "price": 3500000,
-              "isRepresentative": false
+              "isRepresentative": true
             }
           ],
           "unit": "원"
@@ -185068,7 +185080,7 @@
               "hasManagementFee": false,
               "includedYear": null,
               "discount": null,
-              "isRepresentative": false,
+              "isRepresentative": true,
               "raw": null
             }
           ],
@@ -185798,7 +185810,8 @@
             {
               "name": "가족단 8기",
               "price": 11000000,
-              "groupType": "새 그룹 1"
+              "groupType": "새 그룹 1",
+              "isRepresentative": true
             },
             {
               "name": "가족단 12기",
@@ -237977,7 +237990,7 @@
               "name": "대가족형(8인-일반목)",
               "grade": "",
               "price": 16000000,
-              "isRepresentative": false
+              "isRepresentative": true
             }
           ],
           "unit": "원"
@@ -242713,7 +242726,7 @@
               "name": "반송/부부형(2기)",
               "grade": "관리비5만원(1년) / 3년선납",
               "price": 5000000,
-              "isRepresentative": false
+              "isRepresentative": true
             }
           ],
           "unit": "원"
@@ -244093,7 +244106,7 @@
               "name": "개인 1위 (1구당)",
               "grade": "",
               "price": 30500000,
-              "isRepresentative": false
+              "isRepresentative": true
             }
           ],
           "unit": "원"
@@ -244104,7 +244117,7 @@
               "name": "공동 12위 (1구당)",
               "grade": "",
               "price": 30900000,
-              "isRepresentative": false
+              "isRepresentative": true
             }
           ],
           "unit": "원"
@@ -245451,7 +245464,8 @@
             {
               "name": "잔디 (1인)",
               "price": 600000,
-              "groupType": "새 그룹 1"
+              "groupType": "새 그룹 1",
+              "isRepresentative": true
             }
           ],
           "unit": ""
@@ -246287,7 +246301,7 @@
               "name": "부부형",
               "grade": "",
               "price": 3000000,
-              "isRepresentative": false
+              "isRepresentative": true
             },
             {
               "name": "특별형",
@@ -247806,7 +247820,7 @@
               "name": "2인형",
               "grade": "개인형 부부형 가능",
               "price": 3000000,
-              "isRepresentative": false
+              "isRepresentative": true
             }
           ],
           "unit": "원"
@@ -255253,7 +255267,7 @@
               "name": "추모목장 사용료 (1위 안치비)",
               "grade": "가로, 세로, 높이 30cm",
               "price": 800000,
-              "isRepresentative": false
+              "isRepresentative": true
             },
             {
               "name": "추모목장 관리비 (1위 40년관리)",
@@ -255706,7 +255720,8 @@
               "name": "사용료",
               "grade": "1회 40년 연장불가",
               "price": 300000,
-              "groupType": "관내"
+              "groupType": "관내",
+              "isRepresentative": true
             },
             {
               "name": "사용료",
@@ -256177,7 +256192,8 @@
               "name": "잔디장",
               "grade": "사용료: 40만원, 관리비: 30만원 (15년)",
               "price": 700000,
-              "groupType": "관내"
+              "groupType": "관내",
+              "isRepresentative": true
             },
             {
               "name": "잔디장",
@@ -257813,7 +257829,7 @@
               "hasManagementFee": false,
               "includedYear": null,
               "discount": null,
-              "isRepresentative": false,
+              "isRepresentative": true,
               "raw": null
             }
           ],
@@ -257871,7 +257887,7 @@
               "hasManagementFee": false,
               "includedYear": null,
               "discount": null,
-              "isRepresentative": false,
+              "isRepresentative": true,
               "raw": null
             }
           ],
@@ -304038,7 +304054,7 @@
               "hasManagementFee": false,
               "includedYear": null,
               "discount": null,
-              "isRepresentative": false,
+              "isRepresentative": true,
               "raw": null
             },
             {

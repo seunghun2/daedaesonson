@@ -1742,7 +1742,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                 // → representativePrice로 간단히 표시 (API 로드 후 상세 표시로 전환)
                 const priceTable = facility.priceInfo?.priceTable || facility.pricing;
 
-                if (!priceTable) {
+                if (!priceTable && !facility.priceInfo?.standardizedPrices?.length) {
                     // priceTable 로드 전에는 가격 섹션 숨김 (flash 방지)
                     return null;
                 }
@@ -1768,7 +1768,66 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                 // 대표 메뉴 그룹에서 제외할 키 (부가시설)
                 const excludeKeys = ['봉안벽'];
 
-                if (priceTable) {
+                // 🔥 V2 standardizedPrices 우선 사용
+                const stdPrices = facility.priceInfo?.standardizedPrices;
+                if (stdPrices && stdPrices.length > 0) {
+                    const serviceLabels: Record<string, string> = {
+                        'BONGSAN': '봉안당',
+                        'BURIAL': '매장묘지',
+                        'NATURAL': '수목장',
+                    };
+                    // 서비스타입별 ★ 항목 최저가 수집
+                    const byService: Record<string, number[]> = {};
+                    stdPrices.forEach((g: any) => {
+                        const label = serviceLabels[g.serviceType] || g.serviceType;
+                        if (!byService[label]) byService[label] = [];
+                        const rows = g.rows || [];
+                        // ★ 항목 우선
+                        const repItems = rows.filter((r: any) => r.isRepresentative && r.price > 0);
+                        if (repItems.length > 0) {
+                            repItems.forEach((r: any) => {
+                                const val = r.price < 10000 ? r.price * 10000 : r.price;
+                                byService[label].push(val);
+                            });
+                        }
+                    });
+                    // byService → menuGroups 매핑
+                    for (const [label, prices] of Object.entries(byService)) {
+                        if (prices.length > 0) {
+                            if (menuGroups[label]) {
+                                menuGroups[label].push(...prices);
+                            } else {
+                                // 직접 매핑 안 되면 키워드로 매칭
+                                for (const [menu, kws] of Object.entries(menuKeywords)) {
+                                    if (kws.some(kw => label.includes(kw))) {
+                                        menuGroups[menu].push(...prices);
+                                        break;
+                                    }
+                                }
+                            }
+                            subRepItems.push({ label, price: Math.min(...prices) });
+                        }
+                    }
+                    // ★ 없는 서비스타입도 최저가로 추가
+                    if (subRepItems.length === 0) {
+                        stdPrices.forEach((g: any) => {
+                            const label = serviceLabels[g.serviceType] || g.serviceType;
+                            const rows = g.rows || [];
+                            const prices = rows
+                                .filter((r: any) => r.feeType !== 'MAINTENANCE' && r.price > 0)
+                                .map((r: any) => r.price < 10000 ? r.price * 10000 : r.price);
+                            if (prices.length > 0) {
+                                const min = Math.min(...prices);
+                                if (menuGroups[label]) menuGroups[label].push(min);
+                                subRepItems.push({ label, price: min });
+                            }
+                        });
+                    }
+                    isRep = subRepItems.length > 0;
+                    if (isRep && subRepItems.length > 0) {
+                        displayPriceNum = subRepItems[0].price / 10000;
+                    }
+                } else if (priceTable) {
                     // 1. Collect representative items AND fallback min prices
                     Object.keys(priceTable).forEach(key => {
                         const cat = priceTable[key];
@@ -1799,6 +1858,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                             } else {
                                 // 🔥 ★ 없는 카테고리 → 최저가를 자동으로 메뉴그룹에 추가
                                 const validPrices = cat.rows
+                                    .filter((r: any) => !/관리비|관리|석물|작업|각자|제례/.test(r.name))
                                     .map((r: any) => Number(r.price))
                                     .filter((p: number) => !isNaN(p) && p > 0);
                                 if (validPrices.length > 0) {
