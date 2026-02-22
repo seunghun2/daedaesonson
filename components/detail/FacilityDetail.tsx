@@ -84,7 +84,7 @@ function PriceInfoSection({ priceInfo, hasPrice }: { priceInfo: any, hasPrice: b
     }> | undefined;
 
     const hasStandardized = standardizedPrices && standardizedPrices.length > 0 &&
-        standardizedPrices.some(g => g.rows.length > 0);
+        standardizedPrices.some(g => g?.rows?.length > 0);
 
     // === 공통 헬퍼 ===
     const getServiceIcon = (type: string) => {
@@ -112,7 +112,7 @@ function PriceInfoSection({ priceInfo, hasPrice }: { priceInfo: any, hasPrice: b
     // === V2 렌더링: 표준화 데이터 ===
     if (hasStandardized) {
         // 🔧 OTHER serviceType 재분류 + 필터링
-        const EXCLUDE_SUBTYPES = /석물|부대시설|옵션|무연고|제례|조경|용품/;
+        const EXCLUDE_SUBTYPES = /무연고/;
         const reclassifiedPrices = standardizedPrices!.map(g => {
             if (g.serviceType === 'OTHER') {
                 const st = g.subType || '';
@@ -159,7 +159,7 @@ function PriceInfoSection({ priceInfo, hasPrice }: { priceInfo: any, hasPrice: b
 
         // 서비스 타입별 최저가 계산
         const getMinPriceForService = (serviceType: string) => {
-            const EXCLUDE_SUBTYPES = /석물|묘테|부대시설|옵션|선택|무연고|제례|조경|용품/;
+            const EXCLUDE_SUBTYPES = /무연고/;
             const groups = reclassifiedPrices.filter(
                 g => g.serviceType === serviceType && !EXCLUDE_SUBTYPES.test(g.subType || '')
             );
@@ -685,6 +685,15 @@ function PriceInfoSection({ priceInfo, hasPrice }: { priceInfo: any, hasPrice: b
                                                         <Box id={`desc-${cat}`} mb={12} py={10} px={12} style={{ display: 'none', backgroundColor: '#ffffff', borderRadius: 8, border: '1.5px solid #ced4da', boxShadow: '0 1px 4px rgba(0,0,0,0.06)' }}>
                                                             <Text size="xs" c="dark.6" style={{ lineHeight: 1.6 }}>
                                                                 {catDesc}
+                                                            </Text>
+                                                        </Box>
+                                                    )}
+                                                    {/* Check if there is a representative note to display for this subType */}
+                                                    {mainRows.some((r: any) => r.isRepresentative && r.note && r.note.includes(' : ')) && (
+                                                        <Box mb={12} py={10} px={12} style={{ backgroundColor: '#fdfdfd', borderRadius: 8, border: '1px solid #e9ecef' }}>
+                                                            <Text size="xs" c="dark.5" style={{ lineHeight: 1.6 }}>
+                                                                <b>{mainRows.find((r: any) => r.isRepresentative && r.note && r.note.includes(' : ')).note.split(' : ')[0]}</b>:
+                                                                {mainRows.find((r: any) => r.isRepresentative && r.note && r.note.includes(' : ')).note.split(' : ')[1].split(' / ')[0]}
                                                             </Text>
                                                         </Box>
                                                     )}
@@ -1853,7 +1862,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                         if (/매장|평장/.test(st)) return 'BURIAL';
                         return 'OTHER';
                     };
-                    const EXCLUDE_SUBTYPES = /석물|묘테|부대시설|옵션|선택|무연고|제례|조경|용품/;
+                    const EXCLUDE_SUBTYPES = /무연고/;
                     // 서비스타입별 항목 수집
                     const serviceRows: Record<string, any[]> = {};
                     stdPrices.forEach((g: any) => {
