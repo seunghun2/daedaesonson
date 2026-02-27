@@ -13,7 +13,7 @@ interface GlossaryItem {
 const glossaryData: GlossaryItem[] = [
     // 장지 유형
     { term: '매장묘', description: '시신을 땅에 묻는 전통 장법입니다. 단분(1인), 합장(2인 1기), 쌍분(나란히 2기) 등으로 나뉩니다.', category: '장지 유형' },
-    { term: '봉안당(납골당)', description: '화장 후 유골을 봉안당(납골당)에 안치하는 방식입니다. 단수가 높을수록 가격이 낮아지는 경향이 있습니다.', category: '장지 유형' },
+    { term: '봉안당(납골당)', description: '화장 후 유골을 봉안당(납골당)에 안치하는 방식입니다. 보통 성인 키에 눈 높이단이 가장 비싸고, 눈 높이보다 높거나 낮은 곳은 안치단 금액이 저렴합니다.', category: '장지 유형' },
     { term: '수목장(자연장)', description: '화장 후 유골을 나무 밑이나 잔디밭 등 자연에 매장하는 친환경 장법입니다.', category: '장지 유형' },
     { term: '공원묘지', description: '공원 형태로 조성된 묘지로, 매장묘와 봉안당을 함께 운영하는 경우가 많습니다.', category: '장지 유형' },
     { term: '추모공원', description: '추모 시설이 갖춰진 공원으로, 봉안당·수목장·잔디장 등 다양한 장법을 제공합니다.', category: '장지 유형' },

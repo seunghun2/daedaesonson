@@ -1,0 +1,143 @@
+[
+  {
+    "serviceType": "BURIAL",
+    "subType": "2평형 사용료 및 관련 비용",
+    "groupType": "사용료 및 부대비용 (필수/선택)",
+    "rows": [
+      {
+        "description": "30년 사용료",
+        "price": 572000,
+        "feeType": "USAGE",
+        "grade": "2평형",
+        "note": "",
+        "name": "사용료 2평형 (6.75㎡)"
+      },
+      {
+        "description": "30년 사용료-1종 수급 국가유공자",
+        "price": 0,
+        "feeType": "USAGE",
+        "grade": "2평형 (국가유공자)",
+        "note": "전액 감면",
+        "name": "사용료 2평형 (6.75㎡) 국가유공자"
+      },
+      {
+        "description": "30년 관리비",
+        "price": 480000,
+        "feeType": "MAINTENANCE",
+        "grade": "2평형",
+        "note": "30년 선납",
+        "name": "관리비 2평형 (6.75㎡)"
+      },
+      {
+        "description": "30년 관리비-1종 수급 국가유공자",
+        "price": 0,
+        "feeType": "MAINTENANCE",
+        "grade": "2평형 (국가유공자)",
+        "note": "전액 감면",
+        "name": "관리비 2평형 (6.75㎡) 국가유공자"
+      },
+      {
+        "description": "동절기. (하절기 동절기 동일요금)",
+        "price": 370000,
+        "feeType": "INSTALLATION",
+        "grade": "2평형",
+        "note": "작업비(안장비)",
+        "name": "매장비 2평형 (6.75㎡)"
+      }
+    ]
+  },
+  {
+    "serviceType": "BURIAL",
+    "subType": "3평형 사용료 및 관련 비용",
+    "groupType": "사용료 및 부대비용 (필수/선택)",
+    "rows": [
+      {
+        "description": "30년 사용료",
+        "price": 839000,
+        "feeType": "USAGE",
+        "grade": "3평형",
+        "note": "",
+        "name": "사용료 3평형 (9.9㎡)"
+      },
+      {
+        "description": "30년 사용료-1종 수급 국가유공자",
+        "price": 0,
+        "feeType": "USAGE",
+        "grade": "3평형 (국가유공자)",
+        "note": "전액 감면",
+        "name": "사용료 3평형 (9.9㎡) 국가유공자"
+      },
+      {
+        "description": "30년 관리비",
+        "price": 720000,
+        "feeType": "MAINTENANCE",
+        "grade": "3평형",
+        "note": "30년 선납",
+        "name": "관리비 3평형 (9.9㎡)"
+      },
+      {
+        "description": "30년 관리비-1종 수급 국가유공자",
+        "price": 0,
+        "feeType": "MAINTENANCE",
+        "grade": "3평형 (국가유공자)",
+        "note": "전액 감면",
+        "name": "관리비 3평형 (9.9㎡) 국가유공자"
+      },
+      {
+        "description": "1구당 (하절기 동절기 동일요금)",
+        "price": 370000,
+        "feeType": "INSTALLATION",
+        "grade": "3평형 (1구)",
+        "note": "작업비(안장비)",
+        "name": "매장비 3평형 (9.9㎡) - 1구당"
+      },
+      {
+        "description": "2구당 (상동)",
+        "price": 740000,
+        "feeType": "INSTALLATION",
+        "grade": "3평형 (2구)",
+        "note": "작업비(안장비)",
+        "name": "매장비 3평형 (9.9㎡) - 2구당"
+      }
+    ]
+  },
+  {
+    "serviceType": "BURIAL",
+    "subType": "석물 비용",
+    "groupType": "추가 석물 및 조경 (선택)",
+    "rows": [
+      {
+        "description": "장사용품 분류 단가표 기준",
+        "price": 940000,
+        "feeType": "STONE",
+        "grade": "2평형 화강암",
+        "note": "",
+        "name": "석물비 2평형 (화강암)"
+      },
+      {
+        "description": "시설사용료/장사용품 분류 단가표 기준",
+        "price": 1118000,
+        "feeType": "STONE",
+        "grade": "2평형 오석",
+        "note": "",
+        "name": "석물비 2평형 (오석)"
+      },
+      {
+        "description": "장사용품 분류 단가표 기준",
+        "price": 982000,
+        "feeType": "STONE",
+        "grade": "3평형 화강암",
+        "note": "",
+        "name": "석물비 3평형 (화강암)"
+      },
+      {
+        "description": "시설사용료/장사용품 분류 단가표 기준",
+        "price": 1160000,
+        "feeType": "STONE",
+        "grade": "3평형 오석",
+        "note": "",
+        "name": "석물비 3평형 (오석)"
+      }
+    ]
+  }
+]

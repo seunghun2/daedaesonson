@@ -1,7 +1,3 @@
-/**
- * facilities.json의 전체 priceInfo (standardizedPrices 포함)를
- * Supabase DB의 pricing 컬럼에 동기화
- */
 const fs = require('fs');
 const { createClient } = require('@supabase/supabase-js');
 require('dotenv').config({ path: '.env.local' });
@@ -15,9 +11,18 @@ async function main() {
     const data = JSON.parse(fs.readFileSync('data/facilities.json', 'utf8'));
     const facilities = data.facilities || data;
 
+    // Get --parkId argument if passed
+    let targetParkId = null;
+    const parkIdArgIndex = process.argv.indexOf('--parkId');
+    if (parkIdArgIndex !== -1 && process.argv.length > parkIdArgIndex + 1) {
+        targetParkId = process.argv[parkIdArgIndex + 1];
+    }
+
     let updated = 0, errors = 0, skipped = 0;
 
     for (const f of facilities) {
+        if (targetParkId && f.id !== targetParkId) continue;
+
         const pi = f.priceInfo;
         if (!pi) { skipped++; continue; }
 
@@ -28,10 +33,14 @@ async function main() {
 
         if (error) {
             errors++;
-            if (errors <= 3) console.error(`  ❌ ${f.id}: ${error.message}`);
+            if (errors <= 3 || targetParkId) console.error(`  ❌ ${f.id}: ${error.message}`);
         } else {
             updated++;
-            if (updated % 100 === 0) process.stdout.write(`  ${updated}건 완료...\n`);
+            if (targetParkId) {
+                console.log(`✅ ${f.id} 동기화 완료!`);
+            } else if (updated % 100 === 0) {
+                process.stdout.write(`  ${updated}건 완료...\n`);
+            }
         }
     }
 

@@ -26,96 +26,50 @@ export default function FacilityCard({ facility, onClick }: FacilityCardProps) {
     const config = CATEGORY_CONFIG[facility.category] || CATEGORY_CONFIG.OTHER;
     const Icon = config.icon;
 
-    // 가격 포맷팅 - 어드민 대표가격 → priceTable → CSV → priceRange 순서
+    // ⭐ 별표(isRepresentative)만 사용. 없으면 "가격문의"
     let displayPrice = '가격문의';
     let priceLabel = '';
-    let isRepFromPricing = false;
 
-    // 🔥 0순위: DB representativePrice (어드민에서 설정한 대표가격 - 원 단위)
-    const dbRepPrice = (facility as any).representativePrice;
-    if (dbRepPrice && dbRepPrice > 0) {
-        // 원 단위이므로 그대로 formatKoreanCurrency에 전달
-        const priceInWon = dbRepPrice < 10000 ? dbRepPrice * 10000 : dbRepPrice;
-        displayPrice = formatKoreanCurrency(priceInWon);
-        isRepFromPricing = true;
-    }
-
-    // 1순위: priceInfo.priceTable 확인 (상세페이지와 동일한 로직)
     const priceTable = (facility as any).priceInfo?.priceTable || facility.pricing;
-    if (!isRepFromPricing && priceTable) {
-        // Collection for sub-items (Label, Price in Won)
-        const subRepItems: { label: string; price: number }[] = [];
-
-        // 1. Collect all representative items
-        Object.keys(priceTable).forEach(key => {
-            const cat = priceTable[key];
-            // Skip 'Others' or Option-like categories
-            if (/옵션|관리비|기타|공통|제외|석물|비고|안내|별도/.test(key)) return;
-
-            if (cat && Array.isArray(cat.rows)) {
-                const rep = cat.rows.find((r: any) => r.isRepresentative);
-                if (rep) {
-                    let priceVal = Number(rep.price);
-                    if (isNaN(priceVal) || priceVal <= 0) return;
-
-                    // Heuristic: Process Unit
-                    // If < 10000, assume Man-won -> Convert to Won
-                    // If >= 10000, assume Won -> Keep as Won
-                    const val = priceVal < 10000 ? priceVal * 10000 : priceVal;
-
-                    subRepItems.push({ label: key, price: val });
-                }
-            }
-        });
-
-        // 2. Pick Main Display Price (Preferred Category matching - 상세페이지와 동일)
+    if (priceTable && typeof priceTable === 'object' && Object.keys(priceTable).length > 0) {
+        // Preferred category matching
         let preferredKeywords: string[] = [];
         if (facility.category === 'FAMILY_GRAVE') preferredKeywords = ['매장', '묘지', '분양'];
         else if (facility.category === 'CHARNEL_HOUSE') preferredKeywords = ['봉안', '납골', '안치'];
         else if (facility.category === 'NATURAL_BURIAL') preferredKeywords = ['수목', '자연', '잔디', '화초'];
 
-        // Find first item that matches ANY of the keywords
+        const subRepItems: { label: string; price: number }[] = [];
+
+        Object.keys(priceTable).forEach(key => {
+            if (/옵션|관리비|기타|공통|제외|석물|비고|안내|별도/.test(key)) return;
+            const cat = priceTable[key];
+            if (cat && Array.isArray(cat.rows)) {
+                const rep = cat.rows.find((r: any) => r.isRepresentative);
+                if (rep && rep.price > 0) {
+                    const val = rep.price < 10000 ? rep.price * 10000 : rep.price;
+                    subRepItems.push({ label: key, price: val });
+                }
+            }
+        });
+
         const mainItem = subRepItems.find(i =>
             preferredKeywords.some(k => i.label.includes(k))
         ) || subRepItems[0];
 
         if (mainItem) {
             displayPrice = formatKoreanCurrency(mainItem.price);
-            isRepFromPricing = true;
         }
     }
 
-    if (!isRepFromPricing && facility.representativePricing) {
-        const rp = facility.representativePricing;
-        if (facility.category === 'CREMATORIUM' && rp.cremation) {
-            const val = rp.cremation.resident;
-            if (val > 0) {
-                displayPrice = formatKoreanCurrency(val);
-                priceLabel = '관내';
-            }
-        } else if (facility.category === 'NATURAL_BURIAL' && rp.natural) {
-            const val = rp.natural.individual || rp.natural.joint || rp.natural.couple;
-            if (val && val > 0) {
-                displayPrice = formatKoreanCurrency(val);
-                priceLabel = rp.natural.individual ? '개인' : (rp.natural.joint ? '공동' : '부부');
-            }
-        } else if (facility.category === 'CHARNEL_HOUSE' && rp.enshrinement) {
-            const val = rp.enshrinement.min;
-            if (val > 0) displayPrice = formatKoreanCurrency(val);
-        } else if (facility.category === 'FAMILY_GRAVE' && rp.cemetery) {
-            const val = rp.cemetery.minLandFee;
-            if (val > 0) {
-                displayPrice = formatKoreanCurrency(val);
-                // '대지' 라벨 제거
-                priceLabel = '';
-            }
+    // 🔥 Fallback: 리스트 API에서는 priceTable을 안 내려줌 → representativePrice 또는 priceRange 사용
+    if (displayPrice === '가격문의') {
+        const repPrice = (facility as any).representativePrice || 0;
+        const minPrice = (facility as any).priceRange?.min || 0;
+        const fallbackPrice = repPrice > 0 ? repPrice : minPrice;
+        if (fallbackPrice > 0) {
+            const normalizedPrice = fallbackPrice < 10000 ? fallbackPrice * 10000 : fallbackPrice;
+            displayPrice = formatKoreanCurrency(normalizedPrice);
         }
-    }
-
-    // Fallback to legacy priceRange if no representative price found (priceTable 없는 레거시만)
-    // 🔥 priceTable이 있으면 폴백 안 함 (stale minPrice 방지)
-    if (displayPrice === '가격문의' && !priceTable && facility.priceRange?.min) {
-        displayPrice = formatKoreanCurrency(facility.priceRange.min);
     }
 
     // Flag for showing '~' (from)

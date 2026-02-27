@@ -1,64 +1,30 @@
 const fs = require('fs');
-const data = JSON.parse(fs.readFileSync('data/facilities.json', 'utf8'));
-const facilities = data.facilities || data;
-
-let total = 0, withPriceTable = 0, withRep = 0, withoutRep = 0;
-const noRepList = [];
-const repSummary = [];
-
-facilities.forEach(f => {
-    total++;
-    const pt = f.priceInfo?.priceTable || f.pricing;
-    if (!pt) return;
-    withPriceTable++;
-
-    let hasRep = false;
-    const repItems = [];
-
-    for (const cat of Object.keys(pt)) {
-        if (/옵션|관리비|기타|공통|제외|석물|비고|안내|별도/.test(cat)) continue;
-        const rows = pt[cat]?.rows || [];
-        const rep = rows.find(r => r.isRepresentative);
-        if (rep) {
-            hasRep = true;
-            repItems.push(`${cat}: ${rep.name} ${rep.price}만원`);
+const data = JSON.parse(fs.readFileSync('./data/facilities.json', 'utf8'));
+for (let i = 49; i <= 70; i++) {
+    const id = 'park-00' + (i < 10 ? '0' + i : i);
+    const p = data.find(d => d.id === id);
+    if (!p || !p.priceInfo || !p.priceInfo.standardizedPrices) { console.log(id + ': NO DATA'); continue; }
+    const repRows = [];
+    p.priceInfo.standardizedPrices.forEach(sp => {
+        sp.rows.forEach(r => {
+            if (r.isRepresentative) repRows.push(r.name + '=' + r.price);
+        });
+    });
+    // find lowest usage row
+    let lowestUsage = null;
+    for (const sp of p.priceInfo.standardizedPrices) {
+        for (const r of sp.rows) {
+            if (!r.feeType || r.feeType === 'USAGE') {
+                if (!lowestUsage || r.price < lowestUsage.price) {
+                    lowestUsage = { name: r.name, price: r.price, sub: sp.subType };
+                }
+            }
         }
     }
-
-    if (hasRep) {
-        withRep++;
-        repSummary.push({ id: f.id, name: f.name, reps: repItems });
+    if (repRows.length > 0) {
+        console.log(id + ' ' + p.name + ' [OK] ' + repRows.join(', '));
     } else {
-        withoutRep++;
-        // 카테고리와 최저가 표시
-        const cats = [];
-        for (const cat of Object.keys(pt)) {
-            if (/옵션|관리비|기타|공통|제외|석물|비고|안내|별도/.test(cat)) continue;
-            const rows = pt[cat]?.rows || [];
-            const prices = rows.map(r => r.price).filter(p => p > 0);
-            const min = prices.length > 0 ? Math.min(...prices) : 0;
-            cats.push(`${cat}(${rows.length}항목, 최저 ${min}만원)`);
-        }
-        noRepList.push({ id: f.id, name: f.name, cats });
+        const info = lowestUsage ? lowestUsage.sub + '/' + lowestUsage.name + '=' + lowestUsage.price : 'N/A';
+        console.log(id + ' ' + p.name + ' [NO REP] lowest=' + info);
     }
-});
-
-console.log('=== 대표가격 현황 ===');
-console.log(`총 시설: ${total}`);
-console.log(`priceTable 보유: ${withPriceTable}`);
-console.log(`★ 대표가격 있음: ${withRep}`);
-console.log(`★ 없음 (설정 필요): ${withoutRep}`);
-console.log('');
-
-console.log('=== ★ 이미 설정된 시설 ===');
-repSummary.forEach(s => {
-    console.log(`  ${s.id} | ${s.name}`);
-    s.reps.forEach(r => console.log(`    ★ ${r}`));
-});
-
-console.log('');
-console.log('=== ★ 없는 시설 (설정 필요) ===');
-noRepList.forEach(s => {
-    console.log(`  ${s.id} | ${s.name}`);
-    s.cats.forEach(c => console.log(`    - ${c}`));
-});
+}

@@ -4,7 +4,7 @@ import Script from 'next/script';
 import NextImage from 'next/image';
 import { Image, Text, Badge, Group, Button, Stack, Box, Paper, Modal, Tabs, Collapse, ActionIcon, Rating, Textarea, TextInput, LoadingOverlay, useMantineTheme, Accordion, Table, Switch, Select, Drawer, Tooltip, Popover } from '@mantine/core';
 import { useDisclosure, useMediaQuery } from '@mantine/hooks';
-import { Car, Utensils, Accessibility, Store, Navigation, Globe, ChevronLeft, ChevronRight, TrendingUp, ChevronDown, ChevronUp, Star, Pencil, Camera, X, ImageIcon, Plus, Trash, Archive, Mountain, Trees, Layers, Lock, Unlock, Check } from 'lucide-react';
+import { Car, Utensils, Accessibility, Store, Navigation, Globe, ChevronLeft, ChevronRight, TrendingUp, ChevronDown, ChevronUp, Star, Pencil, Camera, X, ImageIcon, Plus, Trash, Archive, Mountain, Trees, Layers, Lock, Unlock, Check, ExternalLink } from 'lucide-react';
 import InquiryPanel from './InquiryPanel';
 import ScrollableTabsList from '@/components/ScrollableTabsList';
 import ReviewsPanel from './ReviewsPanel';
@@ -69,7 +69,7 @@ const getDisplayName = (name: string) => {
         .trim();
 };
 
-function PriceInfoSection({ priceInfo, hasPrice }: { priceInfo: any, hasPrice: boolean }) {
+function PriceInfoSection({ priceInfo, hasPrice, facilityName, websiteUrl }: { priceInfo: any, hasPrice: boolean, facilityName?: string, websiteUrl?: string }) {
     if (!priceInfo) return null;
 
     // === V2: 표준화 데이터가 있으면 새 형식으로 렌더링 ===
@@ -102,7 +102,8 @@ function PriceInfoSection({ priceInfo, hasPrice }: { priceInfo: any, hasPrice: b
         return type;
     };
 
-    const formatName = (name: string) => {
+    const formatName = (name?: string) => {
+        if (!name) return '';
         return name
             .replace(/(\d+)위/g, '$1분 안치')
             .replace(/(?<!\d)1분 안치/g, '1분 안치 (개인형)')
@@ -143,13 +144,23 @@ function PriceInfoSection({ priceInfo, hasPrice }: { priceInfo: any, hasPrice: b
         const getSubTypeDescription = (subType: string) => {
             const map: Record<string, string> = {
                 '매장묘': '시신을 땅에 묻는 전통 장법입니다. 단분(1인), 합장(2인 1기), 쌍분(나란히 2기) 등으로 나뉩니다.',
+                '복합묘': '매장묘와 봉안묘를 결합한 형태로, 하나의 묘역에 시신 매장과 유골 안치를 함께 할 수 있는 묘지입니다.',
                 '평장묘': '봉분(흙무덤)을 만들지 않고 평평하게 조성하는 묘지입니다. 잔디장이라고도 합니다.',
+                '단장형': '1인용 묘지 형태입니다. 한 분의 시신만 매장하는 단독 묘지를 말합니다.',
+                '합장형': '2인용 묘지 형태입니다. 부부 등 두 분의 시신을 한 묘지에 함께 매장하는 형태입니다.',
                 '봉안묘': '화장 후 유골을 묘지 형태로 안치하는 방식입니다.',
+                '봉안분묘': '화장 후 유골함을 묘지 형태로 안치하는 방식입니다. 봉안묘와 같은 개념입니다.',
                 '봉안담': '화장 후 유골함을 담 형태의 시설에 안치하는 방식입니다. 봉안당보다 저렴한 편입니다.',
-                '봉안당': '화장 후 유골을 봉안당(납골당)에 안치하는 방식입니다. 단수가 높을수록 가격이 낮아지는 경향이 있습니다.',
+                '봉안당': '화장 후 유골을 봉안당(납골당)에 안치하는 방식입니다. 보통 성인 키에 눈 높이단이 가장 비싸고, 눈 높이보다 높거나 낮은 곳은 안치단 금액이 저렴합니다.',
+                '납골': '화장 후 유골을 납골당(봉안당)에 안치하는 방식입니다.',
                 '수목장': '화장 후 유골을 나무 밑에 매장하는 친환경 장법입니다.',
                 '잔디장': '화장 후 유골을 잔디밭 아래에 매장하는 친환경 장법입니다.',
                 '자연장': '화장 후 유골을 나무 밑이나 잔디밭 등 자연에 매장하는 친환경 장법입니다.',
+                '개장': '기존 묘지에서 시신 또는 유골을 꺼내어 다른 곳으로 이장하거나 화장하는 작업입니다. 묘지 이전이나 합장 시 필요합니다.',
+                '석물': '묘지에 설치하는 돌로 만든 시설물입니다. 비석(묘비), 상석(제사용 돌탁자), 묘테(봉분 보호석) 등이 있습니다.',
+                '장례용품': '매장 또는 장례에 필요한 각종 물품입니다. 유골함, 횡대(목재 받침), 석관 등이 포함됩니다.',
+                '매장 작업비': '실제 매장(안장) 작업에 드는 인건비 및 장비 사용료입니다. 시신 매장과 유골 매장의 작업량 차이로 가격이 다릅니다.',
+                '수리': '기존 묘지의 석물이나 봉분을 보수하는 작업 비용입니다.',
             };
             for (const [key, desc] of Object.entries(map)) {
                 if (subType.includes(key) || key.includes(subType)) return desc;
@@ -237,9 +248,9 @@ function PriceInfoSection({ priceInfo, hasPrice }: { priceInfo: any, hasPrice: b
                             </Text>
                             {row.residency && row.residency !== 'ALL' && (
                                 <Badge size="xs" variant="light"
-                                    color={row.residency === 'LOCAL' ? 'blue' : row.residency === 'VETERAN' ? 'grape' : 'orange'}
+                                    color={row.residency === 'LOCAL' || row.residency === 'RESIDENT' ? 'blue' : row.residency === 'VETERAN' ? 'grape' : 'orange'}
                                 >
-                                    {row.residency === 'LOCAL' ? '관내' : row.residency === 'NON_LOCAL' ? '관외' : '유공자'}
+                                    {row.residency === 'LOCAL' || row.residency === 'RESIDENT' ? '관내' : row.residency === 'NON_LOCAL' || row.residency === 'NON_RESIDENT' ? '관외' : '유공자'}
                                 </Badge>
                             )}
                             {row.paymentCycle && (
@@ -256,6 +267,11 @@ function PriceInfoSection({ priceInfo, hasPrice }: { priceInfo: any, hasPrice: b
                     {row.grade && row.grade !== '-' && (
                         <Text size="13px" c="gray.6" mt={4} style={{ lineHeight: 1.4, fontWeight: 500 }}>
                             {row.grade}
+                        </Text>
+                    )}
+                    {row.note && (
+                        <Text size="12px" c="gray.6" mt={2} style={{ lineHeight: 1.4, fontWeight: 500 }}>
+                            {row.note}
                         </Text>
                     )}
                 </Box>
@@ -405,7 +421,7 @@ function PriceInfoSection({ priceInfo, hasPrice }: { priceInfo: any, hasPrice: b
                                         if (!row.price || row.price === 0) {
                                             return (
                                                 <Box key={`other-${idx}`} mb={2}>
-                                                    <Text size="13px" fw={700} c="dark.7">{row.name.replace(/^\[|\]$/g, '')}</Text>
+                                                    <Text size="13px" fw={700} c="dark.7">{(row.name || '').replace(/^\[|\]$/g, '')}</Text>
                                                     {row.grade && row.grade !== '-' && (
                                                         <Text size="12px" c="dark.6" mt={4} style={{ lineHeight: 1.5, wordBreak: 'keep-all' }}>
                                                             {row.grade}
@@ -454,7 +470,29 @@ function PriceInfoSection({ priceInfo, hasPrice }: { priceInfo: any, hasPrice: b
                     </ScrollableTabsList>
 
                     {serviceTypes.map(st => {
-                        const groups = reclassifiedPrices.filter(g => g.serviceType === st);
+                        const rawGroups = reclassifiedPrices.filter(g => g.serviceType === st);
+                        // 같은 subType의 그룹들을 머지 (다른 groupType은 rows에 groupType 보존)
+                        const mergedMap = new Map<string, typeof rawGroups[0]>();
+                        rawGroups.forEach(g => {
+                            const key = g.subType;
+                            if (mergedMap.has(key)) {
+                                const existing = mergedMap.get(key)!;
+                                // rows에 groupType이 없으면 원본 그룹의 groupType을 row에 복사
+                                const rowsWithGroup = g.rows.map(r => ({
+                                    ...r,
+                                    groupType: r.groupType || (g as any).groupType || undefined,
+                                }));
+                                existing.rows = [...existing.rows, ...rowsWithGroup];
+                            } else {
+                                // 첫 번째 그룹: rows에 groupType 복사
+                                const rowsWithGroup = g.rows.map(r => ({
+                                    ...r,
+                                    groupType: r.groupType || (g as any).groupType || undefined,
+                                }));
+                                mergedMap.set(key, { ...g, rows: rowsWithGroup });
+                            }
+                        });
+                        const groups = Array.from(mergedMap.values());
                         return (
                             <Tabs.Panel key={st} value={st}>
                                 <Accordion
@@ -475,12 +513,37 @@ function PriceInfoSection({ priceInfo, hasPrice }: { priceInfo: any, hasPrice: b
                     })}
                 </Tabs>
 
-                <Box mt="xl" p="lg" bg="gray.0" style={{ borderRadius: 8 }}>
-                    <Text size="xs" c="dimmed" style={{ lineHeight: 1.6 }}>
-                        사용료는 <b>e하늘 장사정보 시스템</b>에 등록되어 있는 가격정보를 바탕으로 안내해드리고 있어 상이할 수 있습니다.<br />
-                        사용료 정보가 안내되지 않은 시설은 <b>해당 시설에 직접 문의</b>바랍니다.
-                    </Text>
-                </Box>
+                <Text size="xs" c="dimmed" mt="xl" style={{ lineHeight: 1.6 }}>
+                    사용료는 <b>e하늘 장사정보 시스템</b>에 등록되어 있는 가격정보를 바탕으로 안내해드리고 있어 상이할 수 있습니다.<br />
+                    사용료 정보가 안내되지 않은 시설은 <b>해당 시설에 직접 문의</b>바랍니다.
+                </Text>
+
+                {websiteUrl && (
+                    <Box
+                        component="a"
+                        href={websiteUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        mt="md"
+                        pt="md"
+                        style={{
+                            borderTop: '1px solid #e9ecef',
+                            textDecoration: 'none',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            gap: 4,
+                        }}
+                    >
+                        <Text component="span" style={{ fontSize: 14 }} fw={600} c="dark.7">
+                            {facilityName || '시설'} 공식 홈페이지
+                        </Text>
+                        <Text component="span" style={{ fontSize: 14 }} fw={600} c="brand.6">
+                            바로가기
+                        </Text>
+                        <ExternalLink size={14} color="var(--mantine-color-brand-6)" />
+                    </Box>
+                )}
             </Box>
         );
     }
@@ -634,7 +697,7 @@ function PriceInfoSection({ priceInfo, hasPrice }: { priceInfo: any, hasPrice: b
                                             '매장묘': '시신을 땅에 묻는 전통 장법입니다. 단분(1인), 합장(2인 1기), 쌍분(나란히 2기) 등으로 나뉩니다.',
                                             '평장묘': '봉분(흙무덤)을 만들지 않고 평평하게 조성하는 묘지입니다. 잔디장이라고도 합니다.',
                                             '봉안담': '화장 후 유골함을 담 형태의 시설에 안치하는 방식입니다. 봉안당보다 저렴한 편입니다.',
-                                            '봉안당': '화장 후 유골을 봉안당(납골당)에 안치하는 방식입니다. 단수가 높을수록 가격이 낮아지는 경향이 있습니다.',
+                                            '봉안당': '화장 후 유골을 봉안당(납골당)에 안치하는 방식입니다. 보통 성인 키에 눈 높이단이 가장 비싸고, 눈 높이보다 높거나 낮은 곳은 안치단 금액이 저렴합니다.',
                                             '봉안묘': '화장 후 유골을 묘지 형태로 안치하는 방식입니다.',
                                             '수목형': '화장 후 유골을 나무 밑에 매장하는 친환경 장법입니다.',
                                             '잔디형': '화장 후 유골을 잔디밭 아래에 매장하는 친환경 장법입니다.',
@@ -795,12 +858,37 @@ function PriceInfoSection({ priceInfo, hasPrice }: { priceInfo: any, hasPrice: b
                 })}
             </Accordion>
 
-            <Box mt="xl" p="lg" bg="gray.0" style={{ borderRadius: 8 }}>
-                <Text size="xs" c="dimmed" style={{ lineHeight: 1.6 }}>
-                    사용료는 <b>e하늘 장사정보 시스템</b>에 등록되어 있는 가격정보를 바탕으로 안내해드리고 있어 상이할 수 있습니다.<br />
-                    사용료 정보가 안내되지 않은 시설은 <b>해당 시설에 직접 문의</b>바랍니다.
-                </Text>
-            </Box>
+            <Text size="xs" c="dimmed" mt="xl" style={{ lineHeight: 1.6 }}>
+                사용료는 <b>e하늘 장사정보 시스템</b>에 등록되어 있는 가격정보를 바탕으로 안내해드리고 있어 상이할 수 있습니다.<br />
+                사용료 정보가 안내되지 않은 시설은 <b>해당 시설에 직접 문의</b>바랍니다.
+            </Text>
+
+            {websiteUrl && (
+                <Box
+                    component="a"
+                    href={websiteUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    mt="md"
+                    pt="md"
+                    style={{
+                        borderTop: '1px solid #e9ecef',
+                        textDecoration: 'none',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        gap: 4,
+                    }}
+                >
+                    <Text component="span" style={{ fontSize: 14 }} fw={600} c="dark.7">
+                        {facilityName || '시설'} 공식 홈페이지
+                    </Text>
+                    <Text component="span" style={{ fontSize: 14 }} fw={600} c="brand.6">
+                        바로가기
+                    </Text>
+                    <ExternalLink size={14} color="var(--mantine-color-brand-6)" />
+                </Box>
+            )}
         </Box>
     );
 }
@@ -2215,7 +2303,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
             }
 
             {/* 8. 가격 정보 (상세) - 리팩토링된 컴포넌트 사용 */}
-            <PriceInfoSection priceInfo={facility.priceInfo} hasPrice={hasPrice} />
+            <PriceInfoSection priceInfo={facility.priceInfo} hasPrice={hasPrice} facilityName={facility.name} websiteUrl={facility.websiteUrl} />
 
 
 
@@ -2225,21 +2313,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                 <Text size="sm" fw={700} mb="sm">위치</Text>
                 <Text size="sm" mb="md" c="dark.7">{facility.address}</Text>
 
-                <Group grow>
-                    {facility.websiteUrl && (
-                        <Button
-                            variant="outline"
-                            color="gray"
-                            size="sm"
-                            component="a"
-                            href={facility.websiteUrl}
-                            target="_blank"
-                            leftSection={<Globe size={16} />}
-                        >
-                            홈페이지
-                        </Button>
-                    )}
-                </Group>
+
             </Box>
 
             {/* 시설 정보 */}

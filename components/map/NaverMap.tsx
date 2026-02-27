@@ -815,69 +815,27 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
 
             const { lat, lng } = fac.fixedCoordinates;
 
-            // [Price Logic] 어드민 대표가격 → priceTable → CSV → priceRange 순서
+            // [Price Logic] ⭐ 별표(isRepresentative)만 사용. 없으면 "문의"
             let priceText = '문의';
             let formattedPrice = 0;
-            let isRep = false;
 
-            // 🔥 0순위: DB representativePrice (어드민에서 설정한 대표가격 - 원 단위)
-            const dbRepPrice = (fac as any).representativePrice;
-            if (dbRepPrice && dbRepPrice > 0) {
-                // 원 단위이므로 만원으로 변환
-                formattedPrice = dbRepPrice < 10000 ? dbRepPrice : Math.round(dbRepPrice / 10000);
-                isRep = true;
-            }
+            const priceTable = (fac as any).priceInfo?.priceTable || fac.pricing;
+            if (priceTable) {
+                for (const catKey of Object.keys(priceTable)) {
+                    if (/옵션|관리비|기타|공통|제외|석물|비고|안내|별도/.test(catKey)) continue;
 
-            // 1순위: priceInfo.priceTable에서 대표 가격 찾기 (상세 API에서 온 경우)
-            if (!isRep) {
-                const priceTable = (fac as any).priceInfo?.priceTable || fac.pricing;
-                if (priceTable) {
-                    for (const catKey of Object.keys(priceTable)) {
-                        // 기타/옵션/관리비 등 제외
-                        if (/옵션|관리비|기타|공통|제외|석물|비고|안내|별도/.test(catKey)) continue;
-
-                        const category = priceTable[catKey];
-                        if (category && Array.isArray(category.rows)) {
-                            const repItem = category.rows.find((r: any) => r.isRepresentative);
-                            if (repItem && repItem.price > 0) {
-                                // price가 10000 미만이면 만원 단위로 간주, 이상이면 원 단위로 간주
-                                formattedPrice = repItem.price < 10000 ? repItem.price : Math.round(repItem.price / 10000);
-                                isRep = true;
-                                break;
-                            }
-                        }
-                    }
-                }
-            }
-
-            // 2순위: representativePricing (CSV 기반 원 단위 실제 가격) 폴백
-            if (!isRep) {
-                const repPricing = (fac as any).representativePricing;
-                if (repPricing) {
-                    // 카테고리별 최소 가격 찾기 (enshrinement, natural 등)
-                    const categories = Object.keys(repPricing);
-                    for (const cat of categories) {
-                        const pricing = repPricing[cat];
-                        if (pricing?.min && pricing.min > 0) {
-                            // representativePricing.min은 원 단위이므로 만원으로 변환
-                            formattedPrice = Math.round(pricing.min / 10000);
-                            isRep = true;
+                    const category = priceTable[catKey];
+                    if (category && Array.isArray(category.rows)) {
+                        const repItem = category.rows.find((r: any) => r.isRepresentative);
+                        if (repItem && repItem.price > 0) {
+                            formattedPrice = repItem.price < 10000 ? repItem.price : Math.round(repItem.price / 10000);
                             break;
                         }
                     }
                 }
             }
 
-            // 3순위: priceRange.min 폴백 (priceTable이 없는 레거시 시설만!)
-            // 🔥 priceTable이 있으면 폴백 안 함 (stale minPrice 방지)
-            const hasPriceTable = !!((fac as any).priceInfo?.priceTable || fac.pricing);
-            if (!isRep && !hasPriceTable && fac.priceRange?.min && fac.priceRange.min >= 1000) {
-                // priceRange.min이 10000 미만이면 만원 단위, 이상이면 원 단위로 간주
-                formattedPrice = fac.priceRange.min < 10000 ? fac.priceRange.min : Math.round(fac.priceRange.min / 10000);
-            }
-
             if (formattedPrice > 0) {
-                // 만원 단위로 표시
                 priceText = `${formattedPrice.toLocaleString()}만`;
             }
 

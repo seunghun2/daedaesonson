@@ -71,6 +71,11 @@ const GroupEditor = memo(({ groupName, groupData, onRename, onUpdateRows, onDele
                             onChange={(e) => updateLocalRow(idx, 'grade', e.target.value)}
                             onBlur={commitRows}
                         />
+                        <TextInput
+                            label="추가설명" size="xs" value={row.note || ''} placeholder="예: 설치비, 관리비 포함"
+                            onChange={(e) => updateLocalRow(idx, 'note', e.target.value)}
+                            onBlur={commitRows}
+                        />
                         <NumberInput
                             label="가격" size="xs" value={row.price}
                             onChange={(val) => updateLocalRow(idx, 'price', Number(val))}
