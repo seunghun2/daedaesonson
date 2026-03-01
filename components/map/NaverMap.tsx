@@ -819,19 +819,46 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
             let priceText = '문의';
             let formattedPrice = 0;
 
-            const priceTable = (fac as any).priceInfo?.priceTable || fac.pricing;
-            if (priceTable) {
-                for (const catKey of Object.keys(priceTable)) {
-                    if (/옵션|관리비|기타|공통|제외|석물|비고|안내|별도/.test(catKey)) continue;
-
-                    const category = priceTable[catKey];
-                    if (category && Array.isArray(category.rows)) {
-                        const repItem = category.rows.find((r: any) => r.isRepresentative);
+            // 1) 신형(standardizedPrices) 먼저 확인
+            const sp = (fac as any).priceInfo?.standardizedPrices;
+            if (Array.isArray(sp) && sp.length > 0) {
+                for (const group of sp) {
+                    if (Array.isArray(group.rows)) {
+                        const repItem = group.rows.find((r: any) => r.isRepresentative);
                         if (repItem && repItem.price > 0) {
                             formattedPrice = repItem.price < 10000 ? repItem.price : Math.round(repItem.price / 10000);
                             break;
                         }
                     }
+                }
+            }
+
+            // 2) 구형(priceTable) 확인
+            if (formattedPrice === 0) {
+                const priceTable = (fac as any).priceInfo?.priceTable || fac.pricing;
+                if (priceTable) {
+                    for (const catKey of Object.keys(priceTable)) {
+                        if (/옵션|관리비|기타|공통|제외|석물|비고|안내|별도/.test(catKey)) continue;
+
+                        const category = priceTable[catKey];
+                        if (category && Array.isArray(category.rows)) {
+                            const repItem = category.rows.find((r: any) => r.isRepresentative);
+                            if (repItem && repItem.price > 0) {
+                                formattedPrice = repItem.price < 10000 ? repItem.price : Math.round(repItem.price / 10000);
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+
+            // 3) 최종 fallback: representativePrice 또는 priceRange.min (page.tsx에서 계산해서 내려줌)
+            if (formattedPrice === 0) {
+                const repPrice = (fac as any).representativePrice || 0;
+                const minPrice = (fac as any).priceRange?.min || 0;
+                const fallback = repPrice > 0 ? repPrice : minPrice;
+                if (fallback > 0) {
+                    formattedPrice = fallback < 10000 ? fallback : Math.round(fallback / 10000);
                 }
             }
 

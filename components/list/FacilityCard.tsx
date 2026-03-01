@@ -30,27 +30,25 @@ export default function FacilityCard({ facility, onClick }: FacilityCardProps) {
     let displayPrice = '가격문의';
     let priceLabel = '';
 
-    const priceTable = (facility as any).priceInfo?.priceTable || facility.pricing;
-    if (priceTable && typeof priceTable === 'object' && Object.keys(priceTable).length > 0) {
+    // 1) 신형(standardizedPrices) 먼저 확인
+    const sp = (facility as any).priceInfo?.standardizedPrices;
+    if (Array.isArray(sp) && sp.length > 0) {
         // Preferred category matching
         let preferredKeywords: string[] = [];
-        if (facility.category === 'FAMILY_GRAVE') preferredKeywords = ['매장', '묘지', '분양'];
-        else if (facility.category === 'CHARNEL_HOUSE') preferredKeywords = ['봉안', '납골', '안치'];
-        else if (facility.category === 'NATURAL_BURIAL') preferredKeywords = ['수목', '자연', '잔디', '화초'];
+        if (facility.category === 'FAMILY_GRAVE') preferredKeywords = ['매장', '묘지', '분양', 'BURIAL'];
+        else if (facility.category === 'CHARNEL_HOUSE') preferredKeywords = ['봉안', '납골', '안치', 'BONGSAN'];
+        else if (facility.category === 'NATURAL_BURIAL') preferredKeywords = ['수목', '자연', '잔디', '화초', 'NATURAL'];
 
         const subRepItems: { label: string; price: number }[] = [];
-
-        Object.keys(priceTable).forEach(key => {
-            if (/옵션|관리비|기타|공통|제외|석물|비고|안내|별도/.test(key)) return;
-            const cat = priceTable[key];
-            if (cat && Array.isArray(cat.rows)) {
-                const rep = cat.rows.find((r: any) => r.isRepresentative);
+        for (const group of sp) {
+            if (Array.isArray(group.rows)) {
+                const rep = group.rows.find((r: any) => r.isRepresentative);
                 if (rep && rep.price > 0) {
                     const val = rep.price < 10000 ? rep.price * 10000 : rep.price;
-                    subRepItems.push({ label: key, price: val });
+                    subRepItems.push({ label: group.serviceType || group.subType || '', price: val });
                 }
             }
-        });
+        }
 
         const mainItem = subRepItems.find(i =>
             preferredKeywords.some(k => i.label.includes(k))
@@ -58,6 +56,39 @@ export default function FacilityCard({ facility, onClick }: FacilityCardProps) {
 
         if (mainItem) {
             displayPrice = formatKoreanCurrency(mainItem.price);
+        }
+    }
+
+    // 2) 구형(priceTable) 확인
+    if (displayPrice === '가격문의') {
+        const priceTable = (facility as any).priceInfo?.priceTable || facility.pricing;
+        if (priceTable && typeof priceTable === 'object' && Object.keys(priceTable).length > 0) {
+            let preferredKeywords: string[] = [];
+            if (facility.category === 'FAMILY_GRAVE') preferredKeywords = ['매장', '묘지', '분양'];
+            else if (facility.category === 'CHARNEL_HOUSE') preferredKeywords = ['봉안', '납골', '안치'];
+            else if (facility.category === 'NATURAL_BURIAL') preferredKeywords = ['수목', '자연', '잔디', '화초'];
+
+            const subRepItems: { label: string; price: number }[] = [];
+
+            Object.keys(priceTable).forEach(key => {
+                if (/옵션|관리비|기타|공통|제외|석물|비고|안내|별도/.test(key)) return;
+                const cat = priceTable[key];
+                if (cat && Array.isArray(cat.rows)) {
+                    const rep = cat.rows.find((r: any) => r.isRepresentative);
+                    if (rep && rep.price > 0) {
+                        const val = rep.price < 10000 ? rep.price * 10000 : rep.price;
+                        subRepItems.push({ label: key, price: val });
+                    }
+                }
+            });
+
+            const mainItem = subRepItems.find(i =>
+                preferredKeywords.some(k => i.label.includes(k))
+            ) || subRepItems[0];
+
+            if (mainItem) {
+                displayPrice = formatKoreanCurrency(mainItem.price);
+            }
         }
     }
 

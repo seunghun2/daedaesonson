@@ -89,6 +89,8 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
 
   // 🚀 모바일 상세 슬라이드아웃 애니메이션 상태
   const [isDetailClosing, setIsDetailClosing] = useState(false);
+  const [isDetailLoading, setIsDetailLoading] = useState(false);
+  const detailLoadingIdRef = useRef<string>(''); // 빠른 클릭 시 race condition 방지
 
   // 검색어 상태
   const [searchQuery, setSearchQuery] = useState('');
@@ -511,30 +513,31 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
       // 🖥️ PC: 왼쪽 패널에 상세 표시 + URL 업데이트
       setNearbyList(null); // 주변 시설 패널 닫기
       const wasAlreadyOpen = !!selectedFacility;
-      // 이미 상세가 열려있으면 replaceState (히스토리 안 쌓음), 처음이면 pushState
       if (wasAlreadyOpen) {
         window.history.replaceState({ facilityId: facility.id }, '', `/facility/${facility.id}`);
       } else {
         window.history.pushState({ facilityId: facility.id }, '', `/facility/${facility.id}`);
       }
-      // 🔥 기본 정보 즉시 표시 (이름, 이미지, 주소 등)  
-      // 가격은 FacilityDetail에서 priceTable 없으면 return null → flash 없음
-      setSelectedFacility(facility);
-      // 🗺️ SSR 정밀 좌표로 지도 이동 (DB 반올림 좌표가 아닌 원본 사용)
-      if (facility.coordinates && mapRef.current) {
-        mapRef.current.panTo(facility.coordinates.lat, facility.coordinates.lng);
-      }
-      // API로 상세 데이터(priceTable 등) 보강
+      // 🔥 전체 스켈레톤 로딩 표시 → API 완료 후 한번에 전체 렌더링
+      const requestId = facility.id;
+      detailLoadingIdRef.current = requestId;
+      setIsDetailLoading(true);
+      setSelectedFacility(facility); // 기본 정보 유지 (패널 영역 유지용)
       fetch(`/api/facilities/${facility.id}`)
         .then(res => res.ok ? res.json() : null)
         .then(data => {
+          // 빠른 클릭 시 이전 요청 무시 (race condition 방지)
+          if (detailLoadingIdRef.current !== requestId) return;
           if (data) {
-            // SSR의 정밀 좌표 유지 (DB 좌표는 소수점 2자리로 반올림됨)
             data.coordinates = facility.coordinates || data.coordinates;
             setSelectedFacility(data);
           }
+          setIsDetailLoading(false);
         })
-        .catch(() => { /* 기본 데이터로 유지 */ });
+        .catch(() => {
+          if (detailLoadingIdRef.current !== requestId) return;
+          setIsDetailLoading(false);
+        });
     }
 
     // 📝 기록 저장
@@ -564,6 +567,8 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
 
   const handleCloseDetail = () => {
     setSelectedFacility(null);
+    setIsDetailLoading(false);
+    detailLoadingIdRef.current = '';
     // URL을 /로 복원 (페이지 전환 없이)
     window.history.pushState({}, '', '/');
   };
@@ -926,6 +931,7 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
               onClose={handleCloseDetail}
               allFacilities={finalFacilities}
               isDesktop={true}
+              isDetailLoading={isDetailLoading}
               onSelectFacility={(id) => {
                 const fac = finalFacilities.find(f => f.id === id);
                 if (fac) handleMarkerClick(fac);

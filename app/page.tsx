@@ -29,10 +29,28 @@ function getFacilities(): Facility[] {
         // 3순위: minPrice (priceTable이 아예 없는 레거시 시설만)
         let repPrice = normalizePrice(f.representativePrice || 0);
 
-        // representativePrice가 없으면 priceTable에서 직접 계산
+        // representativePrice가 없으면 priceTable 또는 standardizedPrices에서 직접 계산
         const pt = f.priceInfo?.priceTable || f.pricing;
-        let hasRepInTable = false; // priceTable에 대표항목이 존재하는지 여부
+        const sp = f.priceInfo?.standardizedPrices; // 신형 가격 데이터
+        let hasRepInTable = false;
 
+        // 1) 신형(standardizedPrices) 먼저 확인
+        if (repPrice === 0 && Array.isArray(sp) && sp.length > 0) {
+          for (const group of sp) {
+            if (Array.isArray(group.rows)) {
+              const rep = group.rows.find((r: any) => r.isRepresentative);
+              if (rep) {
+                hasRepInTable = true;
+                if (rep.price > 0) {
+                  repPrice = normalizePrice(rep.price);
+                  break;
+                }
+              }
+            }
+          }
+        }
+
+        // 2) 구형(priceTable) 확인
         if (repPrice === 0 && pt && typeof pt === 'object') {
           for (const catKey of Object.keys(pt)) {
             if (/옵션|관리비|기타|공통|제외|석물|비고|안내|별도/.test(catKey)) continue;
@@ -50,10 +68,12 @@ function getFacilities(): Facility[] {
           }
         }
 
-        // minPrice 폴백: priceTable이 존재하면 사용 안 함 (stale minPrice 방지)
-        // priceTable이 아예 없는 레거시 시설만 minPrice 사용
-        const hasPriceTable = !!(pt && typeof pt === 'object' && Object.keys(pt).length > 0);
-        const minP = (repPrice > 0 || hasRepInTable || hasPriceTable) ? 0 : normalizePrice(f.minPrice || f.priceRange?.min || 0);
+        // minPrice 폴백: priceTable/standardizedPrices가 존재하면 사용 안 함
+        const hasPriceData = !!(
+          (pt && typeof pt === 'object' && Object.keys(pt).length > 0) ||
+          (Array.isArray(sp) && sp.length > 0)
+        );
+        const minP = (repPrice > 0 || hasRepInTable || hasPriceData) ? 0 : normalizePrice(f.minPrice || f.priceRange?.min || 0);
         const maxP = normalizePrice(f.maxPrice || f.priceRange?.max || 0);
 
         return {
