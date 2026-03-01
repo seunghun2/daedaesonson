@@ -70,8 +70,8 @@ export default function InquiryPanel({ facility, isOpen, onClose, allFacilities 
     const loadInquiries = async () => {
         setIsLoading(true);
         try {
-            // 전체 문의 로드 (어드민 API 활용)
-            const res = await fetch('/api/admin/inquiries');
+            // 해당 시설의 문의만 로드 (빠른 로딩)
+            const res = await fetch(`/api/facilities/${facility.id}/inquiries`);
             const data = await res.json();
             if (data.inquiries) {
                 // 최신순 정렬
@@ -259,7 +259,7 @@ export default function InquiryPanel({ facility, isOpen, onClose, allFacilities 
                         </Group>
                     </Box>
 
-                    <ScrollArea style={{ flex: 1 }} bg="gray.0">
+                    <ScrollArea style={{ flex: 1, WebkitOverflowScrolling: 'touch' }} bg="gray.0" type="scroll">
                         <Stack gap="md" p="md">
                             {/* 안내 문구 */}
                             <Paper p="sm" radius="md" bg="gray.0" style={{ border: '1px solid #f1f3f5' }}>
