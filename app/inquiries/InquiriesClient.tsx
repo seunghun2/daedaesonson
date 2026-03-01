@@ -254,7 +254,7 @@ export default function InquiriesClient({ initialInquiries, facilities = [] }: I
                                                 <Unlock size={15} color="#22c55e" /> :
                                                 <Lock size={15} color="#adb5bd" />
                                         )}
-                                        <Text size="md" fw={600} c="dark.8">{inquiry.title}</Text>
+                                        <Text fw={600} c="dark.8" style={{ fontSize: 15 }}>{inquiry.title}</Text>
                                         {inquiry.replies && inquiry.replies.length > 0 && (
                                             <Box px={8} py={3} bg="brand.0" style={{ borderRadius: 6 }}>
                                                 <Text size="xs" c="brand" fw={600}>답변완료</Text>
@@ -264,11 +264,11 @@ export default function InquiriesClient({ initialInquiries, facilities = [] }: I
 
                                     {/* 내용 (비공개면 블러) */}
                                     <Text
-                                        size="sm"
                                         c="gray.6"
                                         lineClamp={6}
                                         lh={1.6}
                                         style={{
+                                            fontSize: 13,
                                             whiteSpace: 'pre-wrap',
                                             ...(showBlur ? {
                                                 filter: 'blur(4px)',
