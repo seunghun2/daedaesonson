@@ -70,8 +70,8 @@ export default function InquiryPanel({ facility, isOpen, onClose, allFacilities 
     const loadInquiries = async () => {
         setIsLoading(true);
         try {
-            // 해당 시설의 문의만 로드 (빠른 로딩)
-            const res = await fetch(`/api/facilities/${facility.id}/inquiries`);
+            // 전체 문의 로드
+            const res = await fetch('/api/admin/inquiries');
             const data = await res.json();
             if (data.inquiries) {
                 // 최신순 정렬
@@ -307,7 +307,7 @@ export default function InquiryPanel({ facility, isOpen, onClose, allFacilities 
                                             {inquiry.isPrivate && (
                                                 <Lock size={14} color={isUnlocked ? '#40c057' : '#adb5bd'} />
                                             )}
-                                            <Text size="sm" fw={500} c="dark">{inquiry.title}</Text>
+                                            <Text fw={500} c="dark" style={{ fontSize: 13 }}>{inquiry.title}</Text>
                                             {inquiry.replies && inquiry.replies.length > 0 && (
                                                 <Box px={6} py={2} bg="brand.0" style={{ borderRadius: 4 }}>
                                                     <Text size="xs" c="brand" fw={500}>답변완료</Text>
@@ -317,10 +317,10 @@ export default function InquiryPanel({ facility, isOpen, onClose, allFacilities 
 
                                         {/* 내용 (비공개면 블러) */}
                                         <Text
-                                            size="xs"
                                             c="dimmed"
                                             lineClamp={3}
                                             style={{
+                                                fontSize: 11,
                                                 whiteSpace: 'pre-wrap',
                                                 ...(inquiry.isPrivate && !isUnlocked ? {
                                                     filter: 'blur(4px)',
