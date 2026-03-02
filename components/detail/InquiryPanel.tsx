@@ -159,6 +159,8 @@ export default function InquiryPanel({ facility, isOpen, onClose, allFacilities 
             if (res.ok) {
                 setUnlockedIds(prev => new Set([...prev, selectedInquiry.id]));
                 closePin();
+                document.body.style.overflow = '';
+                document.body.style.position = '';
                 setPinError('');
             } else {
                 setPinError('비밀번호가 일치하지 않습니다.');
@@ -361,11 +363,12 @@ export default function InquiryPanel({ facility, isOpen, onClose, allFacilities 
             {/* 비밀번호 입력 - 예쁜 팝업 */}
             <Modal
                 opened={pinOpened}
-                onClose={closePin}
+                onClose={() => { closePin(); document.body.style.overflow = ''; document.body.style.position = ''; }}
                 centered
                 size={320}
                 radius="lg"
                 withCloseButton={false}
+                lockScroll={false}
                 styles={{
                     root: { zIndex: 9999 },
                     content: { padding: 0 },
