@@ -231,7 +231,7 @@ export default function InquiryPanel({ facility, isOpen, onClose, allFacilities 
                     body: { padding: 0, backgroundColor: '#fff', height: '100%' }
                 }}
                 withCloseButton={false}
-                lockScroll={isMobile}
+                lockScroll={false}
             >
                 <Stack gap={0} h="100%">
                     {/* Header */}
@@ -259,7 +259,7 @@ export default function InquiryPanel({ facility, isOpen, onClose, allFacilities 
                         </Group>
                     </Box>
 
-                    <ScrollArea style={{ flex: 1, WebkitOverflowScrolling: 'touch' }} bg="gray.0" type="scroll">
+                    <ScrollArea style={{ flex: 1, WebkitOverflowScrolling: 'touch', overscrollBehavior: 'contain' }} bg="gray.0" type="scroll">
                         <Stack gap="md" p="md">
                             {/* 안내 문구 */}
                             <Paper p="sm" radius="md" bg="gray.0" style={{ border: '1px solid #f1f3f5' }}>

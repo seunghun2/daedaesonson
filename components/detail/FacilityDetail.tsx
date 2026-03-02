@@ -2773,7 +2773,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
 
 
                     {/* Story Panel Overlay */}
-                    <InquiryPanel facility={facility} isOpen={inquiryOpen} onClose={() => setInquiryOpen(false)} allFacilities={allFacilities} />
+                    <InquiryPanel facility={facility} isOpen={inquiryOpen} onClose={() => { setInquiryOpen(false); document.body.style.overflow = ''; document.body.style.position = ''; document.body.style.touchAction = ''; }} allFacilities={allFacilities} />
                     <ReviewsPanel facility={facility} isOpen={reviewsOpen} onClose={() => setReviewsOpen(false)} />
 
                     {/* 상담 신청 - 모바일: Modal fullScreen, PC: Drawer 스타일 */}
