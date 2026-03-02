@@ -765,6 +765,9 @@ function FacilityEditModal({ facilityToEdit, opened, onClose, onSaved, onNavigat
                 {editForm.priceInfo?.priceVerified && (
                     <Badge color="green" variant="filled" size="sm">✅ 검토완료</Badge>
                 )}
+                {editForm.isFull && (
+                    <Badge color="dark" variant="filled" size="sm">⛔ 만장</Badge>
+                )}
             </Group>
         } size="lg" scrollAreaComponent={ScrollArea.Autosize}>
             <Group justify="flex-end" mb="md">
@@ -803,6 +806,18 @@ function FacilityEditModal({ facilityToEdit, opened, onClose, onSaved, onNavigat
                             <Group justify="space-between">
                                 <div><Text fw={600} size="sm">마커 표시</Text><Text size="xs" c="dimmed">지도에 이 시설의 마커를 표시합니다.</Text></div>
                                 <Switch size="lg" checked={editForm.isActive !== false} onChange={(e) => setEditForm(prev => ({ ...prev, isActive: e.target.checked }))} onLabel="ON" offLabel="OFF" color={editForm.isActive === false ? 'red' : 'green'} />
+                            </Group>
+                        </Paper>
+                        <Paper withBorder p="sm" radius="md" bg={editForm.isFull ? 'dark.0' : 'gray.0'}>
+                            <Group justify="space-between">
+                                <div>
+                                    <Group gap="xs">
+                                        <Text fw={600} size="sm">⛔ 만장</Text>
+                                        {editForm.isFull && <Badge color="dark" size="xs">만장</Badge>}
+                                    </Group>
+                                    <Text size="xs" c="dimmed">신규 안치/매장 불가 시설 (마커가 검은색으로 표시됩니다)</Text>
+                                </div>
+                                <Switch size="lg" checked={!!editForm.isFull} onChange={(e) => setEditForm(prev => ({ ...prev, isFull: e.target.checked }))} onLabel="만장" offLabel="가능" color={editForm.isFull ? 'dark' : 'gray'} />
                             </Group>
                         </Paper>
                         <TextInput label="시설명 (원본 - 고정값)" value={editForm.originalName || ''} readOnly variant="filled" description="아카이브 폴더와 매칭되는 이름입니다." />

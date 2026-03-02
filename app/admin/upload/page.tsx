@@ -472,6 +472,9 @@ export default function AdminPage() {
                                                 {(item as any)._hasDetailedPrices && (
                                                     <Badge size="xs" color="cyan" variant="light">DB</Badge>
                                                 )}
+                                                {item.isFull && (
+                                                    <Badge size="xs" color="dark" variant="filled">만장</Badge>
+                                                )}
                                             </Group>
                                         </Table.Td>
                                         <Table.Td>

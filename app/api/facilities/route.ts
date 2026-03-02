@@ -74,7 +74,7 @@ async function loadPricingData(): Promise<Map<string, RepresentativePricing>> {
 export async function GET() {
     try {
         // 🚀 필요 컬럼만 선택 (pricing, images 등 무거운 JSONB 제외)
-        const FACILITY_COLUMNS = 'id,name,address,lat,lng,category,minPrice,maxPrice,representativePrice,operatorType,hasParking,hasRestaurant,hasStore,hasAccessibility,isPublic,isActive,reviewCount,rating,phone,fax,capacity,lastUpdated,websiteUrl,viewCount,description,originalName,updatedAt,thumbnail';
+        const FACILITY_COLUMNS = 'id,name,address,lat,lng,category,minPrice,maxPrice,representativePrice,operatorType,hasParking,hasRestaurant,hasStore,hasAccessibility,isPublic,isActive,isFull,reviewCount,rating,phone,fax,capacity,lastUpdated,websiteUrl,viewCount,description,originalName,updatedAt,thumbnail';
 
         let facilitiesFromDb: any[] = [];
         let from = 0;
@@ -141,6 +141,7 @@ export async function GET() {
                 hasAccessibility: f.hasAccessibility ?? false,
                 isPublic: f.isPublic ?? false,
                 isActive: f.isActive ?? true,
+                isFull: f.isFull ?? false,
                 hasDetailedPrices: (categoryCountMap.get(f.id) || 0) > 0,
                 representativePricing: pricingMap.get(f.id),
                 reviewCount: f.reviewCount || 0,
@@ -316,6 +317,7 @@ export async function POST(req: Request) {
                 capacity: f.capacity ?? undefined,
                 websiteUrl: f.websiteUrl !== undefined ? f.websiteUrl : (f.website || ''),
                 isActive: f.isActive ?? true,
+                isFull: f.isFull ?? false,
                 operatorType: f.operatorType,
                 originalName: f.originalName,
                 lastUpdated: f.lastUpdated || new Date().toISOString(),
@@ -427,6 +429,7 @@ export async function POST(req: Request) {
                     capacity: f.capacity ?? null,
                     websiteUrl: f.websiteUrl || f.website || '',
                     isActive: f.isActive ?? true,
+                    isFull: f.isFull ?? false,
                 };
             });
 

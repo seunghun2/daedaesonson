@@ -28635,7 +28635,8 @@
     "fax": "",
     "websiteUrl": "https://www.insiseol.or.kr/life/family/facility/cemetery.jsp",
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0072/photo_1.jpg",
-    "representativePrice": 36000000
+    "representativePrice": 36000000,
+    "isFull": true
   },
   {
     "id": "park-0073",
@@ -34636,7 +34637,8 @@
     "fax": "",
     "websiteUrl": "",
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0102/photo_1.PNG",
-    "representativePrice": 250000
+    "representativePrice": 250000,
+    "isFull": true
   },
   {
     "id": "park-0103",
@@ -36671,7 +36673,8 @@
     "websiteUrl": "",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0113/photo_1.PNG",
-    "representativePrice": 250000
+    "representativePrice": 250000,
+    "isFull": true
   },
   {
     "id": "park-0114",
@@ -38599,7 +38602,8 @@
     "websiteUrl": "",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0123/photo_1.PNG",
-    "representativePrice": 16300
+    "representativePrice": 16300,
+    "isFull": true
   },
   {
     "id": "park-0124",
@@ -38820,7 +38824,8 @@
     "websiteUrl": "",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0124/photo_1.PNG",
-    "representativePrice": 16300
+    "representativePrice": 16300,
+    "isFull": true
   },
   {
     "id": "park-0125",
@@ -48585,7 +48590,8 @@
     "fax": "",
     "websiteUrl": "",
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0181/photo_1.PNG",
-    "representativePrice": 36000000
+    "representativePrice": 36000000,
+    "isFull": true
   },
   {
     "id": "park-0182",
@@ -48932,7 +48938,8 @@
     "fax": "",
     "websiteUrl": "",
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0183/photo_1.PNG",
-    "representativePrice": 36000000
+    "representativePrice": 36000000,
+    "isFull": true
   },
   {
     "id": "park-0184",
@@ -50760,7 +50767,8 @@
     "fax": "",
     "websiteUrl": "",
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0194/photo_1.PNG",
-    "representativePrice": 96000
+    "representativePrice": 96000,
+    "isFull": true
   },
   {
     "id": "park-0195",
@@ -52048,7 +52056,8 @@
     "fax": "",
     "websiteUrl": "http://www.mediareport.co.kr/",
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0202/photo_1.PNG",
-    "representativePrice": 63000
+    "representativePrice": 63000,
+    "isFull": true
   },
   {
     "id": "park-0203",
@@ -52872,7 +52881,8 @@
     "websiteUrl": "",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0207/photo_1.PNG",
-    "representativePrice": 24000
+    "representativePrice": 24000,
+    "isFull": true
   },
   {
     "id": "park-0208",
@@ -53522,7 +53532,8 @@
     "websiteUrl": "https://www.placeview.co.kr/",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0211/photo_1.PNG",
-    "representativePrice": 36000000
+    "representativePrice": 36000000,
+    "isFull": true
   },
   {
     "id": "park-0212",
@@ -53872,7 +53883,8 @@
     "fax": "",
     "websiteUrl": "https://www.idaegu.co.kr/",
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0213/photo_1.PNG",
-    "representativePrice": 20000000
+    "representativePrice": 20000000,
+    "isFull": true
   },
   {
     "id": "park-0214",
@@ -62576,7 +62588,8 @@
     "websiteUrl": "",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0265/photo_1.PNG",
-    "representativePrice": 36000000
+    "representativePrice": 36000000,
+    "isFull": true
   },
   {
     "id": "park-0266",
@@ -65795,7 +65808,8 @@
     "websiteUrl": "",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0286/photo_1.PNG",
-    "representativePrice": 35000
+    "representativePrice": 35000,
+    "isFull": true
   },
   {
     "id": "park-0287",
@@ -66320,7 +66334,8 @@
     "websiteUrl": "",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0289/photo_1.PNG",
-    "representativePrice": 63000
+    "representativePrice": 63000,
+    "isFull": true
   },
   {
     "id": "park-0290",
@@ -67418,7 +67433,8 @@
     "fax": "",
     "websiteUrl": "",
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0296/photo_1.PNG",
-    "representativePrice": 36000000
+    "representativePrice": 36000000,
+    "isFull": true
   },
   {
     "id": "park-0297",
@@ -69765,7 +69781,8 @@
     "websiteUrl": "",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0310/photo_1.PNG",
-    "representativePrice": 50000000
+    "representativePrice": 50000000,
+    "isFull": true
   },
   {
     "id": "park-0311",
@@ -73377,7 +73394,8 @@
     "fax": "",
     "websiteUrl": "",
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0331/photo_1.PNG",
-    "representativePrice": 36000000
+    "representativePrice": 36000000,
+    "isFull": true
   },
   {
     "id": "park-0332",
@@ -74084,7 +74102,8 @@
     "websiteUrl": "",
     "viewCount": 328,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0335/photo_1.PNG",
-    "representativePrice": 0
+    "representativePrice": 0,
+    "isFull": true
   },
   {
     "id": "park-0336",
@@ -74233,7 +74252,8 @@
     "websiteUrl": "",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0336/photo_1.PNG",
-    "representativePrice": 0
+    "representativePrice": 0,
+    "isFull": true
   },
   {
     "id": "park-0337",
@@ -75069,7 +75089,8 @@
     "fax": "",
     "websiteUrl": "",
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0342/photo_1.jpg",
-    "representativePrice": 42000
+    "representativePrice": 42000,
+    "isFull": true
   },
   {
     "id": "park-0343",
@@ -90684,7 +90705,8 @@
     "websiteUrl": "",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0445/photo_1.PNG",
-    "representativePrice": 0
+    "representativePrice": 0,
+    "isFull": true
   },
   {
     "id": "park-0446",
@@ -94532,7 +94554,8 @@
     "websiteUrl": "",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0471/photo_1.PNG",
-    "representativePrice": 0
+    "representativePrice": 0,
+    "isFull": true
   },
   {
     "id": "park-0472",
@@ -98693,7 +98716,8 @@
     "websiteUrl": "",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0497/photo_1.PNG",
-    "representativePrice": 0
+    "representativePrice": 0,
+    "isFull": true
   },
   {
     "id": "park-0498",
@@ -98970,7 +98994,8 @@
     "websiteUrl": "",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0499/photo_1.PNG",
-    "representativePrice": 0
+    "representativePrice": 0,
+    "isFull": true
   },
   {
     "id": "park-0500",
@@ -199206,7 +199231,8 @@
     "websiteUrl": "",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0858/photo_1.PNG",
-    "representativePrice": 0
+    "representativePrice": 0,
+    "isFull": true
   },
   {
     "id": "park-0859",
@@ -229428,7 +229454,8 @@
     "websiteUrl": "",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-1061/photo_1.PNG",
-    "representativePrice": 0
+    "representativePrice": 0,
+    "isFull": true
   },
   {
     "id": "park-1062",
@@ -240420,7 +240447,8 @@
     "websiteUrl": "",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-1135/photo_1.PNG",
-    "representativePrice": 0
+    "representativePrice": 0,
+    "isFull": true
   },
   {
     "id": "park-1136",
@@ -240535,7 +240563,8 @@
     "websiteUrl": "",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-1136/photo_1.PNG",
-    "representativePrice": 0
+    "representativePrice": 0,
+    "isFull": true
   },
   {
     "id": "park-1137",
@@ -240700,7 +240729,8 @@
     "priceRange": {
       "min": 0,
       "max": 0
-    }
+    },
+    "isFull": true
   },
   {
     "id": "park-1138",
@@ -240815,7 +240845,8 @@
     "websiteUrl": "",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-1138/photo_1.PNG",
-    "representativePrice": 0
+    "representativePrice": 0,
+    "isFull": true
   },
   {
     "id": "park-1139",

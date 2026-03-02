@@ -875,12 +875,19 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
                 'FUNERAL_HOME': '#78909c',
                 'ETC': '#8d6e63'
             };
-            const markerColor = categoryColors[fac.category as FacilityCategory] || '#0097a7';
+
+            // 만장 시설은 검은색, 아니면 카테고리 색상
+            const isFull = !!(fac as any).isFull;
+            const markerColor = isFull ? '#333333' : (categoryColors[fac.category as FacilityCategory] || '#0097a7');
 
             const contentWidth = 56;
             const contentHeight = 52;
             const tailSize = 10;
             const archHeight = 14;
+
+            // 만장 마커: 검은색 + "만장" 텍스트 / 일반 마커: 카테고리 + 가격
+            const topText = isFull ? categoryLabel : categoryLabel;
+            const bottomText = isFull ? '만장' : priceText;
 
             // 위쪽 아치형 + 왼쪽 아래 꼬리 + 오른쪽 아래 라운드
             const svgContent = `
@@ -896,8 +903,8 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
                     L 0 ${archHeight}
                     Z
                 " fill="${markerColor}" stroke="rgba(0,0,0,0.2)" stroke-width="1"/>
-                <text x="${contentWidth / 2}" y="20" font-family="-apple-system, sans-serif" font-size="10" fill="white" fill-opacity="0.9" text-anchor="middle">${categoryLabel}</text>
-                <text x="${contentWidth / 2}" y="38" font-family="-apple-system, sans-serif" font-size="13" font-weight="800" fill="white" text-anchor="middle">${priceText}</text>
+                <text x="${contentWidth / 2}" y="20" font-family="-apple-system, sans-serif" font-size="10" fill="white" fill-opacity="0.9" text-anchor="middle">${topText}</text>
+                <text x="${contentWidth / 2}" y="38" font-family="-apple-system, sans-serif" font-size="13" font-weight="800" fill="${isFull ? '#ff6b6b' : 'white'}" text-anchor="middle">${bottomText}</text>
             </svg>
             `;
 
@@ -944,6 +951,7 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
                     ">
                         <div style="font-weight: 700; font-size: 13px; color: #333; margin-bottom: 4px;">
                             ${fac.name}
+                            ${isFull ? '<span style="background:#333;color:#ff6b6b;padding:1px 5px;border-radius:3px;font-size:10px;margin-left:4px;">만장</span>' : ''}
                         </div>
                         <div style="font-size: 11px; color: #666;">
                             ${fac.address || ''}

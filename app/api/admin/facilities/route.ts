@@ -28,7 +28,7 @@ export async function GET(request: Request) {
         // pricing, images 등 대용량 JSONB는 편집 시 /api/facilities/[id]에서 개별 로드
         let query = supabase
             .from('Facility')
-            .select('id, name, address, category, isPublic, capacity, lastUpdated, minPrice, maxPrice, representativePrice, operatorType, phone, rating, reviewCount, description, websiteUrl, viewCount, isActive, images', { count: 'exact' });
+            .select('id, name, address, category, isPublic, capacity, lastUpdated, minPrice, maxPrice, representativePrice, operatorType, phone, rating, reviewCount, description, websiteUrl, viewCount, isActive, isFull, images', { count: 'exact' });
 
         // 카테고리 필터
         if (category !== 'all') {

@@ -257,6 +257,7 @@ export interface Facility {
     tags?: string[];
 
     // 상태
+    isFull?: boolean; // 만장 여부 (true면 신규 안치/매장 불가)
     status?: 'OPEN' | 'SELLING' | 'CLOSED';
 
     // 운영자 정보
