@@ -89,6 +89,7 @@ function getFacilities(): Facility[] {
           representativePrice: repPrice,
           operatorType: f.operatorType,
           isPublic: f.isPublic ?? false,
+          isFull: f.isFull ?? false,
           thumbnail: f.thumbnail || (f.images?.[0]) || '',
         };
       });

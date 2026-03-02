@@ -884,15 +884,15 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
             let anchorPoint: any;
 
             if (isFull) {
-                // 🔴 만장 마커: 내 위치 아이콘과 비슷한 검은 원형 점
-                const dotSize = 20;
+                // ⚫ 만장 마커: 검은 점만 (네이버 지도 자체 라벨 활용)
+                const dotSize = 18;
+                const hitArea = 32;
                 svgContent = `
-                <div style="position:relative; width:${dotSize}px; height:${dotSize}px; cursor:pointer;">
-                    <div style="position:absolute; top:0; left:0; width:${dotSize}px; height:${dotSize}px; background:#333; border:2.5px solid white; border-radius:50%; box-shadow:0 0 6px rgba(0,0,0,0.4);"></div>
-                    <div style="position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); width:6px; height:6px; background:#ff6b6b; border-radius:50%;"></div>
+                <div style="width:${hitArea}px; height:${hitArea}px; cursor:pointer; display:flex; align-items:center; justify-content:center;">
+                    <div style="width:${dotSize}px; height:${dotSize}px; background:rgba(0,0,0,0.5); border:2.5px solid white; border-radius:50%; box-shadow:0 0 6px rgba(0,0,0,0.25);"></div>
                 </div>
                 `;
-                anchorPoint = new window.naver.maps.Point(dotSize / 2, dotSize / 2);
+                anchorPoint = new window.naver.maps.Point(hitArea / 2, hitArea / 2);
             } else {
                 // 일반 마커: 기존 가격 태그 스타일
                 const contentWidth = 56;
@@ -924,7 +924,8 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
                 position: new window.naver.maps.LatLng(lat, lng),
                 map: map,
                 visible: false,
-                title: fac.name,
+                title: isFull ? '' : fac.name,
+                zIndex: isFull ? 50 : 100,
                 icon: {
                     content: svgContent,
                     anchor: anchorPoint,
@@ -962,8 +963,7 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
                         max-width: 200px;
                     ">
                         <div style="font-weight: 700; font-size: 13px; color: #333; margin-bottom: 4px;">
-                            ${fac.name}
-                            ${isFull ? '<span style="background:#333;color:#ff6b6b;padding:1px 5px;border-radius:3px;font-size:10px;margin-left:4px;">만장</span>' : ''}
+                            ${isFull ? '<span style="display:inline-block;width:10px;height:10px;background:rgba(0,0,0,0.5);border:1.5px solid white;border-radius:50%;margin-right:4px;vertical-align:middle;box-shadow:0 0 3px rgba(0,0,0,0.2);"></span>' : ''}${fac.name}
                         </div>
                         <div style="font-size: 11px; color: #666;">
                             ${fac.address || ''}
@@ -1165,6 +1165,7 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
 
                         const fac = (marker as any).__facilityData;
                         if (!fac) return;
+                        if (fac.isFull) return; // 만장 시설은 이름 라벨 표시 안 함
 
                         // 시설명 (최대 10자)
                         const name = fac.name?.length > 10 ? fac.name.slice(0, 10) + '...' : fac.name;
@@ -1208,7 +1209,7 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
                                 `,
                                 anchor: new window.naver.maps.Point(-30, 96),
                             },
-                            zIndex: 50
+                            zIndex: 200
                         });
 
                         // 레이블 클릭 시 마커 클릭과 동일하게 동작

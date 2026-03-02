@@ -28625,7 +28625,7 @@
       "categoryCount": 3,
       "itemCount": 7
     },
-    "isActive": false,
+    "isActive": true,
     "viewCount": 300,
     "amenities": {
       "parkingSpaces": 10,
@@ -34630,7 +34630,7 @@
       "categoryCount": 2,
       "itemCount": 4
     },
-    "isActive": false,
+    "isActive": true,
     "viewCount": 0,
     "amenities": {},
     "operatorType": "OTHER",
@@ -36666,7 +36666,7 @@
       "itemCount": 4,
       "representativeCount": 2
     },
-    "isActive": false,
+    "isActive": true,
     "amenities": {},
     "operatorType": "OTHER",
     "fax": "",
@@ -38595,7 +38595,7 @@
       "itemCount": 4,
       "representativeCount": 2
     },
-    "isActive": false,
+    "isActive": true,
     "amenities": {},
     "operatorType": "OTHER",
     "fax": "",
@@ -38817,7 +38817,7 @@
       "itemCount": 4,
       "representativeCount": 2
     },
-    "isActive": false,
+    "isActive": true,
     "amenities": {},
     "operatorType": "OTHER",
     "fax": "",
@@ -48584,7 +48584,7 @@
       "itemCount": 2
     },
     "viewCount": 310,
-    "isActive": false,
+    "isActive": true,
     "amenities": {},
     "operatorType": "OTHER",
     "fax": "",
@@ -48932,7 +48932,7 @@
       "itemCount": 2
     },
     "viewCount": 0,
-    "isActive": false,
+    "isActive": true,
     "amenities": {},
     "operatorType": "OTHER",
     "fax": "",
@@ -50761,7 +50761,7 @@
       "representativeCount": 2
     },
     "viewCount": 0,
-    "isActive": false,
+    "isActive": true,
     "amenities": {},
     "operatorType": "OTHER",
     "fax": "",
@@ -52050,7 +52050,7 @@
       "representativeCount": 2
     },
     "viewCount": 0,
-    "isActive": false,
+    "isActive": true,
     "amenities": {},
     "operatorType": "OTHER",
     "fax": "",
@@ -52874,7 +52874,7 @@
       "itemCount": 2,
       "representativeCount": 2
     },
-    "isActive": false,
+    "isActive": true,
     "amenities": {},
     "operatorType": "OTHER",
     "fax": "",
@@ -53525,7 +53525,7 @@
       "itemCount": 2,
       "representativeCount": 2
     },
-    "isActive": false,
+    "isActive": true,
     "amenities": {},
     "operatorType": "OTHER",
     "fax": "",
@@ -53877,7 +53877,7 @@
       "representativeCount": 2
     },
     "viewCount": 0,
-    "isActive": false,
+    "isActive": true,
     "amenities": {},
     "operatorType": "OTHER",
     "fax": "",
@@ -62581,7 +62581,7 @@
       "itemCount": 2,
       "representativeCount": 2
     },
-    "isActive": false,
+    "isActive": true,
     "amenities": {},
     "operatorType": "OTHER",
     "fax": "",
@@ -65801,7 +65801,7 @@
       "itemCount": 2,
       "representativeCount": 1
     },
-    "isActive": false,
+    "isActive": true,
     "amenities": {},
     "operatorType": "OTHER",
     "fax": "",
@@ -66327,7 +66327,7 @@
       "itemCount": 2,
       "representativeCount": 2
     },
-    "isActive": false,
+    "isActive": true,
     "amenities": {},
     "operatorType": "OTHER",
     "fax": "",
@@ -67427,7 +67427,7 @@
       "itemCount": 2
     },
     "viewCount": 0,
-    "isActive": false,
+    "isActive": true,
     "amenities": {},
     "operatorType": "OTHER",
     "fax": "",
@@ -69774,7 +69774,7 @@
       "itemCount": 2,
       "representativeCount": 1
     },
-    "isActive": false,
+    "isActive": true,
     "amenities": {},
     "operatorType": "OTHER",
     "fax": "",
@@ -73388,7 +73388,7 @@
       "itemCount": 2
     },
     "viewCount": 0,
-    "isActive": false,
+    "isActive": true,
     "amenities": {},
     "operatorType": "OTHER",
     "fax": "",
@@ -74095,7 +74095,7 @@
       "itemCount": 4,
       "representativeCount": 0
     },
-    "isActive": false,
+    "isActive": true,
     "amenities": {},
     "operatorType": "OTHER",
     "fax": "",
@@ -74245,7 +74245,7 @@
       "itemCount": 1,
       "representativeCount": 0
     },
-    "isActive": false,
+    "isActive": true,
     "amenities": {},
     "operatorType": "OTHER",
     "fax": "",
@@ -75083,7 +75083,7 @@
       "representativeCount": 1
     },
     "viewCount": 0,
-    "isActive": false,
+    "isActive": true,
     "amenities": {},
     "operatorType": "OTHER",
     "fax": "",
@@ -98709,7 +98709,7 @@
       "itemCount": 0,
       "representativeCount": 0
     },
-    "isActive": false,
+    "isActive": true,
     "amenities": {},
     "operatorType": "OTHER",
     "fax": "",
@@ -98987,7 +98987,7 @@
       "itemCount": 3,
       "representativeCount": 0
     },
-    "isActive": false,
+    "isActive": true,
     "amenities": {},
     "operatorType": "OTHER",
     "fax": "",
@@ -199224,7 +199224,7 @@
       "itemCount": 1,
       "representativeCount": 0
     },
-    "isActive": false,
+    "isActive": true,
     "amenities": {},
     "operatorType": "OTHER",
     "fax": "",
@@ -229447,7 +229447,7 @@
       "itemCount": 0,
       "representativeCount": 0
     },
-    "isActive": false,
+    "isActive": true,
     "amenities": {},
     "operatorType": "OTHER",
     "fax": "",
@@ -240440,7 +240440,7 @@
       "itemCount": 2,
       "representativeCount": 0
     },
-    "isActive": false,
+    "isActive": true,
     "amenities": {},
     "operatorType": "OTHER",
     "fax": "",
@@ -240556,7 +240556,7 @@
       "itemCount": 0,
       "representativeCount": 0
     },
-    "isActive": false,
+    "isActive": true,
     "amenities": {},
     "operatorType": "OTHER",
     "fax": "",
@@ -240718,7 +240718,7 @@
       "itemCount": 3,
       "representativeCount": 0
     },
-    "isActive": false,
+    "isActive": true,
     "amenities": {},
     "operatorType": "OTHER",
     "fax": "",
@@ -240838,7 +240838,7 @@
       "itemCount": 0,
       "representativeCount": 0
     },
-    "isActive": false,
+    "isActive": true,
     "amenities": {},
     "operatorType": "OTHER",
     "fax": "",
