@@ -1130,7 +1130,7 @@
     "viewCount": 555,
     "amenities": {},
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://www.nakwonpark.co.kr/",
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0001/photo_1.jpg",
     "representativePrice": 3000000
   },
@@ -1448,7 +1448,7 @@
     "amenities": {},
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "http://www.siloami.com/",
     "viewCount": 255,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0002/photo_1.jpg",
     "representativePrice": 0
@@ -3280,7 +3280,7 @@
     },
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "http://www.ndpark.co.kr/",
     "viewCount": 240,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0005/photo_1.jpg",
     "representativePrice": 750000
@@ -4743,7 +4743,7 @@
     "amenities": {},
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://www.shinbulsanpark.co.kr/",
     "viewCount": 246,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/uploads/1766928213348_bvim5.jpg",
     "representativePrice": 1070000,
@@ -6278,7 +6278,7 @@
     "amenities": {},
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://www.yesan.go.kr/kor/sub06_13_04_02_01.do",
     "viewCount": 1009,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/uploads/1766928658658_pmp09.jpg",
     "representativePrice": 1419000
@@ -7328,7 +7328,7 @@
     },
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://dmonster1355.cafe24.com/",
     "viewCount": 279,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/uploads/1766928974732_j2iw9.jpg",
     "representativePrice": 1200000
@@ -8571,7 +8571,7 @@
     },
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://www.sotbalsan.co.kr/",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0010/photo_1.JPG",
     "representativePrice": 1400000
@@ -8983,7 +8983,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://roem.com/",
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0011/photo_1.jpg",
     "representativePrice": 5600000
   },
@@ -9413,7 +9413,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "http://www.hwasanpark.co.kr/",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0012/photo_1.jpg",
     "representativePrice": 5270000,
@@ -10013,7 +10013,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "http://www.scpark.co.kr/",
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0013/photo_1.jpg",
     "representativePrice": 14100000
   },
@@ -10386,7 +10386,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://www.jahayeon.com/",
     "viewCount": 227,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0014/photo_1.jpg",
     "representativePrice": 1950000
@@ -12061,7 +12061,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "http://www.nypark.co.kr/",
     "viewCount": 310,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0019/photo_1.PNG",
     "representativePrice": 950000
@@ -12356,7 +12356,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "http://www.mrmpark.co.kr/",
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0020/photo_1.jpg",
     "representativePrice": 1200000
   },
@@ -12732,7 +12732,6 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0021/photo_1.PNG",
     "representativePrice": 996000
@@ -14349,7 +14348,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://www.gyoungchun.com/",
     "viewCount": 276,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0026/photo_1.PNG",
     "representativePrice": 1000000
@@ -14976,7 +14975,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "http://www.woosungpark.com/",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0027/photo_1.JPG",
     "representativePrice": 693000
@@ -15378,7 +15377,6 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0028/photo_1.PNG",
     "representativePrice": 1800000
@@ -15803,7 +15801,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "http://www.cpdsd.or.kr/front/news/p0401/333?b_id=1&s_field=1&s_word=",
     "viewCount": 334,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0029/photo_1.PNG",
     "representativePrice": 1300000
@@ -16194,7 +16192,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://www.pungsanpark.co.kr/",
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0030/photo_1.jpg",
     "representativePrice": 222122
   },
@@ -16547,7 +16545,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "http://www.cpdsd.or.kr/front/news/p0401/333?b_id=1&s_field=1&s_word=",
     "viewCount": 210,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0031/photo_1.PNG",
     "representativePrice": 15000000
@@ -17721,7 +17719,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://www.pressian.com/",
     "viewCount": 260,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0034/photo_1.jpg",
     "representativePrice": 572000
@@ -18095,7 +18093,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "http://www.dongsanpark.com/",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0035/photo_1.PNG",
     "representativePrice": 900000
@@ -19104,7 +19102,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://www.jindallae.kr/",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0038/photo_1.jpg",
     "representativePrice": 19500000
@@ -19447,7 +19445,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://www.skpark.co.kr/",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0039/photo_1.jpg",
     "representativePrice": 1350000
@@ -20042,7 +20040,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://www.jahayeon.com/",
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0041/photo_1.jpg",
     "representativePrice": 1500000
   },
@@ -21113,7 +21111,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://www.hannampark.com/",
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0044/photo_1.JPG",
     "representativePrice": 581190
   },
@@ -22085,7 +22083,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://www.yangyang.go.kr/gw/mobile/partinfo_life_jangmyo",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0047/photo_1.PNG",
     "representativePrice": 359440
@@ -23053,7 +23051,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "http://www.cetpark.com/",
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0050/photo_1.PNG",
     "representativePrice": 2156000
   },
@@ -23415,7 +23413,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "http://www.ymw.kr/",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0051/photo_1.JPG",
     "representativePrice": 600000
@@ -24386,7 +24384,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "http://www.woosungpark.com/",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0054/photo_1.PNG",
     "representativePrice": 1600000
@@ -24864,7 +24862,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://www.yongin-park.com/",
     "viewCount": 329,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0056/photo_1.jpg",
     "representativePrice": 2620000
@@ -25491,7 +25489,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "http://www.gjpark.co.kr/",
     "viewCount": 361,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0058/photo_1.jpg",
     "representativePrice": 332748
@@ -25715,7 +25713,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://nhgpark.co.kr/",
     "viewCount": 381,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0059/photo_1.jpg",
     "representativePrice": 1577000
@@ -26344,7 +26342,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "http://chodong.or.kr/",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0062/photo_1.jpg",
     "representativePrice": 1300000
@@ -26549,7 +26547,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://www.taebaek.go.kr/www/contents.do?key=434",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0063/photo_1.PNG",
     "representativePrice": 2273000
@@ -26965,7 +26963,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "http://www.gjccp.kr/",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0065/photo_1.jpg",
     "representativePrice": 1000000
@@ -27275,7 +27273,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "http://gaenaree.com/",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0066/photo_1.PNG",
     "representativePrice": 724000
@@ -27521,7 +27519,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://ghdsd.or.kr/chunbo",
     "viewCount": 361,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0067/photo_1.PNG",
     "representativePrice": 1350000
@@ -27878,7 +27876,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "http://pn.catholic.or.kr/page/location.php",
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0069/photo_1.PNG",
     "representativePrice": 1000000
   },
@@ -28170,7 +28168,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "http://grave.amck.kr/",
     "viewCount": 261,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0070/photo_1.jpg",
     "representativePrice": 1250000
@@ -28350,7 +28348,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "http://www.xn--989ardy58be3ft8b5tjba.kr/",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0071/photo_1.PNG",
     "representativePrice": 800000
@@ -28635,7 +28633,7 @@
     },
     "operatorType": "OTHER",
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://www.insiseol.or.kr/life/family/facility/cemetery.jsp",
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0072/photo_1.jpg",
     "representativePrice": 36000000
   },
@@ -28787,7 +28785,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "http://www.ccpark.co.kr/",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0073/photo_1.jpg"
   },
@@ -29002,7 +29000,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://www.changwonpark.kr/",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0074/photo_1.jpg",
     "representativePrice": 2700000
@@ -30137,7 +30135,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://www.cheongju.go.kr/sannam/selectBbsNttView.do?key=4771&bbsNo=40&nttNo=45060&integrDeptCode=",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0079/photo_1.jpg",
     "representativePrice": 1302600
@@ -30274,7 +30272,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://www.pc.go.kr/portal/info/info-open/info-open-advance/info-open-advance-whole?preSeq=146114",
     "viewCount": 277,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0080/photo_1.jpg",
     "representativePrice": 2000000
@@ -31286,7 +31284,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://www.newsis.com/",
     "viewCount": 362,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0085/photo_1.PNG",
     "representativePrice": 300000
@@ -31657,7 +31655,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "http://www.seorabolpark.com/",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0087/photo_1.jpg",
     "representativePrice": 332749
@@ -31815,7 +31813,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "http://www.gimhaeskypark.com/",
     "viewCount": 419,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0088/photo_1.PNG",
     "representativePrice": 2500000
@@ -32234,7 +32232,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://www.jsimc.or.kr/",
     "viewCount": 295,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0090/photo_1.PNG",
     "representativePrice": 923000
@@ -32474,7 +32472,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://m.newspic.kr/",
     "viewCount": 311,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0091/photo_6.jpg",
     "representativePrice": 1700000
@@ -32599,7 +32597,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "http://www.andongpark.net/",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0092/photo_1.PNG",
     "representativePrice": 40000
@@ -32773,7 +32771,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://moovitapp.com/",
     "viewCount": 346,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0093/photo_1.PNG",
     "representativePrice": 3500000
@@ -33161,7 +33159,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "http://www.hdpark.co.kr/",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0095/photo_1.jpg",
     "representativePrice": 1300000
@@ -33321,7 +33319,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://www.jeonju.go.kr/planweb/board/view.9is?dataUid=3e5881f00ce3409dbf296af7f531eb52&contentUid=ff8080818990c349018b041a879f395a&boardUid=9be517a7914528ce01930aa3ddc26cf0",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0096/photo_1.JPG",
     "representativePrice": 240000
@@ -33513,7 +33511,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "http://www.hdpark.co.kr/",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0097/photo_1.jpg",
     "representativePrice": 1300000
@@ -34183,7 +34181,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://www.changwon.go.kr/cwportal/depart/11067/14022/14049.web",
     "viewCount": 158,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0100/photo_1.PNG",
     "representativePrice": 1400000
@@ -34422,7 +34420,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://www.hongcheon.go.kr/www/selectEminwonNewsView.do?key=283&news_epct_no=13656&ofr_pageSize=10",
     "viewCount": 176,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0101/photo_1.PNG",
     "representativePrice": 1125000
@@ -35391,7 +35389,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "http://www.peace11.com/",
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0106/photo_1.jpg",
     "representativePrice": 1641528
   },
@@ -37785,7 +37783,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://www.daejonilbo.com/",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0119/photo_1.jpeg",
     "representativePrice": 700000
@@ -38151,7 +38149,6 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0121/photo_1.jpg",
     "representativePrice": 3619280
@@ -38378,7 +38375,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "http://www.chungsol.net/",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0122/photo_1.JPG",
     "representativePrice": 2506000
@@ -39057,7 +39054,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://www.wanju.go.kr/index.9is?contentUid=ff8080818b024d8e018b274f60032c09",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0125/photo_1.PNG",
     "representativePrice": 684000
@@ -39421,7 +39418,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://www.placeview.co.kr/",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0127/photo_1.PNG",
     "representativePrice": 199000
@@ -39987,7 +39984,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://xn--hq1b28ffspg0a.com/",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0130/photo_1.PNG",
     "representativePrice": 150000
@@ -40578,7 +40575,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://www.hsg.go.kr/www/contents.do?key=1190",
     "viewCount": 267,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0133/photo_1.PNG",
     "representativePrice": 361140
@@ -40937,7 +40934,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://xn--h50bz74at1b530a.com/",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0135/photo_1.PNG",
     "representativePrice": 2450000
@@ -41429,7 +41426,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "http://www.gunwipark.com/",
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0138/photo_1.PNG",
     "representativePrice": 2000000
   },
@@ -42291,7 +42288,6 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
     "viewCount": 277,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0143/photo_1.jpg",
     "representativePrice": 1000000
@@ -42673,7 +42669,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://www.jahayeon.com/",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0145/photo_1.jpg",
     "representativePrice": 2450000
@@ -43014,7 +43010,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "http://www.eunkwang.com/",
     "viewCount": 344,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0147/photo_1.PNG",
     "representativePrice": 1000000
@@ -43302,7 +43298,6 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0149/photo_1.PNG",
     "representativePrice": 0
@@ -43478,7 +43473,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "http://www.elysium.co.kr/",
     "viewCount": 242,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0150/photo_1.png",
     "representativePrice": 897239
@@ -43810,7 +43805,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://c3korea.com/",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0152/photo_1.PNG",
     "representativePrice": 592100
@@ -44135,7 +44130,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "http://yi.catholic.or.kr/page/use.php",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0154/photo_1.jpg",
     "representativePrice": 600000
@@ -44507,7 +44502,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://www.nakwonpark.co.kr/",
     "viewCount": 347,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0156/photo_1.jpg",
     "representativePrice": 1660000
@@ -45053,7 +45048,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "http://www.dangjin.go.kr/media/Board/media/0102/View/12227",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0159/photo_1.PNG",
     "representativePrice": 693600
@@ -45168,7 +45163,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://www.busan.go.kr/depart/welgrand0305",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0160/photo_1.PNG",
     "representativePrice": 1405000
@@ -45963,7 +45958,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://www.suncheon.go.kr/minju/0008/0001/?mode=view&cntId=11767",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0165/photo_1.PNG",
     "representativePrice": 515000
@@ -46640,7 +46635,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://unkyung.co.kr/",
     "viewCount": 420,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0169/photo_1.jpg",
     "representativePrice": 1512400
@@ -46815,7 +46810,6 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0170/photo_1.PNG",
     "representativePrice": 15000
@@ -47093,7 +47087,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://wonjupark.com/",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0172/photo_1.PNG",
     "representativePrice": 1500000
@@ -47729,7 +47723,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://fpt.purpleo.co.kr/",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0176/photo_1.PNG",
     "representativePrice": 500000
@@ -47903,7 +47897,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://www.ulex.co.kr/",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0177/photo_1.PNG",
     "representativePrice": 300000
@@ -48236,7 +48230,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://www.sianpark.co.kr/",
     "viewCount": 429,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0179/photo_1.jpg",
     "representativePrice": 11132
@@ -49126,7 +49120,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://www.insiseol.or.kr/life/family/guide/grave_fee.jsp",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0184/photo_1.jpg",
     "representativePrice": 30000
@@ -49409,7 +49403,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://www.jeonbuk.go.kr/board/view.jeonbuk?boardId=BBS_0000036&menuCd=DOM_000000104001006004&dataSid=333222",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0186/photo_1.PNG",
     "representativePrice": 100000
@@ -49936,7 +49930,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://www.jeonbuk.go.kr/board/view.jeonbuk?boardId=BBS_0000036&menuCd=DOM_000000104006001000&dataSid=333218",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0189/photo_1.PNG",
     "representativePrice": 30000
@@ -50226,7 +50220,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://www.yanggu.go.kr/user_sub?bk=LQEIT240715221627882&mu_idx=474&bt=rd",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0191/photo_1.PNG",
     "representativePrice": 366120
@@ -50588,7 +50582,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "http://jdr.kr/",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0193/photo_1.jpg",
     "representativePrice": 1000000
@@ -50937,7 +50931,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://www.jeonbuk.go.kr/board/view.jeonbuk?boardId=BBS_0000036&menuCd=DOM_000000104006001000&dataSid=333227",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0195/photo_1.PNG",
     "representativePrice": 400000
@@ -51520,7 +51514,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://www.jeonbuk.go.kr/board/view.jeonbuk?boardId=BBS_0000036&menuCd=DOM_000000104001006004&dataSid=333220",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0199/photo_1.PNG",
     "representativePrice": 90000
@@ -51701,7 +51695,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://www.bisco.or.kr/yeongnakpark/index.asp",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0200/photo_1.jpg",
     "representativePrice": 300000
@@ -51876,7 +51870,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://dggb-portal.funeralblog.co.kr/",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0201/photo_1.PNG",
     "representativePrice": 25000
@@ -52052,7 +52046,7 @@
     "amenities": {},
     "operatorType": "OTHER",
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "http://www.mediareport.co.kr/",
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0202/photo_1.PNG",
     "representativePrice": 63000
   },
@@ -52226,7 +52220,6 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0203/photo_1.PNG",
     "representativePrice": 15000
@@ -52528,7 +52521,6 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0205/photo_1.jpg",
     "representativePrice": 1900000
@@ -53179,7 +53171,6 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0209/photo_1.PNG",
     "representativePrice": 180000
@@ -53528,7 +53519,7 @@
     "amenities": {},
     "operatorType": "OTHER",
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://www.placeview.co.kr/",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0211/photo_1.PNG",
     "representativePrice": 36000000
@@ -53703,7 +53694,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://www.cosmosfarm.com/",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0212/photo_1.PNG",
     "representativePrice": 15000
@@ -53879,7 +53870,7 @@
     "amenities": {},
     "operatorType": "OTHER",
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://www.idaegu.co.kr/",
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0213/photo_1.PNG",
     "representativePrice": 20000000
   },
@@ -54052,7 +54043,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://www.seoul.co.kr/",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0214/photo_1.PNG",
     "representativePrice": 15400
@@ -54491,7 +54482,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://www.jeonbuk.go.kr/board/view.jeonbuk?boardId=BBS_0000036&menuCd=DOM_000000104001006004&dataSid=333230",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0217/photo_1.PNG",
     "representativePrice": 445000
@@ -57487,7 +57478,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://www.gangjin.go.kr/www/open_information/advance/advance_info?idx=402&page=27&mode=view",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0235/photo_1.PNG",
     "representativePrice": 26000
@@ -58705,7 +58696,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "http://www.jongnocc.or.kr/16",
     "viewCount": 277,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0242/photo_1.jpg",
     "representativePrice": 10000
@@ -59401,7 +59392,6 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0246/photo_1.PNG",
     "representativePrice": 200000
@@ -60103,7 +60093,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://www.honam-funeralcenter.co.kr/",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0250/photo_1.jpg",
     "representativePrice": 1900000
@@ -60281,7 +60271,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://www.geochang.go.kr/02313/02327/02362.web",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0251/photo_1.PNG",
     "representativePrice": 300000
@@ -62234,7 +62224,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://www.guri.go.kr/www/selectBbsNttView.do?key=393&bbsNo=42&nttNo=139065",
     "viewCount": 332,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0263/photo_1.PNG",
     "representativePrice": 120000
@@ -63040,7 +63030,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://www.baekwoonmemorial.co.kr/",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0268/photo_1.jpg",
     "representativePrice": 700000
@@ -63207,7 +63197,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://www.baekwoonmemorial.co.kr/",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0269/photo_1.jpg",
     "representativePrice": 700000
@@ -63354,7 +63344,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "http://www.gunwipark.com/",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0270/photo_1.PNG",
     "representativePrice": 0
@@ -63527,7 +63517,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "http://www.mjeonbuk.com/",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0271/photo_1.PNG",
     "representativePrice": 300000
@@ -63987,7 +63977,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://www.jeonbuk.go.kr/board/view.jeonbuk?boardId=BBS_0000036&menuCd=DOM_000000104001006004&dataSid=333216",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0274/photo_1.PNG",
     "representativePrice": 90000
@@ -64097,7 +64087,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://www.jeonbuk.go.kr/board/view.jeonbuk?boardId=BBS_0000036&menuCd=DOM_000000104006001000&dataSid=333217",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0275/photo_1.PNG",
     "representativePrice": 90000
@@ -64273,7 +64263,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://www.placeview.co.kr/",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0276/photo_1.PNG",
     "representativePrice": 300000
@@ -64494,7 +64484,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "http://www.mediayonhap.com/",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0278/photo_1.PNG",
     "representativePrice": 50000
@@ -64663,7 +64653,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://www.sacheon.go.kr/life/00321/00391.web",
     "viewCount": 447,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0279/photo_1.PNG",
     "representativePrice": 23000
@@ -66440,7 +66430,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://www.djmw.co.kr/",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0290/photo_1.PNG",
     "representativePrice": 6300000
@@ -66787,7 +66777,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://www.ihc.go.kr/www/contents.do?key=204",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0292/photo_1.PNG",
     "representativePrice": 110000
@@ -68473,7 +68463,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://wipi.ai.kr/",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0302/photo_1.PNG",
     "representativePrice": 3081000
@@ -68742,7 +68732,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://www.tournews21.com/",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0304/photo_1.PNG",
     "representativePrice": 430500
@@ -69259,7 +69249,7 @@
     "operatorType": "OTHER",
     "isActive": false,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://www.chunbukyo.or.kr/_%EC%83%88%EC%86%8C%EC%8B%9D/%EC%B2%9C%EB%B6%80%EA%B5%90%EC%B6%94%EB%AA%A8%EA%B3%B5%EC%9B%90%EC%97%90%EC%84%9C-2022%EB%85%84-%EC%B6%94%EB%AA%A8%EC%9D%98-%EB%82%A0-%EC%97%B4%EB%A0%A4/",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0307/photo_1.PNG",
     "representativePrice": 0
@@ -69601,7 +69591,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "http://www.gijn.kr/",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0309/photo_1.PNG",
     "representativePrice": 40000
@@ -69913,7 +69903,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://www.daegu-archdiocese.or.kr/page/org.html?p=view&idNumber=530&id=2&T=&gN=%EC%84%B1%EC%A7%81%EC%9E%90%EC%9C%84%EC%9B%90%ED%9A%8C",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0311/photo_1.PNG",
     "representativePrice": 0
@@ -71476,7 +71466,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "http://carmap.co.kr/",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0320/photo_1.PNG",
     "representativePrice": 15000
@@ -74343,7 +74333,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://www.jeonbuk.go.kr/board/view.jeonbuk?boardId=BBS_0000036&menuCd=DOM_000000104001006004&dataSid=617323",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0337/photo_1.PNG",
     "representativePrice": 60000
@@ -75493,7 +75483,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://www.djsiseol.or.kr/portal/sub040206_05.asp",
     "viewCount": 344,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0345/photo_1.PNG",
     "representativePrice": 30000
@@ -75948,7 +75938,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "http://www.gjn.kr/",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0348/photo_1.PNG",
     "representativePrice": 400000
@@ -76098,7 +76088,7 @@
     "operatorType": "OTHER",
     "isActive": false,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://www.pressian.com/",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0349/photo_1.PNG",
     "representativePrice": 0
@@ -76251,7 +76241,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://www.djsiseol.or.kr/portal/sub040206_05.asp",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0350/photo_1.PNG",
     "representativePrice": 30000
@@ -76545,7 +76535,7 @@
     "operatorType": "OTHER",
     "isActive": false,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://findby.co.kr/",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0352/photo_1.PNG",
     "representativePrice": 0
@@ -76694,7 +76684,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://www.jeonbuk.go.kr/board/view.jeonbuk?boardId=BBS_0000036&menuCd=DOM_000000104001006004&dataSid=333221",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0353/photo_1.PNG",
     "representativePrice": 0
@@ -76840,7 +76830,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://terms.naver.com/",
     "viewCount": 349,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0354/photo_1.jpg",
     "representativePrice": 0
@@ -77802,7 +77792,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://manguripark.or.kr/sub/sub01_01.php",
     "viewCount": 303,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0360/photo_1.jpg",
     "representativePrice": 0
@@ -78718,7 +78708,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://www.boseong.go.kr/tour/festivity/yeol_seonru/parking?print=true&page=1&page=1",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0366/photo_1.PNG",
     "representativePrice": 0
@@ -79333,7 +79323,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://www.djsiseol.or.kr/portal/sub040206_05.asp",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0370/photo_1.PNG",
     "representativePrice": 30000
@@ -80049,7 +80039,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "http://www.naju.go.kr:443/www/administration/new/conflict?idx=580609&mode=view&sort=recent",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0375/photo_1.PNG",
     "representativePrice": 10000
@@ -80202,7 +80192,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://www.djsiseol.or.kr/portal/sub040206_05.asp",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0376/photo_1.PNG",
     "representativePrice": 30000
@@ -81409,7 +81399,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://www.pressian.com/",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0384/photo_1.PNG",
     "representativePrice": 200000
@@ -82484,7 +82474,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://www.store114.net/",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0391/photo_1.PNG",
     "representativePrice": 10000
@@ -82791,7 +82781,6 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0393/photo_1.PNG",
     "representativePrice": 50000
@@ -82946,7 +82935,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://www.gangjin.go.kr/www/open_information/advance/advance_info?idx=402&page=27&mode=view",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0394/photo_1.PNG",
     "representativePrice": 10000
@@ -83092,7 +83081,7 @@
     "operatorType": "OTHER",
     "isActive": false,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://www.sisul.or.kr/open_content/memorial/bbs/bbsMsgList.do?bcd=cremate&pgdiv=13",
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0395/photo_1.PNG",
     "representativePrice": 0
   },
@@ -84167,7 +84156,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://www.cosmosfarm.com/",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0402/photo_1.PNG",
     "representativePrice": 30000
@@ -85266,7 +85255,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "http://songwol.or.kr/",
     "viewCount": 361,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0409/photo_1.PNG",
     "representativePrice": 970000
@@ -87677,7 +87666,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://www.cosmosfarm.com/",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0425/photo_1.PNG",
     "representativePrice": 30000
@@ -88608,7 +88597,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "http://www.newstnt.com/",
     "viewCount": 276,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0431/photo_1.PNG",
     "representativePrice": 450000
@@ -89069,7 +89058,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://www.gangjin.go.kr/www/open_information/advance/advance_info?idx=402&page=27&mode=view",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0434/photo_1.PNG",
     "representativePrice": 30000
@@ -89951,7 +89940,7 @@
     "operatorType": "OTHER",
     "isActive": false,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://www.bmpark.co.kr/",
     "viewCount": 277,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0440/photo_1.jpg",
     "representativePrice": 0
@@ -90249,7 +90238,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "http://www.jeonjupark.co.kr/",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0442/photo_1.PNG",
     "representativePrice": 0
@@ -90970,7 +90959,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "http://www.xn--ob0bx0i3gt55ah0mz2alkn74g.com/",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0447/photo_1.jpg",
     "representativePrice": 0
@@ -91252,7 +91241,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://jejuhyanggyo.co.kr/",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0449/photo_1.PNG",
     "representativePrice": 0
@@ -91391,7 +91380,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "http://www.elysium.co.kr/",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0450/photo_1.PNG",
     "representativePrice": 0
@@ -91530,7 +91519,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://dggb-portal.funeralblog.co.kr/",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0451/photo_1.PNG",
     "representativePrice": 0
@@ -91973,7 +91962,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://www.diocesejeju.or.kr/holy_main/1731",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0454/photo_1.jpg",
     "representativePrice": 0
@@ -92115,7 +92104,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://terms.naver.com/",
     "viewCount": 382,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0455/photo_1.PNG",
     "representativePrice": 0
@@ -92869,7 +92858,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://nbukd-lee7305.tistory.com/",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0460/photo_1.PNG",
     "representativePrice": 0
@@ -93003,7 +92992,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://www.changwonpark.kr/",
     "viewCount": 328,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0461/photo_1.PNG",
     "representativePrice": 0
@@ -93535,7 +93524,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://www.shinsegae.com/",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0464/photo_1.PNG",
     "representativePrice": 1000000
@@ -93956,7 +93945,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://dggb-portal.funeralblog.co.kr/",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0467/photo_1.PNG",
     "representativePrice": 0
@@ -94095,7 +94084,6 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0468/photo_1.PNG",
     "representativePrice": 0
@@ -94237,7 +94225,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "http://church.catholic.or.kr/gireum/html/bon-02.htm",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0469/photo_1.PNG",
     "representativePrice": 0
@@ -94682,7 +94670,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://www.ccsamgakji.com/",
     "viewCount": 361,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0472/photo_1.PNG",
     "representativePrice": 0
@@ -95145,7 +95133,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://www.pressian.com/",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0475/photo_1.png",
     "representativePrice": 410000
@@ -95939,7 +95927,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "http://www.ssmemorialpark.co.kr/",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0479/photo_1.PNG",
     "representativePrice": 1500000
@@ -97462,7 +97450,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://cemetery.gwangyang.go.kr/",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0488/photo_1.PNG",
     "representativePrice": 340000
@@ -97625,7 +97613,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://www.hygn.go.kr/00432/00893/01170.web?amode=view&idx=860890&gcode=1001&gubun=present",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0489/photo_1.PNG",
     "representativePrice": 0
@@ -97764,7 +97752,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "http://www.ssm.or.kr/main/sub.html?Mode=view&boardID=www8&num=1076",
     "viewCount": 363,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0490/photo_1.PNG",
     "representativePrice": 0
@@ -98082,7 +98070,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://www.honam-funeralcenter.co.kr/",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0492/photo_1.PNG",
     "representativePrice": 0
@@ -99533,7 +99521,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "http://www.shinhyunchurch.kr/",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0503/photo_1.PNG",
     "representativePrice": 0
@@ -99980,7 +99968,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://www.bulgwang.or.kr/38",
     "viewCount": 328,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0506/photo_1.PNG",
     "representativePrice": 0
@@ -100265,7 +100253,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "http://www.dongsanpark.com/",
     "viewCount": 361,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0508/photo_1.PNG",
     "representativePrice": 0
@@ -101770,7 +101758,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "http://www.jungtosa.com/",
     "viewCount": 380,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0509/photo_1.JPG",
     "representativePrice": 1000000
@@ -102942,7 +102930,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://www.huepark.co.kr/",
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0510/photo_1.jpg",
     "representativePrice": 2000000
   },
@@ -103093,7 +103081,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "http://www.haeinsa.or.kr/bbs/board.php?bo_table=3050&wr_id=442",
     "viewCount": 263,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0511/photo_1.PNG",
     "representativePrice": 9000000
@@ -104787,7 +104775,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "http://www.ssmemorialpark.co.kr/",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0514/photo_1.PNG",
     "representativePrice": 1500000
@@ -105838,7 +105826,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://www.edpk.co.kr/",
     "viewCount": 335,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0515/photo_1.JPG",
     "representativePrice": 1200000
@@ -106902,7 +106890,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "http://www.803park.com/",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0516/photo_1.PNG",
     "representativePrice": 1500000
@@ -107444,7 +107432,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://www.gongamcompany.co.kr/",
     "viewCount": 368,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0517/photo_1.jpg",
     "representativePrice": 1500000
@@ -108493,7 +108481,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://ypthefore.co.kr/",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0519/photo_1.jpg",
     "representativePrice": 2000000
@@ -109882,7 +109870,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://marketbz.com/",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/uploads/1768961296053_4x2mqj.jpg",
     "representativePrice": 3000000
@@ -111389,7 +111377,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://xn--bb0bvbv22azrg55a803bv5k10b.com/",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0522/photo_1.png",
     "representativePrice": 3000000
@@ -111545,7 +111533,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://ddskycastle.kr/",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0523/photo_1.PNG",
     "representativePrice": 1500000
@@ -112546,7 +112534,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "http://www.maranathagh.co.kr/",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0524/photo_1.PNG",
     "representativePrice": 1500000
@@ -114449,7 +114437,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "http://www.greenpiapark.com/",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0526/photo_1.PNG",
     "representativePrice": 2800000
@@ -115195,7 +115183,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://www.bisco.or.kr/memorialpark/index.asp",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0527/photo_1.jpg",
     "representativePrice": 5000000
@@ -115950,7 +115938,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "http://www.youilpark.com/",
     "viewCount": 396,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0528/photo_1.jpg",
     "representativePrice": 2500000
@@ -116665,7 +116653,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://www.sianpark.co.kr/",
     "viewCount": 415,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0529/photo_1.jpg",
     "representativePrice": 25850000
@@ -117722,7 +117710,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "http://neverend.kr/",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0530/photo_1.jpg",
     "representativePrice": 2450000
@@ -118349,7 +118337,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "http://www.moakpark.co.kr/",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0531/photo_1.jpg",
     "representativePrice": 2400000
@@ -118878,7 +118866,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "http://www.doseongsa.or.kr/xe/chumoinfo",
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0532/photo_1.JPG",
     "representativePrice": 3500000
   },
@@ -120563,7 +120551,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "http://xn--3i0bm4pvoaq6yw2hg7i.com/",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0535/photo_1.jpg",
     "representativePrice": 3500000
@@ -121873,7 +121861,6 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0538/photo_1.PNG",
     "representativePrice": 50000
@@ -123388,7 +123375,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "http://www.ymw.kr/",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0051/photo_1.JPG",
     "representativePrice": 1800000
@@ -123640,7 +123627,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://www.bisco.or.kr/memorialpark/index.asp",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0542/photo_1.PNG",
     "representativePrice": 326000
@@ -124411,7 +124398,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "http://www.mokpopark.com/",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0544/photo_1.JPG",
     "representativePrice": 2000000
@@ -124996,7 +124983,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://kiramonthly.com/",
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0545/photo_1.jpg",
     "representativePrice": 2500000
   },
@@ -125834,7 +125821,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://www.utopiafuture.co.kr/",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0546/photo_1.jpg",
     "representativePrice": 1800000
@@ -126319,7 +126306,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://www.jahayeon.com/",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0547/photo_1.jpg",
     "representativePrice": 12500000
@@ -126747,7 +126734,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "http://bb.catholic.or.kr/page/remains.php",
     "viewCount": 432,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0548/photo_1.jpg",
     "representativePrice": 1900000
@@ -127067,7 +127054,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "http://bb.catholic.or.kr/board/view.php?board=faq&seq=435",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0549/photo_1.PNG",
     "representativePrice": 1800000
@@ -128358,7 +128345,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "http://www.sambongsa.com/",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0552/photo_1.jpg",
     "representativePrice": 6000000
@@ -129160,7 +129147,6 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0554/photo_1.jpg",
     "representativePrice": 3000000
@@ -129808,7 +129794,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://shue.kr/",
     "viewCount": 396,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0555/photo_1.JPG",
     "representativePrice": 3000000
@@ -130181,7 +130167,6 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0556/photo_1.PNG",
     "representativePrice": 3000000
@@ -130403,7 +130388,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "http://www.lawm.co.kr/",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0557/photo_1.jpg",
     "representativePrice": 8800000
@@ -130823,7 +130808,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "http://skypark.co.kr/",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0558/photo_1.jpg",
     "representativePrice": 1000000
@@ -131139,7 +131124,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://www.imaeil.com/",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0559/photo_1.PNG",
     "representativePrice": 373370
@@ -131545,7 +131530,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://www.bmpark.co.kr/",
     "viewCount": 327,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0440/photo_1.jpg",
     "representativePrice": 4045000
@@ -133075,7 +133060,6 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0564/photo_1.jpg",
     "representativePrice": 6100000
   },
@@ -133448,7 +133432,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://www.skycastle.kr/",
     "viewCount": 414,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0565/photo_1.jpg",
     "representativePrice": 2000000
@@ -133874,7 +133858,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "http://www.nokyawon.net/",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0566/photo_1.JPG",
     "representativePrice": 2500000
@@ -134311,7 +134295,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://www.peacepark.or.kr/icheon/intro/welcome.ksgi",
     "viewCount": 446,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0567/photo_1.PNG",
     "representativePrice": 770000
@@ -134785,7 +134769,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://01068893333.vipcall.co.kr/",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0568/photo_1.jpg",
     "representativePrice": 100000
@@ -135257,7 +135241,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "http://www.yangjupark.com/",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0569/photo_1.PNG",
     "representativePrice": 770000
@@ -135556,7 +135540,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://www.peacepark.or.kr/cheongdo/helpdesk/charnel.ksgi?installNm=%EC%A0%84%EC%84%B1%EA%B3%A4&applyNm=%EC%A0%84%EC%9D%80%EC%98%81",
     "viewCount": 344,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/uploads/1768962894467_rxaqps.jpg",
     "representativePrice": 770000
@@ -136396,7 +136380,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "http://www.kscatholic.or.kr/bbs/board.php?bo_table=noti2&wr_id=53",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0572/photo_1.PNG",
     "representativePrice": 1200000
@@ -137164,7 +137148,6 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0574/photo_1.jpg",
     "representativePrice": 1000000
@@ -137517,7 +137500,6 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
     "viewCount": 431,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0575/photo_1.JPG",
     "representativePrice": 1600000
@@ -137868,7 +137850,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "http://jaimpark.com/",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0576/photo_1.JPG",
     "representativePrice": 2500000
@@ -138191,7 +138173,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "http://www.gjtline.kr/",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0577/photo_1.png",
     "representativePrice": 2500000
@@ -139336,7 +139318,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://www.xn--zb0bz2xuzijwdpyf.com/",
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0578/photo_1.jpg",
     "representativePrice": 4000000
   },
@@ -139909,7 +139891,7 @@
     "isActive": true,
     "fax": "",
     "capacity": null,
-    "websiteUrl": "",
+    "websiteUrl": "https://www.sisul.or.kr/open_content/memorial/cremate/facility_photo03_02.jsp",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0580/photo_1.jpg",
     "representativePrice": 100000
@@ -140235,7 +140217,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "http://www.hwaeomsa.or.kr/",
     "viewCount": 386,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0581/photo_1.PNG",
     "representativePrice": 2500000
@@ -140399,7 +140381,6 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
     "viewCount": 395,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0582/photo_1.PNG",
     "representativePrice": 1000000
@@ -141131,7 +141112,7 @@
     "operatorType": "PUBLIC",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://www.sisul.or.kr/open_content/memorial/",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0584/photo_1.jpg",
     "representativePrice": 100000
@@ -141728,7 +141709,6 @@
     "isActive": true,
     "fax": "",
     "capacity": null,
-    "websiteUrl": "",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0586/photo_1.jpg",
     "representativePrice": 100000
@@ -142001,7 +141981,6 @@
     "isActive": true,
     "fax": "",
     "capacity": null,
-    "websiteUrl": "",
     "viewCount": 480,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0587/photo_1.jpg",
     "representativePrice": 100000
@@ -146246,7 +146225,6 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0598/photo_1.PNG",
     "representativePrice": 2630000
@@ -147412,7 +147390,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://www.buddhism.or.kr/jongdan/sub1/sub1-9-2-12.php",
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0602/photo_1.PNG",
     "representativePrice": 5000000
   },
@@ -147710,7 +147688,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://marketbz.com/",
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0603/photo_1.PNG",
     "representativePrice": 3000000
   },
@@ -155443,7 +155421,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "http://www.samdailbo.com/",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0627/photo_1.jpg",
     "representativePrice": 200000
@@ -156982,7 +156960,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "http://www.sejonge-park.kr/",
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/uploads/1769506194024_v2bjhz.jpg",
     "representativePrice": 4000000
   },
@@ -157929,7 +157907,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://www.gcfmc.or.kr/gc_memorialpark/",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0635/photo_1.jpg",
     "representativePrice": 1500000
@@ -158676,7 +158654,6 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0638/photo_1.PNG",
     "representativePrice": 2000000
@@ -160394,7 +160371,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://yakchunsa.templestay.com/",
     "viewCount": 395,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/uploads/1769506514090_dk4ri.jpg",
     "representativePrice": 15000000
@@ -186729,7 +186706,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://www.jeonbuk.go.kr/board/view.jeonbuk?boardId=BBS_0000036&menuCd=DOM_000000104001006004&dataSid=617341",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0766/photo_1.PNG",
     "representativePrice": 100000
@@ -186889,7 +186866,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "http://deokwonsa.com/",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0767/photo_1.jpg",
     "representativePrice": 0
@@ -188707,7 +188684,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://home.chosearch.com/",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0779/photo_1.jpg",
     "representativePrice": 50000
@@ -188928,7 +188905,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "http://www.peace11.com/",
     "viewCount": 399,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0106/photo_1.jpg",
     "representativePrice": 1007479
@@ -189405,7 +189382,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "http://younghopark.com/",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0783/photo_1.PNG",
     "representativePrice": 800000
@@ -189686,7 +189663,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://cfmc.kr/",
     "viewCount": 480,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0785/photo_1.PNG",
     "representativePrice": 150000
@@ -190537,7 +190514,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://www.xn--289a5d62b284avyo3rj.com/",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0791/photo_1.PNG",
     "representativePrice": 500000
@@ -191052,7 +191029,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "http://www.xn--989ardy58be3ft8b5tjba.kr/",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0071/photo_1.PNG",
     "representativePrice": 550000
@@ -191461,7 +191438,7 @@
     },
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "http://www.sineopark.co.kr/",
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0798/photo_1.jpg",
     "representativePrice": 1000000
   },
@@ -191707,7 +191684,7 @@
     "isActive": true,
     "fax": "",
     "capacity": null,
-    "websiteUrl": "",
+    "websiteUrl": "http://www.yeaeunpark.com/",
     "viewCount": 277,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0800/photo_1.PNG",
     "representativePrice": 2500000
@@ -191989,7 +191966,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "http://www.idampark.co.kr/",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0802/photo_1.jpg",
     "representativePrice": 3550000
@@ -192122,7 +192099,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "http://bhpark.co.kr/",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0803/photo_1.jpg",
     "representativePrice": 1800000
@@ -193170,7 +193147,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://www.uiryeong.go.kr/index.uiryeong?menuCd=DOM_000000204001002018",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0811/photo_1.PNG",
     "representativePrice": 300000
@@ -193406,7 +193383,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://cms.wfmc.kr/",
     "viewCount": 344,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0813/photo_1.jpg",
     "representativePrice": 500000
@@ -193526,7 +193503,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://www.xn--9m1b62g7qo9znbfa.com/",
     "viewCount": 361,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0814/photo_1.PNG",
     "representativePrice": 5400000
@@ -193779,7 +193756,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://grandpark.seoul.go.kr/munhwa/munhwaView/ko/S001005001004.do?mh_no=46145",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0816/photo_1.jpg",
     "representativePrice": 200000,
@@ -194077,7 +194054,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://cylooks.co.kr/",
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0818/photo_1.jpg",
     "representativePrice": 0
   },
@@ -195040,7 +195017,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://blog.snlife.co.kr/",
     "viewCount": 0,
     "thumbnail": "",
     "representativePrice": 130000
@@ -195452,7 +195429,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://blog.snlife.co.kr/",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0829/photo_1.jpg",
     "representativePrice": 190000
@@ -196205,7 +196182,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://m.cafe.daum.net/",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0835/photo_1.jpg",
     "representativePrice": 3200000
@@ -196326,7 +196303,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://hcpark.kr/",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0836/photo_1.jpg",
     "representativePrice": 1750000
@@ -196456,7 +196433,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "http://www.bongsunsa.net/",
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0837/photo_1.PNG",
     "representativePrice": 5000000
   },
@@ -196715,7 +196692,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "http://www.chilgok.go.kr/portal/bbs/view.do?mId=0904100000&bIdx=110091&ptIdx=332",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0839/photo_1.PNG",
     "representativePrice": 60000000
@@ -197338,7 +197315,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://www.geochang.go.kr/02313/02327/02362.web",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0844/photo_1.PNG",
     "representativePrice": 100000
@@ -199473,7 +199450,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "http://www.headlinejeju.co.kr/",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0860/photo_1.jpg",
     "representativePrice": 20000
@@ -199569,7 +199546,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://www.dangjin.go.kr/cop/bbs/BBSMSTR_000000001010/selectBoardArticle.do?nttId=1113547",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0152/photo_1.PNG",
     "representativePrice": 5436000
@@ -199724,7 +199701,7 @@
     "operatorType": "OTHER",
     "isActive": false,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://www.dangjin.go.kr/cop/bbs/BBSMSTR_000000001010/selectBoardArticle.do?nttId=1113547",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0152/photo_1.PNG",
     "representativePrice": 400000
@@ -200180,7 +200157,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://www.brsisul.or.kr/kor/BBSMSTR_000000000003/2896/view.do",
     "viewCount": 429,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0863/photo_1.PNG",
     "representativePrice": 700000
@@ -200593,7 +200570,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "http://www.headlinejeju.co.kr/",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0867/photo_1.PNG",
     "representativePrice": 20000
@@ -201809,7 +201786,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://www.jangseong.go.kr/home/www/news/show/5238",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0878/photo_1.JPG",
     "representativePrice": 300000
@@ -202115,7 +202092,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://marketbz.com/",
     "viewCount": 434,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0880/photo_1.jpg",
     "representativePrice": 0
@@ -202450,7 +202427,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://www.ihc.go.kr/www/contents.do?key=204",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0292/photo_1.PNG",
     "representativePrice": 250000
@@ -202562,7 +202539,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://www.yc.go.kr/tour/tourInfo/view.do?mId=0111000000&idx=288",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0884/photo_1.jpg",
     "representativePrice": 2000000
@@ -203427,7 +203404,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://news.bbsi.co.kr/",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0886/photo_1.jpg",
     "representativePrice": 0
@@ -203766,7 +203743,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "http://www.namdopark.kr/",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0888/photo_1.jpg",
     "representativePrice": 0
@@ -203884,7 +203861,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://www.haewonjungsa.com/",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0889/photo_1.jpg",
     "representativePrice": 0
@@ -204400,7 +204377,7 @@
     "operatorType": "OTHER",
     "isActive": false,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://www.baekwoonmemorial.co.kr/",
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0268/photo_1.jpg",
     "representativePrice": 700000
   },
@@ -204567,7 +204544,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "http://www.dongsanpark.com/",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0035/photo_1.PNG",
     "representativePrice": 0
@@ -204832,7 +204809,7 @@
     "isActive": true,
     "fax": "",
     "capacity": null,
-    "websiteUrl": "",
+    "websiteUrl": "https://donghwapark.co.kr:48152/",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0895/photo_1.jpg",
     "representativePrice": 0,
@@ -205029,7 +205006,7 @@
     "operatorType": "OTHER",
     "isActive": false,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://www.baekwoonmemorial.co.kr/",
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0269/photo_1.jpg",
     "representativePrice": 700000
   },
@@ -205175,7 +205152,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://www.khs.go.kr/newsBbz/selectNewsBbzView.do?newsItemId=155696700&sectionId=b_sec_1",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0897/photo_1.PNG",
     "representativePrice": 0
@@ -206182,7 +206159,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "http://www.nypark.co.kr/",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0019/photo_1.PNG",
     "representativePrice": 0
@@ -206342,7 +206319,7 @@
     "amenities": {},
     "isActive": false,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://dmonster1355.cafe24.com/",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0008/photo_1.PNG",
     "representativePrice": 0
@@ -206755,7 +206732,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://gunlock8.tistory.com/",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0116/photo_1.PNG",
     "representativePrice": 120000
@@ -207963,7 +207940,7 @@
     "isActive": true,
     "fax": "",
     "capacity": null,
-    "websiteUrl": "",
+    "websiteUrl": "http://www.woosungpark.com/",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0915/photo_1.PNG",
     "representativePrice": 0
@@ -209148,7 +209125,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://www.cosmosfarm.com/",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0924/photo_1.PNG",
     "representativePrice": 0
@@ -209575,7 +209552,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://www.cosmosfarm.com/",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0927/photo_1.PNG",
     "representativePrice": 0
@@ -212520,7 +212497,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://www.chungju.go.kr/child/selectBbsNttView.do?key=2294&bbsNo=174&nttNo=199418",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0944/photo_1.PNG",
     "representativePrice": 0
@@ -212673,7 +212650,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://www.hannampark.com/",
     "viewCount": 447,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0945/photo_1.PNG",
     "representativePrice": 0
@@ -213301,7 +213278,7 @@
     "isActive": true,
     "fax": "",
     "capacity": null,
-    "websiteUrl": "",
+    "websiteUrl": "http://woosungmp.com/",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0949/photo_1.PNG",
     "representativePrice": 0
@@ -214132,7 +214109,7 @@
     "operatorType": "OTHER",
     "isActive": false,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "http://www.cetpark.com/",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0050/photo_1.PNG",
     "representativePrice": 0
@@ -215082,7 +215059,7 @@
     "isActive": true,
     "fax": "",
     "capacity": null,
-    "websiteUrl": "",
+    "websiteUrl": "https://www.jindallae.kr/",
     "viewCount": 447,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0963/photo_1.PNG",
     "representativePrice": 0
@@ -215209,7 +215186,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://www.korearank.com/",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0964/photo_1.PNG",
     "representativePrice": 0
@@ -215468,7 +215445,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "http://gaenaree.com/",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0066/photo_1.PNG",
     "representativePrice": 0
@@ -216161,7 +216138,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://www.xn--w52bz9k6vch5c5p.kr/",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0970/photo_1.PNG",
     "representativePrice": 3000000
@@ -216823,7 +216800,7 @@
     "isActive": true,
     "fax": "",
     "capacity": null,
-    "websiteUrl": "",
+    "websiteUrl": "https://www.chungnam.go.kr/cnportal/media/article/view.do?articleNo=MD0002080339&menuNo=500167",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0974/photo_1.PNG",
     "representativePrice": 0,
@@ -217094,7 +217071,7 @@
     "isActive": true,
     "fax": "",
     "capacity": null,
-    "websiteUrl": "",
+    "websiteUrl": "https://www.hanulpark.co.kr/",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0976/photo_1.PNG",
     "representativePrice": 0
@@ -218696,7 +218673,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://www.juklim.com/",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0988/photo_1.PNG",
     "representativePrice": 0
@@ -218973,7 +218950,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://www.gimpocouncil.go.kr/cnts/ctz/minwonView.php?bbsSn=1149&bbsCd=ctz&bbsSubCd=ctz01",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0990/photo_1.jpg",
     "representativePrice": 0
@@ -219104,7 +219081,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://samgolife.co.kr/",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0991/photo_1.PNG",
     "representativePrice": 0
@@ -219762,7 +219739,7 @@
     "isActive": true,
     "fax": "",
     "capacity": null,
-    "websiteUrl": "",
+    "websiteUrl": "https://www.gongamcompany.co.kr/",
     "viewCount": 118,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0996/photo_1.PNG",
     "representativePrice": 0
@@ -220302,7 +220279,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://www.ggtour.or.kr/travel-info/tourism-info/725dff4b-746a-11ee-b910-0242ac120002",
     "viewCount": 167,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-1000/photo_1.PNG",
     "representativePrice": 0
@@ -221142,7 +221119,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://www.bisco.or.kr/yeongnakpark/index.asp",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-1006/photo_1.PNG",
     "representativePrice": 0
@@ -221561,7 +221538,7 @@
     "amenities": {},
     "isActive": false,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "http://www.siloami.com/",
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0002/photo_1.jpg",
     "representativePrice": 0
   },
@@ -221807,7 +221784,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://rolling-dana.tistory.com/",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-1010/photo_1.PNG",
     "representativePrice": 0
@@ -224066,7 +224043,7 @@
     "amenities": {},
     "isActive": false,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://www.yesan.go.kr/kor/sub06_13_04_02_01.do",
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0007/photo_1.PNG",
     "representativePrice": 0
   },
@@ -224293,7 +224270,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://www.cwsisul.or.kr/_sangbok/_sub01/sub01_02.html",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-1492/photo_1.jpg",
     "representativePrice": 0
@@ -224460,7 +224437,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://www.cwsisul.or.kr/_sangbok/_sub01/sub01_02.html",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-1492/photo_1.jpg",
     "representativePrice": 0
@@ -225176,7 +225153,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://www.goseong.go.kr/tour/board/view.goseong?boardId=BBS_0000168&menuCd=DOM_000000202005000000&dataSid=240935",
     "viewCount": 242,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-1032/photo_1.PNG",
     "representativePrice": 0
@@ -226432,7 +226409,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://pervsi.com/",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-1041/photo_1.PNG",
     "representativePrice": 0
@@ -227051,7 +227028,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://www.gjwelfare.or.kr:444/orga/map.detail.php?no=6847",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-1045/photo_1.PNG",
     "representativePrice": 0
@@ -227197,7 +227174,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://young1984.com/",
     "viewCount": 328,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-1046/photo_1.PNG",
     "representativePrice": 0
@@ -228257,7 +228234,7 @@
     "amenities": {},
     "isActive": false,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "http://www.ndpark.co.kr/",
     "viewCount": 294,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0005/photo_1.jpg",
     "representativePrice": 0
@@ -230401,7 +230378,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://mytemple.co.kr:49234/",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-1067/photo_1.PNG",
     "representativePrice": 0
@@ -234834,7 +234811,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://www.pungsanpark.co.kr/",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0030/photo_1.jpg",
     "representativePrice": 0
@@ -235128,7 +235105,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "http://xn--ok1b63r6ocfpf5wde.com/",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-1098/photo_1.PNG",
     "representativePrice": 0
@@ -236601,7 +236578,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://jsimc.or.kr/layout/basic/page/page2/page06.html",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-1108/photo_1.PNG",
     "representativePrice": 0
@@ -237942,7 +237919,7 @@
     "operatorType": "OTHER",
     "isActive": false,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "http://skypark.co.kr/",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0558/photo_1.jpg",
     "representativePrice": 0
@@ -238186,7 +238163,7 @@
     "operatorType": "OTHER",
     "isActive": false,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://www.gyoungchun.com/",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0026/photo_1.PNG",
     "representativePrice": 0
@@ -238464,7 +238441,7 @@
     "amenities": {},
     "isActive": false,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://dmonster1355.cafe24.com/",
     "viewCount": 227,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0008/photo_1.PNG",
     "representativePrice": 0
@@ -239324,7 +239301,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://www.ggilbo.com/",
     "viewCount": 327,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-1127/photo_1.jpeg",
     "representativePrice": 0
@@ -240178,7 +240155,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://www.geochang.go.kr/portal/contract/List.do?amode=view&ctrtAcctBookMngNo=201900214137",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0246/photo_1.PNG",
     "representativePrice": 0
@@ -240293,7 +240270,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://news.bbsi.co.kr/",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-1134/photo_1.PNG",
     "representativePrice": 0
@@ -241852,7 +241829,7 @@
     "operatorType": "OTHER",
     "isActive": false,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://www.changwon.go.kr/cwportal/depart/11067/14022/14049.web",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0100/photo_1.PNG",
     "representativePrice": 0
@@ -243790,7 +243767,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://www.guri.go.kr/www/selectBbsNttView.do?key=393&bbsNo=42&nttNo=139065",
     "viewCount": 383,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0263/photo_1.PNG",
     "representativePrice": 0
@@ -243911,7 +243888,7 @@
     "operatorType": "OTHER",
     "isActive": false,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://www.guri.go.kr/www/selectBbsNttView.do?key=393&bbsNo=42&nttNo=139065",
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0263/photo_1.PNG",
     "representativePrice": 0
   },
@@ -244638,7 +244615,7 @@
     "isActive": true,
     "fax": "",
     "capacity": null,
-    "websiteUrl": "",
+    "websiteUrl": "https://www.newsro.kr/",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-1163/photo_1.png",
     "representativePrice": 0,
@@ -245307,7 +245284,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "http://www.iksanmemorial.kr/",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-1166/photo_1.png",
     "representativePrice": 2000000
@@ -246133,7 +246110,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://wonjupark.com/",
     "viewCount": 311,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0172/photo_1.PNG",
     "representativePrice": 0
@@ -248395,7 +248372,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "http://evergreenpark.co.kr/",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-1179/photo_1.jpg",
     "representativePrice": 1500000
@@ -248853,7 +248830,7 @@
     "operatorType": "OTHER",
     "isActive": false,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://www.xn--w52bz9k6vch5c5p.kr/",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0970/photo_1.PNG",
     "representativePrice": 0
@@ -251331,7 +251308,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "http://www.rodempark.com/",
     "viewCount": 467,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-1189/photo_1.PNG",
     "representativePrice": 2000000
@@ -251897,7 +251874,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "http://www.woosungpark.com/",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0027/photo_1.JPG",
     "representativePrice": 11000000
@@ -252725,7 +252702,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://pervsi.com/",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-1194/photo_1.jpg",
     "representativePrice": 2500000
@@ -253152,7 +253129,7 @@
     "isActive": true,
     "fax": "",
     "capacity": null,
-    "websiteUrl": "",
+    "websiteUrl": "https://www.wbf.or.kr/woodland/facility/view.do?f_idx=26&prepage=%2Fwoodland%2Ffacility%2Flist.do%3Fv_page%3D6",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-1196/photo_1.jpg",
     "representativePrice": 1000000
@@ -255647,7 +255624,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "http://www.nllpoorn.com/",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-1208/photo_1.jpg",
     "representativePrice": 2000000
@@ -256401,7 +256378,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://www.xn--vk2bq6c4lu1uboh.com/",
     "viewCount": 227,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-1211/photo_1.png",
     "representativePrice": 4000000
@@ -256905,7 +256882,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "http://soonwidot.co.kr/",
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-1214/photo_1.jpg",
     "representativePrice": 2000000
   },
@@ -257483,7 +257460,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "http://www.cosmosfarm.com/",
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-1217/photo_1.jpg",
     "representativePrice": 2000000
   },
@@ -259822,7 +259799,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://marketbz.com/",
     "viewCount": 0,
     "thumbnail": "",
     "representativePrice": 3000000
@@ -260682,7 +260659,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://member.nfcf.or.kr/forest/user.tdf?a=common.HtmlApp&c=4001&d=gyeongju&page=/member/gyeongju/mem01.html&mc=MEM_GGJ_NBR01",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-1227/photo_1.PNG",
     "representativePrice": 6000000
@@ -261381,7 +261358,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://www.seohopark.kr/",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0589/photo_1.jpg",
     "representativePrice": 2000000
@@ -261852,7 +261829,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://ssanggyesa.net/",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-1234/photo_1.PNG",
     "representativePrice": 9000000
@@ -263552,7 +263529,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://www.taebaek.go.kr/www/contents.do?key=434",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0063/photo_1.PNG",
     "representativePrice": 500000
@@ -263677,7 +263654,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://www.jeonbuk.go.kr/board/view.jeonbuk?boardId=BBS_0000036&menuCd=DOM_000000104001006004&dataSid=333246",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-1245/photo_1.JPG",
     "representativePrice": 300000
@@ -264749,7 +264726,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://nhgpark.co.kr/",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0059/photo_1.jpg",
     "representativePrice": 1577000
@@ -264896,7 +264873,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "http://www.jndmnews.com/",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0417/photo_1.PNG",
     "representativePrice": 1800000
@@ -266990,7 +266967,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "http://www.gochangpj.kr/",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-1265/photo_1.jpg",
     "representativePrice": 250000
@@ -267387,7 +267364,7 @@
     "operatorType": "OTHER",
     "isActive": false,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://yakchunsa.templestay.com/",
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-1268/photo_1.PNG",
     "representativePrice": 3500000
   },
@@ -268739,7 +268716,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "http://mujangnf.cafe24.com/",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-1279/photo_1.jpg",
     "representativePrice": 50000
@@ -269861,7 +269838,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "http://skypark.co.kr/",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0558/photo_1.jpg",
     "representativePrice": 2000000
@@ -270273,7 +270250,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "http://www.ymw.kr/",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0051/photo_1.JPG",
     "representativePrice": 1500000
@@ -271558,7 +271535,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "http://www.chungsol.net/",
     "viewCount": 498,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0122/photo_1.JPG",
     "representativePrice": 90000
@@ -272623,7 +272600,7 @@
     "operatorType": "OTHER",
     "isActive": false,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "http://www.woosungpark.com/",
     "viewCount": 310,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0027/photo_1.JPG",
     "representativePrice": 0
@@ -277154,7 +277131,7 @@
     "operatorType": "OTHER",
     "isActive": false,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "http://www.st-news.co.kr/",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0698/photo_1.PNG",
     "representativePrice": 0
@@ -278028,7 +278005,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://www.ggilbo.com/",
     "viewCount": 327,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-1127/photo_1.jpeg",
     "representativePrice": 0
@@ -278643,7 +278620,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://www.shinsegae.com/",
     "viewCount": 395,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0464/photo_1.PNG",
     "representativePrice": 0
@@ -281172,7 +281149,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "http://www.mrmpark.co.kr/",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0020/photo_1.jpg",
     "representativePrice": 0
@@ -281315,7 +281292,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "http://www.nypark.co.kr/",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0019/photo_1.PNG",
     "representativePrice": 0
@@ -281457,7 +281434,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "http://younghopark.com/",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0783/photo_1.PNG",
     "representativePrice": 0
@@ -281747,7 +281724,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://www.wbf.or.kr/woodland/facility/view.do?f_idx=31&prepage=%2Fwoodland%2Ffacility%2Flist.do%3Fv_page%3D6",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-1368/photo_1.PNG",
     "representativePrice": 0
@@ -282323,7 +282300,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "http://kia_m.apluslife.co.kr/",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-1372/photo_1.PNG",
     "representativePrice": 0
@@ -283637,7 +283614,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "http://www.xn--4k0b59hu4d9vh8zdixcdwntsb216cckdz5b.com/",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-1381/photo_1.PNG",
     "representativePrice": 0
@@ -284154,7 +284131,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "http://www.smdaycare.or.kr/main/sub.html?pageCode=1",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-1384/photo_1.PNG",
     "representativePrice": 0
@@ -287437,7 +287414,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "http://www.chungsol.net/",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-1406/photo_1.jpeg",
     "representativePrice": 0
@@ -287873,7 +287850,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "http://www.hyosimwon.com/",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0655/photo_1.jpg",
     "representativePrice": 0
@@ -289320,7 +289297,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://seago.co.kr/",
     "viewCount": 395,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-1419/photo_1.png",
     "representativePrice": 0
@@ -289590,7 +289567,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "http://www.yongcheon.com/",
     "viewCount": 282,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-1421/photo_1.png",
     "representativePrice": 0
@@ -290168,7 +290145,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "http://xn--og5b21b73v.com/",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-1425/photo_1.png",
     "representativePrice": 0
@@ -290457,7 +290434,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://www.evergreench.or.kr/main/sub.html?pageCode=5",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-1427/photo_1.png",
     "representativePrice": 0
@@ -291307,7 +291284,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "http://www.xn--989ardy58be3ft8b5tjba.kr/",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0071/photo_1.PNG",
     "representativePrice": 0
@@ -292604,7 +292581,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://blog.snlife.co.kr/",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-1437/photo_1.jpg",
     "representativePrice": 0
@@ -294021,7 +293998,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://jsimc.or.kr/layout/basic/page/page2/page06.html",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-1108/photo_1.PNG",
     "representativePrice": 100000
@@ -297044,7 +297021,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "http://www.jeollailbo.com/",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0536/photo_1.PNG",
     "representativePrice": 0
@@ -299974,7 +299951,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://www.tongyeong.go.kr/00973/00979/01046.web",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-1452/photo_1.jpg",
     "representativePrice": 0
@@ -300947,7 +300924,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://www.gongju.go.kr/naraewon/index.do",
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0691/photo_1.jpg",
     "representativePrice": 1000000
   },
@@ -302572,7 +302549,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "http://www.fta.or.kr/bbs/board.php?bo_table=sub03_01&wr_id=3929",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-1457/photo_1.jpg",
     "representativePrice": 0
@@ -304070,7 +304047,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://www.sokcho.go.kr/sc/fields/welfare/senior/funeral",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-1461/photo_1.jpg",
     "representativePrice": 0
@@ -304473,7 +304450,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://blog.snlife.co.kr/",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-1462/photo_1.jpg",
     "representativePrice": 0
@@ -305617,7 +305594,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://xbugo.com/",
     "viewCount": 0,
     "thumbnail": "",
     "representativePrice": 0
@@ -306888,7 +306865,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://www.mokpo.go.kr/www/life_welfare/welfare/funeral?print=true&page=1&page=1",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-1470/photo_1.jpg",
     "representativePrice": 70000
@@ -307261,7 +307238,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://www.memorial-hall.co.kr/",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-1471/photo_1.jpg",
     "representativePrice": 0
@@ -307616,7 +307593,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://www.gimhaememorialpark.or.kr/www",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-1472/photo_1.jpg",
     "representativePrice": 0
@@ -308198,7 +308175,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://www.cauc.or.kr/_chpark/index.asp",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0751/photo_1.PNG",
     "representativePrice": 100000
@@ -308876,7 +308853,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://www.nocutnews.co.kr/",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-1476/photo_1.jpg",
     "representativePrice": 0
@@ -309057,7 +309034,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://blog.snlife.co.kr/",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-1477/photo_1.jpg",
     "representativePrice": 130000
@@ -310715,7 +310692,7 @@
     "operatorType": "OTHER",
     "isActive": false,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://www.bisco.or.kr/yeongnakpark/index.asp",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0200/photo_1.jpg",
     "representativePrice": 0
@@ -311558,7 +311535,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://www.cuc.or.kr/viewBoard.do?id=670d59cfc45c4dc0a79eda9e7ee51e32",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-1485/photo_1.jpg",
     "representativePrice": 0
@@ -311850,7 +311827,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "http://memorial.andongsisul.or.kr/",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-1486/photo_1.JPG",
     "representativePrice": 0
@@ -312946,7 +312923,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://www.gumi.go.kr/well/wfInfoByCate/view.do?key=2505131273907&wfInfoSn=403",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-1490/photo_1.jpg",
     "representativePrice": 0
@@ -313249,7 +313226,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://memorial-map.kr/",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-1491/photo_1.jpg",
     "representativePrice": 0
@@ -315401,7 +315378,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://www.cwsisul.or.kr/_sangbok/_sub01/sub01_02.html",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-1492/photo_1.jpg",
     "representativePrice": 0
@@ -315702,7 +315679,7 @@
     "operatorType": "OTHER",
     "isActive": true,
     "fax": "",
-    "websiteUrl": "",
+    "websiteUrl": "https://www.gumi.go.kr/well/wfInfoByCate/view.do?key=2505131273907&wfInfoSn=403",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-1493/photo_1.JPG",
     "representativePrice": 0

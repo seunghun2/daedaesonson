@@ -1,0 +1,2318 @@
+{
+  "verified": [
+    {
+      "id": "park-0001",
+      "name": "(재)낙원추모공원",
+      "isPublic": false,
+      "website": "https://www.nakwonpark.co.kr/",
+      "pageTitle": "낙원추모공원"
+    },
+    {
+      "id": "park-0002",
+      "name": "(재)실로암공원묘원",
+      "isPublic": false,
+      "website": "http://www.siloami.com/",
+      "pageTitle": "실로암공원묘원"
+    },
+    {
+      "id": "park-0005",
+      "name": "진주내동공원묘원",
+      "isPublic": false,
+      "website": "http://www.ndpark.co.kr/",
+      "pageTitle": "진주내동공원묘원"
+    },
+    {
+      "id": "park-0006",
+      "name": "신불산공원묘원",
+      "isPublic": false,
+      "website": "https://www.shinbulsanpark.co.kr/",
+      "pageTitle": "신불산공원묘원"
+    },
+    {
+      "id": "park-0007",
+      "name": "예산군추모공원",
+      "isPublic": true,
+      "website": "https://www.yesan.go.kr/kor/sub06_13_04_02_01.do",
+      "pageTitle": "인사말 < 공원소개 < 추모공원 < 공공·관광시설 < 분야별 정보 < 예산군청"
+    },
+    {
+      "id": "park-0008",
+      "name": "(재)대지공원묘원",
+      "isPublic": false,
+      "website": "https://dmonster1355.cafe24.com/sub0201.php",
+      "pageTitle": "분양절차 | 대지공원묘원"
+    },
+    {
+      "id": "park-0010",
+      "name": "재단법인 솥발산공원묘원",
+      "isPublic": false,
+      "website": "https://www.sotbalsan.co.kr/",
+      "pageTitle": "솥발산공원묘원"
+    },
+    {
+      "id": "park-0011",
+      "name": "재단법인 로엠(묘지)",
+      "isPublic": false,
+      "website": "https://roem.com/",
+      "pageTitle": "[ROEM] 로맨틱 영캐주얼 브랜드 로엠"
+    },
+    {
+      "id": "park-0012",
+      "name": "(재)화산추모공원(묘지)",
+      "isPublic": false,
+      "website": "http://www.hwasanpark.co.kr/page/sub2-4.php",
+      "pageTitle": "분양안내 | 화산추모공원"
+    },
+    {
+      "id": "park-0014",
+      "name": "(재)자하연 일산(묘지)",
+      "isPublic": false,
+      "website": "https://www.jahayeon.com/",
+      "pageTitle": "자연과 공존하는 메모리얼파크 자하연 사이트입니다."
+    },
+    {
+      "id": "park-0019",
+      "name": "(재)남양공원묘원",
+      "isPublic": false,
+      "website": "http://www.nypark.co.kr/doc/intro02.php",
+      "pageTitle": "재단법인 남양공원묘원"
+    },
+    {
+      "id": "park-0020",
+      "name": "목련공원묘원",
+      "isPublic": false,
+      "website": "http://www.mrmpark.co.kr/",
+      "pageTitle": "목련메모리얼파크 &#8211; 추억을 담은 그곳"
+    },
+    {
+      "id": "park-0027",
+      "name": "우성공원묘원",
+      "isPublic": false,
+      "website": "http://www.woosungpark.com/bbs/board.php?bo_table=sub0203",
+      "pageTitle": "우성공원묘원"
+    },
+    {
+      "id": "park-0029",
+      "name": "청파동성당 청파묘원",
+      "isPublic": false,
+      "website": "http://www.cpdsd.or.kr/front/news/p0401/333?b_id=1&s_field=1&s_word=",
+      "pageTitle": "천주교 서울대교구 청파동성당 :: 공지사항"
+    },
+    {
+      "id": "park-0030",
+      "name": "(재)풍산공원묘원",
+      "isPublic": false,
+      "website": "https://www.pungsanpark.co.kr/",
+      "pageTitle": "풍산공원묘원"
+    },
+    {
+      "id": "park-0031",
+      "name": "청파동성당 평화묘원",
+      "isPublic": false,
+      "website": "http://www.cpdsd.or.kr/front/news/p0401/333?b_id=1&s_field=1&s_word=",
+      "pageTitle": "천주교 서울대교구 청파동성당 :: 공지사항"
+    },
+    {
+      "id": "park-0032",
+      "name": "(재)호정공원(묘지)",
+      "isPublic": false,
+      "website": "http://www.jeonmin.co.kr/news/articleView.html?idxno=339394",
+      "pageTitle": "호정공원Cloud9 철저한 코로나19 방역수칙 준비 - 전민일보"
+    },
+    {
+      "id": "park-0034",
+      "name": "삼척시추모공원 묘지 제1단지",
+      "isPublic": true,
+      "website": "https://www.pressian.com/pages/articles/2021011414141939661",
+      "pageTitle": "삼척시 추모공원, 온라인 추모관 홈페이지 운영"
+    },
+    {
+      "id": "park-0035",
+      "name": "(재)동산공원묘원",
+      "isPublic": false,
+      "website": "http://www.dongsanpark.com/",
+      "pageTitle": "동산공원묘원 | 분묘 | 봉안탑 | 봉안묘 | 평장 | 무연고"
+    },
+    {
+      "id": "park-0039",
+      "name": "(재)석계공원묘원",
+      "isPublic": false,
+      "website": "https://www.skpark.co.kr/bbs/board.php?bo_table=notice&wr_id=31",
+      "pageTitle": "공지사항 | 석계공원묘원"
+    },
+    {
+      "id": "park-0041",
+      "name": "(재)자하연포천(묘지)",
+      "isPublic": false,
+      "website": "https://www.jahayeon.com/",
+      "pageTitle": "자연과 공존하는 메모리얼파크 자하연 사이트입니다."
+    },
+    {
+      "id": "park-0042",
+      "name": "별그리다(THE HILL)",
+      "isPublic": false,
+      "website": "http://www.star4ever.com/helpdesk/notice_hill/lists",
+      "pageTitle": "별그리다 THE HILL"
+    },
+    {
+      "id": "park-0044",
+      "name": "(재)한남공원묘원",
+      "isPublic": false,
+      "website": "https://www.hannampark.com/",
+      "pageTitle": "한남공원묘원"
+    },
+    {
+      "id": "park-0050",
+      "name": "광주공원묘원",
+      "isPublic": false,
+      "website": "http://www.cetpark.com/",
+      "pageTitle": "경기광주공원묘원"
+    },
+    {
+      "id": "park-0051",
+      "name": "영모묘원",
+      "isPublic": false,
+      "website": "http://www.ymw.kr/bbs/content.php?co_id=greeting",
+      "pageTitle": "인사말 | (재)영모묘원"
+    },
+    {
+      "id": "park-0054",
+      "name": "(재)우성공원묘원",
+      "isPublic": false,
+      "website": "http://www.woosungpark.com/bbs/board.php?bo_table=sub0203",
+      "pageTitle": "우성공원묘원"
+    },
+    {
+      "id": "park-0056",
+      "name": "(재)용인공원(묘지)",
+      "isPublic": false,
+      "website": "https://www.yongin-park.com/facility/park_info",
+      "pageTitle": "공원안내 | 용인공원"
+    },
+    {
+      "id": "park-0058",
+      "name": "(재)경주공원묘원",
+      "isPublic": false,
+      "website": "http://www.gjpark.co.kr/feature",
+      "pageTitle": "경주공원묘원"
+    },
+    {
+      "id": "park-0059",
+      "name": "남한강공원묘원",
+      "isPublic": false,
+      "website": "https://nhgpark.co.kr/",
+      "pageTitle": "남한강공원묘원"
+    },
+    {
+      "id": "park-0062",
+      "name": "초동교회공원묘원",
+      "isPublic": false,
+      "website": "http://chodong.or.kr/",
+      "pageTitle": "초동교회"
+    },
+    {
+      "id": "park-0063",
+      "name": "태백공원묘원",
+      "isPublic": true,
+      "website": "https://www.taebaek.go.kr/www/contents.do?key=434",
+      "pageTitle": "태백 공원묘원 - 장묘시설 - 복지 - 태백시청"
+    },
+    {
+      "id": "park-0066",
+      "name": "(재)개나리추모공원",
+      "isPublic": false,
+      "website": "http://gaenaree.com/",
+      "pageTitle": "개나리공원"
+    },
+    {
+      "id": "park-0067",
+      "name": "금호동성당 천보묘원(묘지)",
+      "isPublic": false,
+      "website": "https://ghdsd.or.kr/chunbo",
+      "pageTitle": "천보묘원 &#8211; 금호동성당"
+    },
+    {
+      "id": "park-0069",
+      "name": "(재)천주교평내공원묘원",
+      "isPublic": false,
+      "website": "http://pn.catholic.or.kr/page/location.php",
+      "pageTitle": "천주교 평내공원묘원"
+    },
+    {
+      "id": "park-0070",
+      "name": "재림공원묘원",
+      "isPublic": false,
+      "website": "http://grave.amck.kr/bbs/content.php?co_id=howToUse",
+      "pageTitle": "이용 안내 | 재림공원묘원"
+    },
+    {
+      "id": "park-0072",
+      "name": "영종공설묘지(신규매장불가)",
+      "isPublic": true,
+      "website": "https://www.insiseol.or.kr/life/family/facility/cemetery.jsp",
+      "pageTitle": "묘지 | 인천시설공단 인천가족공원&gt;주요 시설안내"
+    },
+    {
+      "id": "park-0074",
+      "name": "창원공원묘원(묘지)",
+      "isPublic": false,
+      "website": "https://www.changwonpark.kr/",
+      "pageTitle": "창원공원묘원"
+    },
+    {
+      "id": "park-0079",
+      "name": "오창장미공원",
+      "isPublic": true,
+      "website": "https://www.cheongju.go.kr/sannam/selectBbsNttView.do?key=4771&bbsNo=40&nttNo=45060&integrDeptCode=",
+      "pageTitle": "매화공원․오창장미공원 청주시시설관리공단으로 위탁 &lt; 새소식 &lt; 열린마당 - 서원구 산남동"
+    },
+    {
+      "id": "park-0080",
+      "name": "평창군 공설묘지",
+      "isPublic": true,
+      "website": "https://www.pc.go.kr/portal/info/info-open/info-open-advance/info-open-advance-whole?preSeq=146114",
+      "pageTitle": "전체보기 - 사전정보공표 상세 | 평창군청 &gt; 정보공개 &gt; 정보공개 &gt; 사전정보공표 자료 &gt; 전체보기"
+    },
+    {
+      "id": "park-0085",
+      "name": "영동공원묘원",
+      "isPublic": false,
+      "website": "https://www.newsis.com/view/NISI20210919_0000832396",
+      "pageTitle": "강릉영동공원묘원 추석성묘 :: 공감언론 뉴시스 ::"
+    },
+    {
+      "id": "park-0087",
+      "name": "서라벌공원묘원",
+      "isPublic": false,
+      "website": "http://www.seorabolpark.com/page/greeting.php",
+      "pageTitle": "재단법인 서라벌공원묘원"
+    },
+    {
+      "id": "park-0091",
+      "name": "광릉 더 크레스트 묘지",
+      "isPublic": false,
+      "website": "https://m.newspic.kr/view.html?nid=2024121809000017576",
+      "pageTitle": "새로운 개념의 고품격 광릉추모공원 봉안당 광릉 더 크레스트"
+    },
+    {
+      "id": "park-0092",
+      "name": "(재)안동추모공원(묘지)",
+      "isPublic": false,
+      "website": "http://www.andongpark.net/bbs/content.php?co_id=sub1_1",
+      "pageTitle": "법인소개 | (재)안동추모공원"
+    },
+    {
+      "id": "park-0093",
+      "name": "청량리성당 다볼산묘원",
+      "isPublic": false,
+      "website": "https://moovitapp.com/index/en/public_transit-%EC%B2%9C%EC%A3%BC%EA%B5%90_%EC%B2%AD%EB%9F%89%EB%A6%AC_%EC%84%B1%EB%8B%B9_%EB%8B%A4%EB%B3%BC%EC%82%B0_%EB%AC%98%EC%9B%90-%EC%84%9C%EC%9A%B8%EC%8B%9CSeoul-site_44525387-1802",
+      "pageTitle": "How to Get to 천주교 청량리 성당 다볼산 묘원 in 양주시, 경기도 by Bus or Subway?"
+    },
+    {
+      "id": "park-0095",
+      "name": "현대공원1묘원",
+      "isPublic": false,
+      "website": "http://www.hdpark.co.kr/06_guide/sitemap.php",
+      "pageTitle": "재단법인 현대공원"
+    },
+    {
+      "id": "park-0096",
+      "name": "전주효자공원",
+      "isPublic": true,
+      "website": "https://www.jeonju.go.kr/planweb/board/view.9is?dataUid=3e5881f00ce3409dbf296af7f531eb52&contentUid=ff8080818990c349018b041a879f395a&boardUid=9be517a7914528ce01930aa3ddc26cf0",
+      "pageTitle": "전주시 대표사이트 > 전주소식 > 공고 > 고시/공고 > 전주 도시계획시설(묘지공원:효자묘지공원)사업 실시계획 변경 작성에 따른 열람(정정)공고(읽기)"
+    },
+    {
+      "id": "park-0097",
+      "name": "현대공원2묘원",
+      "isPublic": false,
+      "website": "http://www.hdpark.co.kr/06_guide/sitemap.php",
+      "pageTitle": "재단법인 현대공원"
+    },
+    {
+      "id": "park-0100",
+      "name": "천자봉공원묘원",
+      "isPublic": false,
+      "website": "https://www.changwon.go.kr/cwportal/depart/11067/14022/14049.web",
+      "pageTitle": "천자봉공원묘원 | 분야별정보"
+    },
+    {
+      "id": "park-0106",
+      "name": "(재)자하연분당(묘지)",
+      "isPublic": false,
+      "website": "http://www.peace11.com/board_KweM79/3506",
+      "pageTitle": "자하연 분당 공원묘지 안내 - - - 공식✅"
+    },
+    {
+      "id": "park-0119",
+      "name": "청양군추모공원(묘지)",
+      "isPublic": true,
+      "website": "https://www.daejonilbo.com/news/articleView.html?idxno=2227246",
+      "pageTitle": "청양군, 추모공원 추석 명절맞이 환경 정비 및 운영 준비 박차 < 청양 < 충남 < 지역 < 기사본문 - 대전일보"
+    },
+    {
+      "id": "park-0122",
+      "name": "청솔공원",
+      "isPublic": true,
+      "website": "http://www.chungsol.net/",
+      "pageTitle": "청솔수목장 본사 - 수목장,자연장,잔디장,추모공원,납골,봉안,나무장례"
+    },
+    {
+      "id": "park-0125",
+      "name": "완주군 공설공원묘지",
+      "isPublic": true,
+      "website": "https://www.wanju.go.kr/index.9is?contentUid=ff8080818b024d8e018b274f60032c09",
+      "pageTitle": "완주군 > 분야별정보 > 복지 > 노인복지 > 장묘문화 > 장묘시설현황"
+    },
+    {
+      "id": "park-0127",
+      "name": "청북공설묘지",
+      "isPublic": true,
+      "website": "https://www.placeview.co.kr/id/MjcyNjgzMzUg",
+      "pageTitle": "청북공설공원묘지"
+    },
+    {
+      "id": "park-0135",
+      "name": "재단법인 아너스홈(구 대성공원묘원)",
+      "isPublic": false,
+      "website": "https://xn--h50bz74at1b530a.com/24/?q=YToxOntzOjEyOiJrZXl3b3JkX3R5cGUiO3M6MzoiYWxsIjt9&bmode=view&idx=122902733&t=board",
+      "pageTitle": "(재)대성공원묘원 -&gt; (재)아너스홈 명칭 변경안내 : 아너스홈"
+    },
+    {
+      "id": "park-0138",
+      "name": "가톨릭군위묘원",
+      "isPublic": false,
+      "website": "http://www.gunwipark.com/bbs/content.php?co_id=welcome",
+      "pageTitle": "묘원소개 | 가톨릭 군위묘원"
+    },
+    {
+      "id": "park-0145",
+      "name": "(재)자하연팔당(묘지)",
+      "isPublic": false,
+      "website": "https://www.jahayeon.com/",
+      "pageTitle": "자연과 공존하는 메모리얼파크 자하연 사이트입니다."
+    },
+    {
+      "id": "park-0147",
+      "name": "은광교회 묘지",
+      "isPublic": false,
+      "website": "http://www.eunkwang.com/main/sub.html?pageCode=5",
+      "pageTitle": "은광교회 / 교회 안내 / 섬기는 분들 / 장로"
+    },
+    {
+      "id": "park-0150",
+      "name": "삼성개발공원묘원(묘지)",
+      "isPublic": false,
+      "website": "http://www.elysium.co.kr/",
+      "pageTitle": "(재)삼성개발공원묘원 엘리시움"
+    },
+    {
+      "id": "park-0152",
+      "name": "솔뫼공설묘지",
+      "isPublic": true,
+      "website": "https://c3korea.com/dangjin-solmoe-public-cemetery-expansion-design-competition/",
+      "pageTitle": "당진시 솔뫼공설묘지 묘역확장사업 설계 공모 - C3코리아"
+    },
+    {
+      "id": "park-0154",
+      "name": "천주교용인공원묘원",
+      "isPublic": false,
+      "website": "http://yi.catholic.or.kr/page/use.php",
+      "pageTitle": "천주교 용인추모공원"
+    },
+    {
+      "id": "park-0156",
+      "name": "낙원공원묘원",
+      "isPublic": false,
+      "website": "https://www.nakwonpark.co.kr/bbs/board.php?bo_table=05_01&wr_id=22",
+      "pageTitle": "낙원공원묘원 공식 홈페이지 리뉴얼 오픈안내 > 공지사항 | 낙원추모공원"
+    },
+    {
+      "id": "park-0160",
+      "name": "영락공원묘지",
+      "isPublic": true,
+      "website": "https://www.busan.go.kr/depart/welgrand0305",
+      "pageTitle": "영락공원 운영 : 부산광역시 분야별 통합"
+    },
+    {
+      "id": "park-0169",
+      "name": "운경공원묘원",
+      "isPublic": false,
+      "website": "https://unkyung.co.kr/about-us/",
+      "pageTitle": "운경공원 소개 - (재)운경공원"
+    },
+    {
+      "id": "park-0172",
+      "name": "(재)원주공원묘원",
+      "isPublic": false,
+      "website": "https://wonjupark.com/",
+      "pageTitle": "원주공원묘원"
+    },
+    {
+      "id": "park-0176",
+      "name": "유치공설공원묘지",
+      "isPublic": true,
+      "website": "https://fpt.purpleo.co.kr/view/48329",
+      "pageTitle": "유치공설공원묘지 | 전라남도 장흥군 유치면 부유로 257 | 전국 공중 화장실 지도"
+    },
+    {
+      "id": "park-0177",
+      "name": "의령군공설묘지",
+      "isPublic": true,
+      "website": "https://www.ulex.co.kr/%EB%B2%95%EB%A5%A0/1374122-2104519-%EC%9D%98%EB%A0%B9%EA%B5%B0%EA%B3%B5%EC%84%A4%EB%AC%98%EC%A7%80%EC%84%A4%EC%B9%98",
+      "pageTitle": "의령군 공설묘지 설치 및 관리 등에 관한 조례 | U-LEX 법률우주"
+    },
+    {
+      "id": "park-0184",
+      "name": "인천가족공원 묘지",
+      "isPublic": true,
+      "website": "https://www.insiseol.or.kr/life/family/guide/grave_fee.jsp",
+      "pageTitle": "사용요금 | 인천시설공단 인천가족공원&gt;장사시설 이용안내&gt;묘지시설 이용안내"
+    },
+    {
+      "id": "park-0193",
+      "name": "진달래공원묘원",
+      "isPublic": false,
+      "website": "http://jdr.kr/%EB%B6%84%EC%96%91%EC%95%88%EB%82%B4/%EB%B6%84%EC%96%91%EC%A0%88%EC%B0%A8/",
+      "pageTitle": "분양절차 | 재단법인 진달래공원묘원"
+    },
+    {
+      "id": "park-0200",
+      "name": "부산영락공원묘지",
+      "isPublic": true,
+      "website": "https://www.bisco.or.kr/yeongnakpark/index.asp",
+      "pageTitle": "영락공원"
+    },
+    {
+      "id": "park-0201",
+      "name": "죽변화성리공설묘지",
+      "isPublic": true,
+      "website": "https://dggb-portal.funeralblog.co.kr/all-funeral/%EC%9A%B8%EC%A7%84%EA%B5%B0%EC%9D%98%EB%A3%8C%EC%9B%90%EC%9E%A5%EB%A1%80%EC%8B%9D%EC%9E%A5/%EC%9A%B8%EC%A7%84%20%EA%B5%B0%EB%A6%BD%20%EC%B6%94%EB%AA%A8%EC%9B%90/%EC%A3%BD%EB%B3%80%ED%99%94%EC%84%B1%EB%A6%AC%EA%B3%B5%EC%84%A4%EB%AC%98%EC%A7%80/",
+      "pageTitle": "울진군의료원장례식장x울진 군립 추모원x죽변화성리공설묘지, 장례식장, 화장장, 장지 한 번에 | 대구경북장례정보 [고이장례연구소]"
+    },
+    {
+      "id": "park-0202",
+      "name": "신월공설묘지(만장)",
+      "isPublic": true,
+      "website": "http://www.mediareport.co.kr/269127",
+      "pageTitle": "광주시 초월읍, 신월공설묘지 환경 정비로 쾌적하고 품격 있는 추모 공간 조성:미디어 리포트"
+    },
+    {
+      "id": "park-0211",
+      "name": "왕길공설묘지(만장)",
+      "isPublic": true,
+      "website": "https://www.placeview.co.kr/id/MjUwODQwMTAg",
+      "pageTitle": "왕길공설묘지"
+    },
+    {
+      "id": "park-0212",
+      "name": "양오리공설묘지",
+      "isPublic": true,
+      "website": "https://www.cosmosfarm.com/square/comment/76803",
+      "pageTitle": "양오리공설묘지 인천 강화군 송해면 양오리 산184 ..."
+    },
+    {
+      "id": "park-0213",
+      "name": "상주시공설묘지(만장)",
+      "isPublic": true,
+      "website": "https://www.idaegu.co.kr/news/articleView.html?idxno=510928",
+      "pageTitle": "상주, 공설추모공원 최종후보지 선정 속도 < 상주 < 경북 < 기사본문 - 대구신문"
+    },
+    {
+      "id": "park-0214",
+      "name": "왕길조성묘지",
+      "isPublic": true,
+      "website": "https://www.seoul.co.kr/news/newsView.php?id=20110118016018",
+      "pageTitle": "인천 왕길묘지 수목장 조성 民·官 갈등 | 서울Pn"
+    },
+    {
+      "id": "park-0235",
+      "name": "선암리공설묘지",
+      "isPublic": true,
+      "website": "https://www.gangjin.go.kr/www/open_information/advance/advance_info?idx=402&page=27&mode=view",
+      "pageTitle": "공동, 공설묘지 현황 &lt; (전체) &lt; 사전정보공표목록 &lt; 사전정보공표 &lt; 정보공개 - 강진군청"
+    },
+    {
+      "id": "park-0250",
+      "name": "갑향군립묘원(묘지)",
+      "isPublic": true,
+      "website": "https://www.honam-funeralcenter.co.kr/funeral-process-recommend/%EA%B5%AC%EB%A1%80%EC%9E%A5%EB%A1%80%EC%8B%9D%EC%9E%A5/%EC%88%9C%EC%B2%9C%EC%8B%9C%EB%A6%BD%EC%B6%94%EB%AA%A8%EA%B3%B5%EC%9B%90/%EA%B0%91%ED%96%A5%EA%B5%B0%EB%A6%BD%EB%AC%98%EC%9B%90(%EB%AC%98%EC%A7%80)/",
+      "pageTitle": "구례장례식장x순천시립추모공원x갑향군립묘원(묘지), 광주 전라 장례 준비의 모든 것 :: 광주전라장례정보 [고이장례연구소]"
+    },
+    {
+      "id": "park-0263",
+      "name": "구리시공설묘지",
+      "isPublic": true,
+      "website": "https://www.guri.go.kr/www/selectBbsNttView.do?key=393&bbsNo=42&nttNo=139065",
+      "pageTitle": "구리소식 &gt; 보도자료 - 구리시청"
+    },
+    {
+      "id": "park-0268",
+      "name": "백운공원묘원 제1묘원",
+      "isPublic": false,
+      "website": "https://www.baekwoonmemorial.co.kr/",
+      "pageTitle": "(재)백운공원묘원"
+    },
+    {
+      "id": "park-0269",
+      "name": "백운공원묘원 제2묘원",
+      "isPublic": false,
+      "website": "https://www.baekwoonmemorial.co.kr/",
+      "pageTitle": "(재)백운공원묘원"
+    },
+    {
+      "id": "park-0270",
+      "name": "가톨릭 범물공원묘원",
+      "isPublic": false,
+      "website": "http://www.gunwipark.com/bbs/board.php?bo_table=notice&wr_id=1",
+      "pageTitle": "가톨릭 군위묘원 홈페이지입니다. > 공지사항 | 가톨릭 군위묘원"
+    },
+    {
+      "id": "park-0271",
+      "name": "익산하늘공원묘지",
+      "isPublic": true,
+      "website": "http://www.mjeonbuk.com/news/articleView.html?idxno=87820",
+      "pageTitle": "익산시 공설장사시설, '익산하늘공원'으로 명칭 통합 < 익산시 < 자치행정 < 기사본문 - 아시아뉴스전북"
+    },
+    {
+      "id": "park-0276",
+      "name": "북상공설공원묘지",
+      "isPublic": true,
+      "website": "https://www.placeview.co.kr/id/MjUwODM5NDQg",
+      "pageTitle": "북상공설공원묘지"
+    },
+    {
+      "id": "park-0278",
+      "name": "안성시공설공원묘지(사곡동)",
+      "isPublic": true,
+      "website": "http://www.mediayonhap.com/news/articleView.html?idxno=71072",
+      "pageTitle": "안성, 사곡동·금광면 공설공원묘지 분묘 일제조사 집중 접수기간 운영 < 사회 < 종합 < 기사본문 - 미디어연합"
+    },
+    {
+      "id": "park-0279",
+      "name": "사천시공설묘지",
+      "isPublic": true,
+      "website": "https://www.sacheon.go.kr/life/00321/00391.web",
+      "pageTitle": "사천시 : 대한민국 우주항공 수도"
+    },
+    {
+      "id": "park-0290",
+      "name": "대전공원묘원",
+      "isPublic": false,
+      "website": "https://www.djmw.co.kr/bbs/board.php?bo_table=41&wr_id=2",
+      "pageTitle": "홈페이지 개설 안내 > 공지사항 | (재)대전공원묘원"
+    },
+    {
+      "id": "park-0292",
+      "name": "화천공원묘원",
+      "isPublic": true,
+      "website": "https://www.ihc.go.kr/www/contents.do?key=204",
+      "pageTitle": "장사업무 - 노인 - 주민복지 - 보건/복지 - 분야별정보 - 화천군청"
+    },
+    {
+      "id": "park-0302",
+      "name": "망월묘지공원",
+      "isPublic": true,
+      "website": "https://wipi.ai.kr/ko/%EB%A7%9D%EC%9B%94%EB%AC%98%EC%A7%80%EA%B3%B5%EC%9B%90",
+      "pageTitle": "망월묘지공원 - 위피버스"
+    },
+    {
+      "id": "park-0304",
+      "name": "모란공원(묘지)",
+      "isPublic": false,
+      "website": "https://www.tournews21.com/news/articleView.html?idxno=92317",
+      "pageTitle": "모란시장 근처 가볼 만한 곳, 어디가 있을까? < 국내여행 < 여행 < 기사본문 - 투어코리아"
+    },
+    {
+      "id": "park-0307",
+      "name": "천부교추모공원",
+      "isPublic": false,
+      "website": "https://www.chunbukyo.or.kr/_%EC%83%88%EC%86%8C%EC%8B%9D/%EC%B2%9C%EB%B6%80%EA%B5%90%EC%B6%94%EB%AA%A8%EA%B3%B5%EC%9B%90%EC%97%90%EC%84%9C-2022%EB%85%84-%EC%B6%94%EB%AA%A8%EC%9D%98-%EB%82%A0-%EC%97%B4%EB%A0%A4/",
+      "pageTitle": "천부교추모공원에서 ‘2022년 추모의 날’ 열려 | 천부교 / 천부교회 공식 홈페이지"
+    },
+    {
+      "id": "park-0309",
+      "name": "일동면 공설묘지",
+      "isPublic": true,
+      "website": "http://www.gijn.kr/news/articleView.html?idxno=418160",
+      "pageTitle": "포천시, ‘일동면 공설묘지 추모공원 조성’ 사업 추진 < 포천시 < 자치행정 < 종합 < 기사본문 - 경기인저널"
+    },
+    {
+      "id": "park-0311",
+      "name": "천주교 대구대교구청 성직자묘지",
+      "isPublic": false,
+      "website": "https://www.daegu-archdiocese.or.kr/page/org.html?p=view&idNumber=530&id=2&T=&gN=%EC%84%B1%EC%A7%81%EC%9E%90%EC%9C%84%EC%9B%90%ED%9A%8C",
+      "pageTitle": "천주교 대구대교구"
+    },
+    {
+      "id": "park-0320",
+      "name": "내리공설묘지(화도면)",
+      "isPublic": true,
+      "website": "http://carmap.co.kr/web/mplus/gage/view.php?bid=25620874&SCODE=F18A02&sigun=6280000&gugun=3570000",
+      "pageTitle": "[생활] 내리공설묘지 ( 인천광역시 강화군 화도면 )"
+    },
+    {
+      "id": "park-0348",
+      "name": "충해공원묘지",
+      "isPublic": true,
+      "website": "http://www.gjn.kr/news/articleView.html?idxno=33384",
+      "pageTitle": "충해공원묘지 옆 산 속에 왠 철재유통시설 < 사회 < 뉴스 < 기사본문 - 거제인터넷신문"
+    },
+    {
+      "id": "park-0349",
+      "name": "합성동공설묘지",
+      "isPublic": true,
+      "website": "https://www.pressian.com/pages/articles/2022090722462496419",
+      "pageTitle": "마산회원구 \"추석 연휴 합성동 공설묘지 성묘객 맞이 준비 끝\""
+    },
+    {
+      "id": "park-0352",
+      "name": "하늘의문(당하동)",
+      "isPublic": false,
+      "website": "https://findby.co.kr/details/22686-282603000071-st-652b54e48c641f9e38a1e6d4",
+      "pageTitle": "당하동 하늘의문묘지, 드림로 472"
+    },
+    {
+      "id": "park-0354",
+      "name": "혜화동성당 도봉동묘원",
+      "isPublic": false,
+      "website": "https://terms.naver.com/entry.naver?docId=2596267&cid=51880&categoryId=53262",
+      "pageTitle": "천주교 혜화동교회 방학동 묘원 암각문"
+    },
+    {
+      "id": "park-0360",
+      "name": "망우역사문화공원",
+      "isPublic": false,
+      "website": "https://manguripark.or.kr/sub/sub01_01.php",
+      "pageTitle": "망우역사문화공원"
+    },
+    {
+      "id": "park-0366",
+      "name": "보성공설묘지",
+      "isPublic": true,
+      "website": "https://www.boseong.go.kr/tour/festivity/yeol_seonru/parking?print=true&page=1&page=1",
+      "pageTitle": "보성군오시는 길 및 주차장 안내 &lt; 보성 열선루 이순신 역사문화축제 &lt; 축제/행사"
+    },
+    {
+      "id": "park-0375",
+      "name": "산포면공설묘지",
+      "isPublic": true,
+      "website": "http://www.naju.go.kr:443/www/administration/new/conflict?idx=580609&mode=view&sort=recent",
+      "pageTitle": "갈등유발 예상시설 사전고지(묘지관련시설 및 장례시설, 산포면 등정리 941-1) &lt; 갈등유발 예상시설 사전고지 &lt; 나주소식 &lt; 열린시정 - 나주시청"
+    },
+    {
+      "id": "park-0384",
+      "name": "구례군공설묘지",
+      "isPublic": true,
+      "website": "https://www.pressian.com/pages/articles/2022062311571680638",
+      "pageTitle": "구례군, 친환경 공설자연장지 새단장"
+    },
+    {
+      "id": "park-0391",
+      "name": "천주교나주성당공원묘지",
+      "isPublic": false,
+      "website": "https://www.store114.net/store/detail.asp?seq=25083900",
+      "pageTitle": "천주교나주성당공원묘지"
+    },
+    {
+      "id": "park-0394",
+      "name": "남평읍공설묘지",
+      "isPublic": true,
+      "website": "https://www.gangjin.go.kr/www/open_information/advance/advance_info?idx=402&page=27&mode=view",
+      "pageTitle": "공동, 공설묘지 현황 &lt; (전체) &lt; 사전정보공표목록 &lt; 사전정보공표 &lt; 정보공개 - 강진군청"
+    },
+    {
+      "id": "park-0395",
+      "name": "내곡리묘지",
+      "isPublic": true,
+      "website": "https://www.sisul.or.kr/open_content/memorial/bbs/bbsMsgList.do?bcd=cremate&pgdiv=13",
+      "pageTitle": "서울시설공단 장사시설 내곡리 묘지 목록 | memorial&gt;서울시립승화원&gt;주요시설&gt;시설별사진&gt;매장"
+    },
+    {
+      "id": "park-0402",
+      "name": "삼동암공동묘지",
+      "isPublic": true,
+      "website": "https://www.cosmosfarm.com/square/comment/76695",
+      "pageTitle": "삼동암공동묘지 인천 강화군 불은면 삼동암리 산21..."
+    },
+    {
+      "id": "park-0425",
+      "name": "삼흥리공설묘지",
+      "isPublic": true,
+      "website": "https://www.cosmosfarm.com/square/comment/76702",
+      "pageTitle": "삼흥리공설묘지 인천 강화군 양도면 삼흥리 산171 ..."
+    },
+    {
+      "id": "park-0431",
+      "name": "서산시희망공원(묘지)",
+      "isPublic": false,
+      "website": "http://www.newstnt.com/news/articleView.html?idxno=530655",
+      "pageTitle": "서산시, 희망공원 봉안당 새 이름 공모…26일까지 접수 | 뉴스티앤티"
+    },
+    {
+      "id": "park-0434",
+      "name": "인화리공설묘지",
+      "isPublic": true,
+      "website": "https://www.gangjin.go.kr/www/open_information/advance/advance_info?idx=402&page=27&mode=view",
+      "pageTitle": "공동, 공설묘지 현황 &lt; (전체) &lt; 사전정보공표목록 &lt; 사전정보공표 &lt; 정보공개 - 강진군청"
+    },
+    {
+      "id": "park-0440",
+      "name": "(재)분당메모리얼파크",
+      "isPublic": false,
+      "website": "https://www.bmpark.co.kr/",
+      "pageTitle": "분당메모리얼파크"
+    },
+    {
+      "id": "park-0442",
+      "name": "(재)전주공원묘원",
+      "isPublic": false,
+      "website": "http://www.jeonjupark.co.kr/",
+      "pageTitle": "전주공원묘원"
+    },
+    {
+      "id": "park-0449",
+      "name": "제주향교묘지",
+      "isPublic": false,
+      "website": "https://jejuhyanggyo.co.kr/greeting",
+      "pageTitle": "제주향교"
+    },
+    {
+      "id": "park-0450",
+      "name": "삼성공원묘원",
+      "isPublic": false,
+      "website": "http://www.elysium.co.kr/",
+      "pageTitle": "(재)삼성개발공원묘원 엘리시움"
+    },
+    {
+      "id": "park-0451",
+      "name": "대구중부교회묘지",
+      "isPublic": false,
+      "website": "https://dggb-portal.funeralblog.co.kr/facility-place/1238/price/",
+      "pageTitle": "[대구] 대구중부교회묘지 비용 알아보기 | 대구경북장례정보포털"
+    },
+    {
+      "id": "park-0455",
+      "name": "혜화동성당 방학동묘원",
+      "isPublic": false,
+      "website": "https://terms.naver.com/entry.naver?docId=2596267&cid=51880&categoryId=53262",
+      "pageTitle": "천주교 혜화동교회 방학동 묘원 암각문"
+    },
+    {
+      "id": "park-0460",
+      "name": "천주교산내공원묘원",
+      "isPublic": false,
+      "website": "https://nbukd-lee7305.tistory.com/16150927",
+      "pageTitle": "산내 천주교 공원 묘원"
+    },
+    {
+      "id": "park-0461",
+      "name": "천주교 창원공원묘원",
+      "isPublic": false,
+      "website": "https://www.changwonpark.kr/memorial/intro.php",
+      "pageTitle": "창원공원묘원"
+    },
+    {
+      "id": "park-0464",
+      "name": "신세계공원",
+      "isPublic": false,
+      "website": "https://www.shinsegae.com/store/main.do?storeCd=SC00001",
+      "pageTitle": "신세계백화점 본점 한눈에 보기"
+    },
+    {
+      "id": "park-0467",
+      "name": "대구화교협회묘지",
+      "isPublic": false,
+      "website": "https://dggb-portal.funeralblog.co.kr/facility-place/1122/",
+      "pageTitle": "[대구] 대구화교협회묘지 납골당 정보 한눈에 정리 | 대구경북장례정보포털"
+    },
+    {
+      "id": "park-0472",
+      "name": "삼각지성당 하늘묘원",
+      "isPublic": false,
+      "website": "https://www.ccsamgakji.com/%ED%95%98%EB%8A%98%EB%AC%98%EC%9B%90",
+      "pageTitle": "하늘묘원 | 삼각지성당"
+    },
+    {
+      "id": "park-0475",
+      "name": "삼척시추모공원 묘지 제2단지",
+      "isPublic": true,
+      "website": "https://www.pressian.com/pages/articles/2021011414141939661",
+      "pageTitle": "삼척시 추모공원, 온라인 추모관 홈페이지 운영"
+    },
+    {
+      "id": "park-0479",
+      "name": "(재)성산공원(묘지)",
+      "isPublic": false,
+      "website": "http://www.ssmemorialpark.co.kr/contents.htm?code=6_2",
+      "pageTitle": "성산공원 > 이용안내 > 개인정보취급방침"
+    },
+    {
+      "id": "park-0488",
+      "name": "광양시립영세공원 묘지",
+      "isPublic": true,
+      "website": "https://cemetery.gwangyang.go.kr/",
+      "pageTitle": "광양시립영세공원"
+    },
+    {
+      "id": "park-0490",
+      "name": "서소문교회동산",
+      "isPublic": false,
+      "website": "http://www.ssm.or.kr/main/sub.html?Mode=view&boardID=www8&num=1076",
+      "pageTitle": "서소문교회 / 환영합니다 / 수양관,동산안내"
+    },
+    {
+      "id": "park-0492",
+      "name": "영암군군서공설묘지",
+      "isPublic": true,
+      "website": "https://www.honam-funeralcenter.co.kr/funeral-process-recommend/%ED%98%B8%EB%82%A8%EC%9E%A5%EB%A1%80%EC%8B%9D%EC%9E%A5/%EB%AA%A9%ED%8F%AC%EC%B6%94%EB%AA%A8%EA%B3%B5%EC%9B%90/%EC%98%81%EC%95%94%EA%B5%B0%EA%B5%B0%EC%84%9C%EA%B3%B5%EC%84%A4%EB%AC%98%EC%A7%80/",
+      "pageTitle": "호남장례식장x목포추모공원x영암군군서공설묘지, 광주 전라 장례 준비의 모든 것 :: 광주전라장례정보 [고이장례연구소]"
+    },
+    {
+      "id": "park-0503",
+      "name": "신현교회 묘지",
+      "isPublic": false,
+      "website": "http://www.shinhyunchurch.kr/main/sub.html?pageCode=3",
+      "pageTitle": "신현교회 / 교회소개 / 섬기는 사람"
+    },
+    {
+      "id": "park-0506",
+      "name": "불광동성당 바다의별묘원",
+      "isPublic": false,
+      "website": "https://www.bulgwang.or.kr/38",
+      "pageTitle": "불광동성당"
+    },
+    {
+      "id": "park-0508",
+      "name": "(재)동산공원묘원 묘지",
+      "isPublic": false,
+      "website": "http://www.dongsanpark.com/",
+      "pageTitle": "동산공원묘원 | 분묘 | 봉안탑 | 봉안묘 | 평장 | 무연고"
+    },
+    {
+      "id": "park-0509",
+      "name": "정토사 극락원",
+      "isPublic": false,
+      "website": "http://www.jungtosa.com/theme/dt_pro02/html/4_beinhaus/03.php",
+      "pageTitle": "안치단 안내 | 정토사"
+    },
+    {
+      "id": "park-0510",
+      "name": "분당추모공원휴",
+      "isPublic": false,
+      "website": "https://www.huepark.co.kr/page/members/procedure.php",
+      "pageTitle": "분당추모공원 휴"
+    },
+    {
+      "id": "park-0511",
+      "name": "해인사 고불암무량수전",
+      "isPublic": false,
+      "website": "http://www.haeinsa.or.kr/bbs/board.php?bo_table=3050&wr_id=442",
+      "pageTitle": "[법보신문] 해인사, 3년 이어온 고불암·무량수전 소유권 소송 완승 > 미디어 속 해인사 | 법보종찰 가야산 해인사"
+    },
+    {
+      "id": "park-0514",
+      "name": "(재)성산공원 추모관",
+      "isPublic": false,
+      "website": "http://www.ssmemorialpark.co.kr/contents.htm?code=2_4",
+      "pageTitle": "성산공원 > 분양안내 > 성산추모관(실내)"
+    },
+    {
+      "id": "park-0515",
+      "name": "에덴추모공원",
+      "isPublic": false,
+      "website": "https://www.edpk.co.kr/",
+      "pageTitle": "재단법인 에덴추모공원"
+    },
+    {
+      "id": "park-0516",
+      "name": "팔공산도림사추모공원",
+      "isPublic": false,
+      "website": "http://www.803park.com/doc/sitemap.html",
+      "pageTitle": "팔공산 도림사 추모공원"
+    },
+    {
+      "id": "park-0517",
+      "name": "파주추모공원 봉안당",
+      "isPublic": false,
+      "website": "https://www.gongamcompany.co.kr/040",
+      "pageTitle": "파주봉안당 · 파주추모공원 · 파주납골당 ·파주불교납골당 비교 | 공감"
+    },
+    {
+      "id": "park-0519",
+      "name": "양평추모공원 더포레",
+      "isPublic": false,
+      "website": "https://ypthefore.co.kr/HOME",
+      "pageTitle": "양평추모공원 더포레"
+    },
+    {
+      "id": "park-0520",
+      "name": "수불사추모공원",
+      "isPublic": false,
+      "website": "https://marketbz.com/companyDetail/6139324358",
+      "pageTitle": "수불사 추모공원-***(최종수정일:20260228), 6139324358"
+    },
+    {
+      "id": "park-0522",
+      "name": "연천동막골추모관",
+      "isPublic": false,
+      "website": "https://xn--bb0bvbv22azrg55a803bv5k10b.com/",
+      "pageTitle": "연천동막골추모관"
+    },
+    {
+      "id": "park-0523",
+      "name": "대덕스카이캐슬 추모관",
+      "isPublic": false,
+      "website": "https://ddskycastle.kr/",
+      "pageTitle": "대덕스카이캐슬 추모관"
+    },
+    {
+      "id": "park-0524",
+      "name": "마라나타하늘정원",
+      "isPublic": false,
+      "website": "http://www.maranathagh.co.kr/home/c05/",
+      "pageTitle": "마라나타 하늘정원"
+    },
+    {
+      "id": "park-0526",
+      "name": "그린피아추모공원",
+      "isPublic": false,
+      "website": "http://www.greenpiapark.com/",
+      "pageTitle": "그린피아추모공원"
+    },
+    {
+      "id": "park-0527",
+      "name": "중앙추모공원(재단법인 현) 봉안시설",
+      "isPublic": false,
+      "website": "https://www.bisco.or.kr/memorialpark/index.asp",
+      "pageTitle": "추모공원"
+    },
+    {
+      "id": "park-0530",
+      "name": "무궁화추모공원",
+      "isPublic": false,
+      "website": "http://neverend.kr/bbs/board.php?bo_table=preview&sca=%EA%B0%80%EC%A1%B1%EC%8B%A4",
+      "pageTitle": "무궁화 추모공원"
+    },
+    {
+      "id": "park-0532",
+      "name": "도성사 봉안당",
+      "isPublic": false,
+      "website": "http://www.doseongsa.or.kr/xe/chumoinfo",
+      "pageTitle": "도성사 - 영가들의 편안한 안식처"
+    },
+    {
+      "id": "park-0535",
+      "name": "청련사 극락원",
+      "isPublic": false,
+      "website": "http://xn--3i0bm4pvoaq6yw2hg7i.com/main/html.php?htmid=service/process01.html",
+      "pageTitle": "청련사극락원"
+    },
+    {
+      "id": "park-0541",
+      "name": "영모묘원",
+      "isPublic": false,
+      "website": "http://www.ymw.kr/bbs/content.php?co_id=greeting",
+      "pageTitle": "인사말 | (재)영모묘원"
+    },
+    {
+      "id": "park-0542",
+      "name": "부산추모공원 봉안당",
+      "isPublic": true,
+      "website": "https://www.bisco.or.kr/memorialpark/index.asp",
+      "pageTitle": "추모공원"
+    },
+    {
+      "id": "park-0544",
+      "name": "목포추모관 휴",
+      "isPublic": true,
+      "website": "http://www.mokpopark.com/",
+      "pageTitle": "목포추모관 휴"
+    },
+    {
+      "id": "park-0545",
+      "name": "(재)평화공원 파라다이스 추모관",
+      "isPublic": false,
+      "website": "https://kiramonthly.com/683",
+      "pageTitle": "평화공원 파라다이스 추모관 2020.2"
+    },
+    {
+      "id": "park-0547",
+      "name": "(재)자하연 일산(봉안)",
+      "isPublic": false,
+      "website": "https://www.jahayeon.com/",
+      "pageTitle": "자연과 공존하는 메모리얼파크 자하연 사이트입니다."
+    },
+    {
+      "id": "park-0548",
+      "name": "천주교 비봉추모관",
+      "isPublic": false,
+      "website": "http://bb.catholic.or.kr/page/remains.php",
+      "pageTitle": "천주교 비봉공원묘원"
+    },
+    {
+      "id": "park-0549",
+      "name": "천주교 서울대교구 평화묘원 봉안묘",
+      "isPublic": false,
+      "website": "http://bb.catholic.or.kr/board/view.php?board=faq&seq=435",
+      "pageTitle": "천주교 비봉공원묘원"
+    },
+    {
+      "id": "park-0552",
+      "name": "대한불교조계종 삼봉사 봉안당",
+      "isPublic": false,
+      "website": "http://www.sambongsa.com/m_sbsm1.html",
+      "pageTitle": "한국불교조계종 삼봉사"
+    },
+    {
+      "id": "park-0555",
+      "name": "청통추모관",
+      "isPublic": false,
+      "website": "https://shue.kr/%EC%B2%AD%ED%86%B5%EC%B6%94%EB%AA%A8%EA%B4%80-%EB%82%A9%EA%B3%A8%EB%8B%B9/",
+      "pageTitle": "청통추모관"
+    },
+    {
+      "id": "park-0557",
+      "name": "재단법인 로엠(봉안시설)",
+      "isPublic": false,
+      "website": "http://www.lawm.co.kr/pages/join.asp",
+      "pageTitle": "복도깨비 로엠"
+    },
+    {
+      "id": "park-0558",
+      "name": "(재)효원가족공원",
+      "isPublic": false,
+      "website": "http://skypark.co.kr/",
+      "pageTitle": "효원가족공원"
+    },
+    {
+      "id": "park-0559",
+      "name": "극락사추모공원",
+      "isPublic": false,
+      "website": "https://www.imaeil.com/page/view/2025061508185374094",
+      "pageTitle": "`극락사 추모공원` 건들바위역서 걸어서 2분…대중교통 이용 편리 - 매일신문"
+    },
+    {
+      "id": "park-0560",
+      "name": "(재)분당메모리얼파크",
+      "isPublic": false,
+      "website": "https://www.bmpark.co.kr/",
+      "pageTitle": "분당메모리얼파크"
+    },
+    {
+      "id": "park-0565",
+      "name": "분당스카이캐슬추모공원",
+      "isPublic": false,
+      "website": "https://www.skycastle.kr/",
+      "pageTitle": "(주)스카이캐슬"
+    },
+    {
+      "id": "park-0566",
+      "name": "녹야원추모관",
+      "isPublic": false,
+      "website": "http://www.nokyawon.net/",
+      "pageTitle": "녹야원추모관-대전납골당,세종시납골당"
+    },
+    {
+      "id": "park-0567",
+      "name": "(재)한국SGI이천평화공원",
+      "isPublic": false,
+      "website": "https://www.peacepark.or.kr/icheon/intro/welcome.ksgi",
+      "pageTitle": "한국SGI이천평화공원"
+    },
+    {
+      "id": "park-0568",
+      "name": "상상추모공원",
+      "isPublic": false,
+      "website": "https://01068893333.vipcall.co.kr/",
+      "pageTitle": "상상추모공원 납골당.추모공원전문업체 전국서비스"
+    },
+    {
+      "id": "park-0569",
+      "name": "양주추모공원",
+      "isPublic": false,
+      "website": "http://www.yangjupark.com/",
+      "pageTitle": "양주추모공원"
+    },
+    {
+      "id": "park-0570",
+      "name": "(재)한국SGI청도평화공원",
+      "isPublic": false,
+      "website": "https://www.peacepark.or.kr/cheongdo/helpdesk/charnel.ksgi?installNm=%EC%A0%84%EC%84%B1%EA%B3%A4&applyNm=%EC%A0%84%EC%9D%80%EC%98%81",
+      "pageTitle": "한국SGI청도평화공원"
+    },
+    {
+      "id": "park-0572",
+      "name": "천주교 금상동성당 하늘자리",
+      "isPublic": false,
+      "website": "http://www.kscatholic.or.kr/bbs/board.php?bo_table=noti2&wr_id=53",
+      "pageTitle": "금상동성당 홈페이지 운영안내 > 성당 공지사항 | 금상동성당 하늘자리"
+    },
+    {
+      "id": "park-0576",
+      "name": "자임추모공원",
+      "isPublic": false,
+      "website": "http://jaimpark.com/category/%ED%99%88%ED%8E%98%EC%9D%B4%EC%A7%80/",
+      "pageTitle": "홈페이지 &#8211; 자임추모공원"
+    },
+    {
+      "id": "park-0577",
+      "name": "삼우추모공원",
+      "isPublic": false,
+      "website": "http://www.gjtline.kr/news/articleView.html?idxno=46565",
+      "pageTitle": "삼우추모공원 음력 윤6월 맞이 특별혜택 제공 < 사회 < 기사본문 - 거제타임라인"
+    },
+    {
+      "id": "park-0578",
+      "name": "예진추모관",
+      "isPublic": false,
+      "website": "https://www.xn--zb0bz2xuzijwdpyf.com/",
+      "pageTitle": "예진추모관 - 납골당,봉안당,추모원,추모공원"
+    },
+    {
+      "id": "park-0579",
+      "name": "(재)호정공원(봉안)",
+      "isPublic": false,
+      "website": "http://www.hjcloud9.com/page/memorial02",
+      "pageTitle": "호정공원 | 봉안묘"
+    },
+    {
+      "id": "park-0580",
+      "name": "용미리건물식추모의집",
+      "isPublic": true,
+      "website": "https://www.sisul.or.kr/open_content/memorial/cremate/facility_photo03_02.jsp",
+      "pageTitle": "서울시설공단 장사시설 용미리 건물식 추모의 집 목록 | memorial&gt;서울시립승화원&gt;주요시설&gt;시설별사진&gt;봉안(납골)"
+    },
+    {
+      "id": "park-0581",
+      "name": "화엄사",
+      "isPublic": false,
+      "website": "http://www.hwaeomsa.or.kr/",
+      "pageTitle": "화엄사 : 대한불교조계종 제19교구본사 지리산 대화엄사"
+    },
+    {
+      "id": "park-0589",
+      "name": "(재)서호추모공원",
+      "isPublic": false,
+      "website": "https://www.seohopark.kr/",
+      "pageTitle": "(재)서호추모공원"
+    },
+    {
+      "id": "park-0590",
+      "name": "천주교안동교구 봉안경당",
+      "isPublic": false,
+      "website": "http://xn--289a71jftad9zslkca.com/",
+      "pageTitle": "천주교 안동교구 봉안경당"
+    },
+    {
+      "id": "park-0592",
+      "name": "(재)화산추모공원(봉안)",
+      "isPublic": false,
+      "website": "http://www.hwasanpark.co.kr/",
+      "pageTitle": "화산추모공원"
+    },
+    {
+      "id": "park-0595",
+      "name": "천주교용인공원묘원(봉안)",
+      "isPublic": false,
+      "website": "http://yi.catholic.or.kr/board/list.php?board=report",
+      "pageTitle": "천주교 용인추모공원"
+    },
+    {
+      "id": "park-0602",
+      "name": "대한불교조계종관음사",
+      "isPublic": false,
+      "website": "https://www.buddhism.or.kr/jongdan/sub1/sub1-9-2-12.php",
+      "pageTitle": "대한불교조계종"
+    },
+    {
+      "id": "park-0603",
+      "name": "석예정사",
+      "isPublic": false,
+      "website": "https://marketbz.com/companyDetail/6078293626",
+      "pageTitle": "석예정사-차****(최종수정일:20260228), 6078293626"
+    },
+    {
+      "id": "park-0605",
+      "name": "남한강공원묘원",
+      "isPublic": false,
+      "website": "https://nhgpark.co.kr/",
+      "pageTitle": "남한강공원묘원"
+    },
+    {
+      "id": "park-0610",
+      "name": "추모공원 하늘문",
+      "isPublic": false,
+      "website": "http://www.hi1009.com/",
+      "pageTitle": "추모공원 하늘문"
+    },
+    {
+      "id": "park-0617",
+      "name": "봉안당에데나(낙원추모공원)",
+      "isPublic": false,
+      "website": "https://www.edena.co.kr/bbs/content.php?co_id=02_01",
+      "pageTitle": "에데나 | EDENA스토리"
+    },
+    {
+      "id": "park-0618",
+      "name": "별그리다(THE WALL)",
+      "isPublic": false,
+      "website": "http://www.star4ever.com/helpdesk/notice_wall/lists",
+      "pageTitle": "별그리다 THE WALL"
+    },
+    {
+      "id": "park-0620",
+      "name": "(주)청아공원",
+      "isPublic": false,
+      "website": "https://www.chungahpark.co.kr/park/tour.jsp",
+      "pageTitle": "청아공원"
+    },
+    {
+      "id": "park-0623",
+      "name": "서대산추모공원 봉안당",
+      "isPublic": false,
+      "website": "http://www.xn--ob0bp8i99gpugnpa27ylkm.com/",
+      "pageTitle": "서대산추모공원"
+    },
+    {
+      "id": "park-0624",
+      "name": "재단법인 효천추모공원",
+      "isPublic": false,
+      "website": "https://www.hcmp.kr/skin-skin2/mortuary.html",
+      "pageTitle": "효천추모공원"
+    },
+    {
+      "id": "park-0627",
+      "name": "양지공원 제2추모의집",
+      "isPublic": true,
+      "website": "http://www.samdailbo.com/news/articleView.html?idxno=179470",
+      "pageTitle": "양지공원 제2추모의 집 화장실 리모델링 등 시설 보수 - 삼다일보"
+    },
+    {
+      "id": "park-0628",
+      "name": "봉안당 홈",
+      "isPublic": false,
+      "website": "http://www.home12.co.kr/doc/pay2.php",
+      "pageTitle": "분당 봉안당 홈"
+    },
+    {
+      "id": "park-0629",
+      "name": "(재)안동추모공원(봉안당)",
+      "isPublic": false,
+      "website": "http://www.andongpark.net/bbs/content.php?co_id=sub5_2_2",
+      "pageTitle": "추모당(실내봉안당) | (재)안동추모공원"
+    },
+    {
+      "id": "park-0630",
+      "name": "(재)서현추모공원",
+      "isPublic": false,
+      "website": "https://seohyunpark.com/",
+      "pageTitle": "재단법인 서현추모공원"
+    },
+    {
+      "id": "park-0631",
+      "name": "(재)여주세종추모공원 봉안당",
+      "isPublic": false,
+      "website": "http://www.sejonge-park.kr/",
+      "pageTitle": "재단법인 여주세종추모공원"
+    },
+    {
+      "id": "park-0632",
+      "name": "영평사 추모공원",
+      "isPublic": false,
+      "website": "https://www.youngpyungsapark.co.kr/bbs/content.php?co_id=1000",
+      "pageTitle": "영평사 추모공원"
+    },
+    {
+      "id": "park-0633",
+      "name": "월봉사연화원",
+      "isPublic": false,
+      "website": "http://wolbongsa.com/sub02/sub01.php",
+      "pageTitle": "월봉사연화원"
+    },
+    {
+      "id": "park-0635",
+      "name": "김천추모공원",
+      "isPublic": false,
+      "website": "https://www.gcfmc.or.kr/gc_memorialpark/",
+      "pageTitle": "김천시립추모공원"
+    },
+    {
+      "id": "park-0636",
+      "name": "(재)용인공원(아너스톤)",
+      "isPublic": false,
+      "website": "https://www.honorstone.co.kr/content/notice_view?idx=329&rp=page%3D3",
+      "pageTitle": "공지사항 | 아너스톤"
+    },
+    {
+      "id": "park-0637",
+      "name": "아름다운추모원",
+      "isPublic": false,
+      "website": "http://www.earumdaun.com/bbs/content.php?co_id=201",
+      "pageTitle": "분양안내 | 보타사 아름다운추모원"
+    }
+  ],
+  "unmatched": [
+    {
+      "id": "park-0003",
+      "name": "(재)삼덕공원묘원",
+      "isPublic": false,
+      "website": "http://www.gunwipark.com/bbs/board.php?bo_table=notice&wr_id=1",
+      "pageTitle": "가톨릭 군위묘원 홈페이지입니다. > 공지사항 | 가톨릭 군위묘원"
+    },
+    {
+      "id": "park-0013",
+      "name": "(재)서울공원묘원",
+      "isPublic": false,
+      "website": "http://www.scpark.co.kr/",
+      "pageTitle": "�����������"
+    },
+    {
+      "id": "park-0021",
+      "name": "물미묘원",
+      "isPublic": true,
+      "website": "https://www.wjmbc.co.kr/news/desk.html?pagecode=view&num_seq=87479",
+      "pageTitle": "원주문화방송(주) > 최신뉴스"
+    },
+    {
+      "id": "park-0022",
+      "name": "천주교안성추모공원(묘원)",
+      "isPublic": false,
+      "website": "http://www.ampark.co.kr/",
+      "pageTitle": "õ�ֱ� �������� �ȼ��߸����"
+    },
+    {
+      "id": "park-0023",
+      "name": "함양하늘공원(묘지)",
+      "isPublic": false,
+      "website": "https://m.catholic.or.kr/web/addr/catholicInfo.asp?code=201007011",
+      "pageTitle": "모바일 한국 천주교 주소록"
+    },
+    {
+      "id": "park-0026",
+      "name": "(재)경춘공원묘원",
+      "isPublic": false,
+      "website": "https://www.gyoungchun.com/",
+      "pageTitle": ""
+    },
+    {
+      "id": "park-0028",
+      "name": "(재)화신공원묘원",
+      "isPublic": false,
+      "website": "https://www.jeonbuk.go.kr/board/view.jeonbuk?boardId=BBS_0000036&menuCd=DOM_000000104001006004&dataSid=333249",
+      "pageTitle": "분야별 정보 > 전북복지 > 장사정보 > 장사시설안내 > 상세 | 전북특별자치도"
+    },
+    {
+      "id": "park-0038",
+      "name": "(재)진달래문화재단",
+      "isPublic": false,
+      "website": "https://www.jindallae.kr/82",
+      "pageTitle": "진달래메모리얼파크"
+    },
+    {
+      "id": "park-0046",
+      "name": "동화경모공원(묘지)",
+      "isPublic": false,
+      "website": "https://donghwapark.co.kr/",
+      "pageTitle": ""
+    },
+    {
+      "id": "park-0047",
+      "name": "양양군공설묘원",
+      "isPublic": true,
+      "website": "https://www.yangyang.go.kr/gw/mobile/partinfo_life_jangmyo",
+      "pageTitle": "장묘관리 | 분야별정보 > 주민생활지원 > 장묘관리"
+    },
+    {
+      "id": "park-0065",
+      "name": "(재)광주구천주교공원묘원",
+      "isPublic": false,
+      "website": "http://www.gjccp.kr/",
+      "pageTitle": "���ֱ�õ�ֱ��������� ��繦��"
+    },
+    {
+      "id": "park-0071",
+      "name": "(재)신세계공원묘원",
+      "isPublic": false,
+      "website": "http://www.xn--989ardy58be3ft8b5tjba.kr/",
+      "pageTitle": "(��ܹ���)�ż����������"
+    },
+    {
+      "id": "park-0073",
+      "name": "재단법인 춘천공원묘원",
+      "isPublic": false,
+      "website": "http://www.ccpark.co.kr/kongwon/sub3.html",
+      "pageTitle": "��õ��������"
+    },
+    {
+      "id": "park-0081",
+      "name": "충현동산",
+      "isPublic": false,
+      "website": "https://www.choonghyunchurch.or.kr/core/awc/download.php?pageCode=16&pageKey=0&deviceType=P&itemNum=157664",
+      "pageTitle": ""
+    },
+    {
+      "id": "park-0082",
+      "name": "세종시공설묘지",
+      "isPublic": true,
+      "website": "https://www.sejong.go.kr/welfare/sub02_05_01.do",
+      "pageTitle": "공설묘지/봉안당 > 장묘안내 > 어르신복지 >"
+    },
+    {
+      "id": "park-0090",
+      "name": "정선하늘공원",
+      "isPublic": true,
+      "website": "https://www.jsimc.or.kr/",
+      "pageTitle": "정선군시설관리공단"
+    },
+    {
+      "id": "park-0108",
+      "name": "(재)광주대교구 여수천주교공원묘원",
+      "isPublic": false,
+      "website": "http://www.gjccp.kr/sogae/intro.asp",
+      "pageTitle": "õ�ֱ����ִ뱳����������"
+    },
+    {
+      "id": "park-0121",
+      "name": "춘천안식공원(묘지)",
+      "isPublic": true,
+      "website": "https://www.chuncheon.go.kr/mayor/newsroom/press-release/?nttId=458690&flag=view",
+      "pageTitle": "보도자료 | 춘천시 통하는 시장실"
+    },
+    {
+      "id": "park-0130",
+      "name": "처리공원묘지",
+      "isPublic": true,
+      "website": "https://xn--hq1b28ffspg0a.com/49/?bmode=view&idx=71049869",
+      "pageTitle": "지금 장례중입니다. 상(喪) 중에 묘이장, 초상치를 때 묘지이장을 해도 되나요? : 묘지이장 후기 및 상담, 견적신청"
+    },
+    {
+      "id": "park-0133",
+      "name": "횡성군공설추모공원(묘지)",
+      "isPublic": true,
+      "website": "https://www.hsg.go.kr/www/contents.do?key=1190",
+      "pageTitle": "시설현황 - 횡성군청"
+    },
+    {
+      "id": "park-0143",
+      "name": "강릉공원묘원(묘지)",
+      "isPublic": false,
+      "website": "https://www.boramplus.com/Cs/Partnership/view/1165",
+      "pageTitle": "보람상조플러스"
+    },
+    {
+      "id": "park-0149",
+      "name": "인천호남향우회",
+      "isPublic": false,
+      "website": "https://www.jeonnam.go.kr/M7116/boardView.do?seq=1957805&menuId=jeonnam0501010000",
+      "pageTitle": "전라남도청 | 분야별 정보 | 일자리ㆍ경제 | 경제동향"
+    },
+    {
+      "id": "park-0159",
+      "name": "대호지공설묘지",
+      "isPublic": true,
+      "website": "http://www.dangjin.go.kr/media/Board/media/0102/View/12227",
+      "pageTitle": "플러그인당진"
+    },
+    {
+      "id": "park-0165",
+      "name": "순천시립공원묘지",
+      "isPublic": true,
+      "website": "https://www.suncheon.go.kr/minju/0008/0001/?mode=view&cntId=11767",
+      "pageTitle": "순천e민주정원"
+    },
+    {
+      "id": "park-0170",
+      "name": "장정리공설묘지",
+      "isPublic": true,
+      "website": "http://www.hysangjo.co.kr/03_funeral/fun_053.asp",
+      "pageTitle": "�ѱ����ջ��� Ȩ�������� ���Ű��� ȯ���մϴ�."
+    },
+    {
+      "id": "park-0175",
+      "name": "월평공설공원묘지",
+      "isPublic": true,
+      "website": "https://www.goinheaven.co.kr/memorialpark/?q=YToxOntzOjEyOiJrZXl3b3JkX3R5cGUiO3M6MzoiYWxsIjt9&bmode=view&idx=6643755&t=board",
+      "pageTitle": "대전시립추모공원 : 고인헤븐"
+    },
+    {
+      "id": "park-0179",
+      "name": "(재)시안 가족추모공원(매장묘)",
+      "isPublic": false,
+      "website": "https://www.sianpark.co.kr/",
+      "pageTitle": "시안가족추모공원"
+    },
+    {
+      "id": "park-0180",
+      "name": "정왕공설묘지",
+      "isPublic": true,
+      "website": "http://www.siheung.go.kr/docviewer/index.jsp?atchFileId=3a05093ad07173a01b566fc4cafc6acbda25aa42fa20eac4874c2cadbe7ab5f8&fileSn=ee4f816e83cce500dc32ac758b27d2f0&docName=%EC%A0%95%EC%99%95%EA%B3%B5%EC%84%A4%EB%AC%98%EC%A7%80%2B%EB%B0%94%EB%A1%9C%EA%B0%80%EA%B8%B0%2B%283%29",
+      "pageTitle": "y-DocViewer"
+    },
+    {
+      "id": "park-0181",
+      "name": "장수동공설묘지(매장불가)",
+      "isPublic": true,
+      "website": "https://315.mpva.go.kr/mpva/downloadBbsFile.do?atchmnflNo=122859",
+      "pageTitle": ""
+    },
+    {
+      "id": "park-0186",
+      "name": "장계공설묘지",
+      "isPublic": true,
+      "website": "https://www.jeonbuk.go.kr/board/view.jeonbuk?boardId=BBS_0000036&menuCd=DOM_000000104001006004&dataSid=333222",
+      "pageTitle": "분야별 정보 > 전북복지 > 장사정보 > 장사시설안내 > 상세 | 전북특별자치도"
+    },
+    {
+      "id": "park-0188",
+      "name": "인산리공설묘지",
+      "isPublic": true,
+      "website": "http://www.kmfa.co.kr/include/dn.php?mode=bbs&bfile=%EC%82%B0%EB%B6%84%EC%A0%9C%EB%8F%84%ED%99%94%20%EB%B0%A9%EC%95%88%20%EC%B5%9C%EC%A2%85%EB%B3%B8%20(%EB%AF%BC%EA%B0%84%EC%A0%95%EC%B1%85%20%EC%A0%9C%EC%95%88%EC%84%9C)%202024_09_30.pdf&rfile=img_20241004091029.pdf",
+      "pageTitle": ""
+    },
+    {
+      "id": "park-0189",
+      "name": "신림덕화공설묘지",
+      "isPublic": true,
+      "website": "https://www.jeonbuk.go.kr/board/view.jeonbuk?boardId=BBS_0000036&menuCd=DOM_000000104006001000&dataSid=333218",
+      "pageTitle": "분야별 정보 > 청년정책 > 청년정책 VISION > 상세 | 전북특별자치도"
+    },
+    {
+      "id": "park-0191",
+      "name": "양구군공설묘지",
+      "isPublic": true,
+      "website": "https://www.yanggu.go.kr/user_sub?bk=LQEIT240715221627882&mu_idx=474&bt=rd",
+      "pageTitle": "국토의 정중앙 양구에 오신걸 환영합니다."
+    },
+    {
+      "id": "park-0194",
+      "name": "안흥동공설묘지(만장)",
+      "isPublic": true,
+      "website": "https://www.ddcsiseol.or.kr/main/board/12/611/board_view.do?&cp=1&listType=list&bdOpenYn=Y&bdNoticeYn=N",
+      "pageTitle": "동두천시 시설관리공단"
+    },
+    {
+      "id": "park-0195",
+      "name": "여산공설묘지",
+      "isPublic": true,
+      "website": "https://www.jeonbuk.go.kr/board/view.jeonbuk?boardId=BBS_0000036&menuCd=DOM_000000104006001000&dataSid=333227",
+      "pageTitle": "분야별 정보 > 청년정책 > 청년정책 VISION > 상세 | 전북특별자치도"
+    },
+    {
+      "id": "park-0199",
+      "name": "아산주진공설묘지",
+      "isPublic": true,
+      "website": "https://www.jeonbuk.go.kr/board/view.jeonbuk?boardId=BBS_0000036&menuCd=DOM_000000104001006004&dataSid=333220",
+      "pageTitle": "분야별 정보 > 전북복지 > 장사정보 > 장사시설안내 > 상세 | 전북특별자치도"
+    },
+    {
+      "id": "park-0203",
+      "name": "주문공설묘지",
+      "isPublic": true,
+      "website": "https://www.idaegu.com/news/articleView.html?idxno=405154",
+      "pageTitle": "대구 지자체들 언택트로 추석맞이에 행정력 집중 - 대구일보"
+    },
+    {
+      "id": "park-0205",
+      "name": "오룡군립묘원(묘지)",
+      "isPublic": true,
+      "website": "https://www.boramsangjo.com/Cs/Partnership/view/1376",
+      "pageTitle": "보람상조개발"
+    },
+    {
+      "id": "park-0209",
+      "name": "옥천군공설묘지",
+      "isPublic": true,
+      "website": "https://oc.nonghyup.com/user/indexSub.do?codyMenuSeq=1970687&siteId=oc",
+      "pageTitle": "옥천농협"
+    },
+    {
+      "id": "park-0210",
+      "name": "온수리공설묘지",
+      "isPublic": true,
+      "website": "https://www.phnuri.co.kr/phgrp/fcltyinfo/selectFcltyInfoFrntList.do?fcltyCd=SHT04&menuNo=5040400",
+      "pageTitle": "전국장사시설안내 | 평화누리"
+    },
+    {
+      "id": "park-0217",
+      "name": "군산시공설묘지",
+      "isPublic": true,
+      "website": "https://www.jeonbuk.go.kr/board/view.jeonbuk?boardId=BBS_0000036&menuCd=DOM_000000104001006004&dataSid=333230",
+      "pageTitle": "분야별 정보 > 전북복지 > 장사정보 > 장사시설안내 > 상세 | 전북특별자치도"
+    },
+    {
+      "id": "park-0242",
+      "name": "종로성당 나자렛묘원",
+      "isPublic": false,
+      "website": "http://www.jongnocc.or.kr/16",
+      "pageTitle": "천주교서울대교구종로성당"
+    },
+    {
+      "id": "park-0246",
+      "name": "가북공설공원묘지",
+      "isPublic": true,
+      "website": "https://www.geochang.go.kr/portal/contract/List.do?amode=view&ctrtAcctBookMngNo=201900214137",
+      "pageTitle": ""
+    },
+    {
+      "id": "park-0251",
+      "name": "거창공설공원묘지",
+      "isPublic": true,
+      "website": "https://www.geochang.go.kr/02313/02327/02362.web",
+      "pageTitle": "관내 장묘시설 안내 | 거창공유복지"
+    },
+    {
+      "id": "park-0255",
+      "name": "장기공설공원묘원",
+      "isPublic": true,
+      "website": "https://www.phnuri.co.kr/phgrp/fcltyinfo/selectFcltyInfoFrntList.do?fcltyCd=SHT04&menuNo=5040400",
+      "pageTitle": "전국장사시설안내 | 평화누리"
+    },
+    {
+      "id": "park-0260",
+      "name": "교산1리공설묘지",
+      "isPublic": true,
+      "website": "https://www.hanam.go.kr/mayor/selectBbsNttView.do?key=780&bbsNo=2144&nttNo=440000",
+      "pageTitle": "2022년 하반기 ~ 2023년 5월 - 열린시장실"
+    },
+    {
+      "id": "park-0274",
+      "name": "부안수동공설묘지",
+      "isPublic": true,
+      "website": "https://www.jeonbuk.go.kr/board/view.jeonbuk?boardId=BBS_0000036&menuCd=DOM_000000104001006004&dataSid=333216",
+      "pageTitle": "분야별 정보 > 전북복지 > 장사정보 > 장사시설안내 > 상세 | 전북특별자치도"
+    },
+    {
+      "id": "park-0275",
+      "name": "부안용산공설묘지",
+      "isPublic": true,
+      "website": "https://www.jeonbuk.go.kr/board/view.jeonbuk?boardId=BBS_0000036&menuCd=DOM_000000104006001000&dataSid=333217",
+      "pageTitle": "분야별 정보 > 청년정책 > 청년정책 VISION > 상세 | 전북특별자치도"
+    },
+    {
+      "id": "park-0297",
+      "name": "동산리공설묘지",
+      "isPublic": true,
+      "website": "https://www.dongsanpark.co.kr/bbs/content.php?co_id=info",
+      "pageTitle": "공원소개 | 동산추모공원"
+    },
+    {
+      "id": "park-0298",
+      "name": "(재)평화공원",
+      "isPublic": false,
+      "website": "https://www.osan.go.kr/osanunm/main.do",
+      "pageTitle": "오산 유엔군 초전기념관"
+    },
+    {
+      "id": "park-0331",
+      "name": "운연동공설묘지(매장불가)",
+      "isPublic": true,
+      "website": "http://www.changwon.go.kr/cwportal/10312/10633/10635.web?amode=view&retMgtNo=562",
+      "pageTitle": "행정규제검색 | 창원특례시"
+    },
+    {
+      "id": "park-0337",
+      "name": "후방산 공설묘지",
+      "isPublic": true,
+      "website": "https://www.jeonbuk.go.kr/board/view.jeonbuk?boardId=BBS_0000036&menuCd=DOM_000000104001006004&dataSid=617323",
+      "pageTitle": "분야별 정보 > 전북복지 > 장사정보 > 장사시설안내 > 상세 | 전북특별자치도"
+    },
+    {
+      "id": "park-0342",
+      "name": "안양시청계공설묘지(만장)",
+      "isPublic": true,
+      "website": "https://www.anyang.go.kr/manan/selectBbsNttView.do?key=974&bbsNo=158&nttNo=75243",
+      "pageTitle": "우리동 소식 목록 - 박달동 - 만안구청"
+    },
+    {
+      "id": "park-0343",
+      "name": "정읍시입암묘지공원",
+      "isPublic": true,
+      "website": "https://terms.naver.com/entry.naver?docId=6740078&cid=72249&categoryId=72327",
+      "pageTitle": "정읍입암시립공원묘원"
+    },
+    {
+      "id": "park-0345",
+      "name": "창리공설묘지",
+      "isPublic": true,
+      "website": "https://www.djsiseol.or.kr/portal/sub040206_05.asp",
+      "pageTitle": "���/�����ü� - ���ü� - ���������� - ���ü� - �����ü� | ���������ýü���������"
+    },
+    {
+      "id": "park-0350",
+      "name": "지석리공설묘지",
+      "isPublic": true,
+      "website": "https://www.djsiseol.or.kr/portal/sub040206_05.asp",
+      "pageTitle": "���/�����ü� - ���ü� - ���������� - ���ü� - �����ü� | ���������ýü���������"
+    },
+    {
+      "id": "park-0351",
+      "name": "하도리공설묘지",
+      "isPublic": true,
+      "website": "https://www.phnuri.co.kr/phgrp/fcltyinfo/selectFcltyInfoFrntList.do?fcltyCd=SHT04&menuNo=5040400",
+      "pageTitle": "전국장사시설안내 | 평화누리"
+    },
+    {
+      "id": "park-0353",
+      "name": "임실군공설묘지",
+      "isPublic": true,
+      "website": "https://www.jeonbuk.go.kr/board/view.jeonbuk?boardId=BBS_0000036&menuCd=DOM_000000104001006004&dataSid=333221",
+      "pageTitle": "분야별 정보 > 전북복지 > 장사정보 > 장사시설안내 > 상세 | 전북특별자치도"
+    },
+    {
+      "id": "park-0355",
+      "name": "도장리공설묘지",
+      "isPublic": true,
+      "website": "https://xn--hq1b28ffspg0a.com/49/?bmode=view&idx=23683173",
+      "pageTitle": "묘지이장 토지보상 진행 및 묘지개장 화장절차 : 묘지이장 후기 및 상담, 견적신청"
+    },
+    {
+      "id": "park-0359",
+      "name": "말도공설묘지",
+      "isPublic": true,
+      "website": "https://www.mohw.go.kr/menu.es?mid=a10712020300",
+      "pageTitle": "장사제도 &lt; 노인지원 &lt; 노인 &lt; 정책 : 힘이 되는 평생 친구, 보건복지부"
+    },
+    {
+      "id": "park-0361",
+      "name": "망월리공설묘지",
+      "isPublic": true,
+      "website": "https://wipi.ai.kr/ko/%EB%A7%9D%EC%9B%94%EB%AC%98%EC%A7%80%EA%B3%B5%EC%9B%90",
+      "pageTitle": "망월묘지공원 - 위피버스"
+    },
+    {
+      "id": "park-0370",
+      "name": "부근리공설묘지",
+      "isPublic": true,
+      "website": "https://www.djsiseol.or.kr/portal/sub040206_05.asp",
+      "pageTitle": "���/�����ü� - ���ü� - ���������� - ���ü� - �����ü� | ���������ýü���������"
+    },
+    {
+      "id": "park-0371",
+      "name": "부활동산종교재단법인",
+      "isPublic": false,
+      "website": "https://www.sungdoch.com/Board/Detail/30/14408",
+      "pageTitle": "성도교회"
+    },
+    {
+      "id": "park-0374",
+      "name": "사기리공설묘지",
+      "isPublic": true,
+      "website": "https://www.phnuri.co.kr/phgrp/fcltyinfo/selectFcltyInfoFrntList.do?fcltyCd=SHT05&menuNo=5040500",
+      "pageTitle": "전국장사시설안내 | 평화누리"
+    },
+    {
+      "id": "park-0376",
+      "name": "삼거리공설묘지",
+      "isPublic": true,
+      "website": "https://www.djsiseol.or.kr/portal/sub040206_05.asp",
+      "pageTitle": "���/�����ü� - ���ü� - ���������� - ���ü� - �����ü� | ���������ýü���������"
+    },
+    {
+      "id": "park-0380",
+      "name": "고능리공동묘지",
+      "isPublic": true,
+      "website": "https://www.data.go.kr/data/15143496/fileData.do",
+      "pageTitle": "보건복지부_묘지 현황_20250101 | 공공데이터포털"
+    },
+    {
+      "id": "park-0381",
+      "name": "고천리공설묘지",
+      "isPublic": true,
+      "website": "https://www.data.go.kr/data/15143496/fileData.do",
+      "pageTitle": "보건복지부_묘지 현황_20250101 | 공공데이터포털"
+    },
+    {
+      "id": "park-0388",
+      "name": "길정리공설묘지",
+      "isPublic": true,
+      "website": "https://www.data.go.kr/data/15143496/fileData.do",
+      "pageTitle": "보건복지부_묘지 현황_20250101 | 공공데이터포털"
+    },
+    {
+      "id": "park-0389",
+      "name": "길직1리공설묘지",
+      "isPublic": true,
+      "website": "https://www.data.go.kr/data/15143496/fileData.do",
+      "pageTitle": "보건복지부_묘지 현황_20250101 | 공공데이터포털"
+    },
+    {
+      "id": "park-0392",
+      "name": "남산리공설묘지",
+      "isPublic": true,
+      "website": "https://www.data.go.kr/data/15143496/fileData.do",
+      "pageTitle": "보건복지부_묘지 현황_20250101 | 공공데이터포털"
+    },
+    {
+      "id": "park-0393",
+      "name": "남원읍공설묘지",
+      "isPublic": true,
+      "website": "http://www.hsilbo.com/etnews/?fn=v&no=214875&cid=21150100",
+      "pageTitle": "������ �������� ���ü� �� ���Ƚ� ���𵨸� �԰��� ��ġ ���� �̿� �"
+    },
+    {
+      "id": "park-0397",
+      "name": "다도면공설묘지",
+      "isPublic": true,
+      "website": "https://www.phnuri.co.kr/phgrp/fcltyinfo/selectFcltyInfoFrntList.do?fcltyCd=SHT04&menuNo=5040400",
+      "pageTitle": "전국장사시설안내 | 평화누리"
+    },
+    {
+      "id": "park-0409",
+      "name": "송월교회(묘지)",
+      "isPublic": false,
+      "website": "http://songwol.or.kr/",
+      "pageTitle": "송월장로교회"
+    },
+    {
+      "id": "park-0413",
+      "name": "신정리공설묘지",
+      "isPublic": true,
+      "website": "https://www.asan.go.kr/main/cms/download.php?tb_nm=administrator_info&uid=74676&pds_no=2023112010363422046&bbs_board=Y&d8_chk=",
+      "pageTitle": ""
+    },
+    {
+      "id": "park-0416",
+      "name": "아차공설묘지",
+      "isPublic": true,
+      "website": "https://www.gp.go.kr/portal/selectBbsNttView.do?key=1195&bbsNo=171&nttNo=118324",
+      "pageTitle": "사전정보공표 상세보기 -가평군청"
+    },
+    {
+      "id": "park-0424",
+      "name": "삼성리공동묘지",
+      "isPublic": true,
+      "website": "https://www.siheung.go.kr/main/advanceInfo/view.do?mId=0301020000&idx=1829",
+      "pageTitle": "사전정보공표 상세보기 | 열린행정 | 열린행정 | 홈페이지"
+    },
+    {
+      "id": "park-0438",
+      "name": "조천장로교회묘지",
+      "isPublic": false,
+      "website": "https://www.puts.ac.kr/www/board/view.general.asp?design=lounge&m1=4&bd_name=jangshin_jboard04&seq=131917",
+      "pageTitle": "����/���� | ���Lounge | ���ȸ���д��б�"
+    },
+    {
+      "id": "park-0439",
+      "name": "갑산공원묘원",
+      "isPublic": false,
+      "website": "http://www.kapsan1004.net/",
+      "pageTitle": ""
+    },
+    {
+      "id": "park-0447",
+      "name": "(재)하늘공원 묘원",
+      "isPublic": false,
+      "website": "http://www.xn--ob0bx0i3gt55ah0mz2alkn74g.com/",
+      "pageTitle": "�Ƹ��ٿ� �ڿ��� �Բ��ϴ� - ��ܹ��� �ϴð���"
+    },
+    {
+      "id": "park-0454",
+      "name": "천주교제주교구묘지",
+      "isPublic": false,
+      "website": "https://www.diocesejeju.or.kr/holy_main/1731",
+      "pageTitle": "성지·순례지"
+    },
+    {
+      "id": "park-0459",
+      "name": "모슬포교회 공동묘지",
+      "isPublic": false,
+      "website": "http://www.mspchurch.or.kr/",
+      "pageTitle": "모슬포중앙교회 홈페이지"
+    },
+    {
+      "id": "park-0468",
+      "name": "대구공원",
+      "isPublic": false,
+      "website": "https://eworld.kr/",
+      "pageTitle": "Eworld! Where Dreams Come True!"
+    },
+    {
+      "id": "park-0469",
+      "name": "길음동성당 묘원",
+      "isPublic": false,
+      "website": "http://church.catholic.or.kr/gireum/html/bon-02.htm",
+      "pageTitle": "���繦�� ��"
+    },
+    {
+      "id": "park-0474",
+      "name": "서울노회유지재단 법인묘지",
+      "isPublic": false,
+      "website": "https://www.kmib.co.kr/article/view.asp?arcid=0020659762",
+      "pageTitle": "�������� �����ȸ������� ���� �̻��忡 �Ѽ��� ���-�����Ϻ�"
+    },
+    {
+      "id": "park-0476",
+      "name": "보령시마을단위공원묘지",
+      "isPublic": true,
+      "website": "https://opinion.lawmaking.go.kr/gcom/sgLmPp/330039?isOgYn=Y&pageIndex=6&lang=en",
+      "pageTitle": "국민참여입법센터"
+    },
+    {
+      "id": "park-0483",
+      "name": "칠곡성당공동묘원",
+      "isPublic": false,
+      "website": "http://www.gunwipark.com/bbs/board.php?bo_table=notice&wr_id=1",
+      "pageTitle": "가톨릭 군위묘원 홈페이지입니다. > 공지사항 | 가톨릭 군위묘원"
+    },
+    {
+      "id": "park-0489",
+      "name": "구룡공설공원묘지",
+      "isPublic": true,
+      "website": "https://www.hygn.go.kr/00432/00893/01170.web?amode=view&idx=860890&gcode=1001&gubun=present",
+      "pageTitle": "공지사항 | 함양군 대표누리집"
+    },
+    {
+      "id": "park-0501",
+      "name": "대야리공설묘지",
+      "isPublic": true,
+      "website": "https://www.siheung.go.kr/main/bbs/view.do?bIdx=56158&ptIdx=14&mId=0205060000",
+      "pageTitle": "처리사례 내용 | 시민호민관(옴부즈만) | 종합민원 | 홈페이지"
+    },
+    {
+      "id": "park-0512",
+      "name": "재단법인 일산장안추모공원",
+      "isPublic": false,
+      "website": "http://www.janganpark.co.kr/",
+      "pageTitle": "��ܹ��� �ϻ� ����߸����"
+    },
+    {
+      "id": "park-0513",
+      "name": "대한불교관음회조계종 백천사 봉안당",
+      "isPublic": false,
+      "website": "https://www.buddhism.or.kr/",
+      "pageTitle": ""
+    },
+    {
+      "id": "park-0521",
+      "name": "(재)용인추모원",
+      "isPublic": false,
+      "website": "https://www.yongin-park.com/yfamily/online_memorial",
+      "pageTitle": "온라인 추모관 | 용인공원"
+    },
+    {
+      "id": "park-0525",
+      "name": "천국의계단추모관(재단법인천국)",
+      "isPublic": false,
+      "website": "http://www.i1009.kr/",
+      "pageTitle": ""
+    },
+    {
+      "id": "park-0528",
+      "name": "유일추모공원",
+      "isPublic": false,
+      "website": "http://www.youilpark.com/",
+      "pageTitle": "�����߸����"
+    },
+    {
+      "id": "park-0529",
+      "name": "(재)시안 가족추모공원(봉안)",
+      "isPublic": false,
+      "website": "https://www.sianpark.co.kr/",
+      "pageTitle": "시안가족추모공원"
+    },
+    {
+      "id": "park-0531",
+      "name": "모악추모공원",
+      "isPublic": false,
+      "website": "http://www.moakpark.co.kr/html/greetings.html",
+      "pageTitle": "추모공원소개 < 인사말"
+    },
+    {
+      "id": "park-0533",
+      "name": "크리스찬메모리얼파크",
+      "isPublic": false,
+      "website": "https://www.fgcmp.com/",
+      "pageTitle": "페이지 자동 이동"
+    },
+    {
+      "id": "park-0537",
+      "name": "재단법인조안공원양주지사",
+      "isPublic": false,
+      "website": "https://www.yangju.go.kr/photo/selectPhotoInfoWebView.do?key=1779&ctgryNo=74&photoInfoNo=58005210",
+      "pageTitle": "사진정보 목록 - 사진DB"
+    },
+    {
+      "id": "park-0538",
+      "name": "약사사지장전추모관",
+      "isPublic": false,
+      "website": "https://www.boramsangjosiloam.com/Cs/Partnership/view/1343",
+      "pageTitle": "보람상조실로암"
+    },
+    {
+      "id": "park-0540",
+      "name": "유토피아추모공원(헤리티지관)",
+      "isPublic": false,
+      "website": "https://www.kmaca.or.kr/combination/contInfoDetail.do?curPageNo=2&searchBodId=BD13120013&pageSize=5&PN=6&searchFild=TITL&searchText=",
+      "pageTitle": "한국상조공제조합"
+    },
+    {
+      "id": "park-0543",
+      "name": "메모리얼펠리스추모관(실로암)",
+      "isPublic": false,
+      "website": "https://www.siloami.com/sub3.html",
+      "pageTitle": "실로암공원묘원"
+    },
+    {
+      "id": "park-0546",
+      "name": "유토피아추모관",
+      "isPublic": false,
+      "website": "https://www.utopiafuture.co.kr/memorial/memorial1.html",
+      "pageTitle": "유토피아퓨처 홈페이지"
+    },
+    {
+      "id": "park-0550",
+      "name": "생극추모공원",
+      "isPublic": false,
+      "website": "http://www.charnelpark.com/",
+      "pageTitle": ""
+    },
+    {
+      "id": "park-0554",
+      "name": "아산메모리얼파크 휴온 봉안당",
+      "isPublic": false,
+      "website": "https://apply.cheotjang.com/info/%EC%95%84%EC%82%B0%EC%8B%9C-%EB%B4%89%EC%95%88%EB%8B%B9-%EB%82%A9%EA%B3%A8%EB%8B%B9-%EC%95%88%EB%82%B4",
+      "pageTitle": "첫장 | 교원그룹 스핀오프 장지 비교 플랫폼"
+    },
+    {
+      "id": "park-0556",
+      "name": "예래원(봉안시설)",
+      "isPublic": false,
+      "website": "https://www.boramlife.com/Cs/Partnership/view/1371",
+      "pageTitle": "보람상조라이프"
+    },
+    {
+      "id": "park-0564",
+      "name": "재단법인 에덴낙원",
+      "isPublic": false,
+      "website": "https://www.icheon.go.kr/tour/cultureTour/manage/view.do?idx=79&mid=0101000000",
+      "pageTitle": "이천9경 상세 | 이천여행 | 이천시청 홈페이지"
+    },
+    {
+      "id": "park-0571",
+      "name": "약사사 하늘재추모원 ",
+      "isPublic": false,
+      "website": "https://www.boramsangjosiloam.com/Cs/Partnership/view/1366",
+      "pageTitle": "보람상조실로암"
+    },
+    {
+      "id": "park-0573",
+      "name": "보령시모란공원 봉안당",
+      "isPublic": true,
+      "website": "https://www.brsisul.or.kr/kor/sub01_03_01.do",
+      "pageTitle": "보령시시설관리공단"
+    },
+    {
+      "id": "park-0574",
+      "name": "(재)영호공원",
+      "isPublic": false,
+      "website": "http://web.amarketing.co.kr/front/portfolio/homepage?bo_id=portfolio_homepage&ar_id=52&sc_field=&sc_keyword=&sc_category=&page=1&request_url=../../front/portfolio/homepage",
+      "pageTitle": "홈페이지 - 에이마케팅 홈페이지제작센터"
+    },
+    {
+      "id": "park-0575",
+      "name": "대원사 봉안당",
+      "isPublic": false,
+      "website": "https://www.gyeongju.go.kr/open_content/ko/page.do?step=258&parm_bod_uid=197628&mnu_uid=187",
+      "pageTitle": "공지사항 | 시정소식 | 경주소식 | 경주시 - Golden City ( Beautiful Gyeongju )"
+    },
+    {
+      "id": "park-0582",
+      "name": "(재)밀양추모공원묘원",
+      "isPublic": false,
+      "website": "https://www.gnfilm.or.kr/location/show/789",
+      "pageTitle": "경남영상자료관"
+    },
+    {
+      "id": "park-0584",
+      "name": "서울시립승화원 추모의집",
+      "isPublic": true,
+      "website": "https://www.sisul.or.kr/open_content/memorial/",
+      "pageTitle": "서울시설공단 | 장사시설"
+    },
+    {
+      "id": "park-0586",
+      "name": "용미리왕릉벽식추모의집",
+      "isPublic": true,
+      "website": "https://www.boramsangjo.com/Cs/Partnership/view/1386",
+      "pageTitle": "보람상조개발"
+    },
+    {
+      "id": "park-0587",
+      "name": "용미리분묘형추모의집",
+      "isPublic": true,
+      "website": "https://www.boramlife.com/Cs/Partnership/view/1385",
+      "pageTitle": "보람상조라이프"
+    },
+    {
+      "id": "park-0588",
+      "name": "용미리벽식추모의집",
+      "isPublic": true,
+      "website": "https://www.boramsangjo.com/Cs/Partnership/view/1386",
+      "pageTitle": "보람상조개발"
+    },
+    {
+      "id": "park-0591",
+      "name": "보장사 영각당",
+      "isPublic": false,
+      "website": "http://www.hysangjo.co.kr/03_funeral/fun_053.asp",
+      "pageTitle": "�ѱ����ջ��� Ȩ�������� ���Ű��� ȯ���մϴ�."
+    },
+    {
+      "id": "park-0593",
+      "name": "예원추모관",
+      "isPublic": false,
+      "website": "http://www.e-yewon.co.kr/",
+      "pageTitle": "���� ����"
+    },
+    {
+      "id": "park-0597",
+      "name": "청풍추모공원",
+      "isPublic": false,
+      "website": "http://memo.bluewindpark.com/",
+      "pageTitle": "페이지 자동 이동"
+    },
+    {
+      "id": "park-0598",
+      "name": "전통사찰95호 동도사",
+      "isPublic": false,
+      "website": "https://www.boramsangjosiloam.com/Cs/Partnership/view/1439",
+      "pageTitle": "보람상조실로암"
+    },
+    {
+      "id": "park-0599",
+      "name": "동천교회 납골묘",
+      "isPublic": false,
+      "website": "http://www.idongcheon.com/",
+      "pageTitle": "��������õ��ȸ"
+    },
+    {
+      "id": "park-0600",
+      "name": "대국사",
+      "isPublic": false,
+      "website": "https://www.baduk.or.kr/",
+      "pageTitle": "한국기원"
+    },
+    {
+      "id": "park-0604",
+      "name": "(재)경춘공원묘원",
+      "isPublic": false,
+      "website": "https://www.gyoungchun.com/",
+      "pageTitle": ""
+    },
+    {
+      "id": "park-0615",
+      "name": "양구봉안공원 봉안당",
+      "isPublic": true,
+      "website": "https://www.yanggu.go.kr/user_sub?bk=VDHPJ250226073900138&mu_idx=232&bt=rd",
+      "pageTitle": "국토의 정중앙 양구에 오신걸 환영합니다."
+    },
+    {
+      "id": "park-0619",
+      "name": "흥륜사정토원",
+      "isPublic": false,
+      "website": "http://www.jungtowon.co.kr/",
+      "pageTitle": "����������"
+    },
+    {
+      "id": "park-0638",
+      "name": "용화사 봉안당",
+      "isPublic": false,
+      "website": "https://www.chungnam.go.kr/cnportal/media/article/view.do?articleNo=MD0002099777&menuNo=500167",
+      "pageTitle": "여행 - 충청남도 누리집(홈페이지)"
+    },
+    {
+      "id": "park-0645",
+      "name": "약천사",
+      "isPublic": false,
+      "website": "https://yakchunsa.templestay.com/",
+      "pageTitle": "템플스테이 | 나를 위한 행복 여행"
+    },
+    {
+      "id": "park-0650",
+      "name": "화성함백산추모공원(별빛쉼터)",
+      "isPublic": true,
+      "website": "https://hbm.hu.or.kr/hambaeksan/user/bbs/BD_selectBbs.do?q_bbsCode=1001&q_bbscttSn=20230103140122343",
+      "pageTitle": "공지사항"
+    }
+  ],
+  "errors": [
+    {
+      "id": "park-0057",
+      "name": "함안군공설추모공원",
+      "isPublic": true,
+      "website": "https://www.haman.go.kr/00989/00993/01036.web",
+      "status": "error"
+    },
+    {
+      "id": "park-0061",
+      "name": "고성군 공설묘원",
+      "isPublic": true,
+      "website": "https://www.gwgs.go.kr/kor/sub02_010801.do",
+      "status": "error"
+    },
+    {
+      "id": "park-0088",
+      "name": "김해하늘공원(묘지)",
+      "isPublic": false,
+      "website": "http://www.gimhaeskypark.com/sub04/sub01_01.php",
+      "status": "error"
+    },
+    {
+      "id": "park-0101",
+      "name": "홍천군공설묘원",
+      "isPublic": true,
+      "website": "https://www.hongcheon.go.kr/www/selectEminwonNewsView.do?key=283&news_epct_no=13656&ofr_pageSize=10",
+      "status": "timeout"
+    },
+    {
+      "id": "park-0216",
+      "name": "천주교부산교구 하늘공원",
+      "isPublic": false,
+      "website": "http://www.catholicbusan.or.kr/index.php?mid=dic_mapBoard&category=466360&sort_index=readed_count&shop_category=%EB%AC%98%EC%A7%80",
+      "status": "error"
+    },
+    {
+      "id": "park-0296",
+      "name": "도림동공설묘지(매장불가)",
+      "isPublic": true,
+      "website": "https://www.data.go.kr/data/15143496/fileData.do",
+      "status": "error"
+    },
+    {
+      "id": "park-0301",
+      "name": "무궁화공원묘원",
+      "isPublic": false,
+      "website": "https://www.gravepark.co.kr/bbs/board.php?bo_table=yp_cs01",
+      "status": "error"
+    },
+    {
+      "id": "park-0335",
+      "name": "이동공설묘지(만장)",
+      "isPublic": true,
+      "website": "https://www.data.go.kr/data/15143496/fileData.do",
+      "status": "error"
+    },
+    {
+      "id": "park-0358",
+      "name": "두운리공동묘지",
+      "isPublic": true,
+      "website": "https://www.nrich.go.kr/kor/subscriptionFileDown.do?idx=37",
+      "status": "timeout"
+    },
+    {
+      "id": "park-0441",
+      "name": "(재)대한예수교장로회 기독교공동묘원",
+      "isPublic": false,
+      "website": "https://brunch.co.kr/@c30817fd463a418/311",
+      "status": "error"
+    },
+    {
+      "id": "park-0534",
+      "name": "신불산추모공원 납골당",
+      "isPublic": false,
+      "website": "http://sbjs.kr/",
+      "status": "error"
+    }
+  ]
+}

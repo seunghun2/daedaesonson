@@ -1,0 +1,3902 @@
+[
+  {
+    "id": "park-0001",
+    "name": "(재)낙원추모공원",
+    "isPublic": false,
+    "website": "https://www.nakwonpark.co.kr/"
+  },
+  {
+    "id": "park-0002",
+    "name": "(재)실로암공원묘원",
+    "isPublic": false,
+    "website": "http://www.siloami.com/"
+  },
+  {
+    "id": "park-0003",
+    "name": "(재)삼덕공원묘원",
+    "isPublic": false,
+    "website": "http://www.gunwipark.com/bbs/board.php?bo_table=notice&wr_id=1"
+  },
+  {
+    "id": "park-0004",
+    "name": "재단법인울산공원묘원",
+    "isPublic": false,
+    "website": "https://www.grandculture.net/ulsan/toc/GC80020236"
+  },
+  {
+    "id": "park-0005",
+    "name": "진주내동공원묘원",
+    "isPublic": false,
+    "website": "http://www.ndpark.co.kr/"
+  },
+  {
+    "id": "park-0006",
+    "name": "신불산공원묘원",
+    "isPublic": false,
+    "website": "https://www.shinbulsanpark.co.kr/"
+  },
+  {
+    "id": "park-0007",
+    "name": "예산군추모공원",
+    "isPublic": true,
+    "website": "https://www.yesan.go.kr/kor/sub06_13_04_02_01.do"
+  },
+  {
+    "id": "park-0008",
+    "name": "(재)대지공원묘원",
+    "isPublic": false,
+    "website": "https://dmonster1355.cafe24.com/sub0201.php"
+  },
+  {
+    "id": "park-0009",
+    "name": "재단법인선산공원묘원",
+    "isPublic": false,
+    "website": "https://www.114.co.kr/search/detail?comp_id=5009767&comp_tp_cd=TEL&upjong_cd=843202"
+  },
+  {
+    "id": "park-0010",
+    "name": "재단법인 솥발산공원묘원",
+    "isPublic": false,
+    "website": "https://www.sotbalsan.co.kr/"
+  },
+  {
+    "id": "park-0011",
+    "name": "재단법인 로엠(묘지)",
+    "isPublic": false,
+    "website": "https://roem.com/"
+  },
+  {
+    "id": "park-0012",
+    "name": "(재)화산추모공원(묘지)",
+    "isPublic": false,
+    "website": "http://www.hwasanpark.co.kr/page/sub2-4.php"
+  },
+  {
+    "id": "park-0013",
+    "name": "(재)서울공원묘원",
+    "isPublic": false,
+    "website": "http://www.scpark.co.kr/"
+  },
+  {
+    "id": "park-0014",
+    "name": "(재)자하연 일산(묘지)",
+    "isPublic": false,
+    "website": "https://www.jahayeon.com/"
+  },
+  {
+    "id": "park-0015",
+    "name": "(재)이화공원묘원",
+    "isPublic": false,
+    "website": "https://www.114.co.kr/search/detail?comp_id=4753960&comp_tp_cd=TEL&upjong_cd=843202"
+  },
+  {
+    "id": "park-0016",
+    "name": "김해공원묘원",
+    "isPublic": false,
+    "website": ""
+  },
+  {
+    "id": "park-0017",
+    "name": "파주하늘나라공원",
+    "isPublic": false,
+    "website": "https://www.114.co.kr/search/detail?comp_id=1047287&comp_tp_cd=INT&upjong_cd=843200"
+  },
+  {
+    "id": "park-0018",
+    "name": "보령시모란공원",
+    "isPublic": true,
+    "website": "https://www.114.co.kr/search/detail?comp_id=5403796&comp_tp_cd=TEL&upjong_cd=843202"
+  },
+  {
+    "id": "park-0019",
+    "name": "(재)남양공원묘원",
+    "isPublic": false,
+    "website": "http://www.nypark.co.kr/doc/intro02.php"
+  },
+  {
+    "id": "park-0020",
+    "name": "목련공원묘원",
+    "isPublic": false,
+    "website": "http://www.mrmpark.co.kr/"
+  },
+  {
+    "id": "park-0021",
+    "name": "물미묘원",
+    "isPublic": true,
+    "website": "https://www.wjmbc.co.kr/news/desk.html?pagecode=view&num_seq=87479"
+  },
+  {
+    "id": "park-0022",
+    "name": "천주교안성추모공원(묘원)",
+    "isPublic": false,
+    "website": "http://www.ampark.co.kr/"
+  },
+  {
+    "id": "park-0023",
+    "name": "함양하늘공원(묘지)",
+    "isPublic": false,
+    "website": "https://m.catholic.or.kr/web/addr/catholicInfo.asp?code=201007011"
+  },
+  {
+    "id": "park-0024",
+    "name": "(재)하늘나라공원 포천묘원",
+    "isPublic": false,
+    "website": "https://www.metropolitan-funeral.co.kr/facility-place/751/"
+  },
+  {
+    "id": "park-0025",
+    "name": "금릉공원묘원",
+    "isPublic": false,
+    "website": "https://www.grandculture.net/gimcheon/dir/GC03201121"
+  },
+  {
+    "id": "park-0026",
+    "name": "(재)경춘공원묘원",
+    "isPublic": false,
+    "website": "https://www.gyoungchun.com/"
+  },
+  {
+    "id": "park-0027",
+    "name": "우성공원묘원",
+    "isPublic": false,
+    "website": "http://www.woosungpark.com/bbs/board.php?bo_table=sub0203"
+  },
+  {
+    "id": "park-0028",
+    "name": "(재)화신공원묘원",
+    "isPublic": false,
+    "website": "https://www.jeonbuk.go.kr/board/view.jeonbuk?boardId=BBS_0000036&menuCd=DOM_000000104001006004&dataSid=333249"
+  },
+  {
+    "id": "park-0029",
+    "name": "청파동성당 청파묘원",
+    "isPublic": false,
+    "website": "http://www.cpdsd.or.kr/front/news/p0401/333?b_id=1&s_field=1&s_word="
+  },
+  {
+    "id": "park-0030",
+    "name": "(재)풍산공원묘원",
+    "isPublic": false,
+    "website": "https://www.pungsanpark.co.kr/"
+  },
+  {
+    "id": "park-0031",
+    "name": "청파동성당 평화묘원",
+    "isPublic": false,
+    "website": "http://www.cpdsd.or.kr/front/news/p0401/333?b_id=1&s_field=1&s_word="
+  },
+  {
+    "id": "park-0032",
+    "name": "(재)호정공원(묘지)",
+    "isPublic": false,
+    "website": "http://www.jeonmin.co.kr/news/articleView.html?idxno=339394"
+  },
+  {
+    "id": "park-0033",
+    "name": "(주)광림공원 동산공원묘원(묘지)",
+    "isPublic": false,
+    "website": "https://endingsketch.com/burial-ground/%EC%A3%BC%EA%B4%91%EB%A6%BC%EA%B3%B5%EC%9B%90-%EB%8F%99%EC%82%B0%EA%B3%B5%EC%9B%90%EB%AC%98%EC%9B%90%EC%9E%90%EC%97%B0%EC%9E%A5/"
+  },
+  {
+    "id": "park-0034",
+    "name": "삼척시추모공원 묘지 제1단지",
+    "isPublic": true,
+    "website": "https://www.pressian.com/pages/articles/2021011414141939661"
+  },
+  {
+    "id": "park-0035",
+    "name": "(재)동산공원묘원",
+    "isPublic": false,
+    "website": "http://www.dongsanpark.com/"
+  },
+  {
+    "id": "park-0036",
+    "name": "유달공원묘지",
+    "isPublic": false,
+    "website": "https://www.114.co.kr/search/detail?comp_id=5179423&comp_tp_cd=TEL&upjong_cd=843202"
+  },
+  {
+    "id": "park-0037",
+    "name": "(재)지평선전북공원묘원(묘지)",
+    "isPublic": false,
+    "website": ""
+  },
+  {
+    "id": "park-0038",
+    "name": "(재)진달래문화재단",
+    "isPublic": false,
+    "website": "https://www.jindallae.kr/82"
+  },
+  {
+    "id": "park-0039",
+    "name": "(재)석계공원묘원",
+    "isPublic": false,
+    "website": "https://www.skpark.co.kr/bbs/board.php?bo_table=notice&wr_id=31"
+  },
+  {
+    "id": "park-0040",
+    "name": "영락공원묘원",
+    "isPublic": false,
+    "website": "https://www.grandculture.net/gwangju/bukgu/dir/GC60000598"
+  },
+  {
+    "id": "park-0041",
+    "name": "(재)자하연포천(묘지)",
+    "isPublic": false,
+    "website": "https://www.jahayeon.com/"
+  },
+  {
+    "id": "park-0042",
+    "name": "별그리다(THE HILL)",
+    "isPublic": false,
+    "website": "http://www.star4ever.com/helpdesk/notice_hill/lists"
+  },
+  {
+    "id": "park-0043",
+    "name": "(재)경맥백합공원",
+    "isPublic": false,
+    "website": "https://www.114.co.kr/search/detail?comp_id=4956478&comp_tp_cd=TEL&upjong_cd=843202"
+  },
+  {
+    "id": "park-0044",
+    "name": "(재)한남공원묘원",
+    "isPublic": false,
+    "website": "https://www.hannampark.com/"
+  },
+  {
+    "id": "park-0045",
+    "name": "충주공원묘원",
+    "isPublic": false,
+    "website": "https://chungju.grandculture.net/chungju/search/GC019P1741"
+  },
+  {
+    "id": "park-0046",
+    "name": "동화경모공원(묘지)",
+    "isPublic": false,
+    "website": "https://donghwapark.co.kr/"
+  },
+  {
+    "id": "park-0047",
+    "name": "양양군공설묘원",
+    "isPublic": true,
+    "website": "https://www.yangyang.go.kr/gw/mobile/partinfo_life_jangmyo"
+  },
+  {
+    "id": "park-0048",
+    "name": "대정공원묘원",
+    "isPublic": false,
+    "website": "https://www.114.co.kr/search/detail?comp_id=3098137&comp_tp_cd=TEL&upjong_cd=843202"
+  },
+  {
+    "id": "park-0049",
+    "name": "천주교혜화동성당 포천묘원",
+    "isPublic": false,
+    "website": "https://www.metropolitan-funeral.co.kr/facility-place/1162/"
+  },
+  {
+    "id": "park-0050",
+    "name": "광주공원묘원",
+    "isPublic": false,
+    "website": "http://www.cetpark.com/"
+  },
+  {
+    "id": "park-0051",
+    "name": "영모묘원",
+    "isPublic": false,
+    "website": "http://www.ymw.kr/bbs/content.php?co_id=greeting"
+  },
+  {
+    "id": "park-0052",
+    "name": "칠량자연공원묘원",
+    "isPublic": false,
+    "website": "https://www.114.co.kr/search/detail?comp_id=5112144&comp_tp_cd=TEL&upjong_cd=843202"
+  },
+  {
+    "id": "park-0053",
+    "name": "(재)봉황공원묘지",
+    "isPublic": false,
+    "website": "https://www.114.co.kr/search/detail?comp_id=5277234&comp_tp_cd=TEL&upjong_cd=843202"
+  },
+  {
+    "id": "park-0054",
+    "name": "(재)우성공원묘원",
+    "isPublic": false,
+    "website": "http://www.woosungpark.com/bbs/board.php?bo_table=sub0203"
+  },
+  {
+    "id": "park-0055",
+    "name": "동해시하늘정원묘지",
+    "isPublic": true,
+    "website": ""
+  },
+  {
+    "id": "park-0056",
+    "name": "(재)용인공원(묘지)",
+    "isPublic": false,
+    "website": "https://www.yongin-park.com/facility/park_info"
+  },
+  {
+    "id": "park-0057",
+    "name": "함안군공설추모공원",
+    "isPublic": true,
+    "website": "https://www.haman.go.kr/00989/00993/01036.web"
+  },
+  {
+    "id": "park-0058",
+    "name": "(재)경주공원묘원",
+    "isPublic": false,
+    "website": "http://www.gjpark.co.kr/feature"
+  },
+  {
+    "id": "park-0059",
+    "name": "남한강공원묘원",
+    "isPublic": false,
+    "website": "https://nhgpark.co.kr/"
+  },
+  {
+    "id": "park-0060",
+    "name": "(재)조양공원",
+    "isPublic": false,
+    "website": "https://fclh.purpleo.co.kr/view/75092"
+  },
+  {
+    "id": "park-0061",
+    "name": "고성군 공설묘원",
+    "isPublic": true,
+    "website": "https://www.gwgs.go.kr/kor/sub02_010801.do"
+  },
+  {
+    "id": "park-0062",
+    "name": "초동교회공원묘원",
+    "isPublic": false,
+    "website": "http://chodong.or.kr/"
+  },
+  {
+    "id": "park-0063",
+    "name": "태백공원묘원",
+    "isPublic": true,
+    "website": "https://www.taebaek.go.kr/www/contents.do?key=434"
+  },
+  {
+    "id": "park-0064",
+    "name": "진천군공설묘지",
+    "isPublic": true,
+    "website": "https://www.ch-funeralportal.co.kr/facility-item/774/price/"
+  },
+  {
+    "id": "park-0065",
+    "name": "(재)광주구천주교공원묘원",
+    "isPublic": false,
+    "website": "http://www.gjccp.kr/"
+  },
+  {
+    "id": "park-0066",
+    "name": "(재)개나리추모공원",
+    "isPublic": false,
+    "website": "http://gaenaree.com/"
+  },
+  {
+    "id": "park-0067",
+    "name": "금호동성당 천보묘원(묘지)",
+    "isPublic": false,
+    "website": "https://ghdsd.or.kr/chunbo"
+  },
+  {
+    "id": "park-0068",
+    "name": "전농동성당 평화묘원",
+    "isPublic": false,
+    "website": "https://k114.co.kr/store/detail.asp?seq=AxErBxJ3CgEvCfdN"
+  },
+  {
+    "id": "park-0069",
+    "name": "(재)천주교평내공원묘원",
+    "isPublic": false,
+    "website": "http://pn.catholic.or.kr/page/location.php"
+  },
+  {
+    "id": "park-0070",
+    "name": "재림공원묘원",
+    "isPublic": false,
+    "website": "http://grave.amck.kr/bbs/content.php?co_id=howToUse"
+  },
+  {
+    "id": "park-0071",
+    "name": "(재)신세계공원묘원",
+    "isPublic": false,
+    "website": "http://www.xn--989ardy58be3ft8b5tjba.kr/"
+  },
+  {
+    "id": "park-0072",
+    "name": "영종공설묘지(신규매장불가)",
+    "isPublic": true,
+    "website": "https://www.insiseol.or.kr/life/family/facility/cemetery.jsp"
+  },
+  {
+    "id": "park-0073",
+    "name": "재단법인 춘천공원묘원",
+    "isPublic": false,
+    "website": "http://www.ccpark.co.kr/kongwon/sub3.html"
+  },
+  {
+    "id": "park-0074",
+    "name": "창원공원묘원(묘지)",
+    "isPublic": false,
+    "website": "https://www.changwonpark.kr/"
+  },
+  {
+    "id": "park-0075",
+    "name": "(재)학명묘원",
+    "isPublic": false,
+    "website": "https://www.114.co.kr/search/detail?comp_id=5108479&comp_tp_cd=TEL&upjong_cd=843202"
+  },
+  {
+    "id": "park-0076",
+    "name": "백란공원묘원",
+    "isPublic": false,
+    "website": "https://www.114.co.kr/search/detail?comp_id=3785864&comp_tp_cd=TEL&upjong_cd=843202"
+  },
+  {
+    "id": "park-0077",
+    "name": "애향묘지",
+    "isPublic": true,
+    "website": "http://www.gsilbo.co.kr/article.asp?aid=169269304738720001"
+  },
+  {
+    "id": "park-0078",
+    "name": "신당동성당 소화묘원",
+    "isPublic": false,
+    "website": "https://www.114.co.kr/search/detail?comp_id=411836&comp_tp_cd=INT&upjong_cd=843200"
+  },
+  {
+    "id": "park-0079",
+    "name": "오창장미공원",
+    "isPublic": true,
+    "website": "https://www.cheongju.go.kr/sannam/selectBbsNttView.do?key=4771&bbsNo=40&nttNo=45060&integrDeptCode="
+  },
+  {
+    "id": "park-0080",
+    "name": "평창군 공설묘지",
+    "isPublic": true,
+    "website": "https://www.pc.go.kr/portal/info/info-open/info-open-advance/info-open-advance-whole?preSeq=146114"
+  },
+  {
+    "id": "park-0081",
+    "name": "충현동산",
+    "isPublic": false,
+    "website": "https://www.choonghyunchurch.or.kr/core/awc/download.php?pageCode=16&pageKey=0&deviceType=P&itemNum=157664"
+  },
+  {
+    "id": "park-0082",
+    "name": "세종시공설묘지",
+    "isPublic": true,
+    "website": "https://www.sejong.go.kr/welfare/sub02_05_01.do"
+  },
+  {
+    "id": "park-0083",
+    "name": "대전추모공원 가족묘원",
+    "isPublic": true,
+    "website": "https://www.15774129.go.kr/platform/newvg/organ_info.do?id=639"
+  },
+  {
+    "id": "park-0084",
+    "name": "매화공원묘지",
+    "isPublic": true,
+    "website": "https://www.114.co.kr/search/detail?comp_id=665773&comp_tp_cd=INT&upjong_cd=843200"
+  },
+  {
+    "id": "park-0085",
+    "name": "영동공원묘원",
+    "isPublic": false,
+    "website": "https://www.newsis.com/view/NISI20210919_0000832396"
+  },
+  {
+    "id": "park-0086",
+    "name": "(재)천주교세종로묘원",
+    "isPublic": false,
+    "website": "https://www.114.co.kr/search/detail?comp_id=410834&comp_tp_cd=INT&upjong_cd=843200"
+  },
+  {
+    "id": "park-0087",
+    "name": "서라벌공원묘원",
+    "isPublic": false,
+    "website": "http://www.seorabolpark.com/page/greeting.php"
+  },
+  {
+    "id": "park-0088",
+    "name": "김해하늘공원(묘지)",
+    "isPublic": false,
+    "website": "http://www.gimhaeskypark.com/sub04/sub01_01.php"
+  },
+  {
+    "id": "park-0089",
+    "name": "여수시공설묘지공원",
+    "isPublic": true,
+    "website": "https://yeosu.grandculture.net/yeosu/multimedia/GC013P2874"
+  },
+  {
+    "id": "park-0090",
+    "name": "정선하늘공원",
+    "isPublic": true,
+    "website": "https://www.jsimc.or.kr/"
+  },
+  {
+    "id": "park-0091",
+    "name": "광릉 더 크레스트 묘지",
+    "isPublic": false,
+    "website": "https://m.newspic.kr/view.html?nid=2024121809000017576"
+  },
+  {
+    "id": "park-0092",
+    "name": "(재)안동추모공원(묘지)",
+    "isPublic": false,
+    "website": "http://www.andongpark.net/bbs/content.php?co_id=sub1_1"
+  },
+  {
+    "id": "park-0093",
+    "name": "청량리성당 다볼산묘원",
+    "isPublic": false,
+    "website": "https://moovitapp.com/index/en/public_transit-%EC%B2%9C%EC%A3%BC%EA%B5%90_%EC%B2%AD%EB%9F%89%EB%A6%AC_%EC%84%B1%EB%8B%B9_%EB%8B%A4%EB%B3%BC%EC%82%B0_%EB%AC%98%EC%9B%90-%EC%84%9C%EC%9A%B8%EC%8B%9CSeoul-site_44525387-1802"
+  },
+  {
+    "id": "park-0094",
+    "name": "예래원(묘지)",
+    "isPublic": false,
+    "website": "https://www.114.co.kr/search/detail?comp_id=414072&comp_tp_cd=INT&upjong_cd=843203"
+  },
+  {
+    "id": "park-0095",
+    "name": "현대공원1묘원",
+    "isPublic": false,
+    "website": "http://www.hdpark.co.kr/06_guide/sitemap.php"
+  },
+  {
+    "id": "park-0096",
+    "name": "전주효자공원",
+    "isPublic": true,
+    "website": "https://www.jeonju.go.kr/planweb/board/view.9is?dataUid=3e5881f00ce3409dbf296af7f531eb52&contentUid=ff8080818990c349018b041a879f395a&boardUid=9be517a7914528ce01930aa3ddc26cf0"
+  },
+  {
+    "id": "park-0097",
+    "name": "현대공원2묘원",
+    "isPublic": false,
+    "website": "http://www.hdpark.co.kr/06_guide/sitemap.php"
+  },
+  {
+    "id": "park-0098",
+    "name": "(재)청구공원",
+    "isPublic": false,
+    "website": "https://www.114.co.kr/search/detail?comp_id=3573768&comp_tp_cd=TEL&upjong_cd=843202"
+  },
+  {
+    "id": "park-0099",
+    "name": "천주교효천공원묘지",
+    "isPublic": false,
+    "website": "https://funeral.easehub.co.kr/funerals/1345"
+  },
+  {
+    "id": "park-0100",
+    "name": "천자봉공원묘원",
+    "isPublic": false,
+    "website": "https://www.changwon.go.kr/cwportal/depart/11067/14022/14049.web"
+  },
+  {
+    "id": "park-0101",
+    "name": "홍천군공설묘원",
+    "isPublic": true,
+    "website": "https://www.hongcheon.go.kr/www/selectEminwonNewsView.do?key=283&news_epct_no=13656&ofr_pageSize=10"
+  },
+  {
+    "id": "park-0102",
+    "name": "이천시대월공설공원묘지(만장)",
+    "isPublic": true,
+    "website": "https://www.metropolitan-funeral.co.kr/facility-place/794/"
+  },
+  {
+    "id": "park-0103",
+    "name": "진리공설묘지",
+    "isPublic": true,
+    "website": "https://funeral.easehub.co.kr/funerals/1303"
+  },
+  {
+    "id": "park-0104",
+    "name": "이천시백사공설공원묘지",
+    "isPublic": true,
+    "website": "https://www.metropolitan-funeral.co.kr/facility-place/803/"
+  },
+  {
+    "id": "park-0105",
+    "name": "점봉동 공원묘지",
+    "isPublic": true,
+    "website": "https://www.metropolitan-funeral.co.kr/facility-place/808/"
+  },
+  {
+    "id": "park-0106",
+    "name": "(재)자하연분당(묘지)",
+    "isPublic": false,
+    "website": "http://www.peace11.com/board_KweM79/3506"
+  },
+  {
+    "id": "park-0107",
+    "name": "하다리공설공원묘지",
+    "isPublic": true,
+    "website": "https://www.metropolitan-funeral.co.kr/facility-place/820/"
+  },
+  {
+    "id": "park-0108",
+    "name": "(재)광주대교구 여수천주교공원묘원",
+    "isPublic": false,
+    "website": "http://www.gjccp.kr/sogae/intro.asp"
+  },
+  {
+    "id": "park-0109",
+    "name": "대구시립공원묘지",
+    "isPublic": true,
+    "website": "https://chilgok.grandculture.net/chilgok/multimedia/GC023P0771"
+  },
+  {
+    "id": "park-0110",
+    "name": "모도리공설묘지",
+    "isPublic": true,
+    "website": "https://www.metropolitan-funeral.co.kr/facility-place/827/"
+  },
+  {
+    "id": "park-0111",
+    "name": "안중공설묘지",
+    "isPublic": true,
+    "website": "https://www.metropolitan-funeral.co.kr/facility-place/819/"
+  },
+  {
+    "id": "park-0112",
+    "name": "이천시설성공설공원묘지",
+    "isPublic": true,
+    "website": "https://www.metropolitan-funeral.co.kr/facility-place/802/"
+  },
+  {
+    "id": "park-0113",
+    "name": "이천시장호원공설공원묘지(만장)",
+    "isPublic": true,
+    "website": "https://www.metropolitan-funeral.co.kr/facility-place/799/"
+  },
+  {
+    "id": "park-0114",
+    "name": "선재리공설묘지",
+    "isPublic": true,
+    "website": "https://www.metropolitan-funeral.co.kr/facility-place/115/"
+  },
+  {
+    "id": "park-0115",
+    "name": "이작리공설묘지",
+    "isPublic": true,
+    "website": "https://www.metropolitan-funeral.co.kr/facility-place/804/"
+  },
+  {
+    "id": "park-0116",
+    "name": "(재)예다원 묘원",
+    "isPublic": false,
+    "website": "https://www.grandculture.net/yeosu/dir/GC01331418"
+  },
+  {
+    "id": "park-0117",
+    "name": "신도리공설묘지",
+    "isPublic": true,
+    "website": "https://www.metropolitan-funeral.co.kr/facility-place/821/"
+  },
+  {
+    "id": "park-0118",
+    "name": "장봉리공설묘지",
+    "isPublic": true,
+    "website": "https://www.metropolitan-funeral.co.kr/facility-place/818/"
+  },
+  {
+    "id": "park-0119",
+    "name": "청양군추모공원(묘지)",
+    "isPublic": true,
+    "website": "https://www.daejonilbo.com/news/articleView.html?idxno=2227246"
+  },
+  {
+    "id": "park-0120",
+    "name": "와동꽃빛공원(공설묘지)",
+    "isPublic": true,
+    "website": "https://www.metropolitan-funeral.co.kr/facility-place/699/"
+  },
+  {
+    "id": "park-0121",
+    "name": "춘천안식공원(묘지)",
+    "isPublic": true,
+    "website": "https://www.chuncheon.go.kr/mayor/newsroom/press-release/?nttId=458690&flag=view"
+  },
+  {
+    "id": "park-0122",
+    "name": "청솔공원",
+    "isPublic": true,
+    "website": "http://www.chungsol.net/"
+  },
+  {
+    "id": "park-0123",
+    "name": "화도공설묘지(만장)",
+    "isPublic": true,
+    "website": "https://www.15774129.go.kr/platform/newvg/organ_info.do?id=513"
+  },
+  {
+    "id": "park-0124",
+    "name": "수동공설묘지(만장)",
+    "isPublic": true,
+    "website": "https://15774129.go.kr/platform/newvg/organ_info.do?id=727"
+  },
+  {
+    "id": "park-0125",
+    "name": "완주군 공설공원묘지",
+    "isPublic": true,
+    "website": "https://www.wanju.go.kr/index.9is?contentUid=ff8080818b024d8e018b274f60032c09"
+  },
+  {
+    "id": "park-0126",
+    "name": "충주시공설묘지",
+    "isPublic": true,
+    "website": "https://www.grandculture.net/chungju/dir/GC01901860"
+  },
+  {
+    "id": "park-0127",
+    "name": "청북공설묘지",
+    "isPublic": true,
+    "website": "https://www.placeview.co.kr/id/MjcyNjgzMzUg"
+  },
+  {
+    "id": "park-0128",
+    "name": "자월리공설묘지",
+    "isPublic": true,
+    "website": "https://www.15774129.go.kr/platform/newvg/organ_info.do?id=611"
+  },
+  {
+    "id": "park-0129",
+    "name": "내리공설묘지",
+    "isPublic": true,
+    "website": "https://www.metropolitan-funeral.co.kr/facility-place/862/"
+  },
+  {
+    "id": "park-0130",
+    "name": "처리공원묘지",
+    "isPublic": true,
+    "website": "https://xn--hq1b28ffspg0a.com/49/?bmode=view&idx=71049869"
+  },
+  {
+    "id": "park-0131",
+    "name": "오산시공설공원묘지",
+    "isPublic": true,
+    "website": "https://www.metropolitan-funeral.co.kr/facility-place/822/"
+  },
+  {
+    "id": "park-0132",
+    "name": "충효공원묘원",
+    "isPublic": false,
+    "website": "https://www.114.co.kr/search/detail?comp_id=4234385&comp_tp_cd=TEL&upjong_cd=843202"
+  },
+  {
+    "id": "park-0133",
+    "name": "횡성군공설추모공원(묘지)",
+    "isPublic": true,
+    "website": "https://www.hsg.go.kr/www/contents.do?key=1190"
+  },
+  {
+    "id": "park-0134",
+    "name": "송탄공설묘지",
+    "isPublic": true,
+    "website": "https://www.metropolitan-funeral.co.kr/facility-place/817/"
+  },
+  {
+    "id": "park-0135",
+    "name": "재단법인 아너스홈(구 대성공원묘원)",
+    "isPublic": false,
+    "website": "https://xn--h50bz74at1b530a.com/24/?q=YToxOntzOjEyOiJrZXl3b3JkX3R5cGUiO3M6MzoiYWxsIjt9&bmode=view&idx=122902733&t=board"
+  },
+  {
+    "id": "park-0136",
+    "name": "인제종합장묘센터 하늘공원",
+    "isPublic": true,
+    "website": "https://www.15774129.go.kr/platform/newvg/organ_info.do?id=799"
+  },
+  {
+    "id": "park-0137",
+    "name": "대청리공설묘지",
+    "isPublic": true,
+    "website": "https://www.metropolitan-funeral.co.kr/facility-place/807/"
+  },
+  {
+    "id": "park-0138",
+    "name": "가톨릭군위묘원",
+    "isPublic": false,
+    "website": "http://www.gunwipark.com/bbs/content.php?co_id=welcome"
+  },
+  {
+    "id": "park-0139",
+    "name": "(재)영락교회공원묘원",
+    "isPublic": false,
+    "website": ""
+  },
+  {
+    "id": "park-0140",
+    "name": "진촌리공설묘지",
+    "isPublic": true,
+    "website": "https://www.metropolitan-funeral.co.kr/facility-place/810/"
+  },
+  {
+    "id": "park-0141",
+    "name": "현수리공원묘지",
+    "isPublic": true,
+    "website": "https://funeral.easehub.co.kr/funerals/1401"
+  },
+  {
+    "id": "park-0142",
+    "name": "연평리공설묘지",
+    "isPublic": true,
+    "website": "https://www.metropolitan-funeral.co.kr/facility-place/800/"
+  },
+  {
+    "id": "park-0143",
+    "name": "강릉공원묘원(묘지)",
+    "isPublic": false,
+    "website": "https://www.boramplus.com/Cs/Partnership/view/1165"
+  },
+  {
+    "id": "park-0144",
+    "name": "남부권공설묘지",
+    "isPublic": true,
+    "website": "https://www.114.co.kr/search/detail?comp_id=740786&comp_tp_cd=INT&upjong_cd=843200"
+  },
+  {
+    "id": "park-0145",
+    "name": "(재)자하연팔당(묘지)",
+    "isPublic": false,
+    "website": "https://www.jahayeon.com/"
+  },
+  {
+    "id": "park-0146",
+    "name": "중림동성당묘원",
+    "isPublic": false,
+    "website": "https://www.metropolitan-funeral.co.kr/facility-place/1155/"
+  },
+  {
+    "id": "park-0147",
+    "name": "은광교회 묘지",
+    "isPublic": false,
+    "website": "http://www.eunkwang.com/main/sub.html?pageCode=5"
+  },
+  {
+    "id": "park-0148",
+    "name": "양우회",
+    "isPublic": false,
+    "website": "https://www.114.co.kr/search/detail?comp_id=2647743&comp_tp_cd=GOV&godata_tp_cd=LOCALDATA"
+  },
+  {
+    "id": "park-0149",
+    "name": "인천호남향우회",
+    "isPublic": false,
+    "website": "https://www.jeonnam.go.kr/M7116/boardView.do?seq=1957805&menuId=jeonnam0501010000"
+  },
+  {
+    "id": "park-0150",
+    "name": "삼성개발공원묘원(묘지)",
+    "isPublic": false,
+    "website": "http://www.elysium.co.kr/"
+  },
+  {
+    "id": "park-0151",
+    "name": "성서공동묘지",
+    "isPublic": true,
+    "website": "https://chilgok.grandculture.net/chilgok/index?category=%EC%A7%80%EB%AA%85%2F%EA%B8%B0%EA%B4%80%EB%AA%85&depth=2&name=%EC%82%AC&page=20&search=%EC%84%B1%EC%84%9C%EC%8B%9C%EB%A6%BD%EB%AC%98%EC%A7%80"
+  },
+  {
+    "id": "park-0152",
+    "name": "솔뫼공설묘지",
+    "isPublic": true,
+    "website": "https://c3korea.com/dangjin-solmoe-public-cemetery-expansion-design-competition/"
+  },
+  {
+    "id": "park-0153",
+    "name": "석문공설묘지",
+    "isPublic": true,
+    "website": "https://www.114.co.kr/search/detail?comp_id=5404374&comp_tp_cd=TEL&upjong_cd=843202"
+  },
+  {
+    "id": "park-0154",
+    "name": "천주교용인공원묘원",
+    "isPublic": false,
+    "website": "http://yi.catholic.or.kr/page/use.php"
+  },
+  {
+    "id": "park-0155",
+    "name": "꽃동네 낙원묘지",
+    "isPublic": false,
+    "website": "https://www.114.co.kr/search/detail?comp_id=665743&comp_tp_cd=INT&upjong_cd=843200"
+  },
+  {
+    "id": "park-0156",
+    "name": "낙원공원묘원",
+    "isPublic": false,
+    "website": "https://www.nakwonpark.co.kr/bbs/board.php?bo_table=05_01&wr_id=22"
+  },
+  {
+    "id": "park-0157",
+    "name": "남해추모누리 공설종합묘원",
+    "isPublic": true,
+    "website": "https://www.boram.com/Cs/Partnership/view/1560"
+  },
+  {
+    "id": "park-0158",
+    "name": "정주동산",
+    "isPublic": false,
+    "website": "https://www.114.co.kr/search/detail?comp_id=4508275&comp_tp_cd=TEL&upjong_cd=843200"
+  },
+  {
+    "id": "park-0159",
+    "name": "대호지공설묘지",
+    "isPublic": true,
+    "website": "http://www.dangjin.go.kr/media/Board/media/0102/View/12227"
+  },
+  {
+    "id": "park-0160",
+    "name": "영락공원묘지",
+    "isPublic": true,
+    "website": "https://www.busan.go.kr/depart/welgrand0305"
+  },
+  {
+    "id": "park-0161",
+    "name": "해방교회공원묘원",
+    "isPublic": false,
+    "website": ""
+  },
+  {
+    "id": "park-0162",
+    "name": "동명가족묘지",
+    "isPublic": true,
+    "website": "https://chilgok.grandculture.net/chilgok/index?category=%EC%A7%80%EB%AA%85%2F%EA%B8%B0%EA%B4%80%EB%AA%85&depth=2&name=%EB%8B%A4&page=20&search=%EB%8F%99%EB%AA%85%EA%B0%80%EC%A1%B1%EB%AC%98%EC%A7%80"
+  },
+  {
+    "id": "park-0163",
+    "name": "동명공동묘지",
+    "isPublic": true,
+    "website": "https://www.114.co.kr/search/detail?comp_id=328661&comp_tp_cd=INT&upjong_cd=843200"
+  },
+  {
+    "id": "park-0164",
+    "name": "양평군공설공원묘지",
+    "isPublic": true,
+    "website": "https://www.114.co.kr/search/detail?comp_id=1631737&comp_tp_cd=INT&upjong_cd=843200"
+  },
+  {
+    "id": "park-0165",
+    "name": "순천시립공원묘지",
+    "isPublic": true,
+    "website": "https://www.suncheon.go.kr/minju/0008/0001/?mode=view&cntId=11767"
+  },
+  {
+    "id": "park-0166",
+    "name": "용미리제1묘지",
+    "isPublic": true,
+    "website": ""
+  },
+  {
+    "id": "park-0167",
+    "name": "용미리제2묘지",
+    "isPublic": true,
+    "website": ""
+  },
+  {
+    "id": "park-0168",
+    "name": "장화리공설묘지",
+    "isPublic": true,
+    "website": "https://funeral.easehub.co.kr/funerals/1273"
+  },
+  {
+    "id": "park-0169",
+    "name": "운경공원묘원",
+    "isPublic": false,
+    "website": "https://unkyung.co.kr/about-us/"
+  },
+  {
+    "id": "park-0170",
+    "name": "장정리공설묘지",
+    "isPublic": true,
+    "website": "http://www.hysangjo.co.kr/03_funeral/fun_053.asp"
+  },
+  {
+    "id": "park-0171",
+    "name": "웅양공설공원묘지",
+    "isPublic": true,
+    "website": ""
+  },
+  {
+    "id": "park-0172",
+    "name": "(재)원주공원묘원",
+    "isPublic": false,
+    "website": "https://wonjupark.com/"
+  },
+  {
+    "id": "park-0173",
+    "name": "월곳리공설묘지",
+    "isPublic": true,
+    "website": "https://www.metropolitan-funeral.co.kr/facility-place/110/"
+  },
+  {
+    "id": "park-0174",
+    "name": "월롱면 공설묘지",
+    "isPublic": true,
+    "website": "https://www.metropolitan-funeral.co.kr/facility-place/926/"
+  },
+  {
+    "id": "park-0175",
+    "name": "월평공설공원묘지",
+    "isPublic": true,
+    "website": "https://www.goinheaven.co.kr/memorialpark/?q=YToxOntzOjEyOiJrZXl3b3JkX3R5cGUiO3M6MzoiYWxsIjt9&bmode=view&idx=6643755&t=board"
+  },
+  {
+    "id": "park-0176",
+    "name": "유치공설공원묘지",
+    "isPublic": true,
+    "website": "https://fpt.purpleo.co.kr/view/48329"
+  },
+  {
+    "id": "park-0177",
+    "name": "의령군공설묘지",
+    "isPublic": true,
+    "website": "https://www.ulex.co.kr/%EB%B2%95%EB%A5%A0/1374122-2104519-%EC%9D%98%EB%A0%B9%EA%B5%B0%EA%B3%B5%EC%84%A4%EB%AC%98%EC%A7%80%EC%84%A4%EC%B9%98"
+  },
+  {
+    "id": "park-0178",
+    "name": "낙원공원 의정부묘원",
+    "isPublic": false,
+    "website": "https://www.metropolitan-funeral.co.kr/facility-place/855/"
+  },
+  {
+    "id": "park-0179",
+    "name": "(재)시안 가족추모공원(매장묘)",
+    "isPublic": false,
+    "website": "https://www.sianpark.co.kr/"
+  },
+  {
+    "id": "park-0180",
+    "name": "정왕공설묘지",
+    "isPublic": true,
+    "website": "http://www.siheung.go.kr/docviewer/index.jsp?atchFileId=3a05093ad07173a01b566fc4cafc6acbda25aa42fa20eac4874c2cadbe7ab5f8&fileSn=ee4f816e83cce500dc32ac758b27d2f0&docName=%EC%A0%95%EC%99%95%EA%B3%B5%EC%84%A4%EB%AC%98%EC%A7%80%2B%EB%B0%94%EB%A1%9C%EA%B0%80%EA%B8%B0%2B%283%29"
+  },
+  {
+    "id": "park-0181",
+    "name": "장수동공설묘지(매장불가)",
+    "isPublic": true,
+    "website": "https://315.mpva.go.kr/mpva/downloadBbsFile.do?atchmnflNo=122859"
+  },
+  {
+    "id": "park-0182",
+    "name": "황산병온공설묘지",
+    "isPublic": true,
+    "website": "https://funeral.easehub.co.kr/funerals/1410"
+  },
+  {
+    "id": "park-0183",
+    "name": "수산동공설묘지(매장불가)",
+    "isPublic": true,
+    "website": "https://funeral.easehub.co.kr/funerals/1146"
+  },
+  {
+    "id": "park-0184",
+    "name": "인천가족공원 묘지",
+    "isPublic": true,
+    "website": "https://www.insiseol.or.kr/life/family/guide/grave_fee.jsp"
+  },
+  {
+    "id": "park-0185",
+    "name": "전곡읍공설묘지",
+    "isPublic": true,
+    "website": "https://www.114.co.kr/search/detail?comp_id=802670&comp_tp_cd=INT&upjong_cd=843200"
+  },
+  {
+    "id": "park-0186",
+    "name": "장계공설묘지",
+    "isPublic": true,
+    "website": "https://www.jeonbuk.go.kr/board/view.jeonbuk?boardId=BBS_0000036&menuCd=DOM_000000104001006004&dataSid=333222"
+  },
+  {
+    "id": "park-0187",
+    "name": "장흥리공설묘지",
+    "isPublic": true,
+    "website": "https://www.114.co.kr/search/detail?comp_id=5246695&comp_tp_cd=TEL&upjong_cd=843202"
+  },
+  {
+    "id": "park-0188",
+    "name": "인산리공설묘지",
+    "isPublic": true,
+    "website": "http://www.kmfa.co.kr/include/dn.php?mode=bbs&bfile=%EC%82%B0%EB%B6%84%EC%A0%9C%EB%8F%84%ED%99%94%20%EB%B0%A9%EC%95%88%20%EC%B5%9C%EC%A2%85%EB%B3%B8%20(%EB%AF%BC%EA%B0%84%EC%A0%95%EC%B1%85%20%EC%A0%9C%EC%95%88%EC%84%9C)%202024_09_30.pdf&rfile=img_20241004091029.pdf"
+  },
+  {
+    "id": "park-0189",
+    "name": "신림덕화공설묘지",
+    "isPublic": true,
+    "website": "https://www.jeonbuk.go.kr/board/view.jeonbuk?boardId=BBS_0000036&menuCd=DOM_000000104006001000&dataSid=333218"
+  },
+  {
+    "id": "park-0190",
+    "name": "외포리공설묘지",
+    "isPublic": true,
+    "website": "https://funeral.easehub.co.kr/funerals/1226"
+  },
+  {
+    "id": "park-0191",
+    "name": "양구군공설묘지",
+    "isPublic": true,
+    "website": "https://www.yanggu.go.kr/user_sub?bk=LQEIT240715221627882&mu_idx=474&bt=rd"
+  },
+  {
+    "id": "park-0192",
+    "name": "양택공원묘지(봉안묘)",
+    "isPublic": true,
+    "website": "https://www.15774129.go.kr/platform/newvg/organ_info.do?id=810"
+  },
+  {
+    "id": "park-0193",
+    "name": "진달래공원묘원",
+    "isPublic": false,
+    "website": "http://jdr.kr/%EB%B6%84%EC%96%91%EC%95%88%EB%82%B4/%EB%B6%84%EC%96%91%EC%A0%88%EC%B0%A8/"
+  },
+  {
+    "id": "park-0194",
+    "name": "안흥동공설묘지(만장)",
+    "isPublic": true,
+    "website": "https://www.ddcsiseol.or.kr/main/board/12/611/board_view.do?&cp=1&listType=list&bdOpenYn=Y&bdNoticeYn=N"
+  },
+  {
+    "id": "park-0195",
+    "name": "여산공설묘지",
+    "isPublic": true,
+    "website": "https://www.jeonbuk.go.kr/board/view.jeonbuk?boardId=BBS_0000036&menuCd=DOM_000000104006001000&dataSid=333227"
+  },
+  {
+    "id": "park-0196",
+    "name": "화산연정공설묘지",
+    "isPublic": true,
+    "website": "https://funeral.easehub.co.kr/funerals/1406"
+  },
+  {
+    "id": "park-0197",
+    "name": "연천읍공설묘지",
+    "isPublic": true,
+    "website": "https://www.metropolitan-funeral.co.kr/facility-place/902/"
+  },
+  {
+    "id": "park-0198",
+    "name": "삼계공설묘지",
+    "isPublic": true,
+    "website": "https://funeral.easehub.co.kr/funerals/1092"
+  },
+  {
+    "id": "park-0199",
+    "name": "아산주진공설묘지",
+    "isPublic": true,
+    "website": "https://www.jeonbuk.go.kr/board/view.jeonbuk?boardId=BBS_0000036&menuCd=DOM_000000104001006004&dataSid=333220"
+  },
+  {
+    "id": "park-0200",
+    "name": "부산영락공원묘지",
+    "isPublic": true,
+    "website": "https://www.bisco.or.kr/yeongnakpark/index.asp"
+  },
+  {
+    "id": "park-0201",
+    "name": "죽변화성리공설묘지",
+    "isPublic": true,
+    "website": "https://dggb-portal.funeralblog.co.kr/all-funeral/%EC%9A%B8%EC%A7%84%EA%B5%B0%EC%9D%98%EB%A3%8C%EC%9B%90%EC%9E%A5%EB%A1%80%EC%8B%9D%EC%9E%A5/%EC%9A%B8%EC%A7%84%20%EA%B5%B0%EB%A6%BD%20%EC%B6%94%EB%AA%A8%EC%9B%90/%EC%A3%BD%EB%B3%80%ED%99%94%EC%84%B1%EB%A6%AC%EA%B3%B5%EC%84%A4%EB%AC%98%EC%A7%80/"
+  },
+  {
+    "id": "park-0202",
+    "name": "신월공설묘지(만장)",
+    "isPublic": true,
+    "website": "http://www.mediareport.co.kr/269127"
+  },
+  {
+    "id": "park-0203",
+    "name": "주문공설묘지",
+    "isPublic": true,
+    "website": "https://www.idaegu.com/news/articleView.html?idxno=405154"
+  },
+  {
+    "id": "park-0204",
+    "name": "해남신안공설묘지",
+    "isPublic": true,
+    "website": "https://funeral.easehub.co.kr/funerals/1397"
+  },
+  {
+    "id": "park-0205",
+    "name": "오룡군립묘원(묘지)",
+    "isPublic": true,
+    "website": "https://www.boramsangjo.com/Cs/Partnership/view/1376"
+  },
+  {
+    "id": "park-0206",
+    "name": "오상리공설묘지",
+    "isPublic": true,
+    "website": "https://funeral.easehub.co.kr/funerals/1214"
+  },
+  {
+    "id": "park-0207",
+    "name": "구미시옥계공설묘지(만장)",
+    "isPublic": true,
+    "website": "https://www.15774129.go.kr/platform/newvg/organ_info.do?id=682"
+  },
+  {
+    "id": "park-0208",
+    "name": "신서면공설묘지",
+    "isPublic": true,
+    "website": "https://www.metropolitan-funeral.co.kr/facility-place/968/"
+  },
+  {
+    "id": "park-0209",
+    "name": "옥천군공설묘지",
+    "isPublic": true,
+    "website": "https://oc.nonghyup.com/user/indexSub.do?codyMenuSeq=1970687&siteId=oc"
+  },
+  {
+    "id": "park-0210",
+    "name": "온수리공설묘지",
+    "isPublic": true,
+    "website": "https://www.phnuri.co.kr/phgrp/fcltyinfo/selectFcltyInfoFrntList.do?fcltyCd=SHT04&menuNo=5040400"
+  },
+  {
+    "id": "park-0211",
+    "name": "왕길공설묘지(만장)",
+    "isPublic": true,
+    "website": "https://www.placeview.co.kr/id/MjUwODQwMTAg"
+  },
+  {
+    "id": "park-0212",
+    "name": "양오리공설묘지",
+    "isPublic": true,
+    "website": "https://www.cosmosfarm.com/square/comment/76803"
+  },
+  {
+    "id": "park-0213",
+    "name": "상주시공설묘지(만장)",
+    "isPublic": true,
+    "website": "https://www.idaegu.co.kr/news/articleView.html?idxno=510928"
+  },
+  {
+    "id": "park-0214",
+    "name": "왕길조성묘지",
+    "isPublic": true,
+    "website": "https://www.seoul.co.kr/news/newsView.php?id=20110118016018"
+  },
+  {
+    "id": "park-0215",
+    "name": "송전공설묘지",
+    "isPublic": true,
+    "website": "https://www.114.co.kr/search/detail?comp_id=453940&comp_tp_cd=INT&upjong_cd=843200"
+  },
+  {
+    "id": "park-0216",
+    "name": "천주교부산교구 하늘공원",
+    "isPublic": false,
+    "website": "http://www.catholicbusan.or.kr/index.php?mid=dic_mapBoard&category=466360&sort_index=readed_count&shop_category=%EB%AC%98%EC%A7%80"
+  },
+  {
+    "id": "park-0217",
+    "name": "군산시공설묘지",
+    "isPublic": true,
+    "website": "https://www.jeonbuk.go.kr/board/view.jeonbuk?boardId=BBS_0000036&menuCd=DOM_000000104001006004&dataSid=333230"
+  },
+  {
+    "id": "park-0218",
+    "name": "광석리공설묘지",
+    "isPublic": true,
+    "website": "https://www.metropolitan-funeral.co.kr/facility-place/863/"
+  },
+  {
+    "id": "park-0219",
+    "name": "금광공설묘지",
+    "isPublic": true,
+    "website": "https://www.metropolitan-funeral.co.kr/facility-place/937/"
+  },
+  {
+    "id": "park-0220",
+    "name": "가납리공설묘지",
+    "isPublic": true,
+    "website": "https://www.metropolitan-funeral.co.kr/facility-place/851/"
+  },
+  {
+    "id": "park-0221",
+    "name": "재단법인금산공원묘원",
+    "isPublic": false,
+    "website": "https://www.114.co.kr/search/detail?comp_id=17811308&comp_tp_cd=TEL&upjong_cd=843299"
+  },
+  {
+    "id": "park-0222",
+    "name": "구암리공설묘지",
+    "isPublic": true,
+    "website": "https://www.metropolitan-funeral.co.kr/facility-place/873/"
+  },
+  {
+    "id": "park-0223",
+    "name": "신암리공설묘지",
+    "isPublic": true,
+    "website": "https://korean.visitkorea.or.kr/detail/ms_detail.do?cotid=86f32bc6-9a91-4afc-9b63-a5d364456dd0"
+  },
+  {
+    "id": "park-0224",
+    "name": "신산리공설묘지",
+    "isPublic": true,
+    "website": "https://www.metropolitan-funeral.co.kr/facility-place/962/"
+  },
+  {
+    "id": "park-0225",
+    "name": "황방리공설묘지",
+    "isPublic": true,
+    "website": "https://www.metropolitan-funeral.co.kr/facility-place/866/"
+  },
+  {
+    "id": "park-0226",
+    "name": "한산리공설묘지",
+    "isPublic": true,
+    "website": "https://www.metropolitan-funeral.co.kr/facility-place/933/"
+  },
+  {
+    "id": "park-0227",
+    "name": "김포공원법인묘지(대곶)",
+    "isPublic": false,
+    "website": "https://www.metropolitan-funeral.co.kr/facility-place/848/"
+  },
+  {
+    "id": "park-0228",
+    "name": "김포공원법인묘지(풍무)",
+    "isPublic": false,
+    "website": "https://www.metropolitan-funeral.co.kr/facility-place/848/"
+  },
+  {
+    "id": "park-0229",
+    "name": "입암리공설묘지",
+    "isPublic": true,
+    "website": "https://www.metropolitan-funeral.co.kr/facility-place/1003/"
+  },
+  {
+    "id": "park-0230",
+    "name": "상수리공설묘지",
+    "isPublic": true,
+    "website": "https://www.metropolitan-funeral.co.kr/facility-place/927/"
+  },
+  {
+    "id": "park-0231",
+    "name": "남상공설공원묘지",
+    "isPublic": true,
+    "website": "https://endingsketch.com/charnel-house/%EB%82%A8%EC%83%81%EA%B3%B5%EC%84%A4%EA%B3%B5%EC%9B%90%EB%AC%98%EC%A7%80-%EB%B4%89%EC%95%88%EB%8B%B9/"
+  },
+  {
+    "id": "park-0232",
+    "name": "두곡리공설묘지",
+    "isPublic": true,
+    "website": "https://www.metropolitan-funeral.co.kr/facility-place/965/"
+  },
+  {
+    "id": "park-0233",
+    "name": "도하리공설묘지",
+    "isPublic": true,
+    "website": "https://www.15774129.go.kr/platform/newvg/organ_info.do?id=871"
+  },
+  {
+    "id": "park-0234",
+    "name": "하패리공설묘지",
+    "isPublic": true,
+    "website": "https://www.metropolitan-funeral.co.kr/facility-place/911/"
+  },
+  {
+    "id": "park-0235",
+    "name": "선암리공설묘지",
+    "isPublic": true,
+    "website": "https://www.gangjin.go.kr/www/open_information/advance/advance_info?idx=402&page=27&mode=view"
+  },
+  {
+    "id": "park-0236",
+    "name": "용암리공설묘지",
+    "isPublic": true,
+    "website": "https://www.metropolitan-funeral.co.kr/facility-place/950/"
+  },
+  {
+    "id": "park-0237",
+    "name": "복지리 공설묘지",
+    "isPublic": true,
+    "website": "https://www.metropolitan-funeral.co.kr/facility-place/975/"
+  },
+  {
+    "id": "park-0238",
+    "name": "방성리공설묘지",
+    "isPublic": true,
+    "website": "https://www.114.co.kr/search/detail?comp_id=1631701&comp_tp_cd=INT&upjong_cd=843200"
+  },
+  {
+    "id": "park-0239",
+    "name": "답곡리 공설묘지",
+    "isPublic": true,
+    "website": "https://www.114.co.kr/search/detail?comp_id=802661&comp_tp_cd=INT&upjong_cd=843200"
+  },
+  {
+    "id": "park-0240",
+    "name": "군남면공설묘지",
+    "isPublic": true,
+    "website": "https://www.metropolitan-funeral.co.kr/facility-place/980/"
+  },
+  {
+    "id": "park-0241",
+    "name": "우고리공설묘지",
+    "isPublic": true,
+    "website": "https://www.metropolitan-funeral.co.kr/facility-place/928/"
+  },
+  {
+    "id": "park-0242",
+    "name": "종로성당 나자렛묘원",
+    "isPublic": false,
+    "website": "http://www.jongnocc.or.kr/16"
+  },
+  {
+    "id": "park-0243",
+    "name": "회정동공설묘지",
+    "isPublic": true,
+    "website": "https://www.metropolitan-funeral.co.kr/facility-place/961/"
+  },
+  {
+    "id": "park-0244",
+    "name": "(재)안양공원묘원",
+    "isPublic": false,
+    "website": "https://www.metropolitan-funeral.co.kr/facility-place/554/"
+  },
+  {
+    "id": "park-0245",
+    "name": "봉양동공설묘지",
+    "isPublic": true,
+    "website": "https://www.metropolitan-funeral.co.kr/facility-place/932/"
+  },
+  {
+    "id": "park-0246",
+    "name": "가북공설공원묘지",
+    "isPublic": true,
+    "website": "https://www.geochang.go.kr/portal/contract/List.do?amode=view&ctrtAcctBookMngNo=201900214137"
+  },
+  {
+    "id": "park-0247",
+    "name": "가조공설공원묘지",
+    "isPublic": true,
+    "website": "https://www.114.co.kr/search/detail?comp_id=371066&comp_tp_cd=INT&upjong_cd=843203"
+  },
+  {
+    "id": "park-0248",
+    "name": "광사동공설묘지",
+    "isPublic": true,
+    "website": "https://www.metropolitan-funeral.co.kr/facility-place/998/"
+  },
+  {
+    "id": "park-0249",
+    "name": "마전동공설묘지",
+    "isPublic": true,
+    "website": "https://www.metropolitan-funeral.co.kr/facility-place/884/"
+  },
+  {
+    "id": "park-0250",
+    "name": "갑향군립묘원(묘지)",
+    "isPublic": true,
+    "website": "https://www.honam-funeralcenter.co.kr/funeral-process-recommend/%EA%B5%AC%EB%A1%80%EC%9E%A5%EB%A1%80%EC%8B%9D%EC%9E%A5/%EC%88%9C%EC%B2%9C%EC%8B%9C%EB%A6%BD%EC%B6%94%EB%AA%A8%EA%B3%B5%EC%9B%90/%EA%B0%91%ED%96%A5%EA%B5%B0%EB%A6%BD%EB%AC%98%EC%9B%90(%EB%AC%98%EC%A7%80)/"
+  },
+  {
+    "id": "park-0251",
+    "name": "거창공설공원묘지",
+    "isPublic": true,
+    "website": "https://www.geochang.go.kr/02313/02327/02362.web"
+  },
+  {
+    "id": "park-0252",
+    "name": "어둔동공설묘지",
+    "isPublic": true,
+    "website": "https://www.metropolitan-funeral.co.kr/facility-place/867/"
+  },
+  {
+    "id": "park-0253",
+    "name": "유양동공설묘지",
+    "isPublic": true,
+    "website": "https://www.metropolitan-funeral.co.kr/facility-place/982/"
+  },
+  {
+    "id": "park-0254",
+    "name": "고려공원법인묘지",
+    "isPublic": false,
+    "website": "https://www.metropolitan-funeral.co.kr/facility-place/1175/"
+  },
+  {
+    "id": "park-0255",
+    "name": "장기공설공원묘원",
+    "isPublic": true,
+    "website": "https://www.phnuri.co.kr/phgrp/fcltyinfo/selectFcltyInfoFrntList.do?fcltyCd=SHT04&menuNo=5040400"
+  },
+  {
+    "id": "park-0256",
+    "name": "고제공설공원묘지",
+    "isPublic": true,
+    "website": ""
+  },
+  {
+    "id": "park-0257",
+    "name": "삼하리공설묘지",
+    "isPublic": true,
+    "website": "https://www.metropolitan-funeral.co.kr/facility-place/864/"
+  },
+  {
+    "id": "park-0258",
+    "name": "삼상리공설묘지",
+    "isPublic": true,
+    "website": "https://www.metropolitan-funeral.co.kr/facility-place/947/"
+  },
+  {
+    "id": "park-0259",
+    "name": "관인면 제1공설묘지",
+    "isPublic": true,
+    "website": "https://15774129.go.kr/platform/newvg/organ_info.do?id=970"
+  },
+  {
+    "id": "park-0260",
+    "name": "교산1리공설묘지",
+    "isPublic": true,
+    "website": "https://www.hanam.go.kr/mayor/selectBbsNttView.do?key=780&bbsNo=2144&nttNo=440000"
+  },
+  {
+    "id": "park-0261",
+    "name": "비암리공설묘지",
+    "isPublic": true,
+    "website": "https://www.metropolitan-funeral.co.kr/facility-place/985/"
+  },
+  {
+    "id": "park-0262",
+    "name": "석우리공설묘지",
+    "isPublic": true,
+    "website": "https://www.metropolitan-funeral.co.kr/facility-place/997/"
+  },
+  {
+    "id": "park-0263",
+    "name": "구리시공설묘지",
+    "isPublic": true,
+    "website": "https://www.guri.go.kr/www/selectBbsNttView.do?key=393&bbsNo=42&nttNo=139065"
+  },
+  {
+    "id": "park-0264",
+    "name": "덕도리공설묘지",
+    "isPublic": true,
+    "website": "https://www.metropolitan-funeral.co.kr/facility-place/910/"
+  },
+  {
+    "id": "park-0265",
+    "name": "대곡공설묘지(만장)",
+    "isPublic": true,
+    "website": "https://funeral.easehub.co.kr/funerals/1010"
+  },
+  {
+    "id": "park-0266",
+    "name": "(재)대명공원묘원",
+    "isPublic": false,
+    "website": "https://www.114.co.kr/search/detail?comp_id=4040645&comp_tp_cd=TEL&upjong_cd=843202"
+  },
+  {
+    "id": "park-0267",
+    "name": "포내공설묘지",
+    "isPublic": true,
+    "website": "https://www.114.co.kr/search/detail?comp_id=1134263&comp_tp_cd=INT&upjong_cd=843200"
+  },
+  {
+    "id": "park-0268",
+    "name": "백운공원묘원 제1묘원",
+    "isPublic": false,
+    "website": "https://www.baekwoonmemorial.co.kr/"
+  },
+  {
+    "id": "park-0269",
+    "name": "백운공원묘원 제2묘원",
+    "isPublic": false,
+    "website": "https://www.baekwoonmemorial.co.kr/"
+  },
+  {
+    "id": "park-0270",
+    "name": "가톨릭 범물공원묘원",
+    "isPublic": false,
+    "website": "http://www.gunwipark.com/bbs/board.php?bo_table=notice&wr_id=1"
+  },
+  {
+    "id": "park-0271",
+    "name": "익산하늘공원묘지",
+    "isPublic": true,
+    "website": "http://www.mjeonbuk.com/news/articleView.html?idxno=87820"
+  },
+  {
+    "id": "park-0272",
+    "name": "통일촌 공설묘지",
+    "isPublic": true,
+    "website": "https://www.metropolitan-funeral.co.kr/facility-place/869/"
+  },
+  {
+    "id": "park-0273",
+    "name": "탄현면 공설묘지",
+    "isPublic": true,
+    "website": "https://www.metropolitan-funeral.co.kr/facility-place/879/"
+  },
+  {
+    "id": "park-0274",
+    "name": "부안수동공설묘지",
+    "isPublic": true,
+    "website": "https://www.jeonbuk.go.kr/board/view.jeonbuk?boardId=BBS_0000036&menuCd=DOM_000000104001006004&dataSid=333216"
+  },
+  {
+    "id": "park-0275",
+    "name": "부안용산공설묘지",
+    "isPublic": true,
+    "website": "https://www.jeonbuk.go.kr/board/view.jeonbuk?boardId=BBS_0000036&menuCd=DOM_000000104006001000&dataSid=333217"
+  },
+  {
+    "id": "park-0276",
+    "name": "북상공설공원묘지",
+    "isPublic": true,
+    "website": "https://www.placeview.co.kr/id/MjUwODM5NDQg"
+  },
+  {
+    "id": "park-0277",
+    "name": "북양공설공원묘지",
+    "isPublic": true,
+    "website": "https://www.metropolitan-funeral.co.kr/facility-place/1005/"
+  },
+  {
+    "id": "park-0278",
+    "name": "안성시공설공원묘지(사곡동)",
+    "isPublic": true,
+    "website": "http://www.mediayonhap.com/news/articleView.html?idxno=71072"
+  },
+  {
+    "id": "park-0279",
+    "name": "사천시공설묘지",
+    "isPublic": true,
+    "website": "https://www.sacheon.go.kr/life/00321/00391.web"
+  },
+  {
+    "id": "park-0280",
+    "name": "상리공설묘지",
+    "isPublic": true,
+    "website": "https://funeral.easehub.co.kr/funerals/1102"
+  },
+  {
+    "id": "park-0281",
+    "name": "초원지공설묘지",
+    "isPublic": true,
+    "website": "https://www.metropolitan-funeral.co.kr/facility-place/912/"
+  },
+  {
+    "id": "park-0282",
+    "name": "상신공원묘지",
+    "isPublic": true,
+    "website": "https://www.metropolitan-funeral.co.kr/facility-place/944/"
+  },
+  {
+    "id": "park-0283",
+    "name": "청주시목련공원묘지",
+    "isPublic": true,
+    "website": "https://cheongju.grandculture.net/cheongju/multimedia/GC002P0468"
+  },
+  {
+    "id": "park-0284",
+    "name": "선단동공설묘지",
+    "isPublic": true,
+    "website": "https://www.metropolitan-funeral.co.kr/facility-place/971/"
+  },
+  {
+    "id": "park-0285",
+    "name": "천주교성환공원묘지",
+    "isPublic": false,
+    "website": ""
+  },
+  {
+    "id": "park-0286",
+    "name": "성석동공설묘지(만장)",
+    "isPublic": true,
+    "website": "https://www.metropolitan-funeral.co.kr/facility-place/1001/"
+  },
+  {
+    "id": "park-0287",
+    "name": "성주군공설묘지",
+    "isPublic": true,
+    "website": "https://law.go.kr/LSW/ordinInfoP.do?ordinSeq=769703"
+  },
+  {
+    "id": "park-0288",
+    "name": "미법리공설묘지",
+    "isPublic": true,
+    "website": "https://funeral.easehub.co.kr/funerals/1061"
+  },
+  {
+    "id": "park-0289",
+    "name": "문형공설묘지(만장)",
+    "isPublic": true,
+    "website": "https://funeral.easehub.co.kr/funerals/1059"
+  },
+  {
+    "id": "park-0290",
+    "name": "대전공원묘원",
+    "isPublic": false,
+    "website": "https://www.djmw.co.kr/bbs/board.php?bo_table=41&wr_id=2"
+  },
+  {
+    "id": "park-0291",
+    "name": "화현면공설묘지",
+    "isPublic": true,
+    "website": "https://www.metropolitan-funeral.co.kr/facility-place/865/"
+  },
+  {
+    "id": "park-0292",
+    "name": "화천공원묘원",
+    "isPublic": true,
+    "website": "https://www.ihc.go.kr/www/contents.do?key=204"
+  },
+  {
+    "id": "park-0293",
+    "name": "화교화원",
+    "isPublic": false,
+    "website": "https://www.114.co.kr/search/detail?comp_id=4575787&comp_tp_cd=TEL&upjong_cd=843200"
+  },
+  {
+    "id": "park-0294",
+    "name": "영암군덕진공설묘지",
+    "isPublic": true,
+    "website": "https://funeral.easehub.co.kr/funerals/1202"
+  },
+  {
+    "id": "park-0295",
+    "name": "덕포리공설묘지",
+    "isPublic": true,
+    "website": "https://funeral.easehub.co.kr/funerals/1028"
+  },
+  {
+    "id": "park-0296",
+    "name": "도림동공설묘지(매장불가)",
+    "isPublic": true,
+    "website": "https://www.data.go.kr/data/15143496/fileData.do"
+  },
+  {
+    "id": "park-0297",
+    "name": "동산리공설묘지",
+    "isPublic": true,
+    "website": "https://www.dongsanpark.co.kr/bbs/content.php?co_id=info"
+  },
+  {
+    "id": "park-0298",
+    "name": "(재)평화공원",
+    "isPublic": false,
+    "website": "https://www.osan.go.kr/osanunm/main.do"
+  },
+  {
+    "id": "park-0299",
+    "name": "하일리공설묘지",
+    "isPublic": true,
+    "website": "https://funeral.easehub.co.kr/funerals/1390"
+  },
+  {
+    "id": "park-0300",
+    "name": "장흥공설공원묘지",
+    "isPublic": true,
+    "website": "https://law.go.kr/LSW/ordinInfoP.do?ordinSeq=2048041"
+  },
+  {
+    "id": "park-0301",
+    "name": "무궁화공원묘원",
+    "isPublic": false,
+    "website": "https://www.gravepark.co.kr/bbs/board.php?bo_table=yp_cs01"
+  },
+  {
+    "id": "park-0302",
+    "name": "망월묘지공원",
+    "isPublic": true,
+    "website": "https://wipi.ai.kr/ko/%EB%A7%9D%EC%9B%94%EB%AC%98%EC%A7%80%EA%B3%B5%EC%9B%90"
+  },
+  {
+    "id": "park-0303",
+    "name": "하늘공원(부곡동공설공원묘지)",
+    "isPublic": true,
+    "website": "https://www.metropolitan-funeral.co.kr/facility-place/296/"
+  },
+  {
+    "id": "park-0304",
+    "name": "모란공원(묘지)",
+    "isPublic": false,
+    "website": "https://www.tournews21.com/news/articleView.html?idxno=92317"
+  },
+  {
+    "id": "park-0305",
+    "name": "소흘읍제3공설묘지",
+    "isPublic": true,
+    "website": "https://www.15774129.go.kr/platform/newvg/organ_info.do?id=928"
+  },
+  {
+    "id": "park-0306",
+    "name": "소흘읍제2공설묘지",
+    "isPublic": true,
+    "website": "https://www.metropolitan-funeral.co.kr/facility-place/888/"
+  },
+  {
+    "id": "park-0307",
+    "name": "천부교추모공원",
+    "isPublic": false,
+    "website": "https://www.chunbukyo.or.kr/_%EC%83%88%EC%86%8C%EC%8B%9D/%EC%B2%9C%EB%B6%80%EA%B5%90%EC%B6%94%EB%AA%A8%EA%B3%B5%EC%9B%90%EC%97%90%EC%84%9C-2022%EB%85%84-%EC%B6%94%EB%AA%A8%EC%9D%98-%EB%82%A0-%EC%97%B4%EB%A0%A4/"
+  },
+  {
+    "id": "park-0308",
+    "name": "내촌면 제2공설묘지",
+    "isPublic": true,
+    "website": ""
+  },
+  {
+    "id": "park-0309",
+    "name": "일동면 공설묘지",
+    "isPublic": true,
+    "website": "http://www.gijn.kr/news/articleView.html?idxno=418160"
+  },
+  {
+    "id": "park-0310",
+    "name": "내유동공설묘지(만장)",
+    "isPublic": true,
+    "website": "https://www.15774129.go.kr/platform/newvg/organ_info.do?id=979"
+  },
+  {
+    "id": "park-0311",
+    "name": "천주교 대구대교구청 성직자묘지",
+    "isPublic": false,
+    "website": "https://www.daegu-archdiocese.or.kr/page/org.html?p=view&idNumber=530&id=2&T=&gN=%EC%84%B1%EC%A7%81%EC%9E%90%EC%9C%84%EC%9B%90%ED%9A%8C"
+  },
+  {
+    "id": "park-0312",
+    "name": "신북면 제4공설묘지",
+    "isPublic": true,
+    "website": ""
+  },
+  {
+    "id": "park-0313",
+    "name": "영북면 제1공설묘지",
+    "isPublic": true,
+    "website": "https://www.metropolitan-funeral.co.kr/facility-place/889/"
+  },
+  {
+    "id": "park-0314",
+    "name": "영중면 제2공설묘지",
+    "isPublic": true,
+    "website": ""
+  },
+  {
+    "id": "park-0315",
+    "name": "영중면 제1공설묘지",
+    "isPublic": true,
+    "website": "https://www.metropolitan-funeral.co.kr/facility-place/877/"
+  },
+  {
+    "id": "park-0316",
+    "name": "내촌면 제4공설묘지",
+    "isPublic": true,
+    "website": "https://www.metropolitan-funeral.co.kr/facility-place/850/"
+  },
+  {
+    "id": "park-0317",
+    "name": "내촌면 제3공설묘지",
+    "isPublic": true,
+    "website": "https://www.metropolitan-funeral.co.kr/facility-place/954/"
+  },
+  {
+    "id": "park-0318",
+    "name": "군내면 제2공설묘지",
+    "isPublic": true,
+    "website": "https://www.metropolitan-funeral.co.kr/facility-place/908/"
+  },
+  {
+    "id": "park-0319",
+    "name": "군내면 제1공설묘지",
+    "isPublic": true,
+    "website": ""
+  },
+  {
+    "id": "park-0320",
+    "name": "내리공설묘지(화도면)",
+    "isPublic": true,
+    "website": "http://carmap.co.kr/web/mplus/gage/view.php?bid=25620874&SCODE=F18A02&sigun=6280000&gugun=3570000"
+  },
+  {
+    "id": "park-0321",
+    "name": "신북면 제6공설묘지",
+    "isPublic": true,
+    "website": ""
+  },
+  {
+    "id": "park-0322",
+    "name": "신북면 제5공설묘지",
+    "isPublic": true,
+    "website": ""
+  },
+  {
+    "id": "park-0323",
+    "name": "신북면 제3공설묘지",
+    "isPublic": true,
+    "website": ""
+  },
+  {
+    "id": "park-0324",
+    "name": "신북면 제2공설묘지",
+    "isPublic": true,
+    "website": "https://15774129.go.kr/platform/newvg/organ_info.do?id=907"
+  },
+  {
+    "id": "park-0325",
+    "name": "창수면 제3공설묘지",
+    "isPublic": true,
+    "website": ""
+  },
+  {
+    "id": "park-0326",
+    "name": "창수면 제2공설묘지",
+    "isPublic": true,
+    "website": "https://www.metropolitan-funeral.co.kr/facility-place/852/"
+  },
+  {
+    "id": "park-0327",
+    "name": "창수면 제1공설묘지",
+    "isPublic": true,
+    "website": "https://www.metropolitan-funeral.co.kr/facility-place/852/"
+  },
+  {
+    "id": "park-0328",
+    "name": "영북면 제2공설묘지",
+    "isPublic": true,
+    "website": "https://www.metropolitan-funeral.co.kr/facility-place/889/"
+  },
+  {
+    "id": "park-0329",
+    "name": "관인면 제2공설묘지",
+    "isPublic": true,
+    "website": "https://15774129.go.kr/platform/newvg/organ_info.do?id=970"
+  },
+  {
+    "id": "park-0330",
+    "name": "가산면 제4공설묘지",
+    "isPublic": true,
+    "website": "https://www.metropolitan-funeral.co.kr/facility-place/929/"
+  },
+  {
+    "id": "park-0331",
+    "name": "운연동공설묘지(매장불가)",
+    "isPublic": true,
+    "website": "http://www.changwon.go.kr/cwportal/10312/10633/10635.web?amode=view&retMgtNo=562"
+  },
+  {
+    "id": "park-0332",
+    "name": "가산면 제3공설묘지",
+    "isPublic": true,
+    "website": "https://www.metropolitan-funeral.co.kr/facility-place/919/"
+  },
+  {
+    "id": "park-0333",
+    "name": "가산면 제2공설묘지",
+    "isPublic": true,
+    "website": "https://www.metropolitan-funeral.co.kr/facility-place/861/"
+  },
+  {
+    "id": "park-0334",
+    "name": "가산면 제1공설묘지",
+    "isPublic": true,
+    "website": "https://www.metropolitan-funeral.co.kr/facility-place/999/"
+  },
+  {
+    "id": "park-0335",
+    "name": "이동공설묘지(만장)",
+    "isPublic": true,
+    "website": "https://www.data.go.kr/data/15143496/fileData.do"
+  },
+  {
+    "id": "park-0336",
+    "name": "학의동공설묘지(만장)",
+    "isPublic": true,
+    "website": "https://www.metropolitan-funeral.co.kr/facility-place/1011/"
+  },
+  {
+    "id": "park-0337",
+    "name": "후방산 공설묘지",
+    "isPublic": true,
+    "website": "https://www.jeonbuk.go.kr/board/view.jeonbuk?boardId=BBS_0000036&menuCd=DOM_000000104001006004&dataSid=617323"
+  },
+  {
+    "id": "park-0338",
+    "name": "천도교 무봉공원",
+    "isPublic": false,
+    "website": "https://funeral.easehub.co.kr/funerals/1314"
+  },
+  {
+    "id": "park-0339",
+    "name": "천주교 양산동묘원",
+    "isPublic": false,
+    "website": "https://www.grandculture.net/gwangju/toc/GC60003274"
+  },
+  {
+    "id": "park-0340",
+    "name": "표선면공설묘지",
+    "isPublic": true,
+    "website": ""
+  },
+  {
+    "id": "park-0341",
+    "name": "하늘의문(마전동)",
+    "isPublic": false,
+    "website": ""
+  },
+  {
+    "id": "park-0342",
+    "name": "안양시청계공설묘지(만장)",
+    "isPublic": true,
+    "website": "https://www.anyang.go.kr/manan/selectBbsNttView.do?key=974&bbsNo=158&nttNo=75243"
+  },
+  {
+    "id": "park-0343",
+    "name": "정읍시입암묘지공원",
+    "isPublic": true,
+    "website": "https://terms.naver.com/entry.naver?docId=6740078&cid=72249&categoryId=72327"
+  },
+  {
+    "id": "park-0344",
+    "name": "청평면공설묘지",
+    "isPublic": true,
+    "website": "https://www.metropolitan-funeral.co.kr/facility-place/1073/"
+  },
+  {
+    "id": "park-0345",
+    "name": "창리공설묘지",
+    "isPublic": true,
+    "website": "https://www.djsiseol.or.kr/portal/sub040206_05.asp"
+  },
+  {
+    "id": "park-0346",
+    "name": "조천읍공설묘지",
+    "isPublic": true,
+    "website": "https://jeju.grandculture.net/jeju/index?category=%EC%A7%80%EB%AA%85%2F%EA%B8%B0%EA%B4%80%EB%AA%85&depth=2&name=%EC%9E%90&page=113&search=%EC%A1%B0%EC%B2%9C%EC%9D%8D%20%EB%AC%98%EC%A7%80"
+  },
+  {
+    "id": "park-0347",
+    "name": "초지리공설묘지",
+    "isPublic": true,
+    "website": "https://funeral.easehub.co.kr/funerals/1361"
+  },
+  {
+    "id": "park-0348",
+    "name": "충해공원묘지",
+    "isPublic": true,
+    "website": "http://www.gjn.kr/news/articleView.html?idxno=33384"
+  },
+  {
+    "id": "park-0349",
+    "name": "합성동공설묘지",
+    "isPublic": true,
+    "website": "https://www.pressian.com/pages/articles/2022090722462496419"
+  },
+  {
+    "id": "park-0350",
+    "name": "지석리공설묘지",
+    "isPublic": true,
+    "website": "https://www.djsiseol.or.kr/portal/sub040206_05.asp"
+  },
+  {
+    "id": "park-0351",
+    "name": "하도리공설묘지",
+    "isPublic": true,
+    "website": "https://www.phnuri.co.kr/phgrp/fcltyinfo/selectFcltyInfoFrntList.do?fcltyCd=SHT04&menuNo=5040400"
+  },
+  {
+    "id": "park-0352",
+    "name": "하늘의문(당하동)",
+    "isPublic": false,
+    "website": "https://findby.co.kr/details/22686-282603000071-st-652b54e48c641f9e38a1e6d4"
+  },
+  {
+    "id": "park-0353",
+    "name": "임실군공설묘지",
+    "isPublic": true,
+    "website": "https://www.jeonbuk.go.kr/board/view.jeonbuk?boardId=BBS_0000036&menuCd=DOM_000000104001006004&dataSid=333221"
+  },
+  {
+    "id": "park-0354",
+    "name": "혜화동성당 도봉동묘원",
+    "isPublic": false,
+    "website": "https://terms.naver.com/entry.naver?docId=2596267&cid=51880&categoryId=53262"
+  },
+  {
+    "id": "park-0355",
+    "name": "도장리공설묘지",
+    "isPublic": true,
+    "website": "https://xn--hq1b28ffspg0a.com/49/?bmode=view&idx=23683173"
+  },
+  {
+    "id": "park-0356",
+    "name": "동강면공설묘지",
+    "isPublic": true,
+    "website": "https://www.114.co.kr/search/detail?comp_id=738735&comp_tp_cd=INT&upjong_cd=843200"
+  },
+  {
+    "id": "park-0357",
+    "name": "동검리공설묘지",
+    "isPublic": true,
+    "website": "https://www.15774129.go.kr/platform/newvg/organ_info.do?id=568"
+  },
+  {
+    "id": "park-0358",
+    "name": "두운리공동묘지",
+    "isPublic": true,
+    "website": "https://www.nrich.go.kr/kor/subscriptionFileDown.do?idx=37"
+  },
+  {
+    "id": "park-0359",
+    "name": "말도공설묘지",
+    "isPublic": true,
+    "website": "https://www.mohw.go.kr/menu.es?mid=a10712020300"
+  },
+  {
+    "id": "park-0360",
+    "name": "망우역사문화공원",
+    "isPublic": false,
+    "website": "https://manguripark.or.kr/sub/sub01_01.php"
+  },
+  {
+    "id": "park-0361",
+    "name": "망월리공설묘지",
+    "isPublic": true,
+    "website": "https://wipi.ai.kr/ko/%EB%A7%9D%EC%9B%94%EB%AC%98%EC%A7%80%EA%B3%B5%EC%9B%90"
+  },
+  {
+    "id": "park-0362",
+    "name": "매음리공설묘지",
+    "isPublic": true,
+    "website": "https://funeral.easehub.co.kr/funerals/1049"
+  },
+  {
+    "id": "park-0363",
+    "name": "문평면공설묘지",
+    "isPublic": true,
+    "website": "https://funeral.easehub.co.kr/funerals/1058"
+  },
+  {
+    "id": "park-0364",
+    "name": "반남면공설묘지",
+    "isPublic": true,
+    "website": "https://funeral.easehub.co.kr/funerals/1062"
+  },
+  {
+    "id": "park-0365",
+    "name": "벽제리묘지",
+    "isPublic": true,
+    "website": "https://www.metropolitan-funeral.co.kr/facility-place/1086/"
+  },
+  {
+    "id": "park-0366",
+    "name": "보성공설묘지",
+    "isPublic": true,
+    "website": "https://www.boseong.go.kr/tour/festivity/yeol_seonru/parking?print=true&page=1&page=1"
+  },
+  {
+    "id": "park-0367",
+    "name": "볼음공설묘지",
+    "isPublic": true,
+    "website": "https://funeral.easehub.co.kr/funerals/1072"
+  },
+  {
+    "id": "park-0368",
+    "name": "봉소리공설묘지",
+    "isPublic": true,
+    "website": "https://funeral.easehub.co.kr/funerals/1073"
+  },
+  {
+    "id": "park-0369",
+    "name": "봉황면공설묘지",
+    "isPublic": true,
+    "website": "https://funeral.easehub.co.kr/funerals/1075"
+  },
+  {
+    "id": "park-0370",
+    "name": "부근리공설묘지",
+    "isPublic": true,
+    "website": "https://www.djsiseol.or.kr/portal/sub040206_05.asp"
+  },
+  {
+    "id": "park-0371",
+    "name": "부활동산종교재단법인",
+    "isPublic": false,
+    "website": "https://www.sungdoch.com/Board/Detail/30/14408"
+  },
+  {
+    "id": "park-0372",
+    "name": "북면공설묘지",
+    "isPublic": true,
+    "website": "https://www.metropolitan-funeral.co.kr/facility-place/1050/"
+  },
+  {
+    "id": "park-0373",
+    "name": "북성리공설묘지",
+    "isPublic": true,
+    "website": ""
+  },
+  {
+    "id": "park-0374",
+    "name": "사기리공설묘지",
+    "isPublic": true,
+    "website": "https://www.phnuri.co.kr/phgrp/fcltyinfo/selectFcltyInfoFrntList.do?fcltyCd=SHT05&menuNo=5040500"
+  },
+  {
+    "id": "park-0375",
+    "name": "산포면공설묘지",
+    "isPublic": true,
+    "website": "http://www.naju.go.kr:443/www/administration/new/conflict?idx=580609&mode=view&sort=recent"
+  },
+  {
+    "id": "park-0376",
+    "name": "삼거리공설묘지",
+    "isPublic": true,
+    "website": "https://www.djsiseol.or.kr/portal/sub040206_05.asp"
+  },
+  {
+    "id": "park-0377",
+    "name": "덕하2리공설묘지",
+    "isPublic": true,
+    "website": "https://funeral.easehub.co.kr/funerals/1030"
+  },
+  {
+    "id": "park-0378",
+    "name": "덕하1리공설묘지",
+    "isPublic": true,
+    "website": "https://funeral.easehub.co.kr/funerals/1029"
+  },
+  {
+    "id": "park-0379",
+    "name": "가평읍 공설묘지(구 제1공설묘지)",
+    "isPublic": true,
+    "website": "https://funeral.easehub.co.kr/funerals/73"
+  },
+  {
+    "id": "park-0380",
+    "name": "고능리공동묘지",
+    "isPublic": true,
+    "website": "https://www.data.go.kr/data/15143496/fileData.do"
+  },
+  {
+    "id": "park-0381",
+    "name": "고천리공설묘지",
+    "isPublic": true,
+    "website": "https://www.data.go.kr/data/15143496/fileData.do"
+  },
+  {
+    "id": "park-0382",
+    "name": "공산면공설묘지",
+    "isPublic": true,
+    "website": "https://funeral.easehub.co.kr/funerals/942"
+  },
+  {
+    "id": "park-0383",
+    "name": "교산리공설묘지(별립산)",
+    "isPublic": true,
+    "website": "https://funeral.easehub.co.kr/funerals/958"
+  },
+  {
+    "id": "park-0384",
+    "name": "구례군공설묘지",
+    "isPublic": true,
+    "website": "https://www.pressian.com/pages/articles/2022062311571680638"
+  },
+  {
+    "id": "park-0385",
+    "name": "구좌읍공설묘지",
+    "isPublic": true,
+    "website": "https://jeju.grandculture.net/jeju/index?category=%EC%A7%80%EB%AA%85%2F%EA%B8%B0%EA%B4%80%EB%AA%85&depth=2&name=A~Z%2C0~9&page=38&search=%EA%B5%AC%EC%A2%8C%EC%9D%8D%20%EB%AC%98%EC%A7%80"
+  },
+  {
+    "id": "park-0386",
+    "name": "국화리공설묘지",
+    "isPublic": true,
+    "website": "https://funeral.easehub.co.kr/funerals/965"
+  },
+  {
+    "id": "park-0387",
+    "name": "금남동공설묘지",
+    "isPublic": true,
+    "website": "https://funeral.easehub.co.kr/funerals/972"
+  },
+  {
+    "id": "park-0388",
+    "name": "길정리공설묘지",
+    "isPublic": true,
+    "website": "https://www.data.go.kr/data/15143496/fileData.do"
+  },
+  {
+    "id": "park-0389",
+    "name": "길직1리공설묘지",
+    "isPublic": true,
+    "website": "https://www.data.go.kr/data/15143496/fileData.do"
+  },
+  {
+    "id": "park-0390",
+    "name": "길직2리공설묘지",
+    "isPublic": true,
+    "website": "https://funeral.easehub.co.kr/funerals/977"
+  },
+  {
+    "id": "park-0391",
+    "name": "천주교나주성당공원묘지",
+    "isPublic": false,
+    "website": "https://www.store114.net/store/detail.asp?seq=25083900"
+  },
+  {
+    "id": "park-0392",
+    "name": "남산리공설묘지",
+    "isPublic": true,
+    "website": "https://www.data.go.kr/data/15143496/fileData.do"
+  },
+  {
+    "id": "park-0393",
+    "name": "남원읍공설묘지",
+    "isPublic": true,
+    "website": "http://www.hsilbo.com/etnews/?fn=v&no=214875&cid=21150100"
+  },
+  {
+    "id": "park-0394",
+    "name": "남평읍공설묘지",
+    "isPublic": true,
+    "website": "https://www.gangjin.go.kr/www/open_information/advance/advance_info?idx=402&page=27&mode=view"
+  },
+  {
+    "id": "park-0395",
+    "name": "내곡리묘지",
+    "isPublic": true,
+    "website": "https://www.sisul.or.kr/open_content/memorial/bbs/bbsMsgList.do?bcd=cremate&pgdiv=13"
+  },
+  {
+    "id": "park-0396",
+    "name": "넙성리공동묘지",
+    "isPublic": true,
+    "website": "https://funeral.easehub.co.kr/funerals/1004"
+  },
+  {
+    "id": "park-0397",
+    "name": "다도면공설묘지",
+    "isPublic": true,
+    "website": "https://www.phnuri.co.kr/phgrp/fcltyinfo/selectFcltyInfoFrntList.do?fcltyCd=SHT04&menuNo=5040400"
+  },
+  {
+    "id": "park-0398",
+    "name": "다시면공설묘지",
+    "isPublic": true,
+    "website": "https://www.15774129.go.kr/platform/newvg/organ_info.do?id=765"
+  },
+  {
+    "id": "park-0399",
+    "name": "당산리공설묘지",
+    "isPublic": true,
+    "website": "https://funeral.easehub.co.kr/funerals/1009"
+  },
+  {
+    "id": "park-0400",
+    "name": "대정읍공설묘지",
+    "isPublic": true,
+    "website": "https://15774129.go.kr/platform/newvg/organ_info.do?id=735"
+  },
+  {
+    "id": "park-0401",
+    "name": "덕성리공동묘지",
+    "isPublic": true,
+    "website": "https://funeral.easehub.co.kr/funerals/1027"
+  },
+  {
+    "id": "park-0402",
+    "name": "삼동암공동묘지",
+    "isPublic": true,
+    "website": "https://www.cosmosfarm.com/square/comment/76695"
+  },
+  {
+    "id": "park-0403",
+    "name": "성산읍공설묘지",
+    "isPublic": true,
+    "website": "https://www.114.co.kr/search/detail?comp_id=664517&comp_tp_cd=INT&upjong_cd=843200"
+  },
+  {
+    "id": "park-0404",
+    "name": "성북동공설묘지",
+    "isPublic": true,
+    "website": "https://www.15774129.go.kr/platform/newvg/organ_info.do?id=502"
+  },
+  {
+    "id": "park-0405",
+    "name": "의정부시공설묘지",
+    "isPublic": true,
+    "website": "https://www.metropolitan-funeral.co.kr/facility-place/728/"
+  },
+  {
+    "id": "park-0406",
+    "name": "영산동공설묘지",
+    "isPublic": true,
+    "website": "https://funeral.easehub.co.kr/funerals/1199"
+  },
+  {
+    "id": "park-0407",
+    "name": "세지면공설묘지",
+    "isPublic": true,
+    "website": "https://funeral.easehub.co.kr/funerals/1136"
+  },
+  {
+    "id": "park-0408",
+    "name": "우도면공설묘지",
+    "isPublic": true,
+    "website": "https://jeju.grandculture.net/jeju/index?category=%EC%A7%80%EB%AA%85%2F%EA%B8%B0%EA%B4%80%EB%AA%85&depth=2&name=%EC%95%84&page=40&search=%EC%9A%B0%EB%8F%84%EB%A9%B4%20%EB%AC%98%EC%A7%80"
+  },
+  {
+    "id": "park-0409",
+    "name": "송월교회(묘지)",
+    "isPublic": false,
+    "website": "http://songwol.or.kr/"
+  },
+  {
+    "id": "park-0410",
+    "name": "숭뢰리공설묘지",
+    "isPublic": true,
+    "website": "https://funeral.easehub.co.kr/funerals/1148"
+  },
+  {
+    "id": "park-0411",
+    "name": "용담망향의공설묘지",
+    "isPublic": true,
+    "website": "https://www.grandculture.net/jinan/toc/GC05801270"
+  },
+  {
+    "id": "park-0412",
+    "name": "신삼리공설묘지",
+    "isPublic": true,
+    "website": "https://funeral.easehub.co.kr/funerals/1161"
+  },
+  {
+    "id": "park-0413",
+    "name": "신정리공설묘지",
+    "isPublic": true,
+    "website": "https://www.asan.go.kr/main/cms/download.php?tb_nm=administrator_info&uid=74676&pds_no=2023112010363422046&bbs_board=Y&d8_chk="
+  },
+  {
+    "id": "park-0414",
+    "name": "왕곡면공설묘지",
+    "isPublic": true,
+    "website": "https://funeral.easehub.co.kr/funerals/1223"
+  },
+  {
+    "id": "park-0415",
+    "name": "신현리공동묘지",
+    "isPublic": true,
+    "website": "https://funeral.easehub.co.kr/funerals/1169"
+  },
+  {
+    "id": "park-0416",
+    "name": "아차공설묘지",
+    "isPublic": true,
+    "website": "https://www.gp.go.kr/portal/selectBbsNttView.do?key=1195&bbsNo=171&nttNo=118324"
+  },
+  {
+    "id": "park-0417",
+    "name": "완도군추모공원",
+    "isPublic": true,
+    "website": "https://www.114.co.kr/search/detail?comp_id=739323&comp_tp_cd=INT&upjong_cd=843200"
+  },
+  {
+    "id": "park-0418",
+    "name": "안덕면공설묘지",
+    "isPublic": true,
+    "website": "https://funeral.easehub.co.kr/funerals/1172"
+  },
+  {
+    "id": "park-0419",
+    "name": "애월읍공설묘지",
+    "isPublic": true,
+    "website": "https://jeju.grandculture.net/jeju/index?category=%EC%A7%80%EB%AA%85%2F%EA%B8%B0%EA%B4%80%EB%AA%85&depth=2&name=A~Z%2C0~9&page=222&search=%EC%95%A0%EC%9B%94%EC%9D%8D%20%EB%AC%98%EC%A7%80"
+  },
+  {
+    "id": "park-0420",
+    "name": "어승생공설묘지",
+    "isPublic": true,
+    "website": "https://jeju.grandculture.net/jeju/index?category=%EC%A7%80%EB%AA%85%2F%EA%B8%B0%EA%B4%80%EB%AA%85&depth=2&name=%EC%95%84&page=13&search=%EC%96%B4%EC%8A%B9%EC%83%9D%20%EA%B3%B5%EC%84%A4%EB%AC%98%EC%A7%80"
+  },
+  {
+    "id": "park-0421",
+    "name": "영강동공설묘지",
+    "isPublic": true,
+    "website": "https://funeral.easehub.co.kr/funerals/1192"
+  },
+  {
+    "id": "park-0422",
+    "name": "설악면공설묘지",
+    "isPublic": true,
+    "website": "https://www.metropolitan-funeral.co.kr/facility-place/1101/"
+  },
+  {
+    "id": "park-0423",
+    "name": "이창동공설묘지",
+    "isPublic": true,
+    "website": "https://funeral.easehub.co.kr/funerals/1250"
+  },
+  {
+    "id": "park-0424",
+    "name": "삼성리공동묘지",
+    "isPublic": true,
+    "website": "https://www.siheung.go.kr/main/advanceInfo/view.do?mId=0301020000&idx=1829"
+  },
+  {
+    "id": "park-0425",
+    "name": "삼흥리공설묘지",
+    "isPublic": true,
+    "website": "https://www.cosmosfarm.com/square/comment/76702"
+  },
+  {
+    "id": "park-0426",
+    "name": "상면공설묘지",
+    "isPublic": true,
+    "website": "https://www.metropolitan-funeral.co.kr/facility-place/1103/"
+  },
+  {
+    "id": "park-0427",
+    "name": "상용리공설묘지",
+    "isPublic": true,
+    "website": "https://funeral.easehub.co.kr/funerals/1106"
+  },
+  {
+    "id": "park-0428",
+    "name": "색달동공설묘지",
+    "isPublic": true,
+    "website": "https://funeral.easehub.co.kr/funerals/1110"
+  },
+  {
+    "id": "park-0429",
+    "name": "서검리공설묘지",
+    "isPublic": true,
+    "website": "https://funeral.easehub.co.kr/funerals/1111"
+  },
+  {
+    "id": "park-0430",
+    "name": "서부공설묘지",
+    "isPublic": true,
+    "website": "https://jeju.grandculture.net/jeju/index?category=%EC%A7%80%EB%AA%85%2F%EA%B8%B0%EA%B4%80%EB%AA%85&depth=2&name=A~Z%2C0~9&page=176&search=%EC%84%9C%EB%B6%80%20%EA%B3%B5%EC%84%A4%EB%AC%98%EC%A7%80"
+  },
+  {
+    "id": "park-0431",
+    "name": "서산시희망공원(묘지)",
+    "isPublic": false,
+    "website": "http://www.newstnt.com/news/articleView.html?idxno=530655"
+  },
+  {
+    "id": "park-0432",
+    "name": "석모리공설묘지",
+    "isPublic": true,
+    "website": "https://funeral.easehub.co.kr/funerals/1119"
+  },
+  {
+    "id": "park-0433",
+    "name": "석포리공설묘지",
+    "isPublic": true,
+    "website": "https://www.15774129.go.kr/platform/newvg/organ_info.do?id=680"
+  },
+  {
+    "id": "park-0434",
+    "name": "인화리공설묘지",
+    "isPublic": true,
+    "website": "https://www.gangjin.go.kr/www/open_information/advance/advance_info?idx=402&page=27&mode=view"
+  },
+  {
+    "id": "park-0435",
+    "name": "선두리공설묘지",
+    "isPublic": true,
+    "website": ""
+  },
+  {
+    "id": "park-0436",
+    "name": "예수장로회 제주교회묘지",
+    "isPublic": false,
+    "website": "https://funeral.easehub.co.kr/funerals/1211"
+  },
+  {
+    "id": "park-0437",
+    "name": "경산공원묘원",
+    "isPublic": false,
+    "website": "https://www.114.co.kr/search/detail?comp_id=4956392&comp_tp_cd=TEL&upjong_cd=843202"
+  },
+  {
+    "id": "park-0438",
+    "name": "조천장로교회묘지",
+    "isPublic": false,
+    "website": "https://www.puts.ac.kr/www/board/view.general.asp?design=lounge&m1=4&bd_name=jangshin_jboard04&seq=131917"
+  },
+  {
+    "id": "park-0439",
+    "name": "갑산공원묘원",
+    "isPublic": false,
+    "website": "http://www.kapsan1004.net/"
+  },
+  {
+    "id": "park-0440",
+    "name": "(재)분당메모리얼파크",
+    "isPublic": false,
+    "website": "https://www.bmpark.co.kr/"
+  },
+  {
+    "id": "park-0441",
+    "name": "(재)대한예수교장로회 기독교공동묘원",
+    "isPublic": false,
+    "website": "https://brunch.co.kr/@c30817fd463a418/311"
+  },
+  {
+    "id": "park-0442",
+    "name": "(재)전주공원묘원",
+    "isPublic": false,
+    "website": "http://www.jeonjupark.co.kr/"
+  },
+  {
+    "id": "park-0443",
+    "name": "정자공원묘원",
+    "isPublic": false,
+    "website": "https://yongin.grandculture.net/yongin/multimedia/GC009P1124"
+  },
+  {
+    "id": "park-0444",
+    "name": "인천기독교장로회묘지",
+    "isPublic": false,
+    "website": "https://www.metropolitan-funeral.co.kr/facility-place/1244/"
+  },
+  {
+    "id": "park-0445",
+    "name": "금천면공설묘지(폐쇄)",
+    "isPublic": true,
+    "website": "https://www.15774129.go.kr/platform/newvg/organ_info.do?id=729"
+  },
+  {
+    "id": "park-0446",
+    "name": "조수천주교묘지",
+    "isPublic": false,
+    "website": "https://funeral.easehub.co.kr/funerals/1293"
+  },
+  {
+    "id": "park-0447",
+    "name": "(재)하늘공원 묘원",
+    "isPublic": false,
+    "website": "http://www.xn--ob0bx0i3gt55ah0mz2alkn74g.com/"
+  },
+  {
+    "id": "park-0448",
+    "name": "(재)금곡장미공원",
+    "isPublic": false,
+    "website": "https://www.114.co.kr/search/detail?comp_id=4956180&comp_tp_cd=TEL&upjong_cd=843202"
+  },
+  {
+    "id": "park-0449",
+    "name": "제주향교묘지",
+    "isPublic": false,
+    "website": "https://jejuhyanggyo.co.kr/greeting"
+  },
+  {
+    "id": "park-0450",
+    "name": "삼성공원묘원",
+    "isPublic": false,
+    "website": "http://www.elysium.co.kr/"
+  },
+  {
+    "id": "park-0451",
+    "name": "대구중부교회묘지",
+    "isPublic": false,
+    "website": "https://dggb-portal.funeralblog.co.kr/facility-place/1238/price/"
+  },
+  {
+    "id": "park-0452",
+    "name": "상전망향의공설묘지",
+    "isPublic": true,
+    "website": "https://www.grandculture.net/jinan/toc/GC05801271"
+  },
+  {
+    "id": "park-0453",
+    "name": "천아오름공원묘지",
+    "isPublic": false,
+    "website": "https://funeral.easehub.co.kr/funerals/1316"
+  },
+  {
+    "id": "park-0454",
+    "name": "천주교제주교구묘지",
+    "isPublic": false,
+    "website": "https://www.diocesejeju.or.kr/holy_main/1731"
+  },
+  {
+    "id": "park-0455",
+    "name": "혜화동성당 방학동묘원",
+    "isPublic": false,
+    "website": "https://terms.naver.com/entry.naver?docId=2596267&cid=51880&categoryId=53262"
+  },
+  {
+    "id": "park-0456",
+    "name": "포항공원묘원",
+    "isPublic": false,
+    "website": "https://www.114.co.kr/search/detail?comp_id=4040645&comp_tp_cd=TEL&upjong_cd=843202"
+  },
+  {
+    "id": "park-0457",
+    "name": "천주교용호동공원묘지",
+    "isPublic": false,
+    "website": ""
+  },
+  {
+    "id": "park-0458",
+    "name": "모슬포 천주교공동묘지",
+    "isPublic": false,
+    "website": "https://funeral.easehub.co.kr/funerals/1054"
+  },
+  {
+    "id": "park-0459",
+    "name": "모슬포교회 공동묘지",
+    "isPublic": false,
+    "website": "http://www.mspchurch.or.kr/"
+  },
+  {
+    "id": "park-0460",
+    "name": "천주교산내공원묘원",
+    "isPublic": false,
+    "website": "https://nbukd-lee7305.tistory.com/16150927"
+  },
+  {
+    "id": "park-0461",
+    "name": "천주교 창원공원묘원",
+    "isPublic": false,
+    "website": "https://www.changwonpark.kr/memorial/intro.php"
+  },
+  {
+    "id": "park-0462",
+    "name": "천주교가덕공원묘지",
+    "isPublic": false,
+    "website": ""
+  },
+  {
+    "id": "park-0463",
+    "name": "신동아교회묘지",
+    "isPublic": false,
+    "website": "https://funeral.easehub.co.kr/funerals/1151"
+  },
+  {
+    "id": "park-0464",
+    "name": "신세계공원",
+    "isPublic": false,
+    "website": "https://www.shinsegae.com/store/main.do?storeCd=SC00001"
+  },
+  {
+    "id": "park-0465",
+    "name": "삼덕교회동산",
+    "isPublic": false,
+    "website": "https://www.grandculture.net/daegu/junggu/dir/GC40004648"
+  },
+  {
+    "id": "park-0466",
+    "name": "인천지구황해도민묘지",
+    "isPublic": false,
+    "website": "https://www.metropolitan-funeral.co.kr/facility-place/1220/"
+  },
+  {
+    "id": "park-0467",
+    "name": "대구화교협회묘지",
+    "isPublic": false,
+    "website": "https://dggb-portal.funeralblog.co.kr/facility-place/1122/"
+  },
+  {
+    "id": "park-0468",
+    "name": "대구공원",
+    "isPublic": false,
+    "website": "https://eworld.kr/"
+  },
+  {
+    "id": "park-0469",
+    "name": "길음동성당 묘원",
+    "isPublic": false,
+    "website": "http://church.catholic.or.kr/gireum/html/bon-02.htm"
+  },
+  {
+    "id": "park-0470",
+    "name": "충주천주교회 성요셉공원묘원",
+    "isPublic": false,
+    "website": ""
+  },
+  {
+    "id": "park-0471",
+    "name": "노안면공설묘지(폐쇄)",
+    "isPublic": true,
+    "website": "https://funeral.easehub.co.kr/funerals/1005"
+  },
+  {
+    "id": "park-0472",
+    "name": "삼각지성당 하늘묘원",
+    "isPublic": false,
+    "website": "https://www.ccsamgakji.com/%ED%95%98%EB%8A%98%EB%AC%98%EC%9B%90"
+  },
+  {
+    "id": "park-0473",
+    "name": "산곡동공설묘지",
+    "isPublic": true,
+    "website": "https://www.metropolitan-funeral.co.kr/facility-place/730/"
+  },
+  {
+    "id": "park-0474",
+    "name": "서울노회유지재단 법인묘지",
+    "isPublic": false,
+    "website": "https://www.kmib.co.kr/article/view.asp?arcid=0020659762"
+  },
+  {
+    "id": "park-0475",
+    "name": "삼척시추모공원 묘지 제2단지",
+    "isPublic": true,
+    "website": "https://www.pressian.com/pages/articles/2021011414141939661"
+  },
+  {
+    "id": "park-0476",
+    "name": "보령시마을단위공원묘지",
+    "isPublic": true,
+    "website": "https://opinion.lawmaking.go.kr/gcom/sgLmPp/330039?isOgYn=Y&pageIndex=6&lang=en"
+  },
+  {
+    "id": "park-0477",
+    "name": "가평추모공원(구 제2공설묘지)",
+    "isPublic": true,
+    "website": "https://www.metropolitan-funeral.co.kr/facility-place/1241/"
+  },
+  {
+    "id": "park-0478",
+    "name": "자일동공설묘지",
+    "isPublic": true,
+    "website": "https://www.metropolitan-funeral.co.kr/facility-place/737/"
+  },
+  {
+    "id": "park-0479",
+    "name": "(재)성산공원(묘지)",
+    "isPublic": false,
+    "website": "http://www.ssmemorialpark.co.kr/contents.htm?code=6_2"
+  },
+  {
+    "id": "park-0480",
+    "name": "(재)천주교유지재단 청주교구묘원",
+    "isPublic": false,
+    "website": "https://www.114.co.kr/search/detail?comp_id=4172691&comp_tp_cd=TEL&upjong_cd=872003"
+  },
+  {
+    "id": "park-0481",
+    "name": "김포성당 매괴의모후 묘원",
+    "isPublic": false,
+    "website": "https://funeral.easehub.co.kr/funerals/980"
+  },
+  {
+    "id": "park-0482",
+    "name": "돈암동성당 광탄추모공원",
+    "isPublic": false,
+    "website": ""
+  },
+  {
+    "id": "park-0483",
+    "name": "칠곡성당공동묘원",
+    "isPublic": false,
+    "website": "http://www.gunwipark.com/bbs/board.php?bo_table=notice&wr_id=1"
+  },
+  {
+    "id": "park-0484",
+    "name": "대구중앙교회 부활의동산",
+    "isPublic": false,
+    "website": "https://www.grandculture.net/daegu/toc/GC40004602"
+  },
+  {
+    "id": "park-0485",
+    "name": "대구칠곡교회묘지",
+    "isPublic": false,
+    "website": "https://www.grandculture.net/daegu/bukgu/dir/GC40005791"
+  },
+  {
+    "id": "park-0486",
+    "name": "상효동공설묘지",
+    "isPublic": true,
+    "website": ""
+  },
+  {
+    "id": "park-0487",
+    "name": "광대리 공원묘지",
+    "isPublic": true,
+    "website": "https://15774129.go.kr/platform/newvg/organ_info.do?id=1109"
+  },
+  {
+    "id": "park-0488",
+    "name": "광양시립영세공원 묘지",
+    "isPublic": true,
+    "website": "https://cemetery.gwangyang.go.kr/"
+  },
+  {
+    "id": "park-0489",
+    "name": "구룡공설공원묘지",
+    "isPublic": true,
+    "website": "https://www.hygn.go.kr/00432/00893/01170.web?amode=view&idx=860890&gcode=1001&gubun=present"
+  },
+  {
+    "id": "park-0490",
+    "name": "서소문교회동산",
+    "isPublic": false,
+    "website": "http://www.ssm.or.kr/main/sub.html?Mode=view&boardID=www8&num=1076"
+  },
+  {
+    "id": "park-0491",
+    "name": "천주교 김천공원묘지",
+    "isPublic": false,
+    "website": "https://endingsketch.com/burial-ground/%EC%B2%9C%EC%A3%BC%EA%B5%90-%EA%B9%80%EC%B2%9C%EA%B3%B5%EC%9B%90%EB%AC%98%EC%A7%80/"
+  },
+  {
+    "id": "park-0492",
+    "name": "영암군군서공설묘지",
+    "isPublic": true,
+    "website": "https://www.honam-funeralcenter.co.kr/funeral-process-recommend/%ED%98%B8%EB%82%A8%EC%9E%A5%EB%A1%80%EC%8B%9D%EC%9E%A5/%EB%AA%A9%ED%8F%AC%EC%B6%94%EB%AA%A8%EA%B3%B5%EC%9B%90/%EC%98%81%EC%95%94%EA%B5%B0%EA%B5%B0%EC%84%9C%EA%B3%B5%EC%84%A4%EB%AC%98%EC%A7%80/"
+  },
+  {
+    "id": "park-0493",
+    "name": "영암군금정공설묘지",
+    "isPublic": true,
+    "website": "https://funeral.easehub.co.kr/funerals/1201"
+  },
+  {
+    "id": "park-0494",
+    "name": "영암군시종공설묘지",
+    "isPublic": true,
+    "website": "https://funeral.easehub.co.kr/funerals/1203"
+  },
+  {
+    "id": "park-0495",
+    "name": "영암군신북공설묘지",
+    "isPublic": true,
+    "website": "https://funeral.easehub.co.kr/funerals/1204"
+  },
+  {
+    "id": "park-0496",
+    "name": "영암군학산공설묘지",
+    "isPublic": true,
+    "website": "https://funeral.easehub.co.kr/funerals/1205"
+  },
+  {
+    "id": "park-0497",
+    "name": "안양시안산공설묘지(만장)",
+    "isPublic": true,
+    "website": "https://www.metropolitan-funeral.co.kr/facility-place/1242/"
+  },
+  {
+    "id": "park-0498",
+    "name": "용산성당 청계묘원",
+    "isPublic": false,
+    "website": "https://funeral.easehub.co.kr/funerals/1324"
+  },
+  {
+    "id": "park-0499",
+    "name": "구미시선산공설묘지(만장)",
+    "isPublic": true,
+    "website": "https://www.15774129.go.kr/platform/newvg/organ_info.do?id=1026"
+  },
+  {
+    "id": "park-0500",
+    "name": "홍성군공원묘지",
+    "isPublic": true,
+    "website": "https://law.go.kr/LSW/ordinInfoP.do?ordinSeq=1340214"
+  },
+  {
+    "id": "park-0501",
+    "name": "대야리공설묘지",
+    "isPublic": true,
+    "website": "https://www.siheung.go.kr/main/bbs/view.do?bIdx=56158&ptIdx=14&mId=0205060000"
+  },
+  {
+    "id": "park-0502",
+    "name": "청암교회(청암동산)",
+    "isPublic": false,
+    "website": "https://www.metropolitan-funeral.co.kr/facility-place/1192/"
+  },
+  {
+    "id": "park-0503",
+    "name": "신현교회 묘지",
+    "isPublic": false,
+    "website": "http://www.shinhyunchurch.kr/main/sub.html?pageCode=3"
+  },
+  {
+    "id": "park-0504",
+    "name": "오식도공설묘지(민간위탁)",
+    "isPublic": true,
+    "website": "https://funeral.easehub.co.kr/funerals/1215"
+  },
+  {
+    "id": "park-0505",
+    "name": "최자실기도원 공원묘지",
+    "isPublic": false,
+    "website": "https://fgpray.com/7238/%EA%B8%B0%EB%8F%84%EC%9B%90-%EC%86%8C%EC%8B%9D/%EC%9E%90%EC%B2%B4%EC%84%B1%ED%9A%8C/2025-9-%EC%98%A4%EC%82%B0%EB%A6%AC%EC%B5%9C%EC%9E%90%EC%8B%A4%EA%B8%B0%EB%85%90%EA%B8%88%EC%8B%9D%EA%B8%B0%EB%8F%84%EC%9B%90-%EC%B6%95%EB%B3%B5%EC%84%B1%ED%9A%8C/"
+  },
+  {
+    "id": "park-0506",
+    "name": "불광동성당 바다의별묘원",
+    "isPublic": false,
+    "website": "https://www.bulgwang.or.kr/38"
+  },
+  {
+    "id": "park-0507",
+    "name": "신광교회 묘지",
+    "isPublic": false,
+    "website": "https://www.metropolitan-funeral.co.kr/facility-place/1161/"
+  },
+  {
+    "id": "park-0508",
+    "name": "(재)동산공원묘원 묘지",
+    "isPublic": false,
+    "website": "http://www.dongsanpark.com/"
+  },
+  {
+    "id": "park-0509",
+    "name": "정토사 극락원",
+    "isPublic": false,
+    "website": "http://www.jungtosa.com/theme/dt_pro02/html/4_beinhaus/03.php"
+  },
+  {
+    "id": "park-0510",
+    "name": "분당추모공원휴",
+    "isPublic": false,
+    "website": "https://www.huepark.co.kr/page/members/procedure.php"
+  },
+  {
+    "id": "park-0511",
+    "name": "해인사 고불암무량수전",
+    "isPublic": false,
+    "website": "http://www.haeinsa.or.kr/bbs/board.php?bo_table=3050&wr_id=442"
+  },
+  {
+    "id": "park-0512",
+    "name": "재단법인 일산장안추모공원",
+    "isPublic": false,
+    "website": "http://www.janganpark.co.kr/"
+  },
+  {
+    "id": "park-0513",
+    "name": "대한불교관음회조계종 백천사 봉안당",
+    "isPublic": false,
+    "website": "https://www.buddhism.or.kr/"
+  },
+  {
+    "id": "park-0514",
+    "name": "(재)성산공원 추모관",
+    "isPublic": false,
+    "website": "http://www.ssmemorialpark.co.kr/contents.htm?code=2_4"
+  },
+  {
+    "id": "park-0515",
+    "name": "에덴추모공원",
+    "isPublic": false,
+    "website": "https://www.edpk.co.kr/"
+  },
+  {
+    "id": "park-0516",
+    "name": "팔공산도림사추모공원",
+    "isPublic": false,
+    "website": "http://www.803park.com/doc/sitemap.html"
+  },
+  {
+    "id": "park-0517",
+    "name": "파주추모공원 봉안당",
+    "isPublic": false,
+    "website": "https://www.gongamcompany.co.kr/040"
+  },
+  {
+    "id": "park-0518",
+    "name": "(재)유명추모공원",
+    "isPublic": false,
+    "website": "https://www.joongang.co.kr/article/25102878"
+  },
+  {
+    "id": "park-0519",
+    "name": "양평추모공원 더포레",
+    "isPublic": false,
+    "website": "https://ypthefore.co.kr/HOME"
+  },
+  {
+    "id": "park-0520",
+    "name": "수불사추모공원",
+    "isPublic": false,
+    "website": "https://marketbz.com/companyDetail/6139324358"
+  },
+  {
+    "id": "park-0521",
+    "name": "(재)용인추모원",
+    "isPublic": false,
+    "website": "https://www.yongin-park.com/yfamily/online_memorial"
+  },
+  {
+    "id": "park-0522",
+    "name": "연천동막골추모관",
+    "isPublic": false,
+    "website": "https://xn--bb0bvbv22azrg55a803bv5k10b.com/"
+  },
+  {
+    "id": "park-0523",
+    "name": "대덕스카이캐슬 추모관",
+    "isPublic": false,
+    "website": "https://ddskycastle.kr/"
+  },
+  {
+    "id": "park-0524",
+    "name": "마라나타하늘정원",
+    "isPublic": false,
+    "website": "http://www.maranathagh.co.kr/home/c05/"
+  },
+  {
+    "id": "park-0525",
+    "name": "천국의계단추모관(재단법인천국)",
+    "isPublic": false,
+    "website": "http://www.i1009.kr/"
+  },
+  {
+    "id": "park-0526",
+    "name": "그린피아추모공원",
+    "isPublic": false,
+    "website": "http://www.greenpiapark.com/"
+  },
+  {
+    "id": "park-0527",
+    "name": "중앙추모공원(재단법인 현) 봉안시설",
+    "isPublic": false,
+    "website": "https://www.bisco.or.kr/memorialpark/index.asp"
+  },
+  {
+    "id": "park-0528",
+    "name": "유일추모공원",
+    "isPublic": false,
+    "website": "http://www.youilpark.com/"
+  },
+  {
+    "id": "park-0529",
+    "name": "(재)시안 가족추모공원(봉안)",
+    "isPublic": false,
+    "website": "https://www.sianpark.co.kr/"
+  },
+  {
+    "id": "park-0530",
+    "name": "무궁화추모공원",
+    "isPublic": false,
+    "website": "http://neverend.kr/bbs/board.php?bo_table=preview&sca=%EA%B0%80%EC%A1%B1%EC%8B%A4"
+  },
+  {
+    "id": "park-0531",
+    "name": "모악추모공원",
+    "isPublic": false,
+    "website": "http://www.moakpark.co.kr/html/greetings.html"
+  },
+  {
+    "id": "park-0532",
+    "name": "도성사 봉안당",
+    "isPublic": false,
+    "website": "http://www.doseongsa.or.kr/xe/chumoinfo"
+  },
+  {
+    "id": "park-0533",
+    "name": "크리스찬메모리얼파크",
+    "isPublic": false,
+    "website": "https://www.fgcmp.com/"
+  },
+  {
+    "id": "park-0534",
+    "name": "신불산추모공원 납골당",
+    "isPublic": false,
+    "website": "http://sbjs.kr/"
+  },
+  {
+    "id": "park-0535",
+    "name": "청련사 극락원",
+    "isPublic": false,
+    "website": "http://xn--3i0bm4pvoaq6yw2hg7i.com/main/html.php?htmid=service/process01.html"
+  },
+  {
+    "id": "park-0536",
+    "name": "서남권추모공원 봉안당",
+    "isPublic": true,
+    "website": "https://www.boram.com/Cs/Partnership/view/1312"
+  },
+  {
+    "id": "park-0537",
+    "name": "재단법인조안공원양주지사",
+    "isPublic": false,
+    "website": "https://www.yangju.go.kr/photo/selectPhotoInfoWebView.do?key=1779&ctgryNo=74&photoInfoNo=58005210"
+  },
+  {
+    "id": "park-0538",
+    "name": "약사사지장전추모관",
+    "isPublic": false,
+    "website": "https://www.boramsangjosiloam.com/Cs/Partnership/view/1343"
+  },
+  {
+    "id": "park-0539",
+    "name": "(재)법화세계추모관",
+    "isPublic": false,
+    "website": "https://funeral.easehub.co.kr/funerals/269"
+  },
+  {
+    "id": "park-0540",
+    "name": "유토피아추모공원(헤리티지관)",
+    "isPublic": false,
+    "website": "https://www.kmaca.or.kr/combination/contInfoDetail.do?curPageNo=2&searchBodId=BD13120013&pageSize=5&PN=6&searchFild=TITL&searchText="
+  },
+  {
+    "id": "park-0541",
+    "name": "영모묘원",
+    "isPublic": false,
+    "website": "http://www.ymw.kr/bbs/content.php?co_id=greeting"
+  },
+  {
+    "id": "park-0542",
+    "name": "부산추모공원 봉안당",
+    "isPublic": true,
+    "website": "https://www.bisco.or.kr/memorialpark/index.asp"
+  },
+  {
+    "id": "park-0543",
+    "name": "메모리얼펠리스추모관(실로암)",
+    "isPublic": false,
+    "website": "https://www.siloami.com/sub3.html"
+  },
+  {
+    "id": "park-0544",
+    "name": "목포추모관 휴",
+    "isPublic": true,
+    "website": "http://www.mokpopark.com/"
+  },
+  {
+    "id": "park-0545",
+    "name": "(재)평화공원 파라다이스 추모관",
+    "isPublic": false,
+    "website": "https://kiramonthly.com/683"
+  },
+  {
+    "id": "park-0546",
+    "name": "유토피아추모관",
+    "isPublic": false,
+    "website": "https://www.utopiafuture.co.kr/memorial/memorial1.html"
+  },
+  {
+    "id": "park-0547",
+    "name": "(재)자하연 일산(봉안)",
+    "isPublic": false,
+    "website": "https://www.jahayeon.com/"
+  },
+  {
+    "id": "park-0548",
+    "name": "천주교 비봉추모관",
+    "isPublic": false,
+    "website": "http://bb.catholic.or.kr/page/remains.php"
+  },
+  {
+    "id": "park-0549",
+    "name": "천주교 서울대교구 평화묘원 봉안묘",
+    "isPublic": false,
+    "website": "http://bb.catholic.or.kr/board/view.php?board=faq&seq=435"
+  },
+  {
+    "id": "park-0550",
+    "name": "생극추모공원",
+    "isPublic": false,
+    "website": "http://www.charnelpark.com/"
+  },
+  {
+    "id": "park-0551",
+    "name": "하늘소망추모관",
+    "isPublic": false,
+    "website": "https://www.boram.com/Cs/Partnership/view/1520"
+  },
+  {
+    "id": "park-0552",
+    "name": "대한불교조계종 삼봉사 봉안당",
+    "isPublic": false,
+    "website": "http://www.sambongsa.com/m_sbsm1.html"
+  },
+  {
+    "id": "park-0553",
+    "name": "천주교안성추모공원(봉안)",
+    "isPublic": false,
+    "website": ""
+  },
+  {
+    "id": "park-0554",
+    "name": "아산메모리얼파크 휴온 봉안당",
+    "isPublic": false,
+    "website": "https://apply.cheotjang.com/info/%EC%95%84%EC%82%B0%EC%8B%9C-%EB%B4%89%EC%95%88%EB%8B%B9-%EB%82%A9%EA%B3%A8%EB%8B%B9-%EC%95%88%EB%82%B4"
+  },
+  {
+    "id": "park-0555",
+    "name": "청통추모관",
+    "isPublic": false,
+    "website": "https://shue.kr/%EC%B2%AD%ED%86%B5%EC%B6%94%EB%AA%A8%EA%B4%80-%EB%82%A9%EA%B3%A8%EB%8B%B9/"
+  },
+  {
+    "id": "park-0556",
+    "name": "예래원(봉안시설)",
+    "isPublic": false,
+    "website": "https://www.boramlife.com/Cs/Partnership/view/1371"
+  },
+  {
+    "id": "park-0557",
+    "name": "재단법인 로엠(봉안시설)",
+    "isPublic": false,
+    "website": "http://www.lawm.co.kr/pages/join.asp"
+  },
+  {
+    "id": "park-0558",
+    "name": "(재)효원가족공원",
+    "isPublic": false,
+    "website": "http://skypark.co.kr/"
+  },
+  {
+    "id": "park-0559",
+    "name": "극락사추모공원",
+    "isPublic": false,
+    "website": "https://www.imaeil.com/page/view/2025061508185374094"
+  },
+  {
+    "id": "park-0560",
+    "name": "(재)분당메모리얼파크",
+    "isPublic": false,
+    "website": "https://www.bmpark.co.kr/"
+  },
+  {
+    "id": "park-0561",
+    "name": "금릉공원묘원",
+    "isPublic": false,
+    "website": "https://www.grandculture.net/gimcheon/dir/GC03201121"
+  },
+  {
+    "id": "park-0562",
+    "name": "(주)광림공원 동산공원묘원(봉안)",
+    "isPublic": false,
+    "website": "https://endingsketch.com/burial-ground/%EC%A3%BC%EA%B4%91%EB%A6%BC%EA%B3%B5%EC%9B%90-%EB%8F%99%EC%82%B0%EA%B3%B5%EC%9B%90%EB%AC%98%EC%9B%90%EC%9E%90%EC%97%B0%EC%9E%A5/"
+  },
+  {
+    "id": "park-0563",
+    "name": "한국불교태고종 극락사 안양원",
+    "isPublic": false,
+    "website": "https://www.boram.com/Cs/Partnership/view/1527"
+  },
+  {
+    "id": "park-0564",
+    "name": "재단법인 에덴낙원",
+    "isPublic": false,
+    "website": "https://www.icheon.go.kr/tour/cultureTour/manage/view.do?idx=79&mid=0101000000"
+  },
+  {
+    "id": "park-0565",
+    "name": "분당스카이캐슬추모공원",
+    "isPublic": false,
+    "website": "https://www.skycastle.kr/"
+  },
+  {
+    "id": "park-0566",
+    "name": "녹야원추모관",
+    "isPublic": false,
+    "website": "http://www.nokyawon.net/"
+  },
+  {
+    "id": "park-0567",
+    "name": "(재)한국SGI이천평화공원",
+    "isPublic": false,
+    "website": "https://www.peacepark.or.kr/icheon/intro/welcome.ksgi"
+  },
+  {
+    "id": "park-0568",
+    "name": "상상추모공원",
+    "isPublic": false,
+    "website": "https://01068893333.vipcall.co.kr/"
+  },
+  {
+    "id": "park-0569",
+    "name": "양주추모공원",
+    "isPublic": false,
+    "website": "http://www.yangjupark.com/"
+  },
+  {
+    "id": "park-0570",
+    "name": "(재)한국SGI청도평화공원",
+    "isPublic": false,
+    "website": "https://www.peacepark.or.kr/cheongdo/helpdesk/charnel.ksgi?installNm=%EC%A0%84%EC%84%B1%EA%B3%A4&applyNm=%EC%A0%84%EC%9D%80%EC%98%81"
+  },
+  {
+    "id": "park-0571",
+    "name": "약사사 하늘재추모원 ",
+    "isPublic": false,
+    "website": "https://www.boramsangjosiloam.com/Cs/Partnership/view/1366"
+  },
+  {
+    "id": "park-0572",
+    "name": "천주교 금상동성당 하늘자리",
+    "isPublic": false,
+    "website": "http://www.kscatholic.or.kr/bbs/board.php?bo_table=noti2&wr_id=53"
+  },
+  {
+    "id": "park-0573",
+    "name": "보령시모란공원 봉안당",
+    "isPublic": true,
+    "website": "https://www.brsisul.or.kr/kor/sub01_03_01.do"
+  },
+  {
+    "id": "park-0574",
+    "name": "(재)영호공원",
+    "isPublic": false,
+    "website": "http://web.amarketing.co.kr/front/portfolio/homepage?bo_id=portfolio_homepage&ar_id=52&sc_field=&sc_keyword=&sc_category=&page=1&request_url=../../front/portfolio/homepage"
+  },
+  {
+    "id": "park-0575",
+    "name": "대원사 봉안당",
+    "isPublic": false,
+    "website": "https://www.gyeongju.go.kr/open_content/ko/page.do?step=258&parm_bod_uid=197628&mnu_uid=187"
+  },
+  {
+    "id": "park-0576",
+    "name": "자임추모공원",
+    "isPublic": false,
+    "website": "http://jaimpark.com/category/%ED%99%88%ED%8E%98%EC%9D%B4%EC%A7%80/"
+  },
+  {
+    "id": "park-0577",
+    "name": "삼우추모공원",
+    "isPublic": false,
+    "website": "http://www.gjtline.kr/news/articleView.html?idxno=46565"
+  },
+  {
+    "id": "park-0578",
+    "name": "예진추모관",
+    "isPublic": false,
+    "website": "https://www.xn--zb0bz2xuzijwdpyf.com/"
+  },
+  {
+    "id": "park-0579",
+    "name": "(재)호정공원(봉안)",
+    "isPublic": false,
+    "website": "http://www.hjcloud9.com/page/memorial02"
+  },
+  {
+    "id": "park-0580",
+    "name": "용미리건물식추모의집",
+    "isPublic": true,
+    "website": "https://www.sisul.or.kr/open_content/memorial/cremate/facility_photo03_02.jsp"
+  },
+  {
+    "id": "park-0581",
+    "name": "화엄사",
+    "isPublic": false,
+    "website": "http://www.hwaeomsa.or.kr/"
+  },
+  {
+    "id": "park-0582",
+    "name": "(재)밀양추모공원묘원",
+    "isPublic": false,
+    "website": "https://www.gnfilm.or.kr/location/show/789"
+  },
+  {
+    "id": "park-0583",
+    "name": "다보정사 안미원",
+    "isPublic": false,
+    "website": "https://www.boram.com/Cs/Partnership/view/1216"
+  },
+  {
+    "id": "park-0584",
+    "name": "서울시립승화원 추모의집",
+    "isPublic": true,
+    "website": "https://www.sisul.or.kr/open_content/memorial/"
+  },
+  {
+    "id": "park-0585",
+    "name": "보현정사",
+    "isPublic": false,
+    "website": "https://www.114.co.kr/search/detail?comp_id=3658434&comp_tp_cd=TEL&upjong_cd=872002"
+  },
+  {
+    "id": "park-0586",
+    "name": "용미리왕릉벽식추모의집",
+    "isPublic": true,
+    "website": "https://www.boramsangjo.com/Cs/Partnership/view/1386"
+  },
+  {
+    "id": "park-0587",
+    "name": "용미리분묘형추모의집",
+    "isPublic": true,
+    "website": "https://www.boramlife.com/Cs/Partnership/view/1385"
+  },
+  {
+    "id": "park-0588",
+    "name": "용미리벽식추모의집",
+    "isPublic": true,
+    "website": "https://www.boramsangjo.com/Cs/Partnership/view/1386"
+  },
+  {
+    "id": "park-0589",
+    "name": "(재)서호추모공원",
+    "isPublic": false,
+    "website": "https://www.seohopark.kr/"
+  },
+  {
+    "id": "park-0590",
+    "name": "천주교안동교구 봉안경당",
+    "isPublic": false,
+    "website": "http://xn--289a71jftad9zslkca.com/"
+  },
+  {
+    "id": "park-0591",
+    "name": "보장사 영각당",
+    "isPublic": false,
+    "website": "http://www.hysangjo.co.kr/03_funeral/fun_053.asp"
+  },
+  {
+    "id": "park-0592",
+    "name": "(재)화산추모공원(봉안)",
+    "isPublic": false,
+    "website": "http://www.hwasanpark.co.kr/"
+  },
+  {
+    "id": "park-0593",
+    "name": "예원추모관",
+    "isPublic": false,
+    "website": "http://www.e-yewon.co.kr/"
+  },
+  {
+    "id": "park-0594",
+    "name": "재단법인 세심사하늘공원",
+    "isPublic": false,
+    "website": "https://www.114.co.kr/search/detail?comp_id=5158132&comp_tp_cd=TEL&upjong_cd=843203"
+  },
+  {
+    "id": "park-0595",
+    "name": "천주교용인공원묘원(봉안)",
+    "isPublic": false,
+    "website": "http://yi.catholic.or.kr/board/list.php?board=report"
+  },
+  {
+    "id": "park-0596",
+    "name": "홍성추모공원봉안당",
+    "isPublic": true,
+    "website": "https://www.ch-funeralportal.co.kr/facility-item/214/price/"
+  },
+  {
+    "id": "park-0597",
+    "name": "청풍추모공원",
+    "isPublic": false,
+    "website": "http://memo.bluewindpark.com/"
+  },
+  {
+    "id": "park-0598",
+    "name": "전통사찰95호 동도사",
+    "isPublic": false,
+    "website": "https://www.boramsangjosiloam.com/Cs/Partnership/view/1439"
+  },
+  {
+    "id": "park-0599",
+    "name": "동천교회 납골묘",
+    "isPublic": false,
+    "website": "http://www.idongcheon.com/"
+  },
+  {
+    "id": "park-0600",
+    "name": "대국사",
+    "isPublic": false,
+    "website": "https://www.baduk.or.kr/"
+  },
+  {
+    "id": "park-0601",
+    "name": "상월사 봉안당",
+    "isPublic": false,
+    "website": ""
+  },
+  {
+    "id": "park-0602",
+    "name": "대한불교조계종관음사",
+    "isPublic": false,
+    "website": "https://www.buddhism.or.kr/jongdan/sub1/sub1-9-2-12.php"
+  },
+  {
+    "id": "park-0603",
+    "name": "석예정사",
+    "isPublic": false,
+    "website": "https://marketbz.com/companyDetail/6078293626"
+  },
+  {
+    "id": "park-0604",
+    "name": "(재)경춘공원묘원",
+    "isPublic": false,
+    "website": "https://www.gyoungchun.com/"
+  },
+  {
+    "id": "park-0605",
+    "name": "남한강공원묘원",
+    "isPublic": false,
+    "website": "https://nhgpark.co.kr/"
+  },
+  {
+    "id": "park-0606",
+    "name": "양산 석굴암 극락전 추모관",
+    "isPublic": false,
+    "website": ""
+  },
+  {
+    "id": "park-0607",
+    "name": "수암사 영혼의쉼터",
+    "isPublic": false,
+    "website": "https://www.114.co.kr/search/detail?comp_id=1646300&comp_tp_cd=INT&upjong_cd=843203"
+  },
+  {
+    "id": "park-0608",
+    "name": "(사)민족불교해동조계종 해동사",
+    "isPublic": false,
+    "website": "https://www.boram.com/Cs/Partnership/view/1297"
+  },
+  {
+    "id": "park-0609",
+    "name": "천주교하늘공원 봉안당",
+    "isPublic": false,
+    "website": ""
+  },
+  {
+    "id": "park-0610",
+    "name": "추모공원 하늘문",
+    "isPublic": false,
+    "website": "http://www.hi1009.com/"
+  },
+  {
+    "id": "park-0611",
+    "name": "은하수공원 달님의집(봉안당)",
+    "isPublic": true,
+    "website": "https://www.ch-funeralportal.co.kr/facility-item/225/"
+  },
+  {
+    "id": "park-0612",
+    "name": "속초시추모의집",
+    "isPublic": true,
+    "website": "https://www.15774129.go.kr/platform/newvg/organ_info.do?id=555"
+  },
+  {
+    "id": "park-0613",
+    "name": "예산군추모의집 제1관",
+    "isPublic": true,
+    "website": "https://endingsketch.com/charnel-house/%EC%98%88%EC%82%B0%EA%B5%B0%EC%B6%94%EB%AA%A8%EC%9D%98%EC%A7%91-%EC%A0%9C1%EA%B4%80/"
+  },
+  {
+    "id": "park-0614",
+    "name": "일산푸른솔추모공원",
+    "isPublic": false,
+    "website": "https://www.metropolitan-funeral.co.kr/facility-place/410/"
+  },
+  {
+    "id": "park-0615",
+    "name": "양구봉안공원 봉안당",
+    "isPublic": true,
+    "website": "https://www.yanggu.go.kr/user_sub?bk=VDHPJ250226073900138&mu_idx=232&bt=rd"
+  },
+  {
+    "id": "park-0616",
+    "name": "(재)지평선전북공원묘원(봉안)",
+    "isPublic": false,
+    "website": ""
+  },
+  {
+    "id": "park-0617",
+    "name": "봉안당에데나(낙원추모공원)",
+    "isPublic": false,
+    "website": "https://www.edena.co.kr/bbs/content.php?co_id=02_01"
+  },
+  {
+    "id": "park-0618",
+    "name": "별그리다(THE WALL)",
+    "isPublic": false,
+    "website": "http://www.star4ever.com/helpdesk/notice_wall/lists"
+  },
+  {
+    "id": "park-0619",
+    "name": "흥륜사정토원",
+    "isPublic": false,
+    "website": "http://www.jungtowon.co.kr/"
+  },
+  {
+    "id": "park-0620",
+    "name": "(주)청아공원",
+    "isPublic": false,
+    "website": "https://www.chungahpark.co.kr/park/tour.jsp"
+  },
+  {
+    "id": "park-0621",
+    "name": "(재)영봉추모공원",
+    "isPublic": false,
+    "website": "https://www.114.co.kr/search/detail?comp_id=5067310&comp_tp_cd=TEL&upjong_cd=843202"
+  },
+  {
+    "id": "park-0622",
+    "name": "강촌추모원",
+    "isPublic": false,
+    "website": "https://www.boram.com/Cs/Partnership/view/1166"
+  },
+  {
+    "id": "park-0623",
+    "name": "서대산추모공원 봉안당",
+    "isPublic": false,
+    "website": "http://www.xn--ob0bp8i99gpugnpa27ylkm.com/"
+  },
+  {
+    "id": "park-0624",
+    "name": "재단법인 효천추모공원",
+    "isPublic": false,
+    "website": "https://www.hcmp.kr/skin-skin2/mortuary.html"
+  },
+  {
+    "id": "park-0625",
+    "name": "학천사추모관",
+    "isPublic": false,
+    "website": "https://www.boram.com/Cs/Partnership/view/1524"
+  },
+  {
+    "id": "park-0626",
+    "name": "양지공원 제1추모의집",
+    "isPublic": true,
+    "website": "https://www.boram.com/Cs/Partnership/view/1349"
+  },
+  {
+    "id": "park-0627",
+    "name": "양지공원 제2추모의집",
+    "isPublic": true,
+    "website": "http://www.samdailbo.com/news/articleView.html?idxno=179470"
+  },
+  {
+    "id": "park-0628",
+    "name": "봉안당 홈",
+    "isPublic": false,
+    "website": "http://www.home12.co.kr/doc/pay2.php"
+  },
+  {
+    "id": "park-0629",
+    "name": "(재)안동추모공원(봉안당)",
+    "isPublic": false,
+    "website": "http://www.andongpark.net/bbs/content.php?co_id=sub5_2_2"
+  },
+  {
+    "id": "park-0630",
+    "name": "(재)서현추모공원",
+    "isPublic": false,
+    "website": "https://seohyunpark.com/"
+  },
+  {
+    "id": "park-0631",
+    "name": "(재)여주세종추모공원 봉안당",
+    "isPublic": false,
+    "website": "http://www.sejonge-park.kr/"
+  },
+  {
+    "id": "park-0632",
+    "name": "영평사 추모공원",
+    "isPublic": false,
+    "website": "https://www.youngpyungsapark.co.kr/bbs/content.php?co_id=1000"
+  },
+  {
+    "id": "park-0633",
+    "name": "월봉사연화원",
+    "isPublic": false,
+    "website": "http://wolbongsa.com/sub02/sub01.php"
+  },
+  {
+    "id": "park-0634",
+    "name": "대한불교염불선종운수사사홍선원",
+    "isPublic": false,
+    "website": ""
+  },
+  {
+    "id": "park-0635",
+    "name": "김천추모공원",
+    "isPublic": false,
+    "website": "https://www.gcfmc.or.kr/gc_memorialpark/"
+  },
+  {
+    "id": "park-0636",
+    "name": "(재)용인공원(아너스톤)",
+    "isPublic": false,
+    "website": "https://www.honorstone.co.kr/content/notice_view?idx=329&rp=page%3D3"
+  },
+  {
+    "id": "park-0637",
+    "name": "아름다운추모원",
+    "isPublic": false,
+    "website": "http://www.earumdaun.com/bbs/content.php?co_id=201"
+  },
+  {
+    "id": "park-0638",
+    "name": "용화사 봉안당",
+    "isPublic": false,
+    "website": "https://www.chungnam.go.kr/cnportal/media/article/view.do?articleNo=MD0002099777&menuNo=500167"
+  },
+  {
+    "id": "park-0639",
+    "name": "효자추모관",
+    "isPublic": false,
+    "website": "https://www.114.co.kr/search/detail?comp_id=4062815&comp_tp_cd=TEL&upjong_cd=843203"
+  },
+  {
+    "id": "park-0640",
+    "name": "쌍용사 봉안당",
+    "isPublic": false,
+    "website": "https://funeral.easehub.co.kr/funerals/576"
+  },
+  {
+    "id": "park-0641",
+    "name": "오향중흥교회 봉안당",
+    "isPublic": false,
+    "website": "https://www.114.co.kr/search/detail?comp_id=402363&comp_tp_cd=INT&upjong_cd=843203"
+  },
+  {
+    "id": "park-0642",
+    "name": "대한불교정음사원",
+    "isPublic": false,
+    "website": "https://www.boram.com/Cs/Partnership/view/1236"
+  },
+  {
+    "id": "park-0643",
+    "name": "대원사추모공원 봉안당",
+    "isPublic": false,
+    "website": "https://endingsketch.com/charnel-house/%EB%8C%80%EC%9B%90%EC%82%AC%EC%B6%94%EB%AA%A8%EA%B3%B5%EC%9B%90-%EB%B4%89%EC%95%88%EB%8B%B9/"
+  },
+  {
+    "id": "park-0644",
+    "name": "충주시 천상원",
+    "isPublic": true,
+    "website": "https://chungju.grandculture.net/chungju/search/GC019P1778"
+  },
+  {
+    "id": "park-0645",
+    "name": "약천사",
+    "isPublic": false,
+    "website": "https://yakchunsa.templestay.com/"
+  },
+  {
+    "id": "park-0646",
+    "name": "구미시공설숭조당 제2관",
+    "isPublic": true,
+    "website": "https://www.kyongbuk.co.kr/news/articleView.html?idxno=2008925"
+  },
+  {
+    "id": "park-0647",
+    "name": "하남시 마루공원(봉안시설)",
+    "isPublic": true,
+    "website": "https://www.metropolitan-funeral.co.kr/facility-place/421/"
+  },
+  {
+    "id": "park-0648",
+    "name": "예수사랑제일교회",
+    "isPublic": false,
+    "website": "https://sarangjeil.kr/news/0ee3e7b9-d7b8-4042-8b5e-478013a2e052"
+  },
+  {
+    "id": "park-0649",
+    "name": "용주사 봉안당",
+    "isPublic": false,
+    "website": "https://funeral.easehub.co.kr/funerals/648"
+  },
+  {
+    "id": "park-0650",
+    "name": "화성함백산추모공원(별빛쉼터)",
+    "isPublic": true,
+    "website": "https://hbm.hu.or.kr/hambaeksan/user/bbs/BD_selectBbs.do?q_bbsCode=1001&q_bbscttSn=20230103140122343"
+  }
+]

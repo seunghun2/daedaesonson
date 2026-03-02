@@ -34,34 +34,87 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     }
 
     const categoryLabel = FACILITY_CATEGORY_LABELS[data.category as FacilityCategory] || '';
+    const isPublic = data.isPublic ? '공설' : '사설';
+
+    // 주소에서 시/도, 시/군/구 추출
+    const addrTokens = (data.address || '').split(' ');
+    const region = addrTokens[0] || ''; // 경기도, 서울특별시 등
+    const city = addrTokens[1] || '';   // 용인시, 강남구 등
+    const shortRegion = region.replace(/특별자치(시|도)|특별시|광역시|도$/g, '') || region;
+    const locationText = city ? `${shortRegion} ${city}` : shortRegion;
+
+    // 가격 텍스트 생성
     const minPrice = data.minPrice || data.priceRange?.min || 0;
-    const priceText = minPrice > 0
-        ? `${minPrice >= 10000 ? Math.floor(minPrice / 10000) + '만' : minPrice.toLocaleString()}원~`
-        : '';
-    const title = `${data.name} ${categoryLabel} 가격정보 | 대대손손`;
-    const description = data.description
-        || `${data.name} ${categoryLabel} 시설 정보${priceText ? ` (${priceText})` : ''}. ${data.address}. 대대손손에서 가격 비교하세요.`;
+    const maxPrice = data.maxPrice || data.priceRange?.max || 0;
+    let priceText = '';
+    if (minPrice > 0) {
+        const minStr = minPrice >= 10000 ? Math.floor(minPrice / 10000) + '만' : minPrice.toLocaleString();
+        if (maxPrice > minPrice) {
+            const maxStr = maxPrice >= 10000 ? Math.floor(maxPrice / 10000) + '만' : maxPrice.toLocaleString();
+            priceText = `${minStr}원~${maxStr}원`;
+        } else {
+            priceText = `${minStr}원~`;
+        }
+    }
+
+    // 서비스 유형 키워드 (매장, 봉안, 수목장 등)
+    const serviceTypes: string[] = [];
+    if (data.standardizedPrices?.length) {
+        const types = new Set(data.standardizedPrices.map((p: any) => p.serviceType));
+        if (types.has('BURIAL') || types.has('FAMILY_GRAVE')) serviceTypes.push('매장');
+        if (types.has('BONGSAN') || types.has('CHARNEL')) serviceTypes.push('봉안');
+        if (types.has('NATURAL_BURIAL')) serviceTypes.push('수목장');
+        if (types.has('CREMATION')) serviceTypes.push('화장');
+    }
+    const serviceText = serviceTypes.length > 0 ? serviceTypes.join('·') : categoryLabel;
+
+    // 🔥 SEO 최적화 타이틀 (예: "서울공원묘원 | 공원묘지 가격 50만원~ | 경기 용인시 | 대대손손")
+    const titleParts = [data.name];
+    if (categoryLabel) titleParts.push(categoryLabel);
+    if (priceText) titleParts.push(`가격 ${priceText}`);
+    if (locationText) titleParts.push(locationText);
+    titleParts.push('대대손손');
+    const title = titleParts.join(' | ');
+
+    // 🔥 SEO 최적화 설명 (풍부한 정보 포함)
+    const descParts: string[] = [];
+    descParts.push(`${data.name} ${categoryLabel} 위치, 가격, 정보 상세보기.`);
+    descParts.push(`${isPublic}.`);
+    if (serviceText) descParts.push(`${serviceText} 가격표 제공.`);
+    if (priceText) descParts.push(`${priceText}.`);
+    if (data.address) descParts.push(`${data.address}.`);
+    if (data.phone) descParts.push(`☎ ${data.phone}.`);
+    descParts.push('대대손손에서 전국 장묘시설 가격을 비교하세요.');
+    const description = descParts.join(' ');
+
     const thumbnail = data.thumbnail || (data.images?.[0]) || '';
+
+    // 키워드 강화
+    const keywords = [
+        data.name, categoryLabel, isPublic, '가격', '비용', '가격표',
+        serviceText, region, city, locationText,
+        '장묘', '묘지', '추모', '대대손손',
+    ].filter(Boolean);
 
     return {
         title,
         description,
-        keywords: [data.name, categoryLabel, '가격', '비용', data.address?.split(' ')[0], data.address?.split(' ')[1]].filter(Boolean),
+        keywords,
         alternates: {
             canonical: `/facility/${id}`,
         },
         openGraph: {
-            title,
+            title: `${data.name} ${categoryLabel} 가격정보 | 대대손손`,
             description,
             url: `https://daedaesonson.com/facility/${id}`,
-            images: thumbnail ? [{ url: thumbnail, width: 600, height: 400 }] : [],
+            images: thumbnail ? [{ url: thumbnail, width: 1200, height: 630, alt: `${data.name} ${categoryLabel}` }] : [],
             type: 'website',
             siteName: '대대손손',
             locale: 'ko_KR',
         },
         twitter: {
             card: 'summary_large_image',
-            title,
+            title: `${data.name} ${categoryLabel} 가격정보 | 대대손손`,
             description,
             images: thumbnail ? [thumbnail] : [],
         },
