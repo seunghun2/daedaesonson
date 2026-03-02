@@ -876,37 +876,49 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
                 'ETC': '#8d6e63'
             };
 
-            // 만장 시설은 검은색, 아니면 카테고리 색상
+            // 만장 여부 체크
             const isFull = !!(fac as any).isFull;
-            const markerColor = isFull ? '#333333' : (categoryColors[fac.category as FacilityCategory] || '#0097a7');
+            const markerColor = categoryColors[fac.category as FacilityCategory] || '#0097a7';
 
-            const contentWidth = 56;
-            const contentHeight = 52;
-            const tailSize = 10;
-            const archHeight = 14;
+            let svgContent: string;
+            let anchorPoint: any;
 
-            // 만장 마커: 검은색 + "만장" 텍스트 / 일반 마커: 카테고리 + 가격
-            const topText = isFull ? categoryLabel : categoryLabel;
-            const bottomText = isFull ? '만장' : priceText;
+            if (isFull) {
+                // 🔴 만장 마커: 내 위치 아이콘과 비슷한 검은 원형 점
+                const dotSize = 20;
+                svgContent = `
+                <div style="position:relative; width:${dotSize}px; height:${dotSize}px; cursor:pointer;">
+                    <div style="position:absolute; top:0; left:0; width:${dotSize}px; height:${dotSize}px; background:#333; border:2.5px solid white; border-radius:50%; box-shadow:0 0 6px rgba(0,0,0,0.4);"></div>
+                    <div style="position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); width:6px; height:6px; background:#ff6b6b; border-radius:50%;"></div>
+                </div>
+                `;
+                anchorPoint = new window.naver.maps.Point(dotSize / 2, dotSize / 2);
+            } else {
+                // 일반 마커: 기존 가격 태그 스타일
+                const contentWidth = 56;
+                const contentHeight = 52;
+                const tailSize = 10;
+                const archHeight = 14;
 
-            // 위쪽 아치형 + 왼쪽 아래 꼬리 + 오른쪽 아래 라운드
-            const svgContent = `
-            <svg width="${contentWidth}" height="${contentHeight + tailSize}" viewBox="0 0 ${contentWidth} ${contentHeight + tailSize}" xmlns="http://www.w3.org/2000/svg">
-                <path d="
-                    M 0 ${archHeight}
-                    Q 0 0, ${contentWidth / 2} 0
-                    Q ${contentWidth} 0, ${contentWidth} ${archHeight}
-                    L ${contentWidth} ${contentHeight - 8}
-                    Q ${contentWidth} ${contentHeight}, ${contentWidth - 8} ${contentHeight}
-                    L ${tailSize} ${contentHeight}
-                    L 0 ${contentHeight + tailSize}
-                    L 0 ${archHeight}
-                    Z
-                " fill="${markerColor}" stroke="rgba(0,0,0,0.2)" stroke-width="1"/>
-                <text x="${contentWidth / 2}" y="20" font-family="-apple-system, sans-serif" font-size="10" fill="white" fill-opacity="0.9" text-anchor="middle">${topText}</text>
-                <text x="${contentWidth / 2}" y="38" font-family="-apple-system, sans-serif" font-size="13" font-weight="800" fill="${isFull ? '#ff6b6b' : 'white'}" text-anchor="middle">${bottomText}</text>
-            </svg>
-            `;
+                svgContent = `
+                <svg width="${contentWidth}" height="${contentHeight + tailSize}" viewBox="0 0 ${contentWidth} ${contentHeight + tailSize}" xmlns="http://www.w3.org/2000/svg">
+                    <path d="
+                        M 0 ${archHeight}
+                        Q 0 0, ${contentWidth / 2} 0
+                        Q ${contentWidth} 0, ${contentWidth} ${archHeight}
+                        L ${contentWidth} ${contentHeight - 8}
+                        Q ${contentWidth} ${contentHeight}, ${contentWidth - 8} ${contentHeight}
+                        L ${tailSize} ${contentHeight}
+                        L 0 ${contentHeight + tailSize}
+                        L 0 ${archHeight}
+                        Z
+                    " fill="${markerColor}" stroke="rgba(0,0,0,0.2)" stroke-width="1"/>
+                    <text x="${contentWidth / 2}" y="20" font-family="-apple-system, sans-serif" font-size="10" fill="white" fill-opacity="0.9" text-anchor="middle">${categoryLabel}</text>
+                    <text x="${contentWidth / 2}" y="38" font-family="-apple-system, sans-serif" font-size="13" font-weight="800" fill="white" text-anchor="middle">${priceText}</text>
+                </svg>
+                `;
+                anchorPoint = new window.naver.maps.Point(0, 52 + 10);
+            }
 
             const marker = new window.naver.maps.Marker({
                 position: new window.naver.maps.LatLng(lat, lng),
@@ -915,7 +927,7 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
                 title: fac.name,
                 icon: {
                     content: svgContent,
-                    anchor: new window.naver.maps.Point(0, contentHeight + tailSize),
+                    anchor: anchorPoint,
                 }
             });
 
