@@ -1628,9 +1628,9 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
     }, [opened, galleryImages.length]);
 
     // Schema.org JSON-LD 구조화된 데이터 생성
-    const jsonLd = {
+    const jsonLd: Record<string, any> = {
         "@context": "https://schema.org",
-        "@type": "Cemetery",
+        "@type": "LocalBusiness",
         "name": facility.name,
         "address": {
             "@type": "PostalAddress",
@@ -1641,11 +1641,6 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
         },
         "telephone": facility.phone || '',
         "priceRange": facility.priceRange?.min ? `${formatKoreanCurrency(facility.priceRange.min * 10000)}~` : '가격 문의',
-        "aggregateRating": facility.rating && facility.reviewCount ? {
-            "@type": "AggregateRating",
-            "ratingValue": facility.rating,
-            "reviewCount": facility.reviewCount
-        } : undefined,
         "amenityFeature": [
             facility.hasParking && { "@type": "LocationFeatureSpecification", "name": "주차장", "value": true },
             facility.hasRestaurant && { "@type": "LocationFeatureSpecification", "name": "식당", "value": true },
@@ -1656,6 +1651,16 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
         "url": typeof window !== 'undefined' ? window.location.href : `https://daedaesonson.com/facility/${facility.id}`,
         "description": facility.description || `${facility.name} - ${FACILITY_CATEGORY_LABELS[facility.category] || '장례시설'} 정보`
     };
+    // aggregateRating은 rating > 0 이고 reviewCount > 0 일 때만 포함 (Google 구조화 데이터 규격)
+    if (facility.rating && facility.rating > 0 && facility.reviewCount && facility.reviewCount > 0) {
+        jsonLd["aggregateRating"] = {
+            "@type": "AggregateRating",
+            "ratingValue": facility.rating,
+            "bestRating": 5,
+            "worstRating": 1,
+            "reviewCount": facility.reviewCount
+        };
+    }
 
 
 
