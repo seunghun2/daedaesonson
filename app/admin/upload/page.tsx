@@ -131,7 +131,7 @@ export default function AdminPage() {
         }
     };
 
-    // 마커 표시 토글 핸들러
+    // 마커 표시 토글 핸들러 - isActive만 직접 업데이트 (전체 upsert 방지)
     const handleToggleMarker = async (item: Facility) => {
         const newIsActive = item.isActive === false ? true : false;
         const updatedItem = { ...item, isActive: newIsActive };
@@ -139,8 +139,25 @@ export default function AdminPage() {
         // 로컬 상태 업데이트
         setFacilities(prev => prev.map(f => f.id === item.id ? updatedItem : f));
 
-        // 서버에 저장
-        await saveToServer(updatedItem);
+        // 서버에 isActive만 직접 PATCH (lat/lng 등 누락 방지)
+        try {
+            const res = await fetch(`/api/facilities/${item.id}`, {
+                method: 'PATCH',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ isActive: newIsActive })
+            });
+            if (!res.ok) {
+                const txt = await res.text();
+                throw new Error(txt);
+            }
+            const now = new Date();
+            setLastSavedTime(`${now.getMonth() + 1}/${now.getDate()} ${now.getHours()}:${String(now.getMinutes()).padStart(2, '0')}`);
+        } catch (e) {
+            console.error('Toggle failed:', e);
+            alert('서버 저장에 실패했습니다: ' + String(e));
+            // 실패 시 롤백
+            setFacilities(prev => prev.map(f => f.id === item.id ? item : f));
+        }
     };
 
 
@@ -490,7 +507,14 @@ export default function AdminPage() {
                                             </Badge>
                                         </Table.Td>
                                         <Table.Td style={{ maxWidth: 200 }}><Text truncate>{item.address}</Text></Table.Td>
-                                        <Table.Td>{(item as any).representativePrice ? formatKoreanCurrency((item as any).representativePrice) : (item as any).minPrice ? formatKoreanCurrency((item as any).minPrice) : '0원'}</Table.Td>
+                                        <Table.Td>{(() => {
+                                            const rp = (item as any).representativePrice || 0;
+                                            const mp = (item as any).minPrice || 0;
+                                            const price = rp > 0 ? rp : mp;
+                                            if (!price) return '0원';
+                                            const normalized = price < 10000 ? price * 10000 : price;
+                                            return formatKoreanCurrency(normalized);
+                                        })()}</Table.Td>
                                         <Table.Td>
                                             {(() => {
                                                 const imgs = typeof item.images === 'string' ? (() => { try { return JSON.parse(item.images as string); } catch { return []; } })() : (item.images || []);

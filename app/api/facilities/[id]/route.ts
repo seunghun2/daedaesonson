@@ -208,3 +208,44 @@ export async function GET(
         return NextResponse.json({ error: 'Failed to load details' }, { status: 500 });
     }
 }
+
+// PATCH: 특정 필드만 업데이트 (isActive 토글 등)
+export async function PATCH(
+    request: NextRequest,
+    { params }: { params: Promise<{ id: string }> }
+) {
+    try {
+        const { id } = await params;
+        const body = await request.json();
+
+        // 허용된 필드만 업데이트 (안전 필터링)
+        const allowedFields = ['isActive', 'isFull', 'isPublic', 'name', 'address', 'phone', 'fax', 'description', 'websiteUrl', 'category', 'operatorType'];
+        const updateData: Record<string, any> = {};
+        for (const key of allowedFields) {
+            if (body[key] !== undefined) {
+                updateData[key] = body[key];
+            }
+        }
+
+        if (Object.keys(updateData).length === 0) {
+            return NextResponse.json({ error: 'No valid fields to update' }, { status: 400 });
+        }
+
+        updateData.updatedAt = new Date().toISOString();
+
+        const { error } = await supabase
+            .from('Facility')
+            .update(updateData)
+            .eq('id', id);
+
+        if (error) {
+            console.error(`[PATCH] DB Error for ${id}:`, error);
+            return NextResponse.json({ error: 'Database save failed', details: error.message }, { status: 500 });
+        }
+
+        return NextResponse.json({ success: true, id, updated: updateData });
+    } catch (e) {
+        console.error('PATCH Error:', e);
+        return NextResponse.json({ error: 'Failed to update' }, { status: 500 });
+    }
+}
