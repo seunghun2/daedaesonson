@@ -63,7 +63,7 @@ async function getFacilities(): Promise<Facility[]> {
 }
 
 export default async function Home() {
-  const initialFacilities = getFacilities();
+  const initialFacilities = await getFacilities();
 
   return (
     <Suspense fallback={<div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100vh' }}>로딩 중...</div>}>
