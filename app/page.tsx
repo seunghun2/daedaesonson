@@ -1,96 +1,59 @@
 import { Suspense } from 'react';
 import HomeClient from './HomeClient';
 import { Facility } from '@/types';
-import fs from 'fs';
-import path from 'path';
+import { getSupabaseServer } from '@/lib/supabaseServer';
 
 // 🚀 ISR: 5분(300초)마다 데이터 갱신
 export const revalidate = 300;
 
-// 📁 로컬 JSON에서 시설 데이터 로드 (Supabase 왕복 제거 → 즉시 렌더링)
-function getFacilities(): Facility[] {
+// 📁 Supabase DB에서 시설 데이터 로드 (isActive, representativePrice 실시간 반영)
+async function getFacilities(): Promise<Facility[]> {
   try {
-    const filePath = path.join(process.cwd(), 'data', 'facilities.json');
-    const raw = fs.readFileSync(filePath, 'utf-8');
-    const all = JSON.parse(raw);
+    const supabase = getSupabaseServer();
+    const COLUMNS = 'id,name,address,lat,lng,category,minPrice,maxPrice,representativePrice,operatorType,isPublic,isActive,isFull,thumbnail';
 
-    // 장례식장, 화장시설 제외 + isActive=false 제외
+    let all: any[] = [];
+    let from = 0;
+    const PAGE_SIZE = 1000;
+    while (true) {
+      const { data, error } = await supabase
+        .from('Facility')
+        .select(COLUMNS)
+        .order('id', { ascending: true })
+        .range(from, from + PAGE_SIZE - 1);
+      if (error) { console.error('SSR Supabase Error:', error); break; }
+      if (data) all.push(...data);
+      if (!data || data.length < PAGE_SIZE) break;
+      from += PAGE_SIZE;
+    }
+
+    const normalizePrice = (p: number): number => {
+      if (!p || p <= 0) return 0;
+      return p < 10000 ? p * 10000 : p;
+    };
+
     return all
       .filter((f: any) => f.category !== 'FUNERAL_HOME' && f.category !== 'CREMATORIUM' && f.isActive !== false)
       .map((f: any) => {
-        const normalizePrice = (p: number): number => {
-          if (!p || p <= 0) return 0;
-          return p < 10000 ? p * 10000 : p;
-        };
-
-        // 🔥 가격 결정 로직 (어드민 ★ 대표가격 최우선)
-        // 1순위: DB representativePrice (어드민 저장 시 precomputed)
-        // 2순위: priceTable에서 직접 계산 (★ isRepresentative 항목)
-        // 3순위: minPrice (priceTable이 아예 없는 레거시 시설만)
-        let repPrice = normalizePrice(f.representativePrice || 0);
-
-        // representativePrice가 없으면 priceTable 또는 standardizedPrices에서 직접 계산
-        const pt = f.priceInfo?.priceTable || f.pricing;
-        const sp = f.priceInfo?.standardizedPrices; // 신형 가격 데이터
-        let hasRepInTable = false;
-
-        // 1) 신형(standardizedPrices) 먼저 확인
-        if (repPrice === 0 && Array.isArray(sp) && sp.length > 0) {
-          for (const group of sp) {
-            if (Array.isArray(group.rows)) {
-              const rep = group.rows.find((r: any) => r.isRepresentative);
-              if (rep) {
-                hasRepInTable = true;
-                if (rep.price > 0) {
-                  repPrice = normalizePrice(rep.price);
-                  break;
-                }
-              }
-            }
-          }
-        }
-
-        // 2) 구형(priceTable) 확인
-        if (repPrice === 0 && pt && typeof pt === 'object') {
-          for (const catKey of Object.keys(pt)) {
-            if (/옵션|관리비|기타|공통|제외|석물|비고|안내|별도/.test(catKey)) continue;
-            const cat = pt[catKey];
-            if (cat && Array.isArray(cat.rows)) {
-              const rep = cat.rows.find((r: any) => r.isRepresentative);
-              if (rep) {
-                hasRepInTable = true;
-                if (rep.price > 0) {
-                  repPrice = normalizePrice(rep.price);
-                  break;
-                }
-              }
-            }
-          }
-        }
-
-        // minPrice 폴백: priceTable/standardizedPrices가 존재하면 사용 안 함
-        const hasPriceData = !!(
-          (pt && typeof pt === 'object' && Object.keys(pt).length > 0) ||
-          (Array.isArray(sp) && sp.length > 0)
-        );
-        const minP = (repPrice > 0 || hasRepInTable || hasPriceData) ? 0 : normalizePrice(f.minPrice || f.priceRange?.min || 0);
-        const maxP = normalizePrice(f.maxPrice || f.priceRange?.max || 0);
+        const repPrice = normalizePrice(f.representativePrice || 0);
+        const minP = normalizePrice(f.minPrice || 0);
+        const maxP = normalizePrice(f.maxPrice || 0);
 
         return {
           id: f.id,
           name: f.name,
           address: f.address || '',
-          coordinates: f.coordinates || { lat: f.lat || 0, lng: f.lng || 0 },
+          coordinates: { lat: f.lat || 0, lng: f.lng || 0 },
           category: f.category,
           priceRange: {
-            min: repPrice || minP,
+            min: repPrice > 0 ? repPrice : minP,
             max: maxP
           },
           representativePrice: repPrice,
           operatorType: f.operatorType,
           isPublic: f.isPublic ?? false,
           isFull: f.isFull ?? false,
-          thumbnail: f.thumbnail || (f.images?.[0]) || '',
+          thumbnail: f.thumbnail || '',
         };
       });
   } catch (error) {
