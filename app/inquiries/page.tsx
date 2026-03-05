@@ -7,7 +7,7 @@ import facilitiesData from '@/data/facilities.json';
 export const revalidate = 30;
 
 const SUPABASE_URL = 'https://jbydmhfuqnpukfutvrgs.supabase.co';
-const SUPABASE_KEY = process.env.SUPABASE_SERVICE_KEY || 'sb_secret_CDAM3cyG1RBEmjvSIaHOPA_If4LP8u3';
+const SUPABASE_KEY = process.env.SUPABASE_SERVICE_KEY || '';
 
 // 시설명 맵 (정적 JSON에서)
 const facilityNameMap = new Map(
