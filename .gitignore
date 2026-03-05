@@ -78,3 +78,4 @@ data/구글 api/
 # Sensitive API Keys (NEVER commit these!)
 google-vision-key.json
 credentials*.json
+scripts/
