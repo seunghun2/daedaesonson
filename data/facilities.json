@@ -1132,7 +1132,7 @@
     "fax": "",
     "websiteUrl": "https://www.nakwonpark.co.kr/",
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0001/photo_1.jpg",
-    "representativePrice": 3000000
+    "representativePrice": 15000000
   },
   {
     "id": "park-0002",
@@ -2166,8 +2166,9 @@
             {
               "name": "[올인원 패키지란?]",
               "feeType": "OTHER",
-              "grade": "토지 사용료 + 관리비 5년 선납 + 특수작업비 + 석물비/설치비가 모두 포함된 원스톱 분양가로, 별도의 추가 비용이 발생하지 않습니다.",
-              "isRepresentative": false
+              "grade": "5년",
+              "isRepresentative": false,
+              "note": ""
             }
           ]
         },
@@ -2226,8 +2227,9 @@
             {
               "name": "[올인원 패키지란?]",
               "feeType": "OTHER",
-              "grade": "토지 사용료 + 관리비 5년 선납 + 특수작업비 + 석물비/설치비가 모두 포함된 원스톱 분양가로, 별도의 추가 비용이 발생하지 않습니다.",
-              "isRepresentative": false
+              "grade": "5년",
+              "isRepresentative": false,
+              "note": ""
             }
           ]
         },
@@ -2310,8 +2312,9 @@
             {
               "name": "[올인원 패키지란?]",
               "feeType": "OTHER",
-              "grade": "토지 사용료 + 관리비 5년 선납 + 특수작업비 + 석물비/설치비가 모두 포함된 원스톱 분양가로, 별도의 추가 비용이 발생하지 않습니다.",
-              "isRepresentative": false
+              "grade": "5년",
+              "isRepresentative": false,
+              "note": ""
             }
           ]
         }
@@ -3242,14 +3245,16 @@
             {
               "name": "[일반실 안내]",
               "feeType": "OTHER",
-              "grade": "가장 표준적이고 아늑하게 구성된 합리적인 가격의 기본 봉안 공간입니다.",
-              "isRepresentative": false
+              "grade": "",
+              "isRepresentative": false,
+              "note": "가장 표준적이고 아늑하게 구성된 합리적인 가격의 기본 봉안 공간입니다."
             },
             {
               "name": "[VIP실 안내]",
               "feeType": "OTHER",
-              "grade": "고급스러운 자재와 넓은 공간이 함께 제공되는 프리미엄 안치 공간입니다.",
-              "isRepresentative": false
+              "grade": "",
+              "isRepresentative": false,
+              "note": "고급스러운 자재와 넓은 공간이 함께 제공되는 프리미엄 안치 공간입니다."
             },
             {
               "name": "연 관리비 (개인단)",
@@ -4746,7 +4751,7 @@
     "websiteUrl": "https://www.shinbulsanpark.co.kr/",
     "viewCount": 246,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/uploads/1766928213348_bvim5.jpg",
-    "representativePrice": 3500000,
+    "representativePrice": 2000000,
     "standardizedPrices": [
       {
         "serviceType": "BONGSAN",
@@ -7331,7 +7336,7 @@
     "websiteUrl": "https://dmonster1355.cafe24.com/",
     "viewCount": 279,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/uploads/1766928974732_j2iw9.jpg",
-    "representativePrice": 1200000
+    "representativePrice": 980000
   },
   {
     "id": "park-0009",
@@ -8080,7 +8085,7 @@
     "fax": "",
     "websiteUrl": "",
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0009/photo_1.PNG",
-    "representativePrice": 1500000
+    "representativePrice": 430000
   },
   {
     "id": "park-0010",
@@ -9416,7 +9421,7 @@
     "websiteUrl": "http://www.hwasanpark.co.kr/",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0012/photo_1.jpg",
-    "representativePrice": 5270000,
+    "representativePrice": 2630000,
     "standardizedPrices": [
       {
         "serviceType": "BURIAL",
@@ -10015,7 +10020,7 @@
     "fax": "",
     "websiteUrl": "http://www.scpark.co.kr/",
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0013/photo_1.jpg",
-    "representativePrice": 21250000
+    "representativePrice": 3000000
   },
   {
     "id": "park-0014",
@@ -11744,7 +11749,7 @@
               "price": 950000,
               "feeType": "USAGE",
               "grade": "1평기준",
-              "note": "매장묘 : 화장하지 않은 시신을 관째로 모시는 전통적인 묘지 방식입니다. \\n✅ [포함 내역: 묘지 사용료 + 묘지조성 및 석물비용 + 최초 5년 관리비]",
+              "note": "매장묘 : 화장하지 않은 시신을 관째로 모시는 전통적인 묘지 방식입니다. / 포함: 묘지 사용료 + 묘지조성 및 석물비용 + 최초 5년 관리비",
               "isRepresentative": true,
               "groupType": "매장묘",
               "duration": null,
@@ -11756,7 +11761,7 @@
               "price": 13000,
               "feeType": "MAINTENANCE",
               "grade": "1평기준",
-              "note": "✅ [포함 내역: 묘지 사용료 + 묘지조성 및 석물비용 + 최초 5년 관리비]",
+              "note": "✅ [포함 내역: 묘지 사용료 + 묘지조성 및 석물비용 + 최초 5년 관리비] / 포함: 묘지 사용료 + 묘지조성 및 석물비용 + 최초 5년 관리비",
               "isRepresentative": false,
               "groupType": "매장묘",
               "duration": null,
@@ -11775,7 +11780,7 @@
               "price": 484000,
               "feeType": "USAGE",
               "grade": "2.2자",
-              "note": "글씨가 뚜렷하게 보이며 고급스러운 검은색이 특징인 비석입니다. \\n✅ [포함 내역: 자재 및 설치비용]",
+              "note": "포함: 자재 및 설치비용",
               "isRepresentative": false,
               "groupType": "비석 - 오석 (검은색 화강암)",
               "duration": null,
@@ -11787,7 +11792,7 @@
               "price": 584000,
               "feeType": "USAGE",
               "grade": "2.5",
-              "note": "밝은 회색 등 자연스러운 색감을 띠는 돌망치 비석 재질입니다. \\n✅ [포함 내역: 자재 및 설치비용]",
+              "note": "포함: 자재 및 설치비용",
               "isRepresentative": false,
               "groupType": "비석 - 애석 (회색/컬러화강암)",
               "duration": null,
@@ -11799,7 +11804,7 @@
               "price": 726000,
               "feeType": "USAGE",
               "grade": "2.7",
-              "note": "밝은 회색 등 자연스러운 색감을 띠는 돌망치 비석 재질입니다. \\n✅ [포함 내역: 자재 및 설치비용]",
+              "note": "포함: 자재 및 설치비용",
               "isRepresentative": false,
               "groupType": "비석 - 애석 (회색/컬러화강암)",
               "duration": null,
@@ -11811,7 +11816,7 @@
               "price": 858000,
               "feeType": "USAGE",
               "grade": "3.0",
-              "note": "밝은 회색 등 자연스러운 색감을 띠는 돌망치 비석 재질입니다. \\n✅ [포함 내역: 자재 및 설치비용]",
+              "note": "포함: 자재 및 설치비용",
               "isRepresentative": false,
               "groupType": "비석 - 애석 (회색/컬러화강암)",
               "duration": null,
@@ -11823,7 +11828,7 @@
               "price": 1089000,
               "feeType": "USAGE",
               "grade": "3.3",
-              "note": "밝은 회색 등 자연스러운 색감을 띠는 돌망치 비석 재질입니다. \\n✅ [포함 내역: 자재 및 설치비용]",
+              "note": "포함: 자재 및 설치비용",
               "isRepresentative": false,
               "groupType": "비석 - 애석 (회색/컬러화강암)",
               "duration": null,
@@ -11835,7 +11840,7 @@
               "price": 484000,
               "feeType": "USAGE",
               "grade": "2.2",
-              "note": "글씨가 뚜렷하게 보이며 고급스러운 검은색이 특징인 비석입니다. \\n✅ [포함 내역: 자재 및 설치비용]",
+              "note": "포함: 자재 및 설치비용",
               "isRepresentative": false,
               "groupType": "비석 - 오석 (검은색 화강암)",
               "duration": null,
@@ -11847,7 +11852,7 @@
               "price": 363000,
               "feeType": "USAGE",
               "grade": "2.2",
-              "note": "밝은 회색 등 자연스러운 색감을 띠는 돌망치 비석 재질입니다. \\n✅ [포함 내역: 자재 및 설치비용]",
+              "note": "포함: 자재 및 설치비용",
               "isRepresentative": false,
               "groupType": "비석 - 애석 (회색/컬러화강암)",
               "duration": null,
@@ -11859,7 +11864,7 @@
               "price": 605000,
               "feeType": "USAGE",
               "grade": "2.5",
-              "note": "글씨가 뚜렷하게 보이며 고급스러운 검은색이 특징인 비석입니다. \\n✅ [포함 내역: 자재 및 설치비용]",
+              "note": "포함: 자재 및 설치비용",
               "isRepresentative": false,
               "groupType": "비석 - 오석 (검은색 화강암)",
               "duration": null,
@@ -11871,7 +11876,7 @@
               "price": 726000,
               "feeType": "USAGE",
               "grade": "2.7",
-              "note": "글씨가 뚜렷하게 보이며 고급스러운 검은색이 특징인 비석입니다. \\n✅ [포함 내역: 자재 및 설치비용]",
+              "note": "포함: 자재 및 설치비용",
               "isRepresentative": false,
               "groupType": "비석 - 오석 (검은색 화강암)",
               "duration": null,
@@ -11883,7 +11888,7 @@
               "price": 847000,
               "feeType": "USAGE",
               "grade": "3.0",
-              "note": "글씨가 뚜렷하게 보이며 고급스러운 검은색이 특징인 비석입니다. \\n✅ [포함 내역: 자재 및 설치비용]",
+              "note": "포함: 자재 및 설치비용",
               "isRepresentative": false,
               "groupType": "비석 - 오석 (검은색 화강암)",
               "duration": null,
@@ -11895,7 +11900,7 @@
               "price": 990000,
               "feeType": "USAGE",
               "grade": "3.5",
-              "note": "글씨가 뚜렷하게 보이며 고급스러운 검은색이 특징인 비석입니다. \\n✅ [포함 내역: 자재 및 설치비용]",
+              "note": "포함: 자재 및 설치비용",
               "isRepresentative": false,
               "groupType": "비석 - 오석 (검은색 화강암)",
               "duration": null,
@@ -11907,7 +11912,7 @@
               "price": 968000,
               "feeType": "USAGE",
               "grade": "2.5",
-              "note": "글씨가 뚜렷하게 보이며 고급스러운 검은색이 특징인 비석입니다. \\n✅ [포함 내역: 자재 및 설치비용]",
+              "note": "포함: 자재 및 설치비용",
               "isRepresentative": false,
               "groupType": "비석 - 오석 (검은색 화강암)",
               "duration": null,
@@ -11919,7 +11924,7 @@
               "price": 1210000,
               "feeType": "USAGE",
               "grade": "3.0",
-              "note": "글씨가 뚜렷하게 보이며 고급스러운 검은색이 특징인 비석입니다. \\n✅ [포함 내역: 자재 및 설치비용]",
+              "note": "포함: 자재 및 설치비용",
               "isRepresentative": false,
               "groupType": "비석 - 오석 (검은색 화강암)",
               "duration": null,
@@ -11931,7 +11936,7 @@
               "price": 48000,
               "feeType": "USAGE",
               "grade": "일반",
-              "note": "제사를 지낼 때 향을 피우거나 헌화용 꽃을 꽂아두기 위해 제단에 설치하는 석물입니다. \\n✅ [포함 내역: 자재 및 설치비용]",
+              "note": "포함: 자재 및 설치비용",
               "isRepresentative": false,
               "groupType": "제례용품 (향로/화병)",
               "duration": null,
@@ -11943,7 +11948,7 @@
               "price": 96000,
               "feeType": "USAGE",
               "grade": "3단",
-              "note": "제사를 지낼 때 향을 피우거나 헌화용 꽃을 꽂아두기 위해 제단에 설치하는 석물입니다. \\n✅ [포함 내역: 자재 및 설치비용]",
+              "note": "포함: 자재 및 설치비용",
               "isRepresentative": false,
               "groupType": "제례용품 (향로/화병)",
               "duration": null,
@@ -11955,7 +11960,7 @@
               "price": 110000,
               "feeType": "USAGE",
               "grade": "소",
-              "note": "제사를 지낼 때 향을 피우거나 헌화용 꽃을 꽂아두기 위해 제단에 설치하는 석물입니다. \\n✅ [포함 내역: 자재 및 설치비용]",
+              "note": "포함: 자재 및 설치비용",
               "isRepresentative": false,
               "groupType": "제례용품 (향로/화병)",
               "duration": null,
@@ -11967,7 +11972,7 @@
               "price": 198000,
               "feeType": "USAGE",
               "grade": "대",
-              "note": "제사를 지낼 때 향을 피우거나 헌화용 꽃을 꽂아두기 위해 제단에 설치하는 석물입니다. \\n✅ [포함 내역: 자재 및 설치비용]",
+              "note": "포함: 자재 및 설치비용",
               "isRepresentative": false,
               "groupType": "제례용품 (향로/화병)",
               "duration": null,
@@ -11979,7 +11984,7 @@
               "price": 1452000,
               "feeType": "USAGE",
               "grade": "C",
-              "note": "봉분을 높이 쌓지 않고, 기독교 및 서양식 묘지처럼 낮고 평평하게 대리석을 까는 세련된 디자인입니다. \\n✅ [포함 내역: 자재 및 시공비용]",
+              "note": "포함: 자재 및 시공비용",
               "isRepresentative": false,
               "groupType": "묘테 (서구식 평장형 디자인)",
               "duration": null,
@@ -11991,7 +11996,7 @@
               "price": 1210000,
               "feeType": "USAGE",
               "grade": "E",
-              "note": "봉분을 높이 쌓지 않고, 기독교 및 서양식 묘지처럼 낮고 평평하게 대리석을 까는 세련된 디자인입니다. \\n✅ [포함 내역: 자재 및 시공비용]",
+              "note": "포함: 자재 및 시공비용",
               "isRepresentative": false,
               "groupType": "묘테 (서구식 평장형 디자인)",
               "duration": null,
@@ -12003,7 +12008,7 @@
               "price": 2530000,
               "feeType": "USAGE",
               "grade": "A",
-              "note": "봉분을 높이 쌓지 않고, 기독교 및 서양식 묘지처럼 낮고 평평하게 대리석을 까는 세련된 디자인입니다. \\n✅ [포함 내역: 자재 및 시공비용]",
+              "note": "포함: 자재 및 시공비용",
               "isRepresentative": false,
               "groupType": "묘테 (서구식 평장형 디자인)",
               "duration": null,
@@ -12015,7 +12020,7 @@
               "price": 2500000,
               "feeType": "USAGE",
               "grade": "A 27자",
-              "note": "동그랗게 쌓은 흙(봉분)이 무너지지 않고 깔끔하게 유지되도록 테두리를 둘러싸는 돌(묘테)입니다. \\n✅ [포함 내역: 자재 및 시공비용]",
+              "note": "포함: 자재 및 시공비용",
               "isRepresentative": false,
               "groupType": "묘테 (원형 둘레석)",
               "duration": null,
@@ -12027,7 +12032,7 @@
               "price": 1694000,
               "feeType": "USAGE",
               "grade": "A 25자",
-              "note": "동그랗게 쌓은 흙(봉분)이 무너지지 않고 깔끔하게 유지되도록 테두리를 둘러싸는 돌(묘테)입니다. \\n✅ [포함 내역: 자재 및 시공비용]",
+              "note": "포함: 자재 및 시공비용",
               "isRepresentative": false,
               "groupType": "묘테 (원형 둘레석)",
               "duration": null,
@@ -12039,7 +12044,7 @@
               "price": 1452000,
               "feeType": "USAGE",
               "grade": "A24자",
-              "note": "동그랗게 쌓은 흙(봉분)이 무너지지 않고 깔끔하게 유지되도록 테두리를 둘러싸는 돌(묘테)입니다. \\n✅ [포함 내역: 자재 및 시공비용]",
+              "note": "포함: 자재 및 시공비용",
               "isRepresentative": false,
               "groupType": "묘테 (원형 둘레석)",
               "duration": null,
@@ -12148,7 +12153,7 @@
               "price": 9900000,
               "feeType": "USAGE",
               "grade": "1.5평",
-              "note": "봉안묘 : 화장한 유골함을 야외 돌무덤(석실) 안에 모시는 방식입니다. / 1.5평 공간에 부부 두 분을 모실 수 있는 특가 패키지입니다. \n✅ [포함 내역: 묘지 사용료 + 묘테/비석 등 석물 설치비용 + 초기 5년치 관리비]",
+              "note": "1.5평 공간에 부부 두 분을 모실 수 있는 특가 패키지입니다. ✅ [포함 내역: 묘지 사용료 + 묘테/비석 등 석물 설치비용 + 초기 5년치 관리비] / 포함: 묘지 사용료 + 묘테/비석 등 석물 설치비용 + 초기 5년치 관리비",
               "isRepresentative": true,
               "groupType": "부부형/소형"
             },
@@ -12157,7 +12162,7 @@
               "price": 10900000,
               "feeType": "USAGE",
               "grade": "1.5평",
-              "note": "1.5평 공간에 부부 두 분을 모시는 상품입니다. 밝은 톤의 고급 황등석(화강암) 석물이 제공됩니다. \n✅ [포함 내역: 묘지 사용료 + 황등석 석물 설치비용 + 초기 5년치 관리비]",
+              "note": "1.5평 공간에 밝은 톤의 고급 황등석(화강암) 석물이 제공됩니다. ✅ [포함 내역: 묘지 사용료 + 황등석 석물 설치비용 + 초기 5년치 관리비] / 포함: 묘지 사용료 + 황등석 석물 설치비용 + 초기 5년치 관리비",
               "isRepresentative": false,
               "groupType": "부부형/소형"
             },
@@ -12166,7 +12171,7 @@
               "price": 11900000,
               "feeType": "USAGE",
               "grade": "1.5평",
-              "note": "1.5평 공간에 부부 두 분을 모시는 상품입니다. 글씨가 선명한 검은빛의 최고급 오석 비석이 제공됩니다. \n✅ [포함 내역: 묘지 사용료 + 오석 석물 설치비용 + 초기 5년치 관리비]",
+              "note": "1.5평 공간에 글씨가 선명한 검은빛의 최고급 오석 비석이 제공됩니다. ✅ [포함 내역: 묘지 사용료 + 오석 석물 설치비용 + 초기 5년치 관리비] / 포함: 묘지 사용료 + 오석 석물 설치비용 + 초기 5년치 관리비",
               "isRepresentative": false,
               "groupType": "부부형/소형"
             },
@@ -12175,7 +12180,7 @@
               "price": 25600000,
               "feeType": "USAGE",
               "grade": "5평",
-              "note": "넓은 5평 공간에 한 가족 최대 8분까지 모실 수 있는 봉안묘입니다. \n✅ [포함 내역: 묘지 사용료 + 대형 석물 설치비용 + 초기 5년치 관리비]",
+              "note": "넓은 5평 공간에 한 가족 최대 8분까지 모실 수 있는 봉안묘입니다. ✅ [포함 내역: 묘지 사용료 + 대형 석물 설치비용 + 초기 5년치 관리비] / 포함: 묘지 사용료 + 대형 석물 설치비용 + 초기 5년치 관리비",
               "isRepresentative": false,
               "groupType": "가족형"
             },
@@ -12184,7 +12189,7 @@
               "price": 21800000,
               "feeType": "USAGE",
               "grade": "4평",
-              "note": "4평 공간에 최대 16분까지 넉넉하게 모실 수 있는 대가족용 봉안묘입니다. \n✅ [포함 내역: 묘지 사용료 + 대형 석물 설치비용 + 초기 5년치 관리비]",
+              "note": "4평 공간에 최대 16분까지 넉넉하게 모실 수 있는 대가족용 봉안묘입니다. ✅ [포함 내역: 묘지 사용료 + 대형 석물 설치비용 + 초기 5년치 관리비] / 포함: 묘지 사용료 + 대형 석물 설치비용 + 초기 5년치 관리비",
               "isRepresentative": false,
               "groupType": "가족형"
             },
@@ -12193,7 +12198,7 @@
               "price": 25600000,
               "feeType": "USAGE",
               "grade": "5평",
-              "note": "5평 공간에 문중 단위 최대 24분까지 모실 수 있는 특대형 봉안묘입니다. \n✅ [포함 내역: 묘지 사용료 + 특대형 석물 설치비용 + 초기 5년치 관리비]",
+              "note": "5평 공간에 문중 단위 최대 24분까지 모실 수 있는 특대형 봉안묘입니다. ✅ [포함 내역: 묘지 사용료 + 특대형 석물 설치비용 + 초기 5년치 관리비] / 포함: 묘지 사용료 + 특대형 석물 설치비용 + 초기 5년치 관리비",
               "isRepresentative": false,
               "groupType": "가족형"
             }
@@ -12209,7 +12214,7 @@
               "price": 17600000,
               "feeType": "USAGE",
               "grade": "5평",
-              "note": "매장묘 : 화장하지 않은 시신을 관째로 모시는 전통적인 묘지 방식입니다. / 5평 공간에 한 분을 모십니다. \n✅ [포함 내역: 토지 사용료 + 묘테, 상석 등 석물 비용 + 초기 5년치 관리비]",
+              "note": "5평 공간에 한 분을 모십니다. ✅ [포함 내역: 토지 사용료 + 묘테, 상석 등 석물 비용 + 초기 5년치 관리비] / 포함: 토지 사용료 + 묘테, 상석 등 석물 비용 + 초기 5년치 관리비",
               "isRepresentative": false,
               "groupType": "매장묘"
             },
@@ -12218,7 +12223,7 @@
               "price": 29600000,
               "feeType": "USAGE",
               "grade": "10평",
-              "note": "넓은 10평 공간에 두 분의 봉분(무덤)을 각각 모시는 쌍분 형태입니다. \n✅ [포함 내역: 토지 사용료 + 묘테, 상석 등 부부 석물 비용 + 초기 5년치 관리비]",
+              "note": "넓은 10평 공간에 두 분의 봉분(무덤)을 각각 모시는 쌍분 형태입니다. ✅ [포함 내역: 토지 사용료 + 묘테, 상석 등 부부 석물 비용 + 초기 5년치 관리비] / 포함: 토지 사용료 + 묘테, 상석 등 부부 석물 비용 + 초기 5년치 관리비",
               "isRepresentative": false,
               "groupType": "매장묘"
             }
@@ -12233,7 +12238,7 @@
               "name": "표준 평장묘",
               "price": 5100000,
               "feeType": "USAGE",
-              "grade": "평장묘 : 화장한 유골을 땅에 묻고 그 위에 작고 얕은 비석만 올리는 자연장 방식입니다. / 기본형 상품입니다. \n✅ [포함 내역: 토지 사용료 + 명패(비석) 등 석물 비용 + 초기 5년치 관리비]",
+              "grade": "5년",
               "note": "",
               "isRepresentative": true,
               "groupType": "평장묘"
@@ -12242,7 +12247,7 @@
               "name": "고급 평장묘",
               "price": 9200000,
               "feeType": "USAGE",
-              "grade": "표준형보다 명패나 대리석 묘테가 더 넓고 고급스럽게 꾸며진 프리미엄 구역입니다. \n✅ [포함 내역: 토지 사용료 + 고급 석물 비용 + 초기 5년치 관리비]",
+              "grade": "5년",
               "note": "",
               "isRepresentative": false,
               "groupType": "평장묘"
@@ -12251,7 +12256,7 @@
               "name": "정원형 평장묘",
               "price": 12900000,
               "feeType": "USAGE",
-              "grade": "넓은 정원(잔디밭) 형태로 넉넉하게 조성된 최고급 평장묘 구역입니다. \n✅ [포함 내역: 토지 사용료 + 정원형 고급 석물 비용 + 초기 5년치 관리비]",
+              "grade": "5년",
               "note": "",
               "isRepresentative": false,
               "groupType": "평장묘"
@@ -12267,8 +12272,8 @@
               "name": "개인형 봉안담 (사용료)",
               "price": 2300000,
               "feeType": "USAGE",
-              "grade": "봉안담 : 실내가 아닌 담벼락 형태의 벽체에 유골함을 모시는 야외 봉안당입니다. / 한 분을 모시는 공간의 최초 사용료입니다.",
-              "note": "",
+              "grade": "",
+              "note": "한 분을 모시는 공간의 최초 사용료입니다.",
               "isRepresentative": true,
               "groupType": "개인단"
             },
@@ -12287,8 +12292,8 @@
               "name": "부부형 봉안담 (사용료)",
               "price": 4500000,
               "feeType": "USAGE",
-              "grade": "가로로 이어진 넓은 칸에 부부 두 분을 모시는 공간의 최초 사용료입니다.",
-              "note": "",
+              "grade": "",
+              "note": "가로로 이어진 넓은 칸에 부부 두 분을 모시는 공간의 최초 사용료입니다.",
               "isRepresentative": true,
               "groupType": "부부단"
             },
@@ -12314,7 +12319,7 @@
               "name": "수목장 개인묘",
               "price": 3000000,
               "feeType": "USAGE",
-              "grade": "수목장 : 지정된 추모목(나무) 주변에 화장한 유골을 묻어 자연과 상생하는 장법입니다. / 한 분을 모시는 상품입니다. \n✅ [포함 내역: 토지 사용료 + 표지석 비용 + 초기 2년치 관리비]",
+              "grade": "2년",
               "note": "",
               "isRepresentative": true,
               "groupType": "개인/부부"
@@ -12323,7 +12328,7 @@
               "name": "수목장 부부묘",
               "price": 4400000,
               "feeType": "USAGE",
-              "grade": "한 그루의 묘목에 부부 두 분을 함께 모시는 패키지 상품입니다. \n✅ [포함 내역: 토지 사용료 + 부부용 표지석 비용 + 초기 2년치 관리비]",
+              "grade": "2년",
               "note": "",
               "isRepresentative": false,
               "groupType": "개인/부부"
@@ -12332,7 +12337,7 @@
               "name": "수목장 가족묘",
               "price": 10500000,
               "feeType": "USAGE",
-              "grade": "우리 가족만의 전용 나무(가족목)를 배정받아 여러 가족을 대대로 모실 수 있는 상품입니다. \n✅ [포함 내역: 토지 사용료 + 가족용 대형 표지석 비용 + 초기 2년치 관리비]",
+              "grade": "2년",
               "note": "",
               "isRepresentative": false,
               "groupType": "가족"
@@ -12358,7 +12363,7 @@
     "fax": "",
     "websiteUrl": "http://www.mrmpark.co.kr/",
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0020/photo_1.jpg",
-    "representativePrice": 9900000
+    "representativePrice": 2300000
   },
   {
     "id": "park-0021",
@@ -12419,8 +12424,8 @@
               "name": "사용료",
               "price": 640000,
               "feeType": "USAGE",
-              "grade": "매장묘 : 화장하지 않은 시신을 관째로 모시는 전통적인 묘지 방식입니다. / 기본 사용료 \\n✅ [포함 내역: 순수 묘지 공간 (토지) 사용 권한]",
-              "note": "",
+              "grade": "",
+              "note": "기본 사용료 / 포함: 순수 묘지 공간 (토지) 사용 권한",
               "isRepresentative": false,
               "groupType": "단장",
               "duration": null,
@@ -12479,8 +12484,8 @@
               "name": "사용료",
               "price": 960000,
               "feeType": "USAGE",
-              "grade": "매장묘 : 화장하지 않은 시신을 관째로 모시는 전통적인 묘지 방식입니다. / 기본 사용료 \\n✅ [포함 내역: 순수 묘지 공간 (토지) 사용 권한]",
-              "note": "",
+              "grade": "",
+              "note": "기본 사용료 / 포함: 순수 묘지 공간 (토지) 사용 권한",
               "isRepresentative": false,
               "groupType": "합장",
               "duration": null,
@@ -12546,8 +12551,8 @@
               "name": "사용료",
               "price": 600000,
               "feeType": "USAGE",
-              "grade": "봉안시설 사용료 \\n✅ [포함 내역: 봉안시설 안치 공간 사용 권한 (관리비 별도)]",
-              "note": "",
+              "grade": "",
+              "note": "봉안시설 사용료 / 포함: 봉안시설 안치 공간 사용 권한 (관리비 별도)",
               "isRepresentative": false,
               "groupType": "개인단",
               "duration": null,
@@ -12594,8 +12599,8 @@
               "name": "사용료",
               "price": 1200000,
               "feeType": "USAGE",
-              "grade": "봉안시설 사용료 \\n✅ [포함 내역: 봉안시설 안치 공간 사용 권한 (관리비 별도)]",
-              "note": "",
+              "grade": "",
+              "note": "봉안시설 사용료 / 포함: 봉안시설 안치 공간 사용 권한 (관리비 별도)",
               "isRepresentative": false,
               "groupType": "부부단",
               "duration": null,
@@ -12649,8 +12654,8 @@
               "name": "매장 작업비 (단장)",
               "price": 480000,
               "feeType": "USAGE",
-              "grade": "매장 작업비 : 시신을 매장할 때 발생하는 인건비 및 장비 사용료입니다. (단장 기준) \\n✅ [단장 묘역 매장 시 1회 부과]",
-              "note": "",
+              "grade": "",
+              "note": "매장 작업비 : 시신을 매장할 때 발생하는 인건비 및 장비 사용료입니다. (단장 기준) ✅ [단장 묘역 매장 시 1회 부과]",
               "isRepresentative": false,
               "groupType": "매장 작업비",
               "duration": null,
@@ -12661,8 +12666,8 @@
               "name": "매장 작업비 (합장)",
               "price": 580000,
               "feeType": "USAGE",
-              "grade": "매장 작업비 : 부부를 함께 모시는 합장 시 발생하는 인건비 및 장비 사용료입니다. \\n✅ [합장 묘역 매장 시 1회 부과]",
-              "note": "",
+              "grade": "",
+              "note": "매장 작업비 : 부부를 함께 모시는 합장 시 발생하는 인건비 및 장비 사용료입니다. ✅ [합장 묘역 매장 시 1회 부과]",
               "isRepresentative": false,
               "groupType": "매장 작업비",
               "duration": null,
@@ -12673,8 +12678,8 @@
               "name": "석물 설치비 (단장)",
               "price": 100000,
               "feeType": "USAGE",
-              "grade": "석물 설치비 : 상석, 향로 등 기본 석물을 묘역에 설치할 때 발생하는 인건비입니다. (단장) \\n✅ [설치 시 1회 부과]",
-              "note": "",
+              "grade": "",
+              "note": "석물 설치비 : 상석, 향로 등 기본 석물을 묘역에 설치할 때 발생하는 인건비입니다. (단장) ✅ [설치 시 1회 부과]",
               "isRepresentative": false,
               "groupType": "석물 설치 인건비",
               "duration": null,
@@ -12685,8 +12690,8 @@
               "name": "석물 설치비 (합장)",
               "price": 100000,
               "feeType": "USAGE",
-              "grade": "석물 설치비 : 상석, 향로 등 석물을 묘역에 설치할 때 발생하는 인건비입니다. (합장) \\n✅ [설치 시 1회 부과]",
-              "note": "",
+              "grade": "",
+              "note": "석물 설치비 : 상석, 향로 등 석물을 묘역에 설치할 때 발생하는 인건비입니다. (합장) ✅ [설치 시 1회 부과]",
               "isRepresentative": false,
               "groupType": "석물 설치 인건비",
               "duration": null,
@@ -12697,8 +12702,8 @@
               "name": "석물 자재비 (단장)",
               "price": 1129000,
               "feeType": "USAGE",
-              "grade": "석물 자재비 : 비석, 상석 등 묘를 꾸미는 데 필요한 돌로 만든 시설물 전체의 자재비용입니다. \\n✅ [단장 묘역 기준 기본 석물 일체]",
-              "note": "",
+              "grade": "",
+              "note": "석물 자재비 : 비석, 상석 등 묘를 꾸미는 데 필요한 돌로 만든 시설물 전체의 자재비용입니다. ✅ [단장 묘역 기준 기본 석물 일체]",
               "isRepresentative": false,
               "groupType": "석물 자재 (구매비용)",
               "duration": null,
@@ -12709,8 +12714,8 @@
               "name": "석물 자재비 (합장)",
               "price": 1366000,
               "feeType": "USAGE",
-              "grade": "석물 자재비 : 부부 묘역을 꾸미기 위한 비석, 상석 등 석물 전체 자재비용입니다. \\n✅ [합장 묘역 기준 기본 석물 일체]",
-              "note": "",
+              "grade": "",
+              "note": "석물 자재비 : 부부 묘역을 꾸미기 위한 비석, 상석 등 석물 전체 자재비용입니다. ✅ [합장 묘역 기준 기본 석물 일체]",
               "isRepresentative": false,
               "groupType": "석물 자재 (구매비용)",
               "duration": null,
@@ -12801,8 +12806,8 @@
               "name": "매장(단장)",
               "price": 8900000,
               "feeType": "USAGE",
-              "grade": "매장묘 : 화장하지 않은 시신을 관째로 모시는 전통적인 묘지 방식입니다. \\n✅ [포함 내역: 매장 토지 사용료]\\n🚨 [안내: 봉분 설치(조성) 비용 및 석물 비용은 별도 입니다.]",
-              "note": "",
+              "grade": "",
+              "note": "매장묘 : 화장하지 않은 시신을 관째로 모시는 전통적인 묘지 방식입니다. 🚨 [안내: 봉분 설치(조성) 비용 및 석물 비용은 별도 입니다.] / 포함: 매장 토지 사용료",
               "isRepresentative": true,
               "groupType": "단장묘",
               "duration": null,
@@ -12820,8 +12825,8 @@
               "name": "매장(합장)",
               "price": 17800000,
               "feeType": "USAGE",
-              "grade": "넓은 공간에 부부를 함께 모시는 합장 형태의 묘지입니다. \\n✅ [포함 내역: 매장 토지 사용료]\\n🚨 [안내: 봉분 설치(조성) 비용 및 석물 비용은 별도 입니다.]",
-              "note": "",
+              "grade": "",
+              "note": "넓은 공간에 부부를 함께 모시는 합장 형태의 묘지입니다. 🚨 [안내: 봉분 설치(조성) 비용 및 석물 비용은 별도 입니다.] / 포함: 매장 토지 사용료",
               "isRepresentative": true,
               "groupType": "합장묘",
               "duration": null,
@@ -12839,8 +12844,8 @@
               "name": "상석",
               "price": 560000,
               "feeType": "USAGE",
-              "grade": "고급단장, 중국 / ✅ [별도의 부가 시설 비용입니다.]",
-              "note": "",
+              "grade": "",
+              "note": "고급단장, 중국 / ✅ [별도의 부가 시설 비용입니다.]",
               "isRepresentative": false,
               "groupType": "상석",
               "duration": null,
@@ -12851,8 +12856,8 @@
               "name": "상석",
               "price": 560000,
               "feeType": "USAGE",
-              "grade": "고급합장, 중국 / ✅ [별도의 부가 시설 비용입니다.]",
-              "note": "",
+              "grade": "",
+              "note": "고급합장, 중국 / ✅ [별도의 부가 시설 비용입니다.]",
               "isRepresentative": false,
               "groupType": "상석",
               "duration": null,
@@ -12863,8 +12868,8 @@
               "name": "상석",
               "price": 100000,
               "feeType": "USAGE",
-              "grade": "기본단장, 중국 / ✅ [별도의 부가 시설 비용입니다.]",
-              "note": "",
+              "grade": "",
+              "note": "기본단장, 중국 / ✅ [별도의 부가 시설 비용입니다.]",
               "isRepresentative": false,
               "groupType": "상석",
               "duration": null,
@@ -12875,8 +12880,8 @@
               "name": "비석",
               "price": 560000,
               "feeType": "USAGE",
-              "grade": "고급단장, 중국 / ✅ [별도의 부가 시설 비용입니다.]",
-              "note": "",
+              "grade": "",
+              "note": "고급단장, 중국 / ✅ [별도의 부가 시설 비용입니다.]",
               "isRepresentative": false,
               "groupType": "비석",
               "duration": null,
@@ -12887,8 +12892,8 @@
               "name": "비석",
               "price": 560000,
               "feeType": "USAGE",
-              "grade": "고급합장, 중국 / ✅ [별도의 부가 시설 비용입니다.]",
-              "note": "",
+              "grade": "",
+              "note": "고급합장, 중국 / ✅ [별도의 부가 시설 비용입니다.]",
               "isRepresentative": false,
               "groupType": "비석",
               "duration": null,
@@ -12899,8 +12904,8 @@
               "name": "비석",
               "price": 290000,
               "feeType": "USAGE",
-              "grade": "기본단장, 중국 / ✅ [별도의 부가 시설 비용입니다.]",
-              "note": "",
+              "grade": "",
+              "note": "기본단장, 중국 / ✅ [별도의 부가 시설 비용입니다.]",
               "isRepresentative": false,
               "groupType": "비석",
               "duration": null,
@@ -12911,8 +12916,8 @@
               "name": "공원정식(30명이상)",
               "price": 9000,
               "feeType": "USAGE",
-              "grade": "밥, 국, 제육볶음, 밑반찬 / ✅ [별도의 부가 시설 비용입니다.]",
-              "note": "",
+              "grade": "",
+              "note": "밥, 국, 제육볶음, 밑반찬 / ✅ [별도의 부가 시설 비용입니다.]",
               "isRepresentative": false,
               "groupType": "부대시설/식사",
               "duration": null,
@@ -12923,8 +12928,8 @@
               "name": "공원정식(30명미만)",
               "price": 8000,
               "feeType": "USAGE",
-              "grade": "밥, 국, 밑반찬 / ✅ [별도의 부가 시설 비용입니다.]",
-              "note": "",
+              "grade": "",
+              "note": "밥, 국, 밑반찬 / ✅ [별도의 부가 시설 비용입니다.]",
               "isRepresentative": false,
               "groupType": "부대시설/식사",
               "duration": null,
@@ -12935,8 +12940,8 @@
               "name": "묘테석",
               "price": 1850000,
               "feeType": "USAGE",
-              "grade": "고급단장, 중국 / ✅ [별도의 부가 시설 비용입니다.]",
-              "note": "",
+              "grade": "",
+              "note": "고급단장, 중국 / ✅ [별도의 부가 시설 비용입니다.]",
               "isRepresentative": false,
               "groupType": "묘테석",
               "duration": null,
@@ -12947,8 +12952,8 @@
               "name": "비석받침",
               "price": 13000,
               "feeType": "USAGE",
-              "grade": "고급단장, 중국 / ✅ [별도의 부가 시설 비용입니다.]",
-              "note": "",
+              "grade": "",
+              "note": "고급단장, 중국 / ✅ [별도의 부가 시설 비용입니다.]",
               "isRepresentative": false,
               "groupType": "비석받침",
               "duration": null,
@@ -12959,8 +12964,8 @@
               "name": "향로",
               "price": 100000,
               "feeType": "USAGE",
-              "grade": "고급단장, 중국 / ✅ [별도의 부가 시설 비용입니다.]",
-              "note": "",
+              "grade": "",
+              "note": "고급단장, 중국 / ✅ [별도의 부가 시설 비용입니다.]",
               "isRepresentative": false,
               "groupType": "향로",
               "duration": null,
@@ -12971,8 +12976,8 @@
               "name": "화병",
               "price": 100000,
               "feeType": "USAGE",
-              "grade": "고급단장, 중국 / ✅ [별도의 부가 시설 비용입니다.]",
-              "note": "",
+              "grade": "",
+              "note": "고급단장, 중국 / ✅ [별도의 부가 시설 비용입니다.]",
               "isRepresentative": false,
               "groupType": "화병",
               "duration": null,
@@ -12983,8 +12988,8 @@
               "name": "묘테석",
               "price": 2100000,
               "feeType": "USAGE",
-              "grade": "고급합장, 중국 / ✅ [별도의 부가 시설 비용입니다.]",
-              "note": "",
+              "grade": "",
+              "note": "고급합장, 중국 / ✅ [별도의 부가 시설 비용입니다.]",
               "isRepresentative": false,
               "groupType": "묘테석",
               "duration": null,
@@ -12995,8 +13000,8 @@
               "name": "비석받침",
               "price": 13000,
               "feeType": "USAGE",
-              "grade": "고급합장, 중국 / ✅ [별도의 부가 시설 비용입니다.]",
-              "note": "",
+              "grade": "",
+              "note": "고급합장, 중국 / ✅ [별도의 부가 시설 비용입니다.]",
               "isRepresentative": false,
               "groupType": "비석받침",
               "duration": null,
@@ -13007,8 +13012,8 @@
               "name": "향로",
               "price": 100000,
               "feeType": "USAGE",
-              "grade": "고급합장, 중국 / ✅ [별도의 부가 시설 비용입니다.]",
-              "note": "",
+              "grade": "",
+              "note": "고급합장, 중국 / ✅ [별도의 부가 시설 비용입니다.]",
               "isRepresentative": false,
               "groupType": "향로",
               "duration": null,
@@ -13019,8 +13024,8 @@
               "name": "화병",
               "price": 100000,
               "feeType": "USAGE",
-              "grade": "고급합장, 중국 / ✅ [별도의 부가 시설 비용입니다.]",
-              "note": "",
+              "grade": "",
+              "note": "고급합장, 중국 / ✅ [별도의 부가 시설 비용입니다.]",
               "isRepresentative": false,
               "groupType": "화병",
               "duration": null,
@@ -13031,8 +13036,8 @@
               "name": "묘테석",
               "price": 401000,
               "feeType": "USAGE",
-              "grade": "기본단장, 중국 / ✅ [별도의 부가 시설 비용입니다.]",
-              "note": "",
+              "grade": "",
+              "note": "기본단장, 중국 / ✅ [별도의 부가 시설 비용입니다.]",
               "isRepresentative": false,
               "groupType": "묘테석",
               "duration": null,
@@ -13043,8 +13048,8 @@
               "name": "향로",
               "price": 100000,
               "feeType": "USAGE",
-              "grade": "기본단장, 중국 / ✅ [별도의 부가 시설 비용입니다.]",
-              "note": "",
+              "grade": "",
+              "note": "기본단장, 중국 / ✅ [별도의 부가 시설 비용입니다.]",
               "isRepresentative": false,
               "groupType": "향로",
               "duration": null,
@@ -13055,8 +13060,8 @@
               "name": "화병",
               "price": 100000,
               "feeType": "USAGE",
-              "grade": "기본단장, 중국 / ✅ [별도의 부가 시설 비용입니다.]",
-              "note": "",
+              "grade": "",
+              "note": "기본단장, 중국 / ✅ [별도의 부가 시설 비용입니다.]",
               "isRepresentative": false,
               "groupType": "화병",
               "duration": null,
@@ -13151,8 +13156,8 @@
               "name": "토지사용료",
               "price": 6500000,
               "feeType": "USAGE",
-              "grade": "1기당 / 매장묘 : 화장하지 않은 시신을 관째로 모시는 전통적인 묘지 방식입니다.\\n✅ [포함 내역: 순수 매장 공간 사용 권한 (조성비, 안장비 별도)]",
-              "note": "",
+              "grade": "",
+              "note": "1기당 / 매장묘 : 화장하지 않은 시신을 관째로 모시는 전통적인 묘지 방식입니다. / 포함: 순수 매장 공간 사용 권한 (조성비, 안장비 별도)",
               "isRepresentative": true,
               "groupType": "매장묘",
               "duration": null,
@@ -13163,7 +13168,7 @@
               "name": "관리비",
               "price": 130000,
               "feeType": "MAINTENANCE",
-              "grade": "묘역을 깔끔하게 유지/관리하기 위해 매년 발생하는 필수 운영비입니다. (1년)",
+              "grade": "1년",
               "note": "",
               "isRepresentative": false,
               "groupType": "매장묘",
@@ -13175,8 +13180,8 @@
               "name": "안장비",
               "price": 1100000,
               "feeType": "USAGE",
-              "grade": "1기당 / 묘를 꾸미고 시신이나 유골을 온전하게 모시는 데 들어가는 실제 작업/설치 비용입니다.",
-              "note": "",
+              "grade": "",
+              "note": "1기당 / 묘를 꾸미고 시신이나 유골을 온전하게 모시는 데 들어가는 실제 작업/설치 비용입니다.",
               "isRepresentative": false,
               "groupType": "매장묘",
               "duration": null,
@@ -13187,8 +13192,8 @@
               "name": "조성비",
               "price": 3000000,
               "feeType": "USAGE",
-              "grade": "1기당 / 묘를 꾸미고 시신이나 유골을 온전하게 모시는 데 들어가는 실제 작업/설치 비용입니다.",
-              "note": "",
+              "grade": "",
+              "note": "1기당 / 묘를 꾸미고 시신이나 유골을 온전하게 모시는 데 들어가는 실제 작업/설치 비용입니다.",
               "isRepresentative": false,
               "groupType": "매장묘",
               "duration": null,
@@ -13206,8 +13211,8 @@
               "name": "토지사용료",
               "price": 1270000,
               "feeType": "USAGE",
-              "grade": "1기당 / 평장묘 : 화장한 유골을 땅에 묻고 작고 얕은 비석만 올리는 깔끔한 방식입니다.\\n✅ [포함 내역: 평장 잔디역 사용 권한 (조성비, 안장비 별도)]",
-              "note": "",
+              "grade": "",
+              "note": "1기당 / 평장묘 : 화장한 유골을 땅에 묻고 작고 얕은 비석만 올리는 깔끔한 방식입니다. / 포함: 평장 잔디역 사용 권한 (조성비, 안장비 별도)",
               "isRepresentative": true,
               "groupType": "평장묘",
               "duration": null,
@@ -13218,7 +13223,7 @@
               "name": "관리비",
               "price": 43000,
               "feeType": "MAINTENANCE",
-              "grade": "묘역을 깔끔하게 유지/관리하기 위해 매년 발생하는 필수 운영비입니다. (1년)",
+              "grade": "1년",
               "note": "",
               "isRepresentative": false,
               "groupType": "평장묘",
@@ -13230,8 +13235,8 @@
               "name": "안장비",
               "price": 500000,
               "feeType": "USAGE",
-              "grade": "1기당 / 묘를 꾸미고 시신이나 유골을 온전하게 모시는 데 들어가는 실제 작업/설치 비용입니다.",
-              "note": "",
+              "grade": "",
+              "note": "1기당 / 묘를 꾸미고 시신이나 유골을 온전하게 모시는 데 들어가는 실제 작업/설치 비용입니다.",
               "isRepresentative": false,
               "groupType": "평장묘",
               "duration": null,
@@ -13242,8 +13247,8 @@
               "name": "조성비",
               "price": 1600000,
               "feeType": "USAGE",
-              "grade": "1기당 / 묘를 꾸미고 시신이나 유골을 온전하게 모시는 데 들어가는 실제 작업/설치 비용입니다.",
-              "note": "",
+              "grade": "",
+              "note": "1기당 / 묘를 꾸미고 시신이나 유골을 온전하게 모시는 데 들어가는 실제 작업/설치 비용입니다.",
               "isRepresentative": false,
               "groupType": "평장묘",
               "duration": null,
@@ -13261,8 +13266,8 @@
               "name": "토지사용료",
               "price": 3800000,
               "feeType": "USAGE",
-              "grade": "1기당 / 수목장 : 지정된 추모목 주변에 유골을 묻어 자연과 함께하는 친환경 장법입니다.\\n✅ [포함 내역: 주변 묘역 사용 권한 (수목조성비, 안장비 별도)]",
-              "note": "",
+              "grade": "",
+              "note": "1기당 / 수목장 : 지정된 추모목 주변에 유골을 묻어 자연과 함께하는 친환경 장법입니다. / 포함: 주변 묘역 사용 권한 (수목조성비, 안장비 별도)",
               "isRepresentative": true,
               "groupType": "수목장",
               "duration": null,
@@ -13273,7 +13278,7 @@
               "name": "관리비",
               "price": 100000,
               "feeType": "MAINTENANCE",
-              "grade": "묘역을 깔끔하게 유지/관리하기 위해 매년 발생하는 필수 운영비입니다. (1년)",
+              "grade": "1년",
               "note": "",
               "isRepresentative": false,
               "groupType": "수목장",
@@ -13285,8 +13290,8 @@
               "name": "안장비",
               "price": 500000,
               "feeType": "USAGE",
-              "grade": "1기당 / 묘를 꾸미고 시신이나 유골을 온전하게 모시는 데 들어가는 실제 작업/설치 비용입니다.",
-              "note": "",
+              "grade": "",
+              "note": "1기당 / 묘를 꾸미고 시신이나 유골을 온전하게 모시는 데 들어가는 실제 작업/설치 비용입니다.",
               "isRepresentative": false,
               "groupType": "수목장",
               "duration": null,
@@ -13297,8 +13302,8 @@
               "name": "조성비",
               "price": 1600000,
               "feeType": "USAGE",
-              "grade": "1기당 / 묘를 꾸미고 시신이나 유골을 온전하게 모시는 데 들어가는 실제 작업/설치 비용입니다.",
-              "note": "",
+              "grade": "",
+              "note": "1기당 / 묘를 꾸미고 시신이나 유골을 온전하게 모시는 데 들어가는 실제 작업/설치 비용입니다.",
               "isRepresentative": false,
               "groupType": "수목장",
               "duration": null,
@@ -13309,8 +13314,8 @@
               "name": "수목조성비",
               "price": 2600000,
               "feeType": "USAGE",
-              "grade": "1기당 / 묘를 꾸미고 시신이나 유골을 온전하게 모시는 데 들어가는 실제 작업/설치 비용입니다.",
-              "note": "",
+              "grade": "",
+              "note": "1기당 / 묘를 꾸미고 시신이나 유골을 온전하게 모시는 데 들어가는 실제 작업/설치 비용입니다.",
               "isRepresentative": false,
               "groupType": "수목장",
               "duration": null,
@@ -13328,8 +13333,8 @@
               "name": "오석",
               "price": 300000,
               "feeType": "USAGE",
-              "grade": "1개 / 필요 시 추가하실 수 있는 장례/제례 용품입니다.",
-              "note": "",
+              "grade": "",
+              "note": "1개 / 필요 시 추가하실 수 있는 장례/제례 용품입니다.",
               "isRepresentative": false,
               "groupType": "기타",
               "duration": null,
@@ -13340,8 +13345,8 @@
               "name": "식사비",
               "price": 12000,
               "feeType": "USAGE",
-              "grade": "1인 / 필요 시 추가하실 수 있는 장례/제례 용품입니다.",
-              "note": "",
+              "grade": "",
+              "note": "1인 / 필요 시 추가하실 수 있는 장례/제례 용품입니다.",
               "isRepresentative": false,
               "groupType": "기타",
               "duration": null,
@@ -13352,8 +13357,8 @@
               "name": "제사상",
               "price": 500000,
               "feeType": "USAGE",
-              "grade": "1상 / 필요 시 추가하실 수 있는 장례/제례 용품입니다.",
-              "note": "",
+              "grade": "",
+              "note": "1상 / 필요 시 추가하실 수 있는 장례/제례 용품입니다.",
               "isRepresentative": false,
               "groupType": "기타",
               "duration": null,
@@ -13364,8 +13369,8 @@
               "name": "산신제상",
               "price": 100000,
               "feeType": "USAGE",
-              "grade": "1상 / 필요 시 추가하실 수 있는 장례/제례 용품입니다.",
-              "note": "",
+              "grade": "",
+              "note": "1상 / 필요 시 추가하실 수 있는 장례/제례 용품입니다.",
               "isRepresentative": false,
               "groupType": "기타",
               "duration": null,
@@ -13376,8 +13381,8 @@
               "name": "각자비",
               "price": 300000,
               "feeType": "USAGE",
-              "grade": "1개당 / 필요 시 추가하실 수 있는 장례/제례 용품입니다.",
-              "note": "",
+              "grade": "",
+              "note": "1개당 / 필요 시 추가하실 수 있는 장례/제례 용품입니다.",
               "isRepresentative": false,
               "groupType": "기타",
               "duration": null,
@@ -13388,8 +13393,8 @@
               "name": "명패비",
               "price": 150000,
               "feeType": "USAGE",
-              "grade": "1개당 / 필요 시 추가하실 수 있는 장례/제례 용품입니다.",
-              "note": "",
+              "grade": "",
+              "note": "1개당 / 필요 시 추가하실 수 있는 장례/제례 용품입니다.",
               "isRepresentative": false,
               "groupType": "기타",
               "duration": null,
@@ -13400,8 +13405,8 @@
               "name": "봉분보수",
               "price": 500000,
               "feeType": "USAGE",
-              "grade": "봉분당 / 필요 시 추가하실 수 있는 장례/제례 용품입니다.",
-              "note": "",
+              "grade": "",
+              "note": "봉분당 / 필요 시 추가하실 수 있는 장례/제례 용품입니다.",
               "isRepresentative": false,
               "groupType": "기타",
               "duration": null,
@@ -13419,8 +13424,8 @@
               "name": "나무함",
               "price": 30000,
               "feeType": "USAGE",
-              "grade": "1개 / 필요 시 추가하실 수 있는 장례/제례 용품입니다.",
-              "note": "",
+              "grade": "",
+              "note": "1개 / 필요 시 추가하실 수 있는 장례/제례 용품입니다.",
               "isRepresentative": false,
               "groupType": "장사용품",
               "duration": null,
@@ -13431,8 +13436,8 @@
               "name": "조화",
               "price": 8000,
               "feeType": "USAGE",
-              "grade": "1개 / 필요 시 추가하실 수 있는 장례/제례 용품입니다.",
-              "note": "",
+              "grade": "",
+              "note": "1개 / 필요 시 추가하실 수 있는 장례/제례 용품입니다.",
               "isRepresentative": false,
               "groupType": "장사용품",
               "duration": null,
@@ -13460,7 +13465,7 @@
     "fax": "",
     "websiteUrl": "",
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0023/photo_1.JPG",
-    "representativePrice": 6500000
+    "representativePrice": 1270000
   },
   {
     "id": "park-0024",
@@ -13558,8 +13563,8 @@
               "name": "축대작업비",
               "price": 1000000,
               "feeType": "USAGE",
-              "grade": "비탈진 묘역의 흙이 무너지지 않도록 경계면에 돌이나 블록으로 축대를 쌓는 기초 공사 비용입니다. (기준: 평당)",
-              "note": "",
+              "grade": "",
+              "note": "비탈진 묘역의 흙이 무너지지 않도록 경계면에 돌이나 블록으로 축대를 쌓는 기초 공사 비용입니다. (기준: 평당)",
               "isRepresentative": false,
               "groupType": "토지 분양 및 기본 매장 작업비 (필수)",
               "duration": null,
@@ -13879,7 +13884,8 @@
               "feeType": "USAGE",
               "grade": "㎡단위",
               "note": "",
-              "name": "묘지 사용료"
+              "name": "묘지 사용료",
+              "isRepresentative": true
             },
             {
               "description": "㎡ 당 1년 관리비 (15년 선납)",
@@ -13892,8 +13898,8 @@
           ]
         },
         {
-          "serviceType": "BONGSAN",
-          "subType": "봉안묘 분양 및 추가 비용",
+          "serviceType": "OTHER",
+          "subType": "석물 (봉안묘)",
           "groupType": "봉안묘 분양 (선택)",
           "rows": [
             {
@@ -13987,8 +13993,8 @@
           ]
         },
         {
-          "serviceType": "BURIAL",
-          "subType": "기타 시설 및 물품 사용료",
+          "serviceType": "OTHER",
+          "subType": "기타 부대비용",
           "groupType": "기타 부대비용 및 물품 (선택)",
           "rows": [
             {
@@ -14069,7 +14075,7 @@
     "websiteUrl": "",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0025/photo_1.jpg",
-    "representativePrice": 60600000
+    "representativePrice": 728000
   },
   {
     "id": "park-0026",
@@ -15379,7 +15385,7 @@
     "fax": "",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0028/photo_1.PNG",
-    "representativePrice": 4800000
+    "representativePrice": 2700000
   },
   {
     "id": "park-0029",
@@ -16548,7 +16554,7 @@
     "websiteUrl": "http://www.cpdsd.or.kr/front/news/p0401/333?b_id=1&s_field=1&s_word=",
     "viewCount": 210,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0031/photo_1.PNG",
-    "representativePrice": 1600000
+    "representativePrice": 1250000
   },
   {
     "id": "park-0032",
@@ -17384,7 +17390,7 @@
     "websiteUrl": "",
     "viewCount": 242,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/uploads/1765775005477_ivxvha.jpg",
-    "representativePrice": 10324000
+    "representativePrice": 6835000
   },
   {
     "id": "park-0034",
@@ -18096,7 +18102,7 @@
     "websiteUrl": "http://www.dongsanpark.com/",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0035/photo_1.PNG",
-    "representativePrice": 3500000
+    "representativePrice": 1050000
   },
   {
     "id": "park-0036",
@@ -18419,7 +18425,7 @@
     "websiteUrl": "",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0036/photo_1.PNG",
-    "representativePrice": 2960000
+    "representativePrice": 2525000
   },
   {
     "id": "park-0037",
@@ -19105,7 +19111,7 @@
     "websiteUrl": "https://www.jindallae.kr/",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0038/photo_1.jpg",
-    "representativePrice": 21450000
+    "representativePrice": 10315000
   },
   {
     "id": "park-0039",
@@ -22086,7 +22092,7 @@
     "websiteUrl": "https://www.yangyang.go.kr/gw/mobile/partinfo_life_jangmyo",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0047/photo_1.PNG",
-    "representativePrice": 359440
+    "representativePrice": 240000
   },
   {
     "id": "park-0048",
@@ -23416,7 +23422,7 @@
     "websiteUrl": "http://www.ymw.kr/",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0051/photo_1.JPG",
-    "representativePrice": 20000000
+    "representativePrice": 15000000
   },
   {
     "id": "park-0052",
@@ -27276,7 +27282,7 @@
     "websiteUrl": "http://gaenaree.com/",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0066/photo_1.PNG",
-    "representativePrice": 1066000
+    "representativePrice": 724000
   },
   {
     "id": "park-0067",
@@ -28635,7 +28641,7 @@
     "fax": "",
     "websiteUrl": "https://www.insiseol.or.kr/life/family/facility/cemetery.jsp",
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0072/photo_1.jpg",
-    "representativePrice": 36000000,
+    "representativePrice": 3600,
     "isFull": true
   },
   {
@@ -34425,7 +34431,7 @@
     "websiteUrl": "https://www.hongcheon.go.kr/www/selectEminwonNewsView.do?key=283&news_epct_no=13656&ofr_pageSize=10",
     "viewCount": 176,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0101/photo_1.PNG",
-    "representativePrice": 1125000
+    "representativePrice": 375000
   },
   {
     "id": "park-0102",
@@ -35799,7 +35805,7 @@
     "websiteUrl": "",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0108/photo_1.PNG",
-    "representativePrice": 1650000
+    "representativePrice": 1000000
   },
   {
     "id": "park-0109",
@@ -39063,7 +39069,7 @@
     "websiteUrl": "https://www.wanju.go.kr/index.9is?contentUid=ff8080818b024d8e018b274f60032c09",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0125/photo_1.PNG",
-    "representativePrice": 684000
+    "representativePrice": 100000
   },
   {
     "id": "park-0126",
@@ -44858,7 +44864,7 @@
     "fax": "",
     "websiteUrl": "",
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0158/photo_1.PNG",
-    "representativePrice": 1200000
+    "representativePrice": 600000
   },
   {
     "id": "park-0159",
@@ -48072,7 +48078,7 @@
     "websiteUrl": "",
     "viewCount": 413,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0178/photo_1.PNG",
-    "representativePrice": 92600000
+    "representativePrice": 9260
   },
   {
     "id": "park-0179",
@@ -48591,7 +48597,7 @@
     "fax": "",
     "websiteUrl": "",
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0181/photo_1.PNG",
-    "representativePrice": 36000000,
+    "representativePrice": 3600,
     "isFull": true
   },
   {
@@ -48939,7 +48945,7 @@
     "fax": "",
     "websiteUrl": "",
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0183/photo_1.PNG",
-    "representativePrice": 36000000,
+    "representativePrice": 3600,
     "isFull": true
   },
   {
@@ -53533,7 +53539,7 @@
     "websiteUrl": "https://www.placeview.co.kr/",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0211/photo_1.PNG",
-    "representativePrice": 36000000,
+    "representativePrice": 3600,
     "isFull": true
   },
   {
@@ -62589,7 +62595,7 @@
     "websiteUrl": "",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0265/photo_1.PNG",
-    "representativePrice": 36000000,
+    "representativePrice": 3600,
     "isFull": true
   },
   {
@@ -67434,7 +67440,7 @@
     "fax": "",
     "websiteUrl": "",
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0296/photo_1.PNG",
-    "representativePrice": 36000000,
+    "representativePrice": 3600,
     "isFull": true
   },
   {
@@ -68137,7 +68143,7 @@
     "websiteUrl": "",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0300/photo_1.PNG",
-    "representativePrice": 1000000
+    "representativePrice": 400000
   },
   {
     "id": "park-0301",
@@ -73395,7 +73401,7 @@
     "fax": "",
     "websiteUrl": "",
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0331/photo_1.PNG",
-    "representativePrice": 36000000,
+    "representativePrice": 3600,
     "isFull": true
   },
   {
@@ -97477,7 +97483,7 @@
     "websiteUrl": "https://cemetery.gwangyang.go.kr/",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0488/photo_1.PNG",
-    "representativePrice": 340000
+    "representativePrice": 100000
   },
   {
     "id": "park-0489",
@@ -119461,7 +119467,7 @@
     "websiteUrl": "",
     "viewCount": 329,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0533/photo_1.JPG",
-    "representativePrice": 2500000
+    "representativePrice": 500000
   },
   {
     "id": "park-0534",
@@ -132381,7 +132387,7 @@
     "websiteUrl": "",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0562/photo_1.JPG",
-    "representativePrice": 36745000
+    "representativePrice": 2764000
   },
   {
     "id": "park-0563",
@@ -139690,7 +139696,7 @@
     "websiteUrl": "http://www.hjcloud9.com",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0579/photo_1.jpg",
-    "representativePrice": 9300000
+    "representativePrice": 2300000
   },
   {
     "id": "park-0580",
@@ -143336,7 +143342,7 @@
     "websiteUrl": "https://seohopark.kr",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0589/photo_1.jpg",
-    "representativePrice": 1000000
+    "representativePrice": 500000
   },
   {
     "id": "park-0590",
@@ -166547,7 +166553,7 @@
     "websiteUrl": "https://yeojuuc.or.kr/sub1/memorial/park.do",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0667/photo_1.JPG",
-    "representativePrice": 400000
+    "representativePrice": 200000
   },
   {
     "id": "park-0668",
@@ -169303,7 +169309,7 @@
     "websiteUrl": "",
     "viewCount": 497,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0101/photo_1.PNG",
-    "representativePrice": 1125000
+    "representativePrice": 300000
   },
   {
     "id": "park-0679",
@@ -169694,7 +169700,7 @@
     "fax": "",
     "websiteUrl": "http://www.gunwipark.com",
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0138/photo_1.PNG",
-    "representativePrice": 4500000
+    "representativePrice": 1800000
   },
   {
     "id": "park-0681",
@@ -170757,7 +170763,7 @@
     "websiteUrl": "http://www.yeonhwapark.co.kr",
     "viewCount": 413,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0682/photo_1.jpg",
-    "representativePrice": 8000000
+    "representativePrice": 800
   },
   {
     "id": "park-0683",
@@ -171128,7 +171134,7 @@
     "websiteUrl": "https://m.jsimc.or.kr/layout/basic/page/page2/page07.html",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0684/photo_1.jpg",
-    "representativePrice": 2973000
+    "representativePrice": 150000
   },
   {
     "id": "park-0685",
@@ -174389,7 +174395,7 @@
     "websiteUrl": "http://samgwangsa.co.kr",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0697/photo_1.PNG",
-    "representativePrice": 8800000
+    "representativePrice": 1000000
   },
   {
     "id": "park-0698",
@@ -175817,7 +175823,7 @@
     "websiteUrl": "http://hamanhaneul.or.kr",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0704/photo_1.PNG",
-    "representativePrice": 270000
+    "representativePrice": 200000
   },
   {
     "id": "park-0705",
@@ -176213,7 +176219,7 @@
     "websiteUrl": "https://www.samcheok.go.kr/memorial",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0705/photo_1.jpg",
-    "representativePrice": 572000,
+    "representativePrice": 236000,
     "priceRange": {
       "min": 336000,
       "max": 592000
@@ -180265,7 +180271,7 @@
     "websiteUrl": "https://www.maneopark.co.kr/",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0727/photo_1.PNG",
-    "representativePrice": 4000000
+    "representativePrice": 700000
   },
   {
     "id": "park-0728",
@@ -183434,7 +183440,7 @@
     "websiteUrl": "https://www.taebaek.go.kr/www/contents.do?key=434",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0745/photo_1.jpg",
-    "representativePrice": 623000
+    "representativePrice": 113000
   },
   {
     "id": "park-0746",
@@ -184453,7 +184459,7 @@
     "websiteUrl": "https://www.cauc.or.kr/_chpark/",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0751/photo_1.PNG",
-    "representativePrice": 400000
+    "representativePrice": 100000
   },
   {
     "id": "park-0752",
@@ -195329,7 +195335,7 @@
     "fax": "",
     "websiteUrl": "",
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0820/photo_1.PNG",
-    "representativePrice": 2000000
+    "representativePrice": 600000
   },
   {
     "id": "park-0821",
@@ -197904,7 +197910,7 @@
     "websiteUrl": "http://www.chilgok.go.kr/portal/bbs/view.do?mId=0904100000&bIdx=110091&ptIdx=332",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0839/photo_1.PNG",
-    "representativePrice": 60000000
+    "representativePrice": 6000
   },
   {
     "id": "park-0840",
@@ -242778,7 +242784,23 @@
           "rows": [],
           "unit": ""
         }
-      }
+      },
+      "standardizedPrices": [
+        {
+          "serviceType": "BONGSAN",
+          "subType": "봉안묘",
+          "unit": "원",
+          "rows": [
+            {
+              "name": "시설 문의",
+              "price": 0,
+              "feeType": "USAGE",
+              "isRepresentative": true,
+              "grade": "관리사무소 문의"
+            }
+          ]
+        }
+      ]
     },
     "_detailedSource": "prisma",
     "_meta": {
@@ -242940,7 +242962,23 @@
             }
           ]
         }
-      }
+      },
+      "standardizedPrices": [
+        {
+          "serviceType": "BONGSAN",
+          "subType": "봉안묘",
+          "unit": "원",
+          "rows": [
+            {
+              "name": "시설 문의",
+              "price": 0,
+              "feeType": "USAGE",
+              "isRepresentative": true,
+              "grade": "관리사무소 문의"
+            }
+          ]
+        }
+      ]
     },
     "_detailedSource": "prisma",
     "_meta": {
@@ -243060,7 +243098,23 @@
           "rows": [],
           "unit": ""
         }
-      }
+      },
+      "standardizedPrices": [
+        {
+          "serviceType": "BONGSAN",
+          "subType": "봉안묘",
+          "unit": "원",
+          "rows": [
+            {
+              "name": "시설 문의",
+              "price": 0,
+              "feeType": "USAGE",
+              "isRepresentative": true,
+              "grade": "관리사무소 문의"
+            }
+          ]
+        }
+      ]
     },
     "_detailedSource": "prisma",
     "_meta": {
@@ -243221,7 +243275,23 @@
             }
           ]
         }
-      }
+      },
+      "standardizedPrices": [
+        {
+          "serviceType": "BONGSAN",
+          "subType": "봉안묘",
+          "unit": "원",
+          "rows": [
+            {
+              "name": "시설 문의",
+              "price": 0,
+              "feeType": "USAGE",
+              "isRepresentative": true,
+              "grade": "관리사무소 문의"
+            }
+          ]
+        }
+      ]
     },
     "_detailedSource": "prisma",
     "_meta": {
@@ -243375,7 +243445,23 @@
             }
           ]
         }
-      }
+      },
+      "standardizedPrices": [
+        {
+          "serviceType": "BONGSAN",
+          "subType": "봉안담",
+          "unit": "원",
+          "rows": [
+            {
+              "name": "시설 문의",
+              "price": 0,
+              "feeType": "USAGE",
+              "isRepresentative": true,
+              "grade": "관리사무소 문의"
+            }
+          ]
+        }
+      ]
     },
     "_detailedSource": "prisma",
     "_meta": {
@@ -243549,89 +243635,60 @@
       "standardizedPrices": [
         {
           "serviceType": "BONGSAN",
-          "subType": "봉안당",
-          "unit": "1기",
+          "subType": "봉안담",
+          "unit": "원",
           "rows": [
             {
-              "name": "개인",
+              "name": "사용료 (개인)",
               "price": 547840,
               "feeType": "USAGE",
-              "grade": "",
-              "note": "",
-              "groupType": "관내",
-              "duration": 15,
-              "durationType": "YEAR"
+              "isRepresentative": true,
+              "grade": "봉안함 포함"
             },
             {
-              "name": "개인",
+              "name": "안치비 (개인)",
               "price": 912480,
               "feeType": "USAGE",
-              "grade": "",
-              "note": "",
-              "groupType": "관외",
-              "duration": 15,
-              "durationType": "YEAR"
+              "grade": "안치 작업비"
             },
             {
-              "name": "개인",
+              "name": "관리비 (개인)",
               "price": 105000,
-              "feeType": "USAGE",
-              "grade": "",
-              "note": "",
-              "groupType": "관리비",
-              "isRepresentative": true
+              "feeType": "MAINTENANCE"
             },
             {
-              "name": "부부",
+              "name": "사용료 (부부)",
               "price": 824460,
               "feeType": "USAGE",
-              "grade": "",
-              "note": "",
-              "groupType": "관내",
-              "duration": 15,
-              "durationType": "YEAR"
+              "grade": "봉안함 포함"
             },
             {
-              "name": "부부",
+              "name": "안치비 (부부)",
               "price": 1368720,
               "feeType": "USAGE",
-              "grade": "",
-              "note": "",
-              "groupType": "관외",
-              "duration": 15,
-              "durationType": "YEAR"
+              "grade": "안치 작업비"
             },
             {
-              "name": "부부",
+              "name": "관리비 (부부)",
               "price": 157500,
-              "feeType": "USAGE",
-              "grade": "",
-              "note": "",
-              "groupType": "관리비"
+              "feeType": "MAINTENANCE"
             },
             {
-              "name": "가족/법인/단체",
+              "name": "사용료 (가족/단체)",
               "price": 1278940,
               "feeType": "USAGE",
-              "grade": "",
-              "note": "",
-              "groupType": "관내"
+              "grade": "봉안함 포함"
             },
             {
-              "name": "가족/법인/단체",
+              "name": "안치비 (가족/단체)",
               "price": 2132340,
               "feeType": "USAGE",
-              "grade": "",
-              "note": "",
-              "groupType": "관외"
+              "grade": "안치 작업비"
             },
             {
-              "name": "가족/법인/단체",
+              "name": "관리비 (가족/단체)",
               "price": 262500,
-              "feeType": "USAGE",
-              "grade": "",
-              "note": "",
-              "groupType": "관리비"
+              "feeType": "MAINTENANCE"
             }
           ]
         }
@@ -243651,7 +243708,7 @@
     "websiteUrl": "",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-1141/photo_1.png",
-    "representativePrice": 105000,
+    "representativePrice": 547840,
     "priceRange": {
       "min": 0,
       "max": 0
@@ -243765,16 +243822,15 @@
       "standardizedPrices": [
         {
           "serviceType": "BONGSAN",
-          "subType": "봉안당",
+          "subType": "봉안묘",
           "unit": "원",
           "rows": [
             {
-              "name": "시설사용료",
+              "name": "시설 문의",
               "price": 0,
               "feeType": "USAGE",
-              "grade": "시설사용료 항목",
-              "note": "",
-              "isRepresentative": true
+              "isRepresentative": true,
+              "grade": "관리사무소 문의"
             }
           ]
         }
@@ -243907,17 +243963,16 @@
       },
       "standardizedPrices": [
         {
-          "serviceType": "BURIAL",
-          "subType": "매장묘",
+          "serviceType": "BONGSAN",
+          "subType": "봉안묘·담",
           "unit": "원",
           "rows": [
             {
-              "name": "묘지 사용료",
+              "name": "시설 문의",
               "price": 0,
               "feeType": "USAGE",
-              "grade": "",
-              "note": "",
-              "isRepresentative": false
+              "isRepresentative": true,
+              "grade": "관리사무소 문의"
             }
           ]
         }
@@ -244053,17 +244108,16 @@
       },
       "standardizedPrices": [
         {
-          "serviceType": "BURIAL",
-          "subType": "매장묘",
+          "serviceType": "BONGSAN",
+          "subType": "봉안묘",
           "unit": "원",
           "rows": [
             {
-              "name": "묘지 사용료",
+              "name": "시설 문의",
               "price": 0,
               "feeType": "USAGE",
-              "grade": "",
-              "note": "",
-              "isRepresentative": true
+              "isRepresentative": true,
+              "grade": "관리사무소 문의"
             }
           ]
         }
@@ -244200,12 +244254,11 @@
           "unit": "원",
           "rows": [
             {
-              "name": "시설사용료",
+              "name": "시설 문의",
               "price": 0,
               "feeType": "USAGE",
-              "grade": "시설사용료 항목사용료내역요금(단위:원)수량선택",
-              "note": "",
-              "isRepresentative": true
+              "isRepresentative": true,
+              "grade": "관리사무소 문의"
             }
           ]
         }
@@ -257639,7 +257692,7 @@
     "websiteUrl": "http://www.hjcloud9.com",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-1207/photo_1.jpg",
-    "representativePrice": 3900000
+    "representativePrice": 2900000
   },
   {
     "id": "park-1208",
@@ -267687,7 +267740,7 @@
     "websiteUrl": "",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-1256/photo_1.PNG",
-    "representativePrice": 1500000
+    "representativePrice": 500000
   },
   {
     "id": "park-1257",
@@ -273175,7 +273228,7 @@
     "websiteUrl": "",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-1295/photo_1.PNG",
-    "representativePrice": 300000
+    "representativePrice": 200000
   },
   {
     "id": "park-1296",
@@ -279738,7 +279791,7 @@
     "websiteUrl": "",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-1340/photo_1.PNG",
-    "representativePrice": 200000
+    "representativePrice": 100000
   },
   {
     "id": "park-1341",
@@ -280908,7 +280961,7 @@
     "websiteUrl": "https://www.shinsegae.com/",
     "viewCount": 395,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0464/photo_1.PNG",
-    "representativePrice": 7000000
+    "representativePrice": 5000000
   },
   {
     "id": "park-1348",
@@ -296286,7 +296339,7 @@
     "websiteUrl": "https://jsimc.or.kr/layout/basic/page/page2/page06.html",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-1108/photo_1.PNG",
-    "representativePrice": 100000
+    "representativePrice": 20000
   },
   {
     "id": "park-1440",
@@ -303211,7 +303264,7 @@
     "fax": "",
     "websiteUrl": "https://www.gongju.go.kr/naraewon/index.do",
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0691/photo_1.jpg",
-    "representativePrice": 1000000
+    "representativePrice": 100000
   },
   {
     "id": "park-1455",
@@ -312200,7 +312253,7 @@
     "websiteUrl": "",
     "viewCount": 505,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0584/photo_1.jpg",
-    "representativePrice": 50000
+    "representativePrice": 25000
   },
   {
     "id": "park-1480",

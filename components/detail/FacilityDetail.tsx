@@ -98,6 +98,7 @@ function PriceInfoSection({ priceInfo, hasPrice, facilityName, websiteUrl }: { p
         if (type === 'BONGSAN') return '봉안당';
         if (type === 'NATURAL' || type === 'NATURAL_BURIAL') return '수목장';
         if (type === 'BURIAL') return '매장묘지';
+        if (type === 'CHARNEL_HOUSE') return '봉안당';
         if (type === 'OTHER') return '기타';
         return type;
     };
@@ -115,6 +116,10 @@ function PriceInfoSection({ priceInfo, hasPrice, facilityName, websiteUrl }: { p
         // 🔧 OTHER serviceType 재분류 + 필터링
         const EXCLUDE_SUBTYPES = /무연고/;
         const reclassifiedPrices = standardizedPrices!.map(g => {
+            // CHARNEL_HOUSE → BONGSAN (category가 serviceType으로 잘못 들어간 경우)
+            if (g.serviceType === 'CHARNEL_HOUSE') {
+                return { ...g, serviceType: 'BONGSAN' };
+            }
             if (g.serviceType === 'OTHER') {
                 const st = g.subType || '';
                 // 자연장/수목장 → NATURAL
