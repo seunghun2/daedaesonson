@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import Script from 'next/script';
+import { AuthProvider } from '@/components/auth/AuthProvider';
 import './globals.css';
 import '@mantine/core/styles.css';
 import { ColorSchemeScript, MantineProvider, createTheme } from '@mantine/core';
@@ -106,7 +107,9 @@ export default function RootLayout({
       </head>
       <body className={inter.className}>
         <MantineProvider theme={theme}>
-          {children}
+          <AuthProvider>
+            {children}
+          </AuthProvider>
         </MantineProvider>
         {/* 🚀 GA4: afterInteractive로 변경 → 렌더 차단 제거 */}
         <Script
@@ -157,6 +160,26 @@ export default function RootLayout({
               document.addEventListener('dblclick', function(e) {
                 e.preventDefault();
               }, { passive: false });
+            })()
+          `,
+          }}
+        />
+        {/* 🔤 Material Symbols 폰트 로드 감지 */}
+        <Script
+          id="font-load-detect"
+          strategy="afterInteractive"
+          dangerouslySetInnerHTML={{
+            __html: `
+            (function() {
+              if (document.fonts) {
+                document.fonts.ready.then(function() {
+                  document.documentElement.classList.add('fonts-loaded');
+                });
+              } else {
+                setTimeout(function() {
+                  document.documentElement.classList.add('fonts-loaded');
+                }, 1000);
+              }
             })()
           `,
           }}

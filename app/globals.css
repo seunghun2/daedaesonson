@@ -70,3 +70,14 @@ body {
   display: none;
   /* Chrome, Safari */
 }
+
+/* 🔤 Material Symbols: 폰트 로드 전 영어 텍스트 숨김 */
+.material-symbols-outlined {
+  opacity: 0;
+  transition: opacity 0.15s ease;
+}
+
+.fonts-loaded .material-symbols-outlined,
+.material-symbols-outlined.material-symbols-outlined--loaded {
+  opacity: 1;
+}

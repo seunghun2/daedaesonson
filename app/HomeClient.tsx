@@ -4,6 +4,7 @@ import { useState, useMemo, useEffect, useRef, useTransition, Suspense } from 'r
 import { Box, Flex, useMantineTheme, TextInput, Group, Text, ThemeIcon, ActionIcon, ScrollArea, Stack, Loader, Center, Button } from '@mantine/core';
 import { useMediaQuery } from '@mantine/hooks';
 import { Search, MapPin, Building, MessageCircle, Clock, Info, User, ChevronLeft } from 'lucide-react';
+import LoginModal from '@/components/auth/LoginModal';
 import Link from 'next/link';
 import { useRouter, useSearchParams, usePathname } from 'next/navigation';
 import { useDebouncedCallback } from 'use-debounce';
@@ -170,6 +171,7 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
 
   // UI 숨김 상태 (지도 탭 시 토글) - 호갱노노 스타일
   const [uiHidden, setUiHidden] = useState(false);
+  const [showLoginFromMap, setShowLoginFromMap] = useState(false);
 
   // 검색창 롤링 placeholder
   const placeholderTexts = ['서울 봉안당', '경기 수목장', '부산 공원묘지', '대전 납골당', '인천 자연장'];
@@ -851,6 +853,7 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
                 </Box>
               )}
             </Box>
+
           </Group>
 
           {/* PC 필터 버튼 (다중 선택) - PC 상세보기 시 숨김 */}
@@ -1022,24 +1025,7 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
                   </Text>
                 </Box>
 
-                {/* 내 정보 아이콘 */}
-                <button
-                  style={{
-                    background: 'transparent',
-                    border: '1.5px solid rgba(255,255,255,0.5)',
-                    borderRadius: '50%',
-                    cursor: 'pointer',
-                    padding: '5px',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    width: 32,
-                    height: 32,
-                    flexShrink: 0,
-                  }}
-                >
-                  <User size={16} color="white" strokeWidth={2} />
-                </button>
+
               </Group>
             </Box>
 
@@ -1159,7 +1145,10 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
           onMapTap={handleMapTap}
           onMapDrag={() => setSearchFocused(false)}
           uiHidden={uiHidden}
+          onUserClick={!isMobile ? () => setShowLoginFromMap(true) : undefined}
         />
+        {/* PC: 로그인 모달 */}
+        <LoginModal isOpen={showLoginFromMap} onClose={() => setShowLoginFromMap(false)} />
       </Box>
 
       {/* PC: 주변 시설 보기 오버레이 패널 (지도 위 왼쪽) */}

@@ -4,6 +4,7 @@ import { Group, Text, TextInput, ActionIcon, Container, Tabs, Box } from '@manti
 import { Search } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
+import UserButton from '@/components/auth/UserButton';
 
 interface HeaderProps {
     activeTab: string;
@@ -15,7 +16,6 @@ export default function Header({ activeTab, onTabChange }: HeaderProps) {
         <Box style={{ borderBottom: '1px solid #e9ecef', height: 60, backgroundColor: 'white' }}>
             <Container fluid h="100%" px="md">
                 <Group h="100%" justify="space-between" wrap="nowrap">
-                    {/* 로고 및 서비스명 */}
                     {/* 로고 및 서비스명 */}
                     <Link href="/" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center' }}>
                         <Image
@@ -38,25 +38,29 @@ export default function Header({ activeTab, onTabChange }: HeaderProps) {
                         />
                     </Box>
 
-                    {/* 우측 탭 (카테고리) - PC에서는 글자, 모바일은 공간 부족하면 숨기거나 아이콘화 */}
-                    <Tabs
-                        value={activeTab}
-                        onChange={(v) => onTabChange(v || 'all')}
-                        variant="pills"
-                        radius="xl"
-                        visibleFrom="sm" // 모바일에서는 일단 숨김 (공간 부족)
-                    >
-                        <Tabs.List>
-                            <Tabs.Tab value="all">전체</Tabs.Tab>
-                            <Tabs.Tab value="charnel">봉안당</Tabs.Tab>
-                            <Tabs.Tab value="natural">수목장</Tabs.Tab>
-                            <Tabs.Tab value="park">공원묘지</Tabs.Tab>
-                        </Tabs.List>
-                    </Tabs>
+                    {/* 우측 영역: 카테고리 탭 + 로그인 버튼 */}
+                    <Group gap="sm" wrap="nowrap">
+                        <Tabs
+                            value={activeTab}
+                            onChange={(v) => onTabChange(v || 'all')}
+                            variant="pills"
+                            radius="xl"
+                            visibleFrom="sm"
+                        >
+                            <Tabs.List>
+                                <Tabs.Tab value="all">전체</Tabs.Tab>
+                                <Tabs.Tab value="charnel">봉안당</Tabs.Tab>
+                                <Tabs.Tab value="natural">수목장</Tabs.Tab>
+                                <Tabs.Tab value="park">공원묘지</Tabs.Tab>
+                            </Tabs.List>
+                        </Tabs>
 
-                    {/* 모바일용 메뉴 버튼 (필요시 추가) */}
+                        {/* 👤 로그인/프로필 버튼 */}
+                        <UserButton />
+                    </Group>
                 </Group>
             </Container>
         </Box>
     );
 }
+

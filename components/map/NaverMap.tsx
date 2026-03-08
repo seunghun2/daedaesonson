@@ -31,6 +31,7 @@ interface NaverMapProps {
     uiHidden?: boolean; // UI 숨김 상태 (호갱노노 스타일 애니메이션)
     activeCategory?: string[]; // 🚀 카테고리 필터 (마커 visibility 토글용)
     institutionFilter?: 'all' | 'public' | 'private'; // 공설/사설 필터
+    onUserClick?: () => void; // 사용자 버튼 클릭 콜백
 }
 
 export interface NaverMapRef {
@@ -68,7 +69,7 @@ const REGION_MAPPINGS: { [key: string]: string[] } = {
 // 좌표별 시설 ID 등록부 (전역 유지 - 필터링되어도 위치 고정)
 const LAYOUT_REGISTRY = new Map<string, string[]>();
 
-const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerClick, onBoundsChanged, onCenterAddressChange, isMobile, onViewList, onMapTap, onMapDrag, uiHidden, activeCategory = ['all'], institutionFilter = 'all' }, ref) => {
+const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerClick, onBoundsChanged, onCenterAddressChange, isMobile, onViewList, onMapTap, onMapDrag, uiHidden, activeCategory = ['all'], institutionFilter = 'all', onUserClick }, ref) => {
     const mapRef = useRef<HTMLDivElement>(null);
     const [isMapLoaded, setIsMapLoaded] = useState(false);
     const [isMainLoaded, setIsMainLoaded] = useState(false);
@@ -455,36 +456,29 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
                 if (targetFeatures.length > 0) {
                     // 여러 개가 검색되면(수유1동, 수유2동 등) 그 중 하나를 대표로 쓰거나 중심점 계산
                     // 여기선 첫 번째 매칭을 사용하되, highlightRegion에서 다시 병합하여 그림.
-                    const representative = targetFeatures[0];
-
-                    try {
-                        // 단순 첫 번째 요소의 중심점보다는, 전체 Feature들의 중심점(bounds center)이 더 정확하겠으나,
-                        // 여기서는 highlightRegion이 알아서 병합해주므로, 대표 좌표만 넘김.
-                        // But for better centering, let's use turf on the collection if multiple.
-                        let centerFeature = representative;
-                        if (targetFeatures.length > 1) {
-                            const fc = featureCollection(targetFeatures);
-                            // Center of mass for the whole collection
-                            const center = centerOfMass(fc as any);
-                            const [lng, lat] = center.geometry.coordinates;
-                            return {
-                                lat, lng, zoom: 14, type: 'dong' as const, name: normKeyword // Use input keyword so highlightRegion uses mapping
-                            };
-                        }
-
-                        const center = centerOfMass(representative);
+                    // But for better centering, let's use turf on the collection if multiple.
+                    let centerFeature = targetFeatures[0];
+                    if (targetFeatures.length > 1) {
+                        const fc = featureCollection(targetFeatures);
+                        // Center of mass for the whole collection
+                        const center = centerOfMass(fc as any);
                         const [lng, lat] = center.geometry.coordinates;
-
                         return {
-                            lat: lat,
-                            lng: lng,
-                            zoom: 14,
-                            type: 'dong' as const,
-                            name: representative.properties.name // Or keyword? If mapped, keyword is better key.
+                            lat, lng, zoom: 14, type: 'dong' as const, name: normKeyword // Use input keyword so highlightRegion uses mapping
                         };
-                    } catch (e) {
-                        console.error('   ❌ Centroid calc failed', e);
                     }
+
+                    const representative = centerFeature;
+                    const center = centerOfMass(representative);
+                    const [lng, lat] = center.geometry.coordinates;
+
+                    return {
+                        lat: lat,
+                        lng: lng,
+                        zoom: 14,
+                        type: 'dong' as const,
+                        name: representative.properties.name // Or keyword? If mapped, keyword is better key.
+                    };
                 } else {
                 }
             } else {
@@ -1525,6 +1519,13 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
                         transform: uiHidden ? 'translateX(100px)' : 'translateX(0)',
                         transition: 'transform 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
                     }}>
+                        {/* 0. 내 정보 (PC만) */}
+                        {onUserClick && (
+                            <CustomControlBtn
+                                icon={<span className="material-symbols-outlined" style={{ fontSize: '24px', color: '#495057' }}>person_outline</span>}
+                                onClick={onUserClick}
+                            />
+                        )}
                         {/* 1. 줌 컨트롤 그룹 */}
                         <div style={{
                             display: 'flex', flexDirection: 'column',
