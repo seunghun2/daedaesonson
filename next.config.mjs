@@ -21,6 +21,15 @@ const nextConfig = {
         ],
     },
     serverExternalPackages: ['@prisma/client', 'prisma'],
+    // 🔗 한글 URL → 영문 라우트 매핑 (Next.js 16 Turbopack은 한글 디렉토리 미지원)
+    async rewrites() {
+        return [
+            {
+                source: '/%EC%A7%80%EC%97%AD/:slug*',
+                destination: '/region/:slug*',
+            },
+        ];
+    },
     // 🚀 번들 최적화
     experimental: {
         optimizePackageImports: ['@mantine/core', '@mantine/hooks', '@turf/helpers', '@turf/union', '@turf/center-of-mass', 'lucide-react'],
