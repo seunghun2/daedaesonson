@@ -1,8 +1,8 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Box, Text, Group, Stack, Badge, Paper, Table, Select, Button, TextInput, Textarea, ActionIcon, Tooltip, Modal, Tabs, Loader } from '@mantine/core';
-import { Search, RefreshCw, Eye, CheckCircle, XCircle, Clock, MessageSquare } from 'lucide-react';
+import { Box, Text, Group, Stack, Badge, Paper, Table, Select, Button, TextInput, Textarea, ActionIcon, Tooltip, Modal, Loader, Image } from '@mantine/core';
+import { Search, RefreshCw, Eye, CheckCircle, XCircle, Clock } from 'lucide-react';
 
 interface Correction {
     id: string;
@@ -11,6 +11,8 @@ interface Correction {
     correction_type: string;
     content: string;
     contact: string | null;
+    name: string | null;
+    photos: string[] | null;
     status: string;
     admin_note: string | null;
     created_at: string;
@@ -21,6 +23,8 @@ const TYPE_LABELS: Record<string, string> = {
     price: '가격 정보',
     facility_info: '시설 정보',
     photo: '사진/이미지',
+    business_status: '영업 상태',
+    location: '위치 정보',
     other: '기타',
 };
 
@@ -74,7 +78,10 @@ export default function AdminCorrectionsPage() {
     };
 
     const filteredCorrections = corrections.filter(c =>
-        !searchText || c.facility_name.toLowerCase().includes(searchText.toLowerCase()) || c.content.toLowerCase().includes(searchText.toLowerCase())
+        !searchText ||
+        c.facility_name.toLowerCase().includes(searchText.toLowerCase()) ||
+        c.content.toLowerCase().includes(searchText.toLowerCase()) ||
+        (c.name || '').toLowerCase().includes(searchText.toLowerCase())
     );
 
     const formatDate = (dateStr: string) => {
@@ -108,7 +115,7 @@ export default function AdminCorrectionsPage() {
                         w={150}
                     />
                     <TextInput
-                        placeholder="시설명 또는 내용 검색"
+                        placeholder="시설명, 내용, 성함 검색"
                         leftSection={<Search size={16} />}
                         value={searchText}
                         onChange={(e) => setSearchText(e.currentTarget.value)}
@@ -142,15 +149,17 @@ export default function AdminCorrectionsPage() {
                 </Paper>
             ) : (
                 <Paper withBorder radius="md" style={{ overflow: 'hidden' }}>
-                    <Table.ScrollContainer minWidth={600}>
+                    <Table.ScrollContainer minWidth={700}>
                         <Table striped highlightOnHover>
                             <Table.Thead>
                                 <Table.Tr>
                                     <Table.Th>상태</Table.Th>
                                     <Table.Th>유형</Table.Th>
                                     <Table.Th>시설명</Table.Th>
+                                    <Table.Th>성함</Table.Th>
                                     <Table.Th>내용</Table.Th>
                                     <Table.Th>연락처</Table.Th>
+                                    <Table.Th>사진</Table.Th>
                                     <Table.Th>접수일시</Table.Th>
                                     <Table.Th>관리</Table.Th>
                                 </Table.Tr>
@@ -167,15 +176,21 @@ export default function AdminCorrectionsPage() {
                                                 <Text size="sm">{TYPE_LABELS[c.correction_type] || c.correction_type}</Text>
                                             </Table.Td>
                                             <Table.Td>
-                                                <Text size="sm" fw={500} style={{ maxWidth: 150, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                                                <Text size="sm" fw={500} style={{ maxWidth: 130, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
                                                     {c.facility_name}
                                                 </Text>
                                             </Table.Td>
                                             <Table.Td>
-                                                <Text size="sm" lineClamp={2} style={{ maxWidth: 250 }}>{c.content}</Text>
+                                                <Text size="sm">{c.name || '-'}</Text>
+                                            </Table.Td>
+                                            <Table.Td>
+                                                <Text size="sm" lineClamp={2} style={{ maxWidth: 200 }}>{c.content}</Text>
                                             </Table.Td>
                                             <Table.Td>
                                                 <Text size="xs" c="dimmed">{c.contact || '-'}</Text>
+                                            </Table.Td>
+                                            <Table.Td>
+                                                <Text size="xs" c="dimmed">{c.photos && c.photos.length > 0 ? `${c.photos.length}장` : '-'}</Text>
                                             </Table.Td>
                                             <Table.Td>
                                                 <Text size="xs" c="dimmed">{formatDate(c.created_at)}</Text>
@@ -231,6 +246,10 @@ export default function AdminCorrectionsPage() {
                                     <Text size="sm">{TYPE_LABELS[selectedCorrection.correction_type] || selectedCorrection.correction_type}</Text>
                                 </Group>
                                 <Group>
+                                    <Text size="sm" c="dimmed" w={80}>성함</Text>
+                                    <Text size="sm">{selectedCorrection.name || '미입력'}</Text>
+                                </Group>
+                                <Group>
                                     <Text size="sm" c="dimmed" w={80}>연락처</Text>
                                     <Text size="sm">{selectedCorrection.contact || '미입력'}</Text>
                                 </Group>
@@ -243,6 +262,26 @@ export default function AdminCorrectionsPage() {
                                 <Text size="sm" lh={1.6} style={{ whiteSpace: 'pre-wrap' }}>{selectedCorrection.content}</Text>
                             </Paper>
                         </Box>
+
+                        {/* 첨부 사진 */}
+                        {selectedCorrection.photos && selectedCorrection.photos.length > 0 && (
+                            <Box>
+                                <Text size="sm" fw={600} mb={6}>첨부 사진 ({selectedCorrection.photos.length}장)</Text>
+                                <Group gap="xs" style={{ flexWrap: 'wrap' }}>
+                                    {selectedCorrection.photos.map((photo, idx) => (
+                                        <Image
+                                            key={idx}
+                                            src={photo}
+                                            w={120}
+                                            h={120}
+                                            radius="md"
+                                            style={{ objectFit: 'cover', border: '1px solid #dee2e6', cursor: 'pointer' }}
+                                            onClick={() => window.open(photo, '_blank')}
+                                        />
+                                    ))}
+                                </Group>
+                            </Box>
+                        )}
 
                         <Box>
                             <Text size="sm" fw={600} mb={6}>관리자 메모</Text>

@@ -2,7 +2,7 @@
 const nextConfig = {
     // reactCompiler: true,
     typescript: {
-        ignoreBuildErrors: true,
+        ignoreBuildErrors: false,
     },
     images: {
         // WebP 자동 변환 (원본 대비 70~90% 압축)

@@ -233,7 +233,7 @@ export default function ReviewRepliesPage() {
                                     <Group gap={6} mt="xs" ml={28}>
                                         {reply.photos.map((photo: string, idx: number) => (
                                             <Box key={idx} style={{ cursor: 'pointer' }} onClick={() => setEnlargedImage(photo)}>
-                                                <img src={photo} alt="" style={{ width: 80, height: 80, objectFit: 'cover', borderRadius: '8px', border: '1px solid #dee2e6' }} />
+                                                <img src={photo} alt="리뷰 사진" onError={(e) => { e.currentTarget.style.display = 'none'; }} style={{ width: 80, height: 80, objectFit: 'cover', borderRadius: '8px', border: '1px solid #dee2e6' }} />
                                             </Box>
                                         ))}
                                     </Group>
@@ -291,7 +291,7 @@ export default function ReviewRepliesPage() {
                     <Group gap={6} mt="xs">
                         {replyPhotos.map((photo, idx) => (
                             <Box key={idx} pos="relative" style={{ borderRadius: '8px', overflow: 'hidden' }}>
-                                <img src={photo} alt="" style={{ width: 50, height: 50, objectFit: 'cover', borderRadius: '8px', border: '1px solid #dee2e6' }} />
+                                <img src={photo} alt="답글 사진" onError={(e) => { e.currentTarget.style.display = 'none'; }} style={{ width: 50, height: 50, objectFit: 'cover', borderRadius: '8px', border: '1px solid #dee2e6' }} />
                                 <ActionIcon
                                     variant="filled" color="dark" size={14} radius="xl"
                                     pos="absolute" top={2} right={2}
@@ -342,7 +342,7 @@ export default function ReviewRepliesPage() {
                 }}
             >
                 {enlargedImage && (
-                    <img src={enlargedImage} alt="확대" style={{ maxWidth: '95%', maxHeight: '90vh', objectFit: 'contain', borderRadius: '8px' }} />
+                    <img src={enlargedImage} alt="확대 이미지" onError={(e) => { e.currentTarget.style.display = 'none'; }} style={{ maxWidth: '95%', maxHeight: '90vh', objectFit: 'contain', borderRadius: '8px' }} />
                 )}
             </Modal>
 

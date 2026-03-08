@@ -163,7 +163,7 @@ export default function ReviewsPanel({ facility, isOpen, onClose }: ReviewsPanel
                                                     <Group gap="xs" mt="sm" ml={32}>
                                                         {review.photos.map((photo: string, idx: number) => (
                                                             <Box key={idx} style={{ cursor: 'pointer' }} onClick={() => { setEnlargedImages(review.photos); setEnlargedImageIndex(idx); }}>
-                                                                <img src={photo} alt="" style={{ width: 80, height: 80, objectFit: 'cover', borderRadius: '8px', border: '1px solid #f1f3f5' }} />
+                                                                <img src={photo} alt="리뷰 사진" onError={(e) => { e.currentTarget.style.display = 'none'; }} style={{ width: 80, height: 80, objectFit: 'cover', borderRadius: '8px', border: '1px solid #f1f3f5' }} />
                                                             </Box>
                                                         ))}
                                                     </Group>
@@ -198,7 +198,7 @@ export default function ReviewsPanel({ facility, isOpen, onClose }: ReviewsPanel
                                                                     <Group gap={6} mt="xs" ml={26}>
                                                                         {reply.photos.map((photo: string, idx: number) => (
                                                                             <Box key={idx} style={{ cursor: 'pointer' }} onClick={() => { setEnlargedImages(reply.photos); setEnlargedImageIndex(idx); }}>
-                                                                                <img src={photo} alt="" style={{ width: 60, height: 60, objectFit: 'cover', borderRadius: '8px', border: '1px solid #dee2e6' }} />
+                                                                                <img src={photo} alt="답글 사진" onError={(e) => { e.currentTarget.style.display = 'none'; }} style={{ width: 60, height: 60, objectFit: 'cover', borderRadius: '8px', border: '1px solid #dee2e6' }} />
                                                                             </Box>
                                                                         ))}
                                                                     </Group>
@@ -233,7 +233,7 @@ export default function ReviewsPanel({ facility, isOpen, onClose }: ReviewsPanel
                                                             <Group gap={6} mt="xs">
                                                                 {replyPhotos.map((photo, idx) => (
                                                                     <Box key={idx} pos="relative">
-                                                                        <img src={photo} alt="" style={{ width: 50, height: 50, objectFit: 'cover', borderRadius: '8px' }} />
+                                                                        <img src={photo} alt="리뷰 사진" onError={(e) => { e.currentTarget.style.display = 'none'; }} style={{ width: 50, height: 50, objectFit: 'cover', borderRadius: '8px' }} />
                                                                         <ActionIcon variant="filled" color="dark" size={16} radius="xl" pos="absolute" top={2} right={2}
                                                                             onClick={() => setReplyPhotos(prev => prev.filter((_, i) => i !== idx))}><X size={8} /></ActionIcon>
                                                                     </Box>
@@ -317,7 +317,7 @@ export default function ReviewsPanel({ facility, isOpen, onClose }: ReviewsPanel
                     </Box>
                     <Box style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '60px 16px 16px' }}
                         onClick={() => { setEnlargedImages([]); setEnlargedImageIndex(0); }}>
-                        <img src={enlargedImages[enlargedImageIndex]} alt="" onClick={(e) => e.stopPropagation()}
+                        <img src={enlargedImages[enlargedImageIndex]} alt="확대 이미지" onError={(e) => { e.currentTarget.style.display = 'none'; }} onClick={(e) => e.stopPropagation()}
                             style={{ maxWidth: '100%', maxHeight: '85vh', objectFit: 'contain', borderRadius: '8px' }} />
                     </Box>
                     {enlargedImages.length > 1 && (

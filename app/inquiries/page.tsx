@@ -1,13 +1,10 @@
 import { Suspense } from 'react';
-import { createClient } from '@supabase/supabase-js';
+import { getSupabaseServer } from '@/lib/supabaseServer';
 import InquiriesClient from './InquiriesClient';
 import facilitiesData from '@/data/facilities.json';
 
 // 🔥 30초 캐시 (빠른 로딩)
 export const revalidate = 30;
-
-const SUPABASE_URL = 'https://jbydmhfuqnpukfutvrgs.supabase.co';
-const SUPABASE_KEY = process.env.SUPABASE_SERVICE_KEY || '';
 
 // 시설명 맵 (정적 JSON에서)
 const facilityNameMap = new Map(
@@ -29,9 +26,7 @@ interface Inquiry {
 
 async function getInquiries(): Promise<Inquiry[]> {
     try {
-        const supabase = createClient(SUPABASE_URL, SUPABASE_KEY, {
-            auth: { persistSession: false }
-        });
+        const supabase = getSupabaseServer();
 
         const { data: inquiries, error } = await supabase
             .from('Inquiry')

@@ -1,12 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getSupabaseServer } from '@/lib/supabaseServer';
 
-// Vercel serverless 설정: 바디 사이즈 제한 확장 & 타임아웃
-export const config = {
-    api: {
-        bodyParser: false, // FormData 직접 처리
-    },
-};
 export const maxDuration = 60; // 60초 타임아웃 (Vercel Pro)
 
 const supabase = getSupabaseServer();

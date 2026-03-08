@@ -193,8 +193,8 @@ export default function AdminPage() {
         } else if (sortOrder === 'updated-desc') {
             // 수정일 최신순
             result = result.sort((a, b) => {
-                const dateA = (a as any).updatedAt ? new Date((a as any).updatedAt).getTime() : 0;
-                const dateB = (b as any).updatedAt ? new Date((b as any).updatedAt).getTime() : 0;
+                const dateA = a.updatedAt ? new Date(a.updatedAt).getTime() : 0;
+                const dateB = b.updatedAt ? new Date(b.updatedAt).getTime() : 0;
                 return dateB - dateA;
             });
         }
@@ -486,7 +486,7 @@ export default function AdminPage() {
                                         <Table.Td fw={500}>
                                             <Group gap="xs">
                                                 {item.name}
-                                                {(item as any)._hasDetailedPrices && (
+                                                {item._hasDetailedPrices && (
                                                     <Badge size="xs" color="cyan" variant="light">DB</Badge>
                                                 )}
                                                 {item.isFull && (
@@ -508,8 +508,8 @@ export default function AdminPage() {
                                         </Table.Td>
                                         <Table.Td style={{ maxWidth: 200 }}><Text truncate>{item.address}</Text></Table.Td>
                                         <Table.Td>{(() => {
-                                            const rp = (item as any).representativePrice || 0;
-                                            const mp = (item as any).minPrice || 0;
+                                            const rp = item.representativePrice || 0;
+                                            const mp = item.minPrice || 0;
                                             const price = rp > 0 ? rp : mp;
                                             if (!price) return '0원';
                                             const normalized = price < 10000 ? price * 10000 : price;

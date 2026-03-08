@@ -1,6 +1,6 @@
 'use client';
 
-import { AppShell, Burger, Group, NavLink, Text, Avatar, Box, ThemeIcon, ActionIcon, Tooltip } from '@mantine/core';
+import { AppShell, Burger, Group, NavLink, Text, Avatar, Box, ThemeIcon, ActionIcon, Tooltip, TextInput, Button, Paper, Stack, PasswordInput } from '@mantine/core';
 import { useDisclosure, useMediaQuery } from '@mantine/hooks';
 import { useState, useEffect } from 'react';
 import {
@@ -15,7 +15,8 @@ import {
     PhoneCall as IconPhoneCall,
     Briefcase as IconBriefcase,
     Star as IconStar,
-    FileEdit as IconFileEdit
+    FileEdit as IconFileEdit,
+    Lock as IconLock
 } from 'lucide-react';
 
 import { usePathname, useRouter } from 'next/navigation';
@@ -24,24 +25,129 @@ import Link from 'next/link';
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
     const [opened, { toggle, close }] = useDisclosure();
     const [collapsed, setCollapsed] = useState(false);
+    const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null); // null = 확인 중
+    const [password, setPassword] = useState('');
+    const [loginError, setLoginError] = useState('');
+    const [loginLoading, setLoginLoading] = useState(false);
     const pathname = usePathname();
     const router = useRouter();
-    // SSR 시 undefined로 시작, useEffect에서 값 설정 (hydration mismatch 방지)
     const isMobile = useMediaQuery('(max-width: 768px)', undefined, { getInitialValueInEffect: true });
 
-    // localStorage에서 상태 불러오기
+    // 인증 상태 확인
+    useEffect(() => {
+        checkAuth();
+    }, []);
+
+    const checkAuth = async () => {
+        try {
+            // admin API를 호출해서 401이면 미인증
+            const res = await fetch('/api/admin/faqs', { method: 'GET' });
+            setIsAuthenticated(res.ok);
+        } catch {
+            setIsAuthenticated(false);
+        }
+    };
+
+    // 로그인
+    const handleLogin = async () => {
+        setLoginLoading(true);
+        setLoginError('');
+        try {
+            const res = await fetch('/api/admin/auth', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ password }),
+            });
+
+            if (res.ok) {
+                setIsAuthenticated(true);
+                setPassword('');
+            } else {
+                setLoginError('비밀번호가 올바르지 않습니다.');
+            }
+        } catch {
+            setLoginError('로그인 중 오류가 발생했습니다.');
+        } finally {
+            setLoginLoading(false);
+        }
+    };
+
+    // 로그아웃
+    const handleLogout = async () => {
+        await fetch('/api/admin/auth', { method: 'DELETE' });
+        setIsAuthenticated(false);
+        setPassword('');
+    };
+
+    // localStorage에서 사이드바 상태 불러오기
     useEffect(() => {
         const saved = localStorage.getItem('adminSidebarCollapsed');
         if (saved === 'true') setCollapsed(true);
     }, []);
 
-    // 상태 변경 시 저장
     const toggleCollapsed = () => {
         const newValue = !collapsed;
         setCollapsed(newValue);
         localStorage.setItem('adminSidebarCollapsed', String(newValue));
     };
 
+    // 로딩 중
+    if (isAuthenticated === null) {
+        return (
+            <Box style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '100vh', background: '#f8f9fa' }}>
+                <Text c="dimmed">확인 중...</Text>
+            </Box>
+        );
+    }
+
+    // 미인증 → 로그인 폼
+    if (!isAuthenticated) {
+        return (
+            <Box style={{
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                minHeight: '100vh',
+                background: 'linear-gradient(135deg, #1a1b2e 0%, #16213e 50%, #0f3460 100%)',
+            }}>
+                <Paper shadow="xl" p="xl" radius="lg" w={380} style={{
+                    background: 'rgba(255,255,255,0.95)',
+                    backdropFilter: 'blur(20px)',
+                }}>
+                    <Stack align="center" gap="lg">
+                        <ThemeIcon size={60} radius="xl" color="blue" variant="light">
+                            <IconLock size={28} />
+                        </ThemeIcon>
+                        <div style={{ textAlign: 'center' }}>
+                            <Text size="xl" fw={800}>관리자 로그인</Text>
+                            <Text size="sm" c="dimmed" mt={4}>대대손손 관리자 페이지</Text>
+                        </div>
+
+                        <PasswordInput
+                            placeholder="비밀번호를 입력하세요"
+                            value={password}
+                            onChange={(e) => { setPassword(e.target.value); setLoginError(''); }}
+                            onKeyDown={(e) => e.key === 'Enter' && handleLogin()}
+                            error={loginError}
+                            w="100%"
+                            size="md"
+                        />
+
+                        <Button
+                            fullWidth
+                            size="md"
+                            onClick={handleLogin}
+                            loading={loginLoading}
+                            color="blue"
+                            radius="md"
+                        >
+                            로그인
+                        </Button>
+                    </Stack>
+                </Paper>
+            </Box>
+        );
+    }
+
+    // 인증됨 → 어드민 대시보드
     const navItems = [
         { label: '대시보드', icon: IconDashboard, link: '/admin' },
         { label: '시설 데이터 관리', icon: IconDatabase, link: '/admin/upload' },
@@ -52,11 +158,6 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         { label: '제휴문의관리', icon: IconBriefcase, link: '/admin/partnership' },
         { label: '설정', icon: IconSettings, link: '/admin/settings' },
     ];
-
-    const handleNavClick = (link: string) => {
-        router.push(link);
-        if (isMobile) close(); // 모바일에서 네비 클릭 후 자동 닫힘
-    };
 
     return (
         <AppShell
@@ -137,7 +238,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                         variant="subtle"
                         color="red"
                         c="red.4"
-                        onClick={() => alert('로그아웃 되었습니다.')}
+                        onClick={handleLogout}
                         styles={{ root: { borderRadius: 8, justifyContent: collapsed ? 'center' : 'flex-start' } }}
                     />
                 </Tooltip>

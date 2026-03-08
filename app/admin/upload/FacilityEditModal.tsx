@@ -536,7 +536,7 @@ function FacilityEditModal({ facilityToEdit, opened, onClose, onSaved, onNavigat
         // priceVerified를 true로 설정
         setEditForm(prev => ({
             ...prev,
-            priceInfo: { ...prev.priceInfo, priceVerified: true }
+            priceInfo: { priceTable: {}, ...prev.priceInfo, priceVerified: true as const }
         }));
         // 저장 로직 간소화 - pricing JSON만 업데이트
         try {

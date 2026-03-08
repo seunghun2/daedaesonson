@@ -1,4 +1,4 @@
-export const SUPABASE_URL = 'https://jbydmhfuqnpukfutvrgs.supabase.co';
+export const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://jbydmhfuqnpukfutvrgs.supabase.co';
 export const STORAGE_PATH = '/storage/v1/object/public/facilities/';
 
 /**

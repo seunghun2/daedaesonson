@@ -269,6 +269,21 @@ export interface Facility {
 
     // 리뷰 (확장)
     reviews?: Review[];
+
+    // 런타임 확장 필드 (API에서 동적으로 추가)
+    thumbnail?: string;             // 대표 이미지 URL
+    viewCount?: number;             // 조회수
+    inquiries?: any[];              // 문의 목록
+    representativePrice?: number;   // 대표 가격 (숫자)
+    minPrice?: number;              // 최소 가격
+
+    // 내부 메타 (어드민 전용)
+    _hasDetailedPrices?: boolean;   // 상세 가격 존재 여부
+    _detailedSource?: string;       // 상세 데이터 출처
+    _meta?: {
+        categoryCount?: number;
+        itemCount?: number;
+    };
 }
 
 export interface ReviewReply {

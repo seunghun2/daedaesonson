@@ -156,7 +156,7 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
         try { sessionStorage.setItem('facilitiesCache', JSON.stringify(initialFacilities)); } catch { }
       };
       if ('requestIdleCallback' in window) {
-        (window as any).requestIdleCallback(save);
+        window.requestIdleCallback(save);
       } else {
         setTimeout(save, 100);
       }
@@ -177,8 +177,8 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
 
   // 📊 GA4: 홈페이지 페이지뷰
   useEffect(() => {
-    if (typeof window !== 'undefined' && (window as any).gtag) {
-      (window as any).gtag('event', 'page_view', {
+    if (typeof window !== 'undefined' && window.gtag) {
+      window.gtag('event', '홈_페이지_조회', {
         page_title: '홈 - 지도',
         page_location: window.location.href,
         page_path: '/'
@@ -554,7 +554,7 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
         address: facility.address,
         category: facility.category,
         minPrice: facility.priceRange?.min || 0,
-        thumbnail: (facility as any).thumbnail || facility.imageGallery?.[0],
+        thumbnail: facility.thumbnail || facility.imageGallery?.[0],
         visitedAt: Date.now(),
       });
       // 최대 20개
@@ -671,9 +671,9 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
                         setSearchFocused(false);
                         (document.activeElement as HTMLElement)?.blur();
                         // 📊 GA4: 검색 실행
-                        if ((window as any).gtag) {
-                          (window as any).gtag('event', 'search', {
-                            search_term: searchQuery
+                        if (window.gtag) {
+                          window.gtag('event', '검색', {
+                            검색어: searchQuery
                           });
                         }
                       }

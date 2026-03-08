@@ -31,7 +31,7 @@ export default function FacilityCard({ facility, onClick }: FacilityCardProps) {
     let priceLabel = '';
 
     // 1) 신형(standardizedPrices) 먼저 확인
-    const sp = (facility as any).priceInfo?.standardizedPrices;
+    const sp = facility.priceInfo?.standardizedPrices;
     if (Array.isArray(sp) && sp.length > 0) {
         // Preferred category matching
         let preferredKeywords: string[] = [];
@@ -62,7 +62,7 @@ export default function FacilityCard({ facility, onClick }: FacilityCardProps) {
 
     // 2) 구형(priceTable) 확인
     if (displayPrice === '가격문의') {
-        const priceTable = (facility as any).priceInfo?.priceTable || facility.pricing;
+        const priceTable = facility.priceInfo?.priceTable || facility.pricing;
         if (priceTable && typeof priceTable === 'object' && Object.keys(priceTable).length > 0) {
             let preferredKeywords: string[] = [];
             if (facility.category === 'FAMILY_GRAVE') preferredKeywords = ['매장', '묘지', '분양'];
@@ -95,8 +95,8 @@ export default function FacilityCard({ facility, onClick }: FacilityCardProps) {
 
     // 🔥 Fallback: 리스트 API에서는 priceTable을 안 내려줌 → representativePrice 또는 priceRange 사용
     if (displayPrice === '가격문의') {
-        const repPrice = (facility as any).representativePrice || 0;
-        const minPrice = (facility as any).priceRange?.min || 0;
+        const repPrice = facility.representativePrice || 0;
+        const minPrice = facility.priceRange?.min || 0;
         const fallbackPrice = repPrice > 0 ? repPrice : minPrice;
         if (fallbackPrice > 0) {
             const normalizedPrice = fallbackPrice < 10000 ? fallbackPrice * 10000 : fallbackPrice;
@@ -131,7 +131,7 @@ export default function FacilityCard({ facility, onClick }: FacilityCardProps) {
                     {/* Check for valid image URL first */}
                     {(() => {
                         // 🔥 thumbnail을 우선 체크 (초기 데이터)
-                        const rawImg = (facility as any).thumbnail || facility.imageUrl || (Array.isArray(facility.images) ? facility.images[0] : facility.images) || facility.imageGallery?.[0];
+                        const rawImg = facility.thumbnail || facility.imageUrl || (Array.isArray(facility.images) ? facility.images[0] : facility.images) || facility.imageGallery?.[0];
                         const validUrl = getFacilityImageUrl(rawImg);
 
                         if (validUrl) {

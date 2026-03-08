@@ -275,7 +275,7 @@ export default function ReviewsListPage() {
                                     <Group gap="xs" mt="sm" ml={32}>
                                         {review.photos.map((photo: string, idx: number) => (
                                             <Box key={idx} style={{ cursor: 'pointer' }} onClick={() => openImageViewer(review.photos, idx)}>
-                                                <img src={photo} alt="" style={{ width: 100, height: 100, objectFit: 'cover', borderRadius: '8px', border: '1px solid #f1f3f5' }} />
+                                                <img src={photo} alt="리뷰 사진" onError={(e) => { e.currentTarget.style.display = 'none'; }} style={{ width: 100, height: 100, objectFit: 'cover', borderRadius: '8px', border: '1px solid #f1f3f5' }} />
                                             </Box>
                                         ))}
                                     </Group>
@@ -322,7 +322,7 @@ export default function ReviewsListPage() {
                                                     <Group gap={6} mt="xs" ml={26}>
                                                         {reply.photos.map((photo: string, idx: number) => (
                                                             <Box key={idx} style={{ cursor: 'pointer' }} onClick={() => openImageViewer(reply.photos, idx)}>
-                                                                <img src={photo} alt="" style={{ width: 80, height: 80, objectFit: 'cover', borderRadius: '8px', border: '1px solid #dee2e6' }} />
+                                                                <img src={photo} alt="답글 사진" onError={(e) => { e.currentTarget.style.display = 'none'; }} style={{ width: 80, height: 80, objectFit: 'cover', borderRadius: '8px', border: '1px solid #dee2e6' }} />
                                                             </Box>
                                                         ))}
                                                     </Group>
@@ -423,7 +423,7 @@ export default function ReviewsListPage() {
                                 <Group gap={8} mt="sm">
                                     {replyPhotos.map((photo, idx) => (
                                         <Box key={idx} pos="relative" style={{ borderRadius: '10px', overflow: 'hidden' }}>
-                                            <img src={photo} alt="" style={{ width: 64, height: 64, objectFit: 'cover', borderRadius: '10px', border: '1px solid #e9ecef' }} />
+                                            <img src={photo} alt="첨부 사진" onError={(e) => { e.currentTarget.style.display = 'none'; }} style={{ width: 64, height: 64, objectFit: 'cover', borderRadius: '10px', border: '1px solid #e9ecef' }} />
                                             <ActionIcon variant="filled" color="dark" size={18} radius="xl" pos="absolute" top={4} right={4}
                                                 onClick={() => setReplyPhotos(prev => prev.filter((_, i) => i !== idx))}>
                                                 <X size={10} />
@@ -476,7 +476,7 @@ export default function ReviewsListPage() {
                     </Box>
                     <Box style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '60px 16px 16px' }}
                         onClick={closeImageViewer}>
-                        <img src={enlargedImages[enlargedImageIndex]} alt="확대 이미지"
+                        <img src={enlargedImages[enlargedImageIndex]} alt="확대 이미지" onError={(e) => { e.currentTarget.style.display = 'none'; }}
                             onClick={(e) => e.stopPropagation()}
                             style={{ maxWidth: '100%', maxHeight: '85vh', objectFit: 'contain', borderRadius: '8px' }} />
                     </Box>

@@ -1,17 +1,14 @@
-'use server';
-import { createClient } from '@supabase/supabase-js';
+// 정보 수정 요청 API
+import { getSupabaseServer } from '@/lib/supabaseServer';
 import { NextRequest, NextResponse } from 'next/server';
 
-const supabase = createClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.SUPABASE_SERVICE_KEY!
-);
+const supabase = getSupabaseServer();
 
 // POST: 정보 수정 요청 등록
 export async function POST(request: NextRequest) {
     try {
         const body = await request.json();
-        const { facility_id, facility_name, correction_type, content, contact } = body;
+        const { facility_id, facility_name, correction_type, content, contact, name, photos } = body;
 
         if (!facility_id || !facility_name || !correction_type || !content) {
             return NextResponse.json({ error: '필수 항목을 모두 입력해주세요.' }, { status: 400 });
@@ -25,6 +22,9 @@ export async function POST(request: NextRequest) {
                 correction_type,
                 content,
                 contact: contact || null,
+                name: name || null,
+                photos: photos || null,
+                status: 'pending',
             })
             .select()
             .single();

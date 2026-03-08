@@ -921,8 +921,8 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
     useEffect(() => {
         // 🚀 초기 데이터로 렌더링 + thumbnail → imageGallery 매핑
         const enriched = { ...initialFacility };
-        if (!enriched.imageGallery?.length && (enriched as any).thumbnail) {
-            enriched.imageGallery = [(enriched as any).thumbnail];
+        if (!enriched.imageGallery?.length && enriched.thumbnail) {
+            enriched.imageGallery = [enriched.thumbnail];
         }
         setFacility(enriched);
 
@@ -931,15 +931,15 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
         containerRef.current?.parentElement?.scrollTo({ top: 0 });
 
         // 📊 GA4 이벤트 전송 - 시설 상세 조회 (페이지 리포트에 표시)
-        if (typeof window !== 'undefined' && (window as any).gtag) {
-            (window as any).gtag('event', 'page_view', {
+        if (typeof window !== 'undefined' && window.gtag) {
+            window.gtag('event', '시설_상세_조회', {
                 page_title: `${initialFacility.name} - 시설 상세`,
                 page_location: window.location.href,
                 page_path: `/?id=${initialFacility.id}`,
-                facility_id: initialFacility.id,
-                facility_name: initialFacility.name,
-                facility_category: initialFacility.category,
-                is_public: initialFacility.isPublic
+                시설ID: initialFacility.id,
+                시설명: initialFacility.name,
+                카테고리: initialFacility.category,
+                공설여부: initialFacility.isPublic
             });
         }
 
@@ -975,14 +975,14 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
         const hash = facility.id.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
         return 50 + (hash * 17) % 450;
     };
-    const baseCount = (facility as any).viewCount || getInitialViewCount();
+    const baseCount = facility.viewCount || getInitialViewCount();
     // 🚀 즉시 +1 표시 (마운트 시점에 바로)
     const [viewCount, setViewCount] = useState(baseCount + 1);
 
     // 🔥 리뷰/문의 데이터 동기화 (facility prop 변경 시마다 실행)
     useEffect(() => {
         setReviews(facility.reviews || []);
-        setInquiries((facility as any).inquiries || []);
+        setInquiries(facility.inquiries || []);
         setReviewCount(facility.reviews?.length || 0);
         setShowAllInquiries(false);
     }, [facility]);
@@ -1007,7 +1007,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
 
     // Inquiry State (문의 폼)
     const [reviews, setReviews] = useState<Review[]>(facility.reviews || []);
-    const [inquiries, setInquiries] = useState<any[]>((facility as any).inquiries || []);
+    const [inquiries, setInquiries] = useState<any[]>(facility.inquiries || []);
     const [reviewCount, setReviewCount] = useState(facility.reviews?.length || 0);
     const [reviewModalOpened, { open: openReviewModal, close: closeReviewModal }] = useDisclosure(false);
     const [isSubmitting, setIsSubmitting] = useState(false);
@@ -1034,6 +1034,14 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
     const [inquiryOpen, setInquiryOpen] = useState(false);
     const [correctionOpen, setCorrectionOpen] = useState(false);
     const [reviewsOpen, setReviewsOpen] = useState(false);
+
+    // 패널 전환 — 하나 열면 나머지 모두 닫기
+    const closeAllPanels = () => {
+        setInquiryOpen(false);
+        setCorrectionOpen(false);
+        setReviewsOpen(false);
+        closeReviewModal();
+    };
 
     // 대댓글 삭제 모달 상태
     const [deleteReplyModal, setDeleteReplyModal] = useState<{ reviewId: string; replyId: string } | null>(null);
@@ -1328,6 +1336,14 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
             const data = await res.json();
 
             if (res.ok && data.success) {
+                if (window.gtag) {
+                    window.gtag('event', '후기_작성', {
+                        시설ID: facility.id,
+                        시설명: facility.name,
+                        별점: reviewForm.rating,
+                        사진수: reviewForm.photos.length
+                    });
+                }
                 if (data.review) {
                     setReviews(prev => [data.review, ...prev]);
                     setReviewCount(prev => prev + 1);
@@ -1349,8 +1365,8 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
     const handleReviewPhotoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const files = e.target.files;
         if (!files || files.length === 0) return;
-        if (reviewForm.photos.length + files.length > 5) {
-            alert('사진은 최대 5장까지 첨부할 수 있습니다.');
+        if (reviewForm.photos.length + files.length > 10) {
+            alert('사진은 최대 10장까지 첨부할 수 있습니다.');
             return;
         }
         Array.from(files).forEach(file => {
@@ -1469,7 +1485,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                     author: replyNickname,
                     content: replyContent,
                     photos: replyPhotos,
-                    createdAt: new Date().toISOString()
+                    date: new Date().toISOString()
                 };
 
                 setReviews(prev => prev.map(r => {
@@ -1603,7 +1619,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
     // 🚀 imageGallery가 아직 없으면 thumbnail로 즉시 표시 (API 응답 전)
     const rawImages = (facility.imageGallery && facility.imageGallery.length > 0)
         ? facility.imageGallery
-        : ((facility as any).thumbnail ? [(facility as any).thumbnail] : []);
+        : (facility.thumbnail ? [facility.thumbnail] : []);
     const galleryImages = rawImages
         .filter((img: string) => img && typeof img === 'string' && img.trim() !== '')
         .filter((img: string) => img.startsWith('http') || img.startsWith('blob:') || img.startsWith('data:'))
@@ -1738,10 +1754,10 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                     onClick={(e) => {
                                         e.stopPropagation();
                                         e.preventDefault();
-                                        if ((window as any).gtag) {
-                                            (window as any).gtag('event', 'map_navigate', {
-                                                facility_id: facility.id,
-                                                facility_name: facility.name
+                                        if (window.gtag) {
+                                            window.gtag('event', '지도_이동', {
+                                                시설ID: facility.id,
+                                                시설명: facility.name
                                             });
                                         }
                                         if (onMapView && facility.coordinates) {
@@ -1763,10 +1779,10 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                     e.stopPropagation();
                                     e.preventDefault();
                                     navigator.clipboard.writeText(`https://daedaesonson.com/facility/${facility.id}`);
-                                    if ((window as any).gtag) {
-                                        (window as any).gtag('event', 'share_click', {
-                                            facility_id: facility.id,
-                                            facility_name: facility.name
+                                    if (window.gtag) {
+                                        window.gtag('event', '공유_클릭', {
+                                            시설ID: facility.id,
+                                            시설명: facility.name
                                         });
                                     }
                                 }}
@@ -1808,6 +1824,13 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                             onClick={() => {
                                 if (facility.phone) {
                                     window.location.href = `tel:${facility.phone}`;
+                                    if (window.gtag) {
+                                        window.gtag('event', '직접전화_클릭', {
+                                            시설ID: facility.id,
+                                            시설명: facility.name,
+                                            전화번호: facility.phone
+                                        });
+                                    }
                                 }
                             }}
                         >
@@ -1821,6 +1844,13 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                             style={{ display: 'flex', alignItems: 'center', gap: '6px', cursor: 'pointer', padding: '10px 12px', flex: 1, justifyContent: 'center' }}
                             onClick={() => {
                                 setIsFavorited(prev => !prev);
+                                if (window.gtag) {
+                                    window.gtag('event', '찜_토글', {
+                                        시설ID: facility.id,
+                                        시설명: facility.name,
+                                        찜상태: !isFavorited ? '찜함' : '해제'
+                                    });
+                                }
                             }}
                         >
                             <span className="material-symbols-outlined" style={{ fontSize: '18px', color: isFavorited ? '#ff6b6b' : 'white', fontVariationSettings: isFavorited ? "'FILL' 1" : "'FILL' 0", transition: 'all 0.2s ease' }}>favorite</span>
@@ -1833,7 +1863,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                             style={{ display: 'flex', alignItems: 'center', gap: '6px', cursor: 'pointer', padding: '10px 12px', flex: 1, justifyContent: 'center' }}
                             onClick={() => {
                                 if (isDesktop) {
-                                    setReviewsOpen(!reviewsOpen);
+                                    if (reviewsOpen) { setReviewsOpen(false); } else { closeAllPanels(); setReviewsOpen(true); }
                                 } else {
                                     router.push(`/facility/${facility.id}/reviews`);
                                 }
@@ -2414,7 +2444,15 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                 cursor: 'pointer',
                                 textAlign: 'center',
                             }}
-                            onClick={() => setConsultModalOpened(true)}
+                            onClick={() => {
+                                setConsultModalOpened(true);
+                                if ((window as any).gtag) {
+                                    (window as any).gtag('event', '상담_신청_열기', {
+                                        시설ID: facility.id,
+                                        시설명: facility.name
+                                    });
+                                }
+                            }}
                         >
                             <Text style={{ fontSize: 15 }} fw={600} c="brand.6">이 시설에 대해 더 자세히 알아보기</Text>
                         </Box>
@@ -2427,7 +2465,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                         {/* 후기 작성 입력 */}
                         <Paper
                             withBorder radius="md" p="md" mb="lg"
-                            onClick={() => reviewModalOpened ? closeReviewModal() : openReviewModal()}
+                            onClick={() => { if (reviewModalOpened) { closeReviewModal(); } else { closeAllPanels(); openReviewModal(); } }}
                             style={{ cursor: 'pointer', borderColor: '#e9ecef', backgroundColor: '#f8f9fa' }}
                         >
                             <Group justify="space-between">
@@ -2452,7 +2490,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                                     <span className="material-symbols-outlined" style={{ fontSize: '24px', color: '#adb5bd' }}>account_circle</span>
                                                 </Box>
                                                 <Text size="sm" fw={600} c="dark.8">{review.author}</Text>
-                                                <Text size="xs" c="dimmed">· {formatRelativeTime(review.createdAt || review.date)}</Text>
+                                                <Text size="xs" c="dimmed">· {formatRelativeTime(review.date)}</Text>
                                             </Group>
                                             <ActionIcon variant="transparent" color="gray" size="sm" onClick={() => openDeleteReviewModal(review.id)}>
                                                 <Trash size={14} />
@@ -2465,7 +2503,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                         {review.photos && review.photos.length > 0 && (
                                             <Group gap="xs" mb="sm">
                                                 {review.photos.map((photo, idx) => (
-                                                    <Box key={idx} style={{ cursor: 'pointer' }} onClick={() => openImageViewer(review.photos, idx)}>
+                                                    <Box key={idx} style={{ cursor: 'pointer' }} onClick={() => openImageViewer(review.photos ?? [], idx)}>
                                                         <Image src={photo} w={100} h={100} radius="md" style={{ objectFit: 'cover', border: '1px solid #f1f3f5' }} />
                                                     </Box>
                                                 ))}
@@ -2496,7 +2534,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                                 setReplyPassword('');
                                             }}>
                                                 <span className="material-symbols-outlined" style={{ fontSize: '18px', color: '#adb5bd' }}>chat_bubble</span>
-                                                <Text size="xs" c="dimmed">답글달기 {review.replies?.length > 0 ? review.replies.length : ''}</Text>
+                                                <Text size="xs" c="dimmed">답글달기 {(review.replies?.length ?? 0) > 0 ? review.replies?.length : ''}</Text>
                                             </Group>
                                         </Group>
 
@@ -2521,7 +2559,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                                             <Group gap={6} mt="xs" ml={26}>
                                                                 {reply.photos.map((photo: string, idx: number) => (
                                                                     <Box key={idx} style={{ cursor: 'pointer' }} onClick={() => openImageViewer(reply.photos, idx)}>
-                                                                        <img src={photo} alt="" style={{ width: 80, height: 80, objectFit: 'cover', borderRadius: '8px', border: '1px solid #dee2e6' }} />
+                                                                        <img src={photo} alt="리뷰 사진" onError={(e) => { e.currentTarget.style.display = 'none'; }} style={{ width: 80, height: 80, objectFit: 'cover', borderRadius: '8px', border: '1px solid #dee2e6' }} />
                                                                     </Box>
                                                                 ))}
                                                             </Group>
@@ -2580,7 +2618,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                     }}
                                     onClick={() => {
                                         if (isDesktop) {
-                                            setReviewsOpen(!reviewsOpen);
+                                            if (reviewsOpen) { setReviewsOpen(false); } else { closeAllPanels(); setReviewsOpen(true); }
                                         } else {
                                             router.push(`/facility/${facility.id}/reviews`);
                                         }
@@ -2604,11 +2642,11 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                 textAlign: 'center',
                             }}
                             onClick={() => {
-                                setInquiryOpen(!inquiryOpen);
+                                if (inquiryOpen) { setInquiryOpen(false); } else { closeAllPanels(); setInquiryOpen(true); }
                                 if ((window as any).gtag) {
-                                    (window as any).gtag('event', 'inquiry_open', {
-                                        facility_id: facility.id,
-                                        facility_name: facility.name
+                                    (window as any).gtag('event', '문의_열기', {
+                                        시설ID: facility.id,
+                                        시설명: facility.name
                                     });
                                 }
                             }}
@@ -2679,17 +2717,22 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                                             justifyContent: 'center',
                                                         }}
                                                     >
-                                                        <img
-                                                            src={thumbUrl}
-                                                            alt={rec.name}
-                                                            loading="lazy"
-                                                            style={{
-                                                                width: hasImage ? '100%' : 32,
-                                                                height: hasImage ? '100%' : 16,
-                                                                objectFit: 'cover',
-                                                                opacity: hasImage ? 1 : 0.3,
-                                                            }}
-                                                        />
+                                                        {hasImage ? (
+                                                            <NextImage
+                                                                src={thumbUrl}
+                                                                alt={rec.name}
+                                                                width={48}
+                                                                height={48}
+                                                                style={{ objectFit: 'cover', width: '100%', height: '100%' }}
+                                                                loading="lazy"
+                                                            />
+                                                        ) : (
+                                                            <img
+                                                                src={thumbUrl}
+                                                                alt={rec.name}
+                                                                style={{ width: 32, height: 16, objectFit: 'cover', opacity: 0.3 }}
+                                                            />
+                                                        )}
                                                     </Box>
                                                     <Box style={{ flex: 1, minWidth: 0 }}>
                                                         <Text size="sm" fw={600} lineClamp={1}>{rec.name}</Text>
@@ -2761,7 +2804,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                         <Box mx={-16} style={{ height: 1, backgroundColor: 'rgba(255,255,255,0.08)' }} />
 
                         {/* 시설 정보수정 요청 버튼 */}
-                        <Box py="lg" onClick={() => setCorrectionOpen(true)} style={{ cursor: 'pointer' }}>
+                        <Box py="lg" onClick={() => { closeAllPanels(); setCorrectionOpen(true); }} style={{ cursor: 'pointer' }}>
                             <Text style={{ fontSize: 16 }} fw={600} c="rgba(255,255,255,0.85)">정보 수정 요청하기</Text>
                         </Box>
                         {/* ── 구분선 ── */}
@@ -4094,34 +4137,15 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                             >
                                 <LoadingOverlay visible={isSubmitting} />
 
-                                {/* 헤더 */}
-                                <Box
-                                    px="md"
-                                    py="sm"
-                                    style={{
-                                        borderBottom: '1px solid #f1f3f5',
-                                        display: 'flex',
-                                        alignItems: 'center',
-                                        justifyContent: 'space-between',
-                                        flexShrink: 0,
-                                        height: 56,
-                                    }}
-                                >
-                                    <Box w={36} />
-
-                                    <Text size="md" fw={600}>후기 작성</Text>
-
-                                    <Button
-                                        variant="filled"
-                                        color="brand"
-                                        size="xs"
-                                        radius="md"
-                                        fw={600}
-                                        onClick={handleSubmitReview}
-                                        disabled={reviewForm.rating === 0 || !reviewForm.content.trim() || reviewForm.password.length < 4}
-                                    >
-                                        등록
-                                    </Button>
+                                {/* 헤더 — 문의 패널과 동일 톤 */}
+                                <Box p="md" style={{ borderBottom: '1px solid #f1f3f5', flexShrink: 0 }}>
+                                    <Group justify="space-between" align="center">
+                                        <Text fw={700} size="lg">후기 작성</Text>
+                                        <ActionIcon variant="subtle" color="dark" onClick={() => closeReviewModal()}>
+                                            <X size={20} />
+                                        </ActionIcon>
+                                    </Group>
+                                    <Text size="xs" c="dimmed" mt={4}>{facility.name}</Text>
                                 </Box>
 
                                 {/* 컨텐츠 영역 */}
@@ -4210,7 +4234,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                                 >
                                                     <Camera size={22} color="#868e96" strokeWidth={1.5} />
                                                     <Text size="xs" c="dimmed" mt={2}>
-                                                        {reviewForm.photos.length}/5
+                                                        {reviewForm.photos.length}/10
                                                     </Text>
                                                 </Box>
 
@@ -4269,6 +4293,22 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                                 label: { fontSize: 14, fontWeight: 500, marginBottom: 4 },
                                             }}
                                         />
+                                    </Box>
+
+                                    {/* 등록 버튼 */}
+                                    <Box px="md" py="md">
+                                        <Button
+                                            fullWidth
+                                            size="lg"
+                                            color="brand"
+                                            radius="xl"
+                                            fw={600}
+                                            onClick={handleSubmitReview}
+                                            disabled={reviewForm.rating === 0 || !reviewForm.content.trim() || reviewForm.password.length < 4}
+                                            style={{ height: 52, fontSize: 16 }}
+                                        >
+                                            등록하기
+                                        </Button>
                                     </Box>
                                 </Box>
                             </Box>
@@ -4773,7 +4813,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                         <Group gap={8} mt="sm">
                                             {replyPhotos.map((photo, idx) => (
                                                 <Box key={idx} pos="relative" style={{ borderRadius: '10px', overflow: 'hidden' }}>
-                                                    <img src={photo} alt="" style={{ width: 64, height: 64, objectFit: 'cover', borderRadius: '10px', border: '1px solid #e9ecef' }} />
+                                                    <img src={photo} alt="수정요청 사진" onError={(e) => { e.currentTarget.style.display = 'none'; }} style={{ width: 64, height: 64, objectFit: 'cover', borderRadius: '10px', border: '1px solid #e9ecef' }} />
                                                     <ActionIcon
                                                         variant="filled"
                                                         color="dark"

@@ -125,6 +125,20 @@ export default function RootLayout({
             `,
           }}
         />
+        {/* 📊 Microsoft Clarity: 사용자 행동 분석 */}
+        <Script
+          id="clarity-init"
+          strategy="afterInteractive"
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function(c,l,a,r,i,t,y){
+                c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+                t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+                y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+              })(window, document, "clarity", "script", "vsfs39zhhi");
+            `,
+          }}
+        />
         {/* 🚀 더블탭 차단: afterInteractive로 이동 */}
         <Script
           id="prevent-doubletap"

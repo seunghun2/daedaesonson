@@ -56,8 +56,8 @@ function ListPageContent() {
 
     // 📊 GA4: 리스트 페이지뷰
     useEffect(() => {
-        if (typeof window !== 'undefined' && (window as any).gtag) {
-            (window as any).gtag('event', 'page_view', {
+        if (typeof window !== 'undefined' && window.gtag) {
+            window.gtag('event', '리스트_페이지_조회', {
                 page_title: `리스트 - ${regionName}`,
                 page_location: window.location.href,
                 page_path: '/list'

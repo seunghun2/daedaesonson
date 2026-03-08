@@ -97,8 +97,8 @@ export default function InquiriesClient({ initialInquiries, facilities = [] }: I
 
     // 📊 GA4: 문의 페이지뷰
     useEffect(() => {
-        if (typeof window !== 'undefined' && (window as any).gtag) {
-            (window as any).gtag('event', 'page_view', {
+        if (typeof window !== 'undefined' && window.gtag) {
+            window.gtag('event', '문의_페이지_조회', {
                 page_title: '문의 목록',
                 page_location: window.location.href,
                 page_path: '/inquiries'
