@@ -6,6 +6,7 @@ import { Image, Text, Badge, Group, Button, Stack, Box, Paper, Modal, Tabs, Coll
 import { useDisclosure, useMediaQuery } from '@mantine/hooks';
 import { Car, Utensils, Accessibility, Store, Navigation, Globe, ChevronLeft, ChevronRight, TrendingUp, ChevronDown, ChevronUp, Star, Pencil, Camera, X, ImageIcon, Plus, Trash, Archive, Mountain, Trees, Layers, Lock, Unlock, Check, ExternalLink, Flame } from 'lucide-react';
 import InquiryPanel from './InquiryPanel';
+import CorrectionRequestModal from './CorrectionRequestModal';
 import ScrollableTabsList from '@/components/ScrollableTabsList';
 import ReviewsPanel from './ReviewsPanel';
 import { Facility, FACILITY_CATEGORY_LABELS, Review } from '@/types';
@@ -1031,6 +1032,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
     const [replyPassword, setReplyPassword] = useState('');
     const [likedReviews, setLikedReviews] = useState<Set<string>>(new Set());
     const [inquiryOpen, setInquiryOpen] = useState(false);
+    const [correctionOpen, setCorrectionOpen] = useState(false);
     const [reviewsOpen, setReviewsOpen] = useState(false);
 
     // 대댓글 삭제 모달 상태
@@ -2340,7 +2342,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                         </Box>
                     )}
 
-                    {/* 7. 시설 소개 */}
+                    {/* 7. 시설 소개 - 숨김처리 (아직 미사용)
                     {
                         facility.description && facility.description !== phoneNumber && (
                             <Box bg="white" p="md" style={{ borderBottom: '8px solid #f8f9fa', boxShadow: 'inset 0 -1px 0 #e9ecef' }}>
@@ -2349,6 +2351,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                             </Box>
                         )
                     }
+                    */}
 
                     {/* 8. 가격 정보 (상세) - 리팩토링된 컴포넌트 사용 */}
                     <PriceInfoSection priceInfo={facility.priceInfo} hasPrice={hasPrice} facilityName={facility.name} websiteUrl={facility.websiteUrl} />
@@ -2758,14 +2761,8 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                         <Box mx={-16} style={{ height: 1, backgroundColor: 'rgba(255,255,255,0.08)' }} />
 
                         {/* 시설 정보수정 요청 버튼 */}
-                        <Box py="lg">
-                            <Box
-                                component="a"
-                                href={`mailto:seunghun.dev@gmail.com?subject=${encodeURIComponent(`[정보수정] ${facility.name}`)}&body=${encodeURIComponent(`시설명: ${facility.name}\n\n수정이 필요한 내용:\n\n`)}`}
-                                style={{ textDecoration: 'none', cursor: 'pointer' }}
-                            >
-                                <Text style={{ fontSize: 16 }} fw={600} c="rgba(255,255,255,0.85)">정보 수정 요청하기</Text>
-                            </Box>
+                        <Box py="lg" onClick={() => setCorrectionOpen(true)} style={{ cursor: 'pointer' }}>
+                            <Text style={{ fontSize: 16 }} fw={600} c="rgba(255,255,255,0.85)">정보 수정 요청하기</Text>
                         </Box>
                         {/* ── 구분선 ── */}
                         <Box mx={-16} style={{ height: 1, backgroundColor: 'rgba(255,255,255,0.08)' }} />
@@ -2787,6 +2784,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
 
                     {/* Story Panel Overlay */}
                     <InquiryPanel facility={facility} isOpen={inquiryOpen} onClose={() => { setInquiryOpen(false); document.body.style.overflow = ''; document.body.style.position = ''; document.body.style.touchAction = ''; }} allFacilities={allFacilities} />
+                    <CorrectionRequestModal facilityId={facility.id} facilityName={facility.name} isOpen={correctionOpen} onClose={() => setCorrectionOpen(false)} />
                     <ReviewsPanel facility={facility} isOpen={reviewsOpen} onClose={() => setReviewsOpen(false)} />
 
                     {/* 상담 신청 - 모바일: Modal fullScreen, PC: Drawer 스타일 */}

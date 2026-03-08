@@ -163006,7 +163006,7 @@
               "feeType": "USAGE",
               "grade": "1위 (일반)",
               "isRepresentative": true,
-              "groupType": "서관(일반실/고급실)"
+              "groupType": "서관(일반실)"
             },
             {
               "name": "9단",
@@ -163014,7 +163014,7 @@
               "feeType": "USAGE",
               "grade": "1위 (고급)",
               "isRepresentative": false,
-              "groupType": "서관(일반실/고급실)"
+              "groupType": "서관(고급실)"
             },
             {
               "name": "8단",
@@ -163022,7 +163022,7 @@
               "feeType": "USAGE",
               "grade": "1위 (일반)",
               "isRepresentative": false,
-              "groupType": "서관(일반실/고급실)"
+              "groupType": "서관(일반실)"
             },
             {
               "name": "8단",
@@ -163030,7 +163030,7 @@
               "feeType": "USAGE",
               "grade": "1위 (고급)",
               "isRepresentative": false,
-              "groupType": "서관(일반실/고급실)"
+              "groupType": "서관(고급실)"
             },
             {
               "name": "7단",
@@ -163038,7 +163038,7 @@
               "feeType": "USAGE",
               "grade": "1위 (일반)",
               "isRepresentative": false,
-              "groupType": "서관(일반실/고급실)"
+              "groupType": "서관(일반실)"
             },
             {
               "name": "7단",
@@ -163046,7 +163046,7 @@
               "feeType": "USAGE",
               "grade": "1위 (고급)",
               "isRepresentative": false,
-              "groupType": "서관(일반실/고급실)"
+              "groupType": "서관(고급실)"
             },
             {
               "name": "6단",
@@ -163054,7 +163054,7 @@
               "feeType": "USAGE",
               "grade": "1위 (일반)",
               "isRepresentative": false,
-              "groupType": "서관(일반실/고급실)"
+              "groupType": "서관(일반실)"
             },
             {
               "name": "6단",
@@ -163062,7 +163062,7 @@
               "feeType": "USAGE",
               "grade": "1위 (고급)",
               "isRepresentative": false,
-              "groupType": "서관(일반실/고급실)"
+              "groupType": "서관(고급실)"
             },
             {
               "name": "5단",
@@ -163070,7 +163070,7 @@
               "feeType": "USAGE",
               "grade": "1위 (일반)",
               "isRepresentative": false,
-              "groupType": "서관(일반실/고급실)"
+              "groupType": "서관(일반실)"
             },
             {
               "name": "5단",
@@ -163078,7 +163078,7 @@
               "feeType": "USAGE",
               "grade": "1위 (고급)",
               "isRepresentative": false,
-              "groupType": "서관(일반실/고급실)"
+              "groupType": "서관(고급실)"
             },
             {
               "name": "4단",
@@ -163086,7 +163086,7 @@
               "feeType": "USAGE",
               "grade": "1위 (일반)",
               "isRepresentative": false,
-              "groupType": "서관(일반실/고급실)"
+              "groupType": "서관(일반실)"
             },
             {
               "name": "4단",
@@ -163094,7 +163094,7 @@
               "feeType": "USAGE",
               "grade": "1위 (고급)",
               "isRepresentative": false,
-              "groupType": "서관(일반실/고급실)"
+              "groupType": "서관(고급실)"
             },
             {
               "name": "3단",
@@ -163102,7 +163102,7 @@
               "feeType": "USAGE",
               "grade": "1위 (일반)",
               "isRepresentative": false,
-              "groupType": "서관(일반실/고급실)"
+              "groupType": "서관(일반실)"
             },
             {
               "name": "3단",
@@ -163110,7 +163110,7 @@
               "feeType": "USAGE",
               "grade": "1위 (고급)",
               "isRepresentative": false,
-              "groupType": "서관(일반실/고급실)"
+              "groupType": "서관(고급실)"
             },
             {
               "name": "2단",
@@ -163118,7 +163118,7 @@
               "feeType": "USAGE",
               "grade": "1위 (일반)",
               "isRepresentative": false,
-              "groupType": "서관(일반실/고급실)"
+              "groupType": "서관(일반실)"
             },
             {
               "name": "2단",
@@ -163126,7 +163126,7 @@
               "feeType": "USAGE",
               "grade": "1위 (고급)",
               "isRepresentative": false,
-              "groupType": "서관(일반실/고급실)"
+              "groupType": "서관(고급실)"
             },
             {
               "name": "1단",
@@ -163134,7 +163134,7 @@
               "feeType": "USAGE",
               "grade": "1위 (일반)",
               "isRepresentative": false,
-              "groupType": "서관(일반실/고급실)"
+              "groupType": "서관(일반실)"
             },
             {
               "name": "1단",
@@ -163142,7 +163142,7 @@
               "feeType": "USAGE",
               "grade": "1위 (고급)",
               "isRepresentative": false,
-              "groupType": "서관(일반실/고급실)"
+              "groupType": "서관(고급실)"
             },
             {
               "name": "9단",
@@ -163150,7 +163150,7 @@
               "feeType": "USAGE",
               "grade": "1위 (일반)",
               "isRepresentative": true,
-              "groupType": "동관(일반실/고급실)"
+              "groupType": "동관(일반실)"
             },
             {
               "name": "9단",
@@ -163158,7 +163158,7 @@
               "feeType": "USAGE",
               "grade": "1위 (고급)",
               "isRepresentative": false,
-              "groupType": "동관(일반실/고급실)"
+              "groupType": "동관(고급실)"
             },
             {
               "name": "8단",
@@ -163166,7 +163166,7 @@
               "feeType": "USAGE",
               "grade": "1위 (일반)",
               "isRepresentative": false,
-              "groupType": "동관(일반실/고급실)"
+              "groupType": "동관(일반실)"
             },
             {
               "name": "8단",
@@ -163174,7 +163174,7 @@
               "feeType": "USAGE",
               "grade": "1위 (고급)",
               "isRepresentative": false,
-              "groupType": "동관(일반실/고급실)"
+              "groupType": "동관(고급실)"
             },
             {
               "name": "7단",
@@ -163182,7 +163182,7 @@
               "feeType": "USAGE",
               "grade": "1위 (일반)",
               "isRepresentative": false,
-              "groupType": "동관(일반실/고급실)"
+              "groupType": "동관(일반실)"
             },
             {
               "name": "7단",
@@ -163190,7 +163190,7 @@
               "feeType": "USAGE",
               "grade": "1위 (고급)",
               "isRepresentative": false,
-              "groupType": "동관(일반실/고급실)"
+              "groupType": "동관(고급실)"
             },
             {
               "name": "6단",
@@ -163198,7 +163198,7 @@
               "feeType": "USAGE",
               "grade": "1위 (일반)",
               "isRepresentative": false,
-              "groupType": "동관(일반실/고급실)"
+              "groupType": "동관(일반실)"
             },
             {
               "name": "6단",
@@ -163206,7 +163206,7 @@
               "feeType": "USAGE",
               "grade": "1위 (고급)",
               "isRepresentative": false,
-              "groupType": "동관(일반실/고급실)"
+              "groupType": "동관(고급실)"
             },
             {
               "name": "5단",
@@ -163214,7 +163214,7 @@
               "feeType": "USAGE",
               "grade": "1위 (일반)",
               "isRepresentative": false,
-              "groupType": "동관(일반실/고급실)"
+              "groupType": "동관(일반실)"
             },
             {
               "name": "5단",
@@ -163222,7 +163222,7 @@
               "feeType": "USAGE",
               "grade": "1위 (고급)",
               "isRepresentative": false,
-              "groupType": "동관(일반실/고급실)"
+              "groupType": "동관(고급실)"
             },
             {
               "name": "4단",
@@ -163230,7 +163230,7 @@
               "feeType": "USAGE",
               "grade": "1위 (일반)",
               "isRepresentative": false,
-              "groupType": "동관(일반실/고급실)"
+              "groupType": "동관(일반실)"
             },
             {
               "name": "4단",
@@ -163238,7 +163238,7 @@
               "feeType": "USAGE",
               "grade": "1위 (고급)",
               "isRepresentative": false,
-              "groupType": "동관(일반실/고급실)"
+              "groupType": "동관(고급실)"
             },
             {
               "name": "3단",
@@ -163246,7 +163246,7 @@
               "feeType": "USAGE",
               "grade": "1위 (일반)",
               "isRepresentative": false,
-              "groupType": "동관(일반실/고급실)"
+              "groupType": "동관(일반실)"
             },
             {
               "name": "3단",
@@ -163254,7 +163254,7 @@
               "feeType": "USAGE",
               "grade": "1위 (고급)",
               "isRepresentative": false,
-              "groupType": "동관(일반실/고급실)"
+              "groupType": "동관(고급실)"
             },
             {
               "name": "2단",
@@ -163262,7 +163262,7 @@
               "feeType": "USAGE",
               "grade": "1위 (일반)",
               "isRepresentative": false,
-              "groupType": "동관(일반실/고급실)"
+              "groupType": "동관(일반실)"
             },
             {
               "name": "2단",
@@ -163270,7 +163270,7 @@
               "feeType": "USAGE",
               "grade": "1위 (고급)",
               "isRepresentative": false,
-              "groupType": "동관(일반실/고급실)"
+              "groupType": "동관(고급실)"
             },
             {
               "name": "1단",
@@ -163278,7 +163278,7 @@
               "feeType": "USAGE",
               "grade": "1위 (일반)",
               "isRepresentative": false,
-              "groupType": "동관(일반실/고급실)"
+              "groupType": "동관(일반실)"
             },
             {
               "name": "1단",
@@ -163286,7 +163286,7 @@
               "feeType": "USAGE",
               "grade": "1위 (고급)",
               "isRepresentative": false,
-              "groupType": "동관(일반실/고급실)"
+              "groupType": "동관(고급실)"
             }
           ]
         },
@@ -163416,140 +163416,6 @@
               "feeType": "USAGE",
               "grade": "20위",
               "isRepresentative": false
-            }
-          ]
-        },
-        {
-          "serviceType": "NATURAL",
-          "subType": "봉안당",
-          "unit": "원",
-          "rows": [
-            {
-              "name": "9단",
-              "price": 2000000,
-              "feeType": "USAGE",
-              "grade": "1위 (일반)",
-              "isRepresentative": true
-            },
-            {
-              "name": "9단",
-              "price": 2000000,
-              "feeType": "USAGE",
-              "grade": "1위 (고급)",
-              "isRepresentative": false
-            },
-            {
-              "name": "8단",
-              "price": 3000000,
-              "feeType": "USAGE",
-              "grade": "1위 (일반)",
-              "isRepresentative": false
-            },
-            {
-              "name": "8단",
-              "price": 3000000,
-              "feeType": "USAGE",
-              "grade": "1위 (고급)",
-              "isRepresentative": false
-            },
-            {
-              "name": "7단",
-              "price": 4500000,
-              "feeType": "USAGE",
-              "grade": "1위 (일반)",
-              "isRepresentative": false
-            },
-            {
-              "name": "7단",
-              "price": 5000000,
-              "feeType": "USAGE",
-              "grade": "1위 (고급)",
-              "isRepresentative": false
-            },
-            {
-              "name": "6단",
-              "price": 5500000,
-              "feeType": "USAGE",
-              "grade": "1위 (일반)",
-              "isRepresentative": false
-            },
-            {
-              "name": "6단",
-              "price": 6500000,
-              "feeType": "USAGE",
-              "grade": "1위 (고급)",
-              "isRepresentative": false
-            },
-            {
-              "name": "5단",
-              "price": 6000000,
-              "feeType": "USAGE",
-              "grade": "1위 (일반)",
-              "isRepresentative": false
-            },
-            {
-              "name": "5단",
-              "price": 7000000,
-              "feeType": "USAGE",
-              "grade": "1위 (고급)",
-              "isRepresentative": false
-            },
-            {
-              "name": "4단",
-              "price": 5500000,
-              "feeType": "USAGE",
-              "grade": "1위 (일반)",
-              "isRepresentative": false
-            },
-            {
-              "name": "4단",
-              "price": 6500000,
-              "feeType": "USAGE",
-              "grade": "1위 (고급)",
-              "isRepresentative": false
-            },
-            {
-              "name": "3단",
-              "price": 5000000,
-              "feeType": "USAGE",
-              "grade": "1위 (일반)",
-              "isRepresentative": false
-            },
-            {
-              "name": "3단",
-              "price": 6000000,
-              "feeType": "USAGE",
-              "grade": "1위 (고급)",
-              "isRepresentative": false
-            },
-            {
-              "name": "2단",
-              "price": 4000000,
-              "feeType": "USAGE",
-              "grade": "1위 (일반)",
-              "isRepresentative": false
-            },
-            {
-              "name": "2단",
-              "price": 4000000,
-              "feeType": "USAGE",
-              "grade": "1위 (고급)",
-              "isRepresentative": false
-            },
-            {
-              "name": "1단",
-              "price": 3000000,
-              "feeType": "USAGE",
-              "grade": "1위 (일반)",
-              "isRepresentative": false
-            },
-            {
-              "name": "1단",
-              "price": 3000000,
-              "feeType": "USAGE",
-              "grade": "1위 (고급)",
-              "isRepresentative": false,
-              "note": "부부단 가격은 위 가격의 2배입니다.좌측이 일반실, 우측이 고급실 가격입니다.종교 관계없이 이용할 수 있는 안치 공간과 기독교, 천주교 전용관으로 구분됩니다.예배실(기도실)이 있어 자유롭게 이용할 수 있어요."
             }
           ]
         }
