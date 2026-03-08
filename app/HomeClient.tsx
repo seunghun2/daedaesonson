@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useMemo, useEffect, useRef, Suspense } from 'react';
+import { useState, useMemo, useEffect, useRef, useTransition, Suspense } from 'react';
 import { Box, Flex, useMantineTheme, TextInput, Group, Text, ThemeIcon, ActionIcon, ScrollArea, Stack, Loader, Center, Button } from '@mantine/core';
 import { useMediaQuery } from '@mantine/hooks';
 import { Search, MapPin, Building, MessageCircle, Clock, Info, User, ChevronLeft } from 'lucide-react';
@@ -82,6 +82,7 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
 
   // 상태 관리
   const [activeCategory, setActiveCategory] = useState<string[]>(['all']);
+  const [isPending, startTransition] = useTransition();
   const [institutionFilter, setInstitutionFilter] = useState<'all' | 'public' | 'private'>('all'); // 공설/사설 필터
   const [selectedFacility, setSelectedFacility] = useState<Facility | null>(null);
   const [mobileView, setMobileView] = useState<'map' | 'list'>('map');
@@ -394,23 +395,25 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
     setCurrentBounds(bounds);
   };
 
-  // 1. 지도에 표시할 데이터 (Bound 변경에 영향받지 않음 -> 마커 리렌더링 방지)
-  // 🚫 검색어로 마커가 사라지지 않도록 - 카테고리만 필터링
+  // 🚀 Step 1: 기본 필터 (dbFacilities 변경 시에만 재계산 → 탭 클릭 시 건너뜀!)
+  const baseFacilities = useMemo(() => {
+    return dbFacilities.filter(f =>
+      f.isActive !== false &&
+      f.category !== 'FUNERAL_HOME'
+    );
+  }, [dbFacilities]);
+
+  // 🚀 Step 2: 카테고리 + 공설/사설 필터 (탭 클릭 시 이것만 재실행 → 가벼움!)
   const filteredMapFacilities = useMemo(() => {
-    let base = dbFacilities;
-
-    // 0. 마커 off된 시설 제외 (어드민에서 isActive: false 설정)
-    base = base.filter(f => f.isActive !== false);
-
-    // 0-1. 장례식장 기본 제외
-    base = base.filter(f => f.category !== 'FUNERAL_HOME');
+    let base = baseFacilities;
 
     // 1. 카테고리 (다중 선택)
     if (!activeCategory.includes('all')) {
       const catMap: Record<string, string> = {
         'charnel': 'CHARNEL_HOUSE',
         'natural': 'NATURAL_BURIAL',
-        'park': 'FAMILY_GRAVE'
+        'park': 'FAMILY_GRAVE',
+        'crematorium': 'CREMATORIUM'
       };
       const selectedDbCategories = activeCategory
         .filter(c => catMap[c])
@@ -432,10 +435,8 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
       });
     }
 
-    // ❌ 검색어 필터링 제거 - 마커는 항상 표시되어야 함
-
     return base;
-  }, [dbFacilities, activeCategory, institutionFilter]);
+  }, [baseFacilities, activeCategory, institutionFilter]);
 
   // 2. 리스트에 표시할 데이터 (지도 데이터 + 현재 Viewport filtering + 정렬)
   const finalFacilities = useMemo(() => {
@@ -853,7 +854,7 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
           </Group>
 
           {/* PC 필터 버튼 (다중 선택) - PC 상세보기 시 숨김 */}
-          <Group gap={6} mt="sm" align="center" style={{ display: (!isMobile && selectedFacility) ? 'none' : undefined }}>
+          <div style={{ display: (!isMobile && selectedFacility) ? 'none' : 'flex', gap: 6, marginTop: 8, alignItems: 'center', overflowX: 'auto', scrollbarWidth: 'none', msOverflowStyle: 'none', WebkitOverflowScrolling: 'touch' }}>
             {/* 전체 버튼 */}
             <button
               onClick={() => setActiveCategory(['all'])}
@@ -868,20 +869,23 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
                 cursor: 'pointer',
                 transition: 'all 0.2s',
                 paddingLeft: '16px',
-                paddingRight: '16px'
+                paddingRight: '16px',
+                flexShrink: 0,
+                whiteSpace: 'nowrap'
               }}
             >
               전체
             </button>
 
             {/* 구분선 */}
-            <div style={{ width: '1px', height: '20px', backgroundColor: '#dee2e6' }} />
+            <div style={{ width: '1px', height: '20px', backgroundColor: '#dee2e6', flexShrink: 0 }} />
 
             {/* 개별 카테고리 버튼들 */}
             {[
               { value: 'charnel', label: '봉안당' },
               { value: 'natural', label: '수목장' },
-              { value: 'park', label: '공원묘지' }
+              { value: 'park', label: '공원묘지' },
+              { value: 'crematorium', label: '화장장' }
             ].map(tab => {
               const isSelected = activeCategory.includes(tab.value);
               return (
@@ -895,7 +899,7 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
                       setActiveCategory(newCats.length === 0 ? ['all'] : newCats);
                     } else {
                       const newCats = [...activeCategory, tab.value];
-                      if (newCats.length === 3) {
+                      if (newCats.length === 4) {
                         setActiveCategory(['all']);
                       } else {
                         setActiveCategory(newCats);
@@ -913,14 +917,16 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
                     cursor: 'pointer',
                     transition: 'all 0.2s',
                     paddingLeft: '16px',
-                    paddingRight: '16px'
+                    paddingRight: '16px',
+                    flexShrink: 0,
+                    whiteSpace: 'nowrap'
                   }}
                 >
                   {tab.label}
                 </button>
               );
             })}
-          </Group>
+          </div>
         </Box>
 
         {/* 상세 보기 or 리스트 */}
@@ -1052,10 +1058,10 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
                 transition: 'transform 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
               }}
             >
-              <Group gap={6} wrap="nowrap" align="center">
+              <div style={{ display: 'flex', gap: 6, alignItems: 'center', overflowX: 'auto', scrollbarWidth: 'none', msOverflowStyle: 'none', WebkitOverflowScrolling: 'touch' }}>
                 {/* 전체 버튼 */}
                 <button
-                  onClick={() => setActiveCategory(['all'])}
+                  onClick={() => startTransition(() => setActiveCategory(['all']))}
                   style={{
                     height: '30px',
                     fontSize: '12px',
@@ -1069,43 +1075,41 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
                     paddingLeft: '14px',
                     paddingRight: '14px',
                     whiteSpace: 'nowrap',
+                    flexShrink: 0,
                   }}
                 >
                   전체
                 </button>
 
                 {/* 구분선 */}
-                <div style={{ width: '1px', height: '20px', backgroundColor: '#dee2e6' }} />
+                <div style={{ width: '1px', height: '20px', backgroundColor: '#dee2e6', flexShrink: 0 }} />
 
                 {/* 개별 카테고리 버튼들 */}
                 {[
                   { value: 'charnel', label: '봉안당' },
                   { value: 'natural', label: '수목장' },
-                  { value: 'park', label: '공원묘지' }
+                  { value: 'park', label: '공원묘지' },
+                  { value: 'crematorium', label: '화장장' }
                 ].map(tab => {
                   const isSelected = activeCategory.includes(tab.value);
                   return (
                     <button
                       key={tab.value}
-                      onClick={() => {
+                      onClick={() => startTransition(() => {
                         if (activeCategory.includes('all')) {
-                          // 전체에서 개별 선택
                           setActiveCategory([tab.value]);
                         } else if (isSelected) {
-                          // 이미 선택된 거 해제
                           const newCats = activeCategory.filter(c => c !== tab.value);
                           setActiveCategory(newCats.length === 0 ? ['all'] : newCats);
                         } else {
-                          // 추가 선택
                           const newCats = [...activeCategory, tab.value];
-                          // 3개 다 선택하면 전체로
-                          if (newCats.length === 3) {
+                          if (newCats.length === 4) {
                             setActiveCategory(['all']);
                           } else {
                             setActiveCategory(newCats);
                           }
                         }
-                      }}
+                      })}
                       style={{
                         height: '30px',
                         fontSize: '12px',
@@ -1119,20 +1123,23 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
                         paddingLeft: '14px',
                         paddingRight: '14px',
                         whiteSpace: 'nowrap',
+                        flexShrink: 0,
                       }}
                     >
                       {tab.label}
                     </button>
                   );
                 })}
-              </Group>
+              </div>
             </Box>
           </>
         )}
 
         <NaverMap
           ref={mapRef}
-          facilities={filteredMapFacilities}
+          facilities={baseFacilities}
+          activeCategory={activeCategory}
+          institutionFilter={institutionFilter}
           onMarkerClick={(f) => {
             setUiHidden(false); // 마커 클릭 시 UI 다시 표시
             handleMarkerClick(f);
@@ -1169,7 +1176,7 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
         // 필터링: 반경 30km + 카테고리
         let nearby = dbFacilities
           .filter(f => f.isActive !== false)
-          .filter(f => f.category !== 'FUNERAL_HOME' && f.category !== 'CREMATORIUM' && f.category !== 'OTHER')
+          .filter(f => f.category !== 'FUNERAL_HOME' && f.category !== 'OTHER')
           .filter(f => {
             if (!f.coordinates) return false;
             return getDistance(nearbyList.lat, nearbyList.lng, f.coordinates.lat, f.coordinates.lng) <= 30;

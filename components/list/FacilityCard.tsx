@@ -45,7 +45,8 @@ export default function FacilityCard({ facility, onClick }: FacilityCardProps) {
                 const rep = group.rows.find((r: any) => r.isRepresentative);
                 if (rep && rep.price > 0) {
                     const val = rep.price < 10000 ? rep.price * 10000 : rep.price;
-                    subRepItems.push({ label: group.serviceType || group.subType || '', price: val });
+                    const labelMap: Record<string, string> = { 'BONGSAN': '봉안당', 'BURIAL': '매장묘지', 'NATURAL': '수목장', 'CREMATION': '화장' };
+                    subRepItems.push({ label: labelMap[group.serviceType] || group.serviceType || group.subType || '', price: val });
                 }
             }
         }

@@ -8573,7 +8573,142 @@
     "coordinates": null,
     "images": [],
     "rating": 0,
-    "reviewCount": 0
+    "reviewCount": 0,
+    "standardizedPrices": [
+      {
+        "serviceType": "CREMATION",
+        "subType": "성인",
+        "name": "성인",
+        "price": 30000,
+        "feeType": "USAGE",
+        "residency": "LOCAL",
+        "isRepresentative": true,
+        "grade": "관내",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "성인",
+        "name": "성인",
+        "price": 60000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외(인접)",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "성인",
+        "name": "성인",
+        "price": 150000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "소인",
+        "name": "소인",
+        "price": 15000,
+        "feeType": "USAGE",
+        "residency": "LOCAL",
+        "isRepresentative": false,
+        "grade": "관내",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "소인",
+        "name": "소인",
+        "price": 30000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외(인접)",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "소인",
+        "name": "소인",
+        "price": 75000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "사산아/태아",
+        "name": "사산아/태아",
+        "price": 7500,
+        "feeType": "USAGE",
+        "residency": "LOCAL",
+        "isRepresentative": false,
+        "grade": "관내",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "사산아/태아",
+        "name": "사산아/태아",
+        "price": 15000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외(인접)",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "사산아/태아",
+        "name": "사산아/태아",
+        "price": 37500,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "개장유골",
+        "name": "개장유골",
+        "price": 15000,
+        "feeType": "USAGE",
+        "residency": "LOCAL",
+        "isRepresentative": false,
+        "grade": "관내",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "개장유골",
+        "name": "개장유골",
+        "price": 30000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외(인접)",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "개장유골",
+        "name": "개장유골",
+        "price": 75000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외",
+        "note": ""
+      }
+    ],
+    "representativePrice": 30000
   },
   {
     "id": "facility_1765514836917_530",
@@ -9773,7 +9908,142 @@
     "coordinates": null,
     "images": [],
     "rating": 0,
-    "reviewCount": 0
+    "reviewCount": 0,
+    "standardizedPrices": [
+      {
+        "serviceType": "CREMATION",
+        "subType": "성인",
+        "name": "성인",
+        "price": 50000,
+        "feeType": "USAGE",
+        "residency": "LOCAL",
+        "isRepresentative": true,
+        "grade": "관내",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "성인",
+        "name": "성인",
+        "price": 150000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외(인접)",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "성인",
+        "name": "성인",
+        "price": 300000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "소인",
+        "name": "소인",
+        "price": 30000,
+        "feeType": "USAGE",
+        "residency": "LOCAL",
+        "isRepresentative": false,
+        "grade": "관내",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "소인",
+        "name": "소인",
+        "price": 90000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외(인접)",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "소인",
+        "name": "소인",
+        "price": 180000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "사산아/태아",
+        "name": "사산아/태아",
+        "price": 15000,
+        "feeType": "USAGE",
+        "residency": "LOCAL",
+        "isRepresentative": false,
+        "grade": "관내",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "사산아/태아",
+        "name": "사산아/태아",
+        "price": 45000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외(인접)",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "사산아/태아",
+        "name": "사산아/태아",
+        "price": 90000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "개장유골",
+        "name": "개장유골",
+        "price": 30000,
+        "feeType": "USAGE",
+        "residency": "LOCAL",
+        "isRepresentative": false,
+        "grade": "관내",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "개장유골",
+        "name": "개장유골",
+        "price": 90000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외(인접)",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "개장유골",
+        "name": "개장유골",
+        "price": 180000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외",
+        "note": ""
+      }
+    ],
+    "representativePrice": 50000
   },
   {
     "id": "facility_1765514836917_586",
@@ -11053,7 +11323,98 @@
     "coordinates": null,
     "images": [],
     "rating": 0,
-    "reviewCount": 0
+    "reviewCount": 0,
+    "standardizedPrices": [
+      {
+        "serviceType": "CREMATION",
+        "subType": "성인",
+        "name": "성인",
+        "price": 40000,
+        "feeType": "USAGE",
+        "residency": "LOCAL",
+        "isRepresentative": true,
+        "grade": "관내",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "성인",
+        "name": "성인",
+        "price": 200000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "소인",
+        "name": "소인",
+        "price": 30000,
+        "feeType": "USAGE",
+        "residency": "LOCAL",
+        "isRepresentative": false,
+        "grade": "관내",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "소인",
+        "name": "소인",
+        "price": 150000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "사산아/태아",
+        "name": "사산아/태아",
+        "price": 20000,
+        "feeType": "USAGE",
+        "residency": "LOCAL",
+        "isRepresentative": false,
+        "grade": "관내",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "사산아/태아",
+        "name": "사산아/태아",
+        "price": 100000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "개장유골",
+        "name": "개장유골",
+        "price": 20000,
+        "feeType": "USAGE",
+        "residency": "LOCAL",
+        "isRepresentative": false,
+        "grade": "관내",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "개장유골",
+        "name": "개장유골",
+        "price": 100000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외",
+        "note": ""
+      }
+    ],
+    "representativePrice": 40000
   },
   {
     "id": "facility_1765514836918_649",
@@ -12141,7 +12502,153 @@
     "coordinates": null,
     "images": [],
     "rating": 0,
-    "reviewCount": 0
+    "reviewCount": 0,
+    "standardizedPrices": [
+      {
+        "serviceType": "CREMATION",
+        "subType": "성인",
+        "name": "성인",
+        "price": 150000,
+        "feeType": "USAGE",
+        "residency": "LOCAL",
+        "isRepresentative": true,
+        "grade": "관내",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "성인",
+        "name": "성인",
+        "price": 500000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외(오산/용인5개변경동)",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "성인",
+        "name": "성인",
+        "price": 1000000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "소인",
+        "name": "소인",
+        "price": 120000,
+        "feeType": "USAGE",
+        "residency": "LOCAL",
+        "isRepresentative": false,
+        "grade": "관내",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "소인",
+        "name": "소인",
+        "price": 250000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외(오산/용인5개변경동)",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "소인",
+        "name": "소인",
+        "price": 500000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "사산아/태아",
+        "name": "사산아/태아",
+        "price": 50000,
+        "feeType": "USAGE",
+        "residency": "LOCAL",
+        "isRepresentative": false,
+        "grade": "관내",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "사산아/태아",
+        "name": "사산아/태아",
+        "price": 200000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "개장유골",
+        "name": "개장유골",
+        "price": 100000,
+        "feeType": "USAGE",
+        "residency": "LOCAL",
+        "isRepresentative": false,
+        "grade": "관내",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "개장유골",
+        "name": "개장유골",
+        "price": 500000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "무연고자",
+        "name": "무연고자",
+        "price": 0,
+        "feeType": "USAGE",
+        "residency": "LOCAL",
+        "isRepresentative": false,
+        "grade": "관내(수원시)",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "무연고자",
+        "name": "무연고자",
+        "price": 500000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외(오산/용인5개변경동)",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "무연고자",
+        "name": "무연고자",
+        "price": 1000000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외",
+        "note": ""
+      }
+    ],
+    "representativePrice": 150000
   },
   {
     "id": "facility_1765514836915_155",
@@ -16221,7 +16728,142 @@
     "coordinates": null,
     "images": [],
     "rating": 0,
-    "reviewCount": 0
+    "reviewCount": 0,
+    "standardizedPrices": [
+      {
+        "serviceType": "CREMATION",
+        "subType": "성인",
+        "name": "성인",
+        "price": 50000,
+        "feeType": "USAGE",
+        "residency": "LOCAL",
+        "isRepresentative": true,
+        "grade": "관내",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "성인",
+        "name": "성인",
+        "price": 150000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외(인접)",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "성인",
+        "name": "성인",
+        "price": 300000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "소인",
+        "name": "소인",
+        "price": 30000,
+        "feeType": "USAGE",
+        "residency": "LOCAL",
+        "isRepresentative": false,
+        "grade": "관내",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "소인",
+        "name": "소인",
+        "price": 90000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외(인접)",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "소인",
+        "name": "소인",
+        "price": 180000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "사산아/태아",
+        "name": "사산아/태아",
+        "price": 15000,
+        "feeType": "USAGE",
+        "residency": "LOCAL",
+        "isRepresentative": false,
+        "grade": "관내",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "사산아/태아",
+        "name": "사산아/태아",
+        "price": 45000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외(인접)",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "사산아/태아",
+        "name": "사산아/태아",
+        "price": 90000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "개장유골",
+        "name": "개장유골",
+        "price": 30000,
+        "feeType": "USAGE",
+        "residency": "LOCAL",
+        "isRepresentative": false,
+        "grade": "관내",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "개장유골",
+        "name": "개장유골",
+        "price": 90000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외(인접)",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "개장유골",
+        "name": "개장유골",
+        "price": 180000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외",
+        "note": ""
+      }
+    ],
+    "representativePrice": 50000
   },
   {
     "id": "facility_1765514836919_697",
@@ -16237,7 +16879,153 @@
     "coordinates": null,
     "images": [],
     "rating": 0,
-    "reviewCount": 0
+    "reviewCount": 0,
+    "standardizedPrices": [
+      {
+        "serviceType": "CREMATION",
+        "subType": "성인",
+        "name": "성인",
+        "price": 150000,
+        "feeType": "USAGE",
+        "residency": "LOCAL",
+        "isRepresentative": true,
+        "grade": "관내",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "성인",
+        "name": "성인",
+        "price": 500000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외(오산/용인5개변경동)",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "성인",
+        "name": "성인",
+        "price": 1000000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "소인",
+        "name": "소인",
+        "price": 120000,
+        "feeType": "USAGE",
+        "residency": "LOCAL",
+        "isRepresentative": false,
+        "grade": "관내",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "소인",
+        "name": "소인",
+        "price": 250000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외(오산/용인5개변경동)",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "소인",
+        "name": "소인",
+        "price": 500000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "사산아/태아",
+        "name": "사산아/태아",
+        "price": 50000,
+        "feeType": "USAGE",
+        "residency": "LOCAL",
+        "isRepresentative": false,
+        "grade": "관내",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "사산아/태아",
+        "name": "사산아/태아",
+        "price": 200000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "개장유골",
+        "name": "개장유골",
+        "price": 100000,
+        "feeType": "USAGE",
+        "residency": "LOCAL",
+        "isRepresentative": false,
+        "grade": "관내",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "개장유골",
+        "name": "개장유골",
+        "price": 500000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "무연고자",
+        "name": "무연고자",
+        "price": 0,
+        "feeType": "USAGE",
+        "residency": "LOCAL",
+        "isRepresentative": false,
+        "grade": "관내(수원시)",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "무연고자",
+        "name": "무연고자",
+        "price": 500000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외(오산/용인5개변경동)",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "무연고자",
+        "name": "무연고자",
+        "price": 1000000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외",
+        "note": ""
+      }
+    ],
+    "representativePrice": 150000
   },
   {
     "id": "facility_1765514836919_697",
@@ -16253,7 +17041,153 @@
     "coordinates": null,
     "images": [],
     "rating": 0,
-    "reviewCount": 0
+    "reviewCount": 0,
+    "standardizedPrices": [
+      {
+        "serviceType": "CREMATION",
+        "subType": "성인",
+        "name": "성인",
+        "price": 150000,
+        "feeType": "USAGE",
+        "residency": "LOCAL",
+        "isRepresentative": true,
+        "grade": "관내",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "성인",
+        "name": "성인",
+        "price": 500000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외(오산/용인5개변경동)",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "성인",
+        "name": "성인",
+        "price": 1000000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "소인",
+        "name": "소인",
+        "price": 120000,
+        "feeType": "USAGE",
+        "residency": "LOCAL",
+        "isRepresentative": false,
+        "grade": "관내",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "소인",
+        "name": "소인",
+        "price": 250000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외(오산/용인5개변경동)",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "소인",
+        "name": "소인",
+        "price": 500000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "사산아/태아",
+        "name": "사산아/태아",
+        "price": 50000,
+        "feeType": "USAGE",
+        "residency": "LOCAL",
+        "isRepresentative": false,
+        "grade": "관내",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "사산아/태아",
+        "name": "사산아/태아",
+        "price": 200000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "개장유골",
+        "name": "개장유골",
+        "price": 100000,
+        "feeType": "USAGE",
+        "residency": "LOCAL",
+        "isRepresentative": false,
+        "grade": "관내",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "개장유골",
+        "name": "개장유골",
+        "price": 500000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "무연고자",
+        "name": "무연고자",
+        "price": 0,
+        "feeType": "USAGE",
+        "residency": "LOCAL",
+        "isRepresentative": false,
+        "grade": "관내(수원시)",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "무연고자",
+        "name": "무연고자",
+        "price": 500000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외(오산/용인5개변경동)",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "무연고자",
+        "name": "무연고자",
+        "price": 1000000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외",
+        "note": ""
+      }
+    ],
+    "representativePrice": 150000
   },
   {
     "id": "facility_1765514836921_860",
@@ -18829,7 +19763,142 @@
     "coordinates": null,
     "images": [],
     "rating": 0,
-    "reviewCount": 0
+    "reviewCount": 0,
+    "standardizedPrices": [
+      {
+        "serviceType": "CREMATION",
+        "subType": "성인",
+        "name": "성인",
+        "price": 50000,
+        "feeType": "USAGE",
+        "residency": "LOCAL",
+        "isRepresentative": true,
+        "grade": "관내",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "성인",
+        "name": "성인",
+        "price": 150000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외(인접)",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "성인",
+        "name": "성인",
+        "price": 300000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "소인",
+        "name": "소인",
+        "price": 30000,
+        "feeType": "USAGE",
+        "residency": "LOCAL",
+        "isRepresentative": false,
+        "grade": "관내",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "소인",
+        "name": "소인",
+        "price": 90000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외(인접)",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "소인",
+        "name": "소인",
+        "price": 180000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "사산아/태아",
+        "name": "사산아/태아",
+        "price": 15000,
+        "feeType": "USAGE",
+        "residency": "LOCAL",
+        "isRepresentative": false,
+        "grade": "관내",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "사산아/태아",
+        "name": "사산아/태아",
+        "price": 45000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외(인접)",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "사산아/태아",
+        "name": "사산아/태아",
+        "price": 90000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "개장유골",
+        "name": "개장유골",
+        "price": 30000,
+        "feeType": "USAGE",
+        "residency": "LOCAL",
+        "isRepresentative": false,
+        "grade": "관내",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "개장유골",
+        "name": "개장유골",
+        "price": 90000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외(인접)",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "개장유골",
+        "name": "개장유골",
+        "price": 180000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외",
+        "note": ""
+      }
+    ],
+    "representativePrice": 50000
   },
   {
     "id": "facility_1765514836917_521",
@@ -19437,7 +20506,142 @@
     "coordinates": null,
     "images": [],
     "rating": 0,
-    "reviewCount": 0
+    "reviewCount": 0,
+    "standardizedPrices": [
+      {
+        "serviceType": "CREMATION",
+        "subType": "성인",
+        "name": "성인",
+        "price": 30000,
+        "feeType": "USAGE",
+        "residency": "LOCAL",
+        "isRepresentative": true,
+        "grade": "관내",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "성인",
+        "name": "성인",
+        "price": 60000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외(인접)",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "성인",
+        "name": "성인",
+        "price": 150000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "소인",
+        "name": "소인",
+        "price": 15000,
+        "feeType": "USAGE",
+        "residency": "LOCAL",
+        "isRepresentative": false,
+        "grade": "관내",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "소인",
+        "name": "소인",
+        "price": 30000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외(인접)",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "소인",
+        "name": "소인",
+        "price": 75000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "사산아/태아",
+        "name": "사산아/태아",
+        "price": 7500,
+        "feeType": "USAGE",
+        "residency": "LOCAL",
+        "isRepresentative": false,
+        "grade": "관내",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "사산아/태아",
+        "name": "사산아/태아",
+        "price": 15000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외(인접)",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "사산아/태아",
+        "name": "사산아/태아",
+        "price": 37500,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "개장유골",
+        "name": "개장유골",
+        "price": 15000,
+        "feeType": "USAGE",
+        "residency": "LOCAL",
+        "isRepresentative": false,
+        "grade": "관내",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "개장유골",
+        "name": "개장유골",
+        "price": 30000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외(인접)",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "개장유골",
+        "name": "개장유골",
+        "price": 75000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외",
+        "note": ""
+      }
+    ],
+    "representativePrice": 30000
   },
   {
     "id": "facility_1765514836922_934",
@@ -19565,7 +20769,175 @@
     "coordinates": null,
     "images": [],
     "rating": 0,
-    "reviewCount": 0
+    "reviewCount": 0,
+    "standardizedPrices": [
+      {
+        "serviceType": "CREMATION",
+        "subType": "성인",
+        "name": "성인",
+        "price": 50000,
+        "feeType": "USAGE",
+        "residency": "LOCAL",
+        "isRepresentative": true,
+        "grade": "관내",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "성인",
+        "name": "성인",
+        "price": 300000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외(인접/준관내)",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "성인",
+        "name": "성인",
+        "price": 1000000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "소인",
+        "name": "소인",
+        "price": 30000,
+        "feeType": "USAGE",
+        "residency": "LOCAL",
+        "isRepresentative": false,
+        "grade": "관내",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "소인",
+        "name": "소인",
+        "price": 200000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외(인접/준관내)",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "소인",
+        "name": "소인",
+        "price": 600000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "사산아/태아",
+        "name": "사산아/태아",
+        "price": 15000,
+        "feeType": "USAGE",
+        "residency": "LOCAL",
+        "isRepresentative": false,
+        "grade": "관내",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "사산아/태아",
+        "name": "사산아/태아",
+        "price": 90000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외(인접/준관내)",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "사산아/태아",
+        "name": "사산아/태아",
+        "price": 240000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "무연고자",
+        "name": "무연고자",
+        "price": 0,
+        "feeType": "USAGE",
+        "residency": "LOCAL",
+        "isRepresentative": false,
+        "grade": "관내",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "무연고자",
+        "name": "무연고자",
+        "price": 300000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외(인접/준관내)",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "무연고자",
+        "name": "무연고자",
+        "price": 1000000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "개장유골",
+        "name": "개장유골",
+        "price": 30000,
+        "feeType": "USAGE",
+        "residency": "LOCAL",
+        "isRepresentative": false,
+        "grade": "관내",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "개장유골",
+        "name": "개장유골",
+        "price": 200000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외(인접/준관내)",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "개장유골",
+        "name": "개장유골",
+        "price": 600000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외",
+        "note": ""
+      }
+    ],
+    "representativePrice": 50000
   },
   {
     "id": "facility_1765514836923_983",
@@ -19853,7 +21225,153 @@
     "coordinates": null,
     "images": [],
     "rating": 0,
-    "reviewCount": 0
+    "reviewCount": 0,
+    "standardizedPrices": [
+      {
+        "serviceType": "CREMATION",
+        "subType": "성인",
+        "name": "성인",
+        "price": 150000,
+        "feeType": "USAGE",
+        "residency": "LOCAL",
+        "isRepresentative": true,
+        "grade": "관내",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "성인",
+        "name": "성인",
+        "price": 500000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외(오산/용인5개변경동)",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "성인",
+        "name": "성인",
+        "price": 1000000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "소인",
+        "name": "소인",
+        "price": 120000,
+        "feeType": "USAGE",
+        "residency": "LOCAL",
+        "isRepresentative": false,
+        "grade": "관내",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "소인",
+        "name": "소인",
+        "price": 250000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외(오산/용인5개변경동)",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "소인",
+        "name": "소인",
+        "price": 500000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "사산아/태아",
+        "name": "사산아/태아",
+        "price": 50000,
+        "feeType": "USAGE",
+        "residency": "LOCAL",
+        "isRepresentative": false,
+        "grade": "관내",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "사산아/태아",
+        "name": "사산아/태아",
+        "price": 200000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "개장유골",
+        "name": "개장유골",
+        "price": 100000,
+        "feeType": "USAGE",
+        "residency": "LOCAL",
+        "isRepresentative": false,
+        "grade": "관내",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "개장유골",
+        "name": "개장유골",
+        "price": 500000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "무연고자",
+        "name": "무연고자",
+        "price": 0,
+        "feeType": "USAGE",
+        "residency": "LOCAL",
+        "isRepresentative": false,
+        "grade": "관내(수원시)",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "무연고자",
+        "name": "무연고자",
+        "price": 500000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외(오산/용인5개변경동)",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "무연고자",
+        "name": "무연고자",
+        "price": 1000000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외",
+        "note": ""
+      }
+    ],
+    "representativePrice": 150000
   },
   {
     "id": "facility_1765514836918_648",
@@ -19869,7 +21387,98 @@
     "coordinates": null,
     "images": [],
     "rating": 0,
-    "reviewCount": 0
+    "reviewCount": 0,
+    "standardizedPrices": [
+      {
+        "serviceType": "CREMATION",
+        "subType": "성인",
+        "name": "성인",
+        "price": 40000,
+        "feeType": "USAGE",
+        "residency": "LOCAL",
+        "isRepresentative": true,
+        "grade": "관내",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "성인",
+        "name": "성인",
+        "price": 200000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "소인",
+        "name": "소인",
+        "price": 30000,
+        "feeType": "USAGE",
+        "residency": "LOCAL",
+        "isRepresentative": false,
+        "grade": "관내",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "소인",
+        "name": "소인",
+        "price": 150000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "사산아/태아",
+        "name": "사산아/태아",
+        "price": 20000,
+        "feeType": "USAGE",
+        "residency": "LOCAL",
+        "isRepresentative": false,
+        "grade": "관내",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "사산아/태아",
+        "name": "사산아/태아",
+        "price": 100000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "개장유골",
+        "name": "개장유골",
+        "price": 20000,
+        "feeType": "USAGE",
+        "residency": "LOCAL",
+        "isRepresentative": false,
+        "grade": "관내",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "개장유골",
+        "name": "개장유골",
+        "price": 100000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외",
+        "note": ""
+      }
+    ],
+    "representativePrice": 40000
   },
   {
     "id": "facility_1765514836918_654",
@@ -19917,7 +21526,175 @@
     "coordinates": null,
     "images": [],
     "rating": 0,
-    "reviewCount": 0
+    "reviewCount": 0,
+    "standardizedPrices": [
+      {
+        "serviceType": "CREMATION",
+        "subType": "성인",
+        "name": "성인",
+        "price": 140000,
+        "feeType": "USAGE",
+        "residency": "LOCAL",
+        "isRepresentative": true,
+        "grade": "관내",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "성인",
+        "name": "성인",
+        "price": 600000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외(인접/준관내)",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "성인",
+        "name": "성인",
+        "price": 1000000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "소인",
+        "name": "소인",
+        "price": 70000,
+        "feeType": "USAGE",
+        "residency": "LOCAL",
+        "isRepresentative": false,
+        "grade": "관내",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "소인",
+        "name": "소인",
+        "price": 300000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외(인접/준관내)",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "소인",
+        "name": "소인",
+        "price": 500000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "사산아/태아",
+        "name": "사산아/태아",
+        "price": 50000,
+        "feeType": "USAGE",
+        "residency": "LOCAL",
+        "isRepresentative": false,
+        "grade": "관내",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "사산아/태아",
+        "name": "사산아/태아",
+        "price": 200000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외(인접/준관내)",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "사산아/태아",
+        "name": "사산아/태아",
+        "price": 350000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "무연고자",
+        "name": "무연고자",
+        "price": 140000,
+        "feeType": "USAGE",
+        "residency": "LOCAL",
+        "isRepresentative": false,
+        "grade": "관내",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "무연고자",
+        "name": "무연고자",
+        "price": 600000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외(인접/준관내)",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "무연고자",
+        "name": "무연고자",
+        "price": 1000000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "개장유골",
+        "name": "개장유골",
+        "price": 50000,
+        "feeType": "USAGE",
+        "residency": "LOCAL",
+        "isRepresentative": false,
+        "grade": "관내",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "개장유골",
+        "name": "개장유골",
+        "price": 200000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외(인접/준관내)",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "개장유골",
+        "name": "개장유골",
+        "price": 350000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외",
+        "note": ""
+      }
+    ],
+    "representativePrice": 140000
   },
   {
     "id": "facility_1765514836924_991",
@@ -22989,7 +24766,98 @@
     "coordinates": null,
     "images": [],
     "rating": 0,
-    "reviewCount": 0
+    "reviewCount": 0,
+    "standardizedPrices": [
+      {
+        "serviceType": "CREMATION",
+        "subType": "성인",
+        "name": "성인",
+        "price": 22000,
+        "feeType": "USAGE",
+        "residency": "LOCAL",
+        "isRepresentative": true,
+        "grade": "",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "성인",
+        "name": "성인",
+        "price": 66000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "소인",
+        "name": "소인",
+        "price": 11000,
+        "feeType": "USAGE",
+        "residency": "LOCAL",
+        "isRepresentative": false,
+        "grade": "",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "소인",
+        "name": "소인",
+        "price": 33000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "사산아/태아",
+        "name": "사산아/태아",
+        "price": 5500,
+        "feeType": "USAGE",
+        "residency": "LOCAL",
+        "isRepresentative": false,
+        "grade": "",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "사산아/태아",
+        "name": "사산아/태아",
+        "price": 16500,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "개장유골",
+        "name": "개장유골",
+        "price": 22000,
+        "feeType": "USAGE",
+        "residency": "LOCAL",
+        "isRepresentative": false,
+        "grade": "",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "개장유골",
+        "name": "개장유골",
+        "price": 66000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "",
+        "note": ""
+      }
+    ],
+    "representativePrice": 22000
   },
   {
     "id": "facility_1765514836926_1118",
@@ -23005,7 +24873,98 @@
     "coordinates": null,
     "images": [],
     "rating": 0,
-    "reviewCount": 0
+    "reviewCount": 0,
+    "standardizedPrices": [
+      {
+        "serviceType": "CREMATION",
+        "subType": "성인",
+        "name": "성인",
+        "price": 30000,
+        "feeType": "USAGE",
+        "residency": "LOCAL",
+        "isRepresentative": true,
+        "grade": "",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "성인",
+        "name": "성인",
+        "price": 150000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "소인",
+        "name": "소인",
+        "price": 15000,
+        "feeType": "USAGE",
+        "residency": "LOCAL",
+        "isRepresentative": false,
+        "grade": "",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "소인",
+        "name": "소인",
+        "price": 75000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "사산아/태아",
+        "name": "사산아/태아",
+        "price": 7500,
+        "feeType": "USAGE",
+        "residency": "LOCAL",
+        "isRepresentative": false,
+        "grade": "",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "사산아/태아",
+        "name": "사산아/태아",
+        "price": 37500,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "개장유골",
+        "name": "개장유골",
+        "price": 15000,
+        "feeType": "USAGE",
+        "residency": "LOCAL",
+        "isRepresentative": false,
+        "grade": "",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "개장유골",
+        "name": "개장유골",
+        "price": 75000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "",
+        "note": ""
+      }
+    ],
+    "representativePrice": 30000
   },
   {
     "id": "facility_1765514836922_922",
@@ -23085,7 +25044,98 @@
     "coordinates": null,
     "images": [],
     "rating": 0,
-    "reviewCount": 0
+    "reviewCount": 0,
+    "standardizedPrices": [
+      {
+        "serviceType": "CREMATION",
+        "subType": "성인",
+        "name": "성인",
+        "price": 70000,
+        "feeType": "USAGE",
+        "residency": "LOCAL",
+        "isRepresentative": true,
+        "grade": "",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "성인",
+        "name": "성인",
+        "price": 500000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "소인",
+        "name": "소인",
+        "price": 50000,
+        "feeType": "USAGE",
+        "residency": "LOCAL",
+        "isRepresentative": false,
+        "grade": "",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "소인",
+        "name": "소인",
+        "price": 300000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "사산아/태아",
+        "name": "사산아/태아",
+        "price": 35000,
+        "feeType": "USAGE",
+        "residency": "LOCAL",
+        "isRepresentative": false,
+        "grade": "",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "사산아/태아",
+        "name": "사산아/태아",
+        "price": 120000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "개장유골",
+        "name": "개장유골",
+        "price": 40000,
+        "feeType": "USAGE",
+        "residency": "LOCAL",
+        "isRepresentative": false,
+        "grade": "",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "개장유골",
+        "name": "개장유골",
+        "price": 150000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "",
+        "note": ""
+      }
+    ],
+    "representativePrice": 70000
   },
   {
     "id": "facility_1765514836926_1121",
@@ -23101,7 +25151,164 @@
     "coordinates": null,
     "images": [],
     "rating": 0,
-    "reviewCount": 0
+    "reviewCount": 0,
+    "standardizedPrices": [
+      {
+        "serviceType": "CREMATION",
+        "subType": "성인",
+        "name": "성인",
+        "price": 50000,
+        "feeType": "USAGE",
+        "residency": "LOCAL",
+        "isRepresentative": true,
+        "grade": "관내",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "성인",
+        "name": "성인",
+        "price": 150000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외(봉화)",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "성인",
+        "name": "성인",
+        "price": 400000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "소인",
+        "name": "소인",
+        "price": 40000,
+        "feeType": "USAGE",
+        "residency": "LOCAL",
+        "isRepresentative": false,
+        "grade": "관내",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "소인",
+        "name": "소인",
+        "price": 120000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외(봉화)",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "소인",
+        "name": "소인",
+        "price": 280000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "사산아/태아",
+        "name": "사산아/태아",
+        "price": 25000,
+        "feeType": "USAGE",
+        "residency": "LOCAL",
+        "isRepresentative": false,
+        "grade": "관내",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "사산아/태아",
+        "name": "사산아/태아",
+        "price": 75000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외(봉화)",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "사산아/태아",
+        "name": "사산아/태아",
+        "price": 175000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "무연고자",
+        "name": "무연고자",
+        "price": 50000,
+        "feeType": "USAGE",
+        "residency": "LOCAL",
+        "isRepresentative": false,
+        "grade": "",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "무연고자",
+        "name": "무연고자",
+        "price": 400000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "개장유골",
+        "name": "개장유골",
+        "price": 30000,
+        "feeType": "USAGE",
+        "residency": "LOCAL",
+        "isRepresentative": false,
+        "grade": "관내",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "개장유골",
+        "name": "개장유골",
+        "price": 90000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외(봉화)",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "개장유골",
+        "name": "개장유골",
+        "price": 210000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외",
+        "note": ""
+      }
+    ],
+    "representativePrice": 50000
   },
   {
     "id": "facility_1765514836926_1122",
@@ -23117,7 +25324,120 @@
     "coordinates": null,
     "images": [],
     "rating": 0,
-    "reviewCount": 0
+    "reviewCount": 0,
+    "standardizedPrices": [
+      {
+        "serviceType": "CREMATION",
+        "subType": "성인",
+        "name": "성인",
+        "price": 100000,
+        "feeType": "USAGE",
+        "residency": "LOCAL",
+        "isRepresentative": true,
+        "grade": "관내",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "성인",
+        "name": "성인",
+        "price": 500000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "소인",
+        "name": "소인",
+        "price": 80000,
+        "feeType": "USAGE",
+        "residency": "LOCAL",
+        "isRepresentative": false,
+        "grade": "관내",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "소인",
+        "name": "소인",
+        "price": 350000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "사산아/태아",
+        "name": "사산아/태아",
+        "price": 50000,
+        "feeType": "USAGE",
+        "residency": "LOCAL",
+        "isRepresentative": false,
+        "grade": "관내",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "사산아/태아",
+        "name": "사산아/태아",
+        "price": 180000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "무연고자",
+        "name": "무연고자",
+        "price": 100000,
+        "feeType": "USAGE",
+        "residency": "LOCAL",
+        "isRepresentative": false,
+        "grade": "관내",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "무연고자",
+        "name": "무연고자",
+        "price": 500000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "개장유골",
+        "name": "개장유골",
+        "price": 50000,
+        "feeType": "USAGE",
+        "residency": "LOCAL",
+        "isRepresentative": false,
+        "grade": "관내",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "개장유골",
+        "name": "개장유골",
+        "price": 300000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외",
+        "note": ""
+      }
+    ],
+    "representativePrice": 100000
   },
   {
     "id": "facility_1765514836917_529",
@@ -23133,7 +25453,142 @@
     "coordinates": null,
     "images": [],
     "rating": 0,
-    "reviewCount": 0
+    "reviewCount": 0,
+    "standardizedPrices": [
+      {
+        "serviceType": "CREMATION",
+        "subType": "성인",
+        "name": "성인",
+        "price": 30000,
+        "feeType": "USAGE",
+        "residency": "LOCAL",
+        "isRepresentative": true,
+        "grade": "관내",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "성인",
+        "name": "성인",
+        "price": 60000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외(인접)",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "성인",
+        "name": "성인",
+        "price": 150000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "소인",
+        "name": "소인",
+        "price": 15000,
+        "feeType": "USAGE",
+        "residency": "LOCAL",
+        "isRepresentative": false,
+        "grade": "관내",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "소인",
+        "name": "소인",
+        "price": 30000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외(인접)",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "소인",
+        "name": "소인",
+        "price": 75000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "사산아/태아",
+        "name": "사산아/태아",
+        "price": 7500,
+        "feeType": "USAGE",
+        "residency": "LOCAL",
+        "isRepresentative": false,
+        "grade": "관내",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "사산아/태아",
+        "name": "사산아/태아",
+        "price": 15000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외(인접)",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "사산아/태아",
+        "name": "사산아/태아",
+        "price": 37500,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "개장유골",
+        "name": "개장유골",
+        "price": 15000,
+        "feeType": "USAGE",
+        "residency": "LOCAL",
+        "isRepresentative": false,
+        "grade": "관내",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "개장유골",
+        "name": "개장유골",
+        "price": 30000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외(인접)",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "개장유골",
+        "name": "개장유골",
+        "price": 75000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외",
+        "note": ""
+      }
+    ],
+    "representativePrice": 30000
   },
   {
     "id": "facility_1765514836926_1123",
@@ -23149,7 +25604,175 @@
     "coordinates": null,
     "images": [],
     "rating": 0,
-    "reviewCount": 0
+    "reviewCount": 0,
+    "standardizedPrices": [
+      {
+        "serviceType": "CREMATION",
+        "subType": "성인",
+        "name": "성인",
+        "price": 50000,
+        "feeType": "USAGE",
+        "residency": "LOCAL",
+        "isRepresentative": true,
+        "grade": "관내",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "성인",
+        "name": "성인",
+        "price": 500000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외(인접/준관내)",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "성인",
+        "name": "성인",
+        "price": 1000000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "소인",
+        "name": "소인",
+        "price": 44000,
+        "feeType": "USAGE",
+        "residency": "LOCAL",
+        "isRepresentative": false,
+        "grade": "관내",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "소인",
+        "name": "소인",
+        "price": 250000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외(인접/준관내)",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "소인",
+        "name": "소인",
+        "price": 500000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "사산아/태아",
+        "name": "사산아/태아",
+        "price": 20000,
+        "feeType": "USAGE",
+        "residency": "LOCAL",
+        "isRepresentative": false,
+        "grade": "관내",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "사산아/태아",
+        "name": "사산아/태아",
+        "price": 150000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외(인접/준관내)",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "사산아/태아",
+        "name": "사산아/태아",
+        "price": 300000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "무연고자",
+        "name": "무연고자",
+        "price": 0,
+        "feeType": "USAGE",
+        "residency": "LOCAL",
+        "isRepresentative": false,
+        "grade": "관내",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "무연고자",
+        "name": "무연고자",
+        "price": 500000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외(인접/준관내)",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "무연고자",
+        "name": "무연고자",
+        "price": 1000000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "개장유골",
+        "name": "개장유골",
+        "price": 26000,
+        "feeType": "USAGE",
+        "residency": "LOCAL",
+        "isRepresentative": false,
+        "grade": "관내",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "개장유골",
+        "name": "개장유골",
+        "price": 400000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외(인접/준관내)",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "개장유골",
+        "name": "개장유골",
+        "price": 400000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외",
+        "note": ""
+      }
+    ],
+    "representativePrice": 50000
   },
   {
     "id": "facility_1765514836924_990",
@@ -23165,7 +25788,175 @@
     "coordinates": null,
     "images": [],
     "rating": 0,
-    "reviewCount": 0
+    "reviewCount": 0,
+    "standardizedPrices": [
+      {
+        "serviceType": "CREMATION",
+        "subType": "성인",
+        "name": "성인",
+        "price": 140000,
+        "feeType": "USAGE",
+        "residency": "LOCAL",
+        "isRepresentative": true,
+        "grade": "관내",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "성인",
+        "name": "성인",
+        "price": 600000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외(인접/준관내)",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "성인",
+        "name": "성인",
+        "price": 1000000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "소인",
+        "name": "소인",
+        "price": 70000,
+        "feeType": "USAGE",
+        "residency": "LOCAL",
+        "isRepresentative": false,
+        "grade": "관내",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "소인",
+        "name": "소인",
+        "price": 300000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외(인접/준관내)",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "소인",
+        "name": "소인",
+        "price": 500000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "사산아/태아",
+        "name": "사산아/태아",
+        "price": 50000,
+        "feeType": "USAGE",
+        "residency": "LOCAL",
+        "isRepresentative": false,
+        "grade": "관내",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "사산아/태아",
+        "name": "사산아/태아",
+        "price": 200000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외(인접/준관내)",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "사산아/태아",
+        "name": "사산아/태아",
+        "price": 350000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "무연고자",
+        "name": "무연고자",
+        "price": 140000,
+        "feeType": "USAGE",
+        "residency": "LOCAL",
+        "isRepresentative": false,
+        "grade": "관내",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "무연고자",
+        "name": "무연고자",
+        "price": 600000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외(인접/준관내)",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "무연고자",
+        "name": "무연고자",
+        "price": 1000000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "개장유골",
+        "name": "개장유골",
+        "price": 50000,
+        "feeType": "USAGE",
+        "residency": "LOCAL",
+        "isRepresentative": false,
+        "grade": "관내",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "개장유골",
+        "name": "개장유골",
+        "price": 200000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외(인접/준관내)",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "개장유골",
+        "name": "개장유골",
+        "price": 350000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외",
+        "note": ""
+      }
+    ],
+    "representativePrice": 140000
   },
   {
     "id": "facility_1765514836926_1124",
@@ -23181,7 +25972,175 @@
     "coordinates": null,
     "images": [],
     "rating": 0,
-    "reviewCount": 0
+    "reviewCount": 0,
+    "standardizedPrices": [
+      {
+        "serviceType": "CREMATION",
+        "subType": "성인",
+        "name": "성인",
+        "price": 90000,
+        "feeType": "USAGE",
+        "residency": "LOCAL",
+        "isRepresentative": true,
+        "grade": "관내",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "성인",
+        "name": "성인",
+        "price": 330000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외(인접/준관내)",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "성인",
+        "name": "성인",
+        "price": 570000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "소인",
+        "name": "소인",
+        "price": 65000,
+        "feeType": "USAGE",
+        "residency": "LOCAL",
+        "isRepresentative": false,
+        "grade": "관내",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "소인",
+        "name": "소인",
+        "price": 180000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외(인접/준관내)",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "소인",
+        "name": "소인",
+        "price": 290000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "사산아/태아",
+        "name": "사산아/태아",
+        "price": 40000,
+        "feeType": "USAGE",
+        "residency": "LOCAL",
+        "isRepresentative": false,
+        "grade": "관내",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "사산아/태아",
+        "name": "사산아/태아",
+        "price": 90000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외(인접/준관내)",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "사산아/태아",
+        "name": "사산아/태아",
+        "price": 140000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "무연고자",
+        "name": "무연고자",
+        "price": 0,
+        "feeType": "USAGE",
+        "residency": "LOCAL",
+        "isRepresentative": false,
+        "grade": "관내",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "무연고자",
+        "name": "무연고자",
+        "price": 330000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외(인접/준관내)",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "무연고자",
+        "name": "무연고자",
+        "price": 570000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "개장유골",
+        "name": "개장유골",
+        "price": 45000,
+        "feeType": "USAGE",
+        "residency": "LOCAL",
+        "isRepresentative": false,
+        "grade": "관내",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "개장유골",
+        "name": "개장유골",
+        "price": 110000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외(인접/준관내)",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "개장유골",
+        "name": "개장유골",
+        "price": 170000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외",
+        "note": ""
+      }
+    ],
+    "representativePrice": 90000
   },
   {
     "id": "facility_1765514836926_1125",
@@ -23197,7 +26156,98 @@
     "coordinates": null,
     "images": [],
     "rating": 0,
-    "reviewCount": 0
+    "reviewCount": 0,
+    "standardizedPrices": [
+      {
+        "serviceType": "CREMATION",
+        "subType": "성인",
+        "name": "성인",
+        "price": 48000,
+        "feeType": "USAGE",
+        "residency": "LOCAL",
+        "isRepresentative": true,
+        "grade": "관내",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "성인",
+        "name": "성인",
+        "price": 240000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "소인",
+        "name": "소인",
+        "price": 24000,
+        "feeType": "USAGE",
+        "residency": "LOCAL",
+        "isRepresentative": false,
+        "grade": "관내",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "소인",
+        "name": "소인",
+        "price": 120000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "사산아/태아",
+        "name": "사산아/태아",
+        "price": 12000,
+        "feeType": "USAGE",
+        "residency": "LOCAL",
+        "isRepresentative": false,
+        "grade": "관내",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "사산아/태아",
+        "name": "사산아/태아",
+        "price": 60000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "개장유골",
+        "name": "개장유골",
+        "price": 24000,
+        "feeType": "USAGE",
+        "residency": "LOCAL",
+        "isRepresentative": false,
+        "grade": "관내",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "개장유골",
+        "name": "개장유골",
+        "price": 120000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외",
+        "note": ""
+      }
+    ],
+    "representativePrice": 48000
   },
   {
     "id": "facility_1765514836926_1126",
@@ -23213,7 +26263,98 @@
     "coordinates": null,
     "images": [],
     "rating": 0,
-    "reviewCount": 0
+    "reviewCount": 0,
+    "standardizedPrices": [
+      {
+        "serviceType": "CREMATION",
+        "subType": "성인",
+        "name": "성인",
+        "price": 50000,
+        "feeType": "USAGE",
+        "residency": "LOCAL",
+        "isRepresentative": true,
+        "grade": "관내",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "성인",
+        "name": "성인",
+        "price": 250000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "소인",
+        "name": "소인",
+        "price": 40000,
+        "feeType": "USAGE",
+        "residency": "LOCAL",
+        "isRepresentative": false,
+        "grade": "관내",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "소인",
+        "name": "소인",
+        "price": 200000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "사산아/태아",
+        "name": "사산아/태아",
+        "price": 25000,
+        "feeType": "USAGE",
+        "residency": "LOCAL",
+        "isRepresentative": false,
+        "grade": "관내",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "사산아/태아",
+        "name": "사산아/태아",
+        "price": 125000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "개장유골",
+        "name": "개장유골",
+        "price": 30000,
+        "feeType": "USAGE",
+        "residency": "LOCAL",
+        "isRepresentative": false,
+        "grade": "관내",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "개장유골",
+        "name": "개장유골",
+        "price": 150000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외",
+        "note": ""
+      }
+    ],
+    "representativePrice": 50000
   },
   {
     "id": "facility_1765514836926_1127",
@@ -23229,7 +26370,98 @@
     "coordinates": null,
     "images": [],
     "rating": 0,
-    "reviewCount": 0
+    "reviewCount": 0,
+    "standardizedPrices": [
+      {
+        "serviceType": "CREMATION",
+        "subType": "성인",
+        "name": "성인",
+        "price": 54000,
+        "feeType": "USAGE",
+        "residency": "LOCAL",
+        "isRepresentative": true,
+        "grade": "관내",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "성인",
+        "name": "성인",
+        "price": 270000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "소인",
+        "name": "소인",
+        "price": 36000,
+        "feeType": "USAGE",
+        "residency": "LOCAL",
+        "isRepresentative": false,
+        "grade": "관내",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "소인",
+        "name": "소인",
+        "price": 180000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "사산아/태아",
+        "name": "사산아/태아",
+        "price": 18000,
+        "feeType": "USAGE",
+        "residency": "LOCAL",
+        "isRepresentative": false,
+        "grade": "관내",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "사산아/태아",
+        "name": "사산아/태아",
+        "price": 90000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "개장유골",
+        "name": "개장유골",
+        "price": 27000,
+        "feeType": "USAGE",
+        "residency": "LOCAL",
+        "isRepresentative": false,
+        "grade": "관내",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "개장유골",
+        "name": "개장유골",
+        "price": 135000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외",
+        "note": ""
+      }
+    ],
+    "representativePrice": 54000
   },
   {
     "id": "facility_1765514836926_1128",
@@ -23245,7 +26477,98 @@
     "coordinates": null,
     "images": [],
     "rating": 0,
-    "reviewCount": 0
+    "reviewCount": 0,
+    "standardizedPrices": [
+      {
+        "serviceType": "CREMATION",
+        "subType": "성인",
+        "name": "성인",
+        "price": 80000,
+        "feeType": "USAGE",
+        "residency": "LOCAL",
+        "isRepresentative": true,
+        "grade": "관내",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "성인",
+        "name": "성인",
+        "price": 400000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "소인",
+        "name": "소인",
+        "price": 60000,
+        "feeType": "USAGE",
+        "residency": "LOCAL",
+        "isRepresentative": false,
+        "grade": "관내",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "소인",
+        "name": "소인",
+        "price": 300000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "사산아/태아",
+        "name": "사산아/태아",
+        "price": 40000,
+        "feeType": "USAGE",
+        "residency": "LOCAL",
+        "isRepresentative": false,
+        "grade": "관내",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "사산아/태아",
+        "name": "사산아/태아",
+        "price": 200000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "개장유골",
+        "name": "개장유골",
+        "price": 40000,
+        "feeType": "USAGE",
+        "residency": "LOCAL",
+        "isRepresentative": false,
+        "grade": "관내",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "개장유골",
+        "name": "개장유골",
+        "price": 200000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외",
+        "note": ""
+      }
+    ],
+    "representativePrice": 80000
   },
   {
     "id": "facility_1765514836918_648",
@@ -23261,7 +26584,98 @@
     "coordinates": null,
     "images": [],
     "rating": 0,
-    "reviewCount": 0
+    "reviewCount": 0,
+    "standardizedPrices": [
+      {
+        "serviceType": "CREMATION",
+        "subType": "성인",
+        "name": "성인",
+        "price": 40000,
+        "feeType": "USAGE",
+        "residency": "LOCAL",
+        "isRepresentative": true,
+        "grade": "관내",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "성인",
+        "name": "성인",
+        "price": 200000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "소인",
+        "name": "소인",
+        "price": 30000,
+        "feeType": "USAGE",
+        "residency": "LOCAL",
+        "isRepresentative": false,
+        "grade": "관내",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "소인",
+        "name": "소인",
+        "price": 150000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "사산아/태아",
+        "name": "사산아/태아",
+        "price": 20000,
+        "feeType": "USAGE",
+        "residency": "LOCAL",
+        "isRepresentative": false,
+        "grade": "관내",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "사산아/태아",
+        "name": "사산아/태아",
+        "price": 100000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "개장유골",
+        "name": "개장유골",
+        "price": 20000,
+        "feeType": "USAGE",
+        "residency": "LOCAL",
+        "isRepresentative": false,
+        "grade": "관내",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "개장유골",
+        "name": "개장유골",
+        "price": 100000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외",
+        "note": ""
+      }
+    ],
+    "representativePrice": 40000
   },
   {
     "id": "facility_1765514836926_1129",
@@ -23277,7 +26691,98 @@
     "coordinates": null,
     "images": [],
     "rating": 0,
-    "reviewCount": 0
+    "reviewCount": 0,
+    "standardizedPrices": [
+      {
+        "serviceType": "CREMATION",
+        "subType": "성인",
+        "name": "성인",
+        "price": 50000,
+        "feeType": "USAGE",
+        "residency": "LOCAL",
+        "isRepresentative": true,
+        "grade": "관내",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "성인",
+        "name": "성인",
+        "price": 250000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "소인",
+        "name": "소인",
+        "price": 40000,
+        "feeType": "USAGE",
+        "residency": "LOCAL",
+        "isRepresentative": false,
+        "grade": "관내",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "소인",
+        "name": "소인",
+        "price": 200000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "사산아/태아",
+        "name": "사산아/태아",
+        "price": 20000,
+        "feeType": "USAGE",
+        "residency": "LOCAL",
+        "isRepresentative": false,
+        "grade": "관내",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "사산아/태아",
+        "name": "사산아/태아",
+        "price": 100000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "개장유골",
+        "name": "개장유골",
+        "price": 30000,
+        "feeType": "USAGE",
+        "residency": "LOCAL",
+        "isRepresentative": false,
+        "grade": "관내",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "개장유골",
+        "name": "개장유골",
+        "price": 150000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외",
+        "note": ""
+      }
+    ],
+    "representativePrice": 50000
   },
   {
     "id": "facility_1765514836917_585",
@@ -23293,7 +26798,142 @@
     "coordinates": null,
     "images": [],
     "rating": 0,
-    "reviewCount": 0
+    "reviewCount": 0,
+    "standardizedPrices": [
+      {
+        "serviceType": "CREMATION",
+        "subType": "성인",
+        "name": "성인",
+        "price": 50000,
+        "feeType": "USAGE",
+        "residency": "LOCAL",
+        "isRepresentative": true,
+        "grade": "관내",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "성인",
+        "name": "성인",
+        "price": 150000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외(인접)",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "성인",
+        "name": "성인",
+        "price": 300000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "소인",
+        "name": "소인",
+        "price": 30000,
+        "feeType": "USAGE",
+        "residency": "LOCAL",
+        "isRepresentative": false,
+        "grade": "관내",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "소인",
+        "name": "소인",
+        "price": 90000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외(인접)",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "소인",
+        "name": "소인",
+        "price": 180000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "사산아/태아",
+        "name": "사산아/태아",
+        "price": 15000,
+        "feeType": "USAGE",
+        "residency": "LOCAL",
+        "isRepresentative": false,
+        "grade": "관내",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "사산아/태아",
+        "name": "사산아/태아",
+        "price": 45000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외(인접)",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "사산아/태아",
+        "name": "사산아/태아",
+        "price": 90000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "개장유골",
+        "name": "개장유골",
+        "price": 30000,
+        "feeType": "USAGE",
+        "residency": "LOCAL",
+        "isRepresentative": false,
+        "grade": "관내",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "개장유골",
+        "name": "개장유골",
+        "price": 90000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외(인접)",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "개장유골",
+        "name": "개장유골",
+        "price": 180000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외",
+        "note": ""
+      }
+    ],
+    "representativePrice": 50000
   },
   {
     "id": "facility_1765514836926_1130",
@@ -23309,7 +26949,32 @@
     "coordinates": null,
     "images": [],
     "rating": 0,
-    "reviewCount": 0
+    "reviewCount": 0,
+    "standardizedPrices": [
+      {
+        "serviceType": "CREMATION",
+        "subType": "성인",
+        "name": "성인",
+        "price": 19000,
+        "feeType": "USAGE",
+        "residency": "LOCAL",
+        "isRepresentative": true,
+        "grade": "관내(6개월)",
+        "note": "화장시설"
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "성인",
+        "name": "성인",
+        "price": 19000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외(6개월)",
+        "note": "화장시설"
+      }
+    ],
+    "representativePrice": 19000
   },
   {
     "id": "facility_1765514836923_982",
@@ -23325,7 +26990,175 @@
     "coordinates": null,
     "images": [],
     "rating": 0,
-    "reviewCount": 0
+    "reviewCount": 0,
+    "standardizedPrices": [
+      {
+        "serviceType": "CREMATION",
+        "subType": "성인",
+        "name": "성인",
+        "price": 50000,
+        "feeType": "USAGE",
+        "residency": "LOCAL",
+        "isRepresentative": true,
+        "grade": "관내",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "성인",
+        "name": "성인",
+        "price": 300000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외(인접/준관내)",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "성인",
+        "name": "성인",
+        "price": 1000000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "소인",
+        "name": "소인",
+        "price": 30000,
+        "feeType": "USAGE",
+        "residency": "LOCAL",
+        "isRepresentative": false,
+        "grade": "관내",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "소인",
+        "name": "소인",
+        "price": 200000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외(인접/준관내)",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "소인",
+        "name": "소인",
+        "price": 600000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "사산아/태아",
+        "name": "사산아/태아",
+        "price": 15000,
+        "feeType": "USAGE",
+        "residency": "LOCAL",
+        "isRepresentative": false,
+        "grade": "관내",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "사산아/태아",
+        "name": "사산아/태아",
+        "price": 90000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외(인접/준관내)",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "사산아/태아",
+        "name": "사산아/태아",
+        "price": 240000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "무연고자",
+        "name": "무연고자",
+        "price": 0,
+        "feeType": "USAGE",
+        "residency": "LOCAL",
+        "isRepresentative": false,
+        "grade": "관내",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "무연고자",
+        "name": "무연고자",
+        "price": 300000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외(인접/준관내)",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "무연고자",
+        "name": "무연고자",
+        "price": 1000000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "개장유골",
+        "name": "개장유골",
+        "price": 30000,
+        "feeType": "USAGE",
+        "residency": "LOCAL",
+        "isRepresentative": false,
+        "grade": "관내",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "개장유골",
+        "name": "개장유골",
+        "price": 200000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외(인접/준관내)",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "개장유골",
+        "name": "개장유골",
+        "price": 600000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외",
+        "note": ""
+      }
+    ],
+    "representativePrice": 50000
   },
   {
     "id": "facility_1765514836919_697",
@@ -23341,7 +27174,153 @@
     "coordinates": null,
     "images": [],
     "rating": 0,
-    "reviewCount": 0
+    "reviewCount": 0,
+    "standardizedPrices": [
+      {
+        "serviceType": "CREMATION",
+        "subType": "성인",
+        "name": "성인",
+        "price": 150000,
+        "feeType": "USAGE",
+        "residency": "LOCAL",
+        "isRepresentative": true,
+        "grade": "관내",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "성인",
+        "name": "성인",
+        "price": 500000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외(오산/용인5개변경동)",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "성인",
+        "name": "성인",
+        "price": 1000000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "소인",
+        "name": "소인",
+        "price": 120000,
+        "feeType": "USAGE",
+        "residency": "LOCAL",
+        "isRepresentative": false,
+        "grade": "관내",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "소인",
+        "name": "소인",
+        "price": 250000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외(오산/용인5개변경동)",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "소인",
+        "name": "소인",
+        "price": 500000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "사산아/태아",
+        "name": "사산아/태아",
+        "price": 50000,
+        "feeType": "USAGE",
+        "residency": "LOCAL",
+        "isRepresentative": false,
+        "grade": "관내",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "사산아/태아",
+        "name": "사산아/태아",
+        "price": 200000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "개장유골",
+        "name": "개장유골",
+        "price": 100000,
+        "feeType": "USAGE",
+        "residency": "LOCAL",
+        "isRepresentative": false,
+        "grade": "관내",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "개장유골",
+        "name": "개장유골",
+        "price": 500000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "무연고자",
+        "name": "무연고자",
+        "price": 0,
+        "feeType": "USAGE",
+        "residency": "LOCAL",
+        "isRepresentative": false,
+        "grade": "관내(수원시)",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "무연고자",
+        "name": "무연고자",
+        "price": 500000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외(오산/용인5개변경동)",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "무연고자",
+        "name": "무연고자",
+        "price": 1000000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외",
+        "note": ""
+      }
+    ],
+    "representativePrice": 150000
   },
   {
     "id": "facility_1765514836918_691",
@@ -23405,7 +27384,164 @@
     "coordinates": null,
     "images": [],
     "rating": 0,
-    "reviewCount": 0
+    "reviewCount": 0,
+    "standardizedPrices": [
+      {
+        "serviceType": "CREMATION",
+        "subType": "성인",
+        "name": "성인",
+        "price": 50000,
+        "feeType": "USAGE",
+        "residency": "LOCAL",
+        "isRepresentative": true,
+        "grade": "관내",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "성인",
+        "name": "성인",
+        "price": 150000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외(봉화)",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "성인",
+        "name": "성인",
+        "price": 400000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "소인",
+        "name": "소인",
+        "price": 40000,
+        "feeType": "USAGE",
+        "residency": "LOCAL",
+        "isRepresentative": false,
+        "grade": "관내",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "소인",
+        "name": "소인",
+        "price": 120000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외(봉화)",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "소인",
+        "name": "소인",
+        "price": 280000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "사산아/태아",
+        "name": "사산아/태아",
+        "price": 25000,
+        "feeType": "USAGE",
+        "residency": "LOCAL",
+        "isRepresentative": false,
+        "grade": "관내",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "사산아/태아",
+        "name": "사산아/태아",
+        "price": 75000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외(봉화)",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "사산아/태아",
+        "name": "사산아/태아",
+        "price": 175000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "무연고자",
+        "name": "무연고자",
+        "price": 50000,
+        "feeType": "USAGE",
+        "residency": "LOCAL",
+        "isRepresentative": false,
+        "grade": "",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "무연고자",
+        "name": "무연고자",
+        "price": 400000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "개장유골",
+        "name": "개장유골",
+        "price": 30000,
+        "feeType": "USAGE",
+        "residency": "LOCAL",
+        "isRepresentative": false,
+        "grade": "관내",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "개장유골",
+        "name": "개장유골",
+        "price": 90000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외(봉화)",
+        "note": ""
+      },
+      {
+        "serviceType": "CREMATION",
+        "subType": "개장유골",
+        "name": "개장유골",
+        "price": 210000,
+        "feeType": "USAGE",
+        "residency": "NON_LOCAL",
+        "isRepresentative": false,
+        "grade": "관외",
+        "note": ""
+      }
+    ],
+    "representativePrice": 50000
   },
   {
     "id": "facility_1765514836914_54",

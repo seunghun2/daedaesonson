@@ -33,7 +33,7 @@ async function getFacilities(): Promise<Facility[]> {
     };
 
     return all
-      .filter((f: any) => f.category !== 'FUNERAL_HOME' && f.category !== 'CREMATORIUM' && f.isActive !== false)
+      .filter((f: any) => f.category !== 'FUNERAL_HOME' && f.isActive !== false)
       .map((f: any) => {
         const repPrice = normalizePrice(f.representativePrice || 0);
         const minP = normalizePrice(f.minPrice || 0);

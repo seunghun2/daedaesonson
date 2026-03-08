@@ -46,7 +46,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
         const combos = new Map<string, number>();
         allFacilities.forEach((f: any) => {
             if (!f.address || !f.category) return;
-            if (f.category === 'FUNERAL_HOME' || f.category === 'CREMATORIUM') return;
+            if (f.category === 'FUNERAL_HOME') return;
             if (!f.priceRange?.min || f.priceRange.min <= 0) return;
 
             const tokens = f.address.split(' ');
@@ -87,7 +87,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
         const facilities = JSON.parse(fileContent);
 
         facilityPages = facilities
-            .filter((f: any) => f.category !== 'FUNERAL_HOME' && f.category !== 'CREMATORIUM' && f.priceRange?.min > 0)
+            .filter((f: any) => f.category !== 'FUNERAL_HOME' && f.priceRange?.min > 0)
             .map((f: any) => {
                 let lastMod = new Date();
                 if (f.lastUpdated && /^\d{4}-\d{2}-\d{2}/.test(f.lastUpdated)) {

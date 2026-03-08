@@ -4,7 +4,7 @@ import Script from 'next/script';
 import NextImage from 'next/image';
 import { Image, Text, Badge, Group, Button, Stack, Box, Paper, Modal, Tabs, Collapse, ActionIcon, Rating, Textarea, TextInput, LoadingOverlay, useMantineTheme, Accordion, Table, Switch, Select, Drawer, Tooltip, Popover } from '@mantine/core';
 import { useDisclosure, useMediaQuery } from '@mantine/hooks';
-import { Car, Utensils, Accessibility, Store, Navigation, Globe, ChevronLeft, ChevronRight, TrendingUp, ChevronDown, ChevronUp, Star, Pencil, Camera, X, ImageIcon, Plus, Trash, Archive, Mountain, Trees, Layers, Lock, Unlock, Check, ExternalLink } from 'lucide-react';
+import { Car, Utensils, Accessibility, Store, Navigation, Globe, ChevronLeft, ChevronRight, TrendingUp, ChevronDown, ChevronUp, Star, Pencil, Camera, X, ImageIcon, Plus, Trash, Archive, Mountain, Trees, Layers, Lock, Unlock, Check, ExternalLink, Flame } from 'lucide-react';
 import InquiryPanel from './InquiryPanel';
 import ScrollableTabsList from '@/components/ScrollableTabsList';
 import ReviewsPanel from './ReviewsPanel';
@@ -91,6 +91,7 @@ function PriceInfoSection({ priceInfo, hasPrice, facilityName, websiteUrl }: { p
         if (/BURIAL|매장/.test(type) && !type.includes('NATURAL_BURIAL')) return <Mountain size={24} color="#495057" />;
         if (/BONGSAN|봉안/.test(type)) return <Archive size={24} color="#495057" />;
         if (/NATURAL|수목/.test(type)) return <Trees size={24} color="#495057" />;
+        if (/CREMATION|화장/.test(type)) return <Flame size={24} color="#495057" />;
         return <Layers size={24} color="#495057" />;
     };
 
@@ -99,6 +100,7 @@ function PriceInfoSection({ priceInfo, hasPrice, facilityName, websiteUrl }: { p
         if (type === 'NATURAL' || type === 'NATURAL_BURIAL') return '수목장';
         if (type === 'BURIAL') return '매장묘지';
         if (type === 'CHARNEL_HOUSE') return '봉안당';
+        if (type === 'CREMATION') return '화장';
         if (type === 'OTHER') return '기타';
         return type;
     };
@@ -139,7 +141,7 @@ function PriceInfoSection({ priceInfo, hasPrice, facilityName, websiteUrl }: { p
         // 서비스 타입별로 그룹핑
         const serviceTypesRaw = [...new Set(reclassifiedPrices.map(g => g.serviceType))];
         // 탭 순서: 봉안당 → 매장묘 → 수목장 → 기타
-        const serviceTypeOrder = ['BONGSAN', 'BURIAL', 'NATURAL'];
+        const serviceTypeOrder = ['BONGSAN', 'BURIAL', 'NATURAL', 'CREMATION'];
         const serviceTypes = serviceTypesRaw.sort((a, b) => {
             const ai = serviceTypeOrder.indexOf(a);
             const bi = serviceTypeOrder.indexOf(b);
@@ -1984,6 +1986,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                 'BONGSAN': '봉안당',
                                 'BURIAL': '매장묘지',
                                 'NATURAL': '수목장',
+                                'CREMATION': '화장',
                                 'OTHER': '기타',
                             };
                             // 🔧 OTHER 재분류 함수
@@ -3209,7 +3212,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                                 onClick={() => setConsultStep(consultStep === 6 ? -1 : 6)}
                                             >
                                                 <Group justify="space-between">
-                                                    <Text size="md" fw={700}>6. 추가 요청사항 (선택)</Text>
+                                                    <Text size="md" fw={700}>6. 추가 요청사항</Text>
                                                     <ChevronDown size={18} color="#adb5bd" style={{ transform: consultStep === 6 ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s' }} />
                                                 </Group>
                                                 <Collapse in={consultStep === 6}>
@@ -3250,7 +3253,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                             size="lg"
                                             radius="md"
                                             loading={consultSubmitting}
-                                            disabled={!consultForm.name || !consultForm.phone}
+                                            disabled={!consultForm.name || !consultForm.phone || !consultForm.preferredTime || !consultForm.consultMethod || !consultForm.question || !consultForm.message?.trim()}
                                             styles={{ root: { height: 52 } }}
                                             onClick={async () => {
                                                 setConsultSubmitting(true);
@@ -3660,7 +3663,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                                 onClick={() => setConsultStep(consultStep === 6 ? -1 : 6)}
                                             >
                                                 <Group justify="space-between">
-                                                    <Text size="md" fw={700}>6. 추가 요청사항 (선택)</Text>
+                                                    <Text size="md" fw={700}>6. 추가 요청사항</Text>
                                                     <ChevronDown size={18} color="#adb5bd" style={{ transform: consultStep === 6 ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s' }} />
                                                 </Group>
                                                 <Collapse in={consultStep === 6}>
@@ -3690,7 +3693,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                             size="lg"
                                             radius="md"
                                             loading={consultSubmitting}
-                                            disabled={!consultForm.name || !consultForm.phone}
+                                            disabled={!consultForm.name || !consultForm.phone || !consultForm.preferredTime || !consultForm.consultMethod || !consultForm.question || !consultForm.message?.trim()}
                                             styles={{ root: { height: 52 } }}
                                             onClick={async () => {
                                                 setConsultSubmitting(true);

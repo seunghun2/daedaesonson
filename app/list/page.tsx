@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useMemo, useEffect, Suspense } from 'react';
+import { useState, useMemo, useEffect, useCallback, useTransition, Suspense } from 'react';
 import { Box, Group, Text, ScrollArea, Center, Loader, Button, Stack, ActionIcon } from '@mantine/core';
 import { useMediaQuery } from '@mantine/hooks';
 import { ChevronLeft } from 'lucide-react';
@@ -38,6 +38,7 @@ function ListPageContent() {
 
     // 필터
     const [activeCategory, setActiveCategory] = useState<string[]>(['all']);
+    const [isPending, startTransition] = useTransition();
 
     // 상세 페이지
     const [selectedFacility, setSelectedFacility] = useState<Facility | null>(null);
@@ -105,56 +106,48 @@ function ListPageContent() {
         }
     }, [searchParams, allFacilities]);
 
-    // 필터링 (지역 기반 + 카테고리)
-    const filteredFacilities = useMemo(() => {
-        let result = allFacilities;
-
-        // 마커 off된 시설 제외
-        result = result.filter(f => f.isActive !== false);
-
-        // 장례식장, 화장시설, 기타 제외
-        result = result.filter(f =>
+    // Step 1: 거리 계산 + 기본 필터 (좌표/지역 변경 시에만 재계산, 탭 변경 시 건너뜀)
+    const baseFacilities = useMemo(() => {
+        let result = allFacilities.filter(f =>
+            f.isActive !== false &&
             f.category !== 'FUNERAL_HOME' &&
-            f.category !== 'CREMATORIUM' &&
             f.category !== 'OTHER'
         );
 
-        // 좌표가 있으면 거리 기반 필터링 (반경 30km)
+        // 거리 기반 필터 + 거리 캐싱
         if (centerLat && centerLng) {
-            result = result.filter(f => {
-                if (!f.coordinates) return false;
-                const dist = getDistance(centerLat, centerLng, f.coordinates.lat, f.coordinates.lng);
-                return dist <= 30; // 30km 반경
-            });
-        }
+            result = result
+                .map(f => {
+                    if (!f.coordinates) return null;
+                    const dist = getDistance(centerLat, centerLng, f.coordinates.lat, f.coordinates.lng);
+                    if (dist > 30) return null;
+                    return { ...f, _dist: dist };
+                })
+                .filter(Boolean) as (Facility & { _dist: number })[];
 
-        // 카테고리 필터
-        if (!activeCategory.includes('all')) {
-            const catMap: Record<string, FacilityCategory> = {
-                'charnel': 'CHARNEL_HOUSE',
-                'natural': 'NATURAL_BURIAL',
-                'park': 'FAMILY_GRAVE'
-            };
-            const selectedDbCategories = activeCategory
-                .filter(c => catMap[c])
-                .map(c => catMap[c]);
-            if (selectedDbCategories.length > 0) {
-                result = result.filter(f => selectedDbCategories.includes(f.category));
-            }
-        }
-
-        // 거리순 정렬
-        if (centerLat && centerLng) {
-            result = result.sort((a, b) => {
-                if (!a.coordinates || !b.coordinates) return 0;
-                const distA = getDistance(centerLat, centerLng, a.coordinates.lat, a.coordinates.lng);
-                const distB = getDistance(centerLat, centerLng, b.coordinates.lat, b.coordinates.lng);
-                return distA - distB;
-            });
+            // 거리순 정렬 (한 번만)
+            result.sort((a: any, b: any) => (a._dist || 0) - (b._dist || 0));
         }
 
         return result;
-    }, [allFacilities, activeCategory, centerLat, centerLng]);
+    }, [allFacilities, centerLat, centerLng]);
+
+    // Step 2: 카테고리 필터만 (탭 클릭 시 이것만 재실행 → 빠름!)
+    const filteredFacilities = useMemo(() => {
+        if (activeCategory.includes('all')) return baseFacilities;
+
+        const catMap: Record<string, FacilityCategory> = {
+            'charnel': 'CHARNEL_HOUSE',
+            'natural': 'NATURAL_BURIAL',
+            'park': 'FAMILY_GRAVE'
+        };
+        const selectedDbCategories = activeCategory
+            .filter(c => catMap[c])
+            .map(c => catMap[c]);
+        if (selectedDbCategories.length === 0) return baseFacilities;
+
+        return baseFacilities.filter(f => selectedDbCategories.includes(f.category));
+    }, [baseFacilities, activeCategory]);
 
     const visibleFacilities = filteredFacilities.slice(0, visibleCount);
 
@@ -233,7 +226,7 @@ function ListPageContent() {
                 <Group gap={6} wrap="nowrap" align="center">
                     {/* 전체 버튼 */}
                     <button
-                        onClick={() => setActiveCategory(['all'])}
+                        onClick={() => { startTransition(() => setActiveCategory(['all'])); setVisibleCount(20); }}
                         style={{
                             height: '30px',
                             fontSize: '12px',
@@ -266,19 +259,22 @@ function ListPageContent() {
                             <button
                                 key={tab.value}
                                 onClick={() => {
-                                    if (activeCategory.includes('all')) {
-                                        setActiveCategory([tab.value]);
-                                    } else if (isSelected) {
-                                        const newCats = activeCategory.filter(c => c !== tab.value);
-                                        setActiveCategory(newCats.length === 0 ? ['all'] : newCats);
-                                    } else {
-                                        const newCats = [...activeCategory, tab.value];
-                                        if (newCats.length === 3) {
-                                            setActiveCategory(['all']);
+                                    setVisibleCount(20);
+                                    startTransition(() => {
+                                        if (activeCategory.includes('all')) {
+                                            setActiveCategory([tab.value]);
+                                        } else if (isSelected) {
+                                            const newCats = activeCategory.filter(c => c !== tab.value);
+                                            setActiveCategory(newCats.length === 0 ? ['all'] : newCats);
                                         } else {
-                                            setActiveCategory(newCats);
+                                            const newCats = [...activeCategory, tab.value];
+                                            if (newCats.length === 3) {
+                                                setActiveCategory(['all']);
+                                            } else {
+                                                setActiveCategory(newCats);
+                                            }
                                         }
-                                    }
+                                    });
                                 }}
                                 style={{
                                     height: '30px',

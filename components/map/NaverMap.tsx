@@ -29,6 +29,8 @@ interface NaverMapProps {
     onMapTap?: () => void; // 빈 지도 탭 시 호출 (UI 토글용)
     onMapDrag?: () => void; // 지도 드래그 시 호출 (검색창 닫기용)
     uiHidden?: boolean; // UI 숨김 상태 (호갱노노 스타일 애니메이션)
+    activeCategory?: string[]; // 🚀 카테고리 필터 (마커 visibility 토글용)
+    institutionFilter?: 'all' | 'public' | 'private'; // 공설/사설 필터
 }
 
 export interface NaverMapRef {
@@ -66,7 +68,7 @@ const REGION_MAPPINGS: { [key: string]: string[] } = {
 // 좌표별 시설 ID 등록부 (전역 유지 - 필터링되어도 위치 고정)
 const LAYOUT_REGISTRY = new Map<string, string[]>();
 
-const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerClick, onBoundsChanged, onCenterAddressChange, isMobile, onViewList, onMapTap, onMapDrag, uiHidden }, ref) => {
+const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerClick, onBoundsChanged, onCenterAddressChange, isMobile, onViewList, onMapTap, onMapDrag, uiHidden, activeCategory = ['all'], institutionFilter = 'all' }, ref) => {
     const mapRef = useRef<HTMLDivElement>(null);
     const [isMapLoaded, setIsMapLoaded] = useState(false);
     const [isMainLoaded, setIsMainLoaded] = useState(false);
@@ -103,10 +105,14 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
 
     // props를 ref에 저장 (이벤트 리스너 내부에서 최신 값 참조 위함)
     const propsRef = useRef({ facilities, onMarkerClick, onBoundsChanged });
+    const activeCategoryRef = useRef(activeCategory);
+    const institutionFilterRef = useRef(institutionFilter);
 
     useEffect(() => {
         propsRef.current = { facilities, onMarkerClick, onBoundsChanged };
-    }, [facilities, onMarkerClick, onBoundsChanged]);
+        activeCategoryRef.current = activeCategory;
+        institutionFilterRef.current = institutionFilter;
+    }, [facilities, onMarkerClick, onBoundsChanged, activeCategory, institutionFilter]);
 
     // 🚀 GeoJSON lazy load 플래그 (첫 사용 시에만 로드, 초기 로딩 50MB 제거!)
     const geomLoadingRef = useRef<{ dong: boolean; gu: boolean }>({ dong: false, gu: false });
@@ -781,15 +787,8 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
         const currentZoom = map.getZoom();
         // 잡음 방지: 로그 제거
 
-        // 🔄 필터 변경 감지 (facilities 개수가 바뀌면 마커 재생성)
-        if (isMarkersInitializedRef.current && prevFacilitiesCountRef.current !== processedFacilities.length) {
-            isMarkersInitializedRef.current = false; // 재초기화 허용
-        }
-        prevFacilitiesCountRef.current = processedFacilities.length;
-
-        // 🔒 이미 마커가 초기화되었으면 재생성하지 않음 (위치 고정)
+        // 🔒 이미 마커가 초기화되었으면 재생성하지 않음 (카테고리 필터는 visibility로 처리)
         if (isMarkersInitializedRef.current) {
-            // 잡음 방지: 로그 제거
             return;
         }
 
@@ -1025,6 +1024,7 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
                 map.setZoom(12);
             });
 
+            (regionMarker as any).__regionKey = regionKey;
             regionMarkersArrayRef.current.push(regionMarker);
         }
 
@@ -1057,6 +1057,7 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
                 map.setZoom(10);
             });
 
+            (provinceMarker as any).__provinceKey = provinceKey;
             provinceMarkersArrayRef.current.push(provinceMarker);
         }
 
@@ -1087,6 +1088,132 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
             updateVisibleMarkers();
         }
     }, [facilities, isMapLoaded, updateVisibleMarkers, processedFacilities.length]);
+
+    // 🚀🚀🚀 핵심 성능 최적화: 카테고리/공설사설 필터 변경 시 마커 visibility만 토글 (재생성 없음!)
+    useEffect(() => {
+        const map = mapInstanceRef.current;
+        if (!map || !window.naver || markersRef.current.length === 0) return;
+
+        const catMap: Record<string, string> = {
+            'charnel': 'CHARNEL_HOUSE',
+            'natural': 'NATURAL_BURIAL',
+            'park': 'FAMILY_GRAVE',
+            'crematorium': 'CREMATORIUM'
+        };
+
+        const isAllCategory = activeCategory.includes('all');
+        const selectedDbCategories = isAllCategory ? [] : activeCategory
+            .filter(c => catMap[c])
+            .map(c => catMap[c]);
+
+        const currentZoom = map.getZoom();
+        const bounds = map.getBounds();
+        const isIndividualMode = currentZoom > 11;
+
+        // 개별 마커 visibility 토글
+        for (const marker of markersRef.current) {
+            const fac = (marker as any).__facilityData;
+            if (!fac) continue;
+
+            // 카테고리 필터
+            let catVisible = isAllCategory || selectedDbCategories.includes(fac.category);
+
+            // 공설/사설 필터
+            if (catVisible && institutionFilter !== 'all') {
+                if (institutionFilter === 'public') catVisible = fac.isPublic === true;
+                else if (institutionFilter === 'private') catVisible = fac.isPublic === false;
+            }
+
+            // 줌 모드: individual 모드일 때만 개별 마커 표시
+            if (isIndividualMode) {
+                marker.setVisible(catVisible && bounds.hasPoint(marker.getPosition()));
+            } else {
+                marker.setVisible(false);
+            }
+        }
+
+        // 지역/도 마커 카운트도 업데이트 (필터 반영)
+        // 지역 마커
+        for (const regionMarker of regionMarkersArrayRef.current) {
+            const regionKey = (regionMarker as any).__regionKey;
+            if (!regionKey || !regionGroups[regionKey]) {
+                regionMarker.setVisible(false);
+                continue;
+            }
+
+            // 해당 지역의 필터된 시설 수 계산
+            let count = 0;
+            for (const fac of regionGroups[regionKey].facilities) {
+                let visible = isAllCategory || selectedDbCategories.includes(fac.category);
+                if (visible && institutionFilter !== 'all') {
+                    if (institutionFilter === 'public') visible = fac.isPublic === true;
+                    else if (institutionFilter === 'private') visible = fac.isPublic === false;
+                }
+                if (visible) count++;
+            }
+
+            if (count === 0) {
+                regionMarker.setVisible(false);
+            } else {
+                // 카운트 업데이트
+                const displayName = regionKey.endsWith('시') || regionKey.endsWith('군') || regionKey.endsWith('구')
+                    ? regionKey.slice(0, -1) : regionKey;
+                regionMarker.setIcon({
+                    content: `
+                        <div style="cursor:pointer; min-width:64px; padding: 6px 10px; background:#1D0098; color:white; border-radius:6px; box-shadow:0 2px 6px rgba(0,0,0,0.15); display:flex; flex-direction:column; align-items:center; justify-content:center; font-family:-apple-system, sans-serif;">
+                            <div style="font-size:11px; opacity:0.8; margin-bottom:2px; line-height:1;">${displayName}</div>
+                            <div style="font-size:14px; font-weight:800; line-height:1;">${count} 곳</div>
+                        </div>
+                    `,
+                    size: new window.naver.maps.Size(64, 40),
+                    anchor: new window.naver.maps.Point(32, 20),
+                });
+                const isRegionMode = currentZoom >= 10 && currentZoom <= 11;
+                regionMarker.setVisible(isRegionMode);
+            }
+        }
+
+        // 도 마커 업데이트  
+        for (const provMarker of provinceMarkersArrayRef.current) {
+            const provKey = (provMarker as any).__provinceKey;
+            if (!provKey || !provinceGroups[provKey]) continue;
+
+            // 해당 도의 필터된 시설 수 계산
+            let count = 0;
+            for (const fac of processedFacilities) {
+                const facProv = (fac.address || '').split(' ')[0] || '기타';
+                if (facProv !== provKey) continue;
+                let visible = isAllCategory || selectedDbCategories.includes(fac.category);
+                if (visible && institutionFilter !== 'all') {
+                    if (institutionFilter === 'public') visible = fac.isPublic === true;
+                    else if (institutionFilter === 'private') visible = fac.isPublic === false;
+                }
+                if (visible) count++;
+            }
+
+            if (count === 0) {
+                provMarker.setVisible(false);
+            } else {
+                let displayName = provKey;
+                if (displayName.includes('특별자치')) displayName = displayName.replace('특별자치', '');
+                else if (displayName.endsWith('특별시') || displayName.endsWith('광역시')) displayName = displayName.substring(0, 2);
+                else if (displayName.endsWith('도')) displayName = displayName.slice(0, -1);
+
+                provMarker.setIcon({
+                    content: `
+                        <div style="cursor:pointer; min-width:64px; padding: 6px 10px; background:#1D0098; color:white; border-radius:6px; box-shadow:0 2px 6px rgba(0,0,0,0.15); display:flex; flex-direction:column; align-items:center; justify-content:center; font-family:-apple-system, sans-serif;">
+                            <div style="font-size:11px; opacity:0.8; margin-bottom:2px; line-height:1;">${displayName}</div>
+                            <div style="font-size:14px; font-weight:800; line-height:1;">${count} 곳</div>
+                        </div>
+                    `,
+                    size: new window.naver.maps.Size(64, 40),
+                    anchor: new window.naver.maps.Point(32, 20),
+                });
+                const isProvinceMode = currentZoom <= 9;
+                provMarker.setVisible(isProvinceMode);
+            }
+        }
+    }, [activeCategory, institutionFilter, processedFacilities, regionGroups, provinceGroups]);
 
     const initMap = () => {
         if (!window.naver || !window.naver.maps) {
@@ -1248,15 +1375,35 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
                         regionMarkersArrayRef.current.forEach(m => m.setVisible(true));
                     } else {
                         const bounds = map.getBounds();
+                        const catMap: Record<string, string> = { 'charnel': 'CHARNEL_HOUSE', 'natural': 'NATURAL_BURIAL', 'park': 'FAMILY_GRAVE', 'crematorium': 'CREMATORIUM' };
+                        const ac = activeCategoryRef.current;
+                        const isAll = ac.includes('all');
+                        const selCats = isAll ? [] : ac.filter(c => catMap[c]).map(c => catMap[c]);
+                        const instF = institutionFilterRef.current;
                         markersRef.current.forEach(m => {
-                            m.setVisible(bounds.hasPoint(m.getPosition()));
+                            const fac = (m as any).__facilityData;
+                            let catOk = isAll || selCats.includes(fac?.category);
+                            if (catOk && instF !== 'all') {
+                                catOk = instF === 'public' ? fac?.isPublic === true : fac?.isPublic === false;
+                            }
+                            m.setVisible(catOk && bounds.hasPoint(m.getPosition()));
                         });
                     }
                 } else if (newMode === 'individual') {
                     // 🔥 같은 모드에서도 줌/이동 시 viewport 마커 갱신 (CSS 토글만이라 빠름)
                     const bounds = map.getBounds();
+                    const catMap2: Record<string, string> = { 'charnel': 'CHARNEL_HOUSE', 'natural': 'NATURAL_BURIAL', 'park': 'FAMILY_GRAVE', 'crematorium': 'CREMATORIUM' };
+                    const ac2 = activeCategoryRef.current;
+                    const isAll2 = ac2.includes('all');
+                    const selCats2 = isAll2 ? [] : ac2.filter(c => catMap2[c]).map(c => catMap2[c]);
+                    const instF2 = institutionFilterRef.current;
                     markersRef.current.forEach(m => {
-                        m.setVisible(bounds.hasPoint(m.getPosition()));
+                        const fac = (m as any).__facilityData;
+                        let catOk = isAll2 || selCats2.includes(fac?.category);
+                        if (catOk && instF2 !== 'all') {
+                            catOk = instF2 === 'public' ? fac?.isPublic === true : fac?.isPublic === false;
+                        }
+                        m.setVisible(catOk && bounds.hasPoint(m.getPosition()));
                     });
                 }
             });
@@ -1278,8 +1425,18 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
                 // 🚀 드래그 후 새 영역 마커 표시 (individual 모드에서만)
                 if (prevZoomModeRef.current === 'individual') {
                     const bounds = map.getBounds();
+                    const catMap3: Record<string, string> = { 'charnel': 'CHARNEL_HOUSE', 'natural': 'NATURAL_BURIAL', 'park': 'FAMILY_GRAVE', 'crematorium': 'CREMATORIUM' };
+                    const ac3 = activeCategoryRef.current;
+                    const isAll3 = ac3.includes('all');
+                    const selCats3 = isAll3 ? [] : ac3.filter(c => catMap3[c]).map(c => catMap3[c]);
+                    const instF3 = institutionFilterRef.current;
                     markersRef.current.forEach(m => {
-                        m.setVisible(bounds.hasPoint(m.getPosition()));
+                        const fac = (m as any).__facilityData;
+                        let catOk = isAll3 || selCats3.includes(fac?.category);
+                        if (catOk && instF3 !== 'all') {
+                            catOk = instF3 === 'public' ? fac?.isPublic === true : fac?.isPublic === false;
+                        }
+                        m.setVisible(catOk && bounds.hasPoint(m.getPosition()));
                     });
                 }
             });

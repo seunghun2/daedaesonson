@@ -51,7 +51,7 @@ export async function generateStaticParams() {
 
     facilities.forEach((f: any) => {
         if (!f.address || !f.category) return;
-        if (f.category === 'FUNERAL_HOME' || f.category === 'CREMATORIUM') return;
+        if (f.category === 'FUNERAL_HOME') return;
         if (!f.priceRange?.min || f.priceRange.min <= 0) return;
 
         const tokens = f.address.split(' ');
