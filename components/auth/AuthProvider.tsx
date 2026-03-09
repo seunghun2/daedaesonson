@@ -83,25 +83,43 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         window.location.href = authUrl;
     };
 
-    // 휴대전화 로그인 (OTP 발송)
+    // 휴대전화 로그인 (솔라피 SMS OTP 발송)
     const signInWithPhone = async (phone: string) => {
-        // 한국 번호 형식 변환: 010-1234-5678 → +821012345678
-        const formattedPhone = phone.replace(/-/g, '').replace(/^0/, '+82');
-        const { error } = await supabase.auth.signInWithOtp({
-            phone: formattedPhone,
-        });
-        return { error: error?.message ?? null };
+        try {
+            const res = await fetch('/api/auth/send-otp', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ phone }),
+            });
+            const data = await res.json();
+            if (!res.ok) return { error: data.error };
+            return { error: null };
+        } catch {
+            return { error: '인증번호 발송에 실패했습니다' };
+        }
     };
 
-    // OTP 인증
+    // OTP 인증 (솔라피)
     const verifyOtp = async (phone: string, token: string) => {
-        const formattedPhone = phone.replace(/-/g, '').replace(/^0/, '+82');
-        const { error } = await supabase.auth.verifyOtp({
-            phone: formattedPhone,
-            token,
-            type: 'sms',
-        });
-        return { error: error?.message ?? null };
+        try {
+            const res = await fetch('/api/auth/verify-otp', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ phone, code: token }),
+            });
+            const data = await res.json();
+            if (!res.ok) return { error: data.error };
+
+            // 매직 링크 토큰으로 세션 생성
+            if (data.token) {
+                const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+                const verifyUrl = `${supabaseUrl}/auth/v1/verify?token=${data.token}&type=magiclink&redirect_to=${window.location.origin}`;
+                window.location.href = verifyUrl;
+            }
+            return { error: null };
+        } catch {
+            return { error: '인증에 실패했습니다' };
+        }
     };
 
     // 로그아웃
