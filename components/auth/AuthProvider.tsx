@@ -49,7 +49,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     // 세션 변경 감지
     useEffect(() => {
         // 초기 세션 확인
-        supabase.auth.getSession().then(({ data: { session } }: any) => {
+        supabase.auth.getSession().then(({ data: { session } }) => {
             setSession(session);
             setUser(session?.user ?? null);
             if (session?.user) {
@@ -60,7 +60,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
         // 인증 상태 변경 리스너
         const { data: { subscription } } = supabase.auth.onAuthStateChange(
-            async (_event: any, session: any) => {
+            async (_event, session) => {
                 setSession(session);
                 setUser(session?.user ?? null);
                 if (session?.user) {
