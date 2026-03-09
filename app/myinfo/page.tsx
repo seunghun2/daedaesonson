@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { Box, Text, Group, Stack } from '@mantine/core';
 import { useRouter } from 'next/navigation';
-import { ChevronLeft, Heart, LogOut, Trash2, ChevronRight, MapPin } from 'lucide-react';
+import { ChevronLeft, Star, LogOut, Trash2, ChevronRight, MapPin } from 'lucide-react';
 import BottomNav from '@/components/common/BottomNav';
 import { useAuth } from '@/components/auth/AuthProvider';
 import { useMediaQuery } from '@mantine/hooks';
@@ -151,9 +151,9 @@ export default function MyInfoPage() {
                         </Box>
                     ) : facilityDetails.length === 0 ? (
                         <Box py={40} style={{ textAlign: 'center' }}>
-                            <Heart size={40} color="#dee2e6" style={{ margin: '0 auto 12px' }} />
+                            <Star size={40} color="#FFD43B" fill="#FFD43B" style={{ margin: '0 auto 12px' }} />
                             <Text c="dimmed" size="sm">관심 시설이 없습니다</Text>
-                            <Text c="dimmed" size="xs" mt={4}>시설 상세 페이지에서 ♡를 눌러 추가하세요</Text>
+                            <Text c="dimmed" size="xs" mt={4}>시설 상세 페이지에서 ★를 눌러 추가하세요</Text>
                         </Box>
                     ) : (
                         <Stack gap="sm">
@@ -231,51 +231,49 @@ export default function MyInfoPage() {
                         </Stack>
                     </Box>
 
-                    {/* 관심 시설 */}
+                    {/* 관심 시설 & 내 이야기 */}
                     <Box px="md" pb="md">
-                        <Box
-                            bg="white"
-                            px="md"
-                            py={14}
-                            style={{
-                                borderRadius: 12,
-                                cursor: 'pointer',
-                                display: 'flex',
-                                alignItems: 'center',
-                                justifyContent: 'space-between',
-                            }}
-                            onClick={() => setShowFavorites(true)}
-                        >
-                            <Group gap={8}>
-                                <Heart size={16} color="#ff6b6b" fill="#ff6b6b" />
-                                <Text size="sm" fw={500}>관심 시설</Text>
-                            </Group>
-                            <Group gap={4}>
-                                <Text size="sm" fw={700} c="brand.7">{favorites.length}개</Text>
-                                <ChevronRight size={16} color="#adb5bd" />
-                            </Group>
-                        </Box>
-                    </Box>
+                        <Stack gap={0} bg="white" style={{ borderRadius: 12, overflow: 'hidden' }}>
+                            <Box
+                                px="md"
+                                py={14}
+                                style={{
+                                    cursor: 'pointer',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'space-between',
+                                    borderBottom: '1px solid #f1f3f5',
+                                }}
+                                onClick={() => setShowFavorites(true)}
+                            >
+                                <Group gap={8}>
+                                    <Star size={16} color="#adb5bd" fill="#adb5bd" />
+                                    <Text size="sm" fw={500}>관심 시설</Text>
+                                </Group>
+                                <Group gap={4}>
+                                    <Text size="sm" fw={600} c="dimmed">{favorites.length}개</Text>
+                                    <ChevronRight size={16} color="#adb5bd" />
+                                </Group>
+                            </Box>
 
-                    {/* 내 이야기 */}
-                    <Box px="md" pb="md">
-                        <Box
-                            bg="white" px="md" py={14}
-                            style={{
-                                borderRadius: 12, cursor: 'pointer',
-                                display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-                            }}
-                            onClick={() => setShowMyReviews(!showMyReviews)}
-                        >
-                            <Group gap={8}>
-                                <span className="material-symbols-outlined" style={{ fontSize: '18px', color: '#302E92' }}>chat_bubble</span>
-                                <Text size="sm" fw={500}>내 이야기</Text>
-                            </Group>
-                            <Group gap={4}>
-                                <Text size="sm" fw={700} style={{ color: 'var(--mantine-color-brand-7)' }}>{myReviews.length}개</Text>
-                                <span className="material-symbols-outlined" style={{ fontSize: '16px', color: '#adb5bd', transition: 'transform 0.2s', transform: showMyReviews ? 'rotate(90deg)' : 'none' }}>chevron_right</span>
-                            </Group>
-                        </Box>
+                            <Box
+                                px="md" py={14}
+                                style={{
+                                    cursor: 'pointer',
+                                    display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+                                }}
+                                onClick={() => setShowMyReviews(!showMyReviews)}
+                            >
+                                <Group gap={8}>
+                                    <span className="material-symbols-outlined" style={{ fontSize: '18px', color: '#adb5bd' }}>chat_bubble</span>
+                                    <Text size="sm" fw={500}>내 이야기</Text>
+                                </Group>
+                                <Group gap={4}>
+                                    <Text size="sm" fw={600} c="dimmed">{myReviews.length}개</Text>
+                                    <span className="material-symbols-outlined" style={{ fontSize: '16px', color: '#adb5bd', transition: 'transform 0.2s', transform: showMyReviews ? 'rotate(90deg)' : 'none' }}>chevron_right</span>
+                                </Group>
+                            </Box>
+                        </Stack>
                         {showMyReviews && (
                             <Stack gap="xs" mt="xs">
                                 {myReviews.length === 0 ? (
@@ -357,83 +355,88 @@ export default function MyInfoPage() {
                         </Stack>
                     </Box>
                 </>
-            )}
+            )
+            }
 
             {/* 로그아웃 확인 모달 */}
-            {showLogoutConfirm && (
-                <Box style={{
-                    position: 'fixed', inset: 0, zIndex: 9999,
-                    display: 'flex', alignItems: 'center', justifyContent: 'center',
-                    backgroundColor: 'rgba(0,0,0,0.4)',
-                }} onClick={() => setShowLogoutConfirm(false)}>
-                    <Box
-                        bg="white" p="xl"
-                        style={{
-                            borderRadius: 16, width: 280, textAlign: 'center',
-                            animation: 'scaleIn 0.2s ease-out',
-                        }}
-                        onClick={(e: any) => e.stopPropagation()}
-                    >
-                        <Text size="md" fw={700} mb={4}>로그아웃</Text>
-                        <Text size="sm" c="dimmed" mb={20}>로그아웃 하시겠습니까?</Text>
-                        <Group justify="center" gap={8}>
-                            <button
-                                onClick={() => setShowLogoutConfirm(false)}
-                                style={{
-                                    padding: '10px 28px', borderRadius: 10, flex: 1,
-                                    backgroundColor: '#f1f3f5', border: 'none',
-                                    fontSize: 14, fontWeight: 600, color: '#495057', cursor: 'pointer',
-                                }}
-                            >
-                                아니오
-                            </button>
-                            <button
-                                onClick={() => { setShowLogoutConfirm(false); signOut(); }}
-                                style={{
-                                    padding: '10px 28px', borderRadius: 10, flex: 1,
-                                    backgroundColor: '#302E92', border: 'none',
-                                    fontSize: 14, fontWeight: 600, color: 'white', cursor: 'pointer',
-                                }}
-                            >
-                                예
-                            </button>
-                        </Group>
+            {
+                showLogoutConfirm && (
+                    <Box style={{
+                        position: 'fixed', inset: 0, zIndex: 9999,
+                        display: 'flex', alignItems: 'center', justifyContent: 'center',
+                        backgroundColor: 'rgba(0,0,0,0.4)',
+                    }} onClick={() => setShowLogoutConfirm(false)}>
+                        <Box
+                            bg="white" p="xl"
+                            style={{
+                                borderRadius: 16, width: 280, textAlign: 'center',
+                                animation: 'scaleIn 0.2s ease-out',
+                            }}
+                            onClick={(e: any) => e.stopPropagation()}
+                        >
+                            <Text size="md" fw={700} mb={4}>로그아웃</Text>
+                            <Text size="sm" c="dimmed" mb={20}>로그아웃 하시겠습니까?</Text>
+                            <Group justify="center" gap={8}>
+                                <button
+                                    onClick={() => setShowLogoutConfirm(false)}
+                                    style={{
+                                        padding: '10px 28px', borderRadius: 10, flex: 1,
+                                        backgroundColor: '#f1f3f5', border: 'none',
+                                        fontSize: 14, fontWeight: 600, color: '#495057', cursor: 'pointer',
+                                    }}
+                                >
+                                    아니오
+                                </button>
+                                <button
+                                    onClick={() => { setShowLogoutConfirm(false); signOut(); }}
+                                    style={{
+                                        padding: '10px 28px', borderRadius: 10, flex: 1,
+                                        backgroundColor: '#302E92', border: 'none',
+                                        fontSize: 14, fontWeight: 600, color: 'white', cursor: 'pointer',
+                                    }}
+                                >
+                                    예
+                                </button>
+                            </Group>
+                        </Box>
+                        <style>{`@keyframes scaleIn { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }`}</style>
                     </Box>
-                    <style>{`@keyframes scaleIn { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }`}</style>
-                </Box>
-            )}
+                )
+            }
 
             {/* 이야기 삭제 확인 모달 */}
-            {deleteReviewId && (
-                <Box style={{
-                    position: 'fixed', inset: 0, zIndex: 9999,
-                    display: 'flex', alignItems: 'center', justifyContent: 'center',
-                    backgroundColor: 'rgba(0,0,0,0.4)',
-                }} onClick={() => setDeleteReviewId(null)}>
-                    <Box
-                        bg="white" p="xl"
-                        style={{ borderRadius: 16, width: 280, textAlign: 'center', animation: 'scaleIn 0.2s ease-out' }}
-                        onClick={(e: any) => e.stopPropagation()}
-                    >
-                        <Text size="md" fw={700} mb={4}>이야기 삭제</Text>
-                        <Text size="sm" c="dimmed" mb={20}>이 이야기를 삭제하시겠습니까?</Text>
-                        <Group justify="center" gap={8}>
-                            <button
-                                onClick={() => setDeleteReviewId(null)}
-                                style={{ padding: '10px 28px', borderRadius: 10, flex: 1, backgroundColor: '#f1f3f5', border: 'none', fontSize: 14, fontWeight: 600, color: '#495057', cursor: 'pointer' }}
-                            >아니오</button>
-                            <button
-                                onClick={handleDeleteReview}
-                                disabled={deletingReview}
-                                style={{ padding: '10px 28px', borderRadius: 10, flex: 1, backgroundColor: '#e03131', border: 'none', fontSize: 14, fontWeight: 600, color: 'white', cursor: deletingReview ? 'not-allowed' : 'pointer' }}
-                            >{deletingReview ? '삭제 중...' : '예'}</button>
-                        </Group>
+            {
+                deleteReviewId && (
+                    <Box style={{
+                        position: 'fixed', inset: 0, zIndex: 9999,
+                        display: 'flex', alignItems: 'center', justifyContent: 'center',
+                        backgroundColor: 'rgba(0,0,0,0.4)',
+                    }} onClick={() => setDeleteReviewId(null)}>
+                        <Box
+                            bg="white" p="xl"
+                            style={{ borderRadius: 16, width: 280, textAlign: 'center', animation: 'scaleIn 0.2s ease-out' }}
+                            onClick={(e: any) => e.stopPropagation()}
+                        >
+                            <Text size="md" fw={700} mb={4}>이야기 삭제</Text>
+                            <Text size="sm" c="dimmed" mb={20}>이 이야기를 삭제하시겠습니까?</Text>
+                            <Group justify="center" gap={8}>
+                                <button
+                                    onClick={() => setDeleteReviewId(null)}
+                                    style={{ padding: '10px 28px', borderRadius: 10, flex: 1, backgroundColor: '#f1f3f5', border: 'none', fontSize: 14, fontWeight: 600, color: '#495057', cursor: 'pointer' }}
+                                >아니오</button>
+                                <button
+                                    onClick={handleDeleteReview}
+                                    disabled={deletingReview}
+                                    style={{ padding: '10px 28px', borderRadius: 10, flex: 1, backgroundColor: '#e03131', border: 'none', fontSize: 14, fontWeight: 600, color: 'white', cursor: deletingReview ? 'not-allowed' : 'pointer' }}
+                                >{deletingReview ? '삭제 중...' : '예'}</button>
+                            </Group>
+                        </Box>
+                        <style>{`@keyframes scaleIn { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }`}</style>
                     </Box>
-                    <style>{`@keyframes scaleIn { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }`}</style>
-                </Box>
-            )}
+                )
+            }
             {isMobile && <BottomNav />}
-        </Box>
+        </Box >
     );
 
     if (!isMobile) {

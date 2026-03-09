@@ -86,6 +86,7 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
   const [activeCategory, setActiveCategory] = useState<string[]>(['all']);
   const [isPending, startTransition] = useTransition();
   const [institutionFilter, setInstitutionFilter] = useState<'all' | 'public' | 'private'>('all'); // 공설/사설 필터
+  const [hideInquiry, setHideInquiry] = useState(false); // 문의제외 필터
   const [selectedFacility, setSelectedFacility] = useState<Facility | null>(null);
   const [mobileView, setMobileView] = useState<'map' | 'list'>('map');
   const [sortBy, setSortBy] = useState('rating');
@@ -440,8 +441,13 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
       });
     }
 
+    // 3. 문의제외 필터
+    if (hideInquiry) {
+      base = base.filter(f => (f.priceRange?.min ?? 0) > 0);
+    }
+
     return base;
-  }, [baseFacilities, activeCategory, institutionFilter]);
+  }, [baseFacilities, activeCategory, institutionFilter, hideInquiry]);
 
   // 2. 리스트에 표시할 데이터 (지도 데이터 + 현재 Viewport filtering + 정렬)
   const finalFacilities = useMemo(() => {
@@ -933,6 +939,31 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
                 </button>
               );
             })}
+
+            {/* 구분선 */}
+            <div style={{ width: '1px', height: '20px', backgroundColor: '#dee2e6', flexShrink: 0 }} />
+
+            {/* 문의제외 필터 */}
+            <button
+              onClick={() => setHideInquiry(!hideInquiry)}
+              style={{
+                height: '34px',
+                fontSize: '14px',
+                fontWeight: hideInquiry ? 700 : 500,
+                backgroundColor: hideInquiry ? '#FFF3E0' : 'white',
+                color: hideInquiry ? '#E65100' : '#495057',
+                border: hideInquiry ? '1.5px solid #E65100' : '1px solid #dee2e6',
+                borderRadius: '20px',
+                cursor: 'pointer',
+                transition: 'all 0.2s',
+                paddingLeft: '16px',
+                paddingRight: '16px',
+                flexShrink: 0,
+                whiteSpace: 'nowrap'
+              }}
+            >
+              문의제외
+            </button>
           </div>
         </Box>
 
@@ -1131,6 +1162,31 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
                     </button>
                   );
                 })}
+
+                {/* 구분선 */}
+                <div style={{ width: '1px', height: '20px', backgroundColor: '#dee2e6', flexShrink: 0 }} />
+
+                {/* 문의제외 필터 */}
+                <button
+                  onClick={() => setHideInquiry(!hideInquiry)}
+                  style={{
+                    height: '30px',
+                    fontSize: '12px',
+                    fontWeight: hideInquiry ? 700 : 500,
+                    backgroundColor: hideInquiry ? '#FFF3E0' : 'white',
+                    color: hideInquiry ? '#E65100' : '#495057',
+                    border: hideInquiry ? '1.5px solid #E65100' : '1px solid #dee2e6',
+                    borderRadius: '6px',
+                    cursor: 'pointer',
+                    transition: 'all 0.2s',
+                    paddingLeft: '14px',
+                    paddingRight: '14px',
+                    whiteSpace: 'nowrap',
+                    flexShrink: 0,
+                  }}
+                >
+                  문의제외
+                </button>
               </div>
             </Box>
           </>
@@ -1141,6 +1197,7 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
           facilities={baseFacilities}
           activeCategory={activeCategory}
           institutionFilter={institutionFilter}
+          hideInquiry={hideInquiry}
           onMarkerClick={(f) => {
             setUiHidden(false); // 마커 클릭 시 UI 다시 표시
             handleMarkerClick(f);

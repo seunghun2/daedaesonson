@@ -31,6 +31,7 @@ interface NaverMapProps {
     uiHidden?: boolean; // UI 숨김 상태 (호갱노노 스타일 애니메이션)
     activeCategory?: string[]; // 🚀 카테고리 필터 (마커 visibility 토글용)
     institutionFilter?: 'all' | 'public' | 'private'; // 공설/사설 필터
+    hideInquiry?: boolean; // 문의제외 필터
     onUserClick?: () => void; // 사용자 버튼 클릭 콜백
 }
 
@@ -69,7 +70,7 @@ const REGION_MAPPINGS: { [key: string]: string[] } = {
 // 좌표별 시설 ID 등록부 (전역 유지 - 필터링되어도 위치 고정)
 const LAYOUT_REGISTRY = new Map<string, string[]>();
 
-const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerClick, onBoundsChanged, onCenterAddressChange, isMobile, onViewList, onMapTap, onMapDrag, uiHidden, activeCategory = ['all'], institutionFilter = 'all', onUserClick }, ref) => {
+const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerClick, onBoundsChanged, onCenterAddressChange, isMobile, onViewList, onMapTap, onMapDrag, uiHidden, activeCategory = ['all'], institutionFilter = 'all', hideInquiry = false, onUserClick }, ref) => {
     const mapRef = useRef<HTMLDivElement>(null);
     const [isMapLoaded, setIsMapLoaded] = useState(false);
     const [isMainLoaded, setIsMainLoaded] = useState(false);
@@ -108,12 +109,14 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
     const propsRef = useRef({ facilities, onMarkerClick, onBoundsChanged });
     const activeCategoryRef = useRef(activeCategory);
     const institutionFilterRef = useRef(institutionFilter);
+    const hideInquiryRef = useRef(hideInquiry);
 
     useEffect(() => {
         propsRef.current = { facilities, onMarkerClick, onBoundsChanged };
         activeCategoryRef.current = activeCategory;
         institutionFilterRef.current = institutionFilter;
-    }, [facilities, onMarkerClick, onBoundsChanged, activeCategory, institutionFilter]);
+        hideInquiryRef.current = hideInquiry;
+    }, [facilities, onMarkerClick, onBoundsChanged, activeCategory, institutionFilter, hideInquiry]);
 
     // 🚀 GeoJSON lazy load 플래그 (첫 사용 시에만 로드, 초기 로딩 50MB 제거!)
     const geomLoadingRef = useRef<{ dong: boolean; gu: boolean }>({ dong: false, gu: false });
@@ -1118,6 +1121,11 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
                 else if (institutionFilter === 'private') catVisible = fac.isPublic === false;
             }
 
+            // 문의제외 필터
+            if (catVisible && hideInquiry) {
+                catVisible = (fac.priceRange?.min ?? 0) > 0;
+            }
+
             // 줌 모드: individual 모드일 때만 개별 마커 표시
             if (isIndividualMode) {
                 marker.setVisible(catVisible && bounds.hasPoint(marker.getPosition()));
@@ -1142,6 +1150,9 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
                 if (visible && institutionFilter !== 'all') {
                     if (institutionFilter === 'public') visible = fac.isPublic === true;
                     else if (institutionFilter === 'private') visible = fac.isPublic === false;
+                }
+                if (visible && hideInquiry) {
+                    visible = (fac.priceRange?.min ?? 0) > 0;
                 }
                 if (visible) count++;
             }
@@ -1182,6 +1193,9 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
                     if (institutionFilter === 'public') visible = fac.isPublic === true;
                     else if (institutionFilter === 'private') visible = fac.isPublic === false;
                 }
+                if (visible && hideInquiry) {
+                    visible = (fac.priceRange?.min ?? 0) > 0;
+                }
                 if (visible) count++;
             }
 
@@ -1207,7 +1221,7 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
                 provMarker.setVisible(isProvinceMode);
             }
         }
-    }, [activeCategory, institutionFilter, processedFacilities, regionGroups, provinceGroups]);
+    }, [activeCategory, institutionFilter, hideInquiry, processedFacilities, regionGroups, provinceGroups]);
 
     const initMap = () => {
         if (!window.naver || !window.naver.maps) {

@@ -38,6 +38,7 @@ function ListPageContent() {
 
     // 필터
     const [activeCategory, setActiveCategory] = useState<string[]>(['all']);
+    const [hideInquiry, setHideInquiry] = useState(false);
     const [isPending, startTransition] = useTransition();
 
     // 상세 페이지
@@ -149,7 +150,13 @@ function ListPageContent() {
         return baseFacilities.filter(f => selectedDbCategories.includes(f.category));
     }, [baseFacilities, activeCategory]);
 
-    const visibleFacilities = filteredFacilities.slice(0, visibleCount);
+    // Step 3: 문의제외 필터
+    const finalFacilities = useMemo(() => {
+        if (!hideInquiry) return filteredFacilities;
+        return filteredFacilities.filter(f => (f.priceRange?.min ?? 0) > 0);
+    }, [filteredFacilities, hideInquiry]);
+
+    const visibleFacilities = finalFacilities.slice(0, visibleCount);
 
     const handleFacilityClick = (facility: Facility) => {
         const params = new URLSearchParams(searchParams.toString());
@@ -223,7 +230,7 @@ function ListPageContent() {
                     zIndex: 99,
                 }}
             >
-                <Group gap={6} wrap="nowrap" align="center">
+                <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
                     {/* 전체 버튼 */}
                     <button
                         onClick={() => { startTransition(() => setActiveCategory(['all'])); setVisibleCount(20); }}
@@ -295,7 +302,29 @@ function ListPageContent() {
                             </button>
                         );
                     })}
-                </Group>
+                    {/* 문의제외 필터 */}
+                    <div style={{ width: '1px', height: '20px', backgroundColor: '#dee2e6', flexShrink: 0 }} />
+                    <button
+                        onClick={() => setHideInquiry(!hideInquiry)}
+                        style={{
+                            height: '30px',
+                            fontSize: '12px',
+                            fontWeight: hideInquiry ? 700 : 500,
+                            backgroundColor: hideInquiry ? '#FFF3E0' : 'white',
+                            color: hideInquiry ? '#E65100' : '#495057',
+                            border: hideInquiry ? '1.5px solid #E65100' : '1px solid #dee2e6',
+                            borderRadius: '6px',
+                            cursor: 'pointer',
+                            transition: 'all 0.2s',
+                            paddingLeft: '14px',
+                            paddingRight: '14px',
+                            whiteSpace: 'nowrap',
+                            flexShrink: 0,
+                        }}
+                    >
+                        문의제외
+                    </button>
+                </div>
             </Box>
 
             {/* 시설 리스트 */}
@@ -304,7 +333,7 @@ function ListPageContent() {
                     <Center h="200px">
                         <Loader size="lg" />
                     </Center>
-                ) : filteredFacilities.length === 0 ? (
+                ) : finalFacilities.length === 0 ? (
                     <Center h="200px" px="md">
                         <Text c="dimmed" ta="center">
                             해당 지역에 시설이 없습니다.
@@ -313,7 +342,7 @@ function ListPageContent() {
                 ) : (
                     <Stack p="md" gap="md">
                         <Text size="sm" c="dimmed" fw={500}>
-                            검색 결과 {filteredFacilities.length}개
+                            검색 결과 {finalFacilities.length}개
                         </Text>
 
                         {visibleFacilities.map((facility) => (
@@ -331,7 +360,7 @@ function ListPageContent() {
                         ))}
 
                         {/* 더 보기 버튼 */}
-                        {visibleCount < filteredFacilities.length && (
+                        {visibleCount < finalFacilities.length && (
                             <Button
                                 variant="light"
                                 color="gray"
@@ -339,7 +368,7 @@ function ListPageContent() {
                                 onClick={handleLoadMore}
                                 mt="md"
                             >
-                                더 보기 ({Math.min(filteredFacilities.length - visibleCount, 20)}개)
+                                더 보기 ({Math.min(finalFacilities.length - visibleCount, 20)}개)
                             </Button>
                         )}
 
@@ -350,26 +379,28 @@ function ListPageContent() {
             </ScrollArea>
 
             {/* 상세 페이지 */}
-            {selectedFacility && (
-                <Box
-                    pos="fixed"
-                    top={0}
-                    left={0}
-                    w="100%"
-                    h="100dvh"
-                    bg="white"
-                    style={{
-                        zIndex: 1000,
-                        overflowY: 'auto',
-                    }}
-                >
-                    <FacilityDetail
-                        facility={selectedFacility}
-                        onClose={handleCloseDetail}
-                    />
-                </Box>
-            )}
-        </Box>
+            {
+                selectedFacility && (
+                    <Box
+                        pos="fixed"
+                        top={0}
+                        left={0}
+                        w="100%"
+                        h="100dvh"
+                        bg="white"
+                        style={{
+                            zIndex: 1000,
+                            overflowY: 'auto',
+                        }}
+                    >
+                        <FacilityDetail
+                            facility={selectedFacility}
+                            onClose={handleCloseDetail}
+                        />
+                    </Box>
+                )
+            }
+        </Box >
     );
 }
 
