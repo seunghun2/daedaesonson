@@ -64,12 +64,7 @@ export default function HistoryPage() {
                 }}
             >
                 <Group justify="space-between" align="center">
-                    <Group gap="sm">
-                        <Link href="/" style={{ display: 'flex', alignItems: 'center' }}>
-                            <ArrowLeft size={20} color="#495057" />
-                        </Link>
-                        <Text size="lg" fw={700}>기록</Text>
-                    </Group>
+                    <Text size="lg" fw={700}>기록</Text>
                     {history.length > 0 && (
                         <Text
                             size="sm"

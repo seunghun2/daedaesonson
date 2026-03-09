@@ -8,6 +8,8 @@ import { Car, Utensils, Accessibility, Store, Navigation, Globe, ChevronLeft, Ch
 import InquiryPanel from './InquiryPanel';
 import CorrectionRequestModal from './CorrectionRequestModal';
 import ScrollableTabsList from '@/components/ScrollableTabsList';
+import { useAuth } from '@/components/auth/AuthProvider';
+import LoginModal from '@/components/auth/LoginModal';
 import ReviewsPanel from './ReviewsPanel';
 import { Facility, FACILITY_CATEGORY_LABELS, Review } from '@/types';
 import { PRICE_TAB_CATEGORIES, OTHER_TAB_CATEGORY } from '@/lib/constants';
@@ -1090,7 +1092,10 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
         password: '',
         photos: [] as string[],
     });
-    const [isFavorited, setIsFavorited] = useState(false);
+    const [showLoginForFavorite, setShowLoginForFavorite] = useState(false);
+    const [favoriteToast, setFavoriteToast] = useState<string | null>(null);
+    const { user, toggleFavorite, isFavorite } = useAuth();
+    const isFavorited = isFavorite(String(facility.id));
     const [showAllInquiries, setShowAllInquiries] = useState(false);
     const [totalInquiryCount, setTotalInquiryCount] = useState(0);
 
@@ -1690,62 +1695,87 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
 
 
     return (
-        <Box
-            ref={containerRef}
-            className="facility-detail-container"
-            style={{ backgroundColor: '#302E92', height: '100%', position: 'relative', overflowY: 'auto', touchAction: 'pan-y', overscrollBehavior: 'contain', WebkitOverflowScrolling: 'touch' } as React.CSSProperties}
-            onTouchStart={(e) => e.stopPropagation()} // 🚀 지도 터치 간섭 방지 (재적용)
-        >
-            {/* Schema.org JSON-LD for SEO */}
-            <Script
-                id="facility-jsonld"
-                type="application/ld+json"
-                dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-            />
-            {/* 1. 헤더 + 액션바 고정 컨테이너 */}
-            <div style={{ position: 'sticky', top: 0, zIndex: 1000 }}>
-                {/* 1-1. 헤더 (← 민간/공설 시설명 + 📍 + 공유) */}
-                <Box bg="brand.8" px="md" py={10}>
-                    <Group justify="space-between" align="center" wrap="nowrap">
-                        <Group gap={4} wrap="nowrap" style={{ flex: 1, minWidth: 0 }}>
-                            <ActionIcon variant="transparent" color="white" w={32} h={32} onClick={onClose} style={{ flexShrink: 0 }}>
-                                <span className="material-symbols-outlined" style={{ fontSize: '22px', fontVariationSettings: "'FILL' 1" }}>arrow_back_ios_new</span>
-                            </ActionIcon>
-                            <Group gap={6} wrap="nowrap" style={{ overflow: 'hidden' }}>
-                                <Badge
-                                    size="sm" radius="sm" variant="light"
-                                    style={{
-                                        textTransform: 'none',
-                                        color: 'white',
-                                        backgroundColor: 'rgba(255,255,255,0.2)',
-                                        fontSize: '12px',
-                                        fontWeight: 600,
-                                        height: '22px',
-                                        border: '1px solid rgba(255,255,255,0.3)',
-                                        padding: '0 6px',
-                                        flexShrink: 0
-                                    }}
-                                >
-                                    {facility.isPublic ? '공설' : '민간'}
-                                </Badge>
-                                <Text
-                                    size="md" fw={600} c="white" truncate
-                                    style={{ fontSize: '16px', cursor: 'pointer' }}
-                                    onClick={(e) => {
-                                        e.stopPropagation();
-                                        navigator.clipboard.writeText(facility.name);
-                                        const el = e.currentTarget;
-                                        el.style.opacity = '0.5';
-                                        setTimeout(() => { el.style.opacity = '1'; }, 200);
-                                    }}
-                                    title="클릭하면 시설명 복사"
-                                >
-                                    {facility.name}
-                                </Text>
+        <>
+            <Box
+                ref={containerRef}
+                className="facility-detail-container"
+                style={{ backgroundColor: '#302E92', height: '100%', position: 'relative', overflowY: 'auto', touchAction: 'pan-y', overscrollBehavior: 'contain', WebkitOverflowScrolling: 'touch' } as React.CSSProperties}
+                onTouchStart={(e) => e.stopPropagation()} // 🚀 지도 터치 간섭 방지 (재적용)
+            >
+                {/* Schema.org JSON-LD for SEO */}
+                <Script
+                    id="facility-jsonld"
+                    type="application/ld+json"
+                    dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+                />
+                {/* 1. 헤더 + 액션바 고정 컨테이너 */}
+                <div style={{ position: 'sticky', top: 0, zIndex: 1000 }}>
+                    {/* 1-1. 헤더 (← 민간/공설 시설명 + 📍 + 공유) */}
+                    <Box bg="brand.8" px="md" py={10}>
+                        <Group justify="space-between" align="center" wrap="nowrap">
+                            <Group gap={4} wrap="nowrap" style={{ flex: 1, minWidth: 0 }}>
+                                <ActionIcon variant="transparent" color="white" w={32} h={32} onClick={onClose} style={{ flexShrink: 0 }}>
+                                    <span className="material-symbols-outlined" style={{ fontSize: '22px', fontVariationSettings: "'FILL' 1" }}>arrow_back_ios_new</span>
+                                </ActionIcon>
+                                <Group gap={6} wrap="nowrap" style={{ overflow: 'hidden' }}>
+                                    <Badge
+                                        size="sm" radius="sm" variant="light"
+                                        style={{
+                                            textTransform: 'none',
+                                            color: 'white',
+                                            backgroundColor: 'rgba(255,255,255,0.2)',
+                                            fontSize: '12px',
+                                            fontWeight: 600,
+                                            height: '22px',
+                                            border: '1px solid rgba(255,255,255,0.3)',
+                                            padding: '0 6px',
+                                            flexShrink: 0
+                                        }}
+                                    >
+                                        {facility.isPublic ? '공설' : '민간'}
+                                    </Badge>
+                                    <Text
+                                        size="md" fw={600} c="white" truncate
+                                        style={{ fontSize: '16px', cursor: 'pointer' }}
+                                        onClick={(e) => {
+                                            e.stopPropagation();
+                                            navigator.clipboard.writeText(facility.name);
+                                            const el = e.currentTarget;
+                                            el.style.opacity = '0.5';
+                                            setTimeout(() => { el.style.opacity = '1'; }, 200);
+                                        }}
+                                        title="클릭하면 시설명 복사"
+                                    >
+                                        {facility.name}
+                                    </Text>
+                                </Group>
                             </Group>
-                        </Group>
-                        <Group gap={0} style={{ flexShrink: 0 }}>
-                            {!isDesktop && (
+                            <Group gap={0} style={{ flexShrink: 0 }}>
+                                {!isDesktop && (
+                                    <ActionIcon
+                                        variant="transparent"
+                                        color="white"
+                                        w={36}
+                                        h={36}
+                                        onClick={(e) => {
+                                            e.stopPropagation();
+                                            e.preventDefault();
+                                            if (window.gtag) {
+                                                window.gtag('event', '지도_이동', {
+                                                    시설ID: facility.id,
+                                                    시설명: facility.name
+                                                });
+                                            }
+                                            if (onMapView && facility.coordinates) {
+                                                onMapView(facility.coordinates.lat, facility.coordinates.lng);
+                                            } else {
+                                                onClose();
+                                            }
+                                        }}
+                                    >
+                                        <span className="material-symbols-outlined" style={{ fontSize: '22px' }}>location_on</span>
+                                    </ActionIcon>
+                                )}
                                 <ActionIcon
                                     variant="transparent"
                                     color="white"
@@ -1754,191 +1784,174 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                     onClick={(e) => {
                                         e.stopPropagation();
                                         e.preventDefault();
+                                        navigator.clipboard.writeText(`https://daedaesonson.com/facility/${facility.id}`);
                                         if (window.gtag) {
-                                            window.gtag('event', '지도_이동', {
+                                            window.gtag('event', '공유_클릭', {
                                                 시설ID: facility.id,
                                                 시설명: facility.name
                                             });
                                         }
-                                        if (onMapView && facility.coordinates) {
-                                            onMapView(facility.coordinates.lat, facility.coordinates.lng);
-                                        } else {
-                                            onClose();
-                                        }
                                     }}
                                 >
-                                    <span className="material-symbols-outlined" style={{ fontSize: '22px' }}>location_on</span>
+                                    <span className="material-symbols-outlined" style={{ fontSize: '22px' }}>share</span>
                                 </ActionIcon>
-                            )}
-                            <ActionIcon
-                                variant="transparent"
-                                color="white"
-                                w={36}
-                                h={36}
-                                onClick={(e) => {
-                                    e.stopPropagation();
-                                    e.preventDefault();
-                                    navigator.clipboard.writeText(`https://daedaesonson.com/facility/${facility.id}`);
+                                {isDesktop && (
+                                    <ActionIcon
+                                        variant="transparent"
+                                        color="white"
+                                        w={36}
+                                        h={36}
+                                        onClick={(e) => {
+                                            e.stopPropagation();
+                                            e.preventDefault();
+                                            onClose();
+                                        }}
+                                    >
+                                        <span className="material-symbols-outlined" style={{ fontSize: '22px' }}>close</span>
+                                    </ActionIcon>
+                                )}
+                            </Group>
+                        </Group>
+                    </Box>
+
+                    {/* 2. 액션바 3등분 (직접전화 / ♡ / 이야기) */}
+                    <Box bg="brand.8" px={0} style={{
+                        borderTop: '1px solid rgba(255,255,255,0.12)',
+                        borderBottom: '1px solid rgba(255,255,255,0.12)',
+                    }}>
+                        <div style={{
+                            display: 'flex',
+                            alignItems: 'stretch',
+                            justifyContent: 'space-around',
+                            width: '100%',
+                        }}>
+                            <div
+                                style={{ display: 'flex', alignItems: 'center', gap: '6px', cursor: 'pointer', padding: '10px 12px', flex: 1, justifyContent: 'center' }}
+                                onClick={() => {
+                                    if (facility.phone) {
+                                        window.location.href = `tel:${facility.phone}`;
+                                        if (window.gtag) {
+                                            window.gtag('event', '직접전화_클릭', {
+                                                시설ID: facility.id,
+                                                시설명: facility.name,
+                                                전화번호: facility.phone
+                                            });
+                                        }
+                                    }
+                                }}
+                            >
+                                <span className="material-symbols-outlined" style={{ fontSize: '18px', color: 'white', fontVariationSettings: "'FILL' 1" }}>call</span>
+                                <span style={{ fontSize: '16px', color: 'white', fontWeight: 500 }}>직접전화</span>
+                            </div>
+
+                            <div style={{ width: '1px', backgroundColor: 'rgba(255,255,255,0.12)', alignSelf: 'stretch' }} />
+
+                            <div
+                                style={{ display: 'flex', alignItems: 'center', gap: '6px', cursor: 'pointer', padding: '10px 12px', flex: 1, justifyContent: 'center' }}
+                                onClick={() => {
+                                    if (!user) {
+                                        setShowLoginForFavorite(true);
+                                        return;
+                                    }
+                                    const willFavorite = !isFavorited;
+                                    toggleFavorite(String(facility.id));
+                                    setFavoriteToast(willFavorite ? '관심 장소로 선택되었습니다' : '관심 장소에서 해제되었습니다');
+                                    setTimeout(() => setFavoriteToast(null), 2000);
                                     if (window.gtag) {
-                                        window.gtag('event', '공유_클릭', {
+                                        window.gtag('event', '찜_토글', {
                                             시설ID: facility.id,
-                                            시설명: facility.name
+                                            시설명: facility.name,
+                                            찜상태: willFavorite ? '찜함' : '해제'
                                         });
                                     }
                                 }}
                             >
-                                <span className="material-symbols-outlined" style={{ fontSize: '22px' }}>share</span>
-                            </ActionIcon>
-                            {isDesktop && (
-                                <ActionIcon
-                                    variant="transparent"
-                                    color="white"
-                                    w={36}
-                                    h={36}
-                                    onClick={(e) => {
-                                        e.stopPropagation();
-                                        e.preventDefault();
-                                        onClose();
-                                    }}
-                                >
-                                    <span className="material-symbols-outlined" style={{ fontSize: '22px' }}>close</span>
-                                </ActionIcon>
-                            )}
-                        </Group>
-                    </Group>
-                </Box>
+                                <span className="material-symbols-outlined" style={{ fontSize: '18px', color: isFavorited ? '#ff6b6b' : 'white', fontVariationSettings: isFavorited ? "'FILL' 1" : "'FILL' 0", transition: 'all 0.2s ease' }}>favorite</span>
+                                <span style={{ fontSize: '16px', color: isFavorited ? '#ff6b6b' : 'white', fontWeight: 500, transition: 'color 0.2s ease' }}>{isFavorited ? 1 : 0}</span>
+                            </div>
 
-                {/* 2. 액션바 3등분 (직접전화 / ♡ / 이야기) */}
-                <Box bg="brand.8" px={0} style={{
-                    borderTop: '1px solid rgba(255,255,255,0.12)',
-                    borderBottom: '1px solid rgba(255,255,255,0.12)',
-                }}>
-                    <div style={{
-                        display: 'flex',
-                        alignItems: 'stretch',
-                        justifyContent: 'space-around',
-                        width: '100%',
-                    }}>
-                        <div
-                            style={{ display: 'flex', alignItems: 'center', gap: '6px', cursor: 'pointer', padding: '10px 12px', flex: 1, justifyContent: 'center' }}
-                            onClick={() => {
-                                if (facility.phone) {
-                                    window.location.href = `tel:${facility.phone}`;
-                                    if (window.gtag) {
-                                        window.gtag('event', '직접전화_클릭', {
-                                            시설ID: facility.id,
-                                            시설명: facility.name,
-                                            전화번호: facility.phone
-                                        });
+                            <div style={{ width: '1px', backgroundColor: 'rgba(255,255,255,0.12)', alignSelf: 'stretch' }} />
+
+                            <div
+                                style={{ display: 'flex', alignItems: 'center', gap: '6px', cursor: 'pointer', padding: '10px 12px', flex: 1, justifyContent: 'center' }}
+                                onClick={() => {
+                                    if (isDesktop) {
+                                        if (reviewsOpen) { setReviewsOpen(false); } else { closeAllPanels(); setReviewsOpen(true); }
+                                    } else {
+                                        router.push(`/facility/${facility.id}/reviews`);
                                     }
-                                }
-                            }}
-                        >
-                            <span className="material-symbols-outlined" style={{ fontSize: '18px', color: 'white', fontVariationSettings: "'FILL' 1" }}>call</span>
-                            <span style={{ fontSize: '16px', color: 'white', fontWeight: 500 }}>직접전화</span>
+                                }}
+                            >
+                                <span className="material-symbols-outlined" style={{ fontSize: '18px', color: 'white', fontVariationSettings: "'FILL' 1" }}>chat_bubble</span>
+                                <span style={{ fontSize: '16px', color: 'white', fontWeight: 500 }}>이야기</span>
+                            </div>
                         </div>
+                    </Box>
+                </div> {/* sticky 컨테이너 닫기 */}
 
-                        <div style={{ width: '1px', backgroundColor: 'rgba(255,255,255,0.12)', alignSelf: 'stretch' }} />
-
-                        <div
-                            style={{ display: 'flex', alignItems: 'center', gap: '6px', cursor: 'pointer', padding: '10px 12px', flex: 1, justifyContent: 'center' }}
-                            onClick={() => {
-                                setIsFavorited(prev => !prev);
-                                if (window.gtag) {
-                                    window.gtag('event', '찜_토글', {
-                                        시설ID: facility.id,
-                                        시설명: facility.name,
-                                        찜상태: !isFavorited ? '찜함' : '해제'
-                                    });
-                                }
-                            }}
-                        >
-                            <span className="material-symbols-outlined" style={{ fontSize: '18px', color: isFavorited ? '#ff6b6b' : 'white', fontVariationSettings: isFavorited ? "'FILL' 1" : "'FILL' 0", transition: 'all 0.2s ease' }}>favorite</span>
-                            <span style={{ fontSize: '16px', color: isFavorited ? '#ff6b6b' : 'white', fontWeight: 500, transition: 'color 0.2s ease' }}>{isFavorited ? 1 : 0}</span>
-                        </div>
-
-                        <div style={{ width: '1px', backgroundColor: 'rgba(255,255,255,0.12)', alignSelf: 'stretch' }} />
-
-                        <div
-                            style={{ display: 'flex', alignItems: 'center', gap: '6px', cursor: 'pointer', padding: '10px 12px', flex: 1, justifyContent: 'center' }}
-                            onClick={() => {
-                                if (isDesktop) {
-                                    if (reviewsOpen) { setReviewsOpen(false); } else { closeAllPanels(); setReviewsOpen(true); }
-                                } else {
-                                    router.push(`/facility/${facility.id}/reviews`);
-                                }
-                            }}
-                        >
-                            <span className="material-symbols-outlined" style={{ fontSize: '18px', color: 'white', fontVariationSettings: "'FILL' 1" }}>chat_bubble</span>
-                            <span style={{ fontSize: '16px', color: 'white', fontWeight: 500 }}>이야기</span>
-                        </div>
-                    </div>
-                </Box>
-            </div> {/* sticky 컨테이너 닫기 */}
-
-            {/* 3. 정보 요약 */}
-            <Box bg="white">
-                {/* 태그 + 방문자 통계 */}
-                <Box
-                    py="sm" px="md"
-                    style={{ borderBottom: '8px solid #f8f9fa', boxShadow: 'inset 0 -1px 0 #e9ecef' }}
-                >
-                    <div style={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'space-between',
-                        width: '100%',
-                        gap: '8px'
-                    }}>
-                        {/* 태그 그룹 - 카테고리만 (복수 카테고리 지원) */}
+                {/* 3. 정보 요약 */}
+                <Box bg="white">
+                    {/* 태그 + 방문자 통계 */}
+                    <Box
+                        py="sm" px="md"
+                        style={{ borderBottom: '8px solid #f8f9fa', boxShadow: 'inset 0 -1px 0 #e9ecef' }}
+                    >
                         <div style={{
                             display: 'flex',
-                            gap: '6px',
-                            overflowX: 'auto',
-                            scrollbarWidth: 'none',
-                            msOverflowStyle: 'none',
-                            whiteSpace: 'nowrap',
-                            alignItems: 'center'
+                            alignItems: 'center',
+                            justifyContent: 'space-between',
+                            width: '100%',
+                            gap: '8px'
                         }}>
-                            {(facility.categories && facility.categories.length > 0
-                                ? facility.categories
-                                : [facility.category]
-                            ).map((cat) => (
-                                <Badge
-                                    key={cat}
-                                    size="md" radius="md" variant="light"
-                                    style={{
-                                        textTransform: 'none',
-                                        color: '#495057',
-                                        backgroundColor: '#f1f3f5',
-                                        fontSize: '13px',
-                                        fontWeight: 500,
-                                        height: '28px',
-                                        border: 'none',
-                                        padding: '0 10px',
-                                        flexShrink: 0
-                                    }}
-                                >
-                                    {FACILITY_CATEGORY_LABELS[cat]}
-                                </Badge>
-                            ))}
-                        </div>
-
-                        {/* 방문자 통계 */}
-                        <Text
-                            key={`viewcount-${facility.id}`}
-                            size="xs"
-                            c="gray.6"
-                            style={{
+                            {/* 태그 그룹 - 카테고리만 (복수 카테고리 지원) */}
+                            <div style={{
+                                display: 'flex',
+                                gap: '6px',
+                                overflowX: 'auto',
+                                scrollbarWidth: 'none',
+                                msOverflowStyle: 'none',
                                 whiteSpace: 'nowrap',
-                                flexShrink: 0,
-                                animation: 'slideUpFade 0.5s ease-out',
-                                fontSize: '12px',
-                            }}
-                        >
-                            최근 {viewCount}명이 {FACILITY_CATEGORY_LABELS[facility.category]} 찾아봤어요
-                        </Text>
-                        <style jsx>{`
+                                alignItems: 'center'
+                            }}>
+                                {(facility.categories && facility.categories.length > 0
+                                    ? facility.categories
+                                    : [facility.category]
+                                ).map((cat) => (
+                                    <Badge
+                                        key={cat}
+                                        size="md" radius="md" variant="light"
+                                        style={{
+                                            textTransform: 'none',
+                                            color: '#495057',
+                                            backgroundColor: '#f1f3f5',
+                                            fontSize: '13px',
+                                            fontWeight: 500,
+                                            height: '28px',
+                                            border: 'none',
+                                            padding: '0 10px',
+                                            flexShrink: 0
+                                        }}
+                                    >
+                                        {FACILITY_CATEGORY_LABELS[cat]}
+                                    </Badge>
+                                ))}
+                            </div>
+
+                            {/* 방문자 통계 */}
+                            <Text
+                                key={`viewcount-${facility.id}`}
+                                size="xs"
+                                c="gray.6"
+                                style={{
+                                    whiteSpace: 'nowrap',
+                                    flexShrink: 0,
+                                    animation: 'slideUpFade 0.5s ease-out',
+                                    fontSize: '12px',
+                                }}
+                            >
+                                최근 {viewCount}명이 {FACILITY_CATEGORY_LABELS[facility.category]} 찾아봤어요
+                            </Text>
+                            <style jsx>{`
                             @keyframes slideUpFade {
                                 from {
                                     opacity: 0;
@@ -1950,429 +1963,429 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                 }
                             }
                         `}</style>
-                    </div>
-                </Box>
-            </Box>
-
-
-
-            {/* 🔥 API 로딩 중이면 본문 스켈레톤, 아니면 원래 컨텐츠 */}
-            {isDetailLoading ? (
-                <Box p="md" style={{ background: 'white', flex: 1, minHeight: '100%' }}>
-                    {/* 가격 영역 스켈레톤 */}
-                    <Box h={12} w="30%" bg="#f1f3f5" mb={12} style={{ borderRadius: 4, animation: 'skPulse 1.5s ease-in-out infinite' }} />
-                    <Box h={22} w="65%" bg="#e9ecef" mb={8} style={{ borderRadius: 6, animation: 'skPulse 1.5s ease-in-out infinite' }} />
-                    <Box h={10} w="55%" bg="#f1f3f5" mb={24} style={{ borderRadius: 4, animation: 'skPulse 1.5s ease-in-out infinite' }} />
-                    {/* 시설 정보 스켈레톤 */}
-                    <Box h={16} w="20%" bg="#e9ecef" mb={12} style={{ borderRadius: 4, animation: 'skPulse 1.5s ease-in-out infinite' }} />
-                    <Box style={{ display: 'flex', gap: 16, justifyContent: 'space-around', marginBottom: 24 }}>
-                        {[1, 2, 3, 4].map(i => <Box key={i} w={48} h={48} bg="#f1f3f5" style={{ borderRadius: '50%', animation: 'skPulse 1.5s ease-in-out infinite' }} />)}
+                        </div>
                     </Box>
-                    {/* 사진 영역 스켈레톤 */}
-                    <Box h={16} w="18%" bg="#e9ecef" mb={12} style={{ borderRadius: 4, animation: 'skPulse 1.5s ease-in-out infinite' }} />
-                    <Box style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8 }}>
-                        <Box style={{ paddingBottom: '100%', borderRadius: 8, backgroundColor: '#f1f3f5', animation: 'skPulse 1.5s ease-in-out infinite' }} />
-                        <Box style={{ paddingBottom: '100%', borderRadius: 8, backgroundColor: '#f1f3f5', animation: 'skPulse 1.5s ease-in-out infinite' }} />
-                    </Box>
-                    <style>{`@keyframes skPulse { 0%,100%{opacity:1} 50%{opacity:0.4} }`}</style>
                 </Box>
-            ) : (
-                <>
 
-                    {/* 가격 정보 섹션 (별도 카드 분리) */}
-                    {(() => {
-                        // 🔥 priceTable이 아직 로드되지 않은 경우 (SSR 초기 데이터)
-                        // → representativePrice로 간단히 표시 (API 로드 후 상세 표시로 전환)
-                        const priceTable = facility.priceInfo?.priceTable || facility.pricing;
 
-                        if (!priceTable && !facility.priceInfo?.standardizedPrices?.length) {
-                            // priceTable 로드 전에는 가격 섹션 숨김
-                            return null;
-                        }
 
-                        // [Price Logic] priceTable이 있는 경우 - 상세 표시
-                        let displayPriceNum = 0;
-                        let isRep = false;
+                {/* 🔥 API 로딩 중이면 본문 스켈레톤, 아니면 원래 컨텐츠 */}
+                {isDetailLoading ? (
+                    <Box p="md" style={{ background: 'white', flex: 1, minHeight: '100%' }}>
+                        {/* 가격 영역 스켈레톤 */}
+                        <Box h={12} w="30%" bg="#f1f3f5" mb={12} style={{ borderRadius: 4, animation: 'skPulse 1.5s ease-in-out infinite' }} />
+                        <Box h={22} w="65%" bg="#e9ecef" mb={8} style={{ borderRadius: 6, animation: 'skPulse 1.5s ease-in-out infinite' }} />
+                        <Box h={10} w="55%" bg="#f1f3f5" mb={24} style={{ borderRadius: 4, animation: 'skPulse 1.5s ease-in-out infinite' }} />
+                        {/* 시설 정보 스켈레톤 */}
+                        <Box h={16} w="20%" bg="#e9ecef" mb={12} style={{ borderRadius: 4, animation: 'skPulse 1.5s ease-in-out infinite' }} />
+                        <Box style={{ display: 'flex', gap: 16, justifyContent: 'space-around', marginBottom: 24 }}>
+                            {[1, 2, 3, 4].map(i => <Box key={i} w={48} h={48} bg="#f1f3f5" style={{ borderRadius: '50%', animation: 'skPulse 1.5s ease-in-out infinite' }} />)}
+                        </Box>
+                        {/* 사진 영역 스켈레톤 */}
+                        <Box h={16} w="18%" bg="#e9ecef" mb={12} style={{ borderRadius: 4, animation: 'skPulse 1.5s ease-in-out infinite' }} />
+                        <Box style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8 }}>
+                            <Box style={{ paddingBottom: '100%', borderRadius: 8, backgroundColor: '#f1f3f5', animation: 'skPulse 1.5s ease-in-out infinite' }} />
+                            <Box style={{ paddingBottom: '100%', borderRadius: 8, backgroundColor: '#f1f3f5', animation: 'skPulse 1.5s ease-in-out infinite' }} />
+                        </Box>
+                        <style>{`@keyframes skPulse { 0%,100%{opacity:1} 50%{opacity:0.4} }`}</style>
+                    </Box>
+                ) : (
+                    <>
 
-                        // Collection for sub-items (Label, Price in Won)
-                        const subRepItems: { label: string; price: number }[] = [];
+                        {/* 가격 정보 섹션 (별도 카드 분리) */}
+                        {(() => {
+                            // 🔥 priceTable이 아직 로드되지 않은 경우 (SSR 초기 데이터)
+                            // → representativePrice로 간단히 표시 (API 로드 후 상세 표시로 전환)
+                            const priceTable = facility.priceInfo?.priceTable || facility.pricing;
 
-                        // 대표 메뉴 3가지로 그룹핑
-                        const menuGroups: Record<string, number[]> = {
-                            '봉안당': [],
-                            '매장묘지': [],
-                            '수목장': [],
-                        };
-                        const menuKeywords: Record<string, string[]> = {
-                            '봉안당': ['봉안', '납골', '안치'],
-                            '매장묘지': ['매장', '평장', '단장', '합장', '쌍분', '묘지', '묘원', '분양'],
-                            '수목장': ['수목', '자연', '잔디', '화초', '암석'],
-                        };
-                        // 대표 메뉴 그룹에서 제외할 키 (부가시설)
-                        const excludeKeys = ['봉안벽'];
-
-                        // 🔥 V2 standardizedPrices 우선 사용
-                        const stdPrices = facility.priceInfo?.standardizedPrices;
-                        if (stdPrices && stdPrices.length > 0) {
-                            const serviceLabels: Record<string, string> = {
-                                'BONGSAN': '봉안당',
-                                'BURIAL': '매장묘지',
-                                'NATURAL': '수목장',
-                                'CREMATION': '화장',
-                                'OTHER': '기타',
-                            };
-                            // 🔧 OTHER 재분류 함수
-                            const reclassifyServiceType = (g: any) => {
-                                if (g.serviceType !== 'OTHER') return g.serviceType;
-                                const st = g.subType || '';
-                                if (/자연장|수목|잔디|화초/.test(st)) return 'NATURAL';
-                                if (/봉안|납골/.test(st)) return 'BONGSAN';
-                                if (/매장|평장/.test(st)) return 'BURIAL';
-                                return 'OTHER';
-                            };
-                            const EXCLUDE_SUBTYPES = /무연고/;
-                            // 서비스타입별 항목 수집
-                            const serviceRows: Record<string, any[]> = {};
-                            stdPrices.forEach((g: any) => {
-                                // 석물/부대시설 등 제외 (serviceType 무관하게 옵션 그룹은 메인 가격 산정에서 제외)
-                                if (EXCLUDE_SUBTYPES.test(g.subType || '') || EXCLUDE_SUBTYPES.test(g.serviceType || '')) return;
-
-                                const actualType = reclassifyServiceType(g);
-                                const label = serviceLabels[actualType] || actualType;
-                                if (!serviceRows[label]) serviceRows[label] = [];
-                                if (g.rows) serviceRows[label].push(...g.rows);
-                            });
-
-                            const byService: Record<string, number[]> = {};
-                            for (const [label, rows] of Object.entries(serviceRows)) {
-                                byService[label] = [];
-                                // ★ 항목 먼저 체크
-                                const repItems = rows.filter((r: any) => r.isRepresentative && r.price > 0);
-                                if (repItems.length > 0) {
-                                    repItems.forEach((r: any) => {
-                                        const val = r.price < 10000 ? r.price * 10000 : r.price;
-                                        byService[label].push(val);
-                                    });
-                                } else {
-                                    // ★ 없으면 non-maintenance 최저가로 fallback (10만 원 미만 필터링)
-                                    const usagePrices = rows
-                                        .filter((r: any) => r.feeType !== 'MAINTENANCE' && r.price > 0)
-                                        .map((r: any) => r.price < 10000 ? r.price * 10000 : r.price)
-                                        .filter((p: number) => p >= 100000);
-
-                                    if (usagePrices.length > 0) {
-                                        byService[label].push(Math.min(...usagePrices));
-                                    }
-                                }
+                            if (!priceTable && !facility.priceInfo?.standardizedPrices?.length) {
+                                // priceTable 로드 전에는 가격 섹션 숨김
+                                return null;
                             }
-                            // byService → menuGroups 매핑
-                            for (const [label, prices] of Object.entries(byService)) {
-                                if (prices.length > 0) {
-                                    if (menuGroups[label]) {
-                                        menuGroups[label].push(...prices);
+
+                            // [Price Logic] priceTable이 있는 경우 - 상세 표시
+                            let displayPriceNum = 0;
+                            let isRep = false;
+
+                            // Collection for sub-items (Label, Price in Won)
+                            const subRepItems: { label: string; price: number }[] = [];
+
+                            // 대표 메뉴 3가지로 그룹핑
+                            const menuGroups: Record<string, number[]> = {
+                                '봉안당': [],
+                                '매장묘지': [],
+                                '수목장': [],
+                            };
+                            const menuKeywords: Record<string, string[]> = {
+                                '봉안당': ['봉안', '납골', '안치'],
+                                '매장묘지': ['매장', '평장', '단장', '합장', '쌍분', '묘지', '묘원', '분양'],
+                                '수목장': ['수목', '자연', '잔디', '화초', '암석'],
+                            };
+                            // 대표 메뉴 그룹에서 제외할 키 (부가시설)
+                            const excludeKeys = ['봉안벽'];
+
+                            // 🔥 V2 standardizedPrices 우선 사용
+                            const stdPrices = facility.priceInfo?.standardizedPrices;
+                            if (stdPrices && stdPrices.length > 0) {
+                                const serviceLabels: Record<string, string> = {
+                                    'BONGSAN': '봉안당',
+                                    'BURIAL': '매장묘지',
+                                    'NATURAL': '수목장',
+                                    'CREMATION': '화장',
+                                    'OTHER': '기타',
+                                };
+                                // 🔧 OTHER 재분류 함수
+                                const reclassifyServiceType = (g: any) => {
+                                    if (g.serviceType !== 'OTHER') return g.serviceType;
+                                    const st = g.subType || '';
+                                    if (/자연장|수목|잔디|화초/.test(st)) return 'NATURAL';
+                                    if (/봉안|납골/.test(st)) return 'BONGSAN';
+                                    if (/매장|평장/.test(st)) return 'BURIAL';
+                                    return 'OTHER';
+                                };
+                                const EXCLUDE_SUBTYPES = /무연고/;
+                                // 서비스타입별 항목 수집
+                                const serviceRows: Record<string, any[]> = {};
+                                stdPrices.forEach((g: any) => {
+                                    // 석물/부대시설 등 제외 (serviceType 무관하게 옵션 그룹은 메인 가격 산정에서 제외)
+                                    if (EXCLUDE_SUBTYPES.test(g.subType || '') || EXCLUDE_SUBTYPES.test(g.serviceType || '')) return;
+
+                                    const actualType = reclassifyServiceType(g);
+                                    const label = serviceLabels[actualType] || actualType;
+                                    if (!serviceRows[label]) serviceRows[label] = [];
+                                    if (g.rows) serviceRows[label].push(...g.rows);
+                                });
+
+                                const byService: Record<string, number[]> = {};
+                                for (const [label, rows] of Object.entries(serviceRows)) {
+                                    byService[label] = [];
+                                    // ★ 항목 먼저 체크
+                                    const repItems = rows.filter((r: any) => r.isRepresentative && r.price > 0);
+                                    if (repItems.length > 0) {
+                                        repItems.forEach((r: any) => {
+                                            const val = r.price < 10000 ? r.price * 10000 : r.price;
+                                            byService[label].push(val);
+                                        });
                                     } else {
-                                        // 직접 매핑 안 되면 키워드로 매칭
-                                        for (const [menu, kws] of Object.entries(menuKeywords)) {
-                                            if (kws.some(kw => label.includes(kw))) {
-                                                menuGroups[menu].push(...prices);
-                                                break;
-                                            }
+                                        // ★ 없으면 non-maintenance 최저가로 fallback (10만 원 미만 필터링)
+                                        const usagePrices = rows
+                                            .filter((r: any) => r.feeType !== 'MAINTENANCE' && r.price > 0)
+                                            .map((r: any) => r.price < 10000 ? r.price * 10000 : r.price)
+                                            .filter((p: number) => p >= 100000);
+
+                                        if (usagePrices.length > 0) {
+                                            byService[label].push(Math.min(...usagePrices));
                                         }
                                     }
-                                    subRepItems.push({ label, price: Math.min(...prices) });
                                 }
-                            }
-                            isRep = subRepItems.length > 0;
-                            if (isRep && subRepItems.length > 0) {
-                                displayPriceNum = subRepItems[0].price / 10000;
-                            }
-                        } else if (priceTable) {
-                            // 1. Collect representative items AND fallback min prices
-                            Object.keys(priceTable).forEach(key => {
-                                const cat = priceTable[key];
-                                // Skip non-main categories
-                                if (/옵션|관리비|기타|공통|제외|석물|비고|안내|별도/.test(key)) return;
-
-                                if (cat && Array.isArray(cat.rows)) {
-                                    const rep = cat.rows.find((r: any) => r.isRepresentative);
-                                    if (rep) {
-                                        let priceVal = Number(rep.price);
-                                        if (isNaN(priceVal) || priceVal <= 0) return;
-
-                                        const val = priceVal < 10000 ? priceVal * 10000 : priceVal;
-
-                                        // 대표 메뉴에 매핑 (부가시설 키는 제외)
-                                        let matched = false;
-                                        if (!excludeKeys.includes(key)) {
-                                            for (const [menu, keywords] of Object.entries(menuKeywords)) {
-                                                if (keywords.some(kw => key.includes(kw))) {
-                                                    menuGroups[menu].push(val);
-                                                    matched = true;
+                                // byService → menuGroups 매핑
+                                for (const [label, prices] of Object.entries(byService)) {
+                                    if (prices.length > 0) {
+                                        if (menuGroups[label]) {
+                                            menuGroups[label].push(...prices);
+                                        } else {
+                                            // 직접 매핑 안 되면 키워드로 매칭
+                                            for (const [menu, kws] of Object.entries(menuKeywords)) {
+                                                if (kws.some(kw => label.includes(kw))) {
+                                                    menuGroups[menu].push(...prices);
                                                     break;
                                                 }
                                             }
                                         }
-                                        // 매핑 안 된 항목도 subRepItems에 보관 (fallback)
-                                        subRepItems.push({ label: key, price: val });
-                                    } else {
-                                        // 🔥 ★ 없는 카테고리 → 최저가를 자동으로 메뉴그룹에 추가
-                                        const validPrices = cat.rows
-                                            .filter((r: any) => !/관리비|관리|석물|작업|각자|제례/.test(r.name))
-                                            .map((r: any) => Number(r.price))
-                                            .filter((p: number) => !isNaN(p) && p > 0);
-                                        if (validPrices.length > 0) {
-                                            const minPrice = Math.min(...validPrices);
-                                            const val = minPrice < 10000 ? minPrice * 10000 : minPrice;
+                                        subRepItems.push({ label, price: Math.min(...prices) });
+                                    }
+                                }
+                                isRep = subRepItems.length > 0;
+                                if (isRep && subRepItems.length > 0) {
+                                    displayPriceNum = subRepItems[0].price / 10000;
+                                }
+                            } else if (priceTable) {
+                                // 1. Collect representative items AND fallback min prices
+                                Object.keys(priceTable).forEach(key => {
+                                    const cat = priceTable[key];
+                                    // Skip non-main categories
+                                    if (/옵션|관리비|기타|공통|제외|석물|비고|안내|별도/.test(key)) return;
+
+                                    if (cat && Array.isArray(cat.rows)) {
+                                        const rep = cat.rows.find((r: any) => r.isRepresentative);
+                                        if (rep) {
+                                            let priceVal = Number(rep.price);
+                                            if (isNaN(priceVal) || priceVal <= 0) return;
+
+                                            const val = priceVal < 10000 ? priceVal * 10000 : priceVal;
+
+                                            // 대표 메뉴에 매핑 (부가시설 키는 제외)
+                                            let matched = false;
                                             if (!excludeKeys.includes(key)) {
                                                 for (const [menu, keywords] of Object.entries(menuKeywords)) {
                                                     if (keywords.some(kw => key.includes(kw))) {
                                                         menuGroups[menu].push(val);
+                                                        matched = true;
                                                         break;
+                                                    }
+                                                }
+                                            }
+                                            // 매핑 안 된 항목도 subRepItems에 보관 (fallback)
+                                            subRepItems.push({ label: key, price: val });
+                                        } else {
+                                            // 🔥 ★ 없는 카테고리 → 최저가를 자동으로 메뉴그룹에 추가
+                                            const validPrices = cat.rows
+                                                .filter((r: any) => !/관리비|관리|석물|작업|각자|제례/.test(r.name))
+                                                .map((r: any) => Number(r.price))
+                                                .filter((p: number) => !isNaN(p) && p > 0);
+                                            if (validPrices.length > 0) {
+                                                const minPrice = Math.min(...validPrices);
+                                                const val = minPrice < 10000 ? minPrice * 10000 : minPrice;
+                                                if (!excludeKeys.includes(key)) {
+                                                    for (const [menu, keywords] of Object.entries(menuKeywords)) {
+                                                        if (keywords.some(kw => key.includes(kw))) {
+                                                            menuGroups[menu].push(val);
+                                                            break;
+                                                        }
                                                     }
                                                 }
                                             }
                                         }
                                     }
+                                });
+
+                                // 2. Pick Main Display Price (Preferred Category matching)
+                                let preferredKeywords: string[] = [];
+                                if (facility.category === 'FAMILY_GRAVE') preferredKeywords = ['매장', '묘지', '분양'];
+                                else if (facility.category === 'CHARNEL_HOUSE') preferredKeywords = ['봉안', '납골', '안치'];
+                                else if (facility.category === 'NATURAL_BURIAL') preferredKeywords = ['수목', '자연', '잔디', '화초'];
+
+                                // Find first item that matches ANY of the keywords
+                                const mainItem = subRepItems.find(i =>
+                                    preferredKeywords.some(k => i.label.includes(k))
+                                ) || subRepItems[0];
+
+                                if (mainItem) {
+                                    displayPriceNum = mainItem.price / 10000;
+                                    isRep = true;
                                 }
-                            });
-
-                            // 2. Pick Main Display Price (Preferred Category matching)
-                            let preferredKeywords: string[] = [];
-                            if (facility.category === 'FAMILY_GRAVE') preferredKeywords = ['매장', '묘지', '분양'];
-                            else if (facility.category === 'CHARNEL_HOUSE') preferredKeywords = ['봉안', '납골', '안치'];
-                            else if (facility.category === 'NATURAL_BURIAL') preferredKeywords = ['수목', '자연', '잔디', '화초'];
-
-                            // Find first item that matches ANY of the keywords
-                            const mainItem = subRepItems.find(i =>
-                                preferredKeywords.some(k => i.label.includes(k))
-                            ) || subRepItems[0];
-
-                            if (mainItem) {
-                                displayPriceNum = mainItem.price / 10000;
-                                isRep = true;
                             }
-                        }
 
-                        // Fallback: priceTable이 아예 없는 레거시 시설만 priceRange.min 사용
-                        // 🔥 priceTable이 있으면 폴백 안 함 (stale minPrice 방지)
-                        if (displayPriceNum === 0 && !priceTable) {
-                            displayPriceNum = facility.priceRange?.min ? Math.round(facility.priceRange.min / 10000) : 0;
-                        }
-
-                        // Fallback attempt with legacy representativePricing if not found in pricing
-                        if (!isRep && facility.representativePricing) {
-                            // (Legacy logic omitted for brevity, keeping existing flow if pricing empty)
-                        }
-
-                        // 대표 메뉴 항목 계산
-                        const menuItems: { label: string; price: number }[] = [];
-                        for (const [menu, prices] of Object.entries(menuGroups)) {
-                            if (prices.length > 0) {
-                                menuItems.push({ label: menu, price: Math.min(...prices) });
+                            // Fallback: priceTable이 아예 없는 레거시 시설만 priceRange.min 사용
+                            // 🔥 priceTable이 있으면 폴백 안 함 (stale minPrice 방지)
+                            if (displayPriceNum === 0 && !priceTable) {
+                                displayPriceNum = facility.priceRange?.min ? Math.round(facility.priceRange.min / 10000) : 0;
                             }
-                        }
-                        const displayItems = menuItems.length > 0 ? menuItems : subRepItems;
 
-                        if (displayItems.length > 0) {
-                            return (
-                                <Box p="md" style={{
-                                    borderBottom: '8px solid #f8f9fa',
-                                    boxShadow: 'inset 0 -1px 0 #e9ecef',
-                                    background: 'white',
-                                }}>
-                                    <Text size="xs" c="gray.5" mb={10} fw={500} style={{ fontSize: '12px' }}>예상 이용 비용</Text>
-                                    <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                                        {displayItems.map((item, idx) => (
-                                            <div key={idx} style={{ display: 'flex', alignItems: 'baseline', gap: '12px' }}>
-                                                <Text style={{ fontSize: '16px', fontWeight: 700, color: '#212529' }}>
-                                                    {item.label}
-                                                </Text>
-                                                <Text style={{ fontSize: '16px', fontWeight: 500, color: 'var(--mantine-color-brand-7)', letterSpacing: '-0.3px' }}>
-                                                    {formatKoreanCurrency(item.price)}~
-                                                </Text>
-                                            </div>
-                                        ))}
-                                    </div>
-                                    <Text size="xs" c="gray.6" mt={10} style={{ fontSize: '11px' }}>
-                                        ※ 실제 비용은 선택 옵션에 따라 달라질 수 있습니다.
-                                    </Text>
-                                </Box>
-                            );
-                        } else if (displayPriceNum > 0) {
-                            // ★ 대표항목이 없는 경우 - 카테고리 라벨 + fallback 가격
-                            const categoryLabel: Record<string, string> = {
-                                'FAMILY_GRAVE': '매장묘지',
-                                'CHARNEL_HOUSE': '봉안당',
-                                'NATURAL_BURIAL': '수목장',
-                            };
-                            const fallbackLabel = categoryLabel[facility.category] || '';
+                            // Fallback attempt with legacy representativePricing if not found in pricing
+                            if (!isRep && facility.representativePricing) {
+                                // (Legacy logic omitted for brevity, keeping existing flow if pricing empty)
+                            }
 
-                            return (
-                                <Box p="md" style={{
-                                    borderBottom: '8px solid #f8f9fa',
-                                    boxShadow: 'inset 0 -1px 0 #e9ecef',
-                                    background: 'white',
-                                }}>
-                                    <Text size="xs" c="gray.5" mb={10} fw={500} style={{ fontSize: '12px' }}>예상 이용 비용</Text>
-                                    <div style={{ display: 'flex', alignItems: 'baseline', gap: '12px' }}>
-                                        {fallbackLabel && (
-                                            <Text style={{ fontSize: '16px', fontWeight: 700, color: '#212529' }}>
-                                                {fallbackLabel}
-                                            </Text>
-                                        )}
-                                        <Text style={{ fontSize: '16px', fontWeight: 500, color: 'var(--mantine-color-brand-7)', letterSpacing: '-0.3px' }}>
-                                            {formatKoreanCurrency(displayPriceNum * 10000)}~
-                                        </Text>
-                                    </div>
-                                    <Text size="xs" c="gray.6" mt={8} style={{ fontSize: '11px' }}>
-                                        ※ 실제 비용은 선택 옵션에 따라 달라질 수 있습니다.
-                                    </Text>
-                                </Box>
-                            );
-                        } else {
-                            return (
-                                <Box p="md" style={{
-                                    borderBottom: '8px solid #f8f9fa',
-                                    boxShadow: 'inset 0 -1px 0 #e9ecef',
-                                    background: 'white',
-                                }}>
-                                    <Text size="xs" c="gray.5" mb={10} fw={500} style={{ fontSize: '12px' }}>예상 이용 비용</Text>
-                                    <Text style={{
-                                        fontSize: '20px',
-                                        fontWeight: 800,
-                                        color: 'var(--mantine-color-brand-8)',
-                                        lineHeight: 1,
-                                        letterSpacing: '-0.5px',
+                            // 대표 메뉴 항목 계산
+                            const menuItems: { label: string; price: number }[] = [];
+                            for (const [menu, prices] of Object.entries(menuGroups)) {
+                                if (prices.length > 0) {
+                                    menuItems.push({ label: menu, price: Math.min(...prices) });
+                                }
+                            }
+                            const displayItems = menuItems.length > 0 ? menuItems : subRepItems;
+
+                            if (displayItems.length > 0) {
+                                return (
+                                    <Box p="md" style={{
+                                        borderBottom: '8px solid #f8f9fa',
+                                        boxShadow: 'inset 0 -1px 0 #e9ecef',
+                                        background: 'white',
                                     }}>
-                                        가격문의
-                                    </Text>
-                                    <Text size="xs" c="gray.6" mt={8} style={{ fontSize: '11px' }}>
-                                        시설에 직접 문의하여 정확한 비용을 확인하세요.
-                                    </Text>
-                                </Box>
-                            );
-                        }
-                    })()}
+                                        <Text size="xs" c="gray.5" mb={10} fw={500} style={{ fontSize: '12px' }}>예상 이용 비용</Text>
+                                        <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                                            {displayItems.map((item, idx) => (
+                                                <div key={idx} style={{ display: 'flex', alignItems: 'baseline', gap: '12px' }}>
+                                                    <Text style={{ fontSize: '16px', fontWeight: 700, color: '#212529' }}>
+                                                        {item.label}
+                                                    </Text>
+                                                    <Text style={{ fontSize: '16px', fontWeight: 500, color: 'var(--mantine-color-brand-7)', letterSpacing: '-0.3px' }}>
+                                                        {formatKoreanCurrency(item.price)}~
+                                                    </Text>
+                                                </div>
+                                            ))}
+                                        </div>
+                                        <Text size="xs" c="gray.6" mt={10} style={{ fontSize: '11px' }}>
+                                            ※ 실제 비용은 선택 옵션에 따라 달라질 수 있습니다.
+                                        </Text>
+                                    </Box>
+                                );
+                            } else if (displayPriceNum > 0) {
+                                // ★ 대표항목이 없는 경우 - 카테고리 라벨 + fallback 가격
+                                const categoryLabel: Record<string, string> = {
+                                    'FAMILY_GRAVE': '매장묘지',
+                                    'CHARNEL_HOUSE': '봉안당',
+                                    'NATURAL_BURIAL': '수목장',
+                                };
+                                const fallbackLabel = categoryLabel[facility.category] || '';
 
-                    {/* 4. 핵심 지표 (Highlight) */}
-                    {
-                        facility.highlight && (
-                            <Box bg="white" p="md" style={{ borderBottom: '8px solid #f8f9fa', boxShadow: 'inset 0 -1px 0 #e9ecef' }}>
-                                <Group gap="xs" mb="sm">
-                                    <TrendingUp size={16} color="var(--mantine-color-brand-6)" />
-                                    <Text size="sm" fw={700} c="brand.8">핵심 지표</Text>
-                                </Group>
-                                <Group gap="md">
-                                    {facility.highlight.price && (
-                                        <Box>
-                                            <Text size="xs" c="dimmed">가격</Text>
-                                            <Text size="sm" fw={600} c="brand.7">{facility.highlight.price}</Text>
-                                        </Box>
-                                    )}
-                                    {facility.highlight.accessibility && (
-                                        <Box>
-                                            <Text size="xs" c="dimmed">접근성</Text>
-                                            <Text size="sm" fw={600}>{facility.highlight.accessibility}</Text>
-                                        </Box>
-                                    )}
-                                    {facility.highlight.environment && (
-                                        <Box>
-                                            <Text size="xs" c="dimmed">자연환경</Text>
-                                            <Text size="sm" fw={600}>{facility.highlight.environment}</Text>
-                                        </Box>
-                                    )}
-                                </Group>
-                            </Box>
-                        )
-                    }
-
-                    {/* 5. 시설 정보 카드 */}
-                    <Box bg="white" p="md" style={{ borderBottom: '8px solid #f8f9fa', boxShadow: 'inset 0 -1px 0 #e9ecef' }}>
-                        <Text size="sm" fw={700} mb="md">시설 정보</Text>
-                        <Group gap="lg" grow>
-                            <Box ta="center">
-                                <Box style={{ width: 48, height: 48, borderRadius: '50%', backgroundColor: facility.hasParking ? 'var(--mantine-color-brand-0)' : '#f1f3f5', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 8px' }}>
-                                    <Car size={24} color={facility.hasParking ? 'var(--mantine-color-brand-6)' : '#adb5bd'} />
-                                </Box>
-                                <Text size="xs" fw={facility.hasParking ? 600 : 400} c={facility.hasParking ? 'dark' : 'dimmed'}>주차장</Text>
-                            </Box>
-
-                            <Box ta="center">
-                                <Box style={{ width: 48, height: 48, borderRadius: '50%', backgroundColor: facility.hasRestaurant ? 'var(--mantine-color-brand-0)' : '#f1f3f5', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 8px' }}>
-                                    <Utensils size={24} color={facility.hasRestaurant ? 'var(--mantine-color-brand-6)' : '#adb5bd'} />
-                                </Box>
-                                <Text size="xs" fw={facility.hasRestaurant ? 600 : 400} c={facility.hasRestaurant ? 'dark' : 'dimmed'}>식당</Text>
-                            </Box>
-
-                            <Box ta="center">
-                                <Box style={{ width: 48, height: 48, borderRadius: '50%', backgroundColor: facility.hasAccessibility ? 'var(--mantine-color-brand-0)' : '#f1f3f5', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 8px' }}>
-                                    <Accessibility size={24} color={facility.hasAccessibility ? 'var(--mantine-color-brand-6)' : '#adb5bd'} />
-                                </Box>
-                                <Text size="xs" fw={facility.hasAccessibility ? 600 : 400} c={facility.hasAccessibility ? 'dark' : 'dimmed'}>편의시설</Text>
-                            </Box>
-
-                            <Box ta="center">
-                                <Box style={{ width: 48, height: 48, borderRadius: '50%', backgroundColor: facility.hasStore ? 'var(--mantine-color-brand-0)' : '#f1f3f5', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 8px' }}>
-                                    <Store size={24} color={facility.hasStore ? 'var(--mantine-color-brand-6)' : '#adb5bd'} />
-                                </Box>
-                                <Text size="xs" fw={facility.hasStore ? 600 : 400} c={facility.hasStore ? 'dark' : 'dimmed'}>매점</Text>
-                            </Box>
-
-
-                        </Group>
-                    </Box>
-
-                    {/* 6. 사진 갤러리 (수정됨: 2개 노출 + 오버레이 + 클릭 시 팝업) */}
-                    {galleryImages.length > 0 && (
-                        <Box bg="white" p="md" style={{ borderBottom: '8px solid #f8f9fa', boxShadow: 'inset 0 -1px 0 #e9ecef' }}>
-                            <Text size="sm" fw={700} mb="md">시설 사진</Text>
-                            <Box style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 8 }}>
-                                {visibleImages.map((img, idx) => {
-                                    const isLastAndMore = idx === 1 && extraInfoCount > 0;
-                                    return (
-                                        <Box
-                                            key={idx}
-                                            onClick={() => handleImageClick(idx)}
-                                            style={{ position: 'relative', paddingBottom: '100%', borderRadius: 8, overflow: 'hidden', cursor: 'pointer' }}
-                                        >
-                                            <NextImage
-                                                src={getSingleFacilityImageUrl(img)}
-                                                alt={`${facility.name} ${idx + 1}`}
-                                                fill
-                                                sizes="50vw"
-                                                style={{ objectFit: 'cover' }}
-                                                priority={idx === 0}
-                                                loading={idx === 0 ? undefined : 'lazy'}
-                                            />
-                                            {/* 오버레이 (+7) */}
-                                            {isLastAndMore && (
-                                                <Box
-                                                    style={{
-                                                        position: 'absolute',
-                                                        top: 0,
-                                                        left: 0,
-                                                        width: '100%',
-                                                        height: '100%',
-                                                        backgroundColor: 'rgba(0,0,0,0.3)', // 요청사항: 오버레이 30%
-                                                        display: 'flex',
-                                                        alignItems: 'center',
-                                                        justifyContent: 'center',
-                                                        color: 'white',
-                                                        fontSize: '24px',
-                                                        fontWeight: 700
-                                                    }}
-                                                >
-                                                    +{extraInfoCount}
-                                                </Box>
+                                return (
+                                    <Box p="md" style={{
+                                        borderBottom: '8px solid #f8f9fa',
+                                        boxShadow: 'inset 0 -1px 0 #e9ecef',
+                                        background: 'white',
+                                    }}>
+                                        <Text size="xs" c="gray.5" mb={10} fw={500} style={{ fontSize: '12px' }}>예상 이용 비용</Text>
+                                        <div style={{ display: 'flex', alignItems: 'baseline', gap: '12px' }}>
+                                            {fallbackLabel && (
+                                                <Text style={{ fontSize: '16px', fontWeight: 700, color: '#212529' }}>
+                                                    {fallbackLabel}
+                                                </Text>
                                             )}
-                                        </Box>
-                                    );
-                                })}
-                            </Box>
-                        </Box>
-                    )}
+                                            <Text style={{ fontSize: '16px', fontWeight: 500, color: 'var(--mantine-color-brand-7)', letterSpacing: '-0.3px' }}>
+                                                {formatKoreanCurrency(displayPriceNum * 10000)}~
+                                            </Text>
+                                        </div>
+                                        <Text size="xs" c="gray.6" mt={8} style={{ fontSize: '11px' }}>
+                                            ※ 실제 비용은 선택 옵션에 따라 달라질 수 있습니다.
+                                        </Text>
+                                    </Box>
+                                );
+                            } else {
+                                return (
+                                    <Box p="md" style={{
+                                        borderBottom: '8px solid #f8f9fa',
+                                        boxShadow: 'inset 0 -1px 0 #e9ecef',
+                                        background: 'white',
+                                    }}>
+                                        <Text size="xs" c="gray.5" mb={10} fw={500} style={{ fontSize: '12px' }}>예상 이용 비용</Text>
+                                        <Text style={{
+                                            fontSize: '20px',
+                                            fontWeight: 800,
+                                            color: 'var(--mantine-color-brand-8)',
+                                            lineHeight: 1,
+                                            letterSpacing: '-0.5px',
+                                        }}>
+                                            가격문의
+                                        </Text>
+                                        <Text size="xs" c="gray.6" mt={8} style={{ fontSize: '11px' }}>
+                                            시설에 직접 문의하여 정확한 비용을 확인하세요.
+                                        </Text>
+                                    </Box>
+                                );
+                            }
+                        })()}
 
-                    {/* 7. 시설 소개 - 숨김처리 (아직 미사용)
+                        {/* 4. 핵심 지표 (Highlight) */}
+                        {
+                            facility.highlight && (
+                                <Box bg="white" p="md" style={{ borderBottom: '8px solid #f8f9fa', boxShadow: 'inset 0 -1px 0 #e9ecef' }}>
+                                    <Group gap="xs" mb="sm">
+                                        <TrendingUp size={16} color="var(--mantine-color-brand-6)" />
+                                        <Text size="sm" fw={700} c="brand.8">핵심 지표</Text>
+                                    </Group>
+                                    <Group gap="md">
+                                        {facility.highlight.price && (
+                                            <Box>
+                                                <Text size="xs" c="dimmed">가격</Text>
+                                                <Text size="sm" fw={600} c="brand.7">{facility.highlight.price}</Text>
+                                            </Box>
+                                        )}
+                                        {facility.highlight.accessibility && (
+                                            <Box>
+                                                <Text size="xs" c="dimmed">접근성</Text>
+                                                <Text size="sm" fw={600}>{facility.highlight.accessibility}</Text>
+                                            </Box>
+                                        )}
+                                        {facility.highlight.environment && (
+                                            <Box>
+                                                <Text size="xs" c="dimmed">자연환경</Text>
+                                                <Text size="sm" fw={600}>{facility.highlight.environment}</Text>
+                                            </Box>
+                                        )}
+                                    </Group>
+                                </Box>
+                            )
+                        }
+
+                        {/* 5. 시설 정보 카드 */}
+                        <Box bg="white" p="md" style={{ borderBottom: '8px solid #f8f9fa', boxShadow: 'inset 0 -1px 0 #e9ecef' }}>
+                            <Text size="sm" fw={700} mb="md">시설 정보</Text>
+                            <Group gap="lg" grow>
+                                <Box ta="center">
+                                    <Box style={{ width: 48, height: 48, borderRadius: '50%', backgroundColor: facility.hasParking ? 'var(--mantine-color-brand-0)' : '#f1f3f5', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 8px' }}>
+                                        <Car size={24} color={facility.hasParking ? 'var(--mantine-color-brand-6)' : '#adb5bd'} />
+                                    </Box>
+                                    <Text size="xs" fw={facility.hasParking ? 600 : 400} c={facility.hasParking ? 'dark' : 'dimmed'}>주차장</Text>
+                                </Box>
+
+                                <Box ta="center">
+                                    <Box style={{ width: 48, height: 48, borderRadius: '50%', backgroundColor: facility.hasRestaurant ? 'var(--mantine-color-brand-0)' : '#f1f3f5', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 8px' }}>
+                                        <Utensils size={24} color={facility.hasRestaurant ? 'var(--mantine-color-brand-6)' : '#adb5bd'} />
+                                    </Box>
+                                    <Text size="xs" fw={facility.hasRestaurant ? 600 : 400} c={facility.hasRestaurant ? 'dark' : 'dimmed'}>식당</Text>
+                                </Box>
+
+                                <Box ta="center">
+                                    <Box style={{ width: 48, height: 48, borderRadius: '50%', backgroundColor: facility.hasAccessibility ? 'var(--mantine-color-brand-0)' : '#f1f3f5', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 8px' }}>
+                                        <Accessibility size={24} color={facility.hasAccessibility ? 'var(--mantine-color-brand-6)' : '#adb5bd'} />
+                                    </Box>
+                                    <Text size="xs" fw={facility.hasAccessibility ? 600 : 400} c={facility.hasAccessibility ? 'dark' : 'dimmed'}>편의시설</Text>
+                                </Box>
+
+                                <Box ta="center">
+                                    <Box style={{ width: 48, height: 48, borderRadius: '50%', backgroundColor: facility.hasStore ? 'var(--mantine-color-brand-0)' : '#f1f3f5', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 8px' }}>
+                                        <Store size={24} color={facility.hasStore ? 'var(--mantine-color-brand-6)' : '#adb5bd'} />
+                                    </Box>
+                                    <Text size="xs" fw={facility.hasStore ? 600 : 400} c={facility.hasStore ? 'dark' : 'dimmed'}>매점</Text>
+                                </Box>
+
+
+                            </Group>
+                        </Box>
+
+                        {/* 6. 사진 갤러리 (수정됨: 2개 노출 + 오버레이 + 클릭 시 팝업) */}
+                        {galleryImages.length > 0 && (
+                            <Box bg="white" p="md" style={{ borderBottom: '8px solid #f8f9fa', boxShadow: 'inset 0 -1px 0 #e9ecef' }}>
+                                <Text size="sm" fw={700} mb="md">시설 사진</Text>
+                                <Box style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 8 }}>
+                                    {visibleImages.map((img, idx) => {
+                                        const isLastAndMore = idx === 1 && extraInfoCount > 0;
+                                        return (
+                                            <Box
+                                                key={idx}
+                                                onClick={() => handleImageClick(idx)}
+                                                style={{ position: 'relative', paddingBottom: '100%', borderRadius: 8, overflow: 'hidden', cursor: 'pointer' }}
+                                            >
+                                                <NextImage
+                                                    src={getSingleFacilityImageUrl(img)}
+                                                    alt={`${facility.name} ${idx + 1}`}
+                                                    fill
+                                                    sizes="50vw"
+                                                    style={{ objectFit: 'cover' }}
+                                                    priority={idx === 0}
+                                                    loading={idx === 0 ? undefined : 'lazy'}
+                                                />
+                                                {/* 오버레이 (+7) */}
+                                                {isLastAndMore && (
+                                                    <Box
+                                                        style={{
+                                                            position: 'absolute',
+                                                            top: 0,
+                                                            left: 0,
+                                                            width: '100%',
+                                                            height: '100%',
+                                                            backgroundColor: 'rgba(0,0,0,0.3)', // 요청사항: 오버레이 30%
+                                                            display: 'flex',
+                                                            alignItems: 'center',
+                                                            justifyContent: 'center',
+                                                            color: 'white',
+                                                            fontSize: '24px',
+                                                            fontWeight: 700
+                                                        }}
+                                                    >
+                                                        +{extraInfoCount}
+                                                    </Box>
+                                                )}
+                                            </Box>
+                                        );
+                                    })}
+                                </Box>
+                            </Box>
+                        )}
+
+                        {/* 7. 시설 소개 - 숨김처리 (아직 미사용)
                     {
                         facility.description && facility.description !== phoneNumber && (
                             <Box bg="white" p="md" style={{ borderBottom: '8px solid #f8f9fa', boxShadow: 'inset 0 -1px 0 #e9ecef' }}>
@@ -2383,48 +2396,48 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                     }
                     */}
 
-                    {/* 8. 가격 정보 (상세) - 리팩토링된 컴포넌트 사용 */}
-                    <PriceInfoSection priceInfo={facility.priceInfo} hasPrice={hasPrice} facilityName={facility.name} websiteUrl={facility.websiteUrl} />
+                        {/* 8. 가격 정보 (상세) - 리팩토링된 컴포넌트 사용 */}
+                        <PriceInfoSection priceInfo={facility.priceInfo} hasPrice={hasPrice} facilityName={facility.name} websiteUrl={facility.websiteUrl} />
 
 
 
 
-                    {/* 9. 위치 및 교통 (홈페이지 바로가기 버튼 추가됨) */}
-                    <Box bg="white" p="md" style={{ borderBottom: '8px solid #f8f9fa', boxShadow: 'inset 0 -1px 0 #e9ecef' }}>
-                        <Text size="sm" fw={700} mb="sm">위치</Text>
-                        <Text size="sm" mb="md" c="dark.7">{facility.address}</Text>
+                        {/* 9. 위치 및 교통 (홈페이지 바로가기 버튼 추가됨) */}
+                        <Box bg="white" p="md" style={{ borderBottom: '8px solid #f8f9fa', boxShadow: 'inset 0 -1px 0 #e9ecef' }}>
+                            <Text size="sm" fw={700} mb="sm">위치</Text>
+                            <Text size="sm" mb="md" c="dark.7">{facility.address}</Text>
 
 
-                    </Box>
+                        </Box>
 
-                    {/* 시설 정보 */}
-                    <Box bg="white" p="md" style={{ borderBottom: '8px solid #f8f9fa', boxShadow: 'inset 0 -1px 0 #e9ecef' }}>
-                        <Text size="sm" fw={700} mb="md">시설 정보</Text>
-                        <Stack gap="sm">
-                            <Group justify="space-between">
-                                <Text size="sm" c="gray.6">운영형태</Text>
-                                <Text size="sm" fw={500} c="dark.9">
-                                    {facility.isPublic ? '공설' : '사설'}
-                                </Text>
-                            </Group>
-                            <Group justify="space-between">
-                                <Text size="sm" c="gray.6">시설종류</Text>
-                                <Text size="sm" fw={500} c="dark.9">
-                                    {facility.category ? FACILITY_CATEGORY_LABELS[facility.category] || facility.category : '정보 없음'}
-                                </Text>
-                            </Group>
-
-                            {/* 총매장능력 (값이 0보다 클 때만 노출) */}
-                            {Number(facility.capacity) > 0 && (
+                        {/* 시설 정보 */}
+                        <Box bg="white" p="md" style={{ borderBottom: '8px solid #f8f9fa', boxShadow: 'inset 0 -1px 0 #e9ecef' }}>
+                            <Text size="sm" fw={700} mb="md">시설 정보</Text>
+                            <Stack gap="sm">
                                 <Group justify="space-between">
-                                    <Text size="sm" c="gray.6">총매장능력</Text>
+                                    <Text size="sm" c="gray.6">운영형태</Text>
                                     <Text size="sm" fw={500} c="dark.9">
-                                        {Number(facility.capacity).toLocaleString()}기
+                                        {facility.isPublic ? '공설' : '사설'}
                                     </Text>
                                 </Group>
-                            )}
+                                <Group justify="space-between">
+                                    <Text size="sm" c="gray.6">시설종류</Text>
+                                    <Text size="sm" fw={500} c="dark.9">
+                                        {facility.category ? FACILITY_CATEGORY_LABELS[facility.category] || facility.category : '정보 없음'}
+                                    </Text>
+                                </Group>
 
-                            {/* 업데이트 날짜 - 숨김 처리
+                                {/* 총매장능력 (값이 0보다 클 때만 노출) */}
+                                {Number(facility.capacity) > 0 && (
+                                    <Group justify="space-between">
+                                        <Text size="sm" c="gray.6">총매장능력</Text>
+                                        <Text size="sm" fw={500} c="dark.9">
+                                            {Number(facility.capacity).toLocaleString()}기
+                                        </Text>
+                                    </Group>
+                                )}
+
+                                {/* 업데이트 날짜 - 숨김 처리
                     <Group justify="space-between">
                         <Text size="sm" c="gray.6">업데이트</Text>
                         <Text size="sm" fw={500} c="dark.9">
@@ -2432,1359 +2445,2134 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                         </Text>
                     </Group>
                     */}
-                        </Stack>
+                            </Stack>
 
-                        {/* 상세 상담 받기 버튼 */}
-                        <Box
-                            mt="lg"
-                            py={12}
-                            style={{
-                                backgroundColor: '#f8f9fa',
-                                borderRadius: 8,
-                                cursor: 'pointer',
-                                textAlign: 'center',
-                            }}
-                            onClick={() => {
-                                setConsultModalOpened(true);
-                                if ((window as any).gtag) {
-                                    (window as any).gtag('event', '상담_신청_열기', {
-                                        시설ID: facility.id,
-                                        시설명: facility.name
-                                    });
-                                }
-                            }}
-                        >
-                            <Text style={{ fontSize: 15 }} fw={600} c="brand.6">이 시설에 대해 더 자세히 알아보기</Text>
-                        </Box>
-                    </Box>
-
-                    {/* 이야기 (리뷰) */}
-                    <Box id="reviews-section" bg="white" p="md" style={{ borderBottom: '8px solid #f8f9fa', boxShadow: 'inset 0 -1px 0 #e9ecef' }}>
-                        <Text size="lg" fw={700} mb="md">이야기</Text>
-
-                        {/* 후기 작성 입력 */}
-                        <Paper
-                            withBorder radius="md" p="md" mb="lg"
-                            onClick={() => { if (reviewModalOpened) { closeReviewModal(); } else { closeAllPanels(); openReviewModal(); } }}
-                            style={{ cursor: 'pointer', borderColor: '#e9ecef', backgroundColor: '#f8f9fa' }}
-                        >
-                            <Group justify="space-between">
-                                <Text c="gray.5" size="sm">
-                                    솔직한 후기를 남겨주세요.
-                                </Text>
-                                <Group gap={12}>
-                                    <Camera size={20} color="#1D0098" />
-                                    <Pencil size={20} color="#1D0098" />
-                                </Group>
-                            </Group>
-                        </Paper>
-
-                        {/* 리뷰 목록 */}
-                        <Stack gap="md">
-                            {reviews.length > 0 ? (
-                                (showAllReviews ? reviews : reviews.slice(0, 3)).map((review) => (
-                                    <Box key={review.id} style={{ borderBottom: '1px solid #f1f3f5' }} pb="md">
-                                        <Group justify="space-between" mb={4}>
-                                            <Group gap="xs">
-                                                <Box w={24} h={24} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                                                    <span className="material-symbols-outlined" style={{ fontSize: '24px', color: '#adb5bd' }}>account_circle</span>
-                                                </Box>
-                                                <Text size="sm" fw={600} c="dark.8">{review.author}</Text>
-                                                <Text size="xs" c="dimmed">· {formatRelativeTime(review.date)}</Text>
-                                            </Group>
-                                            <ActionIcon variant="transparent" color="gray" size="sm" onClick={() => openDeleteReviewModal(review.id)}>
-                                                <Trash size={14} />
-                                            </ActionIcon>
-                                        </Group>
-                                        <Text size="md" mb="xs" style={{ whiteSpace: 'pre-wrap', lineHeight: 1.5, color: '#343a40' }}>
-                                            {review.content}
-                                        </Text>
-                                        {/* Review Photos - 클릭 시 확대 */}
-                                        {review.photos && review.photos.length > 0 && (
-                                            <Group gap="xs" mb="sm">
-                                                {review.photos.map((photo, idx) => (
-                                                    <Box key={idx} style={{ cursor: 'pointer' }} onClick={() => openImageViewer(review.photos ?? [], idx)}>
-                                                        <Image src={photo} w={100} h={100} radius="md" style={{ objectFit: 'cover', border: '1px solid #f1f3f5' }} />
-                                                    </Box>
-                                                ))}
-                                            </Group>
-                                        )}
-
-                                        <Group gap="lg">
-                                            <Group gap={4} style={{ cursor: 'pointer' }} onClick={() => handleLike(review.id)}>
-                                                <span
-                                                    className="material-symbols-outlined"
-                                                    style={{
-                                                        fontSize: '18px',
-                                                        color: likedReviews.has(review.id) ? '#fa5252' : '#adb5bd',
-                                                        fontVariationSettings: likedReviews.has(review.id) ? "'FILL' 1" : "'FILL' 0"
-                                                    }}
-                                                >
-                                                    favorite
-                                                </span>
-                                                <Text size="xs" c={likedReviews.has(review.id) ? 'red.6' : 'dimmed'} fw={likedReviews.has(review.id) ? 600 : 400}>
-                                                    좋아요 {review.likes || 0}
-                                                </Text>
-                                            </Group>
-                                            <Group gap={4} style={{ cursor: 'pointer' }} onClick={() => {
-                                                setReplyingTo(replyingTo === review.id ? null : review.id);
-                                                setReplyContent('');
-                                                setReplyPhotos([]);
-                                                setReplyNickname('');
-                                                setReplyPassword('');
-                                            }}>
-                                                <span className="material-symbols-outlined" style={{ fontSize: '18px', color: '#adb5bd' }}>chat_bubble</span>
-                                                <Text size="xs" c="dimmed">답글달기 {(review.replies?.length ?? 0) > 0 ? review.replies?.length : ''}</Text>
-                                            </Group>
-                                        </Group>
-
-
-
-                                        {/* Reply List - 3개까지만 표시 + 더보기 */}
-                                        {review.replies && review.replies.length > 0 && (
-                                            <Box mt="md" bg="gray.0" p="sm" style={{ borderRadius: 'var(--mantine-radius-md)' }}>
-                                                {(expandedReplies.has(review.id) ? review.replies : review.replies.slice(0, 3)).map((reply: any) => (
-                                                    <Box key={reply.id} mb="sm" pb="sm" style={{ borderBottom: '1px solid #f1f3f5' }}>
-                                                        <Group gap="xs" mb={4}>
-                                                            <span className="material-symbols-outlined" style={{ fontSize: '18px', color: '#adb5bd' }}>account_circle</span>
-                                                            <Text size="sm" fw={700} c="dark.8">{reply.author}</Text>
-                                                            <Text size="xs" c="dimmed">· {formatRelativeTime(reply.createdAt || reply.date)}</Text>
-                                                            <ActionIcon variant="transparent" color="gray" size="xs" onClick={() => openDeleteReplyModal(review.id, reply.id)} ml="auto">
-                                                                <X size={12} />
-                                                            </ActionIcon>
-                                                        </Group>
-                                                        <Text size="sm" c="dark.7" ml={26}>{reply.content}</Text>
-                                                        {/* 대댓글 이미지 - 클릭 시 확대 */}
-                                                        {reply.photos && reply.photos.length > 0 && (
-                                                            <Group gap={6} mt="xs" ml={26}>
-                                                                {reply.photos.map((photo: string, idx: number) => (
-                                                                    <Box key={idx} style={{ cursor: 'pointer' }} onClick={() => openImageViewer(reply.photos, idx)}>
-                                                                        <img src={photo} alt="리뷰 사진" onError={(e) => { e.currentTarget.style.display = 'none'; }} style={{ width: 80, height: 80, objectFit: 'cover', borderRadius: '8px', border: '1px solid #dee2e6' }} />
-                                                                    </Box>
-                                                                ))}
-                                                            </Group>
-                                                        )}
-                                                    </Box>
-                                                ))}
-                                                {/* 3개 이상이면 더보기/접기 */}
-                                                {review.replies.length > 3 && (
-                                                    <Box ta="center" pt="xs">
-                                                        <Button
-                                                            variant="subtle"
-                                                            color="gray"
-                                                            size="xs"
-                                                            onClick={() => {
-                                                                setExpandedReplies(prev => {
-                                                                    const next = new Set(prev);
-                                                                    if (next.has(review.id)) {
-                                                                        next.delete(review.id);
-                                                                    } else {
-                                                                        next.add(review.id);
-                                                                    }
-                                                                    return next;
-                                                                });
-                                                            }}
-                                                            styles={{ root: { color: '#868e96', fontWeight: 600 } }}
-                                                        >
-                                                            {expandedReplies.has(review.id)
-                                                                ? '댓글 접기'
-                                                                : `댓글 더보기 (${review.replies.length - 3}개)`
-                                                            }
-                                                        </Button>
-                                                    </Box>
-                                                )}
-                                            </Box>
-                                        )}
-                                    </Box>
-                                ))
-                            ) : (
-                                <Box ta="center" py="xl">
-                                    <Text size="sm" c="dimmed">
-                                        최근 {viewCount}명이 조회했어요.<br />
-                                        방문 경험을 나눠주시면 많은 분들께 도움이 됩니다!
-                                    </Text>
-                                </Box>
-                            )}
-                            {/* 리뷰 3개 이상이면 더보기/접기 */}
-                            {reviews.length > 3 && (
-                                <Box
-                                    mt="md"
-                                    py={12}
-                                    style={{
-                                        backgroundColor: '#f8f9fa',
-                                        borderRadius: 8,
-                                        cursor: 'pointer',
-                                        textAlign: 'center',
-                                    }}
-                                    onClick={() => {
-                                        if (isDesktop) {
-                                            if (reviewsOpen) { setReviewsOpen(false); } else { closeAllPanels(); setReviewsOpen(true); }
-                                        } else {
-                                            router.push(`/facility/${facility.id}/reviews`);
-                                        }
-                                    }}
-                                >
-                                    <Text style={{ fontSize: 15 }} fw={500} c="dimmed">
-                                        총 {reviews.length - 3}개의 이야기가 더있습니다
-                                    </Text>
-                                </Box>
-                            )}
-                        </Stack>
-
-                        {/* 문의하기 버튼 */}
-                        <Box
-                            mt="lg"
-                            py={12}
-                            style={{
-                                backgroundColor: '#f8f9fa',
-                                borderRadius: 8,
-                                cursor: 'pointer',
-                                textAlign: 'center',
-                            }}
-                            onClick={() => {
-                                if (inquiryOpen) { setInquiryOpen(false); } else { closeAllPanels(); setInquiryOpen(true); }
-                                if ((window as any).gtag) {
-                                    (window as any).gtag('event', '문의_열기', {
-                                        시설ID: facility.id,
-                                        시설명: facility.name
-                                    });
-                                }
-                            }}
-                        >
-                            <Text style={{ fontSize: 15 }} fw={500} c="dimmed">
-                                {totalInquiryCount > 0 ? `총 ${totalInquiryCount}번의 문의를 했어요` : '문의하기'}
-                            </Text>
-                        </Box>
-                    </Box>
-
-                    {/* 주변 시설 추천 */}
-                    {allFacilities.length > 0 && (() => {
-                        // 같은 지역(주소 앞 2단어) + 같은 카테고리 필터
-                        const region = facility.address?.split(' ').slice(0, 2).join(' ') || '';
-                        const similarFacilities = allFacilities
-                            .filter(f =>
-                                f.id !== facility.id &&
-                                f.category === facility.category &&
-                                f.address?.startsWith(region)
-                            )
-                            .slice(0, 3);
-
-                        // 같은 지역 없으면 같은 카테고리만
-                        const recommendations = similarFacilities.length > 0
-                            ? similarFacilities
-                            : allFacilities
-                                .filter(f => f.id !== facility.id && f.category === facility.category)
-                                .slice(0, 3);
-
-                        if (recommendations.length === 0) return null;
-
-                        return (
-                            <Box bg="white" p="md" style={{ borderBottom: '8px solid #f8f9fa', boxShadow: 'inset 0 -1px 0 #e9ecef' }}>
-                                <Text size="sm" fw={700} mb="md">주변 시설</Text>
-                                <Stack gap="xs">
-                                    {recommendations.map(rec => {
-                                        // 🔥 썸네일 우선순위: thumbnail > imageGallery[0] > 로고
-                                        const recAny = rec as any;
-                                        const hasImage = recAny.thumbnail || rec.imageGallery?.[0];
-                                        const thumbUrl = recAny.thumbnail
-                                            ? recAny.thumbnail
-                                            : rec.imageGallery?.[0]
-                                                ? getSingleFacilityImageUrl(rec.imageGallery[0])
-                                                : '/logo-horizontal.svg';
-                                        return (
-                                            <Box
-                                                key={rec.id}
-                                                p="sm"
-                                                bg="gray.0"
-                                                style={{ borderRadius: 8, cursor: 'pointer' }}
-                                                onClick={() => {
-                                                    onSelectFacility?.(rec.id);
-                                                    // 🔥 상세 페이지 맨 위로 스크롤
-                                                    window.scrollTo({ top: 0, behavior: 'instant' });
-                                                }}
-                                            >
-                                                <Group wrap="nowrap" gap="sm">
-                                                    <Box
-                                                        style={{
-                                                            width: 48,
-                                                            height: 48,
-                                                            borderRadius: 6,
-                                                            overflow: 'hidden',
-                                                            flexShrink: 0,
-                                                            backgroundColor: '#f1f3f5',
-                                                            display: 'flex',
-                                                            alignItems: 'center',
-                                                            justifyContent: 'center',
-                                                        }}
-                                                    >
-                                                        {hasImage ? (
-                                                            <NextImage
-                                                                src={thumbUrl}
-                                                                alt={rec.name}
-                                                                width={48}
-                                                                height={48}
-                                                                style={{ objectFit: 'cover', width: '100%', height: '100%' }}
-                                                                loading="lazy"
-                                                            />
-                                                        ) : (
-                                                            <img
-                                                                src={thumbUrl}
-                                                                alt={rec.name}
-                                                                style={{ width: 32, height: 16, objectFit: 'cover', opacity: 0.3 }}
-                                                            />
-                                                        )}
-                                                    </Box>
-                                                    <Box style={{ flex: 1, minWidth: 0 }}>
-                                                        <Text size="sm" fw={600} lineClamp={1}>{rec.name}</Text>
-                                                        <Text size="xs" c="dimmed">{rec.address?.split(' ').slice(0, 2).join(' ')}</Text>
-                                                    </Box>
-                                                    {rec.priceRange?.min && rec.priceRange.min > 0 && (
-                                                        <Text size="sm" fw={600} c="dark.6" style={{ flexShrink: 0 }}>
-                                                            {formatKoreanCurrency(rec.priceRange.min)}부터
-                                                        </Text>
-                                                    )}
-                                                </Group>
-                                            </Box>
-                                        );
-                                    })}
-                                </Stack>
-                            </Box>
-                        );
-                    })()}
-
-
-                    {/* 🔵 하단 공유 & 정보수정 섹션 */}
-                    <Box px="md" pt={10} pb={30} style={{
-                        background: '#302E92',
-                        textAlign: 'center',
-                    }}>
-                        {/* 공유 안내 */}
-                        <Box py="lg">
-                            <Text size="sm" fw={600} c="rgba(255,255,255,0.85)" mb="sm">
-                                이 시설이 도움이 되셨나요? 가족에게 공유해 보세요
-                            </Text>
-
-                            {/* URL 복사 */}
+                            {/* 상세 상담 받기 버튼 */}
                             <Box
-                                mx="auto"
-                                px="md"
-                                py={10}
+                                mt="lg"
+                                py={12}
                                 style={{
-                                    backgroundColor: 'rgba(255,255,255,0.12)',
+                                    backgroundColor: '#f8f9fa',
                                     borderRadius: 8,
-                                    maxWidth: 320,
                                     cursor: 'pointer',
-                                    border: '1px solid rgba(255,255,255,0.2)',
+                                    textAlign: 'center',
                                 }}
                                 onClick={() => {
-                                    const url = `https://daedaesonson.com/facility/${facility.id}`;
-                                    navigator.clipboard.writeText(url);
-                                    alert('링크가 복사되었습니다!');
-                                }}
-                            >
-                                <Group justify="center" gap={6}>
-                                    <span className="material-symbols-outlined" style={{ fontSize: 16, color: 'rgba(255,255,255,0.6)' }}>content_copy</span>
-                                    <Text size="xs" c="rgba(255,255,255,0.8)" lineClamp={1}>
-                                        daedaesonson.com/facility/{facility.id}
-                                    </Text>
-                                </Group>
-                            </Box>
-                        </Box>
-                        {/* ── 구분선 ── */}
-                        <Box mx={-16} style={{ height: 1, backgroundColor: 'rgba(255,255,255,0.08)' }} />
-
-                        {/* 정보수정 요청 */}
-                        <Box py="lg">
-                            <Text style={{ fontSize: 14 }} c="rgba(255,255,255,0.75)" lh={1.6}>
-                                혹시 잘못된 정보가 있다면 알려주세요.<br />
-                                빠르게 확인 후 수정하겠습니다.
-                            </Text>
-                        </Box>
-                        {/* ── 구분선 ── */}
-                        <Box mx={-16} style={{ height: 1, backgroundColor: 'rgba(255,255,255,0.08)' }} />
-
-                        {/* 시설 정보수정 요청 버튼 */}
-                        <Box py="lg" onClick={() => { closeAllPanels(); setCorrectionOpen(true); }} style={{ cursor: 'pointer' }}>
-                            <Text style={{ fontSize: 16 }} fw={600} c="rgba(255,255,255,0.85)">정보 수정 요청하기</Text>
-                        </Box>
-                        {/* ── 구분선 ── */}
-                        <Box mx={-16} style={{ height: 1, backgroundColor: 'rgba(255,255,255,0.08)' }} />
-
-                        {/* 맨위로 이동 */}
-                        <Box
-                            py="md"
-                            onClick={() => {
-                                const container = document.querySelector('.facility-detail-container');
-                                if (container) container.scrollTo({ top: 0, behavior: 'smooth' });
-                                else window.scrollTo({ top: 0, behavior: 'smooth' });
-                            }}
-                            style={{ cursor: 'pointer' }}
-                        >
-                            <span className="material-symbols-outlined" style={{ fontSize: 28, color: 'rgba(255,255,255,0.6)' }}>keyboard_arrow_up</span>
-                        </Box>
-                    </Box>
-
-
-                    {/* Story Panel Overlay */}
-                    <InquiryPanel facility={facility} isOpen={inquiryOpen} onClose={() => { setInquiryOpen(false); document.body.style.overflow = ''; document.body.style.position = ''; document.body.style.touchAction = ''; }} allFacilities={allFacilities} />
-                    <CorrectionRequestModal facilityId={facility.id} facilityName={facility.name} isOpen={correctionOpen} onClose={() => setCorrectionOpen(false)} />
-                    <ReviewsPanel facility={facility} isOpen={reviewsOpen} onClose={() => setReviewsOpen(false)} />
-
-                    {/* 상담 신청 - 모바일: Modal fullScreen, PC: Drawer 스타일 */}
-                    {
-                        isMobile ? (
-                            <Drawer
-                                opened={consultModalOpened}
-                                onClose={() => setConsultModalOpened(false)}
-                                position="right"
-                                size="100%"
-                                withCloseButton={false}
-                                withinPortal
-                                zIndex={10000}
-                                padding={0}
-                                lockScroll={false}
-                                keepMounted
-                                transitionProps={{
-                                    transition: 'slide-left',
-                                    duration: 300,
-                                    timingFunction: 'ease-out'
-                                }}
-                                styles={{
-                                    inner: {
-                                        height: '100%'
-                                    },
-                                    body: {
-                                        height: '100%',
-                                        display: 'flex',
-                                        flexDirection: 'column',
-                                        overflow: 'hidden'
-                                    },
-                                    content: {
-                                        height: '100%',
-                                        display: 'flex',
-                                        flexDirection: 'column',
-                                        overflow: 'hidden'
-                                    },
-                                    overlay: {
-                                        backgroundColor: 'transparent' // 오버레이 투명화로 깜빡임 방지
+                                    setConsultModalOpened(true);
+                                    if ((window as any).gtag) {
+                                        (window as any).gtag('event', '상담_신청_열기', {
+                                            시설ID: facility.id,
+                                            시설명: facility.name
+                                        });
                                     }
                                 }}
                             >
-                                {/* 헤더 */}
-                                <Box
-                                    p="md"
-                                    style={{
-                                        borderBottom: '1px solid #f1f3f5',
-                                        display: 'flex',
-                                        justifyContent: 'space-between',
-                                        alignItems: 'center',
-                                        position: 'sticky',
-                                        top: 0,
-                                        background: 'white',
-                                        zIndex: 10
-                                    }}
-                                >
-                                    <ActionIcon variant="subtle" color="gray" onClick={() => setConsultModalOpened(false)}>
-                                        <X size={20} />
-                                    </ActionIcon>
-                                    <Box style={{ width: 36 }} />
-                                </Box>
+                                <Text style={{ fontSize: 15 }} fw={600} c="brand.6">이 시설에 대해 더 자세히 알아보기</Text>
+                            </Box>
+                        </Box>
 
-                                {/* 본문 - 스크롤 영역 */}
-                                {consultSuccess ? (
-                                    /* 성공 화면 - 깔끔한 디자인 */
-                                    <Box style={{ flex: 1, display: 'flex', flexDirection: 'column', background: 'white' }}>
-                                        {/* 스크롤 가능한 메인 콘텐츠 */}
-                                        <Box style={{
-                                            flex: 1,
-                                            overflowY: 'auto',
-                                            padding: '32px 20px',
-                                            WebkitOverflowScrolling: 'touch',
-                                            touchAction: 'pan-y'
-                                        }}>
-                                            {/* 체크 아이콘 + 메시지 */}
-                                            <Box style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginBottom: 32 }}>
-                                                <Box
-                                                    style={{
-                                                        width: 72,
-                                                        height: 72,
-                                                        borderRadius: '50%',
-                                                        background: 'var(--mantine-color-brand-6)',
-                                                        display: 'flex',
-                                                        alignItems: 'center',
-                                                        justifyContent: 'center',
-                                                        marginBottom: 20
-                                                    }}
-                                                >
-                                                    <Check size={36} color="white" strokeWidth={3} />
-                                                </Box>
-                                                <Text size="xl" fw={700} ta="center" mb={8}>
-                                                    상담 신청이 완료되었어요
-                                                </Text>
-                                                <Text size="sm" c="dimmed" ta="center">
-                                                    영업일 기준 1일 이내 연락드릴게요
-                                                </Text>
-                                            </Box>
+                        {/* 이야기 (리뷰) */}
+                        <Box id="reviews-section" bg="white" p="md" style={{ borderBottom: '8px solid #f8f9fa', boxShadow: 'inset 0 -1px 0 #e9ecef' }}>
+                            <Text size="lg" fw={700} mb="md">이야기</Text>
 
-                                            {/* 신청 정보 카드 */}
-                                            <Box
-                                                style={{
-                                                    background: '#f8f9fa',
-                                                    borderRadius: 12,
-                                                    padding: 20,
-                                                    marginBottom: 20
-                                                }}
-                                            >
-                                                <Text size="xs" c="dimmed" mb={16} fw={600}>신청 정보</Text>
-                                                <Stack gap={12}>
-                                                    <Group justify="space-between">
-                                                        <Text size="sm" c="dimmed">신청 시설</Text>
-                                                        <Text size="sm" fw={600}>{facility.name}</Text>
-                                                    </Group>
-                                                    <Group justify="space-between">
-                                                        <Text size="sm" c="dimmed">신청자</Text>
-                                                        <Text size="sm" fw={600}>{submittedConsultData?.name || '-'}</Text>
-                                                    </Group>
-                                                    <Group justify="space-between">
-                                                        <Text size="sm" c="dimmed">연락처</Text>
-                                                        <Text size="sm" fw={600}>{submittedConsultData?.phone || '-'}</Text>
-                                                    </Group>
-                                                    <Group justify="space-between">
-                                                        <Text size="sm" c="dimmed">희망 연락시간</Text>
-                                                        <Text size="sm" fw={600}>{submittedConsultData?.preferredTime || '시간 무관'}</Text>
-                                                    </Group>
-                                                    <Group justify="space-between">
-                                                        <Text size="sm" c="dimmed">궁금한 점</Text>
-                                                        <Text size="sm" fw={600}>
-                                                            {submittedConsultData?.question === 'price' && '가격 문의'}
-                                                            {submittedConsultData?.question === 'location' && '위치/교통'}
-                                                            {submittedConsultData?.question === 'grave' && '장지 유형'}
-                                                            {submittedConsultData?.question === 'other' && '기타'}
-                                                        </Text>
-                                                    </Group>
-                                                    {submittedConsultData?.message && (
-                                                        <Box style={{ borderTop: '1px solid #e9ecef', paddingTop: 12, marginTop: 4 }}>
-                                                            <Text size="xs" c="dimmed" mb={4}>추가 요청사항</Text>
-                                                            <Text size="sm">{submittedConsultData.message}</Text>
+                            {/* 후기 작성 입력 */}
+                            <Paper
+                                withBorder radius="md" p="md" mb="lg"
+                                onClick={() => { if (reviewModalOpened) { closeReviewModal(); } else { closeAllPanels(); openReviewModal(); } }}
+                                style={{ cursor: 'pointer', borderColor: '#e9ecef', backgroundColor: '#f8f9fa' }}
+                            >
+                                <Group justify="space-between">
+                                    <Text c="gray.5" size="sm">
+                                        솔직한 후기를 남겨주세요.
+                                    </Text>
+                                    <Group gap={12}>
+                                        <Camera size={20} color="#1D0098" />
+                                        <Pencil size={20} color="#1D0098" />
+                                    </Group>
+                                </Group>
+                            </Paper>
+
+                            {/* 리뷰 목록 */}
+                            <Stack gap="md">
+                                {reviews.length > 0 ? (
+                                    (showAllReviews ? reviews : reviews.slice(0, 3)).map((review) => (
+                                        <Box key={review.id} style={{ borderBottom: '1px solid #f1f3f5' }} pb="md">
+                                            <Group justify="space-between" mb={4}>
+                                                <Group gap="xs">
+                                                    <Box w={24} h={24} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                                                        <span className="material-symbols-outlined" style={{ fontSize: '24px', color: '#adb5bd' }}>account_circle</span>
+                                                    </Box>
+                                                    <Text size="sm" fw={600} c="dark.8">{review.author}</Text>
+                                                    <Text size="xs" c="dimmed">· {formatRelativeTime(review.date)}</Text>
+                                                </Group>
+                                                <ActionIcon variant="transparent" color="gray" size="sm" onClick={() => openDeleteReviewModal(review.id)}>
+                                                    <Trash size={14} />
+                                                </ActionIcon>
+                                            </Group>
+                                            <Text size="md" mb="xs" style={{ whiteSpace: 'pre-wrap', lineHeight: 1.5, color: '#343a40' }}>
+                                                {review.content}
+                                            </Text>
+                                            {/* Review Photos - 클릭 시 확대 */}
+                                            {review.photos && review.photos.length > 0 && (
+                                                <Group gap="xs" mb="sm">
+                                                    {review.photos.map((photo, idx) => (
+                                                        <Box key={idx} style={{ cursor: 'pointer' }} onClick={() => openImageViewer(review.photos ?? [], idx)}>
+                                                            <Image src={photo} w={100} h={100} radius="md" style={{ objectFit: 'cover', border: '1px solid #f1f3f5' }} />
+                                                        </Box>
+                                                    ))}
+                                                </Group>
+                                            )}
+
+                                            <Group gap="lg">
+                                                <Group gap={4} style={{ cursor: 'pointer' }} onClick={() => handleLike(review.id)}>
+                                                    <span
+                                                        className="material-symbols-outlined"
+                                                        style={{
+                                                            fontSize: '18px',
+                                                            color: likedReviews.has(review.id) ? '#fa5252' : '#adb5bd',
+                                                            fontVariationSettings: likedReviews.has(review.id) ? "'FILL' 1" : "'FILL' 0"
+                                                        }}
+                                                    >
+                                                        favorite
+                                                    </span>
+                                                    <Text size="xs" c={likedReviews.has(review.id) ? 'red.6' : 'dimmed'} fw={likedReviews.has(review.id) ? 600 : 400}>
+                                                        좋아요 {review.likes || 0}
+                                                    </Text>
+                                                </Group>
+                                                <Group gap={4} style={{ cursor: 'pointer' }} onClick={() => {
+                                                    setReplyingTo(replyingTo === review.id ? null : review.id);
+                                                    setReplyContent('');
+                                                    setReplyPhotos([]);
+                                                    setReplyNickname('');
+                                                    setReplyPassword('');
+                                                }}>
+                                                    <span className="material-symbols-outlined" style={{ fontSize: '18px', color: '#adb5bd' }}>chat_bubble</span>
+                                                    <Text size="xs" c="dimmed">답글달기 {(review.replies?.length ?? 0) > 0 ? review.replies?.length : ''}</Text>
+                                                </Group>
+                                            </Group>
+
+
+
+                                            {/* Reply List - 3개까지만 표시 + 더보기 */}
+                                            {review.replies && review.replies.length > 0 && (
+                                                <Box mt="md" bg="gray.0" p="sm" style={{ borderRadius: 'var(--mantine-radius-md)' }}>
+                                                    {(expandedReplies.has(review.id) ? review.replies : review.replies.slice(0, 3)).map((reply: any) => (
+                                                        <Box key={reply.id} mb="sm" pb="sm" style={{ borderBottom: '1px solid #f1f3f5' }}>
+                                                            <Group gap="xs" mb={4}>
+                                                                <span className="material-symbols-outlined" style={{ fontSize: '18px', color: '#adb5bd' }}>account_circle</span>
+                                                                <Text size="sm" fw={700} c="dark.8">{reply.author}</Text>
+                                                                <Text size="xs" c="dimmed">· {formatRelativeTime(reply.createdAt || reply.date)}</Text>
+                                                                <ActionIcon variant="transparent" color="gray" size="xs" onClick={() => openDeleteReplyModal(review.id, reply.id)} ml="auto">
+                                                                    <X size={12} />
+                                                                </ActionIcon>
+                                                            </Group>
+                                                            <Text size="sm" c="dark.7" ml={26}>{reply.content}</Text>
+                                                            {/* 대댓글 이미지 - 클릭 시 확대 */}
+                                                            {reply.photos && reply.photos.length > 0 && (
+                                                                <Group gap={6} mt="xs" ml={26}>
+                                                                    {reply.photos.map((photo: string, idx: number) => (
+                                                                        <Box key={idx} style={{ cursor: 'pointer' }} onClick={() => openImageViewer(reply.photos, idx)}>
+                                                                            <img src={photo} alt="리뷰 사진" onError={(e) => { e.currentTarget.style.display = 'none'; }} style={{ width: 80, height: 80, objectFit: 'cover', borderRadius: '8px', border: '1px solid #dee2e6' }} />
+                                                                        </Box>
+                                                                    ))}
+                                                                </Group>
+                                                            )}
+                                                        </Box>
+                                                    ))}
+                                                    {/* 3개 이상이면 더보기/접기 */}
+                                                    {review.replies.length > 3 && (
+                                                        <Box ta="center" pt="xs">
+                                                            <Button
+                                                                variant="subtle"
+                                                                color="gray"
+                                                                size="xs"
+                                                                onClick={() => {
+                                                                    setExpandedReplies(prev => {
+                                                                        const next = new Set(prev);
+                                                                        if (next.has(review.id)) {
+                                                                            next.delete(review.id);
+                                                                        } else {
+                                                                            next.add(review.id);
+                                                                        }
+                                                                        return next;
+                                                                    });
+                                                                }}
+                                                                styles={{ root: { color: '#868e96', fontWeight: 600 } }}
+                                                            >
+                                                                {expandedReplies.has(review.id)
+                                                                    ? '댓글 접기'
+                                                                    : `댓글 더보기 (${review.replies.length - 3}개)`
+                                                                }
+                                                            </Button>
                                                         </Box>
                                                     )}
-                                                    <Group justify="space-between">
-                                                        <Text size="sm" c="dimmed">상담 방식</Text>
-                                                        <Text size="sm" fw={600}>
-                                                            {submittedConsultData?.consultMethod === 'phone' && '전화 상담'}
-                                                            {submittedConsultData?.consultMethod === 'field' && '방문 상담'}
-                                                        </Text>
-                                                    </Group>
-                                                </Stack>
-                                            </Box>
-
-                                            {/* 안내 사항 */}
-                                            <Box>
-                                                <Text size="xs" c="dimmed" mb={12} fw={600}>안내 사항</Text>
-                                                <Stack gap={8}>
-                                                    <Text size="sm" c="dimmed">• 입력하신 연락처로 전문 상담사가 연락드립니다</Text>
-                                                    <Text size="sm" c="dimmed">• 상담은 무료이며, 부담 없이 질문해 주세요</Text>
-                                                    <Text size="sm" c="dimmed">• 개인정보는 상담 목적으로만 사용됩니다</Text>
-                                                </Stack>
-                                            </Box>
+                                                </Box>
+                                            )}
                                         </Box>
-
-                                        {/* 하단 버튼 - 뒤로 25% / 확인 75% */}
-                                        <Box p="lg" style={{ borderTop: '1px solid #f1f3f5' }}>
-                                            <Group gap="sm">
-                                                <Button
-                                                    variant="light"
-                                                    color="gray"
-                                                    size="lg"
-                                                    radius="md"
-                                                    styles={{ root: { height: 52, flex: '0 0 25%' } }}
-                                                    onClick={() => setConsultSuccess(false)}
-                                                >
-                                                    뒤로
-                                                </Button>
-                                                <Button
-                                                    color="brand"
-                                                    size="lg"
-                                                    radius="md"
-                                                    styles={{ root: { height: 52, flex: 1 } }}
-                                                    onClick={() => {
-                                                        setConsultModalOpened(false);
-                                                        setConsultSuccess(false);
-                                                    }}
-                                                >
-                                                    확인
-                                                </Button>
-                                            </Group>
-                                        </Box>
-                                    </Box>
+                                    ))
                                 ) : (
-                                    <Box style={{
-                                        flex: 1,
-                                        overflowY: 'auto',
-                                        padding: '24px 20px 100px',
-                                        WebkitOverflowScrolling: 'touch',
-                                        touchAction: 'pan-y'
-                                    }}>
-                                        {/* 타이틀 */}
-                                        <Box mb="xl">
-                                            <Text size="24px" fw={700} lh={1.3} style={{ wordBreak: 'keep-all' }}>
-                                                상담을 신청하려면{'\n'}
-                                                <Text span c="brand" inherit>필수 정보</Text>가 필요해요.
-                                            </Text>
-                                            <Text size="sm" c="dimmed" mt="sm">
-                                                {facility.name}
-                                            </Text>
-                                        </Box>
-
-                                        <Stack gap="sm">
-                                            {/* 1. 이름 - 클릭하면 1번만 열림 */}
-                                            <Box
-                                                p="lg"
-                                                style={{
-                                                    border: consultStep === 1 ? '2px solid var(--mantine-color-brand-6)' : '1px solid #e9ecef',
-                                                    borderRadius: 12,
-                                                    cursor: 'pointer',
-                                                    transition: 'all 0.2s ease'
-                                                }}
-                                                onClick={() => setConsultStep(consultStep === 1 ? -1 : 1)}
-                                            >
-                                                <Group justify="space-between">
-                                                    <Text size="md" fw={700}>1. 이름</Text>
-                                                    <Group gap="xs">
-                                                        {consultStep !== 0 && consultStep !== 1 && consultForm.name && <Text size="sm" c="dimmed">{consultForm.name}</Text>}
-                                                        <ChevronDown size={18} color="#adb5bd" style={{ transform: (consultStep === 0 || consultStep === 1) ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s' }} />
-                                                    </Group>
-                                                </Group>
-                                                <Collapse in={consultStep === 0 || consultStep === 1}>
-                                                    <Box mt="md">
-                                                        <TextInput
-                                                            ref={nameInputRef}
-                                                            placeholder="이름을 입력해 주세요."
-                                                            variant="unstyled"
-                                                            size="lg"
-                                                            value={consultForm.name}
-                                                            onChange={(e) => setConsultForm({ ...consultForm, name: e.currentTarget.value })}
-                                                            styles={{ input: { borderBottom: '1px solid #dee2e6', borderRadius: 0, paddingBottom: 8 } }}
-                                                            onClick={(e) => e.stopPropagation()}
-                                                        />
-                                                    </Box>
-                                                </Collapse>
-                                            </Box>
-
-                                            {/* 2. 연락처 - 클릭하면 2번만 열림 */}
-                                            <Box
-                                                p="lg"
-                                                style={{
-                                                    border: consultStep === 2 ? '2px solid var(--mantine-color-brand-6)' : '1px solid #e9ecef',
-                                                    borderRadius: 12,
-                                                    cursor: 'pointer',
-                                                    transition: 'all 0.2s ease'
-                                                }}
-                                                onClick={() => setConsultStep(consultStep === 2 ? -1 : 2)}
-                                            >
-                                                <Group justify="space-between">
-                                                    <Text size="md" fw={700}>2. 연락처</Text>
-                                                    <Group gap="xs">
-                                                        {consultStep !== 0 && consultStep !== 2 && consultForm.phone && <Text size="sm" c="dimmed">{consultForm.phone}</Text>}
-                                                        <ChevronDown size={18} color="#adb5bd" style={{ transform: (consultStep === 0 || consultStep === 2) ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s' }} />
-                                                    </Group>
-                                                </Group>
-                                                <Collapse in={consultStep === 0 || consultStep === 2}>
-                                                    <Box mt="md">
-                                                        <TextInput
-                                                            placeholder="010-0000-0000"
-                                                            variant="unstyled"
-                                                            size="lg"
-                                                            value={consultForm.phone}
-                                                            onChange={(e) => setConsultForm({ ...consultForm, phone: formatPhoneNumber(e.currentTarget.value) })}
-                                                            styles={{ input: { borderBottom: '1px solid #dee2e6', borderRadius: 0, paddingBottom: 8 } }}
-                                                            onClick={(e) => e.stopPropagation()}
-                                                        />
-                                                        <Text size="xs" c="dimmed" mt="xs">연락처는 상담사와 제휴시설에만 전달됩니다.</Text>
-                                                    </Box>
-                                                </Collapse>
-                                            </Box>
-
-                                            {/* 3. 연락 가능 시간 - 클릭하면 3번만 열림 */}
-                                            <Box
-                                                p="lg"
-                                                style={{
-                                                    border: consultStep === 3 ? '2px solid var(--mantine-color-brand-6)' : '1px solid #e9ecef',
-                                                    borderRadius: 12,
-                                                    cursor: 'pointer',
-                                                    transition: 'all 0.2s ease'
-                                                }}
-                                                onClick={() => setConsultStep(consultStep === 3 ? -1 : 3)}
-                                            >
-                                                <Group justify="space-between">
-                                                    <Text size="md" fw={700}>3. 연락 가능 시간</Text>
-                                                    <Group gap="xs">
-                                                        {consultStep !== 0 && consultStep !== 3 && consultForm.preferredTime && <Text size="sm" c="dimmed">{consultForm.preferredTime}</Text>}
-                                                        <ChevronDown size={18} color="#adb5bd" style={{ transform: (consultStep === 0 || consultStep === 3) ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s' }} />
-                                                    </Group>
-                                                </Group>
-                                                <Collapse in={consultStep === 0 || consultStep === 3}>
-                                                    <Stack gap="xs" mt="md">
-                                                        {['09시~12시', '12시~14시', '14시~18시', '18시~21시', '시간 무관'].map((time) => (
-                                                            <Box key={time}
-                                                                onClick={(e) => {
-                                                                    e.stopPropagation();
-                                                                    setConsultForm({ ...consultForm, preferredTime: time });
-                                                                    setConsultStep(4); // 선택하면 4번 열림
-                                                                }}
-                                                                style={{ display: 'flex', alignItems: 'center', gap: 12, cursor: 'pointer', padding: '8px 0' }}>
-                                                                <Box style={{
-                                                                    width: 22, height: 22, borderRadius: '50%',
-                                                                    border: consultForm.preferredTime === time ? '6px solid var(--mantine-color-brand-6)' : '2px solid #ced4da', background: 'white'
-                                                                }} />
-                                                                <Text size="md">{time}</Text>
-                                                            </Box>
-                                                        ))}
-                                                    </Stack>
-                                                </Collapse>
-                                            </Box>
-
-                                            {/* 4. 상담 방법 */}
-                                            <Box
-                                                p="lg"
-                                                style={{
-                                                    border: consultStep === 4 ? '2px solid var(--mantine-color-brand-6)' : '1px solid #e9ecef',
-                                                    borderRadius: 12,
-                                                    cursor: 'pointer',
-                                                    transition: 'all 0.2s ease'
-                                                }}
-                                                onClick={() => setConsultStep(consultStep === 4 ? -1 : 4)}
-                                            >
-                                                <Group justify="space-between">
-                                                    <Text size="md" fw={700}>4. 상담 방법</Text>
-                                                    <Group gap="xs">
-                                                        {consultStep !== 4 && consultForm.consultMethod && <Text size="sm" c="dimmed">{
-                                                            consultForm.consultMethod === 'phone' ? '전화 상담' :
-                                                                consultForm.consultMethod === 'phone' ? '전화 상담' : '방문 상담'
-                                                        }</Text>}
-                                                        <ChevronDown size={18} color="#adb5bd" style={{ transform: consultStep === 4 ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s' }} />
-                                                    </Group>
-                                                </Group>
-                                                <Collapse in={consultStep === 4}>
-                                                    <Stack gap="sm" mt="md" onClick={(e) => e.stopPropagation()}>
-                                                        {[
-                                                            { value: 'phone', label: '전화 상담', desc: '전화로 상담받기' },
-                                                            { value: 'field', label: '방문 상담', desc: '시설 현장에서 상담' }
-                                                        ].map(method => (
-                                                            <Box
-                                                                key={method.value}
-                                                                p="md"
-                                                                style={{
-                                                                    border: consultForm.consultMethod === method.value ? '2px solid var(--mantine-color-brand-6)' : '1px solid #dee2e6',
-                                                                    borderRadius: 8,
-                                                                    cursor: 'pointer',
-                                                                    background: consultForm.consultMethod === method.value ? 'var(--mantine-color-brand-0)' : 'white'
-                                                                }}
-                                                                onClick={() => {
-                                                                    setConsultForm({ ...consultForm, consultMethod: method.value });
-                                                                    setConsultStep(5); // 선택하면 5번 열림
-                                                                }}
-                                                            >
-                                                                <Text size="sm" fw={600}>{method.label}</Text>
-                                                                <Text size="xs" c="dimmed">{method.desc}</Text>
-                                                            </Box>
-                                                        ))}
-                                                    </Stack>
-                                                </Collapse>
-                                            </Box>
-
-                                            {/* 5. 궁금한 점 - 클릭하면 5번만 열림 */}
-                                            <Box
-                                                p="lg"
-                                                style={{
-                                                    border: consultStep === 5 ? '2px solid var(--mantine-color-brand-6)' : '1px solid #e9ecef',
-                                                    borderRadius: 12,
-                                                    transition: 'all 0.2s ease',
-                                                    cursor: 'pointer'
-                                                }}
-                                                onClick={() => setConsultStep(consultStep === 5 ? -1 : 5)}
-                                            >
-                                                <Group justify="space-between">
-                                                    <Text size="md" fw={700}>5. 궁금한 점</Text>
-                                                    <Group gap="xs">
-                                                        {consultStep !== 5 && consultForm.question && <Text size="sm" c="dimmed">{
-                                                            consultForm.question === 'price' ? '비용/가격' :
-                                                                consultForm.question === 'location' ? '위치/교통' :
-                                                                    consultForm.question === 'grave' ? '묘지 유형' : '기타'
-                                                        }</Text>}
-                                                        <ChevronDown size={18} color="#adb5bd" style={{ transform: consultStep === 5 ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s' }} />
-                                                    </Group>
-                                                </Group>
-                                                <Collapse in={consultStep === 5}>
-                                                    <Stack gap="xs" mt="md">
-                                                        {[
-                                                            { value: 'price', label: '비용/가격이 궁금해요' },
-                                                            { value: 'location', label: '위치/교통이 궁금해요' },
-                                                            { value: 'grave', label: '묘지 유형이 궁금해요' },
-                                                            { value: 'other', label: '기타 문의' }
-                                                        ].map((q) => (
-                                                            <Box key={q.value}
-                                                                onClick={(e) => {
-                                                                    e.stopPropagation();
-                                                                    setConsultForm({ ...consultForm, question: q.value });
-                                                                    setConsultStep(6); // 선택하면 6번 열림
-                                                                }}
-                                                                style={{ display: 'flex', alignItems: 'center', gap: 12, cursor: 'pointer', padding: '8px 0' }}>
-                                                                <Box style={{
-                                                                    width: 22, height: 22, borderRadius: '50%',
-                                                                    border: consultForm.question === q.value ? '6px solid var(--mantine-color-brand-6)' : '2px solid #ced4da', background: 'white'
-                                                                }} />
-                                                                <Text size="md">{q.label}</Text>
-                                                            </Box>
-                                                        ))}
-                                                    </Stack>
-                                                </Collapse>
-                                            </Box>
-
-                                            {/* 6. 추가 요청사항 - 클릭하면 6번만 열림 */}
-                                            <Box
-                                                p="lg"
-                                                style={{
-                                                    border: consultStep === 6 ? '2px solid var(--mantine-color-brand-6)' : '1px solid #e9ecef',
-                                                    borderRadius: 12,
-                                                    transition: 'all 0.2s ease',
-                                                    cursor: 'pointer'
-                                                }}
-                                                onClick={() => setConsultStep(consultStep === 6 ? -1 : 6)}
-                                            >
-                                                <Group justify="space-between">
-                                                    <Text size="md" fw={700}>6. 추가 요청사항</Text>
-                                                    <ChevronDown size={18} color="#adb5bd" style={{ transform: consultStep === 6 ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s' }} />
-                                                </Group>
-                                                <Collapse in={consultStep === 6}>
-                                                    <Box mt="md">
-                                                        <Textarea
-                                                            placeholder="추가로 궁금한 점이 있으시면 입력해주세요."
-                                                            variant="unstyled"
-                                                            rows={3}
-                                                            value={consultForm.message}
-                                                            onChange={(e) => setConsultForm({ ...consultForm, message: e.currentTarget.value })}
-                                                            styles={{ input: { border: '1px solid #dee2e6', borderRadius: 8, padding: 12 } }}
-                                                            onClick={(e) => e.stopPropagation()}
-                                                        />
-                                                    </Box>
-                                                </Collapse>
-                                            </Box>
-                                        </Stack>
+                                    <Box ta="center" py="xl">
+                                        <Text size="sm" c="dimmed">
+                                            최근 {viewCount}명이 조회했어요.<br />
+                                            방문 경험을 나눠주시면 많은 분들께 도움이 됩니다!
+                                        </Text>
                                     </Box>
                                 )}
+                                {/* 리뷰 3개 이상이면 더보기/접기 */}
+                                {reviews.length > 3 && (
+                                    <Box
+                                        mt="md"
+                                        py={12}
+                                        style={{
+                                            backgroundColor: '#f8f9fa',
+                                            borderRadius: 8,
+                                            cursor: 'pointer',
+                                            textAlign: 'center',
+                                        }}
+                                        onClick={() => {
+                                            if (isDesktop) {
+                                                if (reviewsOpen) { setReviewsOpen(false); } else { closeAllPanels(); setReviewsOpen(true); }
+                                            } else {
+                                                router.push(`/facility/${facility.id}/reviews`);
+                                            }
+                                        }}
+                                    >
+                                        <Text style={{ fontSize: 15 }} fw={500} c="dimmed">
+                                            총 {reviews.length - 3}개의 이야기가 더있습니다
+                                        </Text>
+                                    </Box>
+                                )}
+                            </Stack>
 
-                                {/* 하단 버튼 - 성공 화면에서는 숨김 */}
-                                {!consultSuccess && (
+                            {/* 문의하기 버튼 */}
+                            <Box
+                                mt="lg"
+                                py={12}
+                                style={{
+                                    backgroundColor: '#f8f9fa',
+                                    borderRadius: 8,
+                                    cursor: 'pointer',
+                                    textAlign: 'center',
+                                }}
+                                onClick={() => {
+                                    if (inquiryOpen) { setInquiryOpen(false); } else { closeAllPanels(); setInquiryOpen(true); }
+                                    if ((window as any).gtag) {
+                                        (window as any).gtag('event', '문의_열기', {
+                                            시설ID: facility.id,
+                                            시설명: facility.name
+                                        });
+                                    }
+                                }}
+                            >
+                                <Text style={{ fontSize: 15 }} fw={500} c="dimmed">
+                                    {totalInquiryCount > 0 ? `총 ${totalInquiryCount}번의 문의를 했어요` : '문의하기'}
+                                </Text>
+                            </Box>
+                        </Box>
+
+                        {/* 주변 시설 추천 */}
+                        {allFacilities.length > 0 && (() => {
+                            // 같은 지역(주소 앞 2단어) + 같은 카테고리 필터
+                            const region = facility.address?.split(' ').slice(0, 2).join(' ') || '';
+                            const similarFacilities = allFacilities
+                                .filter(f =>
+                                    f.id !== facility.id &&
+                                    f.category === facility.category &&
+                                    f.address?.startsWith(region)
+                                )
+                                .slice(0, 3);
+
+                            // 같은 지역 없으면 같은 카테고리만
+                            const recommendations = similarFacilities.length > 0
+                                ? similarFacilities
+                                : allFacilities
+                                    .filter(f => f.id !== facility.id && f.category === facility.category)
+                                    .slice(0, 3);
+
+                            if (recommendations.length === 0) return null;
+
+                            return (
+                                <Box bg="white" p="md" style={{ borderBottom: '8px solid #f8f9fa', boxShadow: 'inset 0 -1px 0 #e9ecef' }}>
+                                    <Text size="sm" fw={700} mb="md">주변 시설</Text>
+                                    <Stack gap="xs">
+                                        {recommendations.map(rec => {
+                                            // 🔥 썸네일 우선순위: thumbnail > imageGallery[0] > 로고
+                                            const recAny = rec as any;
+                                            const hasImage = recAny.thumbnail || rec.imageGallery?.[0];
+                                            const thumbUrl = recAny.thumbnail
+                                                ? recAny.thumbnail
+                                                : rec.imageGallery?.[0]
+                                                    ? getSingleFacilityImageUrl(rec.imageGallery[0])
+                                                    : '/logo-horizontal.svg';
+                                            return (
+                                                <Box
+                                                    key={rec.id}
+                                                    p="sm"
+                                                    bg="gray.0"
+                                                    style={{ borderRadius: 8, cursor: 'pointer' }}
+                                                    onClick={() => {
+                                                        onSelectFacility?.(rec.id);
+                                                        // 🔥 상세 페이지 맨 위로 스크롤
+                                                        window.scrollTo({ top: 0, behavior: 'instant' });
+                                                    }}
+                                                >
+                                                    <Group wrap="nowrap" gap="sm">
+                                                        <Box
+                                                            style={{
+                                                                width: 48,
+                                                                height: 48,
+                                                                borderRadius: 6,
+                                                                overflow: 'hidden',
+                                                                flexShrink: 0,
+                                                                backgroundColor: '#f1f3f5',
+                                                                display: 'flex',
+                                                                alignItems: 'center',
+                                                                justifyContent: 'center',
+                                                            }}
+                                                        >
+                                                            {hasImage ? (
+                                                                <NextImage
+                                                                    src={thumbUrl}
+                                                                    alt={rec.name}
+                                                                    width={48}
+                                                                    height={48}
+                                                                    style={{ objectFit: 'cover', width: '100%', height: '100%' }}
+                                                                    loading="lazy"
+                                                                />
+                                                            ) : (
+                                                                <img
+                                                                    src={thumbUrl}
+                                                                    alt={rec.name}
+                                                                    style={{ width: 32, height: 16, objectFit: 'cover', opacity: 0.3 }}
+                                                                />
+                                                            )}
+                                                        </Box>
+                                                        <Box style={{ flex: 1, minWidth: 0 }}>
+                                                            <Text size="sm" fw={600} lineClamp={1}>{rec.name}</Text>
+                                                            <Text size="xs" c="dimmed">{rec.address?.split(' ').slice(0, 2).join(' ')}</Text>
+                                                        </Box>
+                                                        {rec.priceRange?.min && rec.priceRange.min > 0 && (
+                                                            <Text size="sm" fw={600} c="dark.6" style={{ flexShrink: 0 }}>
+                                                                {formatKoreanCurrency(rec.priceRange.min)}부터
+                                                            </Text>
+                                                        )}
+                                                    </Group>
+                                                </Box>
+                                            );
+                                        })}
+                                    </Stack>
+                                </Box>
+                            );
+                        })()}
+
+
+                        {/* 🔵 하단 공유 & 정보수정 섹션 */}
+                        <Box px="md" pt={10} pb={30} style={{
+                            background: '#302E92',
+                            textAlign: 'center',
+                        }}>
+                            {/* 공유 안내 */}
+                            <Box py="lg">
+                                <Text size="sm" fw={600} c="rgba(255,255,255,0.85)" mb="sm">
+                                    이 시설이 도움이 되셨나요? 가족에게 공유해 보세요
+                                </Text>
+
+                                {/* URL 복사 */}
+                                <Box
+                                    mx="auto"
+                                    px="md"
+                                    py={10}
+                                    style={{
+                                        backgroundColor: 'rgba(255,255,255,0.12)',
+                                        borderRadius: 8,
+                                        maxWidth: 320,
+                                        cursor: 'pointer',
+                                        border: '1px solid rgba(255,255,255,0.2)',
+                                    }}
+                                    onClick={() => {
+                                        const url = `https://daedaesonson.com/facility/${facility.id}`;
+                                        navigator.clipboard.writeText(url);
+                                        alert('링크가 복사되었습니다!');
+                                    }}
+                                >
+                                    <Group justify="center" gap={6}>
+                                        <span className="material-symbols-outlined" style={{ fontSize: 16, color: 'rgba(255,255,255,0.6)' }}>content_copy</span>
+                                        <Text size="xs" c="rgba(255,255,255,0.8)" lineClamp={1}>
+                                            daedaesonson.com/facility/{facility.id}
+                                        </Text>
+                                    </Group>
+                                </Box>
+                            </Box>
+                            {/* ── 구분선 ── */}
+                            <Box mx={-16} style={{ height: 1, backgroundColor: 'rgba(255,255,255,0.08)' }} />
+
+                            {/* 정보수정 요청 */}
+                            <Box py="lg">
+                                <Text style={{ fontSize: 14 }} c="rgba(255,255,255,0.75)" lh={1.6}>
+                                    혹시 잘못된 정보가 있다면 알려주세요.<br />
+                                    빠르게 확인 후 수정하겠습니다.
+                                </Text>
+                            </Box>
+                            {/* ── 구분선 ── */}
+                            <Box mx={-16} style={{ height: 1, backgroundColor: 'rgba(255,255,255,0.08)' }} />
+
+                            {/* 시설 정보수정 요청 버튼 */}
+                            <Box py="lg" onClick={() => { closeAllPanels(); setCorrectionOpen(true); }} style={{ cursor: 'pointer' }}>
+                                <Text style={{ fontSize: 16 }} fw={600} c="rgba(255,255,255,0.85)">정보 수정 요청하기</Text>
+                            </Box>
+                            {/* ── 구분선 ── */}
+                            <Box mx={-16} style={{ height: 1, backgroundColor: 'rgba(255,255,255,0.08)' }} />
+
+                            {/* 맨위로 이동 */}
+                            <Box
+                                py="md"
+                                onClick={() => {
+                                    const container = document.querySelector('.facility-detail-container');
+                                    if (container) container.scrollTo({ top: 0, behavior: 'smooth' });
+                                    else window.scrollTo({ top: 0, behavior: 'smooth' });
+                                }}
+                                style={{ cursor: 'pointer' }}
+                            >
+                                <span className="material-symbols-outlined" style={{ fontSize: 28, color: 'rgba(255,255,255,0.6)' }}>keyboard_arrow_up</span>
+                            </Box>
+                        </Box>
+
+
+                        {/* Story Panel Overlay */}
+                        <InquiryPanel facility={facility} isOpen={inquiryOpen} onClose={() => { setInquiryOpen(false); document.body.style.overflow = ''; document.body.style.position = ''; document.body.style.touchAction = ''; }} allFacilities={allFacilities} />
+                        <CorrectionRequestModal facilityId={facility.id} facilityName={facility.name} isOpen={correctionOpen} onClose={() => setCorrectionOpen(false)} />
+                        <ReviewsPanel facility={facility} isOpen={reviewsOpen} onClose={() => setReviewsOpen(false)} />
+
+                        {/* 상담 신청 - 모바일: Modal fullScreen, PC: Drawer 스타일 */}
+                        {
+                            isMobile ? (
+                                <Drawer
+                                    opened={consultModalOpened}
+                                    onClose={() => setConsultModalOpened(false)}
+                                    position="right"
+                                    size="100%"
+                                    withCloseButton={false}
+                                    withinPortal
+                                    zIndex={10000}
+                                    padding={0}
+                                    lockScroll={false}
+                                    keepMounted
+                                    transitionProps={{
+                                        transition: 'slide-left',
+                                        duration: 300,
+                                        timingFunction: 'ease-out'
+                                    }}
+                                    styles={{
+                                        inner: {
+                                            height: '100%'
+                                        },
+                                        body: {
+                                            height: '100%',
+                                            display: 'flex',
+                                            flexDirection: 'column',
+                                            overflow: 'hidden'
+                                        },
+                                        content: {
+                                            height: '100%',
+                                            display: 'flex',
+                                            flexDirection: 'column',
+                                            overflow: 'hidden'
+                                        },
+                                        overlay: {
+                                            backgroundColor: 'transparent' // 오버레이 투명화로 깜빡임 방지
+                                        }
+                                    }}
+                                >
+                                    {/* 헤더 */}
                                     <Box
                                         p="md"
                                         style={{
-                                            borderTop: '1px solid #f1f3f5',
+                                            borderBottom: '1px solid #f1f3f5',
+                                            display: 'flex',
+                                            justifyContent: 'space-between',
+                                            alignItems: 'center',
+                                            position: 'sticky',
+                                            top: 0,
                                             background: 'white',
-                                            position: 'fixed',
-                                            bottom: 0,
-                                            left: 0,
-                                            right: 0,
                                             zIndex: 10
                                         }}
                                     >
-                                        <Button
-                                            fullWidth
-                                            color="brand"
-                                            size="lg"
-                                            radius="md"
-                                            loading={consultSubmitting}
-                                            disabled={!consultForm.name || !consultForm.phone || !consultForm.preferredTime || !consultForm.consultMethod || !consultForm.question || !consultForm.message?.trim()}
-                                            styles={{ root: { height: 52 } }}
-                                            onClick={async () => {
-                                                setConsultSubmitting(true);
-                                                try {
-                                                    const res = await fetch('/api/consult', {
-                                                        method: 'POST',
-                                                        headers: { 'Content-Type': 'application/json' },
-                                                        body: JSON.stringify({
-                                                            facilityId: facility.id,
-                                                            facilityName: facility.name,
-                                                            ...consultForm
-                                                        })
-                                                    });
-                                                    if (res.ok) {
-                                                        setSubmittedConsultData({ ...consultForm }); // 성공 화면용 데이터 저장
-                                                        setConsultForm({ name: '', phone: '', preferredTime: '', question: 'price', message: '', consultMethod: 'phone' });
-                                                        setConsultStep(0);
-                                                        setConsultSuccess(true); // 성공 화면 표시
-                                                    }
-                                                } catch (err) {
-                                                    alert('신청 중 오류가 발생했습니다.');
-                                                } finally {
-                                                    setConsultSubmitting(false);
-                                                }
-                                            }}
-                                        >
-                                            상담 신청하기
-                                        </Button>
+                                        <ActionIcon variant="subtle" color="gray" onClick={() => setConsultModalOpened(false)}>
+                                            <X size={20} />
+                                        </ActionIcon>
+                                        <Box style={{ width: 36 }} />
                                     </Box>
-                                )}
-                            </Drawer>
-                        ) : (
-                            <Drawer
-                                opened={consultModalOpened}
-                                onClose={() => { setConsultModalOpened(false); setConsultStep(1); }}
-                                position="left"
-                                size="400px"
-                                withCloseButton={false}
-                                withinPortal
-                                zIndex={10000}
-                                overlayProps={{ opacity: 0 }}
-                                styles={{ body: { height: '100%', display: 'flex', flexDirection: 'column', padding: 0 } }}
-                            >
-                                {/* 헤더 */}
-                                <Box
-                                    p="md"
-                                    style={{
-                                        display: 'flex',
-                                        justifyContent: 'space-between',
-                                        alignItems: 'center',
-                                        background: 'white'
-                                    }}
-                                >
-                                    <ActionIcon variant="subtle" color="gray" onClick={() => { setConsultModalOpened(false); setConsultStep(1); }}>
-                                        <X size={20} />
-                                    </ActionIcon>
-                                    <Box style={{ width: 36 }} />
-                                </Box>
 
-                                {/* 본문 */}
-                                {consultSuccess ? (
-                                    /* 성공 화면 - 깔끔한 디자인 */
-                                    <Box style={{ flex: 1, display: 'flex', flexDirection: 'column', background: 'white' }}>
-                                        {/* 스크롤 가능한 메인 콘텐츠 */}
-                                        <Box style={{ flex: 1, overflowY: 'auto', padding: '32px 20px' }}>
-                                            {/* 체크 아이콘 + 메시지 */}
-                                            <Box style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginBottom: 32 }}>
+                                    {/* 본문 - 스크롤 영역 */}
+                                    {consultSuccess ? (
+                                        /* 성공 화면 - 깔끔한 디자인 */
+                                        <Box style={{ flex: 1, display: 'flex', flexDirection: 'column', background: 'white' }}>
+                                            {/* 스크롤 가능한 메인 콘텐츠 */}
+                                            <Box style={{
+                                                flex: 1,
+                                                overflowY: 'auto',
+                                                padding: '32px 20px',
+                                                WebkitOverflowScrolling: 'touch',
+                                                touchAction: 'pan-y'
+                                            }}>
+                                                {/* 체크 아이콘 + 메시지 */}
+                                                <Box style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginBottom: 32 }}>
+                                                    <Box
+                                                        style={{
+                                                            width: 72,
+                                                            height: 72,
+                                                            borderRadius: '50%',
+                                                            background: 'var(--mantine-color-brand-6)',
+                                                            display: 'flex',
+                                                            alignItems: 'center',
+                                                            justifyContent: 'center',
+                                                            marginBottom: 20
+                                                        }}
+                                                    >
+                                                        <Check size={36} color="white" strokeWidth={3} />
+                                                    </Box>
+                                                    <Text size="xl" fw={700} ta="center" mb={8}>
+                                                        상담 신청이 완료되었어요
+                                                    </Text>
+                                                    <Text size="sm" c="dimmed" ta="center">
+                                                        영업일 기준 1일 이내 연락드릴게요
+                                                    </Text>
+                                                </Box>
+
+                                                {/* 신청 정보 카드 */}
                                                 <Box
                                                     style={{
-                                                        width: 72,
-                                                        height: 72,
-                                                        borderRadius: '50%',
-                                                        background: 'var(--mantine-color-brand-6)',
-                                                        display: 'flex',
-                                                        alignItems: 'center',
-                                                        justifyContent: 'center',
+                                                        background: '#f8f9fa',
+                                                        borderRadius: 12,
+                                                        padding: 20,
                                                         marginBottom: 20
                                                     }}
                                                 >
-                                                    <Check size={36} color="white" strokeWidth={3} />
+                                                    <Text size="xs" c="dimmed" mb={16} fw={600}>신청 정보</Text>
+                                                    <Stack gap={12}>
+                                                        <Group justify="space-between">
+                                                            <Text size="sm" c="dimmed">신청 시설</Text>
+                                                            <Text size="sm" fw={600}>{facility.name}</Text>
+                                                        </Group>
+                                                        <Group justify="space-between">
+                                                            <Text size="sm" c="dimmed">신청자</Text>
+                                                            <Text size="sm" fw={600}>{submittedConsultData?.name || '-'}</Text>
+                                                        </Group>
+                                                        <Group justify="space-between">
+                                                            <Text size="sm" c="dimmed">연락처</Text>
+                                                            <Text size="sm" fw={600}>{submittedConsultData?.phone || '-'}</Text>
+                                                        </Group>
+                                                        <Group justify="space-between">
+                                                            <Text size="sm" c="dimmed">희망 연락시간</Text>
+                                                            <Text size="sm" fw={600}>{submittedConsultData?.preferredTime || '시간 무관'}</Text>
+                                                        </Group>
+                                                        <Group justify="space-between">
+                                                            <Text size="sm" c="dimmed">궁금한 점</Text>
+                                                            <Text size="sm" fw={600}>
+                                                                {submittedConsultData?.question === 'price' && '가격 문의'}
+                                                                {submittedConsultData?.question === 'location' && '위치/교통'}
+                                                                {submittedConsultData?.question === 'grave' && '장지 유형'}
+                                                                {submittedConsultData?.question === 'other' && '기타'}
+                                                            </Text>
+                                                        </Group>
+                                                        {submittedConsultData?.message && (
+                                                            <Box style={{ borderTop: '1px solid #e9ecef', paddingTop: 12, marginTop: 4 }}>
+                                                                <Text size="xs" c="dimmed" mb={4}>추가 요청사항</Text>
+                                                                <Text size="sm">{submittedConsultData.message}</Text>
+                                                            </Box>
+                                                        )}
+                                                        <Group justify="space-between">
+                                                            <Text size="sm" c="dimmed">상담 방식</Text>
+                                                            <Text size="sm" fw={600}>
+                                                                {submittedConsultData?.consultMethod === 'phone' && '전화 상담'}
+                                                                {submittedConsultData?.consultMethod === 'field' && '방문 상담'}
+                                                            </Text>
+                                                        </Group>
+                                                    </Stack>
                                                 </Box>
-                                                <Text size="xl" fw={700} ta="center" mb={8}>
-                                                    상담 신청이 완료되었어요
-                                                </Text>
-                                                <Text size="sm" c="dimmed" ta="center">
-                                                    영업일 기준 1일 이내 연락드릴게요
-                                                </Text>
+
+                                                {/* 안내 사항 */}
+                                                <Box>
+                                                    <Text size="xs" c="dimmed" mb={12} fw={600}>안내 사항</Text>
+                                                    <Stack gap={8}>
+                                                        <Text size="sm" c="dimmed">• 입력하신 연락처로 전문 상담사가 연락드립니다</Text>
+                                                        <Text size="sm" c="dimmed">• 상담은 무료이며, 부담 없이 질문해 주세요</Text>
+                                                        <Text size="sm" c="dimmed">• 개인정보는 상담 목적으로만 사용됩니다</Text>
+                                                    </Stack>
+                                                </Box>
                                             </Box>
 
-                                            {/* 신청 정보 카드 */}
-                                            <Box
-                                                style={{
-                                                    background: '#f8f9fa',
-                                                    borderRadius: 12,
-                                                    padding: 20,
-                                                    marginBottom: 20
-                                                }}
-                                            >
-                                                <Text size="xs" c="dimmed" mb={16} fw={600}>신청 정보</Text>
-                                                <Stack gap={12}>
-                                                    <Group justify="space-between">
-                                                        <Text size="sm" c="dimmed">신청 시설</Text>
-                                                        <Text size="sm" fw={600}>{facility.name}</Text>
-                                                    </Group>
-                                                    <Group justify="space-between">
-                                                        <Text size="sm" c="dimmed">신청자</Text>
-                                                        <Text size="sm" fw={600}>{submittedConsultData?.name || '-'}</Text>
-                                                    </Group>
-                                                    <Group justify="space-between">
-                                                        <Text size="sm" c="dimmed">연락처</Text>
-                                                        <Text size="sm" fw={600}>{submittedConsultData?.phone || '-'}</Text>
-                                                    </Group>
-                                                    <Group justify="space-between">
-                                                        <Text size="sm" c="dimmed">희망 연락시간</Text>
-                                                        <Text size="sm" fw={600}>{submittedConsultData?.preferredTime || '시간 무관'}</Text>
-                                                    </Group>
-                                                    <Group justify="space-between">
-                                                        <Text size="sm" c="dimmed">궁금한 점</Text>
-                                                        <Text size="sm" fw={600}>
-                                                            {submittedConsultData?.question === 'price' && '가격 문의'}
-                                                            {submittedConsultData?.question === 'location' && '위치/교통'}
-                                                            {submittedConsultData?.question === 'grave' && '장지 유형'}
-                                                            {submittedConsultData?.question === 'other' && '기타'}
-                                                        </Text>
-                                                    </Group>
-                                                    {submittedConsultData?.message && (
-                                                        <Box style={{ borderTop: '1px solid #e9ecef', paddingTop: 12, marginTop: 4 }}>
-                                                            <Text size="xs" c="dimmed" mb={4}>추가 요청사항</Text>
-                                                            <Text size="sm">{submittedConsultData.message}</Text>
-                                                        </Box>
-                                                    )}
-                                                    <Group justify="space-between">
-                                                        <Text size="sm" c="dimmed">상담 방식</Text>
-                                                        <Text size="sm" fw={600}>
-                                                            {submittedConsultData?.consultMethod === 'phone' && '전화 상담'}
-                                                            {submittedConsultData?.consultMethod === 'field' && '방문 상담'}
-                                                        </Text>
-                                                    </Group>
-                                                </Stack>
-                                            </Box>
-
-                                            {/* 안내 사항 */}
-                                            <Box>
-                                                <Text size="xs" c="dimmed" mb={12} fw={600}>안내 사항</Text>
-                                                <Stack gap={8}>
-                                                    <Text size="sm" c="dimmed">• 입력하신 연락처로 전문 상담사가 연락드립니다</Text>
-                                                    <Text size="sm" c="dimmed">• 상담은 무료이며, 부담 없이 질문해 주세요</Text>
-                                                    <Text size="sm" c="dimmed">• 개인정보는 상담 목적으로만 사용됩니다</Text>
-                                                </Stack>
+                                            {/* 하단 버튼 - 뒤로 25% / 확인 75% */}
+                                            <Box p="lg" style={{ borderTop: '1px solid #f1f3f5' }}>
+                                                <Group gap="sm">
+                                                    <Button
+                                                        variant="light"
+                                                        color="gray"
+                                                        size="lg"
+                                                        radius="md"
+                                                        styles={{ root: { height: 52, flex: '0 0 25%' } }}
+                                                        onClick={() => setConsultSuccess(false)}
+                                                    >
+                                                        뒤로
+                                                    </Button>
+                                                    <Button
+                                                        color="brand"
+                                                        size="lg"
+                                                        radius="md"
+                                                        styles={{ root: { height: 52, flex: 1 } }}
+                                                        onClick={() => {
+                                                            setConsultModalOpened(false);
+                                                            setConsultSuccess(false);
+                                                        }}
+                                                    >
+                                                        확인
+                                                    </Button>
+                                                </Group>
                                             </Box>
                                         </Box>
+                                    ) : (
+                                        <Box style={{
+                                            flex: 1,
+                                            overflowY: 'auto',
+                                            padding: '24px 20px 100px',
+                                            WebkitOverflowScrolling: 'touch',
+                                            touchAction: 'pan-y'
+                                        }}>
+                                            {/* 타이틀 */}
+                                            <Box mb="xl">
+                                                <Text size="24px" fw={700} lh={1.3} style={{ wordBreak: 'keep-all' }}>
+                                                    상담을 신청하려면{'\n'}
+                                                    <Text span c="brand" inherit>필수 정보</Text>가 필요해요.
+                                                </Text>
+                                                <Text size="sm" c="dimmed" mt="sm">
+                                                    {facility.name}
+                                                </Text>
+                                            </Box>
 
-                                        {/* 하단 버튼 - 뒤로 25% / 확인 75% */}
-                                        <Box p="lg" style={{ borderTop: '1px solid #f1f3f5' }}>
-                                            <Group gap="sm">
-                                                <Button
-                                                    variant="light"
-                                                    color="gray"
-                                                    size="lg"
-                                                    radius="md"
-                                                    styles={{ root: { height: 52, flex: '0 0 25%' } }}
-                                                    onClick={() => setConsultSuccess(false)}
-                                                >
-                                                    뒤로
-                                                </Button>
-                                                <Button
-                                                    color="brand"
-                                                    size="lg"
-                                                    radius="md"
-                                                    styles={{ root: { height: 52, flex: 1 } }}
-                                                    onClick={() => {
-                                                        setConsultModalOpened(false);
-                                                        setConsultSuccess(false);
+                                            <Stack gap="sm">
+                                                {/* 1. 이름 - 클릭하면 1번만 열림 */}
+                                                <Box
+                                                    p="lg"
+                                                    style={{
+                                                        border: consultStep === 1 ? '2px solid var(--mantine-color-brand-6)' : '1px solid #e9ecef',
+                                                        borderRadius: 12,
+                                                        cursor: 'pointer',
+                                                        transition: 'all 0.2s ease'
                                                     }}
+                                                    onClick={() => setConsultStep(consultStep === 1 ? -1 : 1)}
                                                 >
-                                                    확인
-                                                </Button>
-                                            </Group>
+                                                    <Group justify="space-between">
+                                                        <Text size="md" fw={700}>1. 이름</Text>
+                                                        <Group gap="xs">
+                                                            {consultStep !== 0 && consultStep !== 1 && consultForm.name && <Text size="sm" c="dimmed">{consultForm.name}</Text>}
+                                                            <ChevronDown size={18} color="#adb5bd" style={{ transform: (consultStep === 0 || consultStep === 1) ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s' }} />
+                                                        </Group>
+                                                    </Group>
+                                                    <Collapse in={consultStep === 0 || consultStep === 1}>
+                                                        <Box mt="md">
+                                                            <TextInput
+                                                                ref={nameInputRef}
+                                                                placeholder="이름을 입력해 주세요."
+                                                                variant="unstyled"
+                                                                size="lg"
+                                                                value={consultForm.name}
+                                                                onChange={(e) => setConsultForm({ ...consultForm, name: e.currentTarget.value })}
+                                                                styles={{ input: { borderBottom: '1px solid #dee2e6', borderRadius: 0, paddingBottom: 8 } }}
+                                                                onClick={(e) => e.stopPropagation()}
+                                                            />
+                                                        </Box>
+                                                    </Collapse>
+                                                </Box>
+
+                                                {/* 2. 연락처 - 클릭하면 2번만 열림 */}
+                                                <Box
+                                                    p="lg"
+                                                    style={{
+                                                        border: consultStep === 2 ? '2px solid var(--mantine-color-brand-6)' : '1px solid #e9ecef',
+                                                        borderRadius: 12,
+                                                        cursor: 'pointer',
+                                                        transition: 'all 0.2s ease'
+                                                    }}
+                                                    onClick={() => setConsultStep(consultStep === 2 ? -1 : 2)}
+                                                >
+                                                    <Group justify="space-between">
+                                                        <Text size="md" fw={700}>2. 연락처</Text>
+                                                        <Group gap="xs">
+                                                            {consultStep !== 0 && consultStep !== 2 && consultForm.phone && <Text size="sm" c="dimmed">{consultForm.phone}</Text>}
+                                                            <ChevronDown size={18} color="#adb5bd" style={{ transform: (consultStep === 0 || consultStep === 2) ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s' }} />
+                                                        </Group>
+                                                    </Group>
+                                                    <Collapse in={consultStep === 0 || consultStep === 2}>
+                                                        <Box mt="md">
+                                                            <TextInput
+                                                                placeholder="010-0000-0000"
+                                                                variant="unstyled"
+                                                                size="lg"
+                                                                value={consultForm.phone}
+                                                                onChange={(e) => setConsultForm({ ...consultForm, phone: formatPhoneNumber(e.currentTarget.value) })}
+                                                                styles={{ input: { borderBottom: '1px solid #dee2e6', borderRadius: 0, paddingBottom: 8 } }}
+                                                                onClick={(e) => e.stopPropagation()}
+                                                            />
+                                                            <Text size="xs" c="dimmed" mt="xs">연락처는 상담사와 제휴시설에만 전달됩니다.</Text>
+                                                        </Box>
+                                                    </Collapse>
+                                                </Box>
+
+                                                {/* 3. 연락 가능 시간 - 클릭하면 3번만 열림 */}
+                                                <Box
+                                                    p="lg"
+                                                    style={{
+                                                        border: consultStep === 3 ? '2px solid var(--mantine-color-brand-6)' : '1px solid #e9ecef',
+                                                        borderRadius: 12,
+                                                        cursor: 'pointer',
+                                                        transition: 'all 0.2s ease'
+                                                    }}
+                                                    onClick={() => setConsultStep(consultStep === 3 ? -1 : 3)}
+                                                >
+                                                    <Group justify="space-between">
+                                                        <Text size="md" fw={700}>3. 연락 가능 시간</Text>
+                                                        <Group gap="xs">
+                                                            {consultStep !== 0 && consultStep !== 3 && consultForm.preferredTime && <Text size="sm" c="dimmed">{consultForm.preferredTime}</Text>}
+                                                            <ChevronDown size={18} color="#adb5bd" style={{ transform: (consultStep === 0 || consultStep === 3) ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s' }} />
+                                                        </Group>
+                                                    </Group>
+                                                    <Collapse in={consultStep === 0 || consultStep === 3}>
+                                                        <Stack gap="xs" mt="md">
+                                                            {['09시~12시', '12시~14시', '14시~18시', '18시~21시', '시간 무관'].map((time) => (
+                                                                <Box key={time}
+                                                                    onClick={(e) => {
+                                                                        e.stopPropagation();
+                                                                        setConsultForm({ ...consultForm, preferredTime: time });
+                                                                        setConsultStep(4); // 선택하면 4번 열림
+                                                                    }}
+                                                                    style={{ display: 'flex', alignItems: 'center', gap: 12, cursor: 'pointer', padding: '8px 0' }}>
+                                                                    <Box style={{
+                                                                        width: 22, height: 22, borderRadius: '50%',
+                                                                        border: consultForm.preferredTime === time ? '6px solid var(--mantine-color-brand-6)' : '2px solid #ced4da', background: 'white'
+                                                                    }} />
+                                                                    <Text size="md">{time}</Text>
+                                                                </Box>
+                                                            ))}
+                                                        </Stack>
+                                                    </Collapse>
+                                                </Box>
+
+                                                {/* 4. 상담 방법 */}
+                                                <Box
+                                                    p="lg"
+                                                    style={{
+                                                        border: consultStep === 4 ? '2px solid var(--mantine-color-brand-6)' : '1px solid #e9ecef',
+                                                        borderRadius: 12,
+                                                        cursor: 'pointer',
+                                                        transition: 'all 0.2s ease'
+                                                    }}
+                                                    onClick={() => setConsultStep(consultStep === 4 ? -1 : 4)}
+                                                >
+                                                    <Group justify="space-between">
+                                                        <Text size="md" fw={700}>4. 상담 방법</Text>
+                                                        <Group gap="xs">
+                                                            {consultStep !== 4 && consultForm.consultMethod && <Text size="sm" c="dimmed">{
+                                                                consultForm.consultMethod === 'phone' ? '전화 상담' :
+                                                                    consultForm.consultMethod === 'phone' ? '전화 상담' : '방문 상담'
+                                                            }</Text>}
+                                                            <ChevronDown size={18} color="#adb5bd" style={{ transform: consultStep === 4 ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s' }} />
+                                                        </Group>
+                                                    </Group>
+                                                    <Collapse in={consultStep === 4}>
+                                                        <Stack gap="sm" mt="md" onClick={(e) => e.stopPropagation()}>
+                                                            {[
+                                                                { value: 'phone', label: '전화 상담', desc: '전화로 상담받기' },
+                                                                { value: 'field', label: '방문 상담', desc: '시설 현장에서 상담' }
+                                                            ].map(method => (
+                                                                <Box
+                                                                    key={method.value}
+                                                                    p="md"
+                                                                    style={{
+                                                                        border: consultForm.consultMethod === method.value ? '2px solid var(--mantine-color-brand-6)' : '1px solid #dee2e6',
+                                                                        borderRadius: 8,
+                                                                        cursor: 'pointer',
+                                                                        background: consultForm.consultMethod === method.value ? 'var(--mantine-color-brand-0)' : 'white'
+                                                                    }}
+                                                                    onClick={() => {
+                                                                        setConsultForm({ ...consultForm, consultMethod: method.value });
+                                                                        setConsultStep(5); // 선택하면 5번 열림
+                                                                    }}
+                                                                >
+                                                                    <Text size="sm" fw={600}>{method.label}</Text>
+                                                                    <Text size="xs" c="dimmed">{method.desc}</Text>
+                                                                </Box>
+                                                            ))}
+                                                        </Stack>
+                                                    </Collapse>
+                                                </Box>
+
+                                                {/* 5. 궁금한 점 - 클릭하면 5번만 열림 */}
+                                                <Box
+                                                    p="lg"
+                                                    style={{
+                                                        border: consultStep === 5 ? '2px solid var(--mantine-color-brand-6)' : '1px solid #e9ecef',
+                                                        borderRadius: 12,
+                                                        transition: 'all 0.2s ease',
+                                                        cursor: 'pointer'
+                                                    }}
+                                                    onClick={() => setConsultStep(consultStep === 5 ? -1 : 5)}
+                                                >
+                                                    <Group justify="space-between">
+                                                        <Text size="md" fw={700}>5. 궁금한 점</Text>
+                                                        <Group gap="xs">
+                                                            {consultStep !== 5 && consultForm.question && <Text size="sm" c="dimmed">{
+                                                                consultForm.question === 'price' ? '비용/가격' :
+                                                                    consultForm.question === 'location' ? '위치/교통' :
+                                                                        consultForm.question === 'grave' ? '묘지 유형' : '기타'
+                                                            }</Text>}
+                                                            <ChevronDown size={18} color="#adb5bd" style={{ transform: consultStep === 5 ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s' }} />
+                                                        </Group>
+                                                    </Group>
+                                                    <Collapse in={consultStep === 5}>
+                                                        <Stack gap="xs" mt="md">
+                                                            {[
+                                                                { value: 'price', label: '비용/가격이 궁금해요' },
+                                                                { value: 'location', label: '위치/교통이 궁금해요' },
+                                                                { value: 'grave', label: '묘지 유형이 궁금해요' },
+                                                                { value: 'other', label: '기타 문의' }
+                                                            ].map((q) => (
+                                                                <Box key={q.value}
+                                                                    onClick={(e) => {
+                                                                        e.stopPropagation();
+                                                                        setConsultForm({ ...consultForm, question: q.value });
+                                                                        setConsultStep(6); // 선택하면 6번 열림
+                                                                    }}
+                                                                    style={{ display: 'flex', alignItems: 'center', gap: 12, cursor: 'pointer', padding: '8px 0' }}>
+                                                                    <Box style={{
+                                                                        width: 22, height: 22, borderRadius: '50%',
+                                                                        border: consultForm.question === q.value ? '6px solid var(--mantine-color-brand-6)' : '2px solid #ced4da', background: 'white'
+                                                                    }} />
+                                                                    <Text size="md">{q.label}</Text>
+                                                                </Box>
+                                                            ))}
+                                                        </Stack>
+                                                    </Collapse>
+                                                </Box>
+
+                                                {/* 6. 추가 요청사항 - 클릭하면 6번만 열림 */}
+                                                <Box
+                                                    p="lg"
+                                                    style={{
+                                                        border: consultStep === 6 ? '2px solid var(--mantine-color-brand-6)' : '1px solid #e9ecef',
+                                                        borderRadius: 12,
+                                                        transition: 'all 0.2s ease',
+                                                        cursor: 'pointer'
+                                                    }}
+                                                    onClick={() => setConsultStep(consultStep === 6 ? -1 : 6)}
+                                                >
+                                                    <Group justify="space-between">
+                                                        <Text size="md" fw={700}>6. 추가 요청사항</Text>
+                                                        <ChevronDown size={18} color="#adb5bd" style={{ transform: consultStep === 6 ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s' }} />
+                                                    </Group>
+                                                    <Collapse in={consultStep === 6}>
+                                                        <Box mt="md">
+                                                            <Textarea
+                                                                placeholder="추가로 궁금한 점이 있으시면 입력해주세요."
+                                                                variant="unstyled"
+                                                                rows={3}
+                                                                value={consultForm.message}
+                                                                onChange={(e) => setConsultForm({ ...consultForm, message: e.currentTarget.value })}
+                                                                styles={{ input: { border: '1px solid #dee2e6', borderRadius: 8, padding: 12 } }}
+                                                                onClick={(e) => e.stopPropagation()}
+                                                            />
+                                                        </Box>
+                                                    </Collapse>
+                                                </Box>
+                                            </Stack>
                                         </Box>
-                                    </Box>
-                                ) : (
-                                    <Box style={{ flex: 1, overflowY: 'auto', padding: '24px 20px 100px' }}>
-                                        <Box mb="xl">
-                                            <Text size="24px" fw={700} lh={1.3} style={{ wordBreak: 'keep-all' }}>
-                                                상담을 신청하려면{'\n'}
-                                                <Text span c="brand" inherit>필수 정보</Text>가 필요해요.
-                                            </Text>
-                                            <Text size="sm" c="dimmed" mt="sm">
-                                                {facility.name}
-                                            </Text>
-                                        </Box>
+                                    )}
 
-                                        <Stack gap="sm">
-                                            {/* 1. 이름 - 클릭하면 1번만 열림 */}
-                                            <Box
-                                                p="lg"
-                                                style={{
-                                                    border: consultStep === 1 ? '2px solid var(--mantine-color-brand-6)' : '1px solid #e9ecef',
-                                                    borderRadius: 12,
-                                                    cursor: 'pointer',
-                                                    transition: 'all 0.2s ease'
-                                                }}
-                                                onClick={() => setConsultStep(consultStep === 1 ? -1 : 1)}
-                                            >
-                                                <Group justify="space-between">
-                                                    <Text size="md" fw={700}>1. 이름</Text>
-                                                    <Group gap="xs">
-                                                        {consultStep !== 0 && consultStep !== 1 && consultForm.name && <Text size="sm" c="dimmed">{consultForm.name}</Text>}
-                                                        <ChevronDown size={18} color="#adb5bd" style={{ transform: (consultStep === 0 || consultStep === 1) ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s' }} />
-                                                    </Group>
-                                                </Group>
-                                                <Collapse in={consultStep === 0 || consultStep === 1}>
-                                                    <Box mt="md">
-                                                        <TextInput
-                                                            ref={nameInputRef}
-                                                            placeholder="이름을 입력해 주세요."
-                                                            variant="unstyled"
-                                                            size="md"
-                                                            value={consultForm.name}
-                                                            onChange={(e) => setConsultForm({ ...consultForm, name: e.currentTarget.value })}
-                                                            styles={{ input: { borderBottom: '1px solid #dee2e6', borderRadius: 0, paddingBottom: 8 } }}
-                                                            onClick={(e) => e.stopPropagation()}
-                                                        />
-                                                    </Box>
-                                                </Collapse>
-                                            </Box>
-
-                                            {/* 2. 연락처 - 클릭하면 2번만 열림 */}
-                                            <Box
-                                                p="lg"
-                                                style={{
-                                                    border: consultStep === 2 ? '2px solid var(--mantine-color-brand-6)' : '1px solid #e9ecef',
-                                                    borderRadius: 12,
-                                                    cursor: 'pointer',
-                                                    transition: 'all 0.2s ease'
-                                                }}
-                                                onClick={() => setConsultStep(consultStep === 2 ? -1 : 2)}
-                                            >
-                                                <Group justify="space-between">
-                                                    <Text size="md" fw={700}>2. 연락처</Text>
-                                                    <Group gap="xs">
-                                                        {consultStep !== 0 && consultStep !== 2 && consultForm.phone && <Text size="sm" c="dimmed">{consultForm.phone}</Text>}
-                                                        <ChevronDown size={18} color="#adb5bd" style={{ transform: (consultStep === 0 || consultStep === 2) ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s' }} />
-                                                    </Group>
-                                                </Group>
-                                                <Collapse in={consultStep === 0 || consultStep === 2}>
-                                                    <Box mt="md">
-                                                        <TextInput
-                                                            placeholder="010-0000-0000"
-                                                            variant="unstyled"
-                                                            size="md"
-                                                            value={consultForm.phone}
-                                                            onChange={(e) => setConsultForm({ ...consultForm, phone: formatPhoneNumber(e.currentTarget.value) })}
-                                                            styles={{ input: { borderBottom: '1px solid #dee2e6', borderRadius: 0, paddingBottom: 8 } }}
-                                                            onClick={(e) => e.stopPropagation()}
-                                                        />
-                                                        <Text size="xs" c="dimmed" mt="xs">연락처는 상담사와 제휴시설에만 전달됩니다.</Text>
-                                                    </Box>
-                                                </Collapse>
-                                            </Box>
-
-                                            {/* 3. 연락 가능 시간 - 클릭하면 3번만 열림 */}
-                                            <Box
-                                                p="lg"
-                                                style={{
-                                                    border: consultStep === 3 ? '2px solid var(--mantine-color-brand-6)' : '1px solid #e9ecef',
-                                                    borderRadius: 12,
-                                                    cursor: 'pointer',
-                                                    transition: 'all 0.2s ease'
-                                                }}
-                                                onClick={() => setConsultStep(consultStep === 3 ? -1 : 3)}
-                                            >
-                                                <Group justify="space-between">
-                                                    <Text size="md" fw={700}>3. 연락 가능 시간</Text>
-                                                    <Group gap="xs">
-                                                        {consultStep !== 0 && consultStep !== 3 && consultForm.preferredTime && <Text size="sm" c="dimmed">{consultForm.preferredTime}</Text>}
-                                                        <ChevronDown size={18} color="#adb5bd" style={{ transform: (consultStep === 0 || consultStep === 3) ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s' }} />
-                                                    </Group>
-                                                </Group>
-                                                <Collapse in={consultStep === 0 || consultStep === 3}>
-                                                    <Stack gap="xs" mt="md">
-                                                        {['09시~12시', '12시~14시', '14시~18시', '18시~21시', '시간 무관'].map((time) => (
-                                                            <Box key={time}
-                                                                onClick={(e) => {
-                                                                    e.stopPropagation();
-                                                                    setConsultForm({ ...consultForm, preferredTime: time });
-                                                                    setConsultStep(4); // 선택하면 4번 열림
-                                                                }}
-                                                                style={{ display: 'flex', alignItems: 'center', gap: 12, cursor: 'pointer', padding: '8px 0' }}>
-                                                                <Box style={{
-                                                                    width: 22, height: 22, borderRadius: '50%',
-                                                                    border: consultForm.preferredTime === time ? '6px solid var(--mantine-color-brand-6)' : '2px solid #ced4da', background: 'white'
-                                                                }} />
-                                                                <Text size="md">{time}</Text>
-                                                            </Box>
-                                                        ))}
-                                                    </Stack>
-                                                </Collapse>
-                                            </Box>
-
-                                            {/* 4. 상담 방법 */}
-                                            <Box
-                                                p="lg"
-                                                style={{
-                                                    border: consultStep === 4 ? '2px solid var(--mantine-color-brand-6)' : '1px solid #e9ecef',
-                                                    borderRadius: 12,
-                                                    cursor: 'pointer',
-                                                    transition: 'all 0.2s ease'
-                                                }}
-                                                onClick={() => setConsultStep(consultStep === 4 ? -1 : 4)}
-                                            >
-                                                <Group justify="space-between">
-                                                    <Text size="md" fw={700}>4. 상담 방법</Text>
-                                                    <Group gap="xs">
-                                                        {consultStep !== 4 && consultForm.consultMethod && <Text size="sm" c="dimmed">{
-                                                            consultForm.consultMethod === 'phone' ? '전화 상담' :
-                                                                consultForm.consultMethod === 'phone' ? '전화 상담' : '방문 상담'
-                                                        }</Text>}
-                                                        <ChevronDown size={18} color="#adb5bd" style={{ transform: consultStep === 4 ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s' }} />
-                                                    </Group>
-                                                </Group>
-                                                <Collapse in={consultStep === 4}>
-                                                    <Stack gap="sm" mt="md" onClick={(e) => e.stopPropagation()}>
-                                                        {[
-                                                            { value: 'phone', label: '전화 상담', desc: '전화로 상담받기' },
-                                                            { value: 'field', label: '방문 상담', desc: '시설 현장에서 상담' }
-                                                        ].map(method => (
-                                                            <Box
-                                                                key={method.value}
-                                                                p="md"
-                                                                style={{
-                                                                    border: consultForm.consultMethod === method.value ? '2px solid var(--mantine-color-brand-6)' : '1px solid #dee2e6',
-                                                                    borderRadius: 8,
-                                                                    cursor: 'pointer',
-                                                                    background: consultForm.consultMethod === method.value ? 'var(--mantine-color-brand-0)' : 'white'
-                                                                }}
-                                                                onClick={() => {
-                                                                    setConsultForm({ ...consultForm, consultMethod: method.value });
-                                                                    setConsultStep(5); // 선택하면 5번 열림
-                                                                }}
-                                                            >
-                                                                <Text size="sm" fw={600}>{method.label}</Text>
-                                                                <Text size="xs" c="dimmed">{method.desc}</Text>
-                                                            </Box>
-                                                        ))}
-                                                    </Stack>
-                                                </Collapse>
-                                            </Box>
-
-                                            {/* 5. 궁금한 점 - 클릭하면 5번만 열림 */}
-                                            <Box
-                                                p="lg"
-                                                style={{
-                                                    border: consultStep === 5 ? '2px solid var(--mantine-color-brand-6)' : '1px solid #e9ecef',
-                                                    borderRadius: 12,
-                                                    transition: 'all 0.2s ease',
-                                                    cursor: 'pointer'
-                                                }}
-                                                onClick={() => setConsultStep(consultStep === 5 ? -1 : 5)}
-                                            >
-                                                <Group justify="space-between">
-                                                    <Text size="md" fw={700}>5. 궁금한 점</Text>
-                                                    <Group gap="xs">
-                                                        {consultStep !== 5 && consultForm.question && <Text size="sm" c="dimmed">{
-                                                            consultForm.question === 'price' ? '비용/가격' :
-                                                                consultForm.question === 'location' ? '위치/교통' :
-                                                                    consultForm.question === 'grave' ? '묘지 유형' : '기타'
-                                                        }</Text>}
-                                                        <ChevronDown size={18} color="#adb5bd" style={{ transform: consultStep === 5 ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s' }} />
-                                                    </Group>
-                                                </Group>
-                                                <Collapse in={consultStep === 5}>
-                                                    <Stack gap="xs" mt="md">
-                                                        {[
-                                                            { value: 'price', label: '비용/가격이 궁금해요' },
-                                                            { value: 'location', label: '위치/교통이 궁금해요' },
-                                                            { value: 'grave', label: '묘지 유형이 궁금해요' },
-                                                            { value: 'other', label: '기타 문의' }
-                                                        ].map((q) => (
-                                                            <Box key={q.value}
-                                                                onClick={(e) => {
-                                                                    e.stopPropagation();
-                                                                    setConsultForm({ ...consultForm, question: q.value });
-                                                                    setConsultStep(6); // 선택하면 6번 열림
-                                                                }}
-                                                                style={{ display: 'flex', alignItems: 'center', gap: 12, cursor: 'pointer', padding: '8px 0' }}>
-                                                                <Box style={{
-                                                                    width: 22, height: 22, borderRadius: '50%',
-                                                                    border: consultForm.question === q.value ? '6px solid var(--mantine-color-brand-6)' : '2px solid #ced4da', background: 'white'
-                                                                }} />
-                                                                <Text size="md">{q.label}</Text>
-                                                            </Box>
-                                                        ))}
-                                                    </Stack>
-                                                </Collapse>
-                                            </Box>
-
-                                            {/* 6. 추가 요청사항 - 클릭하면 6번만 열림 */}
-                                            <Box
-                                                p="lg"
-                                                style={{
-                                                    border: consultStep === 6 ? '2px solid var(--mantine-color-brand-6)' : '1px solid #e9ecef',
-                                                    borderRadius: 12,
-                                                    transition: 'all 0.2s ease',
-                                                    cursor: 'pointer'
-                                                }}
-                                                onClick={() => setConsultStep(consultStep === 6 ? -1 : 6)}
-                                            >
-                                                <Group justify="space-between">
-                                                    <Text size="md" fw={700}>6. 추가 요청사항</Text>
-                                                    <ChevronDown size={18} color="#adb5bd" style={{ transform: consultStep === 6 ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s' }} />
-                                                </Group>
-                                                <Collapse in={consultStep === 6}>
-                                                    <Box mt="md">
-                                                        <Textarea
-                                                            placeholder="추가로 궁금한 점이 있으시면 입력해주세요."
-                                                            variant="unstyled"
-                                                            rows={3}
-                                                            value={consultForm.message}
-                                                            onChange={(e) => setConsultForm({ ...consultForm, message: e.currentTarget.value })}
-                                                            styles={{ input: { border: '1px solid #dee2e6', borderRadius: 8, padding: 12 } }}
-                                                            onClick={(e) => e.stopPropagation()}
-                                                        />
-                                                    </Box>
-                                                </Collapse>
-                                            </Box>
-                                        </Stack>
-                                    </Box>
-                                )}
-
-                                {/* 하단 버튼 - 성공 화면에서는 숨김 */}
-                                {!consultSuccess && (
-                                    <Box p="md" style={{ borderTop: '1px solid #f1f3f5', background: 'white' }}>
-                                        <Button
-                                            fullWidth
-                                            color="brand"
-                                            size="lg"
-                                            radius="md"
-                                            loading={consultSubmitting}
-                                            disabled={!consultForm.name || !consultForm.phone || !consultForm.preferredTime || !consultForm.consultMethod || !consultForm.question || !consultForm.message?.trim()}
-                                            styles={{ root: { height: 52 } }}
-                                            onClick={async () => {
-                                                setConsultSubmitting(true);
-                                                try {
-                                                    const res = await fetch('/api/consult', {
-                                                        method: 'POST',
-                                                        headers: { 'Content-Type': 'application/json' },
-                                                        body: JSON.stringify({
-                                                            facilityId: facility.id,
-                                                            facilityName: facility.name,
-                                                            ...consultForm
-                                                        })
-                                                    });
-                                                    if (res.ok) {
-                                                        setSubmittedConsultData({ ...consultForm }); // 성공 화면용 데이터 저장
-                                                        setConsultForm({ name: '', phone: '', preferredTime: '', question: 'price', message: '', consultMethod: 'phone' });
-                                                        setConsultStep(0);
-                                                        setConsultSuccess(true); // 성공 화면 표시
-                                                    }
-                                                } catch (err) {
-                                                    alert('신청 중 오류가 발생했습니다.');
-                                                } finally {
-                                                    setConsultSubmitting(false);
-                                                }
+                                    {/* 하단 버튼 - 성공 화면에서는 숨김 */}
+                                    {!consultSuccess && (
+                                        <Box
+                                            p="md"
+                                            style={{
+                                                borderTop: '1px solid #f1f3f5',
+                                                background: 'white',
+                                                position: 'fixed',
+                                                bottom: 0,
+                                                left: 0,
+                                                right: 0,
+                                                zIndex: 10
                                             }}
                                         >
-                                            상담 신청하기
-                                        </Button>
+                                            <Button
+                                                fullWidth
+                                                color="brand"
+                                                size="lg"
+                                                radius="md"
+                                                loading={consultSubmitting}
+                                                disabled={!consultForm.name || !consultForm.phone || !consultForm.preferredTime || !consultForm.consultMethod || !consultForm.question || !consultForm.message?.trim()}
+                                                styles={{ root: { height: 52 } }}
+                                                onClick={async () => {
+                                                    setConsultSubmitting(true);
+                                                    try {
+                                                        const res = await fetch('/api/consult', {
+                                                            method: 'POST',
+                                                            headers: { 'Content-Type': 'application/json' },
+                                                            body: JSON.stringify({
+                                                                facilityId: facility.id,
+                                                                facilityName: facility.name,
+                                                                ...consultForm
+                                                            })
+                                                        });
+                                                        if (res.ok) {
+                                                            setSubmittedConsultData({ ...consultForm }); // 성공 화면용 데이터 저장
+                                                            setConsultForm({ name: '', phone: '', preferredTime: '', question: 'price', message: '', consultMethod: 'phone' });
+                                                            setConsultStep(0);
+                                                            setConsultSuccess(true); // 성공 화면 표시
+                                                        }
+                                                    } catch (err) {
+                                                        alert('신청 중 오류가 발생했습니다.');
+                                                    } finally {
+                                                        setConsultSubmitting(false);
+                                                    }
+                                                }}
+                                            >
+                                                상담 신청하기
+                                            </Button>
+                                        </Box>
+                                    )}
+                                </Drawer>
+                            ) : (
+                                <Drawer
+                                    opened={consultModalOpened}
+                                    onClose={() => { setConsultModalOpened(false); setConsultStep(1); }}
+                                    position="left"
+                                    size="400px"
+                                    withCloseButton={false}
+                                    withinPortal
+                                    zIndex={10000}
+                                    overlayProps={{ opacity: 0 }}
+                                    styles={{ body: { height: '100%', display: 'flex', flexDirection: 'column', padding: 0 } }}
+                                >
+                                    {/* 헤더 */}
+                                    <Box
+                                        p="md"
+                                        style={{
+                                            display: 'flex',
+                                            justifyContent: 'space-between',
+                                            alignItems: 'center',
+                                            background: 'white'
+                                        }}
+                                    >
+                                        <ActionIcon variant="subtle" color="gray" onClick={() => { setConsultModalOpened(false); setConsultStep(1); }}>
+                                            <X size={20} />
+                                        </ActionIcon>
+                                        <Box style={{ width: 36 }} />
                                     </Box>
-                                )}
-                            </Drawer>
-                        )
-                    }
 
-                    {/* Floating Button Removed */}
+                                    {/* 본문 */}
+                                    {consultSuccess ? (
+                                        /* 성공 화면 - 깔끔한 디자인 */
+                                        <Box style={{ flex: 1, display: 'flex', flexDirection: 'column', background: 'white' }}>
+                                            {/* 스크롤 가능한 메인 콘텐츠 */}
+                                            <Box style={{ flex: 1, overflowY: 'auto', padding: '32px 20px' }}>
+                                                {/* 체크 아이콘 + 메시지 */}
+                                                <Box style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginBottom: 32 }}>
+                                                    <Box
+                                                        style={{
+                                                            width: 72,
+                                                            height: 72,
+                                                            borderRadius: '50%',
+                                                            background: 'var(--mantine-color-brand-6)',
+                                                            display: 'flex',
+                                                            alignItems: 'center',
+                                                            justifyContent: 'center',
+                                                            marginBottom: 20
+                                                        }}
+                                                    >
+                                                        <Check size={36} color="white" strokeWidth={3} />
+                                                    </Box>
+                                                    <Text size="xl" fw={700} ta="center" mb={8}>
+                                                        상담 신청이 완료되었어요
+                                                    </Text>
+                                                    <Text size="sm" c="dimmed" ta="center">
+                                                        영업일 기준 1일 이내 연락드릴게요
+                                                    </Text>
+                                                </Box>
 
-                    {/* 🖼️ 호갱노노 스타일 전체화면 이미지 갤러리 */}
-                    {
-                        opened && galleryImages.length > 0 && (
+                                                {/* 신청 정보 카드 */}
+                                                <Box
+                                                    style={{
+                                                        background: '#f8f9fa',
+                                                        borderRadius: 12,
+                                                        padding: 20,
+                                                        marginBottom: 20
+                                                    }}
+                                                >
+                                                    <Text size="xs" c="dimmed" mb={16} fw={600}>신청 정보</Text>
+                                                    <Stack gap={12}>
+                                                        <Group justify="space-between">
+                                                            <Text size="sm" c="dimmed">신청 시설</Text>
+                                                            <Text size="sm" fw={600}>{facility.name}</Text>
+                                                        </Group>
+                                                        <Group justify="space-between">
+                                                            <Text size="sm" c="dimmed">신청자</Text>
+                                                            <Text size="sm" fw={600}>{submittedConsultData?.name || '-'}</Text>
+                                                        </Group>
+                                                        <Group justify="space-between">
+                                                            <Text size="sm" c="dimmed">연락처</Text>
+                                                            <Text size="sm" fw={600}>{submittedConsultData?.phone || '-'}</Text>
+                                                        </Group>
+                                                        <Group justify="space-between">
+                                                            <Text size="sm" c="dimmed">희망 연락시간</Text>
+                                                            <Text size="sm" fw={600}>{submittedConsultData?.preferredTime || '시간 무관'}</Text>
+                                                        </Group>
+                                                        <Group justify="space-between">
+                                                            <Text size="sm" c="dimmed">궁금한 점</Text>
+                                                            <Text size="sm" fw={600}>
+                                                                {submittedConsultData?.question === 'price' && '가격 문의'}
+                                                                {submittedConsultData?.question === 'location' && '위치/교통'}
+                                                                {submittedConsultData?.question === 'grave' && '장지 유형'}
+                                                                {submittedConsultData?.question === 'other' && '기타'}
+                                                            </Text>
+                                                        </Group>
+                                                        {submittedConsultData?.message && (
+                                                            <Box style={{ borderTop: '1px solid #e9ecef', paddingTop: 12, marginTop: 4 }}>
+                                                                <Text size="xs" c="dimmed" mb={4}>추가 요청사항</Text>
+                                                                <Text size="sm">{submittedConsultData.message}</Text>
+                                                            </Box>
+                                                        )}
+                                                        <Group justify="space-between">
+                                                            <Text size="sm" c="dimmed">상담 방식</Text>
+                                                            <Text size="sm" fw={600}>
+                                                                {submittedConsultData?.consultMethod === 'phone' && '전화 상담'}
+                                                                {submittedConsultData?.consultMethod === 'field' && '방문 상담'}
+                                                            </Text>
+                                                        </Group>
+                                                    </Stack>
+                                                </Box>
+
+                                                {/* 안내 사항 */}
+                                                <Box>
+                                                    <Text size="xs" c="dimmed" mb={12} fw={600}>안내 사항</Text>
+                                                    <Stack gap={8}>
+                                                        <Text size="sm" c="dimmed">• 입력하신 연락처로 전문 상담사가 연락드립니다</Text>
+                                                        <Text size="sm" c="dimmed">• 상담은 무료이며, 부담 없이 질문해 주세요</Text>
+                                                        <Text size="sm" c="dimmed">• 개인정보는 상담 목적으로만 사용됩니다</Text>
+                                                    </Stack>
+                                                </Box>
+                                            </Box>
+
+                                            {/* 하단 버튼 - 뒤로 25% / 확인 75% */}
+                                            <Box p="lg" style={{ borderTop: '1px solid #f1f3f5' }}>
+                                                <Group gap="sm">
+                                                    <Button
+                                                        variant="light"
+                                                        color="gray"
+                                                        size="lg"
+                                                        radius="md"
+                                                        styles={{ root: { height: 52, flex: '0 0 25%' } }}
+                                                        onClick={() => setConsultSuccess(false)}
+                                                    >
+                                                        뒤로
+                                                    </Button>
+                                                    <Button
+                                                        color="brand"
+                                                        size="lg"
+                                                        radius="md"
+                                                        styles={{ root: { height: 52, flex: 1 } }}
+                                                        onClick={() => {
+                                                            setConsultModalOpened(false);
+                                                            setConsultSuccess(false);
+                                                        }}
+                                                    >
+                                                        확인
+                                                    </Button>
+                                                </Group>
+                                            </Box>
+                                        </Box>
+                                    ) : (
+                                        <Box style={{ flex: 1, overflowY: 'auto', padding: '24px 20px 100px' }}>
+                                            <Box mb="xl">
+                                                <Text size="24px" fw={700} lh={1.3} style={{ wordBreak: 'keep-all' }}>
+                                                    상담을 신청하려면{'\n'}
+                                                    <Text span c="brand" inherit>필수 정보</Text>가 필요해요.
+                                                </Text>
+                                                <Text size="sm" c="dimmed" mt="sm">
+                                                    {facility.name}
+                                                </Text>
+                                            </Box>
+
+                                            <Stack gap="sm">
+                                                {/* 1. 이름 - 클릭하면 1번만 열림 */}
+                                                <Box
+                                                    p="lg"
+                                                    style={{
+                                                        border: consultStep === 1 ? '2px solid var(--mantine-color-brand-6)' : '1px solid #e9ecef',
+                                                        borderRadius: 12,
+                                                        cursor: 'pointer',
+                                                        transition: 'all 0.2s ease'
+                                                    }}
+                                                    onClick={() => setConsultStep(consultStep === 1 ? -1 : 1)}
+                                                >
+                                                    <Group justify="space-between">
+                                                        <Text size="md" fw={700}>1. 이름</Text>
+                                                        <Group gap="xs">
+                                                            {consultStep !== 0 && consultStep !== 1 && consultForm.name && <Text size="sm" c="dimmed">{consultForm.name}</Text>}
+                                                            <ChevronDown size={18} color="#adb5bd" style={{ transform: (consultStep === 0 || consultStep === 1) ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s' }} />
+                                                        </Group>
+                                                    </Group>
+                                                    <Collapse in={consultStep === 0 || consultStep === 1}>
+                                                        <Box mt="md">
+                                                            <TextInput
+                                                                ref={nameInputRef}
+                                                                placeholder="이름을 입력해 주세요."
+                                                                variant="unstyled"
+                                                                size="md"
+                                                                value={consultForm.name}
+                                                                onChange={(e) => setConsultForm({ ...consultForm, name: e.currentTarget.value })}
+                                                                styles={{ input: { borderBottom: '1px solid #dee2e6', borderRadius: 0, paddingBottom: 8 } }}
+                                                                onClick={(e) => e.stopPropagation()}
+                                                            />
+                                                        </Box>
+                                                    </Collapse>
+                                                </Box>
+
+                                                {/* 2. 연락처 - 클릭하면 2번만 열림 */}
+                                                <Box
+                                                    p="lg"
+                                                    style={{
+                                                        border: consultStep === 2 ? '2px solid var(--mantine-color-brand-6)' : '1px solid #e9ecef',
+                                                        borderRadius: 12,
+                                                        cursor: 'pointer',
+                                                        transition: 'all 0.2s ease'
+                                                    }}
+                                                    onClick={() => setConsultStep(consultStep === 2 ? -1 : 2)}
+                                                >
+                                                    <Group justify="space-between">
+                                                        <Text size="md" fw={700}>2. 연락처</Text>
+                                                        <Group gap="xs">
+                                                            {consultStep !== 0 && consultStep !== 2 && consultForm.phone && <Text size="sm" c="dimmed">{consultForm.phone}</Text>}
+                                                            <ChevronDown size={18} color="#adb5bd" style={{ transform: (consultStep === 0 || consultStep === 2) ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s' }} />
+                                                        </Group>
+                                                    </Group>
+                                                    <Collapse in={consultStep === 0 || consultStep === 2}>
+                                                        <Box mt="md">
+                                                            <TextInput
+                                                                placeholder="010-0000-0000"
+                                                                variant="unstyled"
+                                                                size="md"
+                                                                value={consultForm.phone}
+                                                                onChange={(e) => setConsultForm({ ...consultForm, phone: formatPhoneNumber(e.currentTarget.value) })}
+                                                                styles={{ input: { borderBottom: '1px solid #dee2e6', borderRadius: 0, paddingBottom: 8 } }}
+                                                                onClick={(e) => e.stopPropagation()}
+                                                            />
+                                                            <Text size="xs" c="dimmed" mt="xs">연락처는 상담사와 제휴시설에만 전달됩니다.</Text>
+                                                        </Box>
+                                                    </Collapse>
+                                                </Box>
+
+                                                {/* 3. 연락 가능 시간 - 클릭하면 3번만 열림 */}
+                                                <Box
+                                                    p="lg"
+                                                    style={{
+                                                        border: consultStep === 3 ? '2px solid var(--mantine-color-brand-6)' : '1px solid #e9ecef',
+                                                        borderRadius: 12,
+                                                        cursor: 'pointer',
+                                                        transition: 'all 0.2s ease'
+                                                    }}
+                                                    onClick={() => setConsultStep(consultStep === 3 ? -1 : 3)}
+                                                >
+                                                    <Group justify="space-between">
+                                                        <Text size="md" fw={700}>3. 연락 가능 시간</Text>
+                                                        <Group gap="xs">
+                                                            {consultStep !== 0 && consultStep !== 3 && consultForm.preferredTime && <Text size="sm" c="dimmed">{consultForm.preferredTime}</Text>}
+                                                            <ChevronDown size={18} color="#adb5bd" style={{ transform: (consultStep === 0 || consultStep === 3) ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s' }} />
+                                                        </Group>
+                                                    </Group>
+                                                    <Collapse in={consultStep === 0 || consultStep === 3}>
+                                                        <Stack gap="xs" mt="md">
+                                                            {['09시~12시', '12시~14시', '14시~18시', '18시~21시', '시간 무관'].map((time) => (
+                                                                <Box key={time}
+                                                                    onClick={(e) => {
+                                                                        e.stopPropagation();
+                                                                        setConsultForm({ ...consultForm, preferredTime: time });
+                                                                        setConsultStep(4); // 선택하면 4번 열림
+                                                                    }}
+                                                                    style={{ display: 'flex', alignItems: 'center', gap: 12, cursor: 'pointer', padding: '8px 0' }}>
+                                                                    <Box style={{
+                                                                        width: 22, height: 22, borderRadius: '50%',
+                                                                        border: consultForm.preferredTime === time ? '6px solid var(--mantine-color-brand-6)' : '2px solid #ced4da', background: 'white'
+                                                                    }} />
+                                                                    <Text size="md">{time}</Text>
+                                                                </Box>
+                                                            ))}
+                                                        </Stack>
+                                                    </Collapse>
+                                                </Box>
+
+                                                {/* 4. 상담 방법 */}
+                                                <Box
+                                                    p="lg"
+                                                    style={{
+                                                        border: consultStep === 4 ? '2px solid var(--mantine-color-brand-6)' : '1px solid #e9ecef',
+                                                        borderRadius: 12,
+                                                        cursor: 'pointer',
+                                                        transition: 'all 0.2s ease'
+                                                    }}
+                                                    onClick={() => setConsultStep(consultStep === 4 ? -1 : 4)}
+                                                >
+                                                    <Group justify="space-between">
+                                                        <Text size="md" fw={700}>4. 상담 방법</Text>
+                                                        <Group gap="xs">
+                                                            {consultStep !== 4 && consultForm.consultMethod && <Text size="sm" c="dimmed">{
+                                                                consultForm.consultMethod === 'phone' ? '전화 상담' :
+                                                                    consultForm.consultMethod === 'phone' ? '전화 상담' : '방문 상담'
+                                                            }</Text>}
+                                                            <ChevronDown size={18} color="#adb5bd" style={{ transform: consultStep === 4 ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s' }} />
+                                                        </Group>
+                                                    </Group>
+                                                    <Collapse in={consultStep === 4}>
+                                                        <Stack gap="sm" mt="md" onClick={(e) => e.stopPropagation()}>
+                                                            {[
+                                                                { value: 'phone', label: '전화 상담', desc: '전화로 상담받기' },
+                                                                { value: 'field', label: '방문 상담', desc: '시설 현장에서 상담' }
+                                                            ].map(method => (
+                                                                <Box
+                                                                    key={method.value}
+                                                                    p="md"
+                                                                    style={{
+                                                                        border: consultForm.consultMethod === method.value ? '2px solid var(--mantine-color-brand-6)' : '1px solid #dee2e6',
+                                                                        borderRadius: 8,
+                                                                        cursor: 'pointer',
+                                                                        background: consultForm.consultMethod === method.value ? 'var(--mantine-color-brand-0)' : 'white'
+                                                                    }}
+                                                                    onClick={() => {
+                                                                        setConsultForm({ ...consultForm, consultMethod: method.value });
+                                                                        setConsultStep(5); // 선택하면 5번 열림
+                                                                    }}
+                                                                >
+                                                                    <Text size="sm" fw={600}>{method.label}</Text>
+                                                                    <Text size="xs" c="dimmed">{method.desc}</Text>
+                                                                </Box>
+                                                            ))}
+                                                        </Stack>
+                                                    </Collapse>
+                                                </Box>
+
+                                                {/* 5. 궁금한 점 - 클릭하면 5번만 열림 */}
+                                                <Box
+                                                    p="lg"
+                                                    style={{
+                                                        border: consultStep === 5 ? '2px solid var(--mantine-color-brand-6)' : '1px solid #e9ecef',
+                                                        borderRadius: 12,
+                                                        transition: 'all 0.2s ease',
+                                                        cursor: 'pointer'
+                                                    }}
+                                                    onClick={() => setConsultStep(consultStep === 5 ? -1 : 5)}
+                                                >
+                                                    <Group justify="space-between">
+                                                        <Text size="md" fw={700}>5. 궁금한 점</Text>
+                                                        <Group gap="xs">
+                                                            {consultStep !== 5 && consultForm.question && <Text size="sm" c="dimmed">{
+                                                                consultForm.question === 'price' ? '비용/가격' :
+                                                                    consultForm.question === 'location' ? '위치/교통' :
+                                                                        consultForm.question === 'grave' ? '묘지 유형' : '기타'
+                                                            }</Text>}
+                                                            <ChevronDown size={18} color="#adb5bd" style={{ transform: consultStep === 5 ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s' }} />
+                                                        </Group>
+                                                    </Group>
+                                                    <Collapse in={consultStep === 5}>
+                                                        <Stack gap="xs" mt="md">
+                                                            {[
+                                                                { value: 'price', label: '비용/가격이 궁금해요' },
+                                                                { value: 'location', label: '위치/교통이 궁금해요' },
+                                                                { value: 'grave', label: '묘지 유형이 궁금해요' },
+                                                                { value: 'other', label: '기타 문의' }
+                                                            ].map((q) => (
+                                                                <Box key={q.value}
+                                                                    onClick={(e) => {
+                                                                        e.stopPropagation();
+                                                                        setConsultForm({ ...consultForm, question: q.value });
+                                                                        setConsultStep(6); // 선택하면 6번 열림
+                                                                    }}
+                                                                    style={{ display: 'flex', alignItems: 'center', gap: 12, cursor: 'pointer', padding: '8px 0' }}>
+                                                                    <Box style={{
+                                                                        width: 22, height: 22, borderRadius: '50%',
+                                                                        border: consultForm.question === q.value ? '6px solid var(--mantine-color-brand-6)' : '2px solid #ced4da', background: 'white'
+                                                                    }} />
+                                                                    <Text size="md">{q.label}</Text>
+                                                                </Box>
+                                                            ))}
+                                                        </Stack>
+                                                    </Collapse>
+                                                </Box>
+
+                                                {/* 6. 추가 요청사항 - 클릭하면 6번만 열림 */}
+                                                <Box
+                                                    p="lg"
+                                                    style={{
+                                                        border: consultStep === 6 ? '2px solid var(--mantine-color-brand-6)' : '1px solid #e9ecef',
+                                                        borderRadius: 12,
+                                                        transition: 'all 0.2s ease',
+                                                        cursor: 'pointer'
+                                                    }}
+                                                    onClick={() => setConsultStep(consultStep === 6 ? -1 : 6)}
+                                                >
+                                                    <Group justify="space-between">
+                                                        <Text size="md" fw={700}>6. 추가 요청사항</Text>
+                                                        <ChevronDown size={18} color="#adb5bd" style={{ transform: consultStep === 6 ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s' }} />
+                                                    </Group>
+                                                    <Collapse in={consultStep === 6}>
+                                                        <Box mt="md">
+                                                            <Textarea
+                                                                placeholder="추가로 궁금한 점이 있으시면 입력해주세요."
+                                                                variant="unstyled"
+                                                                rows={3}
+                                                                value={consultForm.message}
+                                                                onChange={(e) => setConsultForm({ ...consultForm, message: e.currentTarget.value })}
+                                                                styles={{ input: { border: '1px solid #dee2e6', borderRadius: 8, padding: 12 } }}
+                                                                onClick={(e) => e.stopPropagation()}
+                                                            />
+                                                        </Box>
+                                                    </Collapse>
+                                                </Box>
+                                            </Stack>
+                                        </Box>
+                                    )}
+
+                                    {/* 하단 버튼 - 성공 화면에서는 숨김 */}
+                                    {!consultSuccess && (
+                                        <Box p="md" style={{ borderTop: '1px solid #f1f3f5', background: 'white' }}>
+                                            <Button
+                                                fullWidth
+                                                color="brand"
+                                                size="lg"
+                                                radius="md"
+                                                loading={consultSubmitting}
+                                                disabled={!consultForm.name || !consultForm.phone || !consultForm.preferredTime || !consultForm.consultMethod || !consultForm.question || !consultForm.message?.trim()}
+                                                styles={{ root: { height: 52 } }}
+                                                onClick={async () => {
+                                                    setConsultSubmitting(true);
+                                                    try {
+                                                        const res = await fetch('/api/consult', {
+                                                            method: 'POST',
+                                                            headers: { 'Content-Type': 'application/json' },
+                                                            body: JSON.stringify({
+                                                                facilityId: facility.id,
+                                                                facilityName: facility.name,
+                                                                ...consultForm
+                                                            })
+                                                        });
+                                                        if (res.ok) {
+                                                            setSubmittedConsultData({ ...consultForm }); // 성공 화면용 데이터 저장
+                                                            setConsultForm({ name: '', phone: '', preferredTime: '', question: 'price', message: '', consultMethod: 'phone' });
+                                                            setConsultStep(0);
+                                                            setConsultSuccess(true); // 성공 화면 표시
+                                                        }
+                                                    } catch (err) {
+                                                        alert('신청 중 오류가 발생했습니다.');
+                                                    } finally {
+                                                        setConsultSubmitting(false);
+                                                    }
+                                                }}
+                                            >
+                                                상담 신청하기
+                                            </Button>
+                                        </Box>
+                                    )}
+                                </Drawer>
+                            )
+                        }
+
+                        {/* Floating Button Removed */}
+
+                        {/* 🖼️ 호갱노노 스타일 전체화면 이미지 갤러리 */}
+                        {
+                            opened && galleryImages.length > 0 && (
+                                <Box
+                                    pos="fixed"
+                                    top={0}
+                                    left={0}
+                                    w="100%"
+                                    h="100dvh"
+                                    onClick={() => setOpened(false)} // 배경 클릭 시 닫기
+                                    style={{
+                                        zIndex: 9999,
+                                        backgroundColor: 'rgba(0, 0, 0, 0.8)', // 80% opacity로 더 어둡게
+                                        cursor: 'pointer',
+                                    }}
+                                >
+                                    {/* 상단 헤더 */}
+                                    <Box
+                                        pos="absolute"
+                                        top={0}
+                                        left={0}
+                                        w="100%"
+                                        p="md"
+                                        style={{
+                                            zIndex: 10000,
+                                            background: 'linear-gradient(to bottom, rgba(0,0,0,0.4), transparent)',
+                                        }}
+                                    >
+                                        <Group justify="space-between" align="center">
+                                            <Text c="white" fw={600} size="md">
+                                                {selectedImageIndex + 1} / {galleryImages.length}
+                                            </Text>
+                                            <ActionIcon
+                                                variant="transparent"
+                                                c="white"
+                                                size="lg"
+                                                onClick={() => setOpened(false)}
+                                            >
+                                                <X size={28} />
+                                            </ActionIcon>
+                                        </Group>
+                                    </Box>
+
+                                    {/* 이미지 영역 - 인스타그램 스타일 무한 캐러셀 */}
+                                    <Box
+                                        pos="absolute"
+                                        top="50%"
+                                        left="0"
+                                        w="100%"
+                                        h="80vh"
+                                        onClick={(e) => e.stopPropagation()}
+                                        style={{
+                                            transform: 'translateY(-50%)',
+                                            overflow: 'hidden',
+                                            touchAction: 'pan-x',
+                                        }}
+                                        onTouchStart={(e) => {
+                                            const touch = e.touches[0];
+                                            (e.currentTarget as any).startX = touch.clientX;
+                                            (e.currentTarget as any).startTime = Date.now();
+                                            (e.currentTarget as any).offsetX = 0;
+                                        }}
+                                        onTouchMove={(e) => {
+                                            if (isAnimating) return;
+                                            const touch = e.touches[0];
+                                            const diff = touch.clientX - (e.currentTarget as any).startX;
+                                            (e.currentTarget as any).offsetX = diff;
+                                            const container = e.currentTarget.querySelector('[data-carousel]') as HTMLElement;
+                                            if (container) {
+                                                // +1 for cloned first image at start
+                                                const baseOffset = -(selectedImageIndex + 1) * 100;
+                                                const dragPercent = (diff / window.innerWidth) * 100;
+                                                container.style.transition = 'none';
+                                                container.style.transform = `translateX(${baseOffset + dragPercent}%)`;
+                                            }
+                                        }}
+                                        onTouchEnd={(e) => {
+                                            if (isAnimating) return;
+                                            const offsetX = (e.currentTarget as any).offsetX || 0;
+                                            const velocity = Math.abs(offsetX) / (Date.now() - (e.currentTarget as any).startTime);
+                                            const threshold = velocity > 0.3 ? 30 : 80;
+
+                                            const container = e.currentTarget.querySelector('[data-carousel]') as HTMLElement;
+
+                                            if (Math.abs(offsetX) > threshold && galleryImages.length > 1) {
+                                                setIsAnimating(true);
+
+                                                let nextIndex = selectedImageIndex;
+                                                if (offsetX < 0) {
+                                                    nextIndex = selectedImageIndex + 1;
+                                                } else {
+                                                    nextIndex = selectedImageIndex - 1;
+                                                }
+
+                                                // Animate to the virtual position
+                                                if (container) {
+                                                    container.style.transition = 'transform 0.3s ease-out';
+                                                    container.style.transform = `translateX(${-(nextIndex + 1) * 100}%)`;
+                                                }
+
+                                                setTimeout(() => {
+                                                    // Handle wrap-around
+                                                    let realIndex = nextIndex;
+                                                    if (nextIndex >= galleryImages.length) {
+                                                        realIndex = 0;
+                                                    } else if (nextIndex < 0) {
+                                                        realIndex = galleryImages.length - 1;
+                                                    }
+
+                                                    // Instantly jump to real position without animation
+                                                    if (realIndex !== nextIndex && container) {
+                                                        container.style.transition = 'none';
+                                                        container.style.transform = `translateX(${-(realIndex + 1) * 100}%)`;
+                                                    }
+
+                                                    setSelectedImageIndex(realIndex);
+                                                    setTimeout(() => setIsAnimating(false), 50);
+                                                }, 300);
+                                            } else {
+                                                if (container) {
+                                                    container.style.transition = 'transform 0.3s ease-out';
+                                                    container.style.transform = `translateX(${-(selectedImageIndex + 1) * 100}%)`;
+                                                }
+                                            }
+                                        }}
+                                        onMouseDown={(e) => {
+                                            e.preventDefault();
+                                            (e.currentTarget as any).isDragging = true;
+                                            (e.currentTarget as any).startX = e.clientX;
+                                            (e.currentTarget as any).startTime = Date.now();
+                                            (e.currentTarget as any).offsetX = 0;
+                                        }}
+                                        onMouseMove={(e) => {
+                                            if (!(e.currentTarget as any).isDragging || isAnimating) return;
+                                            const diff = e.clientX - (e.currentTarget as any).startX;
+                                            (e.currentTarget as any).offsetX = diff;
+                                            const container = e.currentTarget.querySelector('[data-carousel]') as HTMLElement;
+                                            if (container) {
+                                                const baseOffset = -(selectedImageIndex + 1) * 100;
+                                                const dragPercent = (diff / window.innerWidth) * 100;
+                                                container.style.transition = 'none';
+                                                container.style.transform = `translateX(${baseOffset + dragPercent}%)`;
+                                            }
+                                        }}
+                                        onMouseUp={(e) => {
+                                            if (!(e.currentTarget as any).isDragging) return;
+                                            (e.currentTarget as any).isDragging = false;
+                                            if (isAnimating) return;
+
+                                            const offsetX = (e.currentTarget as any).offsetX || 0;
+                                            const velocity = Math.abs(offsetX) / (Date.now() - (e.currentTarget as any).startTime);
+                                            const threshold = velocity > 0.3 ? 30 : 80;
+
+                                            const container = e.currentTarget.querySelector('[data-carousel]') as HTMLElement;
+
+                                            if (Math.abs(offsetX) > threshold && galleryImages.length > 1) {
+                                                setIsAnimating(true);
+
+                                                let nextIndex = selectedImageIndex;
+                                                if (offsetX < 0) {
+                                                    nextIndex = selectedImageIndex + 1;
+                                                } else {
+                                                    nextIndex = selectedImageIndex - 1;
+                                                }
+
+                                                if (container) {
+                                                    container.style.transition = 'transform 0.3s ease-out';
+                                                    container.style.transform = `translateX(${-(nextIndex + 1) * 100}%)`;
+                                                }
+
+                                                setTimeout(() => {
+                                                    let realIndex = nextIndex;
+                                                    if (nextIndex >= galleryImages.length) {
+                                                        realIndex = 0;
+                                                    } else if (nextIndex < 0) {
+                                                        realIndex = galleryImages.length - 1;
+                                                    }
+
+                                                    if (realIndex !== nextIndex && container) {
+                                                        container.style.transition = 'none';
+                                                        container.style.transform = `translateX(${-(realIndex + 1) * 100}%)`;
+                                                    }
+
+                                                    setSelectedImageIndex(realIndex);
+                                                    setTimeout(() => setIsAnimating(false), 50);
+                                                }, 300);
+                                            } else {
+                                                if (container) {
+                                                    container.style.transition = 'transform 0.3s ease-out';
+                                                    container.style.transform = `translateX(${-(selectedImageIndex + 1) * 100}%)`;
+                                                }
+                                            }
+                                        }}
+                                        onMouseLeave={(e) => {
+                                            if ((e.currentTarget as any).isDragging) {
+                                                (e.currentTarget as any).isDragging = false;
+                                                const container = e.currentTarget.querySelector('[data-carousel]') as HTMLElement;
+                                                if (container) {
+                                                    container.style.transition = 'transform 0.3s ease-out';
+                                                    container.style.transform = `translateX(${-(selectedImageIndex + 1) * 100}%)`;
+                                                }
+                                            }
+                                        }}
+                                    >
+                                        {/* 무한 캐러셀 컨테이너 - [마지막복제, ...원본들, 첫번째복제] */}
+                                        <Box
+                                            data-carousel
+                                            style={{
+                                                display: 'flex',
+                                                height: '100%',
+                                                transform: `translateX(${-(selectedImageIndex + 1) * 100}%)`,
+                                                transition: 'transform 0.3s ease-out',
+                                            }}
+                                        >
+                                            {/* 마지막 이미지 복제 (맨 앞) */}
+                                            <Box
+                                                style={{
+                                                    minWidth: '100%',
+                                                    height: '100%',
+                                                    display: 'flex',
+                                                    alignItems: 'center',
+                                                    justifyContent: 'center',
+                                                }}
+                                            >
+                                                <Image
+                                                    src={getSingleFacilityImageUrl(galleryImages[galleryImages.length - 1])}
+                                                    fit="contain"
+                                                    h="100%"
+                                                    w="100%"
+                                                    alt={`${facility.name} 사진 (복제)`}
+                                                    style={{ pointerEvents: 'none' }}
+                                                />
+                                            </Box>
+
+                                            {/* 원본 이미지들 */}
+                                            {galleryImages.map((img, idx) => (
+                                                <Box
+                                                    key={idx}
+                                                    style={{
+                                                        minWidth: '100%',
+                                                        height: '100%',
+                                                        display: 'flex',
+                                                        alignItems: 'center',
+                                                        justifyContent: 'center',
+                                                    }}
+                                                >
+                                                    <Image
+                                                        src={getSingleFacilityImageUrl(img)}
+                                                        fit="contain"
+                                                        h="100%"
+                                                        w="100%"
+                                                        alt={`${facility.name} 사진 ${idx + 1}`}
+                                                        style={{ pointerEvents: 'none' }}
+                                                    />
+                                                </Box>
+                                            ))}
+
+                                            {/* 첫번째 이미지 복제 (맨 뒤) */}
+                                            <Box
+                                                style={{
+                                                    minWidth: '100%',
+                                                    height: '100%',
+                                                    display: 'flex',
+                                                    alignItems: 'center',
+                                                    justifyContent: 'center',
+                                                }}
+                                            >
+                                                <Image
+                                                    src={getSingleFacilityImageUrl(galleryImages[0])}
+                                                    fit="contain"
+                                                    h="100%"
+                                                    w="100%"
+                                                    alt={`${facility.name} 사진 (복제)`}
+                                                    style={{ pointerEvents: 'none' }}
+                                                />
+                                            </Box>
+                                        </Box>
+                                    </Box>
+
+                                    {/* 하단 dot indicator (PC만) */}
+                                    {!isMobile && (
+                                        <Box
+                                            pos="absolute"
+                                            bottom={40}
+                                            left={0}
+                                            w="100%"
+                                            style={{ zIndex: 10000 }}
+                                        >
+                                            <Group justify="center" gap={8}>
+                                                {galleryImages.map((_, idx) => (
+                                                    <Box
+                                                        key={idx}
+                                                        w={idx === selectedImageIndex ? 10 : 8}
+                                                        h={idx === selectedImageIndex ? 10 : 8}
+                                                        style={{
+                                                            borderRadius: '50%',
+                                                            backgroundColor: idx === selectedImageIndex ? 'white' : 'rgba(255,255,255,0.4)',
+                                                            transition: 'all 0.2s',
+                                                            cursor: 'pointer',
+                                                        }}
+                                                        onClick={(e) => {
+                                                            e.stopPropagation();
+                                                            setSelectedImageIndex(idx);
+                                                        }}
+                                                    />
+                                                ))}
+                                            </Group>
+                                        </Box>
+                                    )}
+
+                                    {/* 좌우 네비게이션 (PC만) */}
+                                    {!isMobile && galleryImages.length > 1 && (
+                                        <>
+                                            <ActionIcon
+                                                variant="transparent"
+                                                c="white"
+                                                size="xl"
+                                                pos="absolute"
+                                                left={20}
+                                                top="50%"
+                                                style={{ transform: 'translateY(-50%)', zIndex: 10000 }}
+                                                onClick={(e) => {
+                                                    e.stopPropagation();
+                                                    setSelectedImageIndex(prev => prev > 0 ? prev - 1 : galleryImages.length - 1);
+                                                }}
+                                            >
+                                                <ChevronLeft size={40} />
+                                            </ActionIcon>
+                                            <ActionIcon
+                                                variant="transparent"
+                                                c="white"
+                                                size="xl"
+                                                pos="absolute"
+                                                right={20}
+                                                top="50%"
+                                                style={{ transform: 'translateY(-50%)', zIndex: 10000 }}
+                                                onClick={(e) => {
+                                                    e.stopPropagation();
+                                                    setSelectedImageIndex(prev => prev < galleryImages.length - 1 ? prev + 1 : 0);
+                                                }}
+                                            >
+                                                <ChevronRight size={40} />
+                                            </ActionIcon>
+                                        </>
+                                    )}
+                                </Box>
+                            )
+                        }
+                        {/* 후기 작성 패널 (블라인드/당근 스타일) */}
+                        {
+                            reviewModalOpened && (
+                                <Box
+                                    style={{
+                                        position: 'fixed',
+                                        top: 0,
+                                        left: isMobile ? 0 : 400,
+                                        width: isMobile ? '100%' : '400px',
+                                        height: '100dvh',
+                                        zIndex: 9999,
+                                        backgroundColor: 'white',
+                                        display: 'flex',
+                                        flexDirection: 'column',
+                                    }}
+                                >
+                                    <LoadingOverlay visible={isSubmitting} />
+
+                                    {/* 헤더 — 문의 패널과 동일 톤 */}
+                                    <Box p="md" style={{ borderBottom: '1px solid #f1f3f5', flexShrink: 0 }}>
+                                        <Group justify="space-between" align="center">
+                                            <Text fw={700} size="lg">후기 작성</Text>
+                                            <ActionIcon variant="subtle" color="dark" onClick={() => closeReviewModal()}>
+                                                <X size={20} />
+                                            </ActionIcon>
+                                        </Group>
+                                        <Text size="xs" c="dimmed" mt={4}>{facility.name}</Text>
+                                    </Box>
+
+                                    {/* 컨텐츠 영역 */}
+                                    <Box style={{ flex: 1, overflowY: 'auto' }}>
+                                        {/* 시설명 */}
+                                        <Box p="md" style={{ backgroundColor: '#f8f9fa', borderBottom: '1px solid #f1f3f5' }}>
+                                            <Text size="sm" c="dimmed">{facility.name}에 대한 솔직한 후기를 남겨주세요.</Text>
+                                        </Box>
+
+                                        {/* 별점 선택 */}
+                                        <Box px="md" py="lg" style={{ borderBottom: '1px solid #f1f3f5' }}>
+                                            <Text size="sm" fw={600} mb={12}>만족도를 선택해주세요</Text>
+                                            <Group gap={8} justify="center">
+                                                {[1, 2, 3, 4, 5].map((star) => (
+                                                    <ActionIcon
+                                                        key={star}
+                                                        variant="transparent"
+                                                        size={44}
+                                                        onClick={() => setReviewForm({ ...reviewForm, rating: star })}
+                                                        style={{ transition: 'transform 0.15s ease' }}
+                                                    >
+                                                        <Star
+                                                            size={36}
+                                                            color={star <= reviewForm.rating ? '#fbbf24' : '#dee2e6'}
+                                                            fill={star <= reviewForm.rating ? '#fbbf24' : 'none'}
+                                                            strokeWidth={1.5}
+                                                        />
+                                                    </ActionIcon>
+                                                ))}
+                                            </Group>
+                                            {reviewForm.rating > 0 && (
+                                                <Text size="xs" c="dimmed" ta="center" mt={8}>
+                                                    {reviewForm.rating === 1 ? '별로예요' :
+                                                        reviewForm.rating === 2 ? '아쉬워요' :
+                                                            reviewForm.rating === 3 ? '보통이에요' :
+                                                                reviewForm.rating === 4 ? '좋아요' : '최고예요!'}
+                                                </Text>
+                                            )}
+                                        </Box>
+
+                                        {/* 후기 내용 */}
+                                        <Box px="md" py={14} style={{ borderBottom: '1px solid #f1f3f5', minHeight: 160 }}>
+                                            <Textarea
+                                                placeholder="방문 경험을 자유롭게 작성해주세요.&#10;&#10;예: 시설이 깨끗하고 주차장이 넓어요. 직원분도 친절했습니다."
+                                                variant="unstyled"
+                                                size="md"
+                                                autosize
+                                                minRows={6}
+                                                value={reviewForm.content}
+                                                onChange={(e) => setReviewForm({ ...reviewForm, content: e.target.value })}
+                                                styles={{
+                                                    input: {
+                                                        padding: 0,
+                                                        fontSize: '16px',
+                                                        lineHeight: 1.6,
+                                                        '&::placeholder': { color: '#adb5bd' }
+                                                    }
+                                                }}
+                                            />
+
+                                            {/* 사진 추가 */}
+                                            <Box mt="lg">
+                                                <input
+                                                    type="file"
+                                                    multiple
+                                                    accept="image/*"
+                                                    ref={reviewFileInputRef}
+                                                    style={{ display: 'none' }}
+                                                    onChange={handleReviewPhotoChange}
+                                                />
+                                                <Group gap="xs" align="flex-start">
+                                                    <Box
+                                                        w={72}
+                                                        h={72}
+                                                        style={{
+                                                            border: '1px solid #dee2e6',
+                                                            borderRadius: 8,
+                                                            display: 'flex',
+                                                            flexDirection: 'column',
+                                                            alignItems: 'center',
+                                                            justifyContent: 'center',
+                                                            cursor: 'pointer',
+                                                            flexShrink: 0,
+                                                        }}
+                                                        onClick={() => reviewFileInputRef.current?.click()}
+                                                    >
+                                                        <Camera size={22} color="#868e96" strokeWidth={1.5} />
+                                                        <Text size="xs" c="dimmed" mt={2}>
+                                                            {reviewForm.photos.length}/10
+                                                        </Text>
+                                                    </Box>
+
+                                                    {reviewForm.photos.map((photo, idx) => (
+                                                        <Box key={idx} pos="relative" w={72} h={72}>
+                                                            <Image src={photo} w={72} h={72} radius="md" style={{ objectFit: 'cover', border: '1px solid #dee2e6' }} />
+                                                            <ActionIcon
+                                                                size={18}
+                                                                radius="xl"
+                                                                color="dark"
+                                                                variant="filled"
+                                                                style={{ position: 'absolute', top: -6, right: -6 }}
+                                                                onClick={() => removeReviewPhoto(idx)}
+                                                            >
+                                                                <X size={10} />
+                                                            </ActionIcon>
+                                                        </Box>
+                                                    ))}
+                                                </Group>
+                                            </Box>
+                                        </Box>
+
+                                        {/* 닉네임 */}
+                                        <Box px="md" py={14} style={{ borderBottom: '1px solid #f1f3f5' }}>
+                                            <TextInput
+                                                label="닉네임"
+                                                placeholder="닉네임을 입력하세요"
+                                                value={reviewForm.nickname}
+                                                onChange={(e) => setReviewForm({ ...reviewForm, nickname: e.currentTarget.value })}
+                                                variant="unstyled"
+                                                size="sm"
+                                                styles={{
+                                                    label: { fontSize: 14, fontWeight: 500, marginBottom: 4 },
+                                                    input: {
+                                                        padding: 0,
+                                                        fontSize: '16px',
+                                                        '&::placeholder': { color: '#adb5bd' }
+                                                    }
+                                                }}
+                                            />
+                                        </Box>
+
+                                        {/* 비밀번호 (삭제용) */}
+                                        <Box px="md" py={14} style={{ borderBottom: '1px solid #f1f3f5' }}>
+                                            <TextInput
+                                                label="비밀번호"
+                                                description="후기 삭제 시 필요합니다"
+                                                placeholder="4자 이상 입력"
+                                                type="password"
+                                                value={reviewForm.password}
+                                                onChange={(e) => setReviewForm({ ...reviewForm, password: e.currentTarget.value })}
+                                                size="sm"
+                                                radius="md"
+                                                variant="default"
+                                                styles={{
+                                                    label: { fontSize: 14, fontWeight: 500, marginBottom: 4 },
+                                                }}
+                                            />
+                                        </Box>
+
+                                        {/* 등록 버튼 */}
+                                        <Box px="md" py="md">
+                                            <Button
+                                                fullWidth
+                                                size="lg"
+                                                color="brand"
+                                                radius="xl"
+                                                fw={600}
+                                                onClick={handleSubmitReview}
+                                                disabled={reviewForm.rating === 0 || !reviewForm.content.trim() || reviewForm.password.length < 4}
+                                                style={{ height: 52, fontSize: 16 }}
+                                            >
+                                                등록하기
+                                            </Button>
+                                        </Box>
+                                    </Box>
+                                </Box>
+                            )
+                        }
+
+
+                        {/* 연락처 입력 모달 (등록 버튼 클릭 시) */}
+                        <Modal
+                            opened={phoneModalOpened}
+                            onClose={closePhoneModal}
+                            title="연락처 입력"
+                            size="sm"
+                            centered
+                            zIndex={10001}
+                        >
+                            <Stack gap="md">
+                                <Text size="sm" c="dimmed">
+                                    문의 답변을 받으실 연락처를 입력해주세요.
+                                </Text>
+
+                                <TextInput
+                                    label="연락처"
+                                    placeholder="010-0000-0000"
+                                    value={inquiryForm.phone}
+                                    onChange={(e) => setInquiryForm({ ...inquiryForm, phone: formatPhoneNumber(e.currentTarget.value) })}
+                                    description="뒷자리 4자리가 비밀번호로 사용됩니다"
+                                    required
+                                    styles={{ input: { fontSize: '16px' } }}
+                                />
+
+                                <Paper p="sm" bg="gray.0" radius="md">
+                                    <Group align="flex-start" gap="sm">
+                                        <Switch
+                                            checked={inquiryForm.privacyAgreed}
+                                            onChange={(e) => setInquiryForm({ ...inquiryForm, privacyAgreed: e.currentTarget.checked })}
+                                            color="brand"
+                                            size="sm"
+                                            mt={2}
+                                        />
+                                        <Box style={{ flex: 1 }}>
+                                            <Text size="xs" fw={500}>개인정보 수집 동의</Text>
+                                            <Text size="xs" c="dimmed" lh={1.5} mt={4}>
+                                                문의 답변 및 비밀번호 생성을 위해 연락처를 수집합니다.
+                                            </Text>
+                                        </Box>
+                                    </Group>
+                                </Paper>
+
+                                <Button
+                                    fullWidth
+                                    onClick={() => {
+                                        closePhoneModal();
+                                        handleSubmitInquiry();
+                                    }}
+                                    disabled={!inquiryForm.phone.trim() || inquiryForm.phone.replace(/\D/g, '').length < 10 || !inquiryForm.privacyAgreed}
+                                >
+                                    문의 등록하기
+                                </Button>
+                            </Stack>
+                        </Modal>
+
+                        {/* 문의 상세 바텀시트 */}
+                        <Modal
+                            opened={inquiryDetailOpened}
+                            onClose={closeInquiryDetail}
+                            withCloseButton={false}
+                            size="md"
+                            padding={0}
+                            zIndex={10001}
+                            centered={false}
+                            styles={{
+                                content: {
+                                    position: 'fixed',
+                                    bottom: 0,
+                                    left: 0,
+                                    right: 0,
+                                    margin: 0,
+                                    borderRadius: '20px 20px 0 0',
+                                    maxHeight: '80vh',
+                                    boxShadow: '0 -4px 30px rgba(0,0,0,0.1)',
+                                },
+                                body: { padding: 0 },
+                                inner: { padding: 0, alignItems: 'flex-end' }
+                            }}
+                        >
+                            {selectedInquiry && (
+                                <Box>
+                                    {/* 드래그 핸들 */}
+                                    <Box pt="sm" pb="xs" ta="center">
+                                        <Box w={40} h={4} bg="gray.3" mx="auto" style={{ borderRadius: 2 }} />
+                                    </Box>
+
+                                    {/* 헤더 */}
+                                    <Box px="lg" pb="md">
+                                        <Group justify="space-between" align="flex-start">
+                                            <Box style={{ flex: 1 }}>
+                                                <Group gap={6} mb={4}>
+                                                    {selectedInquiry.isPrivate && (
+                                                        <span className="material-symbols-outlined" style={{ fontSize: 16, color: '#868e96' }}>lock</span>
+                                                    )}
+                                                    <Text size="lg" fw={700} c="dark">{selectedInquiry.title}</Text>
+                                                </Group>
+                                                <Text size="xs" c="dimmed">
+                                                    {new Date(selectedInquiry.createdAt).toLocaleDateString('ko-KR', { year: 'numeric', month: 'long', day: 'numeric' })}
+                                                </Text>
+                                            </Box>
+                                            <ActionIcon variant="subtle" color="gray" size="lg" onClick={closeInquiryDetail}>
+                                                <X size={20} />
+                                            </ActionIcon>
+                                        </Group>
+                                    </Box>
+
+                                    {/* 구분선 */}
+                                    <Box h={1} bg="gray.1" />
+
+                                    {/* 내용 영역 */}
+                                    <Box p="lg" style={{ minHeight: 280 }}>
+                                        {/* 비공개이고 잠금 상태일 때 */}
+                                        {selectedInquiry.isPrivate && !inquiryUnlocked ? (
+                                            <Box ta="center" py="xl">
+                                                <Box
+                                                    w={56} h={56} mb="md" mx="auto"
+                                                    style={{
+                                                        display: 'flex',
+                                                        alignItems: 'center',
+                                                        justifyContent: 'center',
+                                                        background: 'linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%)',
+                                                        borderRadius: 28
+                                                    }}
+                                                >
+                                                    <span className="material-symbols-outlined" style={{ fontSize: 28, color: '#495057' }}>lock</span>
+                                                </Box>
+                                                <Text size="md" fw={600} c="dark" mb={6}>비공개 문의입니다</Text>
+                                                <Text size="sm" c="dimmed" mb="xl">
+                                                    작성 시 입력한 연락처 뒷자리 4자리를 입력해주세요.
+                                                </Text>
+
+                                                <Box maw={200} mx="auto">
+                                                    <TextInput
+                                                        placeholder="0000"
+                                                        value={inquiryPinInput}
+                                                        onChange={(e) => setInquiryPinInput(e.currentTarget.value.replace(/\D/g, '').slice(0, 4))}
+                                                        maxLength={4}
+                                                        styles={{
+                                                            input: {
+                                                                textAlign: 'center',
+                                                                fontSize: '22px',
+                                                                fontWeight: 600,
+                                                                letterSpacing: 10,
+                                                                height: 52,
+                                                                borderRadius: 12,
+                                                                border: '2px solid #dee2e6',
+                                                            }
+                                                        }}
+                                                        error={inquiryPinError}
+                                                    />
+                                                    <Button
+                                                        fullWidth
+                                                        mt="md"
+                                                        size="md"
+                                                        radius="xl"
+                                                        onClick={handleInquiryUnlock}
+                                                        disabled={inquiryPinInput.length !== 4}
+                                                    >
+                                                        확인하기
+                                                    </Button>
+                                                </Box>
+                                            </Box>
+                                        ) : (
+                                            /* 공개 또는 잠금 해제 시 */
+                                            <Stack gap="lg">
+                                                <Text size="sm" c="dark" style={{ whiteSpace: 'pre-wrap', lineHeight: 1.8 }}>
+                                                    {selectedInquiry.content}
+                                                </Text>
+
+                                                {/* 답변 */}
+                                                {selectedInquiry.replies && selectedInquiry.replies.length > 0 && (
+                                                    <Box p="md" style={{ backgroundColor: '#f0f4ff', borderRadius: 12, borderLeft: '4px solid #1D0098' }}>
+                                                        <Group gap={6} mb={6}>
+                                                            <span className="material-symbols-outlined" style={{ fontSize: 16, color: '#1D0098' }}>support_agent</span>
+                                                            <Text size="xs" fw={600} c="brand">관리자 답변</Text>
+                                                        </Group>
+                                                        <Text size="sm" c="dark">{selectedInquiry.replies[0].content}</Text>
+                                                    </Box>
+                                                )}
+
+                                                {/* 삭제 버튼 (잠금 해제 시만) */}
+                                                {inquiryUnlocked && selectedInquiry.isPrivate && (
+                                                    <Button
+                                                        variant="subtle"
+                                                        color="gray"
+                                                        size="sm"
+                                                        leftSection={<span className="material-symbols-outlined" style={{ fontSize: 16 }}>delete</span>}
+                                                        onClick={handleInquiryDelete}
+                                                        style={{ alignSelf: 'center' }}
+                                                    >
+                                                        이 문의 삭제
+                                                    </Button>
+                                                )}
+                                            </Stack>
+                                        )}
+                                    </Box>
+                                </Box>
+                            )}
+                        </Modal>
+
+                        {/* 🔴 플로팅 상담 버튼 (FAB) */}
+                        <Box
+                            onClick={() => setConsultModalOpened(true)}
+                            style={{
+                                position: 'fixed',
+                                bottom: isMobile ? 16 : 16,
+                                right: 16,
+                                width: 56,
+                                height: 56,
+                                borderRadius: '50%',
+                                background: 'linear-gradient(135deg, #1D0098 0%, #4B3FD3 100%)',
+                                boxShadow: '0 4px 16px rgba(29, 0, 152, 0.4)',
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                cursor: 'pointer',
+                                zIndex: 100,
+                                transition: 'transform 0.2s, box-shadow 0.2s',
+                            }}
+                            onMouseEnter={(e) => {
+                                e.currentTarget.style.transform = 'scale(1.1)';
+                                e.currentTarget.style.boxShadow = '0 6px 24px rgba(29, 0, 152, 0.5)';
+                            }}
+                            onMouseLeave={(e) => {
+                                e.currentTarget.style.transform = 'scale(1)';
+                                e.currentTarget.style.boxShadow = '0 4px 16px rgba(29, 0, 152, 0.4)';
+                            }}
+                        >
+                            <Text size="xs" fw={700} c="white" ta="center" lh={1.2}>
+                                상담<br />하기
+                            </Text>
+                        </Box>
+
+                        {/* 🖼️ 풀스크린 이미지 뷰어 (기존 갤러리 스타일과 동일) */}
+                        {enlargedImages.length > 0 && (
                             <Box
                                 pos="fixed"
                                 top={0}
                                 left={0}
                                 w="100%"
                                 h="100dvh"
-                                onClick={() => setOpened(false)} // 배경 클릭 시 닫기
                                 style={{
                                     zIndex: 9999,
-                                    backgroundColor: 'rgba(0, 0, 0, 0.8)', // 80% opacity로 더 어둡게
-                                    cursor: 'pointer',
+                                    backgroundColor: 'rgba(0, 0, 0, 0.95)',
                                 }}
                             >
                                 {/* 상단 헤더 */}
@@ -3801,279 +4589,68 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                 >
                                     <Group justify="space-between" align="center">
                                         <Text c="white" fw={600} size="md">
-                                            {selectedImageIndex + 1} / {galleryImages.length}
+                                            {enlargedImageIndex + 1} / {enlargedImages.length}
                                         </Text>
                                         <ActionIcon
                                             variant="transparent"
                                             c="white"
                                             size="lg"
-                                            onClick={() => setOpened(false)}
+                                            onClick={closeImageViewer}
                                         >
                                             <X size={28} />
                                         </ActionIcon>
                                     </Group>
                                 </Box>
 
-                                {/* 이미지 영역 - 인스타그램 스타일 무한 캐러셀 */}
+                                {/* 이미지 */}
                                 <Box
-                                    pos="absolute"
-                                    top="50%"
-                                    left="0"
-                                    w="100%"
-                                    h="80vh"
-                                    onClick={(e) => e.stopPropagation()}
                                     style={{
-                                        transform: 'translateY(-50%)',
-                                        overflow: 'hidden',
-                                        touchAction: 'pan-x',
+                                        width: '100%',
+                                        height: '100%',
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        justifyContent: 'center',
+                                        padding: '60px 16px 16px',
                                     }}
-                                    onTouchStart={(e) => {
-                                        const touch = e.touches[0];
-                                        (e.currentTarget as any).startX = touch.clientX;
-                                        (e.currentTarget as any).startTime = Date.now();
-                                        (e.currentTarget as any).offsetX = 0;
-                                    }}
-                                    onTouchMove={(e) => {
-                                        if (isAnimating) return;
-                                        const touch = e.touches[0];
-                                        const diff = touch.clientX - (e.currentTarget as any).startX;
-                                        (e.currentTarget as any).offsetX = diff;
-                                        const container = e.currentTarget.querySelector('[data-carousel]') as HTMLElement;
-                                        if (container) {
-                                            // +1 for cloned first image at start
-                                            const baseOffset = -(selectedImageIndex + 1) * 100;
-                                            const dragPercent = (diff / window.innerWidth) * 100;
-                                            container.style.transition = 'none';
-                                            container.style.transform = `translateX(${baseOffset + dragPercent}%)`;
-                                        }
-                                    }}
-                                    onTouchEnd={(e) => {
-                                        if (isAnimating) return;
-                                        const offsetX = (e.currentTarget as any).offsetX || 0;
-                                        const velocity = Math.abs(offsetX) / (Date.now() - (e.currentTarget as any).startTime);
-                                        const threshold = velocity > 0.3 ? 30 : 80;
-
-                                        const container = e.currentTarget.querySelector('[data-carousel]') as HTMLElement;
-
-                                        if (Math.abs(offsetX) > threshold && galleryImages.length > 1) {
-                                            setIsAnimating(true);
-
-                                            let nextIndex = selectedImageIndex;
-                                            if (offsetX < 0) {
-                                                nextIndex = selectedImageIndex + 1;
-                                            } else {
-                                                nextIndex = selectedImageIndex - 1;
-                                            }
-
-                                            // Animate to the virtual position
-                                            if (container) {
-                                                container.style.transition = 'transform 0.3s ease-out';
-                                                container.style.transform = `translateX(${-(nextIndex + 1) * 100}%)`;
-                                            }
-
-                                            setTimeout(() => {
-                                                // Handle wrap-around
-                                                let realIndex = nextIndex;
-                                                if (nextIndex >= galleryImages.length) {
-                                                    realIndex = 0;
-                                                } else if (nextIndex < 0) {
-                                                    realIndex = galleryImages.length - 1;
-                                                }
-
-                                                // Instantly jump to real position without animation
-                                                if (realIndex !== nextIndex && container) {
-                                                    container.style.transition = 'none';
-                                                    container.style.transform = `translateX(${-(realIndex + 1) * 100}%)`;
-                                                }
-
-                                                setSelectedImageIndex(realIndex);
-                                                setTimeout(() => setIsAnimating(false), 50);
-                                            }, 300);
-                                        } else {
-                                            if (container) {
-                                                container.style.transition = 'transform 0.3s ease-out';
-                                                container.style.transform = `translateX(${-(selectedImageIndex + 1) * 100}%)`;
-                                            }
-                                        }
-                                    }}
-                                    onMouseDown={(e) => {
-                                        e.preventDefault();
-                                        (e.currentTarget as any).isDragging = true;
-                                        (e.currentTarget as any).startX = e.clientX;
-                                        (e.currentTarget as any).startTime = Date.now();
-                                        (e.currentTarget as any).offsetX = 0;
-                                    }}
-                                    onMouseMove={(e) => {
-                                        if (!(e.currentTarget as any).isDragging || isAnimating) return;
-                                        const diff = e.clientX - (e.currentTarget as any).startX;
-                                        (e.currentTarget as any).offsetX = diff;
-                                        const container = e.currentTarget.querySelector('[data-carousel]') as HTMLElement;
-                                        if (container) {
-                                            const baseOffset = -(selectedImageIndex + 1) * 100;
-                                            const dragPercent = (diff / window.innerWidth) * 100;
-                                            container.style.transition = 'none';
-                                            container.style.transform = `translateX(${baseOffset + dragPercent}%)`;
-                                        }
-                                    }}
-                                    onMouseUp={(e) => {
-                                        if (!(e.currentTarget as any).isDragging) return;
-                                        (e.currentTarget as any).isDragging = false;
-                                        if (isAnimating) return;
-
-                                        const offsetX = (e.currentTarget as any).offsetX || 0;
-                                        const velocity = Math.abs(offsetX) / (Date.now() - (e.currentTarget as any).startTime);
-                                        const threshold = velocity > 0.3 ? 30 : 80;
-
-                                        const container = e.currentTarget.querySelector('[data-carousel]') as HTMLElement;
-
-                                        if (Math.abs(offsetX) > threshold && galleryImages.length > 1) {
-                                            setIsAnimating(true);
-
-                                            let nextIndex = selectedImageIndex;
-                                            if (offsetX < 0) {
-                                                nextIndex = selectedImageIndex + 1;
-                                            } else {
-                                                nextIndex = selectedImageIndex - 1;
-                                            }
-
-                                            if (container) {
-                                                container.style.transition = 'transform 0.3s ease-out';
-                                                container.style.transform = `translateX(${-(nextIndex + 1) * 100}%)`;
-                                            }
-
-                                            setTimeout(() => {
-                                                let realIndex = nextIndex;
-                                                if (nextIndex >= galleryImages.length) {
-                                                    realIndex = 0;
-                                                } else if (nextIndex < 0) {
-                                                    realIndex = galleryImages.length - 1;
-                                                }
-
-                                                if (realIndex !== nextIndex && container) {
-                                                    container.style.transition = 'none';
-                                                    container.style.transform = `translateX(${-(realIndex + 1) * 100}%)`;
-                                                }
-
-                                                setSelectedImageIndex(realIndex);
-                                                setTimeout(() => setIsAnimating(false), 50);
-                                            }, 300);
-                                        } else {
-                                            if (container) {
-                                                container.style.transition = 'transform 0.3s ease-out';
-                                                container.style.transform = `translateX(${-(selectedImageIndex + 1) * 100}%)`;
-                                            }
-                                        }
-                                    }}
-                                    onMouseLeave={(e) => {
-                                        if ((e.currentTarget as any).isDragging) {
-                                            (e.currentTarget as any).isDragging = false;
-                                            const container = e.currentTarget.querySelector('[data-carousel]') as HTMLElement;
-                                            if (container) {
-                                                container.style.transition = 'transform 0.3s ease-out';
-                                                container.style.transform = `translateX(${-(selectedImageIndex + 1) * 100}%)`;
-                                            }
-                                        }
-                                    }}
+                                    onClick={closeImageViewer}
                                 >
-                                    {/* 무한 캐러셀 컨테이너 - [마지막복제, ...원본들, 첫번째복제] */}
-                                    <Box
-                                        data-carousel
+                                    <img
+                                        src={enlargedImages[enlargedImageIndex]}
+                                        alt="확대 이미지"
+                                        onClick={(e) => e.stopPropagation()}
                                         style={{
-                                            display: 'flex',
-                                            height: '100%',
-                                            transform: `translateX(${-(selectedImageIndex + 1) * 100}%)`,
-                                            transition: 'transform 0.3s ease-out',
+                                            maxWidth: '100%',
+                                            maxHeight: '85vh',
+                                            objectFit: 'contain',
+                                            borderRadius: '8px',
                                         }}
-                                    >
-                                        {/* 마지막 이미지 복제 (맨 앞) */}
-                                        <Box
-                                            style={{
-                                                minWidth: '100%',
-                                                height: '100%',
-                                                display: 'flex',
-                                                alignItems: 'center',
-                                                justifyContent: 'center',
-                                            }}
-                                        >
-                                            <Image
-                                                src={getSingleFacilityImageUrl(galleryImages[galleryImages.length - 1])}
-                                                fit="contain"
-                                                h="100%"
-                                                w="100%"
-                                                alt={`${facility.name} 사진 (복제)`}
-                                                style={{ pointerEvents: 'none' }}
-                                            />
-                                        </Box>
-
-                                        {/* 원본 이미지들 */}
-                                        {galleryImages.map((img, idx) => (
-                                            <Box
-                                                key={idx}
-                                                style={{
-                                                    minWidth: '100%',
-                                                    height: '100%',
-                                                    display: 'flex',
-                                                    alignItems: 'center',
-                                                    justifyContent: 'center',
-                                                }}
-                                            >
-                                                <Image
-                                                    src={getSingleFacilityImageUrl(img)}
-                                                    fit="contain"
-                                                    h="100%"
-                                                    w="100%"
-                                                    alt={`${facility.name} 사진 ${idx + 1}`}
-                                                    style={{ pointerEvents: 'none' }}
-                                                />
-                                            </Box>
-                                        ))}
-
-                                        {/* 첫번째 이미지 복제 (맨 뒤) */}
-                                        <Box
-                                            style={{
-                                                minWidth: '100%',
-                                                height: '100%',
-                                                display: 'flex',
-                                                alignItems: 'center',
-                                                justifyContent: 'center',
-                                            }}
-                                        >
-                                            <Image
-                                                src={getSingleFacilityImageUrl(galleryImages[0])}
-                                                fit="contain"
-                                                h="100%"
-                                                w="100%"
-                                                alt={`${facility.name} 사진 (복제)`}
-                                                style={{ pointerEvents: 'none' }}
-                                            />
-                                        </Box>
-                                    </Box>
+                                    />
                                 </Box>
 
-                                {/* 하단 dot indicator (PC만) */}
-                                {!isMobile && (
+                                {/* 하단 인디케이터 (이미지 2장 이상) */}
+                                {enlargedImages.length > 1 && (
                                     <Box
                                         pos="absolute"
-                                        bottom={40}
+                                        bottom={24}
                                         left={0}
                                         w="100%"
                                         style={{ zIndex: 10000 }}
                                     >
-                                        <Group justify="center" gap={8}>
-                                            {galleryImages.map((_, idx) => (
+                                        <Group justify="center" gap={6}>
+                                            {enlargedImages.map((_, idx) => (
                                                 <Box
                                                     key={idx}
-                                                    w={idx === selectedImageIndex ? 10 : 8}
-                                                    h={idx === selectedImageIndex ? 10 : 8}
+                                                    w={idx === enlargedImageIndex ? 10 : 8}
+                                                    h={idx === enlargedImageIndex ? 10 : 8}
                                                     style={{
                                                         borderRadius: '50%',
-                                                        backgroundColor: idx === selectedImageIndex ? 'white' : 'rgba(255,255,255,0.4)',
-                                                        transition: 'all 0.2s',
+                                                        backgroundColor: idx === enlargedImageIndex ? 'white' : 'rgba(255,255,255,0.4)',
                                                         cursor: 'pointer',
+                                                        transition: 'all 0.2s ease',
                                                     }}
                                                     onClick={(e) => {
                                                         e.stopPropagation();
-                                                        setSelectedImageIndex(idx);
+                                                        setEnlargedImageIndex(idx);
                                                     }}
                                                 />
                                             ))}
@@ -4081,916 +4658,383 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                     </Box>
                                 )}
 
-                                {/* 좌우 네비게이션 (PC만) */}
-                                {!isMobile && galleryImages.length > 1 && (
+                                {/* 좌우 네비게이션 (이미지 2장 이상) */}
+                                {enlargedImages.length > 1 && (
                                     <>
-                                        <ActionIcon
-                                            variant="transparent"
-                                            c="white"
-                                            size="xl"
-                                            pos="absolute"
-                                            left={20}
-                                            top="50%"
-                                            style={{ transform: 'translateY(-50%)', zIndex: 10000 }}
-                                            onClick={(e) => {
-                                                e.stopPropagation();
-                                                setSelectedImageIndex(prev => prev > 0 ? prev - 1 : galleryImages.length - 1);
-                                            }}
-                                        >
-                                            <ChevronLeft size={40} />
-                                        </ActionIcon>
-                                        <ActionIcon
-                                            variant="transparent"
-                                            c="white"
-                                            size="xl"
-                                            pos="absolute"
-                                            right={20}
-                                            top="50%"
-                                            style={{ transform: 'translateY(-50%)', zIndex: 10000 }}
-                                            onClick={(e) => {
-                                                e.stopPropagation();
-                                                setSelectedImageIndex(prev => prev < galleryImages.length - 1 ? prev + 1 : 0);
-                                            }}
-                                        >
-                                            <ChevronRight size={40} />
-                                        </ActionIcon>
+                                        {enlargedImageIndex > 0 && (
+                                            <ActionIcon
+                                                variant="transparent"
+                                                c="white"
+                                                size="xl"
+                                                pos="absolute"
+                                                top="50%"
+                                                left={8}
+                                                style={{ transform: 'translateY(-50%)', zIndex: 10000 }}
+                                                onClick={(e) => {
+                                                    e.stopPropagation();
+                                                    setEnlargedImageIndex(prev => prev - 1);
+                                                }}
+                                            >
+                                                <ChevronLeft size={32} />
+                                            </ActionIcon>
+                                        )}
+                                        {enlargedImageIndex < enlargedImages.length - 1 && (
+                                            <ActionIcon
+                                                variant="transparent"
+                                                c="white"
+                                                size="xl"
+                                                pos="absolute"
+                                                top="50%"
+                                                right={8}
+                                                style={{ transform: 'translateY(-50%)', zIndex: 10000 }}
+                                                onClick={(e) => {
+                                                    e.stopPropagation();
+                                                    setEnlargedImageIndex(prev => prev + 1);
+                                                }}
+                                            >
+                                                <ChevronRight size={32} />
+                                            </ActionIcon>
+                                        )}
                                     </>
                                 )}
                             </Box>
-                        )
-                    }
-                    {/* 후기 작성 패널 (블라인드/당근 스타일) */}
-                    {
-                        reviewModalOpened && (
-                            <Box
-                                style={{
-                                    position: 'fixed',
-                                    top: 0,
-                                    left: isMobile ? 0 : 400,
-                                    width: isMobile ? '100%' : '400px',
-                                    height: '100dvh',
-                                    zIndex: 9999,
-                                    backgroundColor: 'white',
-                                    display: 'flex',
-                                    flexDirection: 'column',
-                                }}
-                            >
-                                <LoadingOverlay visible={isSubmitting} />
+                        )}
 
-                                {/* 헤더 — 문의 패널과 동일 톤 */}
-                                <Box p="md" style={{ borderBottom: '1px solid #f1f3f5', flexShrink: 0 }}>
-                                    <Group justify="space-between" align="center">
-                                        <Text fw={700} size="lg">후기 작성</Text>
-                                        <ActionIcon variant="subtle" color="dark" onClick={() => closeReviewModal()}>
-                                            <X size={20} />
-                                        </ActionIcon>
-                                    </Group>
-                                    <Text size="xs" c="dimmed" mt={4}>{facility.name}</Text>
-                                </Box>
-
-                                {/* 컨텐츠 영역 */}
-                                <Box style={{ flex: 1, overflowY: 'auto' }}>
-                                    {/* 시설명 */}
-                                    <Box p="md" style={{ backgroundColor: '#f8f9fa', borderBottom: '1px solid #f1f3f5' }}>
-                                        <Text size="sm" c="dimmed">{facility.name}에 대한 솔직한 후기를 남겨주세요.</Text>
+                        {/* 💬 댓글 입력 바텀시트 모달 */}
+                        {replyingTo && (
+                            <>
+                                {/* 배경 오버레이 */}
+                                <Box
+                                    pos="fixed"
+                                    top={0}
+                                    left={0}
+                                    w="100%"
+                                    h="100%"
+                                    style={{
+                                        zIndex: 9998,
+                                        backgroundColor: 'rgba(0,0,0,0.4)',
+                                    }}
+                                    onClick={() => {
+                                        setReplyingTo(null);
+                                        setReplyContent('');
+                                        setReplyPhotos([]);
+                                        setReplyNickname('');
+                                        setReplyPassword('');
+                                    }}
+                                />
+                                {/* 바텀시트 */}
+                                <Box
+                                    pos="fixed"
+                                    bottom={0}
+                                    left={0}
+                                    w="100%"
+                                    style={{
+                                        zIndex: 9999,
+                                        backgroundColor: 'white',
+                                        borderRadius: '16px 16px 0 0',
+                                        boxShadow: '0 -4px 20px rgba(0,0,0,0.15)',
+                                        animation: 'slideUp 0.15s ease-out',
+                                        maxHeight: '80vh',
+                                        overflowY: 'auto',
+                                    }}
+                                >
+                                    {/* 드래그 핸들 */}
+                                    <Box ta="center" pt={8} pb={4}>
+                                        <Box
+                                            mx="auto"
+                                            w={40}
+                                            h={4}
+                                            style={{ backgroundColor: '#dee2e6', borderRadius: 2 }}
+                                        />
                                     </Box>
 
-                                    {/* 별점 선택 */}
-                                    <Box px="md" py="lg" style={{ borderBottom: '1px solid #f1f3f5' }}>
-                                        <Text size="sm" fw={600} mb={12}>만족도를 선택해주세요</Text>
-                                        <Group gap={8} justify="center">
-                                            {[1, 2, 3, 4, 5].map((star) => (
-                                                <ActionIcon
-                                                    key={star}
-                                                    variant="transparent"
-                                                    size={44}
-                                                    onClick={() => setReviewForm({ ...reviewForm, rating: star })}
-                                                    style={{ transition: 'transform 0.15s ease' }}
-                                                >
-                                                    <Star
-                                                        size={36}
-                                                        color={star <= reviewForm.rating ? '#fbbf24' : '#dee2e6'}
-                                                        fill={star <= reviewForm.rating ? '#fbbf24' : 'none'}
-                                                        strokeWidth={1.5}
-                                                    />
-                                                </ActionIcon>
-                                            ))}
+                                    <Box p="md" pt={4}>
+                                        {/* 제목 */}
+                                        <Group justify="space-between" mb="md">
+                                            <Text fw={600} size="md">댓글 작성</Text>
+                                            <ActionIcon
+                                                variant="transparent"
+                                                color="gray"
+                                                onClick={() => {
+                                                    setReplyingTo(null);
+                                                    setReplyContent('');
+                                                    setReplyPhotos([]);
+                                                    setReplyNickname('');
+                                                    setReplyPassword('');
+                                                }}
+                                            >
+                                                <X size={20} />
+                                            </ActionIcon>
                                         </Group>
-                                        {reviewForm.rating > 0 && (
-                                            <Text size="xs" c="dimmed" ta="center" mt={8}>
-                                                {reviewForm.rating === 1 ? '별로예요' :
-                                                    reviewForm.rating === 2 ? '아쉬워요' :
-                                                        reviewForm.rating === 3 ? '보통이에요' :
-                                                            reviewForm.rating === 4 ? '좋아요' : '최고예요!'}
-                                            </Text>
-                                        )}
-                                    </Box>
 
-                                    {/* 후기 내용 */}
-                                    <Box px="md" py={14} style={{ borderBottom: '1px solid #f1f3f5', minHeight: 160 }}>
+                                        {/* 닉네임 + 비밀번호 */}
+                                        <Group gap="xs" mb="sm">
+                                            <TextInput
+                                                placeholder="닉네임"
+                                                size="sm"
+                                                value={replyNickname}
+                                                onChange={(e) => setReplyNickname(e.currentTarget.value)}
+                                                style={{ flex: 1 }}
+                                                styles={{
+                                                    input: {
+                                                        fontSize: '14px',
+                                                        borderRadius: '10px',
+                                                        backgroundColor: '#f8f9fa',
+                                                        border: '1px solid #e9ecef',
+                                                    }
+                                                }}
+                                            />
+                                            <TextInput
+                                                placeholder="비밀번호"
+                                                size="sm"
+                                                type="password"
+                                                value={replyPassword}
+                                                onChange={(e) => setReplyPassword(e.currentTarget.value)}
+                                                style={{ flex: 1 }}
+                                                styles={{
+                                                    input: {
+                                                        fontSize: '14px',
+                                                        borderRadius: '10px',
+                                                        backgroundColor: '#f8f9fa',
+                                                        border: '1px solid #e9ecef',
+                                                    }
+                                                }}
+                                            />
+                                        </Group>
+
+                                        {/* 댓글 내용 */}
                                         <Textarea
-                                            placeholder="방문 경험을 자유롭게 작성해주세요.&#10;&#10;예: 시설이 깨끗하고 주차장이 넓어요. 직원분도 친절했습니다."
-                                            variant="unstyled"
-                                            size="md"
+                                            placeholder="댓글을 입력하세요"
+                                            size="sm"
+                                            minRows={3}
+                                            maxRows={5}
                                             autosize
-                                            minRows={6}
-                                            value={reviewForm.content}
-                                            onChange={(e) => setReviewForm({ ...reviewForm, content: e.target.value })}
+                                            value={replyContent}
+                                            onChange={(e) => setReplyContent(e.currentTarget.value)}
                                             styles={{
                                                 input: {
-                                                    padding: 0,
-                                                    fontSize: '16px',
-                                                    lineHeight: 1.6,
-                                                    '&::placeholder': { color: '#adb5bd' }
+                                                    fontSize: '14px',
+                                                    borderRadius: '10px',
+                                                    backgroundColor: '#f8f9fa',
+                                                    border: '1px solid #e9ecef',
                                                 }
                                             }}
                                         />
 
-                                        {/* 사진 추가 */}
-                                        <Box mt="lg">
-                                            <input
-                                                type="file"
-                                                multiple
-                                                accept="image/*"
-                                                ref={reviewFileInputRef}
-                                                style={{ display: 'none' }}
-                                                onChange={handleReviewPhotoChange}
-                                            />
-                                            <Group gap="xs" align="flex-start">
-                                                <Box
-                                                    w={72}
-                                                    h={72}
-                                                    style={{
-                                                        border: '1px solid #dee2e6',
-                                                        borderRadius: 8,
-                                                        display: 'flex',
-                                                        flexDirection: 'column',
-                                                        alignItems: 'center',
-                                                        justifyContent: 'center',
-                                                        cursor: 'pointer',
-                                                        flexShrink: 0,
-                                                    }}
-                                                    onClick={() => reviewFileInputRef.current?.click()}
-                                                >
-                                                    <Camera size={22} color="#868e96" strokeWidth={1.5} />
-                                                    <Text size="xs" c="dimmed" mt={2}>
-                                                        {reviewForm.photos.length}/10
-                                                    </Text>
-                                                </Box>
-
-                                                {reviewForm.photos.map((photo, idx) => (
-                                                    <Box key={idx} pos="relative" w={72} h={72}>
-                                                        <Image src={photo} w={72} h={72} radius="md" style={{ objectFit: 'cover', border: '1px solid #dee2e6' }} />
+                                        {/* 이미지 미리보기 */}
+                                        {replyPhotos.length > 0 && (
+                                            <Group gap={8} mt="sm">
+                                                {replyPhotos.map((photo, idx) => (
+                                                    <Box key={idx} pos="relative" style={{ borderRadius: '10px', overflow: 'hidden' }}>
+                                                        <img src={photo} alt="수정요청 사진" onError={(e) => { e.currentTarget.style.display = 'none'; }} style={{ width: 64, height: 64, objectFit: 'cover', borderRadius: '10px', border: '1px solid #e9ecef' }} />
                                                         <ActionIcon
+                                                            variant="filled"
+                                                            color="dark"
                                                             size={18}
                                                             radius="xl"
-                                                            color="dark"
-                                                            variant="filled"
-                                                            style={{ position: 'absolute', top: -6, right: -6 }}
-                                                            onClick={() => removeReviewPhoto(idx)}
+                                                            pos="absolute"
+                                                            top={4}
+                                                            right={4}
+                                                            onClick={() => setReplyPhotos(prev => prev.filter((_, i) => i !== idx))}
                                                         >
                                                             <X size={10} />
                                                         </ActionIcon>
                                                     </Box>
                                                 ))}
                                             </Group>
-                                        </Box>
-                                    </Box>
+                                        )}
 
-                                    {/* 닉네임 */}
-                                    <Box px="md" py={14} style={{ borderBottom: '1px solid #f1f3f5' }}>
-                                        <TextInput
-                                            label="닉네임"
-                                            placeholder="닉네임을 입력하세요"
-                                            value={reviewForm.nickname}
-                                            onChange={(e) => setReviewForm({ ...reviewForm, nickname: e.currentTarget.value })}
-                                            variant="unstyled"
-                                            size="sm"
-                                            styles={{
-                                                label: { fontSize: 14, fontWeight: 500, marginBottom: 4 },
-                                                input: {
-                                                    padding: 0,
-                                                    fontSize: '16px',
-                                                    '&::placeholder': { color: '#adb5bd' }
-                                                }
-                                            }}
-                                        />
-                                    </Box>
-
-                                    {/* 비밀번호 (삭제용) */}
-                                    <Box px="md" py={14} style={{ borderBottom: '1px solid #f1f3f5' }}>
-                                        <TextInput
-                                            label="비밀번호"
-                                            description="후기 삭제 시 필요합니다"
-                                            placeholder="4자 이상 입력"
-                                            type="password"
-                                            value={reviewForm.password}
-                                            onChange={(e) => setReviewForm({ ...reviewForm, password: e.currentTarget.value })}
-                                            size="sm"
-                                            radius="md"
-                                            variant="default"
-                                            styles={{
-                                                label: { fontSize: 14, fontWeight: 500, marginBottom: 4 },
-                                            }}
-                                        />
-                                    </Box>
-
-                                    {/* 등록 버튼 */}
-                                    <Box px="md" py="md">
-                                        <Button
-                                            fullWidth
-                                            size="lg"
-                                            color="brand"
-                                            radius="xl"
-                                            fw={600}
-                                            onClick={handleSubmitReview}
-                                            disabled={reviewForm.rating === 0 || !reviewForm.content.trim() || reviewForm.password.length < 4}
-                                            style={{ height: 52, fontSize: 16 }}
-                                        >
-                                            등록하기
-                                        </Button>
-                                    </Box>
-                                </Box>
-                            </Box>
-                        )
-                    }
-
-
-                    {/* 연락처 입력 모달 (등록 버튼 클릭 시) */}
-                    <Modal
-                        opened={phoneModalOpened}
-                        onClose={closePhoneModal}
-                        title="연락처 입력"
-                        size="sm"
-                        centered
-                        zIndex={10001}
-                    >
-                        <Stack gap="md">
-                            <Text size="sm" c="dimmed">
-                                문의 답변을 받으실 연락처를 입력해주세요.
-                            </Text>
-
-                            <TextInput
-                                label="연락처"
-                                placeholder="010-0000-0000"
-                                value={inquiryForm.phone}
-                                onChange={(e) => setInquiryForm({ ...inquiryForm, phone: formatPhoneNumber(e.currentTarget.value) })}
-                                description="뒷자리 4자리가 비밀번호로 사용됩니다"
-                                required
-                                styles={{ input: { fontSize: '16px' } }}
-                            />
-
-                            <Paper p="sm" bg="gray.0" radius="md">
-                                <Group align="flex-start" gap="sm">
-                                    <Switch
-                                        checked={inquiryForm.privacyAgreed}
-                                        onChange={(e) => setInquiryForm({ ...inquiryForm, privacyAgreed: e.currentTarget.checked })}
-                                        color="brand"
-                                        size="sm"
-                                        mt={2}
-                                    />
-                                    <Box style={{ flex: 1 }}>
-                                        <Text size="xs" fw={500}>개인정보 수집 동의</Text>
-                                        <Text size="xs" c="dimmed" lh={1.5} mt={4}>
-                                            문의 답변 및 비밀번호 생성을 위해 연락처를 수집합니다.
-                                        </Text>
-                                    </Box>
-                                </Group>
-                            </Paper>
-
-                            <Button
-                                fullWidth
-                                onClick={() => {
-                                    closePhoneModal();
-                                    handleSubmitInquiry();
-                                }}
-                                disabled={!inquiryForm.phone.trim() || inquiryForm.phone.replace(/\D/g, '').length < 10 || !inquiryForm.privacyAgreed}
-                            >
-                                문의 등록하기
-                            </Button>
-                        </Stack>
-                    </Modal>
-
-                    {/* 문의 상세 바텀시트 */}
-                    <Modal
-                        opened={inquiryDetailOpened}
-                        onClose={closeInquiryDetail}
-                        withCloseButton={false}
-                        size="md"
-                        padding={0}
-                        zIndex={10001}
-                        centered={false}
-                        styles={{
-                            content: {
-                                position: 'fixed',
-                                bottom: 0,
-                                left: 0,
-                                right: 0,
-                                margin: 0,
-                                borderRadius: '20px 20px 0 0',
-                                maxHeight: '80vh',
-                                boxShadow: '0 -4px 30px rgba(0,0,0,0.1)',
-                            },
-                            body: { padding: 0 },
-                            inner: { padding: 0, alignItems: 'flex-end' }
-                        }}
-                    >
-                        {selectedInquiry && (
-                            <Box>
-                                {/* 드래그 핸들 */}
-                                <Box pt="sm" pb="xs" ta="center">
-                                    <Box w={40} h={4} bg="gray.3" mx="auto" style={{ borderRadius: 2 }} />
-                                </Box>
-
-                                {/* 헤더 */}
-                                <Box px="lg" pb="md">
-                                    <Group justify="space-between" align="flex-start">
-                                        <Box style={{ flex: 1 }}>
-                                            <Group gap={6} mb={4}>
-                                                {selectedInquiry.isPrivate && (
-                                                    <span className="material-symbols-outlined" style={{ fontSize: 16, color: '#868e96' }}>lock</span>
-                                                )}
-                                                <Text size="lg" fw={700} c="dark">{selectedInquiry.title}</Text>
-                                            </Group>
-                                            <Text size="xs" c="dimmed">
-                                                {new Date(selectedInquiry.createdAt).toLocaleDateString('ko-KR', { year: 'numeric', month: 'long', day: 'numeric' })}
-                                            </Text>
-                                        </Box>
-                                        <ActionIcon variant="subtle" color="gray" size="lg" onClick={closeInquiryDetail}>
-                                            <X size={20} />
-                                        </ActionIcon>
-                                    </Group>
-                                </Box>
-
-                                {/* 구분선 */}
-                                <Box h={1} bg="gray.1" />
-
-                                {/* 내용 영역 */}
-                                <Box p="lg" style={{ minHeight: 280 }}>
-                                    {/* 비공개이고 잠금 상태일 때 */}
-                                    {selectedInquiry.isPrivate && !inquiryUnlocked ? (
-                                        <Box ta="center" py="xl">
-                                            <Box
-                                                w={56} h={56} mb="md" mx="auto"
-                                                style={{
-                                                    display: 'flex',
-                                                    alignItems: 'center',
-                                                    justifyContent: 'center',
-                                                    background: 'linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%)',
-                                                    borderRadius: 28
-                                                }}
-                                            >
-                                                <span className="material-symbols-outlined" style={{ fontSize: 28, color: '#495057' }}>lock</span>
-                                            </Box>
-                                            <Text size="md" fw={600} c="dark" mb={6}>비공개 문의입니다</Text>
-                                            <Text size="sm" c="dimmed" mb="xl">
-                                                작성 시 입력한 연락처 뒷자리 4자리를 입력해주세요.
-                                            </Text>
-
-                                            <Box maw={200} mx="auto">
-                                                <TextInput
-                                                    placeholder="0000"
-                                                    value={inquiryPinInput}
-                                                    onChange={(e) => setInquiryPinInput(e.currentTarget.value.replace(/\D/g, '').slice(0, 4))}
-                                                    maxLength={4}
-                                                    styles={{
-                                                        input: {
-                                                            textAlign: 'center',
-                                                            fontSize: '22px',
-                                                            fontWeight: 600,
-                                                            letterSpacing: 10,
-                                                            height: 52,
-                                                            borderRadius: 12,
-                                                            border: '2px solid #dee2e6',
-                                                        }
-                                                    }}
-                                                    error={inquiryPinError}
+                                        {/* 하단 액션 바 */}
+                                        <Group justify="space-between" mt="md" pb="env(safe-area-inset-bottom, 8px)">
+                                            <Group gap={6}>
+                                                <input
+                                                    type="file"
+                                                    accept="image/*"
+                                                    multiple
+                                                    ref={replyFileInputRef}
+                                                    style={{ display: 'none' }}
+                                                    onChange={handleReplyPhotoUpload}
                                                 />
-                                                <Button
-                                                    fullWidth
-                                                    mt="md"
-                                                    size="md"
-                                                    radius="xl"
-                                                    onClick={handleInquiryUnlock}
-                                                    disabled={inquiryPinInput.length !== 4}
-                                                >
-                                                    확인하기
-                                                </Button>
-                                            </Box>
-                                        </Box>
-                                    ) : (
-                                        /* 공개 또는 잠금 해제 시 */
-                                        <Stack gap="lg">
-                                            <Text size="sm" c="dark" style={{ whiteSpace: 'pre-wrap', lineHeight: 1.8 }}>
-                                                {selectedInquiry.content}
-                                            </Text>
-
-                                            {/* 답변 */}
-                                            {selectedInquiry.replies && selectedInquiry.replies.length > 0 && (
-                                                <Box p="md" style={{ backgroundColor: '#f0f4ff', borderRadius: 12, borderLeft: '4px solid #1D0098' }}>
-                                                    <Group gap={6} mb={6}>
-                                                        <span className="material-symbols-outlined" style={{ fontSize: 16, color: '#1D0098' }}>support_agent</span>
-                                                        <Text size="xs" fw={600} c="brand">관리자 답변</Text>
-                                                    </Group>
-                                                    <Text size="sm" c="dark">{selectedInquiry.replies[0].content}</Text>
-                                                </Box>
-                                            )}
-
-                                            {/* 삭제 버튼 (잠금 해제 시만) */}
-                                            {inquiryUnlocked && selectedInquiry.isPrivate && (
-                                                <Button
-                                                    variant="subtle"
+                                                <ActionIcon
+                                                    variant="light"
                                                     color="gray"
-                                                    size="sm"
-                                                    leftSection={<span className="material-symbols-outlined" style={{ fontSize: 16 }}>delete</span>}
-                                                    onClick={handleInquiryDelete}
-                                                    style={{ alignSelf: 'center' }}
+                                                    size="lg"
+                                                    radius="xl"
+                                                    onClick={() => replyFileInputRef.current?.click()}
                                                 >
-                                                    이 문의 삭제
-                                                </Button>
-                                            )}
-                                        </Stack>
-                                    )}
-                                </Box>
-                            </Box>
-                        )}
-                    </Modal>
+                                                    <span className="material-symbols-outlined" style={{ fontSize: '20px', color: '#868e96' }}>photo_camera</span>
+                                                </ActionIcon>
+                                                <Text size="xs" c="dimmed">{replyPhotos.length}/3</Text>
+                                            </Group>
 
-                    {/* 🔴 플로팅 상담 버튼 (FAB) */}
-                    <Box
-                        onClick={() => setConsultModalOpened(true)}
-                        style={{
-                            position: 'fixed',
-                            bottom: isMobile ? 16 : 16,
-                            right: 16,
-                            width: 56,
-                            height: 56,
-                            borderRadius: '50%',
-                            background: 'linear-gradient(135deg, #1D0098 0%, #4B3FD3 100%)',
-                            boxShadow: '0 4px 16px rgba(29, 0, 152, 0.4)',
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            cursor: 'pointer',
-                            zIndex: 100,
-                            transition: 'transform 0.2s, box-shadow 0.2s',
-                        }}
-                        onMouseEnter={(e) => {
-                            e.currentTarget.style.transform = 'scale(1.1)';
-                            e.currentTarget.style.boxShadow = '0 6px 24px rgba(29, 0, 152, 0.5)';
-                        }}
-                        onMouseLeave={(e) => {
-                            e.currentTarget.style.transform = 'scale(1)';
-                            e.currentTarget.style.boxShadow = '0 4px 16px rgba(29, 0, 152, 0.4)';
-                        }}
-                    >
-                        <Text size="xs" fw={700} c="white" ta="center" lh={1.2}>
-                            상담<br />하기
-                        </Text>
-                    </Box>
-
-                    {/* 🖼️ 풀스크린 이미지 뷰어 (기존 갤러리 스타일과 동일) */}
-                    {enlargedImages.length > 0 && (
-                        <Box
-                            pos="fixed"
-                            top={0}
-                            left={0}
-                            w="100%"
-                            h="100dvh"
-                            style={{
-                                zIndex: 9999,
-                                backgroundColor: 'rgba(0, 0, 0, 0.95)',
-                            }}
-                        >
-                            {/* 상단 헤더 */}
-                            <Box
-                                pos="absolute"
-                                top={0}
-                                left={0}
-                                w="100%"
-                                p="md"
-                                style={{
-                                    zIndex: 10000,
-                                    background: 'linear-gradient(to bottom, rgba(0,0,0,0.4), transparent)',
-                                }}
-                            >
-                                <Group justify="space-between" align="center">
-                                    <Text c="white" fw={600} size="md">
-                                        {enlargedImageIndex + 1} / {enlargedImages.length}
-                                    </Text>
-                                    <ActionIcon
-                                        variant="transparent"
-                                        c="white"
-                                        size="lg"
-                                        onClick={closeImageViewer}
-                                    >
-                                        <X size={28} />
-                                    </ActionIcon>
-                                </Group>
-                            </Box>
-
-                            {/* 이미지 */}
-                            <Box
-                                style={{
-                                    width: '100%',
-                                    height: '100%',
-                                    display: 'flex',
-                                    alignItems: 'center',
-                                    justifyContent: 'center',
-                                    padding: '60px 16px 16px',
-                                }}
-                                onClick={closeImageViewer}
-                            >
-                                <img
-                                    src={enlargedImages[enlargedImageIndex]}
-                                    alt="확대 이미지"
-                                    onClick={(e) => e.stopPropagation()}
-                                    style={{
-                                        maxWidth: '100%',
-                                        maxHeight: '85vh',
-                                        objectFit: 'contain',
-                                        borderRadius: '8px',
-                                    }}
-                                />
-                            </Box>
-
-                            {/* 하단 인디케이터 (이미지 2장 이상) */}
-                            {enlargedImages.length > 1 && (
-                                <Box
-                                    pos="absolute"
-                                    bottom={24}
-                                    left={0}
-                                    w="100%"
-                                    style={{ zIndex: 10000 }}
-                                >
-                                    <Group justify="center" gap={6}>
-                                        {enlargedImages.map((_, idx) => (
-                                            <Box
-                                                key={idx}
-                                                w={idx === enlargedImageIndex ? 10 : 8}
-                                                h={idx === enlargedImageIndex ? 10 : 8}
-                                                style={{
-                                                    borderRadius: '50%',
-                                                    backgroundColor: idx === enlargedImageIndex ? 'white' : 'rgba(255,255,255,0.4)',
-                                                    cursor: 'pointer',
-                                                    transition: 'all 0.2s ease',
-                                                }}
-                                                onClick={(e) => {
-                                                    e.stopPropagation();
-                                                    setEnlargedImageIndex(idx);
-                                                }}
-                                            />
-                                        ))}
-                                    </Group>
-                                </Box>
-                            )}
-
-                            {/* 좌우 네비게이션 (이미지 2장 이상) */}
-                            {enlargedImages.length > 1 && (
-                                <>
-                                    {enlargedImageIndex > 0 && (
-                                        <ActionIcon
-                                            variant="transparent"
-                                            c="white"
-                                            size="xl"
-                                            pos="absolute"
-                                            top="50%"
-                                            left={8}
-                                            style={{ transform: 'translateY(-50%)', zIndex: 10000 }}
-                                            onClick={(e) => {
-                                                e.stopPropagation();
-                                                setEnlargedImageIndex(prev => prev - 1);
-                                            }}
-                                        >
-                                            <ChevronLeft size={32} />
-                                        </ActionIcon>
-                                    )}
-                                    {enlargedImageIndex < enlargedImages.length - 1 && (
-                                        <ActionIcon
-                                            variant="transparent"
-                                            c="white"
-                                            size="xl"
-                                            pos="absolute"
-                                            top="50%"
-                                            right={8}
-                                            style={{ transform: 'translateY(-50%)', zIndex: 10000 }}
-                                            onClick={(e) => {
-                                                e.stopPropagation();
-                                                setEnlargedImageIndex(prev => prev + 1);
-                                            }}
-                                        >
-                                            <ChevronRight size={32} />
-                                        </ActionIcon>
-                                    )}
-                                </>
-                            )}
-                        </Box>
-                    )}
-
-                    {/* 💬 댓글 입력 바텀시트 모달 */}
-                    {replyingTo && (
-                        <>
-                            {/* 배경 오버레이 */}
-                            <Box
-                                pos="fixed"
-                                top={0}
-                                left={0}
-                                w="100%"
-                                h="100%"
-                                style={{
-                                    zIndex: 9998,
-                                    backgroundColor: 'rgba(0,0,0,0.4)',
-                                }}
-                                onClick={() => {
-                                    setReplyingTo(null);
-                                    setReplyContent('');
-                                    setReplyPhotos([]);
-                                    setReplyNickname('');
-                                    setReplyPassword('');
-                                }}
-                            />
-                            {/* 바텀시트 */}
-                            <Box
-                                pos="fixed"
-                                bottom={0}
-                                left={0}
-                                w="100%"
-                                style={{
-                                    zIndex: 9999,
-                                    backgroundColor: 'white',
-                                    borderRadius: '16px 16px 0 0',
-                                    boxShadow: '0 -4px 20px rgba(0,0,0,0.15)',
-                                    animation: 'slideUp 0.15s ease-out',
-                                    maxHeight: '80vh',
-                                    overflowY: 'auto',
-                                }}
-                            >
-                                {/* 드래그 핸들 */}
-                                <Box ta="center" pt={8} pb={4}>
-                                    <Box
-                                        mx="auto"
-                                        w={40}
-                                        h={4}
-                                        style={{ backgroundColor: '#dee2e6', borderRadius: 2 }}
-                                    />
-                                </Box>
-
-                                <Box p="md" pt={4}>
-                                    {/* 제목 */}
-                                    <Group justify="space-between" mb="md">
-                                        <Text fw={600} size="md">댓글 작성</Text>
-                                        <ActionIcon
-                                            variant="transparent"
-                                            color="gray"
-                                            onClick={() => {
-                                                setReplyingTo(null);
-                                                setReplyContent('');
-                                                setReplyPhotos([]);
-                                                setReplyNickname('');
-                                                setReplyPassword('');
-                                            }}
-                                        >
-                                            <X size={20} />
-                                        </ActionIcon>
-                                    </Group>
-
-                                    {/* 닉네임 + 비밀번호 */}
-                                    <Group gap="xs" mb="sm">
-                                        <TextInput
-                                            placeholder="닉네임"
-                                            size="sm"
-                                            value={replyNickname}
-                                            onChange={(e) => setReplyNickname(e.currentTarget.value)}
-                                            style={{ flex: 1 }}
-                                            styles={{
-                                                input: {
-                                                    fontSize: '14px',
-                                                    borderRadius: '10px',
-                                                    backgroundColor: '#f8f9fa',
-                                                    border: '1px solid #e9ecef',
-                                                }
-                                            }}
-                                        />
-                                        <TextInput
-                                            placeholder="비밀번호"
-                                            size="sm"
-                                            type="password"
-                                            value={replyPassword}
-                                            onChange={(e) => setReplyPassword(e.currentTarget.value)}
-                                            style={{ flex: 1 }}
-                                            styles={{
-                                                input: {
-                                                    fontSize: '14px',
-                                                    borderRadius: '10px',
-                                                    backgroundColor: '#f8f9fa',
-                                                    border: '1px solid #e9ecef',
-                                                }
-                                            }}
-                                        />
-                                    </Group>
-
-                                    {/* 댓글 내용 */}
-                                    <Textarea
-                                        placeholder="댓글을 입력하세요"
-                                        size="sm"
-                                        minRows={3}
-                                        maxRows={5}
-                                        autosize
-                                        value={replyContent}
-                                        onChange={(e) => setReplyContent(e.currentTarget.value)}
-                                        styles={{
-                                            input: {
-                                                fontSize: '14px',
-                                                borderRadius: '10px',
-                                                backgroundColor: '#f8f9fa',
-                                                border: '1px solid #e9ecef',
-                                            }
-                                        }}
-                                    />
-
-                                    {/* 이미지 미리보기 */}
-                                    {replyPhotos.length > 0 && (
-                                        <Group gap={8} mt="sm">
-                                            {replyPhotos.map((photo, idx) => (
-                                                <Box key={idx} pos="relative" style={{ borderRadius: '10px', overflow: 'hidden' }}>
-                                                    <img src={photo} alt="수정요청 사진" onError={(e) => { e.currentTarget.style.display = 'none'; }} style={{ width: 64, height: 64, objectFit: 'cover', borderRadius: '10px', border: '1px solid #e9ecef' }} />
-                                                    <ActionIcon
-                                                        variant="filled"
-                                                        color="dark"
-                                                        size={18}
-                                                        radius="xl"
-                                                        pos="absolute"
-                                                        top={4}
-                                                        right={4}
-                                                        onClick={() => setReplyPhotos(prev => prev.filter((_, i) => i !== idx))}
-                                                    >
-                                                        <X size={10} />
-                                                    </ActionIcon>
-                                                </Box>
-                                            ))}
-                                        </Group>
-                                    )}
-
-                                    {/* 하단 액션 바 */}
-                                    <Group justify="space-between" mt="md" pb="env(safe-area-inset-bottom, 8px)">
-                                        <Group gap={6}>
-                                            <input
-                                                type="file"
-                                                accept="image/*"
-                                                multiple
-                                                ref={replyFileInputRef}
-                                                style={{ display: 'none' }}
-                                                onChange={handleReplyPhotoUpload}
-                                            />
-                                            <ActionIcon
-                                                variant="light"
-                                                color="gray"
-                                                size="lg"
+                                            <Button
+                                                size="sm"
+                                                variant="filled"
+                                                color="#1D0098"
                                                 radius="xl"
-                                                onClick={() => replyFileInputRef.current?.click()}
+                                                px="xl"
+                                                onClick={() => handleSubmitReply(replyingTo)}
+                                                disabled={!replyContent.trim() || !replyNickname.trim() || !replyPassword.trim()}
+                                                styles={{
+                                                    root: {
+                                                        fontWeight: 600,
+                                                        '&:disabled': { backgroundColor: '#e9ecef', color: '#adb5bd' }
+                                                    }
+                                                }}
                                             >
-                                                <span className="material-symbols-outlined" style={{ fontSize: '20px', color: '#868e96' }}>photo_camera</span>
-                                            </ActionIcon>
-                                            <Text size="xs" c="dimmed">{replyPhotos.length}/3</Text>
+                                                등록
+                                            </Button>
                                         </Group>
-
-                                        <Button
-                                            size="sm"
-                                            variant="filled"
-                                            color="#1D0098"
-                                            radius="xl"
-                                            px="xl"
-                                            onClick={() => handleSubmitReply(replyingTo)}
-                                            disabled={!replyContent.trim() || !replyNickname.trim() || !replyPassword.trim()}
-                                            styles={{
-                                                root: {
-                                                    fontWeight: 600,
-                                                    '&:disabled': { backgroundColor: '#e9ecef', color: '#adb5bd' }
-                                                }
-                                            }}
-                                        >
-                                            등록
-                                        </Button>
-                                    </Group>
+                                    </Box>
                                 </Box>
-                            </Box>
-                            <style>{`
+                                <style>{`
                         @keyframes slideUp {
                             from { transform: translateY(100%); }
                             to { transform: translateY(0); }
                         }
                     `}</style>
-                        </>
-                    )}
+                            </>
+                        )}
 
-                    {/* 🔒 리뷰(이야기) 삭제 바텀시트 */}
-                    {deleteReviewModal && (
-                        <>
-                            <Box
-                                pos="fixed" top={0} left={0} w="100%" h="100%"
-                                style={{ zIndex: 9998, backgroundColor: 'rgba(0,0,0,0.4)' }}
-                                onClick={() => setDeleteReviewModal(null)}
-                            />
-                            <Box
-                                pos="fixed" bottom={0} left={0} w="100%"
-                                p="lg" pb={40}
-                                style={{
-                                    zIndex: 9999, backgroundColor: 'white',
-                                    borderRadius: '16px 16px 0 0',
-                                    boxShadow: '0 -4px 20px rgba(0,0,0,0.15)',
-                                    animation: 'slideUp 0.15s ease-out',
-                                }}
-                            >
-                                {/* 드래그 핸들 */}
-                                <Box mx="auto" mb="md" w={36} h={4} style={{ borderRadius: 2, backgroundColor: '#dee2e6' }} />
-                                <Group justify="space-between" mb="md">
-                                    <Text fw={600} size="lg">이야기 삭제</Text>
-                                    <ActionIcon variant="subtle" color="gray" onClick={() => setDeleteReviewModal(null)}>
-                                        <span className="material-symbols-outlined" style={{ fontSize: 20 }}>close</span>
-                                    </ActionIcon>
-                                </Group>
-                                <Text size="sm" c="dimmed" mb="md">이야기를 삭제하려면 비밀번호를 입력하세요.</Text>
-                                <TextInput
-                                    placeholder="비밀번호"
-                                    type="password"
-                                    value={deleteReviewPassword}
-                                    onChange={(e) => {
-                                        setDeleteReviewPassword(e.currentTarget.value);
-                                        setDeleteReviewError('');
-                                    }}
-                                    error={deleteReviewError}
-                                    onKeyDown={(e) => e.key === 'Enter' && handleDeleteReview()}
-                                    mb="md"
-                                    styles={{ input: { borderRadius: 12, height: 44 } }}
+                        {/* 🔒 리뷰(이야기) 삭제 바텀시트 */}
+                        {deleteReviewModal && (
+                            <>
+                                <Box
+                                    pos="fixed" top={0} left={0} w="100%" h="100%"
+                                    style={{ zIndex: 9998, backgroundColor: 'rgba(0,0,0,0.4)' }}
+                                    onClick={() => setDeleteReviewModal(null)}
                                 />
-                                <Group grow gap="sm">
-                                    <Button variant="light" color="gray" size="md" radius="xl" onClick={() => setDeleteReviewModal(null)}>
-                                        취소
-                                    </Button>
-                                    <Button variant="filled" color="dark.6" size="md" radius="xl" onClick={handleDeleteReview}>
-                                        삭제하기
-                                    </Button>
-                                </Group>
-                            </Box>
-                            <style>{`@keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }`}</style>
-                        </>
-                    )}
+                                <Box
+                                    pos="fixed" bottom={0} left={0} w="100%"
+                                    p="lg" pb={40}
+                                    style={{
+                                        zIndex: 9999, backgroundColor: 'white',
+                                        borderRadius: '16px 16px 0 0',
+                                        boxShadow: '0 -4px 20px rgba(0,0,0,0.15)',
+                                        animation: 'slideUp 0.15s ease-out',
+                                    }}
+                                >
+                                    {/* 드래그 핸들 */}
+                                    <Box mx="auto" mb="md" w={36} h={4} style={{ borderRadius: 2, backgroundColor: '#dee2e6' }} />
+                                    <Group justify="space-between" mb="md">
+                                        <Text fw={600} size="lg">이야기 삭제</Text>
+                                        <ActionIcon variant="subtle" color="gray" onClick={() => setDeleteReviewModal(null)}>
+                                            <span className="material-symbols-outlined" style={{ fontSize: 20 }}>close</span>
+                                        </ActionIcon>
+                                    </Group>
+                                    <Text size="sm" c="dimmed" mb="md">이야기를 삭제하려면 비밀번호를 입력하세요.</Text>
+                                    <TextInput
+                                        placeholder="비밀번호"
+                                        type="password"
+                                        value={deleteReviewPassword}
+                                        onChange={(e) => {
+                                            setDeleteReviewPassword(e.currentTarget.value);
+                                            setDeleteReviewError('');
+                                        }}
+                                        error={deleteReviewError}
+                                        onKeyDown={(e) => e.key === 'Enter' && handleDeleteReview()}
+                                        mb="md"
+                                        styles={{ input: { borderRadius: 12, height: 44 } }}
+                                    />
+                                    <Group grow gap="sm">
+                                        <Button variant="light" color="gray" size="md" radius="xl" onClick={() => setDeleteReviewModal(null)}>
+                                            취소
+                                        </Button>
+                                        <Button variant="filled" color="dark.6" size="md" radius="xl" onClick={handleDeleteReview}>
+                                            삭제하기
+                                        </Button>
+                                    </Group>
+                                </Box>
+                                <style>{`@keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }`}</style>
+                            </>
+                        )}
 
-                    {/* 🔒 댓글 삭제 바텀시트 */}
-                    {deleteReplyModal && (
-                        <>
-                            <Box
-                                pos="fixed" top={0} left={0} w="100%" h="100%"
-                                style={{ zIndex: 9998, backgroundColor: 'rgba(0,0,0,0.4)' }}
-                                onClick={() => setDeleteReplyModal(null)}
-                            />
-                            <Box
-                                pos="fixed" bottom={0} left={0} w="100%"
-                                p="lg" pb={40}
-                                style={{
-                                    zIndex: 9999, backgroundColor: 'white',
-                                    borderRadius: '16px 16px 0 0',
-                                    boxShadow: '0 -4px 20px rgba(0,0,0,0.15)',
-                                    animation: 'slideUp 0.15s ease-out',
-                                }}
-                            >
-                                {/* 드래그 핸들 */}
-                                <Box mx="auto" mb="md" w={36} h={4} style={{ borderRadius: 2, backgroundColor: '#dee2e6' }} />
-                                <Group justify="space-between" mb="md">
-                                    <Text fw={600} size="lg">댓글 삭제</Text>
-                                    <ActionIcon variant="subtle" color="gray" onClick={() => setDeleteReplyModal(null)}>
-                                        <span className="material-symbols-outlined" style={{ fontSize: 20 }}>close</span>
-                                    </ActionIcon>
-                                </Group>
-                                <Text size="sm" c="dimmed" mb="md">댓글을 삭제하려면 비밀번호를 입력하세요.</Text>
-                                <TextInput
-                                    placeholder="비밀번호"
-                                    type="password"
-                                    value={deleteReplyPassword}
-                                    onChange={(e) => {
-                                        setDeleteReplyPassword(e.currentTarget.value);
-                                        setDeleteReplyError('');
-                                    }}
-                                    error={deleteReplyError}
-                                    onKeyDown={(e) => e.key === 'Enter' && handleDeleteReply()}
-                                    mb="md"
-                                    styles={{ input: { borderRadius: 12, height: 44 } }}
+                        {/* 🔒 댓글 삭제 바텀시트 */}
+                        {deleteReplyModal && (
+                            <>
+                                <Box
+                                    pos="fixed" top={0} left={0} w="100%" h="100%"
+                                    style={{ zIndex: 9998, backgroundColor: 'rgba(0,0,0,0.4)' }}
+                                    onClick={() => setDeleteReplyModal(null)}
                                 />
-                                <Group grow gap="sm">
-                                    <Button variant="light" color="gray" size="md" radius="xl" onClick={() => setDeleteReplyModal(null)}>
-                                        취소
-                                    </Button>
-                                    <Button variant="filled" color="dark.6" size="md" radius="xl" onClick={handleDeleteReply}>
-                                        삭제하기
-                                    </Button>
-                                </Group>
-                            </Box>
-                            <style>{`@keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }`}</style>
-                        </>
-                    )}
-                </>
+                                <Box
+                                    pos="fixed" bottom={0} left={0} w="100%"
+                                    p="lg" pb={40}
+                                    style={{
+                                        zIndex: 9999, backgroundColor: 'white',
+                                        borderRadius: '16px 16px 0 0',
+                                        boxShadow: '0 -4px 20px rgba(0,0,0,0.15)',
+                                        animation: 'slideUp 0.15s ease-out',
+                                    }}
+                                >
+                                    {/* 드래그 핸들 */}
+                                    <Box mx="auto" mb="md" w={36} h={4} style={{ borderRadius: 2, backgroundColor: '#dee2e6' }} />
+                                    <Group justify="space-between" mb="md">
+                                        <Text fw={600} size="lg">댓글 삭제</Text>
+                                        <ActionIcon variant="subtle" color="gray" onClick={() => setDeleteReplyModal(null)}>
+                                            <span className="material-symbols-outlined" style={{ fontSize: 20 }}>close</span>
+                                        </ActionIcon>
+                                    </Group>
+                                    <Text size="sm" c="dimmed" mb="md">댓글을 삭제하려면 비밀번호를 입력하세요.</Text>
+                                    <TextInput
+                                        placeholder="비밀번호"
+                                        type="password"
+                                        value={deleteReplyPassword}
+                                        onChange={(e) => {
+                                            setDeleteReplyPassword(e.currentTarget.value);
+                                            setDeleteReplyError('');
+                                        }}
+                                        error={deleteReplyError}
+                                        onKeyDown={(e) => e.key === 'Enter' && handleDeleteReply()}
+                                        mb="md"
+                                        styles={{ input: { borderRadius: 12, height: 44 } }}
+                                    />
+                                    <Group grow gap="sm">
+                                        <Button variant="light" color="gray" size="md" radius="xl" onClick={() => setDeleteReplyModal(null)}>
+                                            취소
+                                        </Button>
+                                        <Button variant="filled" color="dark.6" size="md" radius="xl" onClick={handleDeleteReply}>
+                                            삭제하기
+                                        </Button>
+                                    </Group>
+                                </Box>
+                                <style>{`@keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }`}</style>
+                            </>
+                        )}
+                    </>
+                )}
+            </Box >
+            <LoginModal isOpen={showLoginForFavorite} onClose={() => setShowLoginForFavorite(false)} />
+            {/* 토스 스타일 토스트 */}
+            {favoriteToast && (
+                <div style={{
+                    position: 'fixed',
+                    bottom: 100,
+                    left: '50%',
+                    transform: 'translateX(-50%)',
+                    zIndex: 99999,
+                    animation: 'toastSlideUp 0.3s ease-out',
+                }}>
+                    <div style={{
+                        backgroundColor: 'rgba(0,0,0,0.85)',
+                        color: 'white',
+                        padding: '12px 24px',
+                        borderRadius: 100,
+                        fontSize: 14,
+                        fontWeight: 500,
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: 8,
+                        whiteSpace: 'nowrap',
+                        boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
+                    }}>
+                        <span className="material-symbols-outlined" style={{ fontSize: '16px', color: '#ff6b6b', fontVariationSettings: "'FILL' 1" }}>favorite</span>
+                        {favoriteToast}
+                    </div>
+                    <style>{`@keyframes toastSlideUp { from { transform: translateX(-50%) translateY(20px); opacity: 0; } to { transform: translateX(-50%) translateY(0); opacity: 1; } }`}</style>
+                </div>
             )}
-        </Box >
+        </>
     );
 }
 

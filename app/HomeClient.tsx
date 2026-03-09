@@ -173,7 +173,8 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
   // UI 숨김 상태 (지도 탭 시 토글) - 호갱노노 스타일
   const [uiHidden, setUiHidden] = useState(false);
   const [showLoginFromMap, setShowLoginFromMap] = useState(false);
-  const { user } = useAuth();
+  const [showMyInfo, setShowMyInfo] = useState(false);
+  const { user, profile, signOut, favorites, isFavorite, toggleFavorite } = useAuth();
 
   // 검색창 롤링 placeholder
   const placeholderTexts = ['서울 봉안당', '경기 수목장', '부산 공원묘지', '대전 납골당', '인천 자연장'];
@@ -517,6 +518,7 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
     } else {
       // 🖥️ PC: 왼쪽 패널에 상세 표시 + URL 업데이트
       setNearbyList(null); // 주변 시설 패널 닫기
+      setShowMyInfo(false); // 내 정보 패널 닫기
       const wasAlreadyOpen = !!selectedFacility;
       if (wasAlreadyOpen) {
         window.history.replaceState({ facilityId: facility.id }, '', `/facility/${facility.id}`);
@@ -936,7 +938,18 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
 
         {/* 상세 보기 or 리스트 */}
         <Box flex={1} h="100%" style={{ position: 'relative', overflow: 'hidden' }}>
-          {selectedFacility && !isMobile ? (
+          {showMyInfo && !isMobile ? (
+            <MyInfoPanel
+              user={user}
+              profile={profile}
+              favorites={favorites}
+              allFacilities={finalFacilities}
+              onClose={() => setShowMyInfo(false)}
+              onSignOut={() => { signOut(); setShowMyInfo(false); }}
+              onFacilityClick={(fac) => { setShowMyInfo(false); handleMarkerClick(fac); }}
+              router={router}
+            />
+          ) : selectedFacility && !isMobile ? (
             <FacilityDetail
               facility={selectedFacility}
               onClose={handleCloseDetail}
@@ -1149,7 +1162,8 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
           uiHidden={uiHidden}
           onUserClick={!isMobile ? () => {
             if (user) {
-              router.push('/myinfo');
+              setShowMyInfo(true);
+              setSelectedFacility(null);
             } else {
               setShowLoginFromMap(true);
             }
@@ -1403,5 +1417,253 @@ export default function HomeClient({ initialFacilities }: HomeClientProps) {
     <Suspense fallback={null}>
       <HomeContent initialFacilities={initialFacilities} />
     </Suspense>
+  );
+}
+
+// 내 정보 패널 (PC 왼쪽 패널 안에서 렌더)
+function MyInfoPanel({
+  user,
+  profile,
+  favorites,
+  allFacilities,
+  onClose,
+  onSignOut,
+  onFacilityClick,
+  router,
+}: {
+  user: any;
+  profile: any;
+  favorites: string[];
+  allFacilities: any[];
+  onClose: () => void;
+  onSignOut: () => void;
+  onFacilityClick: (fac: any) => void;
+  router: any;
+}) {
+  const [showFavList, setShowFavList] = useState(false);
+  const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
+
+  const displayName = profile?.nickname || user?.user_metadata?.full_name || user?.user_metadata?.name || '사용자';
+  const avatarUrl = profile?.avatar_url || user?.user_metadata?.avatar_url;
+  const provider = user?.user_metadata?.provider === 'kakao' ? '카카오' : '휴대전화';
+  const createdAt = user?.created_at
+    ? new Date(user.created_at).toLocaleDateString('ko-KR', { year: 'numeric', month: 'long', day: 'numeric' })
+    : '-';
+
+  const favFacilities = allFacilities.filter(f => favorites.includes(String(f.id)));
+
+  const handleDeleteAccount = async () => {
+    if (!confirm('정말 탈퇴하시겠습니까?\n모든 데이터가 삭제됩니다.')) return;
+    try {
+      await fetch('/api/auth/delete-account', {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ userId: user.id }),
+      });
+      onSignOut();
+      router.push('/');
+    } catch { /* ignore */ }
+  };
+
+  return (
+    <Box style={{ height: '100%', overflowY: 'auto', backgroundColor: '#f8f9fa' }}>
+      {/* 헤더 */}
+      <Box px="md" py={12} style={{ backgroundColor: '#302E92', position: 'sticky', top: 0, zIndex: 10 }}>
+        <Group gap="md" align="center">
+          <Box
+            style={{ cursor: 'pointer', display: 'flex', alignItems: 'center' }}
+            onClick={() => showFavList ? setShowFavList(false) : onClose()}
+          >
+            <span className="material-symbols-outlined" style={{ fontSize: '20px', color: 'white' }}>arrow_back_ios_new</span>
+          </Box>
+          <Text size="md" fw={700} c="white">{showFavList ? '관심 시설' : '내 정보'}</Text>
+        </Group>
+      </Box>
+
+      {showFavList ? (
+        /* 관심 시설 리스트 */
+        <Box p="md">
+          {favFacilities.length === 0 ? (
+            <Box py={60} style={{ textAlign: 'center' }}>
+              <span className="material-symbols-outlined" style={{ fontSize: '48px', color: '#dee2e6' }}>favorite</span>
+              <Text c="dimmed" size="sm" mt={12}>관심 시설이 없습니다</Text>
+              <Text c="dimmed" size="xs" mt={4}>시설 상세 페이지에서 ♡를 눌러 추가하세요</Text>
+            </Box>
+          ) : (
+            <Stack gap="sm">
+              {favFacilities.map((fac) => (
+                <Box
+                  key={fac.id}
+                  bg="white"
+                  p="md"
+                  style={{
+                    borderRadius: 12,
+                    cursor: 'pointer',
+                    transition: 'transform 0.15s, box-shadow 0.15s',
+                    border: '1px solid #f1f3f5',
+                  }}
+                  onClick={() => onFacilityClick(fac)}
+                  onMouseEnter={(e: any) => { e.currentTarget.style.transform = 'translateY(-1px)'; e.currentTarget.style.boxShadow = '0 2px 8px rgba(0,0,0,0.08)'; }}
+                  onMouseLeave={(e: any) => { e.currentTarget.style.transform = ''; e.currentTarget.style.boxShadow = ''; }}
+                >
+                  <Group justify="space-between" wrap="nowrap">
+                    <Box style={{ flex: 1, minWidth: 0 }}>
+                      <Text size="sm" fw={600} truncate>{fac.name}</Text>
+                      <Group gap={4} mt={4}>
+                        <span className="material-symbols-outlined" style={{ fontSize: '14px', color: '#868e96' }}>location_on</span>
+                        <Text size="xs" c="dimmed" truncate>{fac.address}</Text>
+                      </Group>
+                    </Box>
+                    <span className="material-symbols-outlined" style={{ fontSize: '16px', color: '#adb5bd' }}>chevron_right</span>
+                  </Group>
+                </Box>
+              ))}
+            </Stack>
+          )}
+        </Box>
+      ) : (
+        <>
+          {/* 프로필 카드 */}
+          <Box p="md">
+            <Box p="lg" bg="white" style={{ borderRadius: 16, textAlign: 'center' }}>
+              {avatarUrl ? (
+                <img src={avatarUrl} alt={displayName} width={64} height={64} style={{ borderRadius: '50%', objectFit: 'cover', margin: '0 auto 10px', display: 'block' }} />
+              ) : (
+                <Box style={{ width: 64, height: 64, borderRadius: '50%', backgroundColor: '#302E92', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 10px' }}>
+                  <Text c="white" fw={700} size="lg">{displayName.charAt(0)}</Text>
+                </Box>
+              )}
+              <Text size="md" fw={700} mb={2}>{displayName}</Text>
+              <Text size="xs" c="dimmed">{provider} 로그인</Text>
+            </Box>
+          </Box>
+
+          {/* 계정 정보 */}
+          <Box px="md" pb="sm">
+            <Text size="xs" c="dimmed" mb={6} fw={600} px={4}>계정 정보</Text>
+            <Stack gap={0} bg="white" style={{ borderRadius: 12, overflow: 'hidden' }}>
+              <MiniInfoRow label="닉네임" value={displayName} />
+              <MiniInfoRow label="로그인 방식" value={provider} />
+              <MiniInfoRow label="가입일" value={createdAt} last />
+            </Stack>
+          </Box>
+
+          {/* 관심 시설 */}
+          <Box px="md" pb="sm">
+            <Box
+              bg="white" px="md" py={14}
+              style={{ borderRadius: 12, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'space-between', transition: 'background-color 0.15s' }}
+              onClick={() => setShowFavList(true)}
+              onMouseEnter={(e: any) => { e.currentTarget.style.backgroundColor = '#f8f9fa'; }}
+              onMouseLeave={(e: any) => { e.currentTarget.style.backgroundColor = 'white'; }}
+            >
+              <Group gap={8}>
+                <span className="material-symbols-outlined" style={{ fontSize: '18px', color: '#ff6b6b', fontVariationSettings: "'FILL' 1" }}>favorite</span>
+                <Text size="sm" fw={500}>관심 시설</Text>
+              </Group>
+              <Group gap={4}>
+                <Text size="sm" fw={700} style={{ color: 'var(--mantine-color-brand-7)' }}>{favorites.length}개</Text>
+                <span className="material-symbols-outlined" style={{ fontSize: '16px', color: '#adb5bd' }}>chevron_right</span>
+              </Group>
+            </Box>
+          </Box>
+
+          {/* 약관 동의 */}
+          <Box px="md" pb="sm">
+            <Text size="xs" c="dimmed" mb={6} fw={600} px={4}>약관 동의 현황</Text>
+            <Stack gap={0} bg="white" style={{ borderRadius: 12, overflow: 'hidden' }}>
+              <MiniInfoRow label="이용약관" value={profile?.agreed_terms ? '✅ 동의' : '미동의'} />
+              <MiniInfoRow label="개인정보" value={profile?.agreed_privacy ? '✅ 동의' : '미동의'} />
+              <MiniInfoRow label="마케팅 수신" value={profile?.agreed_marketing ? '✅ 동의' : '미동의'} last />
+            </Stack>
+          </Box>
+
+          {/* 액션 */}
+          <Box px="md" pb="lg">
+            <Stack gap={8}>
+              <button
+                onClick={() => setShowLogoutConfirm(true)}
+                style={{
+                  display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8,
+                  width: '100%', padding: '12px', borderRadius: 12,
+                  backgroundColor: 'white', border: '1px solid #e9ecef',
+                  fontSize: 14, fontWeight: 600, color: '#495057', cursor: 'pointer',
+                }}
+              >
+                <span className="material-symbols-outlined" style={{ fontSize: '16px' }}>logout</span>
+                로그아웃
+              </button>
+              <button
+                onClick={handleDeleteAccount}
+                style={{
+                  display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8,
+                  width: '100%', padding: '12px', borderRadius: 12,
+                  backgroundColor: 'transparent', border: 'none',
+                  fontSize: 13, color: '#adb5bd', cursor: 'pointer',
+                }}
+              >
+                <span className="material-symbols-outlined" style={{ fontSize: '14px' }}>delete</span>
+                회원 탈퇴
+              </button>
+            </Stack>
+          </Box>
+        </>
+      )}
+
+      {/* 로그아웃 확인 모달 */}
+      {showLogoutConfirm && (
+        <Box style={{
+          position: 'fixed', inset: 0, zIndex: 9999,
+          display: 'flex', alignItems: 'center', justifyContent: 'center',
+          backgroundColor: 'rgba(0,0,0,0.4)',
+        }} onClick={() => setShowLogoutConfirm(false)}>
+          <Box
+            bg="white" p="xl"
+            style={{
+              borderRadius: 16, width: 280, textAlign: 'center',
+              animation: 'scaleIn 0.2s ease-out',
+            }}
+            onClick={(e: any) => e.stopPropagation()}
+          >
+            <Text size="md" fw={700} mb={4}>로그아웃</Text>
+            <Text size="sm" c="dimmed" mb={20}>로그아웃 하시겠습니까?</Text>
+            <Group justify="center" gap={8}>
+              <button
+                onClick={() => setShowLogoutConfirm(false)}
+                style={{
+                  padding: '10px 28px', borderRadius: 10, flex: 1,
+                  backgroundColor: '#f1f3f5', border: 'none',
+                  fontSize: 14, fontWeight: 600, color: '#495057', cursor: 'pointer',
+                }}
+              >
+                아니오
+              </button>
+              <button
+                onClick={() => { setShowLogoutConfirm(false); onSignOut(); }}
+                style={{
+                  padding: '10px 28px', borderRadius: 10, flex: 1,
+                  backgroundColor: '#302E92', border: 'none',
+                  fontSize: 14, fontWeight: 600, color: 'white', cursor: 'pointer',
+                }}
+              >
+                예
+              </button>
+            </Group>
+          </Box>
+          <style>{`@keyframes scaleIn { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }`}</style>
+        </Box>
+      )}
+    </Box>
+  );
+}
+
+function MiniInfoRow({ label, value, last }: { label: string; value: string; last?: boolean }) {
+  return (
+    <Box px="md" py={12} style={{ borderBottom: last ? 'none' : '1px solid #f1f3f5' }}>
+      <Group justify="space-between">
+        <Text size="xs" c="dimmed">{label}</Text>
+        <Text size="sm" fw={500}>{value}</Text>
+      </Group>
+    </Box>
   );
 }

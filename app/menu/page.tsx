@@ -269,24 +269,6 @@ export default function MenuPage() {
                         </span>
                     ))}
                 </Group>
-
-                {user && (
-                    <Box ta="center" mt="xs">
-                        <button
-                            onClick={signOut}
-                            style={{
-                                background: 'none',
-                                border: 'none',
-                                color: '#adb5bd',
-                                fontSize: 13,
-                                cursor: 'pointer',
-                                textDecoration: 'underline',
-                            }}
-                        >
-                            로그아웃
-                        </button>
-                    </Box>
-                )}
             </Box>
 
             {/* 버전 정보 */}

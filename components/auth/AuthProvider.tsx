@@ -29,7 +29,9 @@ interface AuthContextType {
     verifyOtp: (phone: string, token: string) => Promise<{ error: string | null }>;
     signOut: () => Promise<void>;
     refreshProfile: () => Promise<void>;
-    toggleFavorite: (facilityId: number) => Promise<void>;
+    toggleFavorite: (facilityId: string) => Promise<void>;
+    favorites: string[];
+    isFavorite: (facilityId: string) => boolean;
     needsTerms: boolean;
     agreeToTerms: (marketing: boolean) => Promise<void>;
 }
@@ -42,6 +44,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     const [session, setSession] = useState<Session | null>(null);
     const [loading, setLoading] = useState(true);
     const [needsTerms, setNeedsTerms] = useState(false);
+    const [favorites, setFavorites] = useState<string[]>([]);
 
     // 프로필 가져오기
     const fetchProfile = async (userId: string) => {
@@ -80,8 +83,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
                 setUser(session?.user ?? null);
                 if (session?.user) {
                     await fetchProfile(session.user.id);
+                    loadFavorites(session.access_token);
                 } else {
                     setProfile(null);
+                    setFavorites([]);
                 }
                 setLoading(false);
             }
@@ -181,10 +186,24 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
     // 로그아웃
     const signOut = async () => {
-        await supabase.auth.signOut();
+        try {
+            await supabase.auth.signOut({ scope: 'local' });
+        } catch (e) {
+            // 에러 무시 - 로컬 정리만 하면 됨
+        }
+        // Supabase 관련 localStorage 전부 정리
+        if (typeof window !== 'undefined') {
+            Object.keys(localStorage).forEach(key => {
+                if (key.startsWith('sb-') || key.includes('supabase')) {
+                    localStorage.removeItem(key);
+                }
+            });
+        }
         setUser(null);
         setProfile(null);
         setSession(null);
+        setFavorites([]);
+        window.location.href = '/';
     };
 
     // 프로필 새로고침
@@ -195,19 +214,43 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     };
 
     // 관심 시설 토글
-    const toggleFavorite = async (facilityId: number) => {
-        if (!user || !profile) return;
-        const current = profile.favorite_facilities || [];
-        const updated = current.includes(facilityId)
-            ? current.filter((id) => id !== facilityId)
-            : [...current, facilityId];
+    const toggleFavorite = async (facilityId: string) => {
+        if (!user || !session) return;
+        try {
+            const res = await fetch('/api/favorites', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${session.access_token}`,
+                },
+                body: JSON.stringify({ facilityId }),
+            });
+            const data = await res.json();
+            if (data.action === 'added') {
+                setFavorites(prev => [...prev, String(facilityId)]);
+            } else if (data.action === 'removed') {
+                setFavorites(prev => prev.filter(id => id !== String(facilityId)));
+            }
+        } catch (e) {
+            console.error('toggleFavorite error:', e);
+        }
+    };
 
-        await supabase
-            .from('profiles')
-            .update({ favorite_facilities: updated, updated_at: new Date().toISOString() })
-            .eq('id', user.id);
+    const isFavorite = (facilityId: string) => favorites.includes(String(facilityId));
 
-        setProfile({ ...profile, favorite_facilities: updated });
+    // 관심 시설 목록 로드
+    const loadFavorites = async (accessToken: string) => {
+        try {
+            const res = await fetch('/api/favorites', {
+                headers: { 'Authorization': `Bearer ${accessToken}` },
+            });
+            const data = await res.json();
+            if (data.favorites) {
+                setFavorites(data.favorites.map((f: any) => f.facility_id));
+            }
+        } catch (e) {
+            console.error('loadFavorites error:', e);
+        }
     };
 
     // 약관 동의
@@ -249,6 +292,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
                 signOut,
                 refreshProfile,
                 toggleFavorite,
+                favorites,
+                isFavorite,
                 needsTerms,
                 agreeToTerms,
             }}
