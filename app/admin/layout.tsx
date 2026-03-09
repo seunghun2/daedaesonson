@@ -150,6 +150,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     // 인증됨 → 어드민 대시보드
     const navItems = [
         { label: '대시보드', icon: IconDashboard, link: '/admin' },
+        { label: '회원 관리', icon: IconBriefcase, link: '/admin/members' },
         { label: '시설 데이터 관리', icon: IconDatabase, link: '/admin/upload' },
         { label: '상담신청관리', icon: IconPhoneCall, link: '/admin/consults' },
         { label: '댓글문의관리', icon: IconMessage, link: '/admin/inquiries' },

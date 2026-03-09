@@ -8,6 +8,13 @@ const AuthProvider = dynamic(
     { ssr: false }
 );
 
+const TermsModal = dynamic(() => import('./TermsModal'), { ssr: false });
+
 export function AuthProviderWrapper({ children }: { children: ReactNode }) {
-    return <AuthProvider>{children}</AuthProvider>;
+    return (
+        <AuthProvider>
+            {children}
+            <TermsModal />
+        </AuthProvider>
+    );
 }

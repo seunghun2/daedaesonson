@@ -11,6 +11,12 @@ interface Profile {
     avatar_url: string | null;
     provider: string | null;
     favorite_facilities: number[];
+    agreed_terms: boolean;
+    agreed_privacy: boolean;
+    agreed_marketing: boolean;
+    agreed_at: string | null;
+    last_login_at: string | null;
+    created_at: string | null;
 }
 
 interface AuthContextType {
@@ -24,6 +30,8 @@ interface AuthContextType {
     signOut: () => Promise<void>;
     refreshProfile: () => Promise<void>;
     toggleFavorite: (facilityId: number) => Promise<void>;
+    needsTerms: boolean;
+    agreeToTerms: (marketing: boolean) => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -33,6 +41,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     const [profile, setProfile] = useState<Profile | null>(null);
     const [session, setSession] = useState<Session | null>(null);
     const [loading, setLoading] = useState(true);
+    const [needsTerms, setNeedsTerms] = useState(false);
 
     // 프로필 가져오기
     const fetchProfile = async (userId: string) => {
@@ -43,6 +52,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
             .single();
         if (data) {
             setProfile(data as Profile);
+            // 약관 동의 안 했으면 약관 화면 표시
+            if (!data.agreed_terms) {
+                setNeedsTerms(true);
+            } else {
+                setNeedsTerms(false);
+            }
         }
     };
 
@@ -153,6 +168,32 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         setProfile({ ...profile, favorite_facilities: updated });
     };
 
+    // 약관 동의
+    const agreeToTerms = async (marketing: boolean) => {
+        if (!user) return;
+        const now = new Date().toISOString();
+        await supabase
+            .from('profiles')
+            .update({
+                agreed_terms: true,
+                agreed_privacy: true,
+                agreed_marketing: marketing,
+                agreed_at: now,
+                updated_at: now,
+            })
+            .eq('id', user.id);
+        setNeedsTerms(false);
+        if (profile) {
+            setProfile({
+                ...profile,
+                agreed_terms: true,
+                agreed_privacy: true,
+                agreed_marketing: marketing,
+                agreed_at: now,
+            });
+        }
+    };
+
     return (
         <AuthContext.Provider
             value={{
@@ -166,6 +207,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
                 signOut,
                 refreshProfile,
                 toggleFavorite,
+                needsTerms,
+                agreeToTerms,
             }}
         >
             {children}
