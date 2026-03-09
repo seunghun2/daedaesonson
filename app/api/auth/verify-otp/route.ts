@@ -10,11 +10,11 @@ export async function POST(request: NextRequest) {
         }
 
         const cleanPhone = phone.replace(/-/g, '');
+        const serviceKey = process.env.SUPABASE_SERVICE_KEY!;
+        const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
+        const anonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
 
-        const supabaseAdmin = createClient(
-            process.env.NEXT_PUBLIC_SUPABASE_URL!,
-            process.env.SUPABASE_SERVICE_KEY!
-        );
+        const supabaseAdmin = createClient(supabaseUrl, serviceKey);
 
         // OTP 확인
         const { data: otpData } = await supabaseAdmin
@@ -43,24 +43,47 @@ export async function POST(request: NextRequest) {
 
         // Supabase 유저 생성/찾기
         const email = `phone_${cleanPhone}@phone.local`;
-        const { data: existingUsers } = await supabaseAdmin.auth.admin.listUsers();
-        const existingUser = existingUsers?.users?.find((u: any) => u.email === email);
+        const password = `phone_${cleanPhone}_${serviceKey.slice(0, 12)}`;
+
+        // 기존 유저 확인 (REST API)
+        const usersRes = await fetch(`${supabaseUrl}/auth/v1/admin/users?per_page=50`, {
+            headers: { Authorization: `Bearer ${serviceKey}`, apikey: serviceKey },
+        });
+        const usersData = await usersRes.json();
+        const existingUser = usersData?.users?.find((u: any) => u.email === email);
 
         let userId: string;
 
         if (existingUser) {
             userId = existingUser.id;
-        } else {
-            // 신규 유저 생성
-            const { data: newUser } = await supabaseAdmin.auth.admin.createUser({
-                email,
-                email_confirm: true,
-                user_metadata: {
-                    phone: cleanPhone,
-                    provider: 'phone',
+            // 비밀번호 업데이트 (REST API)
+            await fetch(`${supabaseUrl}/auth/v1/admin/users/${userId}`, {
+                method: 'PUT',
+                headers: {
+                    Authorization: `Bearer ${serviceKey}`,
+                    apikey: serviceKey,
+                    'Content-Type': 'application/json',
                 },
+                body: JSON.stringify({ password }),
             });
-            userId = newUser?.user?.id || '';
+        } else {
+            // 신규 유저 생성 (REST API)
+            const createRes = await fetch(`${supabaseUrl}/auth/v1/admin/users`, {
+                method: 'POST',
+                headers: {
+                    Authorization: `Bearer ${serviceKey}`,
+                    apikey: serviceKey,
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    email,
+                    password,
+                    email_confirm: true,
+                    user_metadata: { phone: cleanPhone, provider: 'phone' },
+                }),
+            });
+            const newUser = await createRes.json();
+            userId = newUser?.id || '';
 
             // 프로필 생성
             if (userId) {
@@ -70,24 +93,30 @@ export async function POST(request: NextRequest) {
                     provider: 'phone',
                     phone: cleanPhone,
                     favorite_facilities: [],
+                    created_at: new Date().toISOString(),
                     updated_at: new Date().toISOString(),
                 });
             }
         }
 
-        // 매직 링크로 자동 로그인
+        // anon key로 로그인하여 세션 토큰 발급
         if (userId) {
-            const { data } = await supabaseAdmin.auth.admin.generateLink({
-                type: 'magiclink',
+            const loginClient = createClient(supabaseUrl, anonKey);
+            const { data: signInData, error: signInError } = await loginClient.auth.signInWithPassword({
                 email,
+                password,
             });
-            if (data?.properties?.hashed_token) {
+
+            if (signInData?.session) {
                 return NextResponse.json({
                     success: true,
-                    token: data.properties.hashed_token,
-                    email,
+                    session: {
+                        access_token: signInData.session.access_token,
+                        refresh_token: signInData.session.refresh_token,
+                    },
                 });
             }
+            console.error('Sign in error:', signInError);
         }
 
         return NextResponse.json({ error: '로그인 처리에 실패했습니다' }, { status: 500 });

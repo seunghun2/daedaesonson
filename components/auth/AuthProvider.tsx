@@ -52,9 +52,18 @@ export function AuthProvider({ children }: { children: ReactNode }) {
             .single();
         if (data) {
             setProfile(data as Profile);
-            // 약관 동의 안 했으면 약관 화면 표시
-            if (!data.agreed_terms) {
-                setNeedsTerms(true);
+            // 약관 동의가 필요한지 확인:
+            // agreed_terms 필드가 명시적으로 false이고, 최근 가입한 유저만
+            if (data.agreed_terms === false && data.created_at) {
+                const createdAt = new Date(data.created_at).getTime();
+                const fiveMinutesAgo = Date.now() - 5 * 60 * 1000;
+                // 5분 이내 신규 가입자만 약관 모달 표시
+                if (createdAt > fiveMinutesAgo) {
+                    setNeedsTerms(true);
+                } else {
+                    // 기존 유저는 자동 동의 처리
+                    setNeedsTerms(false);
+                }
             } else {
                 setNeedsTerms(false);
             }
@@ -125,11 +134,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
             const data = await res.json();
             if (!res.ok) return { error: data.error };
 
-            // 매직 링크 토큰으로 세션 생성
-            if (data.token) {
-                const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-                const verifyUrl = `${supabaseUrl}/auth/v1/verify?token=${data.token}&type=magiclink&redirect_to=${window.location.origin}`;
-                window.location.href = verifyUrl;
+            // 서버에서 받은 세션 토큰으로 클라이언트 세션 설정
+            if (data.session) {
+                const { error: sessionError } = await supabase.auth.setSession({
+                    access_token: data.session.access_token,
+                    refresh_token: data.session.refresh_token,
+                });
+                if (sessionError) return { error: sessionError.message };
             }
             return { error: null };
         } catch {

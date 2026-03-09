@@ -189,6 +189,31 @@ export default function UserButton({ variant = 'light' }: { variant?: 'light' | 
                         onClick={() => { signOut(); setShowMenu(false); }}
                         color="#fa5252"
                     />
+
+                    <div style={{ height: 1, backgroundColor: '#f1f3f5', margin: '4px 0' }} />
+
+                    <MenuItem
+                        icon={
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                <polyline points="3 6 5 6 21 6" />
+                                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
+                            </svg>
+                        }
+                        label="회원탈퇴"
+                        onClick={async () => {
+                            if (!confirm('정말 탈퇴하시겠습니까?\n모든 데이터가 삭제됩니다.')) return;
+                            try {
+                                await fetch('/api/auth/delete-account', {
+                                    method: 'DELETE',
+                                    headers: { 'Content-Type': 'application/json' },
+                                    body: JSON.stringify({ userId: user.id }),
+                                });
+                                await signOut();
+                                setShowMenu(false);
+                            } catch { /* ignore */ }
+                        }}
+                        color="#868e96"
+                    />
                 </div>
             )}
         </div>
