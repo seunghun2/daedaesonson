@@ -8,6 +8,10 @@ export async function GET(request: NextRequest) {
 
     if (code) {
         try {
+            const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
+            const serviceKey = process.env.SUPABASE_SERVICE_KEY!;
+            const anonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
+
             // 1. 카카오에서 access_token 교환
             const tokenRes = await fetch('https://kauth.kakao.com/oauth/token', {
                 method: 'POST',
@@ -33,35 +37,69 @@ export async function GET(request: NextRequest) {
                 const nickname = userData.kakao_account?.profile?.nickname || '사용자';
                 const avatarUrl = userData.kakao_account?.profile?.profile_image_url || '';
 
-                // 3. Supabase Admin으로 유저 생성/로그인
-                const supabaseAdmin = createClient(
-                    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-                    process.env.SUPABASE_SERVICE_KEY!
-                );
-
+                const supabaseAdmin = createClient(supabaseUrl, serviceKey);
                 const email = `kakao_${kakaoId}@kakao.local`;
+                const password = `kakao_${kakaoId}_${serviceKey.slice(0, 12)}`;
 
-                // 기존 유저 찾기
-                const { data: existingUsers } = await supabaseAdmin.auth.admin.listUsers();
-                const existingUser = existingUsers?.users?.find((u: any) => u.email === email);
+                // 3. 기존 유저 찾기 (REST API)
+                const usersRes = await fetch(`${supabaseUrl}/auth/v1/admin/users?per_page=100`, {
+                    headers: { Authorization: `Bearer ${serviceKey}`, apikey: serviceKey },
+                });
+                const usersData = await usersRes.json();
+                const existingUser = usersData?.users?.find((u: any) => u.email === email);
 
                 let userId: string;
 
                 if (existingUser) {
                     userId = existingUser.id;
-                } else {
-                    // 신규 유저 생성
-                    const { data: newUser } = await supabaseAdmin.auth.admin.createUser({
-                        email,
-                        email_confirm: true,
-                        user_metadata: {
-                            full_name: nickname,
-                            avatar_url: avatarUrl,
-                            provider: 'kakao',
-                            kakao_id: kakaoId,
+                    // 비밀번호 업데이트
+                    await fetch(`${supabaseUrl}/auth/v1/admin/users/${userId}`, {
+                        method: 'PUT',
+                        headers: {
+                            Authorization: `Bearer ${serviceKey}`,
+                            apikey: serviceKey,
+                            'Content-Type': 'application/json',
                         },
+                        body: JSON.stringify({
+                            password,
+                            user_metadata: {
+                                full_name: nickname,
+                                avatar_url: avatarUrl,
+                                provider: 'kakao',
+                                kakao_id: kakaoId,
+                            },
+                        }),
                     });
-                    userId = newUser?.user?.id || '';
+
+                    // 프로필 업데이트 (닉네임/아바타 최신화)
+                    await supabaseAdmin.from('profiles').update({
+                        nickname,
+                        avatar_url: avatarUrl,
+                        updated_at: new Date().toISOString(),
+                    }).eq('id', userId);
+                } else {
+                    // 신규 유저 생성 (REST API)
+                    const createRes = await fetch(`${supabaseUrl}/auth/v1/admin/users`, {
+                        method: 'POST',
+                        headers: {
+                            Authorization: `Bearer ${serviceKey}`,
+                            apikey: serviceKey,
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            email,
+                            password,
+                            email_confirm: true,
+                            user_metadata: {
+                                full_name: nickname,
+                                avatar_url: avatarUrl,
+                                provider: 'kakao',
+                                kakao_id: kakaoId,
+                            },
+                        }),
+                    });
+                    const newUser = await createRes.json();
+                    userId = newUser?.id || '';
 
                     // 프로필 생성
                     if (userId) {
@@ -71,20 +109,25 @@ export async function GET(request: NextRequest) {
                             avatar_url: avatarUrl,
                             provider: 'kakao',
                             favorite_facilities: [],
+                            created_at: new Date().toISOString(),
                             updated_at: new Date().toISOString(),
                         });
                     }
                 }
 
-                // 4. 매직 링크로 자동 로그인
+                // 4. signInWithPassword로 세션 토큰 발급
                 if (userId) {
-                    const { data } = await supabaseAdmin.auth.admin.generateLink({
-                        type: 'magiclink',
+                    const loginClient = createClient(supabaseUrl, anonKey);
+                    const { data: signInData } = await loginClient.auth.signInWithPassword({
                         email,
+                        password,
                     });
-                    if (data?.properties?.hashed_token) {
-                        const verifyUrl = `${process.env.NEXT_PUBLIC_SUPABASE_URL}/auth/v1/verify?token=${data.properties.hashed_token}&type=magiclink&redirect_to=${encodeURIComponent(origin)}`;
-                        return NextResponse.redirect(verifyUrl);
+
+                    if (signInData?.session) {
+                        // 세션 토큰을 URL 해시에 포함하여 리디렉트
+                        const redirectUrl = new URL('/', origin);
+                        redirectUrl.hash = `access_token=${signInData.session.access_token}&refresh_token=${signInData.session.refresh_token}&type=kakao`;
+                        return NextResponse.redirect(redirectUrl.toString());
                     }
                 }
             }

@@ -72,6 +72,23 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
     // 세션 변경 감지
     useEffect(() => {
+        // URL 해시에서 카카오 로그인 토큰 확인
+        if (typeof window !== 'undefined' && window.location.hash) {
+            const hash = window.location.hash.substring(1);
+            const params = new URLSearchParams(hash);
+            const accessToken = params.get('access_token');
+            const refreshToken = params.get('refresh_token');
+            if (accessToken && refreshToken) {
+                // 해시 제거
+                window.history.replaceState(null, '', window.location.pathname);
+                // 세션 설정
+                supabase.auth.setSession({
+                    access_token: accessToken,
+                    refresh_token: refreshToken,
+                });
+            }
+        }
+
         // 초기 세션 확인
         supabase.auth.getSession().then(({ data: { session } }) => {
             setSession(session);
