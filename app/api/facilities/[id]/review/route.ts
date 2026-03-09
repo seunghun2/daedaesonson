@@ -136,8 +136,9 @@ export async function DELETE(
             );
         }
 
-        // Admin bypass or password check
-        if (!isAdmin) {
+        // Admin bypass, owner bypass, or password check
+        const isOwner = body.userId && review.userId && body.userId === review.userId;
+        if (!isAdmin && !isOwner) {
             if (!password) {
                 return NextResponse.json(
                     { error: '비밀번호를 입력해주세요.' },

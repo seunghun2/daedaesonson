@@ -1444,6 +1444,8 @@ function MyInfoPanel({
   const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
   const [showMyReviews, setShowMyReviews] = useState(false);
   const [myReviews, setMyReviews] = useState<any[]>([]);
+  const [deleteReviewId, setDeleteReviewId] = useState<string | null>(null);
+  const [deletingReview, setDeletingReview] = useState(false);
 
   // 내 이야기 로드
   useEffect(() => {
@@ -1460,6 +1462,25 @@ function MyInfoPanel({
     };
     loadMyReviews();
   }, []);
+
+  const handleDeleteReview = async () => {
+    if (!deleteReviewId) return;
+    const review = myReviews.find(r => r.id === deleteReviewId);
+    if (!review) return;
+    setDeletingReview(true);
+    try {
+      const res = await fetch(`/api/facilities/${review.facilityId}/review`, {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ reviewId: review.id, userId: user.id }),
+      });
+      if (res.ok) {
+        setMyReviews(prev => prev.filter(r => r.id !== deleteReviewId));
+      }
+    } catch { /* ignore */ }
+    setDeletingReview(false);
+    setDeleteReviewId(null);
+  };
 
   const displayName = profile?.nickname || user?.user_metadata?.full_name || user?.user_metadata?.name || '사용자';
   const avatarUrl = profile?.avatar_url || user?.user_metadata?.avatar_url;
@@ -1570,15 +1591,55 @@ function MyInfoPanel({
                         <span key={s} style={{ color: s <= review.rating ? '#fcc419' : '#dee2e6', fontSize: 14 }}>★</span>
                       ))}
                     </Group>
-                    <Text size="xs" c="dimmed">
-                      {new Date(review.createdAt).toLocaleDateString('ko-KR', { month: 'short', day: 'numeric' })}
-                    </Text>
+                    <Group gap={8}>
+                      <Text size="xs" c="dimmed">
+                        {new Date(review.createdAt).toLocaleDateString('ko-KR', { month: 'short', day: 'numeric' })}
+                      </Text>
+                      <Box
+                        onClick={(e: any) => { e.stopPropagation(); setDeleteReviewId(review.id); }}
+                        style={{ cursor: 'pointer', padding: 4, borderRadius: 6 }}
+                        onMouseEnter={(e: any) => { e.currentTarget.style.backgroundColor = '#fff5f5'; }}
+                        onMouseLeave={(e: any) => { e.currentTarget.style.backgroundColor = 'transparent'; }}
+                      >
+                        <span className="material-symbols-outlined" style={{ fontSize: '16px', color: '#adb5bd' }}>delete</span>
+                      </Box>
+                    </Group>
                   </Group>
                   <Text size="sm" lineClamp={2}>{review.content}</Text>
                   <Text size="xs" c="dimmed" mt={4}>{review.facilityId}</Text>
                 </Box>
               ))}
             </Stack>
+          )}
+
+          {/* 이야기 삭제 확인 모달 */}
+          {deleteReviewId && (
+            <Box style={{
+              position: 'fixed', inset: 0, zIndex: 9999,
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+              backgroundColor: 'rgba(0,0,0,0.4)',
+            }} onClick={() => setDeleteReviewId(null)}>
+              <Box
+                bg="white" p="xl"
+                style={{ borderRadius: 16, width: 280, textAlign: 'center', animation: 'scaleIn 0.2s ease-out' }}
+                onClick={(e: any) => e.stopPropagation()}
+              >
+                <Text size="md" fw={700} mb={4}>이야기 삭제</Text>
+                <Text size="sm" c="dimmed" mb={20}>이 이야기를 삭제하시겠습니까?</Text>
+                <Group justify="center" gap={8}>
+                  <button
+                    onClick={() => setDeleteReviewId(null)}
+                    style={{ padding: '10px 28px', borderRadius: 10, flex: 1, backgroundColor: '#f1f3f5', border: 'none', fontSize: 14, fontWeight: 600, color: '#495057', cursor: 'pointer' }}
+                  >아니오</button>
+                  <button
+                    onClick={handleDeleteReview}
+                    disabled={deletingReview}
+                    style={{ padding: '10px 28px', borderRadius: 10, flex: 1, backgroundColor: '#e03131', border: 'none', fontSize: 14, fontWeight: 600, color: 'white', cursor: deletingReview ? 'not-allowed' : 'pointer' }}
+                  >{deletingReview ? '삭제 중...' : '예'}</button>
+                </Group>
+              </Box>
+              <style>{`@keyframes scaleIn { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }`}</style>
+            </Box>
           )}
         </Box>
       ) : (
