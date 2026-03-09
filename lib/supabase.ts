@@ -13,7 +13,18 @@ export function getSupabaseClient(): SupabaseClient {
         return createClient('https://placeholder.supabase.co', 'placeholder-key');
     }
 
-    _client = createClient(url, key);
+    _client = createClient(url, key, {
+        auth: {
+            // navigator.locks 우회 — 'Lock broken by steal' 에러 방지
+            lock: async (name: string, acquireTimeout: number, fn: () => Promise<any>) => {
+                return await fn();
+            },
+            storageKey: 'sb-auth',
+            autoRefreshToken: true,
+            persistSession: true,
+            detectSessionInUrl: true,
+        }
+    });
     return _client;
 }
 

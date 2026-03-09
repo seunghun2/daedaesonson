@@ -23,15 +23,18 @@ export async function POST(
             );
         }
 
-        if (!password || password.length < 4) {
-            return NextResponse.json(
-                { error: '비밀번호는 4자 이상 입력해주세요.' },
-                { status: 400 }
-            );
+        // 비로그인 유저만 비밀번호 필수
+        if (!userId) {
+            if (!password || password.length < 4) {
+                return NextResponse.json(
+                    { error: '비밀번호는 4자 이상 입력해주세요.' },
+                    { status: 400 }
+                );
+            }
         }
 
-        // Hash password
-        const hashedPassword = await bcrypt.hash(password, 10);
+        // Hash password (비로그인 유저만)
+        const hashedPassword = password ? await bcrypt.hash(password, 10) : null;
 
         // Create review in Supabase
         const { data: newReview, error } = await supabase

@@ -1036,6 +1036,8 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
     const [inquiryOpen, setInquiryOpen] = useState(false);
     const [correctionOpen, setCorrectionOpen] = useState(false);
     const [reviewsOpen, setReviewsOpen] = useState(false);
+    const [shareModalOpen, setShareModalOpen] = useState(false);
+    const [shareToast, setShareToast] = useState<string | null>(null);
 
     // 패널 전환 — 하나 열면 나머지 모두 닫기
     const closeAllPanels = () => {
@@ -1197,6 +1199,60 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
     const [inquiryUnlocked, setInquiryUnlocked] = useState(false);
     const [inquiryPinError, setInquiryPinError] = useState('');
 
+    // 공유 기능
+    const getShareUrl = () => `https://daedaesonson.com/facility/${facility.id}`;
+
+    const shareViaKakao = () => {
+        const shareUrl = getShareUrl();
+        if (typeof window !== 'undefined' && (window as any).Kakao) {
+            const Kakao = (window as any).Kakao;
+            if (!Kakao.isInitialized()) {
+                Kakao.init('9d35e6a05467fd65a6b2ef47f5f1300e');
+            }
+            Kakao.Share.sendDefault({
+                objectType: 'feed',
+                content: {
+                    title: `${facility.name} - 대대손손`,
+                    description: facility.address || '시설 상세 정보를 확인해보세요',
+                    imageUrl: facility.thumbnail || 'https://daedaesonson.com/og-image.png',
+                    link: { mobileWebUrl: shareUrl, webUrl: shareUrl }
+                },
+                buttons: [{ title: '시설 보기', link: { mobileWebUrl: shareUrl, webUrl: shareUrl } }]
+            });
+            if (window.gtag) window.gtag('event', '공유_클릭', { 방법: '카카오톡', 시설ID: facility.id, 시설명: facility.name });
+        } else {
+            navigator.clipboard.writeText(shareUrl);
+            setShareToast('링크가 복사되었습니다');
+            setTimeout(() => setShareToast(null), 2000);
+        }
+        setShareModalOpen(false);
+    };
+
+    const shareViaSMS = () => {
+        const shareUrl = getShareUrl();
+        const text = `[대대손손] ${facility.name}\n${facility.address || ''}\n\n시설 정보 보기: ${shareUrl}`;
+        if (window.gtag) window.gtag('event', '공유_클릭', { 방법: '문자', 시설ID: facility.id, 시설명: facility.name });
+        window.location.href = `sms:?body=${encodeURIComponent(text)}`;
+        setShareModalOpen(false);
+    };
+
+    const shareViaBand = () => {
+        const shareUrl = getShareUrl();
+        const title = `${facility.name} - 대대손손`;
+        const bandUrl = `https://band.us/plugin/share?body=${encodeURIComponent(title)}&route=${encodeURIComponent(shareUrl)}`;
+        window.open(bandUrl, '_blank', 'width=500,height=700');
+        if (window.gtag) window.gtag('event', '공유_클릭', { 방법: '밴드', 시설ID: facility.id, 시설명: facility.name });
+        setShareModalOpen(false);
+    };
+
+    const shareViaLink = () => {
+        navigator.clipboard.writeText(getShareUrl());
+        if (window.gtag) window.gtag('event', '공유_클릭', { 방법: '링크복사', 시설ID: facility.id, 시설명: facility.name });
+        setShareToast('링크가 복사되었습니다');
+        setTimeout(() => setShareToast(null), 2000);
+        setShareModalOpen(false);
+    };
+
     // 문의 클릭 핸들러
     const handleInquiryClick = (inquiry: any) => {
         setSelectedInquiry(inquiry);
@@ -1320,7 +1376,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
             alert('별점을 선택해주세요.');
             return;
         }
-        if (!reviewForm.password.trim() || reviewForm.password.length < 4) {
+        if (!user && (!reviewForm.password.trim() || reviewForm.password.length < 4)) {
             alert('비밀번호를 4자 이상 입력해주세요.');
             return;
         }
@@ -1464,7 +1520,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
             alert('닉네임을 입력해주세요.');
             return;
         }
-        if (!replyPassword.trim()) {
+        if (!user && !replyPassword.trim()) {
             alert('비밀번호를 입력해주세요.');
             return;
         }
@@ -1480,7 +1536,8 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                     content: replyContent,
                     photos: replyPhotos,
                     author: replyNickname,
-                    password: replyPassword
+                    password: replyPassword || undefined,
+                    userId: user?.id,
                 })
             });
 
@@ -1785,13 +1842,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                     onClick={(e) => {
                                         e.stopPropagation();
                                         e.preventDefault();
-                                        navigator.clipboard.writeText(`https://daedaesonson.com/facility/${facility.id}`);
-                                        if (window.gtag) {
-                                            window.gtag('event', '공유_클릭', {
-                                                시설ID: facility.id,
-                                                시설명: facility.name
-                                            });
-                                        }
+                                        setShareModalOpen(true);
                                     }}
                                 >
                                     <span className="material-symbols-outlined" style={{ fontSize: '22px' }}>share</span>
@@ -1867,8 +1918,8 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                     }
                                 }}
                             >
-                                <span className="material-symbols-outlined" style={{ fontSize: '18px', color: isFavorited ? '#ff6b6b' : 'white', fontVariationSettings: isFavorited ? "'FILL' 1" : "'FILL' 0", transition: 'all 0.2s ease' }}>favorite</span>
-                                <span style={{ fontSize: '16px', color: isFavorited ? '#ff6b6b' : 'white', fontWeight: 500, transition: 'color 0.2s ease' }}>{isFavorited ? 1 : 0}</span>
+                                <span className="material-symbols-outlined" style={{ fontSize: '18px', color: isFavorited ? '#FFD43B' : 'white', fontVariationSettings: isFavorited ? "'FILL' 1" : "'FILL' 0", transition: 'all 0.2s ease' }}>star</span>
+                                <span style={{ fontSize: '16px', color: isFavorited ? '#FFD43B' : 'white', fontWeight: 500, transition: 'color 0.2s ease' }}>{isFavorited ? 1 : 0}</span>
                             </div>
 
                             <div style={{ width: '1px', backgroundColor: 'rgba(255,255,255,0.12)', alignSelf: 'stretch' }} />
@@ -2541,7 +2592,12 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                                     </Text>
                                                 </Group>
                                                 <Group gap={4} style={{ cursor: 'pointer' }} onClick={() => {
-                                                    setReplyingTo(replyingTo === review.id ? null : review.id);
+                                                    if (replyingTo === review.id) {
+                                                        setReplyingTo(null);
+                                                    } else {
+                                                        closeAllPanels();
+                                                        setReplyingTo(review.id);
+                                                    }
                                                     setReplyContent('');
                                                     setReplyPhotos([]);
                                                     setReplyNickname('');
@@ -4291,23 +4347,25 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                             />
                                         </Box>
 
-                                        {/* 비밀번호 (삭제용) */}
-                                        <Box px="md" py={14} style={{ borderBottom: '1px solid #f1f3f5' }}>
-                                            <TextInput
-                                                label="비밀번호"
-                                                description="후기 삭제 시 필요합니다"
-                                                placeholder="4자 이상 입력"
-                                                type="password"
-                                                value={reviewForm.password}
-                                                onChange={(e) => setReviewForm({ ...reviewForm, password: e.currentTarget.value })}
-                                                size="sm"
-                                                radius="md"
-                                                variant="default"
-                                                styles={{
-                                                    label: { fontSize: 14, fontWeight: 500, marginBottom: 4 },
-                                                }}
-                                            />
-                                        </Box>
+                                        {/* 비밀번호 (삭제용) — 비로그인 유저만 표시 */}
+                                        {!user && (
+                                            <Box px="md" py={14} style={{ borderBottom: '1px solid #f1f3f5' }}>
+                                                <TextInput
+                                                    label="비밀번호"
+                                                    description="후기 삭제 시 필요합니다"
+                                                    placeholder="4자 이상 입력"
+                                                    type="password"
+                                                    value={reviewForm.password}
+                                                    onChange={(e) => setReviewForm({ ...reviewForm, password: e.currentTarget.value })}
+                                                    size="sm"
+                                                    radius="md"
+                                                    variant="default"
+                                                    styles={{
+                                                        label: { fontSize: 14, fontWeight: 500, marginBottom: 4 },
+                                                    }}
+                                                />
+                                            </Box>
+                                        )}
 
                                         {/* 등록 버튼 */}
                                         <Box px="md" py="md">
@@ -4318,7 +4376,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                                 radius="xl"
                                                 fw={600}
                                                 onClick={handleSubmitReview}
-                                                disabled={reviewForm.rating === 0 || !reviewForm.content.trim() || reviewForm.password.length < 4}
+                                                disabled={reviewForm.rating === 0 || !reviewForm.content.trim() || (!user && reviewForm.password.length < 4)}
                                                 style={{ height: 52, fontSize: 16 }}
                                             >
                                                 등록하기
@@ -4712,7 +4770,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                     w="100%"
                                     h="100%"
                                     style={{
-                                        zIndex: 9998,
+                                        zIndex: 10020,
                                         backgroundColor: 'rgba(0,0,0,0.4)',
                                     }}
                                     onClick={() => {
@@ -4730,7 +4788,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                     left={0}
                                     w="100%"
                                     style={{
-                                        zIndex: 9999,
+                                        zIndex: 10021,
                                         backgroundColor: 'white',
                                         borderRadius: '16px 16px 0 0',
                                         boxShadow: '0 -4px 20px rgba(0,0,0,0.15)',
@@ -4785,22 +4843,24 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                                     }
                                                 }}
                                             />
-                                            <TextInput
-                                                placeholder="비밀번호"
-                                                size="sm"
-                                                type="password"
-                                                value={replyPassword}
-                                                onChange={(e) => setReplyPassword(e.currentTarget.value)}
-                                                style={{ flex: 1 }}
-                                                styles={{
-                                                    input: {
-                                                        fontSize: '14px',
-                                                        borderRadius: '10px',
-                                                        backgroundColor: '#f8f9fa',
-                                                        border: '1px solid #e9ecef',
-                                                    }
-                                                }}
-                                            />
+                                            {!user && (
+                                                <TextInput
+                                                    placeholder="비밀번호"
+                                                    size="sm"
+                                                    type="password"
+                                                    value={replyPassword}
+                                                    onChange={(e) => setReplyPassword(e.currentTarget.value)}
+                                                    style={{ flex: 1 }}
+                                                    styles={{
+                                                        input: {
+                                                            fontSize: '14px',
+                                                            borderRadius: '10px',
+                                                            backgroundColor: '#f8f9fa',
+                                                            border: '1px solid #e9ecef',
+                                                        }
+                                                    }}
+                                                />
+                                            )}
                                         </Group>
 
                                         {/* 댓글 내용 */}
@@ -5014,7 +5074,8 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                     left: '50%',
                     transform: 'translateX(-50%)',
                     zIndex: 99999,
-                    animation: 'toastSlideUp 0.3s ease-out',
+                    pointerEvents: 'none',
+                    animation: 'favToastAnim 2s ease-in-out forwards',
                 }}>
                     <div style={{
                         backgroundColor: 'rgba(0,0,0,0.85)',
@@ -5029,12 +5090,127 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                         whiteSpace: 'nowrap',
                         boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
                     }}>
-                        <span className="material-symbols-outlined" style={{ fontSize: '16px', color: '#ff6b6b', fontVariationSettings: "'FILL' 1" }}>favorite</span>
+                        <span className="material-symbols-outlined" style={{ fontSize: '16px', color: '#FFD43B', fontVariationSettings: "'FILL' 1" }}>star</span>
                         {favoriteToast}
                     </div>
-                    <style>{`@keyframes toastSlideUp { from { transform: translateX(-50%) translateY(20px); opacity: 0; } to { transform: translateX(-50%) translateY(0); opacity: 1; } }`}</style>
+                    <style>{`
+                        @keyframes favToastAnim {
+                            0% { opacity: 0; transform: translateX(-50%) translateY(20px); }
+                            15% { opacity: 1; transform: translateX(-50%) translateY(0); }
+                            75% { opacity: 1; transform: translateX(-50%) translateY(0); }
+                            100% { opacity: 0; transform: translateX(-50%) translateY(-8px); }
+                        }
+                    `}</style>
                 </div>
             )}
+
+            {/* ========== 공유하기 모달 (바텀시트) ========== */}
+            {shareModalOpen && (
+                <div style={{
+                    position: 'fixed', top: 0, left: 0, right: 0, bottom: 0,
+                    zIndex: 10050, display: 'flex', alignItems: 'flex-end', justifyContent: 'center',
+                }}>
+                    {/* 오버레이 */}
+                    <div
+                        style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, background: 'rgba(0,0,0,0.4)' }}
+                        onClick={() => setShareModalOpen(false)}
+                    />
+                    {/* 바텀시트 */}
+                    <div style={{
+                        position: 'relative', width: '100%', maxWidth: isMobile ? '100%' : 400,
+                        background: '#fff', borderRadius: '20px 20px 0 0',
+                        padding: '0 0 40px 0',
+                        animation: 'shareSlideUp 0.25s ease-out',
+                        left: isMobile ? 0 : 400,
+                    }}>
+                        {/* 헤더 */}
+                        <div style={{
+                            display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+                            padding: '20px 16px', borderBottom: '1px solid #f0f0f0',
+                        }}>
+                            <span style={{ fontSize: 16, fontWeight: 600, color: '#111' }}>공유하기</span>
+                            <button
+                                onClick={() => setShareModalOpen(false)}
+                                style={{
+                                    width: 32, height: 32, background: 'transparent', border: 'none',
+                                    fontSize: 18, color: '#999', cursor: 'pointer',
+                                }}
+                            >✕</button>
+                        </div>
+
+                        {/* 카카오톡 */}
+                        <button onClick={shareViaKakao} style={{
+                            display: 'flex', alignItems: 'center', gap: 16, width: '100%',
+                            padding: '16px', background: 'transparent', border: 'none',
+                            borderBottom: '1px solid #f5f5f5', cursor: 'pointer',
+                            fontFamily: "'Pretendard', sans-serif", fontSize: 14, fontWeight: 500, color: '#333', textAlign: 'left' as const,
+                        }}>
+                            <img src="/images/icon-kakao.png" alt="카카오톡" width={32} height={32} style={{ borderRadius: 8 }} />
+                            <span>카카오톡으로 보내기</span>
+                        </button>
+
+                        {/* 문자 */}
+                        <button onClick={shareViaSMS} style={{
+                            display: 'flex', alignItems: 'center', gap: 16, width: '100%',
+                            padding: '16px', background: 'transparent', border: 'none',
+                            borderBottom: '1px solid #f5f5f5', cursor: 'pointer',
+                            fontFamily: "'Pretendard', sans-serif", fontSize: 14, fontWeight: 500, color: '#333', textAlign: 'left' as const,
+                        }}>
+                            <img src="/images/icon-message.png" alt="메세지" width={32} height={32} style={{ borderRadius: 8 }} />
+                            <span>문자로 보내기</span>
+                        </button>
+
+                        {/* 밴드 */}
+                        <button onClick={shareViaBand} style={{
+                            display: 'flex', alignItems: 'center', gap: 16, width: '100%',
+                            padding: '16px', background: 'transparent', border: 'none',
+                            borderBottom: '1px solid #f5f5f5', cursor: 'pointer',
+                            fontFamily: "'Pretendard', sans-serif", fontSize: 14, fontWeight: 500, color: '#333', textAlign: 'left' as const,
+                        }}>
+                            <img src="/images/icon-band.png" alt="밴드" width={32} height={32} style={{ borderRadius: 8 }} />
+                            <span>밴드로 보내기</span>
+                        </button>
+
+                        {/* 링크 복사 */}
+                        <button onClick={shareViaLink} style={{
+                            display: 'flex', alignItems: 'center', gap: 16, width: '100%',
+                            padding: '16px', background: 'transparent', border: 'none',
+                            cursor: 'pointer',
+                            fontFamily: "'Pretendard', sans-serif", fontSize: 14, fontWeight: 500, color: '#333', textAlign: 'left' as const,
+                        }}>
+                            <img src="/images/icon-link.png" alt="링크" width={32} height={32} style={{ borderRadius: 8 }} />
+                            <span>링크 복사하기</span>
+                        </button>
+                    </div>
+                    <style>{`@keyframes shareSlideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }`}</style>
+                </div>
+            )}
+
+            {/* ========== 공유 토스트 ========== */}
+            {shareToast && (
+                <div style={{
+                    position: 'fixed',
+                    bottom: isMobile ? 80 : 40,
+                    left: isMobile ? '50%' : 600,
+                    transform: 'translateX(-50%)',
+                    background: '#333', color: '#fff', padding: '12px 24px', borderRadius: 12,
+                    fontSize: 14, fontWeight: 500, zIndex: 10060, pointerEvents: 'none' as const,
+                    display: 'flex', alignItems: 'center', gap: 8, whiteSpace: 'nowrap' as const,
+                    boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
+                    animation: 'shareToastAnim 2s ease-in-out forwards',
+                }}>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="3"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    {shareToast}
+                </div>
+            )}
+            <style>{`
+                @keyframes shareToastAnim {
+                    0% { opacity: 0; transform: translateX(-50%) translateY(16px); }
+                    12% { opacity: 1; transform: translateX(-50%) translateY(0); }
+                    80% { opacity: 1; transform: translateX(-50%) translateY(0); }
+                    100% { opacity: 0; transform: translateX(-50%) translateY(-8px); }
+                }
+            `}</style>
         </>
     );
 }

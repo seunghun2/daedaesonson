@@ -184,6 +184,11 @@ export default function RootLayout({
           `,
           }}
         />
+        {/* 📱 카카오 공유 SDK */}
+        <Script
+          strategy="afterInteractive"
+          src="https://developers.kakao.com/sdk/js/kakao.min.js"
+        />
       </body>
     </html>
   );
