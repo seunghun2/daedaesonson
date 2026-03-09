@@ -5,6 +5,7 @@ import { Box, Flex, useMantineTheme, TextInput, Group, Text, ThemeIcon, ActionIc
 import { useMediaQuery } from '@mantine/hooks';
 import { Search, MapPin, Building, MessageCircle, Clock, Info, User, ChevronLeft } from 'lucide-react';
 import LoginModal from '@/components/auth/LoginModal';
+import { useAuth } from '@/components/auth/AuthProvider';
 import Link from 'next/link';
 import { useRouter, useSearchParams, usePathname } from 'next/navigation';
 import { useDebouncedCallback } from 'use-debounce';
@@ -172,6 +173,7 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
   // UI 숨김 상태 (지도 탭 시 토글) - 호갱노노 스타일
   const [uiHidden, setUiHidden] = useState(false);
   const [showLoginFromMap, setShowLoginFromMap] = useState(false);
+  const { user } = useAuth();
 
   // 검색창 롤링 placeholder
   const placeholderTexts = ['서울 봉안당', '경기 수목장', '부산 공원묘지', '대전 납골당', '인천 자연장'];
@@ -1145,7 +1147,13 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
           onMapTap={handleMapTap}
           onMapDrag={() => setSearchFocused(false)}
           uiHidden={uiHidden}
-          onUserClick={!isMobile ? () => setShowLoginFromMap(true) : undefined}
+          onUserClick={!isMobile ? () => {
+            if (user) {
+              router.push('/myinfo');
+            } else {
+              setShowLoginFromMap(true);
+            }
+          } : undefined}
         />
         {/* PC: 로그인 모달 */}
         <LoginModal isOpen={showLoginFromMap} onClose={() => setShowLoginFromMap(false)} />

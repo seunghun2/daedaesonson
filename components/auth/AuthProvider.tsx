@@ -75,6 +75,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         // 1. 인증 상태 변경 리스너 (먼저 등록)
         const { data: { subscription } } = supabase.auth.onAuthStateChange(
             async (_event, session) => {
+                console.log('[auth] onAuthStateChange:', _event, 'user:', session?.user?.id);
                 setSession(session);
                 setUser(session?.user ?? null);
                 if (session?.user) {
@@ -88,6 +89,33 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
         // 2. 초기 세션 확인
         const initSession = async () => {
+            // 카카오 로그인 콜백 처리
+            if (typeof window !== 'undefined') {
+                const params = new URLSearchParams(window.location.search);
+                const kakaoAuth = params.get('kakao_auth');
+                if (kakaoAuth) {
+                    console.log('[auth] kakao_auth detected');
+                    // URL에서 쿼리 제거
+                    window.history.replaceState(null, '', window.location.pathname);
+                    try {
+                        const decoded = atob(kakaoAuth);
+                        const parts = decoded.split(':');
+                        const email = parts[0];
+                        const password = parts.slice(1).join(':');
+                        console.log('[auth] email:', email, 'password length:', password?.length);
+                        if (email && password) {
+                            console.log('[auth] calling signInWithPassword...');
+                            const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+                            console.log('[auth] signIn result:', !!data?.session, 'error:', error?.message);
+                            if (!error && data?.session) {
+                                console.log('[auth] SUCCESS! user:', data.session.user?.id);
+                                return; // onAuthStateChange에서 처리
+                            }
+                        }
+                    } catch (e) { console.error('[auth] error:', e); }
+                }
+            }
+
             const { data: { session } } = await supabase.auth.getSession();
             setSession(session);
             setUser(session?.user ?? null);
