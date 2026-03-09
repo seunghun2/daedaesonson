@@ -75,7 +75,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         return () => subscription.unsubscribe();
     }, []);
 
-    // 카카오 로그인 — Supabase를 거치지 않고 카카오 직접 호출 (account_email scope 제거)
+    // 카카오 로그인 — 카카오 직접 호출 (account_email 제외)
     const signInWithKakao = async () => {
         const kakaoClientId = '7ab050573fb230302ee849167cc26762';
         const redirectUri = `${window.location.origin}/auth/callback`;

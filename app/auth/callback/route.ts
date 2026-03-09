@@ -33,28 +33,22 @@ export async function GET(request: NextRequest) {
                 const nickname = userData.kakao_account?.profile?.nickname || '사용자';
                 const avatarUrl = userData.kakao_account?.profile?.profile_image_url || '';
 
-                // 3. Supabase에 사용자 생성/로그인 (서비스 키로)
+                // 3. Supabase Admin으로 유저 생성/로그인
                 const supabaseAdmin = createClient(
                     process.env.NEXT_PUBLIC_SUPABASE_URL!,
                     process.env.SUPABASE_SERVICE_KEY!
                 );
 
-                // 카카오 ID로 기존 유저 찾기
                 const email = `kakao_${kakaoId}@kakao.local`;
-                const { data: existingUser } = await supabaseAdmin.auth.admin.listUsers();
-                const user = existingUser?.users?.find((u: any) => u.email === email);
 
-                if (user) {
-                    // 기존 유저 — 매직 링크로 자동 로그인
-                    const { data } = await supabaseAdmin.auth.admin.generateLink({
-                        type: 'magiclink',
-                        email,
-                    });
-                    if (data?.properties?.hashed_token) {
-                        // 토큰으로 세션 생성
-                        const verifyUrl = `${process.env.NEXT_PUBLIC_SUPABASE_URL}/auth/v1/verify?token=${data.properties.hashed_token}&type=magiclink&redirect_to=${encodeURIComponent(origin)}`;
-                        return NextResponse.redirect(verifyUrl);
-                    }
+                // 기존 유저 찾기
+                const { data: existingUsers } = await supabaseAdmin.auth.admin.listUsers();
+                const existingUser = existingUsers?.users?.find((u: any) => u.email === email);
+
+                let userId: string;
+
+                if (existingUser) {
+                    userId = existingUser.id;
                 } else {
                     // 신규 유저 생성
                     const { data: newUser } = await supabaseAdmin.auth.admin.createUser({
@@ -67,27 +61,30 @@ export async function GET(request: NextRequest) {
                             kakao_id: kakaoId,
                         },
                     });
+                    userId = newUser?.user?.id || '';
 
-                    if (newUser?.user) {
-                        // 프로필 생성
+                    // 프로필 생성
+                    if (userId) {
                         await supabaseAdmin.from('profiles').upsert({
-                            id: newUser.user.id,
+                            id: userId,
                             nickname,
                             avatar_url: avatarUrl,
                             provider: 'kakao',
                             favorite_facilities: [],
                             updated_at: new Date().toISOString(),
                         });
+                    }
+                }
 
-                        // 매직 링크로 자동 로그인
-                        const { data } = await supabaseAdmin.auth.admin.generateLink({
-                            type: 'magiclink',
-                            email,
-                        });
-                        if (data?.properties?.hashed_token) {
-                            const verifyUrl = `${process.env.NEXT_PUBLIC_SUPABASE_URL}/auth/v1/verify?token=${data.properties.hashed_token}&type=magiclink&redirect_to=${encodeURIComponent(origin)}`;
-                            return NextResponse.redirect(verifyUrl);
-                        }
+                // 4. 매직 링크로 자동 로그인
+                if (userId) {
+                    const { data } = await supabaseAdmin.auth.admin.generateLink({
+                        type: 'magiclink',
+                        email,
+                    });
+                    if (data?.properties?.hashed_token) {
+                        const verifyUrl = `${process.env.NEXT_PUBLIC_SUPABASE_URL}/auth/v1/verify?token=${data.properties.hashed_token}&type=magiclink&redirect_to=${encodeURIComponent(origin)}`;
+                        return NextResponse.redirect(verifyUrl);
                     }
                 }
             }
@@ -96,6 +93,5 @@ export async function GET(request: NextRequest) {
         }
     }
 
-    // 로그인 완료 후 홈으로 리다이렉트
     return NextResponse.redirect(new URL('/', origin));
 }
