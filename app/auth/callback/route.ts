@@ -124,10 +124,11 @@ export async function GET(request: NextRequest) {
                     });
 
                     if (signInData?.session) {
-                        // 세션 토큰을 URL 해시에 포함하여 리디렉트
-                        const redirectUrl = new URL('/', origin);
-                        redirectUrl.hash = `access_token=${signInData.session.access_token}&refresh_token=${signInData.session.refresh_token}&type=kakao`;
-                        return NextResponse.redirect(redirectUrl.toString());
+                        // /auth/complete 페이지로 토큰 전달
+                        const completeUrl = new URL('/auth/complete', origin);
+                        completeUrl.searchParams.set('at', signInData.session.access_token);
+                        completeUrl.searchParams.set('rt', signInData.session.refresh_token);
+                        return NextResponse.redirect(completeUrl.toString());
                     }
                 }
             }

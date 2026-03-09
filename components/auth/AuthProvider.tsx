@@ -72,34 +72,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
     // 세션 변경 감지
     useEffect(() => {
-        // URL 해시에서 카카오 로그인 토큰 확인
-        if (typeof window !== 'undefined' && window.location.hash) {
-            const hash = window.location.hash.substring(1);
-            const params = new URLSearchParams(hash);
-            const accessToken = params.get('access_token');
-            const refreshToken = params.get('refresh_token');
-            if (accessToken && refreshToken) {
-                // 해시 제거
-                window.history.replaceState(null, '', window.location.pathname);
-                // 세션 설정
-                supabase.auth.setSession({
-                    access_token: accessToken,
-                    refresh_token: refreshToken,
-                });
-            }
-        }
-
-        // 초기 세션 확인
-        supabase.auth.getSession().then(({ data: { session } }) => {
-            setSession(session);
-            setUser(session?.user ?? null);
-            if (session?.user) {
-                fetchProfile(session.user.id);
-            }
-            setLoading(false);
-        });
-
-        // 인증 상태 변경 리스너
+        // 1. 인증 상태 변경 리스너 (먼저 등록)
         const { data: { subscription } } = supabase.auth.onAuthStateChange(
             async (_event, session) => {
                 setSession(session);
@@ -112,6 +85,19 @@ export function AuthProvider({ children }: { children: ReactNode }) {
                 setLoading(false);
             }
         );
+
+        // 2. 초기 세션 확인
+        const initSession = async () => {
+            const { data: { session } } = await supabase.auth.getSession();
+            setSession(session);
+            setUser(session?.user ?? null);
+            if (session?.user) {
+                fetchProfile(session.user.id);
+            }
+            setLoading(false);
+        };
+
+        initSession();
 
         return () => subscription.unsubscribe();
     }, []);

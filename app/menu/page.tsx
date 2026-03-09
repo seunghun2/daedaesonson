@@ -112,7 +112,8 @@ export default function MenuPage() {
                     <Box
                         p="lg"
                         bg="white"
-                        style={{ borderRadius: 16 }}
+                        style={{ borderRadius: 16, cursor: 'pointer' }}
+                        onClick={() => router.push('/myinfo')}
                     >
                         <Group gap="md" wrap="nowrap">
                             {avatarUrl ? (
