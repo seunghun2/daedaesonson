@@ -186,23 +186,32 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
     // 로그아웃
     const signOut = async () => {
+        // 1. Supabase signOut 시도 (lock 에러 등으로 실패해도 무관)
         try {
             await supabase.auth.signOut({ scope: 'local' });
-        } catch (e) {
-            // 에러 무시 - 로컬 정리만 하면 됨
-        }
-        // Supabase 관련 localStorage 전부 정리
+        } catch (e) { /* 무시 */ }
+
         if (typeof window !== 'undefined') {
-            Object.keys(localStorage).forEach(key => {
-                if (key.startsWith('sb-') || key.includes('supabase')) {
-                    localStorage.removeItem(key);
+            // 2. localStorage에서 Supabase 관련 키 전부 수집 후 삭제
+            const keysToRemove: string[] = [];
+            for (let i = 0; i < localStorage.length; i++) {
+                const key = localStorage.key(i);
+                if (key && (key.startsWith('sb-') || key.includes('supabase') || key.includes('auth-token'))) {
+                    keysToRemove.push(key);
+                }
+            }
+            keysToRemove.forEach(key => localStorage.removeItem(key));
+
+            // 3. Supabase 관련 쿠키도 삭제
+            document.cookie.split(';').forEach(cookie => {
+                const name = cookie.split('=')[0].trim();
+                if (name.startsWith('sb-') || name.includes('supabase')) {
+                    document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/`;
                 }
             });
         }
-        setUser(null);
-        setProfile(null);
-        setSession(null);
-        setFavorites([]);
+
+        // 4. 강제 리로드 (상태 초기화 불필요 - 리로드가 전부 처리)
         window.location.href = '/';
     };
 
