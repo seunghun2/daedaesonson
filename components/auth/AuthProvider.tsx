@@ -75,12 +75,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         return () => subscription.unsubscribe();
     }, []);
 
-    // 카카오 로그인 — Supabase 기본 scope에 account_email이 포함되므로 직접 URL 구성
+    // 카카오 로그인 — Supabase를 거치지 않고 카카오 직접 호출 (account_email scope 제거)
     const signInWithKakao = async () => {
-        const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-        const redirectTo = `${window.location.origin}/auth/callback`;
-        // Supabase Auth의 Kakao OAuth endpoint를 직접 호출하되, scopes를 명시적으로 제한
-        const authUrl = `${supabaseUrl}/auth/v1/authorize?provider=kakao&redirect_to=${encodeURIComponent(redirectTo)}&scopes=profile_nickname%20profile_image`;
+        const kakaoClientId = '7ab050573fb230302ee849167cc26762';
+        const redirectUri = `${window.location.origin}/auth/callback`;
+        const authUrl = `https://kauth.kakao.com/oauth/authorize?client_id=${kakaoClientId}&redirect_uri=${encodeURIComponent(redirectUri)}&response_type=code&scope=profile_nickname,profile_image`;
         window.location.href = authUrl;
     };
 
