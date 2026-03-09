@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import Script from 'next/script';
-import { AuthProvider } from '@/components/auth/AuthProvider';
+import { AuthProviderWrapper } from '@/components/auth/AuthProviderWrapper';
 import './globals.css';
 import '@mantine/core/styles.css';
 import { ColorSchemeScript, MantineProvider, createTheme } from '@mantine/core';
@@ -107,9 +107,9 @@ export default function RootLayout({
       </head>
       <body className={inter.className}>
         <MantineProvider theme={theme}>
-          <AuthProvider>
+          <AuthProviderWrapper>
             {children}
-          </AuthProvider>
+          </AuthProviderWrapper>
         </MantineProvider>
         {/* 🚀 GA4: afterInteractive로 변경 → 렌더 차단 제거 */}
         <Script
