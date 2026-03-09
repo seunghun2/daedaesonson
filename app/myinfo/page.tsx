@@ -34,8 +34,11 @@ export default function MyInfoPage() {
         loadMyReviews();
     }, []);
 
+    useEffect(() => {
+        if (!user) router.push('/menu');
+    }, [user, router]);
+
     if (!user) {
-        router.push('/menu');
         return null;
     }
 
