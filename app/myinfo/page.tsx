@@ -14,8 +14,25 @@ export default function MyInfoPage() {
     const isMobile = useMediaQuery('(max-width: 768px)');
     const [showFavorites, setShowFavorites] = useState(false);
     const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
+    const [showMyReviews, setShowMyReviews] = useState(false);
+    const [myReviews, setMyReviews] = useState<any[]>([]);
     const [facilityDetails, setFacilityDetails] = useState<any[]>([]);
     const [loadingFavorites, setLoadingFavorites] = useState(false);
+
+    useEffect(() => {
+        const loadMyReviews = async () => {
+            try {
+                const supabase = (await import('@/lib/supabase')).default;
+                const { data: { session: s } } = await supabase.auth.getSession();
+                if (!s) return;
+                const res = await fetch('/api/reviews/my', {
+                    headers: { Authorization: `Bearer ${s.access_token}` },
+                });
+                if (res.ok) setMyReviews(await res.json());
+            } catch { /* ignore */ }
+        };
+        loadMyReviews();
+    }, []);
 
     if (!user) {
         router.push('/menu');
@@ -214,6 +231,58 @@ export default function MyInfoPage() {
                                 <ChevronRight size={16} color="#adb5bd" />
                             </Group>
                         </Box>
+                    </Box>
+
+                    {/* 내 이야기 */}
+                    <Box px="md" pb="md">
+                        <Box
+                            bg="white" px="md" py={14}
+                            style={{
+                                borderRadius: 12, cursor: 'pointer',
+                                display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+                            }}
+                            onClick={() => setShowMyReviews(!showMyReviews)}
+                        >
+                            <Group gap={8}>
+                                <span className="material-symbols-outlined" style={{ fontSize: '18px', color: '#302E92' }}>chat_bubble</span>
+                                <Text size="sm" fw={500}>내 이야기</Text>
+                            </Group>
+                            <Group gap={4}>
+                                <Text size="sm" fw={700} style={{ color: 'var(--mantine-color-brand-7)' }}>{myReviews.length}개</Text>
+                                <span className="material-symbols-outlined" style={{ fontSize: '16px', color: '#adb5bd', transition: 'transform 0.2s', transform: showMyReviews ? 'rotate(90deg)' : 'none' }}>chevron_right</span>
+                            </Group>
+                        </Box>
+                        {showMyReviews && (
+                            <Stack gap="xs" mt="xs">
+                                {myReviews.length === 0 ? (
+                                    <Box py={20} style={{ textAlign: 'center' }}>
+                                        <Text size="sm" c="dimmed">아직 작성한 이야기가 없어요</Text>
+                                    </Box>
+                                ) : (
+                                    myReviews.map((review: any) => (
+                                        <Box
+                                            key={review.id}
+                                            bg="white" p="md"
+                                            style={{ borderRadius: 12, cursor: 'pointer' }}
+                                            onClick={() => router.push(`/?id=${review.facilityId}`)}
+                                        >
+                                            <Group justify="space-between" mb={4}>
+                                                <Group gap={4}>
+                                                    {[1, 2, 3, 4, 5].map(s => (
+                                                        <span key={s} style={{ color: s <= review.rating ? '#fcc419' : '#dee2e6', fontSize: 14 }}>★</span>
+                                                    ))}
+                                                </Group>
+                                                <Text size="xs" c="dimmed">
+                                                    {new Date(review.createdAt).toLocaleDateString('ko-KR', { month: 'short', day: 'numeric' })}
+                                                </Text>
+                                            </Group>
+                                            <Text size="sm" lineClamp={2}>{review.content}</Text>
+                                            <Text size="xs" c="dimmed" mt={4}>{review.facilityId}</Text>
+                                        </Box>
+                                    ))
+                                )}
+                            </Stack>
+                        )}
                     </Box>
 
                     {/* 약관 동의 정보 */}

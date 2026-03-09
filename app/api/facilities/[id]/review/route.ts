@@ -13,7 +13,7 @@ export async function POST(
 
     try {
         const body = await request.json();
-        const { rating, content, author, password, photos } = body;
+        const { rating, content, author, password, photos, userId } = body;
 
         // Validation
         if (!rating || !content) {
@@ -44,6 +44,7 @@ export async function POST(
                 password: hashedPassword,
                 photos: photos || [],
                 likes: 0,
+                userId: userId || null,
                 createdAt: new Date().toISOString()
             })
             .select()

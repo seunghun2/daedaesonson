@@ -1442,6 +1442,24 @@ function MyInfoPanel({
 }) {
   const [showFavList, setShowFavList] = useState(false);
   const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
+  const [showMyReviews, setShowMyReviews] = useState(false);
+  const [myReviews, setMyReviews] = useState<any[]>([]);
+
+  // 내 이야기 로드
+  useEffect(() => {
+    const loadMyReviews = async () => {
+      try {
+        const supabase = (await import('@/lib/supabase')).default;
+        const { data: { session } } = await supabase.auth.getSession();
+        if (!session) return;
+        const res = await fetch('/api/reviews/my', {
+          headers: { Authorization: `Bearer ${session.access_token}` },
+        });
+        if (res.ok) setMyReviews(await res.json());
+      } catch { /* ignore */ }
+    };
+    loadMyReviews();
+  }, []);
 
   const displayName = profile?.nickname || user?.user_metadata?.full_name || user?.user_metadata?.name || '사용자';
   const avatarUrl = profile?.avatar_url || user?.user_metadata?.avatar_url;
@@ -1472,11 +1490,15 @@ function MyInfoPanel({
         <Group gap="md" align="center">
           <Box
             style={{ cursor: 'pointer', display: 'flex', alignItems: 'center' }}
-            onClick={() => showFavList ? setShowFavList(false) : onClose()}
+            onClick={() => {
+              if (showFavList) setShowFavList(false);
+              else if (showMyReviews) setShowMyReviews(false);
+              else onClose();
+            }}
           >
             <span className="material-symbols-outlined" style={{ fontSize: '20px', color: 'white' }}>arrow_back_ios_new</span>
           </Box>
-          <Text size="md" fw={700} c="white">{showFavList ? '관심 시설' : '내 정보'}</Text>
+          <Text size="md" fw={700} c="white">{showFavList ? '관심 시설' : showMyReviews ? '내 이야기' : '내 정보'}</Text>
         </Group>
       </Box>
 
@@ -1516,6 +1538,44 @@ function MyInfoPanel({
                     </Box>
                     <span className="material-symbols-outlined" style={{ fontSize: '16px', color: '#adb5bd' }}>chevron_right</span>
                   </Group>
+                </Box>
+              ))}
+            </Stack>
+          )}
+        </Box>
+      ) : showMyReviews ? (
+        /* 내 이야기 리스트 */
+        <Box p="md">
+          {myReviews.length === 0 ? (
+            <Box py={60} style={{ textAlign: 'center' }}>
+              <span className="material-symbols-outlined" style={{ fontSize: '48px', color: '#dee2e6' }}>chat_bubble</span>
+              <Text c="dimmed" mt="sm">아직 작성한 이야기가 없어요</Text>
+            </Box>
+          ) : (
+            <Stack gap="xs">
+              {myReviews.map((review: any) => (
+                <Box
+                  key={review.id}
+                  bg="white" p="md"
+                  style={{ borderRadius: 12, cursor: 'pointer' }}
+                  onClick={() => {
+                    setShowMyReviews(false);
+                    onClose();
+                    onFacilityClick({ id: review.facilityId });
+                  }}
+                >
+                  <Group justify="space-between" mb={4}>
+                    <Group gap={4}>
+                      {[1, 2, 3, 4, 5].map(s => (
+                        <span key={s} style={{ color: s <= review.rating ? '#fcc419' : '#dee2e6', fontSize: 14 }}>★</span>
+                      ))}
+                    </Group>
+                    <Text size="xs" c="dimmed">
+                      {new Date(review.createdAt).toLocaleDateString('ko-KR', { month: 'short', day: 'numeric' })}
+                    </Text>
+                  </Group>
+                  <Text size="sm" lineClamp={2}>{review.content}</Text>
+                  <Text size="xs" c="dimmed" mt={4}>{review.facilityId}</Text>
                 </Box>
               ))}
             </Stack>
@@ -1563,6 +1623,26 @@ function MyInfoPanel({
               </Group>
               <Group gap={4}>
                 <Text size="sm" fw={700} style={{ color: 'var(--mantine-color-brand-7)' }}>{favorites.length}개</Text>
+                <span className="material-symbols-outlined" style={{ fontSize: '16px', color: '#adb5bd' }}>chevron_right</span>
+              </Group>
+            </Box>
+          </Box>
+
+          {/* 내 이야기 */}
+          <Box px="md" pb="sm">
+            <Box
+              bg="white" px="md" py={14}
+              style={{ borderRadius: 12, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'space-between', transition: 'background-color 0.15s' }}
+              onClick={() => setShowMyReviews(true)}
+              onMouseEnter={(e: any) => { e.currentTarget.style.backgroundColor = '#f8f9fa'; }}
+              onMouseLeave={(e: any) => { e.currentTarget.style.backgroundColor = 'white'; }}
+            >
+              <Group gap={8}>
+                <span className="material-symbols-outlined" style={{ fontSize: '18px', color: '#302E92' }}>chat_bubble</span>
+                <Text size="sm" fw={500}>내 이야기</Text>
+              </Group>
+              <Group gap={4}>
+                <Text size="sm" fw={700} style={{ color: 'var(--mantine-color-brand-7)' }}>{myReviews.length}개</Text>
                 <span className="material-symbols-outlined" style={{ fontSize: '16px', color: '#adb5bd' }}>chevron_right</span>
               </Group>
             </Box>

@@ -235,6 +235,10 @@ export default function AdminMembersPage() {
                     member={selectedMember}
                     onClose={() => setSelectedMember(null)}
                     formatDateTime={formatDateTime}
+                    onDelete={async (id) => {
+                        await fetchMembers();
+                        setSelectedMember(null);
+                    }}
                 />
             )}
         </div>
@@ -269,15 +273,40 @@ function formatPhoneDisplay(phone: string) {
     return phone;
 }
 
-function MemberDetailModal({ member, onClose, formatDateTime }: {
+function MemberDetailModal({ member, onClose, formatDateTime, onDelete }: {
     member: Member;
     onClose: () => void;
     formatDateTime: (d: string | null) => string;
+    onDelete: (id: string) => void;
 }) {
     const name = member.profile?.nickname || member.user_metadata?.full_name || '사용자';
     const avatar = member.profile?.avatar_url || member.user_metadata?.avatar_url;
     const provider = member.profile?.provider;
     const phone = member.profile?.phone || member.user_metadata?.phone;
+    const [deleting, setDeleting] = useState(false);
+
+    const handleDelete = async () => {
+        if (!confirm(`"${name}" 회원을 정말 삭제하시겠습니까?\n이 작업은 되돌릴 수 없습니다.`)) return;
+        setDeleting(true);
+        try {
+            const res = await fetch('/api/admin/members', {
+                method: 'DELETE',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ userId: member.id }),
+            });
+            if (res.ok) {
+                alert('회원이 삭제되었습니다.');
+                onDelete(member.id);
+            } else {
+                const data = await res.json();
+                alert(data.error || '삭제 실패');
+            }
+        } catch {
+            alert('네트워크 오류');
+        } finally {
+            setDeleting(false);
+        }
+    };
 
     return (
         <>
@@ -328,6 +357,24 @@ function MemberDetailModal({ member, onClose, formatDateTime }: {
                         </Group>
                     </div>
                 )}
+
+                {/* 회원 삭제 버튼 */}
+                <div style={{ marginTop: 20, borderTop: '1px solid #f1f3f5', paddingTop: 16 }}>
+                    <button
+                        onClick={handleDelete}
+                        disabled={deleting}
+                        style={{
+                            display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8,
+                            width: '100%', padding: '12px', borderRadius: 10,
+                            backgroundColor: deleting ? '#ffe3e3' : '#fff5f5',
+                            border: '1px solid #ffc9c9',
+                            fontSize: 14, fontWeight: 600,
+                            color: '#e03131', cursor: deleting ? 'not-allowed' : 'pointer',
+                        }}
+                    >
+                        {deleting ? '삭제 중...' : '회원 삭제'}
+                    </button>
+                </div>
             </div>
         </>
     );

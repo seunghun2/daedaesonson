@@ -1336,6 +1336,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                     author: reviewForm.nickname.trim() || '익명',
                     password: reviewForm.password,
                     photos: reviewForm.photos,
+                    userId: user?.id,
                 })
             });
             const data = await res.json();
