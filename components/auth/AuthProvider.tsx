@@ -49,7 +49,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     // 세션 변경 감지
     useEffect(() => {
         // 초기 세션 확인
-        supabase.auth.getSession().then(({ data: { session } }) => {
+        supabase.auth.getSession().then(({ data: { session } }: any) => {
             setSession(session);
             setUser(session?.user ?? null);
             if (session?.user) {
@@ -60,7 +60,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
         // 인증 상태 변경 리스너
         const { data: { subscription } } = supabase.auth.onAuthStateChange(
-            async (_event, session) => {
+            async (_event: any, session: any) => {
                 setSession(session);
                 setUser(session?.user ?? null);
                 if (session?.user) {
@@ -75,15 +75,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         return () => subscription.unsubscribe();
     }, []);
 
-    // 카카오 로그인
+    // 카카오 로그인 — Supabase 기본 scope에 account_email이 포함되므로 직접 URL 구성
     const signInWithKakao = async () => {
-        await supabase.auth.signInWithOAuth({
-            provider: 'kakao',
-            options: {
-                redirectTo: `${window.location.origin}/auth/callback`,
-                scopes: 'profile_nickname profile_image',
-            },
-        });
+        const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+        const redirectTo = `${window.location.origin}/auth/callback`;
+        // Supabase Auth의 Kakao OAuth endpoint를 직접 호출하되, scopes를 명시적으로 제한
+        const authUrl = `${supabaseUrl}/auth/v1/authorize?provider=kakao&redirect_to=${encodeURIComponent(redirectTo)}&scopes=profile_nickname%20profile_image`;
+        window.location.href = authUrl;
     };
 
     // 휴대전화 로그인 (OTP 발송)
