@@ -1449,7 +1449,7 @@ function MyInfoPanel({
   useEffect(() => {
     const loadMyReviews = async () => {
       try {
-        const supabase = (await import('@/lib/supabase')).default;
+        const supabase = (await import('@/lib/supabase')).getSupabaseClient();
         const { data: { session } } = await supabase.auth.getSession();
         if (!session) return;
         const res = await fetch('/api/reviews/my', {

@@ -22,7 +22,7 @@ export default function MyInfoPage() {
     useEffect(() => {
         const loadMyReviews = async () => {
             try {
-                const supabase = (await import('@/lib/supabase')).default;
+                const supabase = (await import('@/lib/supabase')).getSupabaseClient();
                 const { data: { session: s } } = await supabase.auth.getSession();
                 if (!s) return;
                 const res = await fetch('/api/reviews/my', {
