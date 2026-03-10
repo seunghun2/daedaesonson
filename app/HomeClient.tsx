@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useMemo, useEffect, useRef, useTransition, Suspense } from 'react';
-import { Box, Flex, useMantineTheme, TextInput, Group, Text, ThemeIcon, ActionIcon, ScrollArea, Stack, Loader, Center, Button, Popover, Checkbox, Drawer } from '@mantine/core';
+import { Box, Flex, useMantineTheme, TextInput, Group, Text, ThemeIcon, ActionIcon, ScrollArea, Stack, Loader, Center, Button, Popover, Checkbox, Drawer, SegmentedControl } from '@mantine/core';
 import { useMediaQuery } from '@mantine/hooks';
 import { Search, MapPin, Building, MessageCircle, Clock, Info, User, ChevronLeft, ChevronDown } from 'lucide-react';
 import LoginModal from '@/components/auth/LoginModal';
@@ -116,6 +116,7 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
   const [tempNearbyCategory, setTempNearbyCategory] = useState<string[]>(['all']);
   const [tempNearbyHideInquiry, setTempNearbyHideInquiry] = useState(false);
   const [nearbyHideInquiry, setNearbyHideInquiry] = useState(false);
+  const [nearbyInstitutionFilter, setNearbyInstitutionFilter] = useState<'all' | 'public' | 'private'>('all');
 
   // 자동완성 결과 상태
   const [completionResults, setCompletionResults] = useState<{
@@ -1247,9 +1248,9 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
         <NaverMap
           ref={mapRef}
           facilities={baseFacilities}
-          activeCategory={activeCategory}
-          institutionFilter={institutionFilter}
-          hideInquiry={hideInquiry}
+          activeCategory={nearbyList ? nearbyCategory : activeCategory}
+          institutionFilter={nearbyList ? nearbyInstitutionFilter : institutionFilter}
+          hideInquiry={nearbyList ? nearbyHideInquiry : hideInquiry}
           onMarkerClick={(f) => {
             setUiHidden(false); // 마커 클릭 시 UI 다시 표시
             handleMarkerClick(f);
@@ -1312,6 +1313,14 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
           nearby = nearby.filter(f => (f.priceRange?.min ?? 0) > 0);
         }
 
+        if (nearbyInstitutionFilter !== 'all') {
+          nearby = nearby.filter(f => {
+            if (nearbyInstitutionFilter === 'public') return f.isPublic === true;
+            if (nearbyInstitutionFilter === 'private') return f.isPublic === false;
+            return true;
+          });
+        }
+
         nearby.sort((a, b) => {
           if (!a.coordinates || !b.coordinates) return 0;
           return getDistance(nearbyList.lat, nearbyList.lng, a.coordinates.lat, a.coordinates.lng)
@@ -1357,7 +1366,7 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
 
             {/* 필터 바 */}
             <Box style={{ padding: '8px 16px', borderBottom: '1px solid #e9ecef', flexShrink: 0 }}>
-              <Group gap={6} wrap="nowrap" align="center">
+              <Group gap={6} wrap="nowrap" align="center" justify="space-between">
                 {/* 전체 시설 → Drawer 오픈 */}
                 <button
                   onClick={() => {
@@ -1382,6 +1391,17 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
                   }
                   <ChevronDown size={14} style={{ opacity: 0.6 }} />
                 </button>
+                <SegmentedControl
+                  size="xs"
+                  value={nearbyInstitutionFilter}
+                  onChange={(val) => setNearbyInstitutionFilter(val as 'all' | 'public' | 'private')}
+                  data={[
+                    { label: '전체', value: 'all' },
+                    { label: '공설', value: 'public' },
+                    { label: '사설', value: 'private' },
+                  ]}
+                  styles={{ root: { height: 30 } }}
+                />
               </Group>
             </Box>
 
