@@ -1,37 +1,79 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { SimpleGrid, Paper, Group, Text, ThemeIcon, Table, Badge, Card, RingProgress, Center, LoadingOverlay } from '@mantine/core';
-import { Database, TrendingUp, UserCheck, AlertCircle } from 'lucide-react';
+import { SimpleGrid, Paper, Group, Text, ThemeIcon, Table, Badge, Card, RingProgress, Center, LoadingOverlay, Stack } from '@mantine/core';
+import { Database, TrendingUp, UserCheck, AlertCircle, PhoneCall, MessageCircle, Star, Briefcase } from 'lucide-react';
 import { FACILITY_CATEGORY_LABELS, Facility } from '@/types';
 
+interface DashboardData {
+    facilities: Facility[];
+    membersCount: number;
+    consultsCount: number;
+    inquiriesCount: number;
+    reviewsCount: number;
+    correctionsCount: number;
+    partnershipCount: number;
+}
+
 export default function AdminDashboard() {
-    const [data, setData] = useState<Facility[]>([]);
+    const [data, setData] = useState<DashboardData>({
+        facilities: [],
+        membersCount: 0,
+        consultsCount: 0,
+        inquiriesCount: 0,
+        reviewsCount: 0,
+        correctionsCount: 0,
+        partnershipCount: 0,
+    });
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        async function fetchData() {
+        async function fetchAll() {
             try {
-                const res = await fetch('/api/facilities');
-                if (res.ok) {
-                    const json = await res.json();
-                    setData(json);
-                }
+                const [
+                    facilitiesRes,
+                    membersRes,
+                    consultsRes,
+                    inquiriesRes,
+                    reviewsRes,
+                    correctionsRes,
+                    partnershipRes,
+                ] = await Promise.all([
+                    fetch('/api/facilities').then(r => r.ok ? r.json() : []),
+                    fetch('/api/admin/members').then(r => r.ok ? r.json() : []),
+                    fetch('/api/consult').then(r => r.ok ? r.json() : { consults: [] }),
+                    fetch('/api/admin/inquiries/count').then(r => r.ok ? r.json() : { count: 0 }),
+                    fetch('/api/admin/reviews').then(r => r.ok ? r.json() : { reviews: [] }),
+                    fetch('/api/corrections').then(r => r.ok ? r.json() : { data: [] }),
+                    fetch('/api/partnership').then(r => r.ok ? r.json() : { inquiries: [] }),
+                ]);
+
+                setData({
+                    facilities: Array.isArray(facilitiesRes) ? facilitiesRes : [],
+                    membersCount: Array.isArray(membersRes) ? membersRes.length : 0,
+                    consultsCount: consultsRes?.consults?.length ?? 0,
+                    inquiriesCount: inquiriesRes?.count ?? 0,
+                    reviewsCount: reviewsRes?.reviews?.length ?? 0,
+                    correctionsCount: correctionsRes?.data?.length ?? 0,
+                    partnershipCount: partnershipRes?.inquiries?.length ?? 0,
+                });
             } catch (e) {
-                console.error(e);
+                console.error('Dashboard fetch error:', e);
             } finally {
                 setLoading(false);
             }
         }
-        fetchData();
+        fetchAll();
     }, []);
 
-    const totalCount = data.length;
-    // 최근 등록 순 (API가 최신순 정렬이라 가정하거나 클라이언트 정렬)
-    const recentItems = [...data].slice(0, 5);
+    const { facilities, membersCount, consultsCount, inquiriesCount, reviewsCount, correctionsCount, partnershipCount } = data;
+    const totalCount = facilities.length;
 
-    // 카테고리 통계 계산
-    const categoryCounts = data.reduce((acc, curr) => {
+    // 최근 등록 시설
+    const recentItems = [...facilities].slice(0, 5);
+
+    // 카테고리 통계
+    const categoryCounts = facilities.reduce((acc, curr) => {
         acc[curr.category] = (acc[curr.category] || 0) + 1;
         return acc;
     }, {} as Record<string, number>);
@@ -44,10 +86,13 @@ export default function AdminDashboard() {
     const otherCount = totalCount - (charnelCount + naturalCount + parkCount);
 
     const stats = [
-        { title: '총 등록 시설', value: totalCount.toLocaleString(), icon: Database, color: 'blue', diff: 12 },
-        { title: '이번 달 조회수', value: '42,910', icon: TrendingUp, color: 'teal', diff: 5.4 },
-        { title: '활성 사용자', value: '1,290', icon: UserCheck, color: 'grape', diff: -2.1 },
-        { title: '신고/수정 요청', value: '3', icon: AlertCircle, color: 'red', diff: 0 },
+        { title: '총 등록 시설', value: totalCount.toLocaleString(), icon: Database, color: 'blue' },
+        { title: '가입 회원', value: membersCount.toLocaleString(), icon: UserCheck, color: 'grape' },
+        { title: '상담 신청', value: consultsCount.toLocaleString(), icon: PhoneCall, color: 'teal' },
+        { title: '수정 요청', value: correctionsCount.toLocaleString(), icon: AlertCircle, color: 'red' },
+        { title: '댓글 문의', value: inquiriesCount.toLocaleString(), icon: MessageCircle, color: 'cyan' },
+        { title: '방문 후기', value: reviewsCount.toLocaleString(), icon: Star, color: 'yellow' },
+        { title: '제휴 문의', value: partnershipCount.toLocaleString(), icon: Briefcase, color: 'indigo' },
     ];
 
     if (loading) return <LoadingOverlay visible />;
@@ -57,29 +102,24 @@ export default function AdminDashboard() {
             <Text size="xl" fw={800} mb="lg">대시보드</Text>
 
             {/* 상단 통계 카드 */}
-            <SimpleGrid cols={{ base: 1, sm: 2, md: 4 }} mb="lg">
+            <SimpleGrid cols={{ base: 2, sm: 3, md: 4 }} mb="lg">
                 {stats.map((stat) => (
                     <Paper withBorder p="md" radius="md" key={stat.title}>
                         <Group justify="space-between">
                             <Text size="xs" c="dimmed" fw={700} tt="uppercase">
                                 {stat.title}
                             </Text>
-                            <ThemeIcon color="gray" variant="light" size="sm">
+                            <ThemeIcon color={stat.color} variant="light" size="sm">
                                 <stat.icon size={16} />
                             </ThemeIcon>
                         </Group>
 
-                        <Group align="flex-end" gap="xs" mt={25}>
-                            <Text size="2xl" fw={700} lh={1}>
-                                {stat.value}
-                            </Text>
-                            <Text c={stat.diff > 0 ? 'teal' : 'red'} size="sm" fw={700} fz="xs">
-                                <span>{stat.diff > 0 ? '+' : ''}{stat.diff}%</span>
-                            </Text>
-                        </Group>
+                        <Text size="2xl" fw={700} lh={1} mt={25}>
+                            {stat.value}
+                        </Text>
 
                         <Text size="xs" c="dimmed" mt={7}>
-                            지난 달 대비
+                            실시간
                         </Text>
                     </Paper>
                 ))}
