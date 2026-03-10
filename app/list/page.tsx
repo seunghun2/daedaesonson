@@ -1,9 +1,9 @@
 'use client';
 
 import { useState, useMemo, useEffect, useCallback, useTransition, Suspense } from 'react';
-import { Box, Group, Text, ScrollArea, Center, Loader, Button, Stack, ActionIcon } from '@mantine/core';
+import { Box, Group, Text, ScrollArea, Center, Loader, Button, Stack, ActionIcon, Checkbox, Drawer, Popover } from '@mantine/core';
 import { useMediaQuery } from '@mantine/hooks';
-import { ChevronLeft } from 'lucide-react';
+import { ChevronLeft, ChevronDown } from 'lucide-react';
 import { useRouter, useSearchParams } from 'next/navigation';
 
 import FacilityCard from '@/components/list/FacilityCard';
@@ -40,6 +40,10 @@ function ListPageContent() {
     const [activeCategory, setActiveCategory] = useState<string[]>(['all']);
     const [hideInquiry, setHideInquiry] = useState(false);
     const [isPending, startTransition] = useTransition();
+
+    const [categoryFilterOpen, setCategoryFilterOpen] = useState(false);
+    const [tempCategory, setTempCategory] = useState<string[]>(['all']);
+    const [tempHideInquiry, setTempHideInquiry] = useState(false);
 
     // 상세 페이지
     const [selectedFacility, setSelectedFacility] = useState<Facility | null>(null);
@@ -231,100 +235,131 @@ function ListPageContent() {
                 }}
             >
                 <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-                    {/* 전체 버튼 */}
+                    {/* 카테고리 필터 버튼 → Drawer 오픈 */}
                     <button
-                        onClick={() => { startTransition(() => setActiveCategory(['all'])); setVisibleCount(20); }}
+                        onClick={() => {
+                            setTempCategory([...activeCategory]);
+                            setTempHideInquiry(hideInquiry);
+                            setCategoryFilterOpen(true);
+                        }}
                         style={{
-                            height: '30px',
-                            fontSize: '12px',
-                            fontWeight: activeCategory.includes('all') ? 700 : 500,
-                            backgroundColor: activeCategory.includes('all') ? '#1D0098' : 'white',
-                            color: activeCategory.includes('all') ? 'white' : '#495057',
-                            border: activeCategory.includes('all') ? 'none' : '1px solid #dee2e6',
-                            borderRadius: '6px',
-                            cursor: 'pointer',
-                            transition: 'all 0.2s',
-                            paddingLeft: '14px',
-                            paddingRight: '14px',
-                            whiteSpace: 'nowrap'
+                            height: '30px', fontSize: '12px', fontWeight: 600,
+                            backgroundColor: activeCategory.includes('all') ? 'white' : '#f1f3f5',
+                            color: activeCategory.includes('all') ? '#495057' : '#343a40',
+                            border: activeCategory.includes('all') ? '1px solid #dee2e6' : '1.5px solid #868e96',
+                            borderRadius: '6px', cursor: 'pointer', transition: 'all 0.2s',
+                            paddingLeft: '12px', paddingRight: '8px', whiteSpace: 'nowrap',
+                            display: 'flex', alignItems: 'center', gap: '4px',
                         }}
                     >
-                        전체
+                        {activeCategory.includes('all') ? '전체 시설' :
+                            activeCategory.length === 1 ?
+                                ({ charnel: '봉안당', natural: '수목장', park: '공원묘지' }[activeCategory[0]] || '전체 시설') :
+                                `${({ charnel: '봉안당', natural: '수목장', park: '공원묘지' }[activeCategory[0]] || '')} 외 ${activeCategory.length - 1}`
+                        }
+                        <ChevronDown size={14} style={{ opacity: 0.6 }} />
                     </button>
 
-                    {/* 구분선 */}
-                    <div style={{ width: '1px', height: '20px', backgroundColor: '#dee2e6' }} />
-
-                    {/* 개별 카테고리 버튼들 */}
-                    {[
-                        { value: 'charnel', label: '봉안당' },
-                        { value: 'natural', label: '수목장' },
-                        { value: 'park', label: '공원묘지' }
-                    ].map(tab => {
-                        const isSelected = activeCategory.includes(tab.value);
-                        return (
-                            <button
-                                key={tab.value}
-                                onClick={() => {
-                                    setVisibleCount(20);
-                                    startTransition(() => {
-                                        if (activeCategory.includes('all')) {
-                                            setActiveCategory([tab.value]);
-                                        } else if (isSelected) {
-                                            const newCats = activeCategory.filter(c => c !== tab.value);
-                                            setActiveCategory(newCats.length === 0 ? ['all'] : newCats);
-                                        } else {
-                                            const newCats = [...activeCategory, tab.value];
-                                            if (newCats.length === 3) {
-                                                setActiveCategory(['all']);
-                                            } else {
-                                                setActiveCategory(newCats);
-                                            }
-                                        }
-                                    });
-                                }}
-                                style={{
-                                    height: '30px',
-                                    fontSize: '12px',
-                                    fontWeight: isSelected ? 700 : 500,
-                                    backgroundColor: isSelected ? '#1D0098' : 'white',
-                                    color: isSelected ? 'white' : '#495057',
-                                    border: isSelected ? 'none' : '1px solid #dee2e6',
-                                    borderRadius: '6px',
-                                    cursor: 'pointer',
-                                    transition: 'all 0.2s',
-                                    paddingLeft: '14px',
-                                    paddingRight: '14px',
-                                    whiteSpace: 'nowrap'
-                                }}
-                            >
-                                {tab.label}
-                            </button>
-                        );
-                    })}
                     {/* 문의제외 필터 */}
-                    <div style={{ width: '1px', height: '20px', backgroundColor: '#dee2e6', flexShrink: 0 }} />
                     <button
                         onClick={() => setHideInquiry(!hideInquiry)}
                         style={{
-                            height: '30px',
-                            fontSize: '12px',
+                            height: '30px', fontSize: '12px',
                             fontWeight: hideInquiry ? 700 : 500,
-                            backgroundColor: hideInquiry ? '#FFF3E0' : 'white',
-                            color: hideInquiry ? '#E65100' : '#495057',
-                            border: hideInquiry ? '1.5px solid #E65100' : '1px solid #dee2e6',
-                            borderRadius: '6px',
-                            cursor: 'pointer',
-                            transition: 'all 0.2s',
-                            paddingLeft: '14px',
-                            paddingRight: '14px',
-                            whiteSpace: 'nowrap',
-                            flexShrink: 0,
+                            backgroundColor: hideInquiry ? '#EDE9FF' : 'white',
+                            color: hideInquiry ? '#1D0098' : '#495057',
+                            border: hideInquiry ? '1.5px solid #1D0098' : '1px solid #dee2e6',
+                            borderRadius: '6px', cursor: 'pointer', transition: 'all 0.2s',
+                            paddingLeft: '14px', paddingRight: '14px', whiteSpace: 'nowrap', flexShrink: 0,
                         }}
                     >
                         문의제외
                     </button>
                 </div>
+
+                {/* 필터 Drawer (PC: 왼쪽 사이드바 크기, 모바일: 풀스크린) */}
+                <Drawer
+                    opened={categoryFilterOpen}
+                    onClose={() => setCategoryFilterOpen(false)}
+                    position={isMobile ? 'bottom' : 'left'}
+                    size={isMobile ? '100%' : 400}
+                    withCloseButton={false}
+                    zIndex={10000}
+                    styles={{
+                        content: { borderRadius: isMobile ? '16px 16px 0 0' : 0, display: 'flex', flexDirection: 'column' as const },
+                        body: { padding: 0, flex: 1, display: 'flex', flexDirection: 'column' as const },
+                    }}
+                >
+                    {/* 헤더 */}
+                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '16px 20px', borderBottom: '1px solid #f1f3f5' }}>
+                        <button onClick={() => setCategoryFilterOpen(false)} style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 4, display: 'flex', alignItems: 'center', justifyContent: 'center', width: 28, height: 28 }}>
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#333" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" /></svg>
+                        </button>
+                        <Text fw={700} size="md">필터</Text>
+                        <div style={{ width: 28 }} />
+                    </div>
+
+                    {/* 시설 유형 */}
+                    <div style={{ padding: '20px 24px', flex: 1 }}>
+                        <Text fw={700} size="sm" mb={16}>시설 유형</Text>
+                        <Stack gap={14}>
+                            {[
+                                { value: 'charnel', label: '봉안당' },
+                                { value: 'natural', label: '수목장' },
+                                { value: 'park', label: '공원묘지' }
+                            ].map(tab => (
+                                <Checkbox
+                                    key={tab.value}
+                                    label={tab.label}
+                                    checked={tempCategory.includes('all') || tempCategory.includes(tab.value)}
+                                    onChange={() => {
+                                        if (tempCategory.includes('all')) {
+                                            const others = ['charnel', 'natural', 'park'].filter(v => v !== tab.value);
+                                            setTempCategory(others);
+                                        } else if (tempCategory.includes(tab.value)) {
+                                            const newCats = tempCategory.filter(c => c !== tab.value);
+                                            setTempCategory(newCats.length === 0 ? ['all'] : newCats);
+                                        } else {
+                                            const newCats = [...tempCategory, tab.value];
+                                            setTempCategory(newCats.length === 3 ? ['all'] : newCats);
+                                        }
+                                    }}
+                                    size="md"
+                                    color="violet"
+                                    styles={{ label: { fontSize: '15px', fontWeight: 500, cursor: 'pointer' }, input: { cursor: 'pointer' } }}
+                                />
+                            ))}
+                        </Stack>
+
+                        <div style={{ height: 1, backgroundColor: '#f1f3f5', margin: '20px 0' }} />
+
+                        <Checkbox
+                            label="문의 가격 시설 제외"
+                            checked={tempHideInquiry}
+                            onChange={() => setTempHideInquiry(!tempHideInquiry)}
+                            size="md"
+                            color="violet"
+                            styles={{ label: { fontSize: '15px', fontWeight: 500, cursor: 'pointer' }, input: { cursor: 'pointer' } }}
+                        />
+                    </div>
+
+                    {/* 하단 버튼 */}
+                    <div style={{ display: 'flex', gap: 12, padding: '16px 20px', borderTop: '1px solid #f1f3f5', paddingBottom: 'calc(16px + env(safe-area-inset-bottom))', marginTop: 'auto' }}>
+                        <button
+                            onClick={() => { setTempCategory(['all']); setTempHideInquiry(false); }}
+                            style={{ flex: '0 0 auto', height: 48, padding: '0 20px', backgroundColor: 'white', border: '1px solid #dee2e6', borderRadius: 12, fontSize: 14, fontWeight: 600, color: '#495057', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 6 }}
+                        >
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="1 4 1 10 7 10" /><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10" /></svg>
+                            선택해제
+                        </button>
+                        <button
+                            onClick={() => { setVisibleCount(20); startTransition(() => setActiveCategory(tempCategory)); setHideInquiry(tempHideInquiry); setCategoryFilterOpen(false); }}
+                            style={{ flex: 1, height: 48, backgroundColor: '#1D0098', color: 'white', border: 'none', borderRadius: 12, fontSize: 15, fontWeight: 700, cursor: 'pointer' }}
+                        >
+                            적용하기
+                        </button>
+                    </div>
+                </Drawer>
             </Box>
 
             {/* 시설 리스트 */}
@@ -341,9 +376,19 @@ function ListPageContent() {
                     </Center>
                 ) : (
                     <Stack p="md" gap="md">
-                        <Text size="sm" c="dimmed" fw={500}>
-                            검색 결과 {finalFacilities.length}개
-                        </Text>
+                        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                            <Text size="sm" c="dimmed" fw={500}>
+                                검색 결과 {finalFacilities.length}개
+                            </Text>
+                            <Checkbox
+                                label="문의시설 제외"
+                                checked={hideInquiry}
+                                onChange={() => setHideInquiry(!hideInquiry)}
+                                size="xs"
+                                color="violet"
+                                styles={{ label: { fontSize: '12px', color: '#868e96', cursor: 'pointer', paddingLeft: 6 }, input: { cursor: 'pointer' } }}
+                            />
+                        </div>
 
                         {visibleFacilities.map((facility) => (
                             <Box
