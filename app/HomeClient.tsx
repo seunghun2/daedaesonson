@@ -910,27 +910,29 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
               <ChevronDown size={16} style={{ opacity: 0.6 }} />
             </button>
 
-            {/* 문의제외 필터 */}
-            <button
-              onClick={() => setHideInquiry(!hideInquiry)}
-              style={{
-                height: '34px',
-                fontSize: '14px',
-                fontWeight: hideInquiry ? 700 : 500,
-                backgroundColor: hideInquiry ? '#EDE9FF' : 'white',
-                color: hideInquiry ? '#1D0098' : '#495057',
-                border: hideInquiry ? '1.5px solid #1D0098' : '1px solid #dee2e6',
-                borderRadius: '20px',
-                cursor: 'pointer',
-                transition: 'all 0.2s',
-                paddingLeft: '16px',
-                paddingRight: '16px',
-                flexShrink: 0,
-                whiteSpace: 'nowrap'
-              }}
-            >
-              문의제외
-            </button>
+            {/* 문의제외 필터 (모바일에서만 표시 - PC는 검색결과 옆 체크박스) */}
+            {isMobile && (
+              <button
+                onClick={() => setHideInquiry(!hideInquiry)}
+                style={{
+                  height: '34px',
+                  fontSize: '14px',
+                  fontWeight: hideInquiry ? 700 : 500,
+                  backgroundColor: hideInquiry ? '#EDE9FF' : 'white',
+                  color: hideInquiry ? '#1D0098' : '#495057',
+                  border: hideInquiry ? '1.5px solid #1D0098' : '1px solid #dee2e6',
+                  borderRadius: '20px',
+                  cursor: 'pointer',
+                  transition: 'all 0.2s',
+                  paddingLeft: '16px',
+                  paddingRight: '16px',
+                  flexShrink: 0,
+                  whiteSpace: 'nowrap'
+                }}
+              >
+                문의제외
+              </button>
+            )}
           </div>
         </Box>
 
@@ -966,11 +968,13 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
             />
           ) : (
             <Flex direction="column" h="100%">
-              <FilterBar sortBy={sortBy} setSortBy={setSortBy} totalCount={finalFacilities.length} institutionFilter={institutionFilter} setInstitutionFilter={setInstitutionFilter} regionName={currentRegionName} />
+              <FilterBar sortBy={sortBy} setSortBy={setSortBy} totalCount={finalFacilities.length} institutionFilter={institutionFilter} setInstitutionFilter={setInstitutionFilter} regionName={currentRegionName} hideInquiry={hideInquiry} setHideInquiry={setHideInquiry} />
               <FacilityList
                 facilities={finalFacilities}
                 onFacilityClick={handleMarkerClick}
                 selectedId={selectedFacility?.id}
+                hideInquiry={hideInquiry}
+                setHideInquiry={setHideInquiry}
               />
             </Flex>
           )}

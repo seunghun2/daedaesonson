@@ -8,7 +8,9 @@ interface FilterBarProps {
     totalCount: number;
     institutionFilter: 'all' | 'public' | 'private';
     setInstitutionFilter: (val: 'all' | 'public' | 'private') => void;
-    regionName?: string; // 현재 지역명
+    regionName?: string;
+    hideInquiry?: boolean;
+    setHideInquiry?: (val: boolean) => void;
 }
 
 export default function FilterBar({ sortBy, setSortBy, totalCount, institutionFilter, setInstitutionFilter, regionName }: FilterBarProps) {

@@ -1,6 +1,6 @@
 'use client';
 
-import { ActionIcon, Affix, Transition, Stack, Text, Box, ScrollArea, Center, Loader, Button } from '@mantine/core';
+import { ActionIcon, Affix, Transition, Stack, Text, Box, ScrollArea, Center, Loader, Button, Checkbox } from '@mantine/core';
 import { useWindowScroll, useMediaQuery } from '@mantine/hooks';
 import { ArrowUp } from 'lucide-react';
 import { Facility } from '@/types';
@@ -12,9 +12,11 @@ interface FacilityListProps {
     loading?: boolean;
     onFacilityClick: (facility: Facility) => void;
     selectedId?: string | null;
+    hideInquiry?: boolean;
+    setHideInquiry?: (val: boolean) => void;
 }
 
-export default function FacilityList({ facilities, loading, onFacilityClick, selectedId }: FacilityListProps) {
+export default function FacilityList({ facilities, loading, onFacilityClick, selectedId, hideInquiry, setHideInquiry }: FacilityListProps) {
     const [visibleCount, setVisibleCount] = useState(20);
     const viewportRef = useRef<HTMLDivElement>(null);
     const [scrollPosition, setScrollPosition] = useState({ y: 0 });
@@ -57,9 +59,19 @@ export default function FacilityList({ facilities, loading, onFacilityClick, sel
         <Box pos="relative" h="100%">
             <ScrollArea h="100%" viewportRef={viewportRef} onScrollPositionChange={setScrollPosition} scrollbarSize={8} offsetScrollbars>
                 <Stack p="md" gap="md">
-                    <Text size="sm" c="dimmed" fw={500}>
-                        검색 결과 {facilities.length}개
-                    </Text>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                        <Text size="sm" c="dimmed" fw={500}>검색 결과 {facilities.length}개</Text>
+                        {setHideInquiry && (
+                            <Checkbox
+                                label="문의시설 제외"
+                                checked={hideInquiry ?? false}
+                                onChange={() => setHideInquiry(!hideInquiry)}
+                                size="xs"
+                                color="violet"
+                                styles={{ label: { fontSize: '12px', cursor: 'pointer', color: '#868e96', paddingLeft: 6 }, input: { cursor: 'pointer' } }}
+                            />
+                        )}
+                    </div>
                     {visibleFacilities.map((fac) => (
                         <Box
                             key={fac.id}
