@@ -1221,6 +1221,10 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
                 provMarker.setVisible(isProvinceMode);
             }
         }
+        // 🏷️ 필터 변경 후 이름 라벨도 갱신 (idle 트리거)
+        if (window.naver?.maps?.Event && map) {
+            window.naver.maps.Event.trigger(map, 'idle');
+        }
     }, [activeCategory, institutionFilter, hideInquiry, processedFacilities, regionGroups, provinceGroups]);
 
     const initMap = () => {
@@ -1295,6 +1299,8 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
                     // 화면에 보이는 마커들만 레이블 생성
                     const bounds = map.getBounds();
                     markersRef.current.forEach((marker, idx) => {
+                        // 필터로 숨겨진 마커는 라벨도 스킵
+                        if (!marker.getVisible()) return;
                         const pos = marker.getPosition();
                         if (!bounds.hasPoint(pos)) return;
 
