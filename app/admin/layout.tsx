@@ -16,7 +16,8 @@ import {
     Briefcase as IconBriefcase,
     Star as IconStar,
     FileEdit as IconFileEdit,
-    Lock as IconLock
+    Lock as IconLock,
+    BookOpen as IconBlog
 } from 'lucide-react';
 
 import { usePathname, useRouter } from 'next/navigation';
@@ -157,6 +158,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         { label: '정보수정요청', icon: IconFileEdit, link: '/admin/corrections' },
         { label: '방문후기관리', icon: IconStar, link: '/admin/reviews' },
         { label: '제휴문의관리', icon: IconBriefcase, link: '/admin/partnership' },
+        { label: '블로그 관리', icon: IconBlog, link: '/admin/blog' },
         { label: '설정', icon: IconSettings, link: '/admin/settings' },
     ];
 

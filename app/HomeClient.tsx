@@ -873,6 +873,7 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
               )}
             </Box>
 
+
           </Group>
 
           {/* PC 필터 버튼 (다중 선택) - PC 상세보기 시 숨김 */}
@@ -934,6 +935,7 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
                 문의제외
               </button>
             )}
+
           </div>
         </Box>
 

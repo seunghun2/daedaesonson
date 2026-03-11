@@ -4593,8 +4593,8 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                             onClick={() => setConsultModalOpened(true)}
                             style={{
                                 position: 'fixed',
-                                bottom: isMobile ? 16 : 16,
-                                right: 16,
+                                bottom: isMobile ? 16 : 24,
+                                ...(isMobile ? { right: 16 } : { left: 322 }),
                                 width: 56,
                                 height: 56,
                                 borderRadius: '50%',

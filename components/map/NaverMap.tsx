@@ -1578,6 +1578,9 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
                         transition: 'transform 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
                         zIndex: 200,
                         pointerEvents: 'auto',
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '8px',
                     }}>
                         <div
                             onClick={() => {
@@ -1605,6 +1608,39 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
                             <span>{centerAddress} 주변 시설 보기</span>
                         </div>
                     </div>
+                )}
+
+                {/* 블로그 버튼 (PC only) - 오른쪽 하단 */}
+                {isMapLoaded && !isMobile && (
+                    <a
+                        href="/guide"
+                        style={{
+                            position: 'absolute',
+                            bottom: '24px',
+                            right: '16px',
+                            zIndex: 200,
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: '4px',
+                            backgroundColor: 'white',
+                            color: '#1D0098',
+                            padding: '12px 16px',
+                            borderRadius: '30px',
+                            boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
+                            cursor: 'pointer',
+                            fontSize: '14px',
+                            fontWeight: 'bold',
+                            whiteSpace: 'nowrap',
+                            textDecoration: 'none',
+                            border: '1.5px solid #e9ecef',
+                            transform: uiHidden ? 'translateY(150%)' : 'translateY(0)',
+                            transition: 'transform 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                            pointerEvents: 'auto',
+                        }}
+                    >
+                        <span className="material-symbols-outlined" style={{ fontSize: '18px' }}>article</span>
+                        <span>블로그</span>
+                    </a>
                 )}
 
                 {/* 로딩/에러 화면 */}
