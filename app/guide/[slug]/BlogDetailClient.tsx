@@ -1,5 +1,6 @@
 'use client';
 
+import { useEffect } from 'react';
 import { Box, Text, Badge, Group, ActionIcon } from '@mantine/core';
 import { useMediaQuery } from '@mantine/hooks';
 import { ChevronLeft, Share2, Eye } from 'lucide-react';
@@ -45,6 +46,11 @@ interface Props {
 export default function BlogDetailClient({ post, relatedPosts }: Props) {
     const router = useRouter();
     const isMobile = useMediaQuery('(max-width: 768px)');
+
+    // 조회수 증가 (클라이언트 사이드, SSR 블로킹 없음)
+    useEffect(() => {
+        fetch(`/api/blog/${post.slug}`).catch(() => {});
+    }, [post.slug]);
 
     const formatDate = (dateStr: string) => {
         const d = new Date(dateStr);
@@ -94,7 +100,7 @@ export default function BlogDetailClient({ post, relatedPosts }: Props) {
                                 대대손손
                             </Text>
                             <Text fw={400} size={isMobile ? 'md' : 'lg'} c="dimmed">
-                                Guide
+                                블로그
                             </Text>
                         </Link>
                     </Group>

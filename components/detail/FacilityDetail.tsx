@@ -542,16 +542,17 @@ function PriceInfoSection({ priceInfo, hasPrice, facilityName, websiteUrl }: { p
                             display: 'flex',
                             alignItems: 'center',
                             justifyContent: 'center',
-                            gap: 4,
+                            gap: 6,
+                            overflow: 'hidden',
                         }}
                     >
-                        <Text component="span" style={{ fontSize: 14 }} fw={600} c="dark.7">
+                        <Text component="span" style={{ fontSize: 14, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', minWidth: 0 }} fw={600} c="dark.7">
                             {facilityName || '시설'} 공식 홈페이지
                         </Text>
-                        <Text component="span" style={{ fontSize: 14 }} fw={600} c="brand.6">
+                        <Text component="span" style={{ fontSize: 14, flexShrink: 0 }} fw={600} c="brand.6">
                             바로가기
                         </Text>
-                        <ExternalLink size={14} color="var(--mantine-color-brand-6)" />
+                        <ExternalLink size={14} color="var(--mantine-color-brand-6)" style={{ flexShrink: 0 }} />
                     </Box>
                 )}
             </Box>
@@ -887,16 +888,17 @@ function PriceInfoSection({ priceInfo, hasPrice, facilityName, websiteUrl }: { p
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
-                        gap: 4,
+                        gap: 6,
+                        overflow: 'hidden',
                     }}
                 >
-                    <Text component="span" style={{ fontSize: 14 }} fw={600} c="dark.7">
+                    <Text component="span" style={{ fontSize: 14, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', minWidth: 0 }} fw={600} c="dark.7">
                         {facilityName || '시설'} 공식 홈페이지
                     </Text>
-                    <Text component="span" style={{ fontSize: 14 }} fw={600} c="brand.6">
+                    <Text component="span" style={{ fontSize: 14, flexShrink: 0 }} fw={600} c="brand.6">
                         바로가기
                     </Text>
-                    <ExternalLink size={14} color="var(--mantine-color-brand-6)" />
+                    <ExternalLink size={14} color="var(--mantine-color-brand-6)" style={{ flexShrink: 0 }} />
                 </Box>
             )}
         </Box>
