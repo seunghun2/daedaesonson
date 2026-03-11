@@ -1388,11 +1388,15 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
                         const isAll = ac.includes('all');
                         const selCats = isAll ? [] : ac.filter(c => catMap[c]).map(c => catMap[c]);
                         const instF = institutionFilterRef.current;
+                        const hi = hideInquiryRef.current;
                         markersRef.current.forEach(m => {
                             const fac = (m as any).__facilityData;
                             let catOk = isAll || selCats.includes(fac?.category);
                             if (catOk && instF !== 'all') {
                                 catOk = instF === 'public' ? fac?.isPublic === true : fac?.isPublic === false;
+                            }
+                            if (catOk && hi) {
+                                catOk = (fac?.priceRange?.min ?? 0) > 0;
                             }
                             m.setVisible(catOk && bounds.hasPoint(m.getPosition()));
                         });
@@ -1405,11 +1409,15 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
                     const isAll2 = ac2.includes('all');
                     const selCats2 = isAll2 ? [] : ac2.filter(c => catMap2[c]).map(c => catMap2[c]);
                     const instF2 = institutionFilterRef.current;
+                    const hi2 = hideInquiryRef.current;
                     markersRef.current.forEach(m => {
                         const fac = (m as any).__facilityData;
                         let catOk = isAll2 || selCats2.includes(fac?.category);
                         if (catOk && instF2 !== 'all') {
                             catOk = instF2 === 'public' ? fac?.isPublic === true : fac?.isPublic === false;
+                        }
+                        if (catOk && hi2) {
+                            catOk = (fac?.priceRange?.min ?? 0) > 0;
                         }
                         m.setVisible(catOk && bounds.hasPoint(m.getPosition()));
                     });
@@ -1438,11 +1446,15 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
                     const isAll3 = ac3.includes('all');
                     const selCats3 = isAll3 ? [] : ac3.filter(c => catMap3[c]).map(c => catMap3[c]);
                     const instF3 = institutionFilterRef.current;
+                    const hi3 = hideInquiryRef.current;
                     markersRef.current.forEach(m => {
                         const fac = (m as any).__facilityData;
                         let catOk = isAll3 || selCats3.includes(fac?.category);
                         if (catOk && instF3 !== 'all') {
                             catOk = instF3 === 'public' ? fac?.isPublic === true : fac?.isPublic === false;
+                        }
+                        if (catOk && hi3) {
+                            catOk = (fac?.priceRange?.min ?? 0) > 0;
                         }
                         m.setVisible(catOk && bounds.hasPoint(m.getPosition()));
                     });
