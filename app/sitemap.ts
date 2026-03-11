@@ -1,12 +1,16 @@
 import { MetadataRoute } from 'next';
 import fs from 'fs';
 import path from 'path';
+import { createClient } from '@supabase/supabase-js';
 
-export default function sitemap(): MetadataRoute.Sitemap {
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://jbydmhfuqnpukfutvrgs.supabase.co';
+const supabaseKey = process.env.SUPABASE_SERVICE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || '';
+
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     const baseUrl = 'https://daedaesonson.com';
 
     // 정적 페이지
-    const staticPages = [
+    const staticPages: MetadataRoute.Sitemap = [
         {
             url: baseUrl,
             lastModified: new Date(),
@@ -106,5 +110,37 @@ export default function sitemap(): MetadataRoute.Sitemap {
         console.error('Sitemap: Failed to load facilities', e);
     }
 
-    return [...staticPages, ...regionPages, ...cityPages, ...facilityPages];
+    // 블로그 페이지
+    const blogPages: MetadataRoute.Sitemap = [
+        {
+            url: `${baseUrl}/guide`,
+            lastModified: new Date(),
+            changeFrequency: 'daily' as const,
+            priority: 0.9,
+        },
+    ];
+
+    try {
+        const supabase = createClient(supabaseUrl, supabaseKey);
+        const { data: posts } = await supabase
+            .from('blog_posts')
+            .select('slug, updated_at')
+            .eq('is_published', true)
+            .order('created_at', { ascending: false });
+
+        if (posts) {
+            posts.forEach(post => {
+                blogPages.push({
+                    url: `${baseUrl}/guide/${post.slug}`,
+                    lastModified: new Date(post.updated_at),
+                    changeFrequency: 'weekly' as const,
+                    priority: 0.85,
+                });
+            });
+        }
+    } catch (e) {
+        console.error('Sitemap: Failed to load blog posts', e);
+    }
+
+    return [...staticPages, ...regionPages, ...cityPages, ...facilityPages, ...blogPages];
 }
