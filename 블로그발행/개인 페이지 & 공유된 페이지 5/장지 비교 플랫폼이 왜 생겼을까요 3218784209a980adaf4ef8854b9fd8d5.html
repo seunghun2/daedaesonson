@@ -1,0 +1,716 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>장지 비교 플랫폼이 왜 생겼을까요?</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+/* Override strong tags inside headings to maintain consistent weight */
+h1 strong,
+h2 strong,
+h3 strong {
+	font-weight: 600;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 10px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.collection-content td {
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.callout img.notion-static-icon {
+	width: 1em;
+	height: 1em;
+}
+
+.callout p {
+	margin: 0;
+}
+
+.callout h1,
+.callout h2,
+.callout h3 {
+	margin: 0 0 0.6rem;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+blockquote.quote-large {
+	font-size: 1.25em;
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.highlight-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.highlight-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.highlight-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.highlight-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.highlight-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.highlight-default_background {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray_background {
+	background: rgba(42, 28, 0, 0.07);
+}
+.highlight-brown_background {
+	background: rgba(139, 46, 0, 0.086);
+}
+.highlight-orange_background {
+	background: rgba(224, 101, 1, 0.129);
+}
+.highlight-yellow_background {
+	background: rgba(211, 168, 0, 0.137);
+}
+.highlight-teal_background {
+	background: rgba(0, 100, 45, 0.09);
+}
+.highlight-blue_background {
+	background: rgba(0, 124, 215, 0.094);
+}
+.highlight-purple_background {
+	background: rgba(102, 0, 178, 0.078);
+}
+.highlight-pink_background {
+	background: rgba(197, 0, 93, 0.086);
+}
+.highlight-red_background {
+	background: rgba(223, 22, 0, 0.094);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.block-color-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.block-color-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.block-color-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.block-color-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.block-color-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.block-color-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.block-color-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.block-color-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(229, 242, 252, 1);
+}
+.block-color-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.block-color-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.block-color-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.select-value-color-default { background-color: rgba(42, 28, 0, 0.07); }
+.select-value-color-gray { background-color: rgba(28, 19, 1, 0.11); }
+.select-value-color-brown { background-color: rgba(127, 51, 0, 0.156); }
+.select-value-color-orange { background-color: rgba(196, 88, 0, 0.203); }
+.select-value-color-yellow { background-color: rgba(209, 156, 0, 0.282); }
+.select-value-color-green { background-color: rgba(0, 96, 38, 0.156); }
+.select-value-color-blue { background-color: rgba(0, 118, 217, 0.203); }
+.select-value-color-purple { background-color: rgba(92, 0, 163, 0.141); }
+.select-value-color-pink { background-color: rgba(183, 0, 78, 0.152); }
+.select-value-color-red { background-color: rgba(206, 24, 0, 0.164); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="32187842-09a9-80ad-af4e-f8854b9fd8d5" class="page sans"><header><h1 class="page-title" dir="auto">장지 비교 플랫폼이 왜 생겼을까요?</h1><p class="page-description" dir="auto"></p></header><div class="page-body"><div style="display:contents" dir="auto"><p id="32187842-09a9-80fa-931e-dbdaf009a395" class="">
+</p></div><div style="display:contents" dir="auto"><p id="32187842-09a9-8020-9a88-dcba97942c0e" class=""><strong>카테고리</strong>: 장례 시장 트렌드 / Type C 인사이트형 <strong>URL slug</strong>: <code>/blog/why-jangji-comparison-platforms-exist</code> <strong>태그</strong>: #장례시장 #장지비교 #정보비대칭 #초고령사회 #장례플랫폼</p></div><div style="display:contents" dir="auto"><hr id="32187842-09a9-8029-b9d5-c983d52e8f39"/></div><div style="display:contents" dir="ltr"><figure id="32187842-09a9-808d-8d3a-f07304aa17af" class="image"><a href="https://images.pexels.com/photos/6841115/pexels-photo-6841115.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=1260&amp;h=750"><img src="https://images.pexels.com/photos/6841115/pexels-photo-6841115.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=1260&amp;h=750"/></a></figure></div><div style="display:contents" dir="auto"><p id="32187842-09a9-80de-89e2-eb1fd0d9d908" class="">
+</p></div><div style="display:contents" dir="auto"><hr id="32187842-09a9-806c-9f28-d61dfc9c2a5d"/></div><div style="display:contents" dir="auto"><h2 id="32187842-09a9-8019-b214-d63f774af0ea" class="">봉안당 가격은 왜 전화해야만 알 수 있을까요</h2></div><div style="display:contents" dir="auto"><p id="32187842-09a9-80b6-9afc-dcae63310b86" class="">부동산은 실거래가가 공개돼요. 보험료는 사이트에 들어가면 바로 비교돼요. 항공권은 출발 30분 전까지도 최저가를 찾을 수 있어요.</p></div><div style="display:contents" dir="auto"><p id="32187842-09a9-804b-8cf7-ddcb7b3337ac" class="">그런데 봉안당이나 수목장 가격은 홈페이지에 없는 경우가 대부분이에요. 직접 전화해서 물어봐야 하고, 견적서를 받아봐야 하고, 직접 방문해야 비로소 숫자가 나와요.</p></div><div style="display:contents" dir="auto"><p id="32187842-09a9-806b-b678-ff1ffb986105" class="">이게 실수일까요? 아니에요. <strong>전략이에요.</strong></p></div><div style="display:contents" dir="auto"><hr id="32187842-09a9-80cb-a2db-c27adc9e61a7"/></div><div style="display:contents" dir="auto"><h2 id="32187842-09a9-8010-b769-e929e8f8552e" class="">가격을 공개하는 순간, 경쟁이 시작돼요</h2></div><div style="display:contents" dir="auto"><p id="32187842-09a9-8044-8138-e47ef138f857" class="">봉안당·수목장 운영자 입장에서 생각해볼게요.</p></div><div style="display:contents" dir="auto"><p id="32187842-09a9-8083-ae97-c7e976463987" class="">가격을 온라인에 공개하면 어떻게 될까요. 소비자가 비교하기 시작하고, 저렴한 곳으로 이탈하고, 시설 간 가격 경쟁이 벌어져요. 마진이 줄어들어요.</p></div><div style="display:contents" dir="auto"><p id="32187842-09a9-8070-b0c1-f349a3c4b4ef" class="">반면 가격을 비공개로 유지하면 어떨까요. 소비자는 전화를 걸어야 하고, 담당자와 직접 상담을 해야 하고, 그 과정에서 관계가 형성돼요. &quot;이미 이렇게까지 얘기했는데&quot;라는 심리적 전환 비용이 생겨요. 계약으로 이어질 가능성이 높아져요.</p></div><div style="display:contents" dir="auto"><p id="32187842-09a9-80ab-97bd-e73e23929c94" class="">비공개가 공급자에게 유리한 구조예요.</p></div><div style="display:contents" dir="auto"><blockquote id="32187842-09a9-8048-ae5a-e78b231735f4" class="">실제로 보건복지부는 2025년부터 장례식장의 가격 정보 공개를 점진적으로 의무화하는 방향을 추진하고 있어요. 지금까지 봉안당·자연장지는 <strong>&quot;자발적 의사에 의해 일부만 장사정보시스템에 등록&quot;</strong> 하는 구조였어요. (보건복지부 2025년 장사업무 안내)</blockquote></div><div style="display:contents" dir="auto"><hr id="32187842-09a9-8005-9eb2-c0073b1c102d"/></div><div style="display:contents" dir="auto"><h2 id="32187842-09a9-8091-8d1f-ed3296ca09e5" class="">그런데 유가족에게는 더 치명적인 구조가 있어요</h2></div><div style="display:contents" dir="auto"><p id="32187842-09a9-80c1-a4f1-d415f8181b77" class="">가격 비공개보다 더 깊은 문제가 있어요. <strong>리베이트 구조</strong>예요.</p></div><div style="display:contents" dir="auto"><p id="32187842-09a9-80f3-bf8d-f07bcfb66dfe" class="">2026년 3월, 공정거래위원회는 국내 장례식장의 리베이트 관행을 처음으로 적발해 시정명령을 내렸어요.</p></div><div style="display:contents" dir="auto"><p id="32187842-09a9-80fb-8399-f16515ac658c" class="">양주한국병원장례문화원이 2021년 11월부터 2025년 8월까지 <strong>112개 상조업체 소속 장례지도사에게 총 3억 4,000만 원의 리베이트를 지급</strong>했어요. (공정거래위원회, 2026.03)</p></div><div style="display:contents" dir="auto"><p id="32187842-09a9-803b-81d3-dc7c08739198" class="">방식은 이랬어요.</p></div><div style="display:contents" dir="auto"><ul id="32187842-09a9-80d5-bd90-f82c318e0021" class="bulleted-list"><li style="list-style-type:disc"><strong>콜비</strong>: 장례지도사가 유가족을 특정 장례식장으로 유치하면 <strong>건당 70만 원</strong> 지급</li></ul></div><div style="display:contents" dir="auto"><ul id="32187842-09a9-806a-ad1d-ec47c4e4dcf5" class="bulleted-list"><li style="list-style-type:disc"><strong>제단꽃R=</strong>: 지정 꽃집 이용을 유도하고, 결제금액의 <strong>30%</strong> 환급</li></ul></div><div style="display:contents" dir="auto"><p id="32187842-09a9-802f-b981-f25cb4a61ca5" class="">결국 이 비용은 어디서 나오냐고요? <strong>유가족이 내는 장례비에서</strong>예요.</p></div><div style="display:contents" dir="auto"><p id="32187842-09a9-801d-9ec9-fb7af45c4cf6" class="">공정위는 리베이트 지급이 없는 장례에서는 유가족에게 <strong>최대 50% 할인</strong>을 제공할 수 있는 내부 방침이 있었다고 밝혔어요. 지금까지 유가족이 낸 비용의 상당 부분이 장례지도사의 뒷돈으로 흘러갔던 거예요.</p></div><div style="display:contents" dir="auto"><p id="32187842-09a9-803a-842e-e8a2946b50f5" class="">공정위는 이번 한 곳 제재를 시작으로 <strong>전국 5개 권역 주요 장례식장으로 조사를 확대</strong>하겠다고 밝혔어요. 이 구조가 얼마나 광범위한지 짐작이 가는 대목이에요.</p></div><div style="display:contents" dir="auto"><hr id="32187842-09a9-806c-91c0-ef00962e9b04"/></div><div style="display:contents" dir="auto"><h2 id="32187842-09a9-8083-bf69-deb516c529fd" class="">그럼 유가족은 왜 이 구조를 못 바꿨을까요</h2></div><div style="display:contents" dir="auto"><p id="32187842-09a9-80b5-afa8-eac2f03e8c41" class="">소비자가 불리한 구조라는 걸 알면서도 왜 이렇게 오래 유지됐을까요.</p></div><div style="display:contents" dir="auto"><p id="32187842-09a9-809b-96ee-e0adc0f6cea8" class="">이유는 딱 하나예요. <strong>비교할 시간이 없기 때문이에요.</strong></p></div><div style="display:contents" dir="auto"><p id="32187842-09a9-808c-a580-f32caad0d936" class="">부동산은 수개월을 탐색하면서 협상력을 키워요. 보험은 여러 상품을 비교하면서 학습해요. 그런데 장례는 달라요.</p></div><div style="display:contents" dir="auto"><p id="32187842-09a9-8030-a4b1-d7d41da5be91" class="">사람이 돌아가시면 <strong>3일 안에</strong> 장례식장, 장지, 안치 방법을 모두 결정해야 해요. 슬픔과 피로가 극에 달한 상태에서요. 이 구조에서 소비자는 비교할 여력도, 협상할 심리적 여유도 없어요.</p></div><div style="display:contents" dir="auto"><p id="32187842-09a9-80cf-a193-fb63a7d125bf" class="">장례지도사가 &quot;여기가 좋아요&quot;라고 하면 그냥 따라가게 되는 이유가 여기에 있어요. 그리고 그 장례지도사에게 건당 70만 원이 들어가는 구조가 작동하는 이유도요.</p></div><div style="display:contents" dir="auto"><hr id="32187842-09a9-8058-a504-e4ee22dfb60c"/></div><div style="display:contents" dir="auto"><h2 id="32187842-09a9-80bf-9692-f29cc5a30a11" class="">숫자로 보면 이 시장이 왜 주목받는지 이해돼요</h2></div><div style="display:contents" dir="ltr"><table id="32187842-09a9-80e7-8394-e36d38c84508" class="simple-table"><thead class="simple-table-header"><div style="display:contents" dir="ltr"><tr id="32187842-09a9-8092-9c9f-c5cdeeb17aa5"><th id="qRCB" class="simple-table-header-color simple-table-header">지표</th><th id="|kY:" class="simple-table-header-color simple-table-header">수치</th><th id="jdrL" class="simple-table-header-color simple-table-header">출처</th></tr></div></thead><tbody><div style="display:contents" dir="ltr"><tr id="32187842-09a9-8069-a602-f9a23e90e3a9"><td id="qRCB" class="">2025년 연간 사망자 수</td><td id="|kY:" class=""><strong>36만 3,400명</strong></td><td id="jdrL" class="">통계청, 2026.02</td></tr></div><div style="display:contents" dir="ltr"><tr id="32187842-09a9-8094-b9a2-c365c4ee932f"><td id="qRCB" class="">2025년 화장률</td><td id="|kY:" class=""><strong>94.2%</strong></td><td id="jdrL" class="">한국장례문화진흥원, 2025.10</td></tr></div><div style="display:contents" dir="ltr"><tr id="32187842-09a9-8002-a63b-c9610fe53806"><td id="qRCB" class="">국내 상조·장례 시장 규모</td><td id="|kY:" class=""><strong>연간 약 11조원</strong></td><td id="jdrL" class="">서울경제, 2025.02</td></tr></div><div style="display:contents" dir="ltr"><tr id="32187842-09a9-809c-98d9-d6a65836c40d"><td id="qRCB" class="">상조 선수금 규모</td><td id="|kY:" class=""><strong>10조원 돌파</strong></td><td id="jdrL" class="">조선비즈, 2025.05</td></tr></div><div style="display:contents" dir="ltr"><tr id="32187842-09a9-807e-8434-f6570287693a"><td id="qRCB" class="">상위 5개 상조사 점유율</td><td id="|kY:" class=""><strong>전체 75%</strong></td><td id="jdrL" class="">조선비즈, 2025.05</td></tr></div></tbody></table></div><div style="display:contents" dir="auto"><p id="32187842-09a9-800f-9b63-e5946f5cd559" class="">연간 36만 명이 돌아가시고, 94%가 화장을 선택해요. 화장 후 장지(봉안당·수목장·자연장)를 결정해야 하는 가정이 매년 <strong>30만 가정 이상</strong> 발생해요.</p></div><div style="display:contents" dir="auto"><p id="32187842-09a9-8070-9c11-ee6f29399c3f" class="">그런데 이 시장은 상위 5개 상조사가 전체 매출의 75%를 점유하고 있어요. 나머지 25%를 수백 개 업체가 나눠 갖는 구조예요. <strong>소비자 선택지는 많지만, 비교할 방법이 없었어요.</strong></p></div><div style="display:contents" dir="auto"><p id="32187842-09a9-8073-8a31-c55f1f4cc478" class="">여기서 플랫폼의 역할이 생겨요.</p></div><div style="display:contents" dir="auto"><hr id="32187842-09a9-8073-a827-c46c9f8849dd"/></div><div style="display:contents" dir="auto"><h2 id="32187842-09a9-8048-8665-d0f5b2db848f" class="">플랫폼은 시장 구조 자체를 바꾸려는 시도예요</h2></div><div style="display:contents" dir="auto"><p id="32187842-09a9-8042-a838-c3d75faf37a3" class="">&quot;장례 비용 200만 원 절약하는 방법.&quot;</p></div><div style="display:contents" dir="auto"><p id="32187842-09a9-80e7-a6b7-c8d3951b131d" class="">고이장례연구소가 홈페이지에 올린 문구예요. 이게 가능한 이유는 단순해요. <strong>중간 마진을 없앴기 때문이에요.</strong></p></div><div style="display:contents" dir="auto"><p id="32187842-09a9-803e-9494-c013d6f5a255" class="">고이의 송슬옹 대표는 이렇게 설명했어요.</p></div><div style="display:contents" dir="auto"><blockquote id="32187842-09a9-8085-9712-eca1c1e7c1f8" class=""><strong>&quot;타사는 하도급 구조로 운영되기 때문에, 중간업체 몫으로 돌아가는 비용이 있다. 고이는 장례지도사 채용, 평가, 진행 상황 등 중간업체의 역할을 모두 온라인화했기 때문에 비용 지출이 없다.&quot;</strong> (ZDNet Korea, 2025.01)</blockquote></div><div style="display:contents" dir="auto"><p id="32187842-09a9-8092-a375-e0676ac3f6eb" class="">첫장컴퍼니의 장원봉 대표도 같은 문제의식에서 출발했어요.</p></div><div style="display:contents" dir="auto"><blockquote id="32187842-09a9-80b8-8e8a-de41043959fb" class=""><strong>&quot;장례는 전문적인 영역임에도 불구하고 소비자에게 정보가 제대로 전달되지 않는 구조였다. 정보 비대칭으로 혼란을 겪는 유가족들을 보며 이를 디지털로 풀어야겠다고 생각했다.&quot;</strong> (IT동아, 2025.12)</blockquote></div><div style="display:contents" dir="auto"><p id="32187842-09a9-8068-8504-d562b9332a0e" class="">이들이 해결하려는 건 단순히 &quot;가격 비교 사이트&quot;가 아니에요. <strong>리베이트가 작동하고, 비공개 가격이 유지되고, 유가족이 협상력 없이 결정을 내려야 하는 구조 자체</strong>예요.</p></div><div style="display:contents" dir="auto"><hr id="32187842-09a9-803e-88db-ea2317e60293"/></div><div style="display:contents" dir="auto"><h2 id="32187842-09a9-8090-861d-c0bd6586c5d4" class="">장례 1세대·2세대·3세대의 차이</h2></div><div style="display:contents" dir="auto"><p id="32187842-09a9-804d-b985-dc4dd6a2f0a9" class="">첫장컴퍼니 장원봉 대표는 현재 한국 장례 시장을 이렇게 진단했어요.</p></div><div style="display:contents" dir="auto"><blockquote id="32187842-09a9-8081-8933-fea49c9c7a70" class=""><strong>&quot;1세대 장례(가족·마을 중심) → 2세대 장례(상조회사·전문기업) → 3세대 장례(온라인 플랫폼 중심)로 전환하는 과도기적 단계에 있다.&quot;</strong> (서울경제, 2025.02)</blockquote></div><div style="display:contents" dir="auto"><p id="32187842-09a9-80cf-b1af-d2d0e22878f2" class="">2025년 기준 한국은 65세 이상 인구 비율이 20.3%로, 공식적으로 <strong>초고령사회</strong>에 진입했어요. (통계청, 2025) 이 비율은 2050년 40.1%까지 올라갈 전망이에요.</p></div><div style="display:contents" dir="auto"><p id="32187842-09a9-80b5-a3c0-d54b6c49a432" class="">연간 사망자는 앞으로 더 늘어요. 장례와 장지 결정을 처음 경험하는 40~50대가 지금의 70~80대를 부모로 두고 있어요. 이들은 네이버 부동산에 익숙하고, 다이렉트 보험 비교에 익숙해요. &quot;왜 장지만 비교가 안 되지?&quot;라는 질문을 자연스럽게 하는 세대예요.</p></div><div style="display:contents" dir="auto"><p id="32187842-09a9-80f6-b06a-e4859d11814d" class="">플랫폼의 성장은 이 인구 구조 변화와 함께 움직여요.</p></div><div style="display:contents" dir="auto"><hr id="32187842-09a9-80a7-8f86-d11079677094"/></div><div style="display:contents" dir="auto"><h2 id="32187842-09a9-8020-a1b4-ca8655c5a306" class="">대대손손이 이 흐름 안에서 하는 일</h2></div><div style="display:contents" dir="ltr"><figure id="32187842-09a9-8078-8c1c-dcdffa4d0846" class="image"><a href="https://images.pexels.com/photos/10499276/pexels-photo-10499276.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=1260&amp;h=750"><img src="https://images.pexels.com/photos/10499276/pexels-photo-10499276.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=1260&amp;h=750"/></a></figure></div><div style="display:contents" dir="auto"><p id="32187842-09a9-80b3-9abf-feb3eef80415" class=""><em>사진 출처: Pexels (CC0 무료)</em></p></div><div style="display:contents" dir="auto"><ul id="32187842-09a9-8083-94fc-e40724c1f0e1" class="bulleted-list"><li style="list-style-type:disc">*<a href="https://daedaesonson.com/">대대손손</a>*은 전국 1,500개 이상 봉안당·수목장·공원묘지의 가격, 관리비, 위치, 재단법인 여부를 한 화면에서 비교할 수 있는 플랫폼이에요.</li></ul></div><div style="display:contents" dir="auto"><p id="32187842-09a9-808a-9bea-dd97f118a7a6" class="">장지 시장에서 소비자가 갖지 못했던 것이 있어요. <strong>비교할 수 있는 기준점</strong>이에요.</p></div><div style="display:contents" dir="auto"><p id="32187842-09a9-80db-9eff-ed7929d22c95" class="">어느 시설이 비싼지, 관리비 구조가 어떻게 다른지, 재단법인인지 아닌지 — 이걸 알아야 선택할 수 있어요. 알아야 협상할 수 있어요. 알아야 후회하지 않아요.</p></div><div style="display:contents" dir="auto"><p id="32187842-09a9-808b-8414-e1ea1045dffb" class="">
+</p></div><div style="display:contents" dir="auto"><p id="32187842-09a9-802c-beba-fb7a141df6b7" class="">→ <strong><a href="https://daedaesonson.com/">지금 바로 내 지역 장지 비교하기</a></strong></p></div></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>

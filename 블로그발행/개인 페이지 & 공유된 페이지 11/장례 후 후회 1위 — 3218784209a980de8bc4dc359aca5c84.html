@@ -1,0 +1,715 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>장례 후 후회 1위 — &quot;</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+/* Override strong tags inside headings to maintain consistent weight */
+h1 strong,
+h2 strong,
+h3 strong {
+	font-weight: 600;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 10px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.collection-content td {
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.callout img.notion-static-icon {
+	width: 1em;
+	height: 1em;
+}
+
+.callout p {
+	margin: 0;
+}
+
+.callout h1,
+.callout h2,
+.callout h3 {
+	margin: 0 0 0.6rem;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+blockquote.quote-large {
+	font-size: 1.25em;
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.highlight-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.highlight-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.highlight-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.highlight-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.highlight-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.highlight-default_background {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray_background {
+	background: rgba(42, 28, 0, 0.07);
+}
+.highlight-brown_background {
+	background: rgba(139, 46, 0, 0.086);
+}
+.highlight-orange_background {
+	background: rgba(224, 101, 1, 0.129);
+}
+.highlight-yellow_background {
+	background: rgba(211, 168, 0, 0.137);
+}
+.highlight-teal_background {
+	background: rgba(0, 100, 45, 0.09);
+}
+.highlight-blue_background {
+	background: rgba(0, 124, 215, 0.094);
+}
+.highlight-purple_background {
+	background: rgba(102, 0, 178, 0.078);
+}
+.highlight-pink_background {
+	background: rgba(197, 0, 93, 0.086);
+}
+.highlight-red_background {
+	background: rgba(223, 22, 0, 0.094);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.block-color-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.block-color-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.block-color-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.block-color-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.block-color-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.block-color-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.block-color-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.block-color-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(229, 242, 252, 1);
+}
+.block-color-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.block-color-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.block-color-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.select-value-color-default { background-color: rgba(42, 28, 0, 0.07); }
+.select-value-color-gray { background-color: rgba(28, 19, 1, 0.11); }
+.select-value-color-brown { background-color: rgba(127, 51, 0, 0.156); }
+.select-value-color-orange { background-color: rgba(196, 88, 0, 0.203); }
+.select-value-color-yellow { background-color: rgba(209, 156, 0, 0.282); }
+.select-value-color-green { background-color: rgba(0, 96, 38, 0.156); }
+.select-value-color-blue { background-color: rgba(0, 118, 217, 0.203); }
+.select-value-color-purple { background-color: rgba(92, 0, 163, 0.141); }
+.select-value-color-pink { background-color: rgba(183, 0, 78, 0.152); }
+.select-value-color-red { background-color: rgba(206, 24, 0, 0.164); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="32187842-09a9-80de-8bc4-dc359aca5c84" class="page sans"><header><h1 class="page-title" dir="auto">장례 후 후회 1위 — &quot;</h1><p class="page-description" dir="auto"></p></header><div class="page-body"><div style="display:contents" dir="auto"><p id="32187842-09a9-800b-997b-f5124da66478" class="">
+</p></div><div style="display:contents" dir="auto"><p id="32187842-09a9-80d4-a7dd-fd8351378dbb" class="">중재목 그때 미리 알아볼걸&quot; 실제로 얼마나 차이 나나요?</p></div><div style="display:contents" dir="ltr"><table id="32187842-09a9-8001-8858-fb5ed79ae6f6" class="simple-table"><thead class="simple-table-header"><div style="display:contents" dir="ltr"><tr id="32187842-09a9-8025-830c-ef9790751dff"><th id="pQGA" class="simple-table-header-color simple-table-header">항목</th><th id="n|fS" class="simple-table-header-color simple-table-header" style="width:679px">내용</th></tr></div></thead><tbody><div style="display:contents" dir="ltr"><tr id="32187842-09a9-8048-871b-f387827e2950"><td id="pQGA" class=""><strong>제목</strong></td><td id="n|fS" class="" style="width:679px">장례 후 후회 1위 — &quot;그때 미리 알아볼걸&quot; 실제로 얼마나 차이 나나요?</td></tr></div><div style="display:contents" dir="ltr"><tr id="32187842-09a9-80d3-aa70-d3476917e009"><td id="pQGA" class=""><strong>메타 설명</strong></td><td id="n|fS" class="" style="width:679px">장례를 마친 가족이 가장 많이 하는 후회는 &#x27;사전 준비를 안 한 것&#x27;이에요. 2025년 데이터 기준으로 비용 차이, 심리적 비용, 놓친 선택들을 구체적으로 정리했어요.</td></tr></div><div style="display:contents" dir="ltr"><tr id="32187842-09a9-809d-ab83-c052d0900b7d"><td id="pQGA" class=""><strong>키워드</strong></td><td id="n|fS" class="" style="width:679px">장례 후회, 장례 사전 준비, 장례 비용 차이, 장례 미리 준비</td></tr></div><div style="display:contents" dir="ltr"><tr id="32187842-09a9-803f-b766-d48d4e2e26e8"><td id="pQGA" class=""><strong>슬러그</strong></td><td id="n|fS" class="" style="width:679px">/blog/funeral-regret-no-1</td></tr></div><div style="display:contents" dir="ltr"><tr id="32187842-09a9-8044-998f-e57f69d35fcc"><td id="pQGA" class=""><strong>대표 이미지</strong></td><td id="n|fS" class="" style="width:679px"><a href="https://www.pexels.com/photo/tombstones-on-a-burial-ground-7197360/">https://www.pexels.com/photo/tombstones-on-a-burial-ground-7197360/</a></td></tr></div></tbody></table></div><div style="display:contents" dir="auto"><hr id="32187842-09a9-804a-838d-fe01b5b3bd72"/></div><div style="display:contents" dir="auto"><h3 id="32187842-09a9-8021-ab52-f42b1b099d18" class="">🖼️ 헤더 이미지</h3></div><div style="display:contents" dir="ltr"><figure id="32187842-09a9-807e-8eab-ec348407eaf3" class="image"><a href="%EC%9E%A5%EB%A1%80%20%ED%9B%84%20%ED%9B%84%ED%9A%8C%201%EC%9C%84%20%E2%80%94/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA_2026-03-12_%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE_12.21.53.png"><img style="width:703.984375px" src="%EC%9E%A5%EB%A1%80%20%ED%9B%84%20%ED%9B%84%ED%9A%8C%201%EC%9C%84%20%E2%80%94/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA_2026-03-12_%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE_12.21.53.png"/></a></figure></div><div style="display:contents" dir="auto"><p id="32187842-09a9-80b4-a78d-c1d2b4c71e3d" class=""><em>출처: Pexels (CC0) — &quot;준비한 가족은 기준점이 있어요. 준비하지 않은 가족은 그 자리에서 결정해야 해요.&quot;</em></p></div><div style="display:contents" dir="auto"><hr id="32187842-09a9-80c0-9098-de68afc18d60"/></div><div style="display:contents" dir="auto"><h2 id="32187842-09a9-80f7-965d-cb6d0a66347e" class="">장례 후 후회 1위 — &quot;그때 미리 알아볼걸&quot; 실제로 얼마나 차이 나나요?</h2></div><div style="display:contents" dir="auto"><p id="32187842-09a9-8028-9044-de856aedaff5" class="">장례를 치른 가족들이 가장 많이 남기는 말이 있어요.</p></div><div style="display:contents" dir="auto"><blockquote id="32187842-09a9-80be-a149-ed6a4d53c677" class="">&quot;비용이 이렇게 많이 드는 줄 몰랐어요.&quot; &quot;장지를 그냥 담당자가 권하는 대로 결정했어요.&quot; &quot;부모님이 뭘 원하셨는지 여쭤본 적이 없었어요.&quot;</blockquote></div><div style="display:contents" dir="auto"><p id="32187842-09a9-80f5-b0e0-ecd890b8568c" class="">세 가지 다 후회예요. 그리고 세 가지 다 사전 준비가 조금만 있었다면 달라질 수 있었던 부분이에요.</p></div><div style="display:contents" dir="auto"><p id="32187842-09a9-80aa-97c1-d21e2b4c027d" class="">이 글은 감정적인 위로가 아니에요. 실제로 얼마나, 어떤 방식으로 달라지는지를 데이터로 정리한 내용이에요.</p></div><div style="display:contents" dir="auto"><hr id="32187842-09a9-803f-bf3f-f5bf0ccc63b3"/></div><div style="display:contents" dir="auto"><h3 id="32187842-09a9-8035-8155-d1cedb6d981c" class="">1. 장례 후 후회 1위는 무엇인가요?</h3></div><div style="display:contents" dir="auto"><p id="32187842-09a9-809b-9f76-da512b9f758e" class="">장례지도사 실무 현장에서 유족들이 가장 많이 남기는 후회는 크게 세 가지로 분류돼요.</p></div><div style="display:contents" dir="auto"><p id="32187842-09a9-80b3-a0df-fcad38656a8e" class=""><strong>① 비용 후회</strong> — &quot;더 저렴한 방법이 있는 줄 몰랐어요&quot; <strong>② 장지 후회</strong> — &quot;다른 곳도 비교해볼걸 그랬어요&quot; <strong>③ 의향 후회</strong> — &quot;부모님 뜻을 미리 여쭤볼걸 그랬어요&quot;</p></div><div style="display:contents" dir="auto"><p id="32187842-09a9-800e-b70e-e6e40cac79ac" class="">이 중 빈도 기준으로 가장 많이 나오는 건 <strong>비용 후회</strong>예요. 그런데 이 세 가지는 실제로 연결되어 있어요. 의향을 몰라서 → 장지를 급하게 결정하고 → 결과적으로 비용이 올라가는 구조예요.</p></div><div style="display:contents" dir="auto"><p id="32187842-09a9-80fa-b748-f04cb9696a6b" class=""><a href="https://blog.naver.com/lyanggang/223080249325">장례지도사 사전 준비 가이드 — Naver 블로그</a></p></div><div style="display:contents" dir="auto"><hr id="32187842-09a9-8025-a130-c62cb010fced"/></div><div style="display:contents" dir="auto"><h3 id="32187842-09a9-80c6-bbd8-e153a84e221d" class="">2. 사전 준비 여부로 비용이 얼마나 달라지나요?</h3></div><div style="display:contents" dir="auto"><p id="32187842-09a9-80af-bdab-cdad95617c9c" class="">2025년 기준 평균 장례 비용은 <strong>1,500만원 이상</strong>이에요. 범위는 500만원에서 3,000만원까지 벌어져요. 같은 3일장, 같은 규모인데도 이 정도 차이가 나요.</p></div><div style="display:contents" dir="auto"><p id="32187842-09a9-8075-a856-cdbfc8e8d55f" class=""><a href="https://blog.naver.com/thechoomo/223894357034">2025년 장례 비용 가이드 — Naver 블로그</a></p></div><div style="display:contents" dir="auto"><p id="32187842-09a9-8088-8dcb-ca2f02f1993d" class="">차이를 만드는 건 <strong>선택의 여유</strong>예요.</p></div><div style="display:contents" dir="ltr"><table id="32187842-09a9-8097-a4ba-d7d9c8c9f072" class="simple-table"><thead class="simple-table-header"><div style="display:contents" dir="ltr"><tr id="32187842-09a9-8083-b500-e19e72976246"><th id="Y:S|" class="simple-table-header-color simple-table-header">구분</th><th id="X{A[" class="simple-table-header-color simple-table-header">사전 준비 O</th><th id="[;O?" class="simple-table-header-color simple-table-header">사전 준비 X</th></tr></div></thead><tbody><div style="display:contents" dir="ltr"><tr id="32187842-09a9-80b6-8525-ed96bfc429cc"><td id="Y:S|" class="">장례식장</td><td id="X{A[" class="">공설·후불제 선택 가능</td><td id="[;O?" class="">병원 인근 사설 자동 선택</td></tr></div><div style="display:contents" dir="ltr"><tr id="32187842-09a9-8009-a622-e985a88a7bc3"><td id="Y:S|" class="">봉안당·장지</td><td id="X{A[" class="">공설·대기자 신청 가능</td><td id="[;O?" class="">현장에서 사설 즉시 계약</td></tr></div><div style="display:contents" dir="ltr"><tr id="32187842-09a9-80a6-bd05-d42951de077d"><td id="Y:S|" class="">상조 서비스</td><td id="X{A[" class="">후불제 작은 장례 활용</td><td id="[;O?" class="">준비 없이 풀패키지 계약</td></tr></div><div style="display:contents" dir="ltr"><tr id="32187842-09a9-8056-bcbf-f31d1388dc9a"><td id="Y:S|" class="">의향 반영</td><td id="X{A[" class="">고인 뜻 반영된 결정</td><td id="[;O?" class="">장례 당일 가족이 대신 결정</td></tr></div><div style="display:contents" dir="ltr"><tr id="32187842-09a9-806e-9ae0-e5a066eec07e"><td id="Y:S|" class=""><strong>예상 총비용</strong></td><td id="X{A[" class=""><strong>500만원 이하 가능</strong></td><td id="[;O?" class=""><strong>2,000만원 이상 빈번</strong></td></tr></div></tbody></table></div><div style="display:contents" dir="auto"><p id="32187842-09a9-8079-b427-e63371e78e08" class=""><strong>차이: 최대 1,500만원.</strong></p></div><div style="display:contents" dir="auto"><p id="32187842-09a9-8070-80c4-f1e32c035d82" class="">이건 과장이 아니에요. 서울 공설 봉안당(10만원/5년) + 후불제 작은 장례(200-300만원) + 공설 화장장 조합이면 전체 500만원 이내가 가능해요. 반면 병원 장례식장(하루 30-50만원×3일) + 사설 봉안당 프리미엄(700-1,500만원) + 풀패키지 상조는 2,000만원을 쉽게 넘어요.</p></div><div style="display:contents" dir="auto"><p id="32187842-09a9-803f-a33f-cb03acde95d4" class=""><a href="https://www.kfcpi.or.kr/link/2025/10/01/de065eab-8172-44fa-a366-af15855e56ab.pdf">한국장례문화진흥원 2025 장례 서비스 안내</a></p></div><div style="display:contents" dir="auto"><hr id="32187842-09a9-808c-95fd-ee13603a85eb"/></div><div style="display:contents" dir="auto"><h3 id="32187842-09a9-80a7-beae-d705e8c88b15" class="">🖼️ 섹션 이미지 ①</h3></div><div style="display:contents" dir="ltr"><figure id="32187842-09a9-8014-b1bd-ff49db1eb9e2" class="image"><a href="https://www.pexels.com/photo/a-cemetery-with-tall-green-trees-10499276/"><img src="https://www.pexels.com/photo/a-cemetery-with-tall-green-trees-10499276/"/></a></figure></div><div style="display:contents" dir="auto"><p id="32187842-09a9-8029-a082-d3409a94984a" class=""><em>출처: Pexels (CC0) — &quot;사전 준비는 &#x27;죽음을 생각하는 것&#x27;이 아니에요. 가족이 덜 힘들게 하는 준비예요.&quot;</em></p></div><div style="display:contents" dir="auto"><hr id="32187842-09a9-80d4-8d0e-ecb9185f7480"/></div><div style="display:contents" dir="auto"><h3 id="32187842-09a9-804b-a8d6-fa2443fd6927" class="">3. 비용만 문제인가요? — &#x27;심리적 비용&#x27;도 있어요</h3></div><div style="display:contents" dir="auto"><p id="32187842-09a9-80e5-a267-f75a8f7b4ec6" class="">돈 이야기만 하면 절반밖에 설명이 안 돼요.</p></div><div style="display:contents" dir="auto"><p id="32187842-09a9-8017-bba9-fa762576e400" class="">장례 당일, 준비 없이 결정을 내려야 하는 가족에게는 <strong>결정 피로</strong>가 발생해요. 빈소 꽃 종류, 봉안당 위치, 수의 선택, 음식 메뉴까지 — 슬픔 속에서 수십 가지 선택을 몇 시간 안에 해야 해요.</p></div><div style="display:contents" dir="auto"><p id="32187842-09a9-8081-9dcf-d6b1278d42d3" class="">이때 장례 담당자가 권하는 것을 그대로 고르는 비율이 높아져요. 준비가 없을수록 <strong>선택 기준</strong>이 없고, 기준이 없을수록 <strong>가격이 올라가는 방향</strong>으로 결정이 흘러요.</p></div><div style="display:contents" dir="auto"><p id="32187842-09a9-804b-b986-c776b74ac07f" class="">보건복지부 2020년 노인실태조사에 따르면, 노인의 <strong>85.6%가 무의미한 연명치료에 반대</strong>한다고 답했어요. 그런데 실제 사전연명의료의향서를 작성한 비율은 **4.7%**에 불과했어요.</p></div><div style="display:contents" dir="auto"><p id="32187842-09a9-80f7-bbad-ce16c1e0facf" class="">생각은 있는데 실행이 없는 거예요.</p></div><div style="display:contents" dir="auto"><p id="32187842-09a9-8053-b55b-f2960b1ff70f" class=""><a href="https://www.welldyingnews.com/news/articleView.html?idxno=1015">보건복지부 노인실태조사 — WelldyingNews</a></p></div><div style="display:contents" dir="auto"><hr id="32187842-09a9-80ce-9061-cff71ca3480e"/></div><div style="display:contents" dir="auto"><h3 id="32187842-09a9-808d-8395-f0e969ef4337" class="">4. 준비를 못 하는 이유가 따로 있나요?</h3></div><div style="display:contents" dir="auto"><p id="32187842-09a9-80bf-bafe-fd4ed8fb238b" class="">데이터는 있어요. 하지 않는 이유도 분류가 돼요.</p></div><div style="display:contents" dir="ltr"><table id="32187842-09a9-803b-b252-e19b93c01d1b" class="simple-table"><thead class="simple-table-header"><div style="display:contents" dir="ltr"><tr id="32187842-09a9-809a-836c-fb876c0140ec"><th id="AWEz" class="simple-table-header-color simple-table-header">방해 요인</th><th id="~fnR" class="simple-table-header-color simple-table-header">설명</th></tr></div></thead><tbody><div style="display:contents" dir="ltr"><tr id="32187842-09a9-8038-8fc5-fd2125e855c7"><td id="AWEz" class="">문화적 금기</td><td id="~fnR" class="">죽음을 미리 이야기하면 불길하다는 인식</td></tr></div><div style="display:contents" dir="ltr"><tr id="32187842-09a9-80e4-9ca4-f9d5e189532c"><td id="AWEz" class="">정보 부재</td><td id="~fnR" class="">어디서 어떻게 시작해야 하는지 모름</td></tr></div><div style="display:contents" dir="ltr"><tr id="32187842-09a9-8014-83c5-e75fa651f200"><td id="AWEz" class="">경험 부족</td><td id="~fnR" class="">장례를 직접 경험한 적이 없어 막막함</td></tr></div><div style="display:contents" dir="ltr"><tr id="32187842-09a9-8040-b921-e16ee236dc40"><td id="AWEz" class="">관계 부담</td><td id="~fnR" class="">부모님께 장례 관련 이야기를 꺼내기 어려움</td></tr></div></tbody></table></div><div style="display:contents" dir="auto"><p id="32187842-09a9-8031-a999-df2cf07db1e5" class="">이 중 가장 실질적인 장벽은 **&#x27;어디서 시작해야 하는지 모른다&#x27;**는 정보 부재예요.</p></div><div style="display:contents" dir="auto"><p id="32187842-09a9-8092-b0a9-ce5d9e1d2648" class="">사전연명의료의향서 등록률을 보면 이게 더 명확해요. 2025년 2월 기준, 전체 인구 대비 <strong>5.37%</strong>, 65세 이상 중에서도 **19.86%**만 등록되어 있어요. 미국 성인 등록률 36.7%와 비교하면 절반도 안 돼요.</p></div><div style="display:contents" dir="auto"><p id="32187842-09a9-802d-a8bb-e45c465abacf" class=""><a href="https://repository.kihasa.re.kr/en/bitstream/201002/48081/1/%EB%B3%B4%EA%B1%B4%EC%82%AC%ED%9A%8C%EC%97%B0%EA%B5%AC.2025.V045.N03_14.pdf">한국보건사회연구원 2025 사전연명의료의향서 통계</a></p></div><div style="display:contents" dir="auto"><hr id="32187842-09a9-8020-9a75-d6ffcb419bbe"/></div><div style="display:contents" dir="auto"><h3 id="32187842-09a9-804b-b589-eea7bb9ceb36" class="">🖼️ 섹션 이미지 ②</h3></div><div style="display:contents" dir="ltr"><figure id="32187842-09a9-8054-8893-c6dc41a36ecc" class="image"><a href="https://pxhere.com/en/photo/1191209"><img src="https://pxhere.com/en/photo/1191209"/></a></figure></div><div style="display:contents" dir="auto"><p id="32187842-09a9-8090-a8b5-d98ec9fa74f9" class=""><em>출처: PxHere (CC0) — &quot;사전연명의료의향서 등록률 5.37%. 생각은 있지만 실행이 없어요.&quot;</em></p></div><div style="display:contents" dir="auto"><hr id="32187842-09a9-80f7-98f3-f2c898fdfd96"/></div><div style="display:contents" dir="auto"><h3 id="32187842-09a9-80bf-a494-d03fcbf3ed57" class="">5. 그러면 실제로 뭘 미리 해두면 되나요?</h3></div><div style="display:contents" dir="auto"><p id="32187842-09a9-80f9-b47b-def02b24c203" class="">&#x27;미리 준비한다&#x27;는 게 거창한 게 아니에요. 다음 5가지만 가족끼리 공유해두면 장례 당일 결정 피로와 비용 충격 대부분을 줄일 수 있어요.</p></div><div style="display:contents" dir="ltr"><table id="32187842-09a9-80dd-8a46-c5507c6a6429" class="simple-table"><thead class="simple-table-header"><div style="display:contents" dir="ltr"><tr id="32187842-09a9-80b6-b2bf-e1ed169c015b"><th id="&gt;^ji" class="simple-table-header-color simple-table-header">단계</th><th id="IyRM" class="simple-table-header-color simple-table-header">준비 항목</th><th id="}&lt;W&gt;" class="simple-table-header-color simple-table-header">예상 절감 효과</th></tr></div></thead><tbody><div style="display:contents" dir="ltr"><tr id="32187842-09a9-8039-b3ff-fb000b4e1ea6"><td id="&gt;^ji" class="">1단계</td><td id="IyRM" class="">고인 의향 파악 (화장/매장, 장지 선호)</td><td id="}&lt;W&gt;" class="">장지 결정 시간 단축, 반대 선택 방지</td></tr></div><div style="display:contents" dir="ltr"><tr id="32187842-09a9-80c9-ac23-f24ed6a9a8ec"><td id="&gt;^ji" class="">2단계</td><td id="IyRM" class="">장지 유형·예산 범위 설정</td><td id="}&lt;W&gt;" class="">공설 신청 가능성 확보</td></tr></div><div style="display:contents" dir="ltr"><tr id="32187842-09a9-80ae-8747-e1bf2461fc82"><td id="&gt;^ji" class="">3단계</td><td id="IyRM" class="">장지 2-3곳 사전 비교</td><td id="}&lt;W&gt;" class="">평균 200-400만원 절감 가능</td></tr></div><div style="display:contents" dir="ltr"><tr id="32187842-09a9-80cc-8749-f08db7ad6b1f"><td id="&gt;^ji" class="">4단계</td><td id="IyRM" class="">상조 방식 검토 (후불제 vs 선불제)</td><td id="}&lt;W&gt;" class="">풀패키지 자동 계약 방지</td></tr></div><div style="display:contents" dir="ltr"><tr id="32187842-09a9-8012-be25-e692b17bcef9"><td id="&gt;^ji" class="">5단계</td><td id="IyRM" class="">사전연명의료의향서 작성 검토</td><td id="}&lt;W&gt;" class="">연명 치료 관련 가족 갈등 예방</td></tr></div></tbody></table></div><div style="display:contents" dir="auto"><p id="32187842-09a9-807e-8d33-f611571d1954" class="">특히 **3단계(장지 사전 비교)**가 비용 차이에서 가장 큰 역할을 해요. 전국 봉안시설 625개소, 자연장지 217개소 — 같은 지역 안에서도 가격이 3-4배 차이 나는 경우가 많아요.</p></div><div style="display:contents" dir="auto"><p id="32187842-09a9-8018-8957-e15893115b72" class=""><a href="https://www.kfcpi.or.kr/link/2025/10/01/de065eab-8172-44fa-a366-af15855e56ab.pdf">한국장례문화진흥원 2024 시설 현황</a></p></div><div style="display:contents" dir="auto"><hr id="32187842-09a9-800f-85a0-f8fdb3520c6d"/></div><div style="display:contents" dir="auto"><h3 id="32187842-09a9-8052-9c75-dd38b9c556c4" class="">6. 준비한 가족과 준비 못 한 가족, 실제 차이는 뭔가요?</h3></div><div style="display:contents" dir="auto"><p id="32187842-09a9-80e4-bb90-c2ef7dc67a92" class="">숫자로 정리하면 이렇게 돼요.</p></div><div style="display:contents" dir="ltr"><table id="32187842-09a9-8069-957b-c38779ed0fea" class="simple-table"><thead class="simple-table-header"><div style="display:contents" dir="ltr"><tr id="32187842-09a9-808d-810a-f1472111914c"><th id="ueAf" class="simple-table-header-color simple-table-header">비교 항목</th><th id="&gt;}D~" class="simple-table-header-color simple-table-header">준비한 가족</th><th id="&lt;Uzf" class="simple-table-header-color simple-table-header">준비 못 한 가족</th></tr></div></thead><tbody><div style="display:contents" dir="ltr"><tr id="32187842-09a9-80fd-bc39-fd7148f21460"><td id="ueAf" class="">장지 결정</td><td id="&gt;}D~" class="">사전 비교 후 선택</td><td id="&lt;Uzf" class="">장례 당일 즉결</td></tr></div><div style="display:contents" dir="ltr"><tr id="32187842-09a9-8003-b51c-ec61606fd31e"><td id="ueAf" class="">봉안당 유형</td><td id="&gt;}D~" class="">공설 or 사전 계약 사설</td><td id="&lt;Uzf" class="">현장 사설 (프리미엄 편향)</td></tr></div><div style="display:contents" dir="ltr"><tr id="32187842-09a9-8008-8d83-c7cfc2d28765"><td id="ueAf" class="">고인 의향 반영</td><td id="&gt;}D~" class="">높음</td><td id="&lt;Uzf" class="">낮음 (가족 추정으로 대체)</td></tr></div><div style="display:contents" dir="ltr"><tr id="32187842-09a9-8066-86ca-e699a3353ed5"><td id="ueAf" class="">사전연명의향서</td><td id="&gt;}D~" class="">작성 완료</td><td id="&lt;Uzf" class="">미작성 (85.6% 반대 의향, 4.7%만 작성)</td></tr></div><div style="display:contents" dir="ltr"><tr id="32187842-09a9-8002-8d14-d2e9b07835a3"><td id="ueAf" class="">평균 총비용</td><td id="&gt;}D~" class="">500만원-800만원</td><td id="&lt;Uzf" class="">1,500만원-2,500만원</td></tr></div><div style="display:contents" dir="ltr"><tr id="32187842-09a9-800a-b1e3-eacd07cc49c8"><td id="ueAf" class="">장례 후 후회</td><td id="&gt;}D~" class="">낮음</td><td id="&lt;Uzf" class=""><strong>&quot;그때 미리 알아볼걸&quot;</strong></td></tr></div></tbody></table></div><div style="display:contents" dir="auto"><hr id="32187842-09a9-8044-8572-c046f14bf343"/></div><div style="display:contents" dir="auto"><h3 id="32187842-09a9-8047-9573-dc62a56cc2c0" class="">🖼️ 섹션 이미지 ③</h3></div><div style="display:contents" dir="ltr"><figure id="32187842-09a9-80c8-98f8-dd1cb4bc2eec" class="image"><a href="https://pxhere.com/en/photo/485023"><img src="https://pxhere.com/en/photo/485023"/></a></figure></div><div style="display:contents" dir="auto"><p id="32187842-09a9-803e-8ecd-c0cc52062b8b" class=""><em>출처: PxHere (CC0) — &quot;준비의 차이는 당일 현장에서 드러나요. 선택지가 있는 가족과 없는 가족.&quot;</em></p></div><div style="display:contents" dir="auto"><hr id="32187842-09a9-8093-ac3b-fed1e9df5411"/></div><div style="display:contents" dir="auto"><h3 id="32187842-09a9-80c0-9a17-dd6424976875" class="">마치며 — 지금 당장 한 가지만 해도 달라져요</h3></div><div style="display:contents" dir="auto"><p id="32187842-09a9-8046-bf52-ffa9e2151d9d" class="">사전 준비가 어렵게 느껴지는 건 &#x27;전부 다 해야 한다&#x27;고 생각하기 때문이에요.</p></div><div style="display:contents" dir="auto"><p id="32187842-09a9-8009-9fb3-c1fe2f1f24f3" class="">그렇지 않아요.</p></div><div style="display:contents" dir="auto"><p id="32187842-09a9-8015-a1fc-fb2c883c0953" class="">오늘 할 수 있는 것 딱 하나만 골라보세요.</p></div><div style="display:contents" dir="auto"><ul id="32187842-09a9-8022-9347-d425c739459a" class="bulleted-list"><li style="list-style-type:disc">부모님께 화장/매장 의향 여쭤보기</li></ul></div><div style="display:contents" dir="auto"><ul id="32187842-09a9-801c-aa57-e0a026d3cdf8" class="bulleted-list"><li style="list-style-type:disc">집 근처 공설 봉안당·수목장 위치 검색해보기</li></ul></div><div style="display:contents" dir="auto"><ul id="32187842-09a9-802d-bfe0-d740bb22740e" class="bulleted-list"><li style="list-style-type:disc">사전연명의료의향서가 뭔지 검색해보기</li></ul></div><div style="display:contents" dir="auto"><p id="32187842-09a9-8070-814e-d134b56051e1" class="">이 세 가지 중 하나만 해도, 나중에 가족이 후회하는 확률이 달라져요.</p></div><div style="display:contents" dir="auto"><hr id="32187842-09a9-802c-9550-dc5b22d0d8bc"/></div><div style="display:contents" dir="auto"><blockquote id="32187842-09a9-8094-9914-c92c1930a520" class="">💡 <strong>전국 봉안당·수목장 가격 한눈에 비교하고 싶으신 분들</strong> 대대손손에서 전국 1,500여 개 장지 정보를 무료로 검색할 수 있어요. 👉 <a href="https://daedaesonson.com/">daedaesonson.com</a> 에서 확인해보세요.</blockquote></div><div style="display:contents" dir="auto"><p id="32187842-09a9-805f-bb3b-da6e9078652b" class="">
+</p></div><div style="display:contents" dir="auto"><p id="32187842-09a9-8028-8bf9-d0207e2acd43" class="">장례 후 후회 1위 — &quot;그때 미리 알아볼걸&quot; 실제로 얼마나 차이 나나요?</p></div></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>

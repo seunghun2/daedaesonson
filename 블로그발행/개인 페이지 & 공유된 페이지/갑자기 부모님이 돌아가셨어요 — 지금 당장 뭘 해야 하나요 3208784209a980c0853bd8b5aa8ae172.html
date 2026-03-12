@@ -1,0 +1,752 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>갑자기 부모님이 돌아가셨어요 — 지금 당장 뭘 해야 하나요?</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+/* Override strong tags inside headings to maintain consistent weight */
+h1 strong,
+h2 strong,
+h3 strong {
+	font-weight: 600;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 10px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.collection-content td {
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.callout img.notion-static-icon {
+	width: 1em;
+	height: 1em;
+}
+
+.callout p {
+	margin: 0;
+}
+
+.callout h1,
+.callout h2,
+.callout h3 {
+	margin: 0 0 0.6rem;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+blockquote.quote-large {
+	font-size: 1.25em;
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.highlight-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.highlight-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.highlight-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.highlight-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.highlight-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.highlight-default_background {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray_background {
+	background: rgba(42, 28, 0, 0.07);
+}
+.highlight-brown_background {
+	background: rgba(139, 46, 0, 0.086);
+}
+.highlight-orange_background {
+	background: rgba(224, 101, 1, 0.129);
+}
+.highlight-yellow_background {
+	background: rgba(211, 168, 0, 0.137);
+}
+.highlight-teal_background {
+	background: rgba(0, 100, 45, 0.09);
+}
+.highlight-blue_background {
+	background: rgba(0, 124, 215, 0.094);
+}
+.highlight-purple_background {
+	background: rgba(102, 0, 178, 0.078);
+}
+.highlight-pink_background {
+	background: rgba(197, 0, 93, 0.086);
+}
+.highlight-red_background {
+	background: rgba(223, 22, 0, 0.094);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.block-color-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.block-color-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.block-color-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.block-color-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.block-color-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.block-color-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.block-color-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.block-color-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(229, 242, 252, 1);
+}
+.block-color-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.block-color-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.block-color-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.select-value-color-default { background-color: rgba(42, 28, 0, 0.07); }
+.select-value-color-gray { background-color: rgba(28, 19, 1, 0.11); }
+.select-value-color-brown { background-color: rgba(127, 51, 0, 0.156); }
+.select-value-color-orange { background-color: rgba(196, 88, 0, 0.203); }
+.select-value-color-yellow { background-color: rgba(209, 156, 0, 0.282); }
+.select-value-color-green { background-color: rgba(0, 96, 38, 0.156); }
+.select-value-color-blue { background-color: rgba(0, 118, 217, 0.203); }
+.select-value-color-purple { background-color: rgba(92, 0, 163, 0.141); }
+.select-value-color-pink { background-color: rgba(183, 0, 78, 0.152); }
+.select-value-color-red { background-color: rgba(206, 24, 0, 0.164); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="32087842-09a9-80c0-853b-d8b5aa8ae172" class="page sans"><header><h1 class="page-title" dir="auto">갑자기 부모님이 돌아가셨어요 — 지금 당장 뭘 해야 하나요?</h1><p class="page-description" dir="auto"></p></header><div class="page-body"><div style="display:contents" dir="auto"><h1 id="32087842-09a9-8019-8eef-f88aad7876fd" class=""><em>D+0부터 D+3까지, 처음 겪는 분을 위한 장례 절차 완전 정리</em></h1></div><div style="display:contents" dir="auto"><hr id="32087842-09a9-8014-9810-f4ae8abca965"/></div><div style="display:contents" dir="ltr"><figure id="32087842-09a9-800f-9146-f117e49f912c" class="image"><a href="https://sspark.genspark.ai/cfimages?u1=ulsNo0v28pZJpKiuKkOGjjDh%2Fskbnfp8mAj0RsmF7%2Ffl2do4ITit0DP%2B1W6AS%2BWMdOpfF2A8abs7cScImKEG65S7TTIzwj7u9%2F1JBaaiTavMU0HcsE1LOsx71PKGNXShUfEco8uY&amp;u2=4ypdOe3n5pkD3t6w&amp;width=2560"><img src="https://sspark.genspark.ai/cfimages?u1=ulsNo0v28pZJpKiuKkOGjjDh%2Fskbnfp8mAj0RsmF7%2Ffl2do4ITit0DP%2B1W6AS%2BWMdOpfF2A8abs7cScImKEG65S7TTIzwj7u9%2F1JBaaiTavMU0HcsE1LOsx71PKGNXShUfEco8uY&amp;u2=4ypdOe3n5pkD3t6w&amp;width=2560"/></a></figure></div><div style="display:contents" dir="auto"><hr id="32087842-09a9-80fc-926a-cb1228943a01"/></div><div style="display:contents" dir="auto"><p id="32087842-09a9-8067-a9bc-f403da1bec01" class="">갑자기 이 글을 찾고 계신 분이라면, 지금 굉장히 힘드실 거예요.</p></div><div style="display:contents" dir="auto"><p id="32087842-09a9-80b7-b2e6-d206a158ed08" class="">슬픔도 슬픔인데 — 뭘 해야 할지 아무도 알려주지 않잖아요. 처음이니까요. 병원에서 의사가 돌아가셨다고 알려주고 나면, 그다음에 뭘 해야 하는지 아무도 친절하게 설명해주지 않아요. 그냥 &quot;장례식장 연락하세요&quot;라는 말 한 마디뿐이에요.</p></div><div style="display:contents" dir="auto"><p id="32087842-09a9-80ee-ad50-d70d15743af5" class="">그래서 이 글을 씁니다. 슬픔을 잠깐 내려놓고, 지금 당장 해야 할 것들만 시간 순서대로 정리해드릴게요. 읽으면서 따라 하실 수 있도록요.</p></div><div style="display:contents" dir="auto"><hr id="32087842-09a9-800a-bb00-ebead65b0e1b"/></div><div style="display:contents" dir="auto"><h2 id="32087842-09a9-800b-8d67-e30ee5bf5f5a" class="">먼저 — 지금 어디 계세요?</h2></div><div style="display:contents" dir="auto"><p id="32087842-09a9-80cb-ac0d-e6d4b72428f6" class="">장례 절차는 <strong>어디서 임종하셨느냐</strong>에 따라 첫 단계가 달라져요.</p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="32087842-09a9-8028-80d6-f2b669ee8dc1" class="code code-wrap"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all">🏥 병원에서 임종 → 의사가 사망진단서 즉시 발급
+🏠 자택에서 임종 → 119신고 → 경찰 입회 → 시체검안서 발급
+🏥 요양원·호스피스 → 담당 의사가 사망진단서 발급</code></pre></div><div style="display:contents" dir="auto"><p id="32087842-09a9-805d-8504-f2942d1dbc4d" class="">이 차이가 중요한 이유는, <strong>사망진단서(또는 시체검안서)가 없으면 이후 모든 절차가 진행이 안 되기 때문</strong>이에요. 화장 예약도, 사망신고도, 보험 청구도 전부 이 서류가 필요해요.</p></div><div style="display:contents" dir="auto"><hr id="32087842-09a9-808a-8dd7-cc9656376288"/></div><div style="display:contents" dir="auto"><h2 id="32087842-09a9-80b4-bdb6-ea37d82f1cb2" class="">D+0 (돌아가신 날) — 이것만 하세요</h2></div><div style="display:contents" dir="ltr"><figure id="32087842-09a9-80c7-b635-cd8bbbcb6dba" class="image"><a href="https://sspark.genspark.ai/cfimages?u1=XwC%2BeST%2BMe2Te4FumV7WTMHXkxQi3vl7f9gWt5%2F8f4QSCAxy%2FoKsD3LmsB8zTcRAi%2Fi9eqLXDV4XmLAiuwiiXFi8sDyhrmSoapLoMKMwiDKQe3Ig%2F91C0FE3N4W0qOxD5aCb%2BQ%2Ba&amp;u2=6eGzendmXnB7y3cy&amp;width=2560"><img src="https://sspark.genspark.ai/cfimages?u1=XwC%2BeST%2BMe2Te4FumV7WTMHXkxQi3vl7f9gWt5%2F8f4QSCAxy%2FoKsD3LmsB8zTcRAi%2Fi9eqLXDV4XmLAiuwiiXFi8sDyhrmSoapLoMKMwiDKQe3Ig%2F91C0FE3N4W0qOxD5aCb%2BQ%2Ba&amp;u2=6eGzendmXnB7y3cy&amp;width=2560"/></a></figure></div><div style="display:contents" dir="auto"><h3 id="32087842-09a9-80bf-bcfb-dda1f97165ae" class="">① 사망진단서 받기 (가장 먼저)</h3></div><div style="display:contents" dir="auto"><p id="32087842-09a9-80b7-8ff2-f432c072774c" class="">의사에게 <strong>사망진단서를 여러 장 요청</strong>하세요. 보통 10장 정도 받아두는 게 좋아요. 나중에 은행, 보험사, 연금공단 등 여러 곳에 각각 제출해야 하거든요. 한 장만 받으면 나중에 다시 떼야 해서 번거로워요.</p></div><div style="display:contents" dir="auto"><blockquote id="32087842-09a9-8005-8782-f6b1c343df3d" class="">💡 <strong>팁</strong>: 사망진단서는 병원에서 장당 1,000~3,000원이에요. 아깝다고 1장만 받지 마세요.</blockquote></div><div style="display:contents" dir="auto"><h3 id="32087842-09a9-80f9-ad74-d938197e661e" class="">② 장례식장 연락하기</h3></div><div style="display:contents" dir="auto"><p id="32087842-09a9-8034-89ce-fd490f78014d" class="">사망진단서를 받은 직후, 장례식장에 연락해서 <strong>운구 차량과 빈소</strong>를 예약해요. 어느 장례식장을 선택할지 미리 생각해두지 않으셨다면, 일반적으로 <strong>돌아가신 병원 내 장례식장</strong>을 이용하는 경우가 많아요. 이유는 이동이 필요 없기 때문이에요.</p></div><div style="display:contents" dir="auto"><p id="32087842-09a9-802c-b861-f45da55eb94f" class="">장례식장에 연락하면 담당자가 나머지 절차를 안내해줄 거예요. 거기서부터는 혼자 결정할 것들이 많아지지만, 장례지도사가 옆에 있어요.</p></div><div style="display:contents" dir="auto"><blockquote id="32087842-09a9-8084-acf1-c9288a93c0fb" class="">⚠️ <strong>주의</strong>: 병원 장례식장이 반드시 최선은 아니에요. 비용 차이가 클 수 있어요. 급하지 않다면 1~2시간 안에 2~3곳에 전화해서 가격 비교하는 것도 방법이에요.</blockquote></div><div style="display:contents" dir="auto"><h3 id="32087842-09a9-800e-ae9d-dc5767059393" class="">③ 가족에게 연락하기</h3></div><div style="display:contents" dir="auto"><p id="32087842-09a9-803b-805a-fe5e2f6a1bd1" class="">가까운 가족에게 먼저 연락하세요. SNS나 단체 메시지로 한 번에 알리는 건 나중에 하고, 지금은 직계 가족, 형제자매에게 전화로 먼저 알리는 게 예의예요.</p></div><div style="display:contents" dir="auto"><hr id="32087842-09a9-805f-abbe-eb5f4c8b9bed"/></div><div style="display:contents" dir="auto"><h2 id="32087842-09a9-804f-9e80-dd3907409d48" class="">D+1 (다음 날) — 빈소 차리고 조문 받기</h2></div><div style="display:contents" dir="auto"><h3 id="32087842-09a9-8071-9d6d-eec448bf43a2" class="">④ 빈소 설치 및 상복 준비</h3></div><div style="display:contents" dir="auto"><p id="32087842-09a9-80c7-a1b9-db3402ecd259" class="">장례식장에서 빈소를 차려드려요. 영정사진, 제단, 조화 등은 장례식장에서 알아서 안내해줘요. 여기서 여러분이 결정해야 할 것들이 있어요.</p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="32087842-09a9-8022-becf-e74f44a7d875" class="code code-wrap"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all">결정해야 할 것들:
+□ 3일장 or 2일장 (일반적으로 3일장)
+□ 발인 날짜와 시간
+□ 화장 or 매장 여부
+□ 화장이라면 → 어느 화장장에서?
+□ 장지는 어디로? (봉안당 / 수목장 / 공원묘지)
+□ 음식 메뉴와 수량
+□ 수의 및 관 선택</code></pre></div><div style="display:contents" dir="auto"><p id="32087842-09a9-800e-add1-d05098fc576e" class="">이 중에서 <strong>가장 빨리 결정해야 하는 건 화장 예약</strong>이에요. 수도권 화장장은 성수기(명절 전후, 겨울)에 예약이 꽉 차는 경우도 있어요. 발인 날짜를 정하자마자 바로 예약하는 걸 추천해요.</p></div><div style="display:contents" dir="auto"><h3 id="32087842-09a9-80b1-b1dc-fdc50eaa6e61" class="">⑤ 부고 연락하기</h3></div><div style="display:contents" dir="auto"><p id="32087842-09a9-80c3-9a6a-d03fafe87990" class="">요즘은 카카오톡으로 부고 문자를 보내는 경우가 많아요. 문자 메시지 앱이나 카카오톡 채널을 통해 부고를 전달할 수 있어요.</p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="32087842-09a9-80ac-93d9-ca6dfa12324d" class="code code-wrap"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all">부고 문자 기본 형식:
+○○○의 부친 ○○○님께서
+○월 ○일 오전/오후 ○시에 별세하셨습니다.
+
+빈소: ○○병원 장례식장 ○호
+발인: ○월 ○일 오전 ○시
+장지: ○○추모공원
+
+상주: ○○○ (연락처: 010-XXXX-XXXX)</code></pre></div><div style="display:contents" dir="auto"><hr id="32087842-09a9-8051-b036-e9ed0b324e1d"/></div><div style="display:contents" dir="auto"><h2 id="32087842-09a9-807c-8b86-c528cc5630bf" class="">D+2 (이틀째) — 입관식과 조문</h2></div><div style="display:contents" dir="auto"><h3 id="32087842-09a9-8067-873c-e4adbbd66868" class="">⑥ 입관식</h3></div><div style="display:contents" dir="auto"><p id="32087842-09a9-8091-bc44-d4072b054fa7" class="">입관은 고인을 관에 모시는 절차예요. 가족들이 함께하는 경우가 많아요. 장례지도사가 절차를 안내해줘요. 이때 수의(壽衣)를 입히고 정성스럽게 모셔요.</p></div><div style="display:contents" dir="auto"><p id="32087842-09a9-80ab-a85b-ed56a2eddfe1" class="">감정적으로 가장 힘든 순간이에요. 지금 힘드셔도 괜찮아요.</p></div><div style="display:contents" dir="auto"><h3 id="32087842-09a9-80c7-9d78-daef852ee215" class="">⑦ 조문 받기</h3></div><div style="display:contents" dir="auto"><p id="32087842-09a9-80de-a524-f36ef44332e8" class="">빈소에서 조문을 받는 동안, 상주는 자리를 지켜야 해요. 교대로 쉬면서 컨디션을 유지하는 게 중요해요. 밥도 꼭 드세요. 이틀 굶으면 몸이 못 버텨요.</p></div><div style="display:contents" dir="auto"><blockquote id="32087842-09a9-80cf-8190-c3f415315547" class="">💡 <strong>조의금 관리</strong>: 부의록(조문록)과 조의금을 별도로 관리하세요. 나중에 감사 인사나 답례품을 드릴 때 필요해요.</blockquote></div><div style="display:contents" dir="auto"><hr id="32087842-09a9-808d-b844-ff37a7f5f0e1"/></div><div style="display:contents" dir="auto"><h2 id="32087842-09a9-80f7-a03d-d542acea4443" class="">D+3 (마지막 날) — 발인과 화장, 장지 안치</h2></div><div style="display:contents" dir="ltr"><figure id="32087842-09a9-80bb-8fad-eb33d6f702d2" class="image"><a href="https://sspark.genspark.ai/cfimages?u1=9%2F9H4bmDrXXsgUyKuW9kOlLAnb1vROtGL2Y%2FG8NYTEMcBzb5vDPCNrsua5QcyOf4wcG5%2Bi2cEsHWZmF7t%2FlvCi33xYSTGS0ReEeNZNhDgEY%3D&amp;u2=ku2edNrF3WVgt3AK&amp;width=2560"><img src="https://sspark.genspark.ai/cfimages?u1=9%2F9H4bmDrXXsgUyKuW9kOlLAnb1vROtGL2Y%2FG8NYTEMcBzb5vDPCNrsua5QcyOf4wcG5%2Bi2cEsHWZmF7t%2FlvCi33xYSTGS0ReEeNZNhDgEY%3D&amp;u2=ku2edNrF3WVgt3AK&amp;width=2560"/></a></figure></div><div style="display:contents" dir="auto"><h3 id="32087842-09a9-80c1-86ff-cf6fc2f86b96" class="">⑧ 발인</h3></div><div style="display:contents" dir="auto"><p id="32087842-09a9-80ee-9de6-de40c8e16778" class="">발인은 고인이 장례식장을 떠나는 절차예요. 발인제를 지내고, 운구차에 관을 싣고 화장장으로 이동해요.</p></div><div style="display:contents" dir="auto"><h3 id="32087842-09a9-8028-b3e7-d03c8f1d1c66" class="">⑨ 화장 (대부분 선택)</h3></div><div style="display:contents" dir="auto"><p id="32087842-09a9-8021-b11d-dfce111aad0f" class="">2025년 기준 한국의 화장률은 약 **94%**예요. 화장장에 도착하면 대기 후 화장이 진행되고, 1~2시간 후 유골함에 담긴 유골을 받아요.</p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="32087842-09a9-80ac-838a-ff23481b7276" class="code code-wrap"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all">수도권 주요 화장장:
+📍 서울 서울추모공원 (서초구)
+📍 경기 성남 수정구 장례식장
+📍 인천 하늘나라 추모공원
+📍 경기 고양 화장장</code></pre></div><div style="display:contents" dir="auto"><blockquote id="32087842-09a9-80c1-9596-e511dccb2be9" class="">⚠️ <strong>중요</strong>: 사망신고는 화장 <strong>이후에</strong> 하는 것을 권장해요. 화장 전에 사망신고를 하면 행정 시스템에서 고인 정보가 이미 사망 처리되어, 화장장에서 신원 조회가 안 되는 경우가 생길 수 있어요.</blockquote></div><div style="display:contents" dir="auto"><h3 id="32087842-09a9-8063-a8b1-fa7c0cafe669" class="">⑩ 장지 안치</h3></div><div style="display:contents" dir="auto"><p id="32087842-09a9-8027-beeb-ec98a40a35eb" class="">화장 후 유골함을 <strong>봉안당(납골당), 수목장, 공원묘지</strong> 중 선택한 장지에 모셔요. 이 결정은 D+1에 미리 해두는 게 좋아요.</p></div><div style="display:contents" dir="auto"><blockquote id="32087842-09a9-8090-bf89-cc1210cfeb9f" class="">장지를 아직 못 정하셨다면? 급하게 결정하지 않아도 돼요. 임시로 가족이 보관하다가 천천히 좋은 곳을 찾아서 모시는 것도 방법이에요.</blockquote></div><div style="display:contents" dir="auto"><hr id="32087842-09a9-804e-bdbf-db4e7a0a1be5"/></div><div style="display:contents" dir="auto"><h2 id="32087842-09a9-802a-8560-c0fb6b58ae74" class="">장례 후에 해야 할 것들 (D+7 이후)</h2></div><div style="display:contents" dir="auto"><p id="32087842-09a9-805d-a3c3-f69909bbabe3" class="">장례가 끝나도 처리해야 할 행정 업무들이 남아있어요.</p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="32087842-09a9-8002-9fe8-f01146a4aad1" class="code code-wrap"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all">□ 사망신고 (주민센터 or정부24 온라인)
+   → 사망 후 1개월 이내
+   → 사망진단서 + 신고인 신분증 지참
+
+□ 금융 계좌 정리
+   → 사망 즉시 계좌 동결 요청 권장
+   → 사망일 이후 인출은 법적 문제 소지
+
+□ 국민연금·공무원연금 수급 정지
+   → 연금공단에 사망 통보
+   → 사망 다음 달부터 지급 정지
+
+□ 건강보험 피부양자 변경
+
+□ 상속 재산 정리
+   → 상속 포기는 3개월 이내 결정
+
+□ 생명보험 청구
+   → 사망진단서 + 보험증권 준비</code></pre></div><div style="display:contents" dir="auto"><hr id="32087842-09a9-805f-92f4-c92c50cbd568"/></div><div style="display:contents" dir="auto"><h2 id="32087842-09a9-8082-ab8c-e288efdc27dd" class="">마지막으로 — 지금 너무 힘드시죠</h2></div><div style="display:contents" dir="ltr"><figure id="32087842-09a9-8031-b34e-c0391fa909bf" class="image"><a href="https://sspark.genspark.ai/cfimages?u1=gNqUo13OhyAAeEuSpHhLDLfdG88Fl83chhKgOXVyTTHGvroB0fn4q%2FjVKZjYFoPqb31ji%2Fh6I8gQOYbfwWhEICx3Ok%2FEzkABusGaVEsVlt%2FnLPYnwODT51LU5r10Ivlimw5kOAo4&amp;u2=mvRYdSzD2L9KAvC%2B&amp;width=2560"><img src="https://sspark.genspark.ai/cfimages?u1=gNqUo13OhyAAeEuSpHhLDLfdG88Fl83chhKgOXVyTTHGvroB0fn4q%2FjVKZjYFoPqb31ji%2Fh6I8gQOYbfwWhEICx3Ok%2FEzkABusGaVEsVlt%2FnLPYnwODT51LU5r10Ivlimw5kOAo4&amp;u2=mvRYdSzD2L9KAvC%2B&amp;width=2560"/></a></figure></div><div style="display:contents" dir="auto"><p id="32087842-09a9-8059-aec6-c86a9f4b5d48" class="">이 글을 찾아보셨다는 것 자체가, 지금 가족을 위해 최선을 다하고 계신다는 증거예요.</p></div><div style="display:contents" dir="auto"><p id="32087842-09a9-803d-bcd8-c47cc148172f" class="">처음 겪는 일인데 완벽하게 할 수는 없어요. 모르는 게 있으면 장례지도사에게 물어보고, 도움이 필요하면 주변에 말하세요. 혼자 다 감당하려 하지 않아도 돼요.</p></div><div style="display:contents" dir="auto"><p id="32087842-09a9-8034-b0a2-da7f961d1ddd" class="">장지 결정이 아직 안 되셨다면, 급하게 하지 마세요. <strong>대대손손에서 전국 1,400개 이상의 봉안당·수목장·공원묘지를 무료로 비교</strong>할 수 있어요. 지역, 가격, 교통편을 한눈에 볼 수 있으니까요.</p></div><div style="display:contents" dir="auto"><p id="32087842-09a9-80f3-8587-e3d3c063fbf6" class="">지금 이 순간, 고인이 편안히 쉬실 수 있도록 잘 해내실 거예요.</p></div><div style="display:contents" dir="auto"><hr id="32087842-09a9-8037-9e1f-ddf5f3388361"/></div><div style="display:contents" dir="auto"><p id="32087842-09a9-80f8-9e1b-eadad528cdbb" class=""><em>📌 이 글이 도움이 됐다면 가족에게 공유해주세요. 갑작스러운 상황에서 누군가에게 꼭 필요한 정보가 될 수 있어요.</em></p></div></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>

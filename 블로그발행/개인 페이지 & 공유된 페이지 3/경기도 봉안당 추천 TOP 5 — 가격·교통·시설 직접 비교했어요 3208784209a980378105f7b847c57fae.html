@@ -1,0 +1,753 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>경기도 봉안당 추천 TOP 5 — 가격·교통·시설 직접 비교했어요</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+/* Override strong tags inside headings to maintain consistent weight */
+h1 strong,
+h2 strong,
+h3 strong {
+	font-weight: 600;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 10px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.collection-content td {
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.callout img.notion-static-icon {
+	width: 1em;
+	height: 1em;
+}
+
+.callout p {
+	margin: 0;
+}
+
+.callout h1,
+.callout h2,
+.callout h3 {
+	margin: 0 0 0.6rem;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+blockquote.quote-large {
+	font-size: 1.25em;
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.highlight-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.highlight-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.highlight-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.highlight-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.highlight-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.highlight-default_background {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray_background {
+	background: rgba(42, 28, 0, 0.07);
+}
+.highlight-brown_background {
+	background: rgba(139, 46, 0, 0.086);
+}
+.highlight-orange_background {
+	background: rgba(224, 101, 1, 0.129);
+}
+.highlight-yellow_background {
+	background: rgba(211, 168, 0, 0.137);
+}
+.highlight-teal_background {
+	background: rgba(0, 100, 45, 0.09);
+}
+.highlight-blue_background {
+	background: rgba(0, 124, 215, 0.094);
+}
+.highlight-purple_background {
+	background: rgba(102, 0, 178, 0.078);
+}
+.highlight-pink_background {
+	background: rgba(197, 0, 93, 0.086);
+}
+.highlight-red_background {
+	background: rgba(223, 22, 0, 0.094);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.block-color-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.block-color-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.block-color-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.block-color-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.block-color-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.block-color-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.block-color-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.block-color-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(229, 242, 252, 1);
+}
+.block-color-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.block-color-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.block-color-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.select-value-color-default { background-color: rgba(42, 28, 0, 0.07); }
+.select-value-color-gray { background-color: rgba(28, 19, 1, 0.11); }
+.select-value-color-brown { background-color: rgba(127, 51, 0, 0.156); }
+.select-value-color-orange { background-color: rgba(196, 88, 0, 0.203); }
+.select-value-color-yellow { background-color: rgba(209, 156, 0, 0.282); }
+.select-value-color-green { background-color: rgba(0, 96, 38, 0.156); }
+.select-value-color-blue { background-color: rgba(0, 118, 217, 0.203); }
+.select-value-color-purple { background-color: rgba(92, 0, 163, 0.141); }
+.select-value-color-pink { background-color: rgba(183, 0, 78, 0.152); }
+.select-value-color-red { background-color: rgba(206, 24, 0, 0.164); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="32087842-09a9-8037-8105-f7b847c57fae" class="page sans"><header><h1 class="page-title" dir="auto">경기도 봉안당 추천 TOP 5 — 가격·교통·시설 직접 비교했어요</h1><p class="page-description" dir="auto"></p></header><div class="page-body"><div style="display:contents" dir="auto"><h1 id="32087842-09a9-80f5-906f-e6a8f22e6808" class=""><em>2025년 최신 기준, 수도권에서 접근하기 좋은 봉안당 5곳 솔직 정리</em></h1></div><div style="display:contents" dir="auto"><h3 id="32087842-09a9-808b-81ef-d7cd5e93d1a5" class=""></h3></div><div style="display:contents" dir="auto"><hr id="32087842-09a9-80bc-a4f5-d36bbe14dd15"/></div><div style="display:contents" dir="ltr"><figure id="32087842-09a9-8072-8bf8-f95b8d5526ea" class="image"><a href="https://sspark.genspark.ai/cfimages?u1=0CE85dGun20d9I6%2Bjhfm8T76pzDadhcA6A9XBpc9TwfswIlCuxKFVRg5iTXGlhiCB8y5%2FrVD2JrrX%2BzKuGnRHVr6D0Z332J5JyEiMs3T4tXvp%2Bx3TWp53Hs%3D&amp;u2=q0RTQuw%2Bf5JNa1Re&amp;width=2560"><img src="https://sspark.genspark.ai/cfimages?u1=0CE85dGun20d9I6%2Bjhfm8T76pzDadhcA6A9XBpc9TwfswIlCuxKFVRg5iTXGlhiCB8y5%2FrVD2JrrX%2BzKuGnRHVr6D0Z332J5JyEiMs3T4tXvp%2Bx3TWp53Hs%3D&amp;u2=q0RTQuw%2Bf5JNa1Re&amp;width=2560"/></a></figure></div><div style="display:contents" dir="auto"><hr id="32087842-09a9-80f6-aab0-ce46b578e1c9"/></div><div style="display:contents" dir="auto"><p id="32087842-09a9-80df-9c97-ce140f393220" class="">경기도 봉안당을 찾고 계신 분들이 가장 많이 하시는 말이 있어요.</p></div><div style="display:contents" dir="auto"><p id="32087842-09a9-808a-93f6-d8be178d05f8" class=""><strong>&quot;너무 많아서 뭐가 좋은지 모르겠어요.&quot;</strong></p></div><div style="display:contents" dir="auto"><p id="32087842-09a9-80c6-9527-cc0414e3a383" class="">경기도에는 수백 개의 봉안당이 있어요. 가격도 천차만별이고, 교통도 각각 다르고, 시설 수준도 달라요. 직접 다 가볼 수도 없고, 인터넷 검색해봐도 광고인지 진짜 정보인지 구분이 안 되죠.</p></div><div style="display:contents" dir="auto"><p id="32087842-09a9-8056-8356-f680c36ad2a7" class="">그래서 대대손손에 등록된 경기도 봉안당 데이터를 기반으로, <strong>가격 대비 접근성과 시설 수준</strong>을 기준으로 직접 정리했어요. 광고 아니에요. 실제 데이터 기반이에요.</p></div><div style="display:contents" dir="auto"><hr id="32087842-09a9-80bc-9fc7-d9aa8fa5d431"/></div><div style="display:contents" dir="auto"><h2 id="32087842-09a9-8006-bc08-eedba81f6334" class="">선택 기준 먼저 잡고 갈게요</h2></div><div style="display:contents" dir="auto"><p id="32087842-09a9-80c3-8a32-d495fe3f4870" class="">봉안당을 고를 때 사람마다 중요하게 보는 게 달라요. 크게 세 가지 타입으로 나눌 수 있어요.</p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="32087842-09a9-80db-bf46-e5ac0b189f40" class="code code-wrap"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all">🚇 교통형 — 대중교통으로 편하게 오고 싶다
+💰 가성비형 — 적당한 시설에 합리적 가격
+🏆 프리미엄형 — 고품격 시설, 비용 불문</code></pre></div><div style="display:contents" dir="auto"><p id="32087842-09a9-809e-a2c0-e7468c662090" class="">아래 TOP 5는 이 세 가지 타입을 모두 커버하도록 골랐어요. 본인 상황에 맞는 곳을 골라보세요.</p></div><div style="display:contents" dir="auto"><hr id="32087842-09a9-8014-8ec2-ff752105fc08"/></div><div style="display:contents" dir="auto"><h2 id="32087842-09a9-803a-ba16-fd7e1d400873" class="">TOP 1 — 용인공원 아너스톤 (용인시)</h2></div><div style="display:contents" dir="auto"><h3 id="32087842-09a9-803e-916b-d23a95789e4a" class=""><strong>프리미엄형 | 국내 최대 규모 호텔식 봉안당</strong></h3></div><div style="display:contents" dir="ltr"><figure id="32087842-09a9-80f2-b628-e140656c40a9" class="image"><a href="https://sspark.genspark.ai/cfimages?u1=hhAS3ToXutgJtVZl5pNXD1ABT4L48PMp5RaNvTauhuXlPG5Ht6MGyC%2BMvhPo%2BGKlq5FvhLwBTrIbknSYRTlFxon8RzumklfCobrDwmbyN51WoXkkXn1aLWWvr%2FIqFJBmxxXjhqsl5WvM4MoiwJKWPlN6OxVokthENmdoGD9x3U%2BC&amp;u2=T1ye40yDYdjiSAhi&amp;width=2560"><img src="https://sspark.genspark.ai/cfimages?u1=hhAS3ToXutgJtVZl5pNXD1ABT4L48PMp5RaNvTauhuXlPG5Ht6MGyC%2BMvhPo%2BGKlq5FvhLwBTrIbknSYRTlFxon8RzumklfCobrDwmbyN51WoXkkXn1aLWWvr%2FIqFJBmxxXjhqsl5WvM4MoiwJKWPlN6OxVokthENmdoGD9x3U%2BC&amp;u2=T1ye40yDYdjiSAhi&amp;width=2560"/></a></figure></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="32087842-09a9-8084-a335-cdf79be76317" class="code code-wrap"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all">📍 위치: 경기도 용인시 처인구
+🚗 교통: 서울에서 자동차 40~50분
+🚌 대중교통: 용인터미널·서현역·정자역 셔틀버스 운행
+💰 가격: 문의 후 확인 (중고가 이상)
+⭐ 특징: 국내 최대 면적, 호텔급 인테리어, 전용 테라스</code></pre></div><div style="display:contents" dir="auto"><p id="32087842-09a9-80be-b2ca-fa7c206de2ae" class="">용인공원 아너스톤은 국내에서 가장 유명한 봉안당 중 하나예요. &quot;다녀온 사람의 절반이 계약한다&quot;는 말이 있을 정도로 시설 만족도가 높아요.</p></div><div style="display:contents" dir="auto"><p id="32087842-09a9-8045-9dbc-c455a51fb0fc" class="">특히 <strong>전용 셔틀버스</strong>가 운행된다는 게 큰 장점이에요. 서현역, 정자역에서 셔틀을 타면 대중교통으로도 충분히 방문 가능해요. 명절에 부모님 모시고 차 없이 오시는 분들도 많아요.</p></div><div style="display:contents" dir="auto"><p id="32087842-09a9-80fd-9b26-dd52f7c7db97" class="">프리미엄 시설인 만큼 가격은 높은 편이에요. 하지만 시설 수준과 관리 상태를 직접 보시면 납득이 되실 거예요. 방문 전 반드시 예약하고 가세요.</p></div><div style="display:contents" dir="auto"><blockquote id="32087842-09a9-80a8-818e-daade5174d6e" class="">✅ <strong>추천 대상</strong>: 가족이 자주 방문할 계획이고, 시설 품격을 중요하게 보시는 분</blockquote></div><div style="display:contents" dir="auto"><hr id="32087842-09a9-8096-88e8-dd4fccc4c996"/></div><div style="display:contents" dir="auto"><h2 id="32087842-09a9-8094-9eac-d5f229a4fce8" class="">TOP 2 — 분당추모공원 휴 (성남시 분당)</h2></div><div style="display:contents" dir="auto"><h3 id="32087842-09a9-806e-978a-e2c196e9955f" class=""><strong>교통형 + 프리미엄 | 서울 강남에서 30분</strong></h3></div><div style="display:contents" dir="ltr"><figure id="32087842-09a9-80e3-b47b-cc93f548ffa1" class="image"><a href="https://sspark.genspark.ai/cfimages?u1=wT4EGv%2BLElvUfr5gB3EM1Pg%2FPbWyngwimzSCQt4x5cqlWl35czQc1KSjKGIAp0EDDcRm4lnxZUYsrt2kWRIilIPKdr9nJyvwiaDPuL%2FkZxq5o7kv964Luw%3D%3D&amp;u2=kPrgCwL5uXdlkZh7&amp;width=2560"><img src="https://sspark.genspark.ai/cfimages?u1=wT4EGv%2BLElvUfr5gB3EM1Pg%2FPbWyngwimzSCQt4x5cqlWl35czQc1KSjKGIAp0EDDcRm4lnxZUYsrt2kWRIilIPKdr9nJyvwiaDPuL%2FkZxq5o7kv964Luw%3D%3D&amp;u2=kPrgCwL5uXdlkZh7&amp;width=2560"/></a></figure></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="32087842-09a9-80f5-a0aa-d659a179fa2a" class="code code-wrap"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all">📍 위치: 경기도 성남시 분당구
+🚗 교통: 서울 강남에서 약 30분
+🚌 대중교통: 지하철·버스 연계 양호
+💰 가격: 중고가 (문의 후 확인)
+⭐ 특징: 서울 접근성 최상, 세미야외형 봉안당</code></pre></div><div style="display:contents" dir="auto"><p id="32087842-09a9-80e8-8b9f-e0acb6cc3416" class="">수도권 봉안당 중 <strong>서울 접근성이 가장 뛰어난 편</strong>이에요. 강남, 서초, 송파에 거주하시는 분들이 특히 많이 찾아요. 분당이라는 지역 특성상 인프라가 잘 갖춰져 있고, 방문할 때 주변에서 식사하거나 카페 들르기도 편해요.</p></div><div style="display:contents" dir="auto"><p id="32087842-09a9-80b5-b17f-ef1721ebea4a" class="">세미야외형 봉안당이라 자연 채광이 잘 들어와요. 실내지만 답답한 느낌이 덜해서, 어르신들이 방문했을 때 만족도가 높아요.</p></div><div style="display:contents" dir="auto"><blockquote id="32087842-09a9-807f-893d-ccadbf909756" class="">✅ <strong>추천 대상</strong>: 서울 강남권 거주자, 자주 방문이 예상되는 분</blockquote></div><div style="display:contents" dir="auto"><hr id="32087842-09a9-8085-bedf-e671b3c26205"/></div><div style="display:contents" dir="auto"><h2 id="32087842-09a9-805c-8b04-c0477c74f3a1" class="">TOP 3 — 화성 함백산추모공원 (화성시)</h2></div><div style="display:contents" dir="auto"><h3 id="32087842-09a9-80d0-bfb3-d3cb36c61049" class=""><strong>가성비형 | 넓은 부지, 합리적 가격</strong></h3></div><div style="display:contents" dir="ltr"><figure id="32087842-09a9-8090-b1d8-fa4b9cdcf69f" class="image"><a href="https://sspark.genspark.ai/cfimages?u1=IYHffps%2F0NWJ1AHPVUR5uurX0pW%2BKpEVgooX2tEkDeXJmKLcNGFRQ2hEsjkVuXTebxxx7CwVWwgiV809ve6p9R9iLsjCeODeE2MohC1G&amp;u2=Uu8Iix6f1afIKIb5&amp;width=2560"><img src="https://sspark.genspark.ai/cfimages?u1=IYHffps%2F0NWJ1AHPVUR5uurX0pW%2BKpEVgooX2tEkDeXJmKLcNGFRQ2hEsjkVuXTebxxx7CwVWwgiV809ve6p9R9iLsjCeODeE2MohC1G&amp;u2=Uu8Iix6f1afIKIb5&amp;width=2560"/></a></figure></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="32087842-09a9-802d-b840-d257def2ee93" class="code code-wrap"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all">📍 위치: 경기도 화성시
+🚗 교통: 수원에서 약 30분, 서울에서 1시간~
+💰 가격: 중저가 (야외 봉안담 포함)
+⭐ 특징: 넓은 공원 부지, 야외 봉안담, 자연 친화적 환경</code></pre></div><div style="display:contents" dir="auto"><p id="32087842-09a9-8052-8b99-d4825eeb827d" class="">화성 함백산추모공원은 경기 남부 지역에서 가성비가 좋기로 알려진 시설이에요. 특히 <strong>야외 봉안담</strong>이 완공되어 운영 중인데, 야외에서 하늘을 보며 추모할 수 있는 환경을 선호하시는 분들에게 인기예요.</p></div><div style="display:contents" dir="auto"><p id="32087842-09a9-80ff-91eb-ff8dc8acf6c7" class="">수원·평택·오산·안성 등 경기 남부 거주자라면 교통이 편해요. 서울에서는 1시간 내외가 걸리지만, 넓고 쾌적한 환경 때문에 일부러 찾아오시는 분들도 있어요.</p></div><div style="display:contents" dir="auto"><blockquote id="32087842-09a9-808b-9ec2-f7ff2950d468" class="">✅ <strong>추천 대상</strong>: 경기 남부 거주자, 야외 추모 공간을 선호하시는 분, 합리적 가격 원하는 분</blockquote></div><div style="display:contents" dir="auto"><hr id="32087842-09a9-8062-b79c-ffa386ad31a8"/></div><div style="display:contents" dir="auto"><h2 id="32087842-09a9-807e-9276-cb9ae8aa599b" class="">TOP 4 — 광명시 관내 공설 봉안당 (광명시)</h2></div><div style="display:contents" dir="auto"><h3 id="32087842-09a9-806d-a71b-d7bbb9b73f1b" class=""><strong>공설형 | 저렴한 가격, 지역 주민 우선</strong></h3></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="32087842-09a9-80f8-9303-d3e653908196" class="code code-wrap"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all">📍 위치: 경기도 광명시
+🚗 교통: 서울에서 약 20~30분
+💰 가격: 공설 기준 (매우 저렴)
+⭐ 특징: 지자체 운영, 저렴한 가격, 지역 주민 우선 신청</code></pre></div><div style="display:contents" dir="auto"><p id="32087842-09a9-80f4-b4d2-c54dfb359cd3" class="">광명시는 서울과 인접해 있어 접근성이 매우 좋아요. 공설 봉안당이기 때문에 가격이 <strong>사설에 비해 현저히 저렴</strong>해요. 단, 광명시 거주자 또는 해당 지역과 연고가 있는 분들을 우선으로 해요.</p></div><div style="display:contents" dir="auto"><p id="32087842-09a9-802b-804c-fe9a931e1e70" class="">공설 봉안당 특성상 시설이 최신 프리미엄 수준은 아니지만, 관리는 잘 되고 있어요. 예산이 한정적이시거나, 시설 수준보다 <strong>접근성과 가격</strong>을 우선시하신다면 좋은 선택이에요.</p></div><div style="display:contents" dir="auto"><blockquote id="32087842-09a9-8068-aff0-c49434a3ece5" class="">✅ <strong>추천 대상</strong>: 광명·시흥·부천 거주자, 예산 최우선 고려하시는 분</blockquote></div><div style="display:contents" dir="auto"><hr id="32087842-09a9-80d3-a4be-dfc51e2ff5df"/></div><div style="display:contents" dir="auto"><h2 id="32087842-09a9-80e9-b267-dab3a391cb19" class="">TOP 5 — 경기도추모공원 (고양시 인근)</h2></div><div style="display:contents" dir="auto"><h3 id="32087842-09a9-800a-a30e-ef1f9d70fc05" class=""><strong>교통형 + 가성비 | 서울 북부·서부 접근성</strong></h3></div><div style="display:contents" dir="ltr"><figure id="32087842-09a9-8018-a0ef-f53901f47299" class="image"><a href="https://sspark.genspark.ai/cfimages?u1=Gz7MdhIS76CkVh4ShA7sFehhTAqUHqKB%2FUjvXo7ob7MjzP9t1aPw2u1IIyilXZbsKwQjONmZgXnfFcSDkLH5bFyBC2dmd%2BzjDk8xubfruOt0zphZXWtP5FKnZtH0I%2BiT7ua7apUlupQ%3D&amp;u2=J0DHqLKokLaziO7O&amp;width=2560"><img src="https://sspark.genspark.ai/cfimages?u1=Gz7MdhIS76CkVh4ShA7sFehhTAqUHqKB%2FUjvXo7ob7MjzP9t1aPw2u1IIyilXZbsKwQjONmZgXnfFcSDkLH5bFyBC2dmd%2BzjDk8xubfruOt0zphZXWtP5FKnZtH0I%2BiT7ua7apUlupQ%3D&amp;u2=J0DHqLKokLaziO7O&amp;width=2560"/></a></figure></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="32087842-09a9-80a8-b67a-c1d4744709cc" class="code code-wrap"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all">📍 위치: 경기도 서북부 (통일로 인근)
+🚗 교통: 서울역에서 약 30분, 광화문에서 21km
+💰 가격: 중가 (배산임수 입지, 약 7,000평 규모)
+⭐ 특징: 호텔급 시설, 명당 입지, 화장 시설 연계</code></pre></div><div style="display:contents" dir="auto"><p id="32087842-09a9-80fd-979b-e5586710d271" class="">서울 북부(은평·서대문·마포)와 경기 서북부(고양·파주·김포) 거주자에게 접근성이 좋은 시설이에요. 명봉산을 등지고 고산천이 흐르는 입지라 자연 환경이 좋고, 규모도 크고 시설 수준도 높아요.</p></div><div style="display:contents" dir="auto"><p id="32087842-09a9-8052-8e85-ed63745eb3be" class="">화장 후 바로 봉안당으로 이동할 수 있는 동선이 편리한 점도 장점이에요.</p></div><div style="display:contents" dir="auto"><blockquote id="32087842-09a9-80a0-8196-fca28db9edc8" class="">✅ <strong>추천 대상</strong>: 서울 북부·서부, 경기 서북부 거주자</blockquote></div><div style="display:contents" dir="auto"><hr id="32087842-09a9-80e8-85b9-cadf02a38c8b"/></div><div style="display:contents" dir="auto"><h2 id="32087842-09a9-807d-8710-c9b555c0737c" class="">경기도 봉안당 비교 요약표</h2></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="32087842-09a9-8084-82f0-cf2714b1d6a2" class="code code-wrap"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all">┌──────────────────┬──────┬──────┬──────┬──────┐
+│  시설명          │ 위치  │ 가격  │ 교통 │시설급│
+├──────────────────┼──────┼──────┼──────┼──────┤
+│ 용인공원 아너스톤 │용인  │고가  │★★★★ │★★★★★│
+│ 분당추모공원 휴  │성남  │중고가│★★★★★│★★★★ │
+│ 화성함백산추모공원│화성  │중저가│★★★  │★★★  │
+│ 광명시 공설봉안당 │광명  │저가  │★★★★ │★★★  │
+│ 경기도추모공원   │고양권│중가  │★★★★ │★★★★ │
+└──────────────────┴──────┴──────┴──────┴──────┘</code></pre></div><div style="display:contents" dir="auto"><hr id="32087842-09a9-8047-abba-e089f2c6f88d"/></div><div style="display:contents" dir="auto"><h2 id="32087842-09a9-8031-9a24-ff9bcaf49538" class="">봉안당 방문 전 꼭 확인할 것 5가지</h2></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="32087842-09a9-80fa-a9df-df60d6878141" class="code code-wrap"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all">① 공실 여부 전화로 먼저 확인
+   → 인기 시설은 원하는 자리가 없을 수 있어요
+
+② 이용 기간 (기한제 vs 영구)
+   → 계약서에 명확히 명시되어 있어야 해요
+
+③ 관리비 포함 여부
+   → 연간 관리비가 별도인 경우 총 비용 계산 필수
+
+④ 재단법인 여부
+   → 사설 시설은 폐업 위험 있어요
+
+⑤ 방문 전 가격표 서면 요청
+   → 구두 안내 후 나중에 달라지는 경우 있어요</code></pre></div><div style="display:contents" dir="auto"><hr id="32087842-09a9-800b-a4f5-f5156510bf97"/></div><div style="display:contents" dir="auto"><h2 id="32087842-09a9-801b-b912-f8a7e6e6e099" class="">발품 팔기 전에 먼저 온라인 비교부터</h2></div><div style="display:contents" dir="ltr"><figure id="32087842-09a9-8022-8470-d146235e1ae6" class="image"><a href="https://sspark.genspark.ai/cfimages?u1=iDIxU4uL2NVCX1RxoKrZlCxIO6FMh5xnL6zK9YLczierzGbmqfP6aQyHxaAH99htZWzxxWABzB7RwpuIKTSgA1ejClelv1TjVb1LMwDs4wLedYnaqeJ98Zh4iCA95z%2BhMRGv&amp;u2=NDVW6G1iEqFj3rlP&amp;width=2560"><img src="https://sspark.genspark.ai/cfimages?u1=iDIxU4uL2NVCX1RxoKrZlCxIO6FMh5xnL6zK9YLczierzGbmqfP6aQyHxaAH99htZWzxxWABzB7RwpuIKTSgA1ejClelv1TjVb1LMwDs4wLedYnaqeJ98Zh4iCA95z%2BhMRGv&amp;u2=NDVW6G1iEqFj3rlP&amp;width=2560"/></a></figure></div><div style="display:contents" dir="auto"><p id="32087842-09a9-8015-8b2f-f4b49e4e8a14" class="">경기도에만 수백 개의 봉안당이 있어요. 다 가볼 수 없잖아요.</p></div><div style="display:contents" dir="auto"><p id="32087842-09a9-800a-9852-ddc97b3e6f84" class=""><strong>대대손손</strong>에서는 전국 1,400개 이상 장지 시설을 지역·가격·장법 기준으로 무료로 비교할 수 있어요. 경기도 봉안당만 필터링해서 가격순으로 정렬하면 내 예산에 맞는 곳들을 한눈에 볼 수 있어요.</p></div><div style="display:contents" dir="auto"><p id="32087842-09a9-803f-b63f-fe300b142e45" class="">집에서 먼저 후보를 2~3개로 좁히고, 그다음에 직접 방문하는 것이 시간도 아끼고, 영업 압박도 덜 받는 방법이에요.</p></div><div style="display:contents" dir="auto"><hr id="32087842-09a9-8059-9fc4-c2e663f74738"/></div><div style="display:contents" dir="auto"><p id="32087842-09a9-8087-859e-c3fe1321526a" class=""><em>📌 이 글에 소개된 시설 정보는 2025년 기준이며, 정확한 가격과 공실 여부는 변동이 있을 수 있어요. 방문 전 반드시 해당 시설에 직접 문의하세요.</em> <em>📌 대대손손에서 최신 가격과 시설 정보를 실시간으로 확인하실 수 있어요 →</em></p></div></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>

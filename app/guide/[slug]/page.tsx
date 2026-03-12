@@ -50,21 +50,41 @@ export async function generateMetadata({ params }: PageProps) {
 
     const { data: post } = await supabase
         .from('blog_posts')
-        .select('title, excerpt, thumbnail_url')
+        .select('title, excerpt, thumbnail_url, tags')
         .eq('slug', slug)
         .eq('is_published', true)
         .single();
 
     if (!post) return { title: '글을 찾을 수 없습니다' };
 
+    const baseUrl = 'https://daedaesonson.com';
+    const ogImage = post.thumbnail_url
+        ? post.thumbnail_url.startsWith('http')
+            ? post.thumbnail_url
+            : `${baseUrl}${post.thumbnail_url}`
+        : undefined;
+
     return {
         title: `${post.title} | 대대손손 가이드`,
         description: post.excerpt || post.title,
+        keywords: post.tags || [],
         openGraph: {
             title: post.title,
             description: post.excerpt || post.title,
-            images: post.thumbnail_url ? [post.thumbnail_url] : [],
+            url: `${baseUrl}/guide/${slug}`,
+            siteName: '대대손손',
+            locale: 'ko_KR',
             type: 'article',
+            ...(ogImage ? { images: [{ url: ogImage, width: 1024, height: 1024, alt: post.title }] } : {}),
+        },
+        twitter: {
+            card: 'summary_large_image',
+            title: post.title,
+            description: post.excerpt || post.title,
+            ...(ogImage ? { images: [ogImage] } : {}),
+        },
+        alternates: {
+            canonical: `/guide/${slug}`,
         },
     };
 }

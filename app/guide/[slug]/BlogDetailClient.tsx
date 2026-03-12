@@ -452,10 +452,10 @@ export default function BlogDetailClient({ post, relatedPosts }: Props) {
                 }
                 .blog-content li { margin-bottom: 0.5em; }
                 .blog-content blockquote {
-                    border-left: 3px solid ${BRAND_COLOR};
+                    border-left: 3px solid #ccc;
                     padding: 12px 20px;
                     margin: 1.5em 0;
-                    background-color: ${BRAND_COLOR_LIGHT};
+                    background-color: #f5f5f5;
                     border-radius: 0 8px 8px 0;
                     color: #444;
                 }
