@@ -890,30 +890,46 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
                 `;
                 anchorPoint = new window.naver.maps.Point(hitArea / 2, hitArea / 2);
             } else {
-                // 일반 마커: 기존 가격 태그 스타일
-                const contentWidth = 56;
-                const contentHeight = 52;
-                const tailSize = 10;
-                const archHeight = 14;
+                // ===== 기존 마커 (아치형 태그) — 나중에 전환 가능 =====
+                // const contentWidth = 56;
+                // const contentHeight = 52;
+                // const tailSize = 10;
+                // const archHeight = 14;
+                // svgContent = `
+                // <svg width="${56}" height="${62}" viewBox="0 0 56 62" xmlns="http://www.w3.org/2000/svg">
+                //     <path d="M 0 14 Q 0 0, 28 0 Q 56 0, 56 14 L 56 44 Q 56 52, 48 52 L 10 52 L 0 62 L 0 14 Z"
+                //         fill="${markerColor}" stroke="rgba(0,0,0,0.2)" stroke-width="1"/>
+                //     <text x="28" y="20" font-family="-apple-system, sans-serif" font-size="10" fill="white" fill-opacity="0.9" text-anchor="middle">${categoryLabel}</text>
+                //     <text x="28" y="38" font-family="-apple-system, sans-serif" font-size="13" font-weight="800" fill="white" text-anchor="middle">${priceText}</text>
+                // </svg>`;
+                // anchorPoint = new window.naver.maps.Point(0, 62);
+
+                // ===== 현재 마커: 한복 깃 리본 (마커아이콘2.svg 기반) =====
+                const categoryColorSet: Record<string, { main: string; dark: string }> = {
+                    'CHARNEL_HOUSE': { main: '#0097a7', dark: '#005f6b' },
+                    'NATURAL_BURIAL': { main: '#43a047', dark: '#2d6e30' },
+                    'FAMILY_GRAVE': { main: '#7e57c2', dark: '#412a6f' },
+                    'CREMATORIUM': { main: '#f57c00', dark: '#c26200' },
+                    'FUNERAL_HOME': { main: '#78909c', dark: '#546e7a' },
+                    'ETC': { main: '#8d6e63', dark: '#5d4037' },
+                };
+                const colors = categoryColorSet[fac.category as FacilityCategory] || categoryColorSet['CHARNEL_HOUSE'];
 
                 svgContent = `
-                <svg width="${contentWidth}" height="${contentHeight + tailSize}" viewBox="0 0 ${contentWidth} ${contentHeight + tailSize}" xmlns="http://www.w3.org/2000/svg">
-                    <path d="
-                        M 0 ${archHeight}
-                        Q 0 0, ${contentWidth / 2} 0
-                        Q ${contentWidth} 0, ${contentWidth} ${archHeight}
-                        L ${contentWidth} ${contentHeight - 8}
-                        Q ${contentWidth} ${contentHeight}, ${contentWidth - 8} ${contentHeight}
-                        L ${tailSize} ${contentHeight}
-                        L 0 ${contentHeight + tailSize}
-                        L 0 ${archHeight}
-                        Z
-                    " fill="${markerColor}" stroke="rgba(0,0,0,0.2)" stroke-width="1"/>
-                    <text x="${contentWidth / 2}" y="20" font-family="-apple-system, sans-serif" font-size="10" fill="white" fill-opacity="0.9" text-anchor="middle">${categoryLabel}</text>
-                    <text x="${contentWidth / 2}" y="38" font-family="-apple-system, sans-serif" font-size="13" font-weight="800" fill="white" text-anchor="middle">${priceText}</text>
+                <svg xmlns="http://www.w3.org/2000/svg" width="62" height="66" viewBox="0 0 48.387 51.479">
+                  <g transform="translate(0,0)">
+                    <path d="M0,32.211V4A4,4,0,0,1,4,0H38.387a4,4,0,0,1,4,4V32.211a4,4,0,0,1-4,4H8.119L0,44.33Z" transform="translate(3 2.15)" fill="${colors.main}"/>
+                    <text x="24" y="18.8" fill="#efefef" font-size="7" font-family="-apple-system, sans-serif" text-anchor="middle">${categoryLabel}</text>
+                    <g transform="translate(16.814 0)">
+                      <rect width="9.858" height="3.13" transform="translate(2.215 0)" fill="${colors.dark}"/>
+                      <rect width="6.976" height="3.13" transform="translate(2.213 0.001) rotate(45)" fill="#efefef"/>
+                      <rect width="13.234" height="3.13" transform="translate(14.29 2.216) rotate(135)" fill="#efefef"/>
+                    </g>
+                    <text x="24" y="30.8" fill="#efefef" font-size="11" font-weight="700" font-family="-apple-system, sans-serif" text-anchor="middle" opacity="0.95">${priceText}</text>
+                  </g>
                 </svg>
                 `;
-                anchorPoint = new window.naver.maps.Point(0, 52 + 10);
+                anchorPoint = new window.naver.maps.Point(4, 60);
             }
 
             const marker = new window.naver.maps.Marker({

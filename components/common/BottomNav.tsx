@@ -73,7 +73,7 @@ export default function BottomNav({ historyCount = 0, hidden = false }: BottomNa
                 bottom: 0,
                 left: 0,
                 right: 0,
-                height: 58,
+                height: 56,
                 backgroundColor: '#fff',
                 borderTop: '1px solid #ddd',
                 zIndex: 2000,
@@ -82,7 +82,7 @@ export default function BottomNav({ historyCount = 0, hidden = false }: BottomNa
                 transition: 'transform 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
             }}
         >
-            <Group h={58} justify="space-around" align="center" px={0}>
+            <Group h={56} justify="space-around" align="center" px={0}>
                 {tabs.map((tab) => {
                     const isActive = pathname === tab.path || (tab.path === '/' && pathname === '/');
                     const IconComponent = iconMap[tab.id];
