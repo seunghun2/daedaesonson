@@ -8,6 +8,7 @@ import { Car, Utensils, Accessibility, Store, Navigation, Globe, ChevronLeft, Ch
 import InquiryPanel from './InquiryPanel';
 import CorrectionRequestModal from './CorrectionRequestModal';
 import ScrollableTabsList from '@/components/ScrollableTabsList';
+import AIChatbot from '@/components/chatbot/AIChatbot';
 import { useAuth } from '@/components/auth/AuthProvider';
 import LoginModal from '@/components/auth/LoginModal';
 import ReviewsPanel from './ReviewsPanel';
@@ -1102,6 +1103,9 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
     const isFavorited = isFavorite(String(facility.id));
     const [showAllInquiries, setShowAllInquiries] = useState(false);
     const [totalInquiryCount, setTotalInquiryCount] = useState(0);
+
+    // AI 챗봇 상태
+    const [aiChatOpen, setAiChatOpen] = useState(false);
 
     // 상담 신청 모달 - URL 파라미터로 관리 + 뒤로가기 지원
     const searchParams = useSearchParams();
@@ -4590,38 +4594,90 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                             )}
                         </Modal>
 
-                        {/* 🔴 플로팅 상담 버튼 (FAB) */}
-                        <Box
-                            onClick={() => setConsultModalOpened(true)}
-                            style={{
-                                position: 'fixed',
-                                bottom: isMobile ? 16 : 24,
-                                ...(isMobile ? { right: 16 } : { left: 322 }),
-                                width: 56,
-                                height: 56,
-                                borderRadius: '50%',
-                                background: 'linear-gradient(135deg, #1D0098 0%, #4B3FD3 100%)',
-                                boxShadow: '0 4px 16px rgba(29, 0, 152, 0.4)',
-                                display: 'flex',
-                                alignItems: 'center',
-                                justifyContent: 'center',
-                                cursor: 'pointer',
-                                zIndex: 100,
-                                transition: 'transform 0.2s, box-shadow 0.2s',
-                            }}
-                            onMouseEnter={(e) => {
-                                e.currentTarget.style.transform = 'scale(1.1)';
-                                e.currentTarget.style.boxShadow = '0 6px 24px rgba(29, 0, 152, 0.5)';
-                            }}
-                            onMouseLeave={(e) => {
-                                e.currentTarget.style.transform = 'scale(1)';
-                                e.currentTarget.style.boxShadow = '0 4px 16px rgba(29, 0, 152, 0.4)';
-                            }}
-                        >
-                            <Text size="xs" fw={700} c="white" ta="center" lh={1.2}>
-                                상담<br />하기
-                            </Text>
+                        {/* 장지 상담 플로팅 버튼 (FAB) */}
+                        <Box style={{
+                            position: 'fixed',
+                            bottom: isMobile ? 16 : 24,
+                            ...(isMobile ? { right: 16 } : { left: 322 }),
+                            zIndex: 100,
+                        }}>
+                            {/* 컴팩트 1줄 라벨 */}
+                            {!aiChatOpen && (
+                                <Box
+                                    onClick={() => setAiChatOpen(true)}
+                                    style={{
+                                        position: 'absolute',
+                                        bottom: 8,
+                                        ...(isMobile ? { right: 64 } : { left: 64 }),
+                                        display: 'flex', alignItems: 'center', gap: 8,
+                                        padding: '10px 16px',
+                                        background: '#fff', border: '1px solid #eee',
+                                        borderRadius: 28,
+                                        boxShadow: '0 4px 16px rgba(0,0,0,0.08)',
+                                        cursor: 'pointer', whiteSpace: 'nowrap',
+                                        animation: 'labelExpand 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+                                        transformOrigin: isMobile ? 'right center' : 'left center',
+                                    }}
+                                >
+                                    <span style={{ fontSize: 13, fontWeight: 600, color: '#333', letterSpacing: '-0.3px' }}>
+                                        대손AI 상담사
+                                    </span>
+                                </Box>
+                            )}
+                            <Box
+                                onClick={() => setAiChatOpen(true)}
+                                style={{
+                                    width: 56, height: 56, borderRadius: '50%',
+                                    background: '#fff', border: '1px solid #eee',
+                                    boxShadow: '0 4px 16px rgba(0,0,0,0.1), 0 1px 4px rgba(0,0,0,0.06)',
+                                    display: 'flex', alignItems: 'center', justifyContent: 'center',
+                                    cursor: 'pointer',
+                                    transition: 'transform 0.2s, box-shadow 0.2s',
+                                }}
+                                onMouseEnter={(e) => {
+                                    e.currentTarget.style.transform = 'scale(1.08)';
+                                    e.currentTarget.style.boxShadow = '0 6px 24px rgba(0,0,0,0.14)';
+                                }}
+                                onMouseLeave={(e) => {
+                                    e.currentTarget.style.transform = 'scale(1)';
+                                    e.currentTarget.style.boxShadow = '0 4px 16px rgba(0,0,0,0.1), 0 1px 4px rgba(0,0,0,0.06)';
+                                }}
+                            >
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                    <path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"
+                                        stroke="#302E92" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                                </svg>
+                            </Box>
                         </Box>
+
+                        {/* 장지 상담 챗봇 */}
+                        <AIChatbot
+                            isOpen={aiChatOpen}
+                            onClose={() => setAiChatOpen(false)}
+                            facilityContext={{
+                                id: Number(facility.id),
+                                name: facility.name,
+                                category: facility.category,
+                                address: facility.address,
+                                phone: facility.phone,
+                                representativePrice: facility.representativePrice,
+                                institutionType: facility.operatorType,
+                                description: facility.description,
+                                standardizedPrices: facility.priceInfo?.standardizedPrices?.flatMap(g =>
+                                    g.rows.map(r => ({ type: g.subType, subType: r.name, price: r.price, notes: r.description }))
+                                ),
+                                amenities: {
+                                    parking: !!facility.hasParking,
+                                    restaurant: !!facility.hasRestaurant,
+                                    convenienceStore: !!facility.hasStore,
+                                    accessibility: !!facility.hasAccessibility,
+                                },
+                            }}
+                            onOpenConsultForm={() => {
+                                setAiChatOpen(false);
+                                setConsultModalOpened(true);
+                            }}
+                        />
 
                         {/* 🖼️ 풀스크린 이미지 뷰어 (기존 갤러리 스타일과 동일) */}
                         {enlargedImages.length > 0 && (

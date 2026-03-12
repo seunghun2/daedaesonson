@@ -3,6 +3,7 @@
 import { Box, Group, Text } from '@mantine/core';
 import { usePathname } from 'next/navigation';
 import Link from 'next/link';
+import ChatFloatingButton from '@/components/chatbot/ChatFloatingButton';
 
 interface BottomNavProps {
     historyCount?: number;
@@ -67,7 +68,9 @@ export default function BottomNav({ historyCount = 0, hidden = false }: BottomNa
     ];
 
     return (
-        <Box
+        <>
+            <ChatFloatingButton />
+            <Box
             style={{
                 position: 'fixed',
                 bottom: 0,
@@ -146,5 +149,6 @@ export default function BottomNav({ historyCount = 0, hidden = false }: BottomNa
                 })}
             </Group>
         </Box>
+        </>
     );
 }
