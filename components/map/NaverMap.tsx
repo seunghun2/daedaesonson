@@ -1554,7 +1554,7 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
                         {/* 0. 내 정보 (PC만) */}
                         {onUserClick && (
                             <CustomControlBtn
-                                icon={<span className="material-symbols-outlined" style={{ fontSize: '24px', color: '#495057' }}>person_outline</span>}
+                                icon={<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#495057" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>}
                                 onClick={onUserClick}
                             />
                         )}
@@ -1565,12 +1565,12 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
                             boxShadow: '0 2px 8px rgba(0,0,0,0.15)'
                         }}>
                             <CustomControlBtn
-                                icon={<span className="material-symbols-outlined" style={{ fontSize: '24px', color: '#495057' }}>add</span>}
+                                icon={<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#495057" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>}
                                 onClick={handleZoomIn}
                                 style={{ borderRadius: 0, borderBottom: '1px solid #f1f3f5' }}
                             />
                             <CustomControlBtn
-                                icon={<span className="material-symbols-outlined" style={{ fontSize: '24px', color: '#495057' }}>remove</span>}
+                                icon={<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#495057" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="5" y1="12" x2="19" y2="12"/></svg>}
                                 onClick={handleZoomOut}
                                 style={{ borderRadius: 0 }}
                             />
@@ -1578,7 +1578,7 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
 
                         {/* 3. 내 위치 */}
                         <CustomControlBtn
-                            icon={<span className="material-symbols-outlined" style={{ fontSize: '24px', color: '#495057' }}>my_location</span>}
+                            icon={<svg width="24" height="24" viewBox="0 0 24 24" fill="#495057"><path d="M12 8c-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4zm8.94 3A8.994 8.994 0 0 0 13 3.06V1h-2v2.06A8.994 8.994 0 0 0 3.06 11H1v2h2.06A8.994 8.994 0 0 0 11 20.94V23h2v-2.06A8.994 8.994 0 0 0 20.94 13H23v-2h-2.06zM12 19c-3.87 0-7-3.13-7-7s3.13-7 7-7 7 3.13 7 7-3.13 7-7 7z"/></svg>}
                             onClick={handleMyLocation}
                         />
                     </div>
@@ -1622,7 +1622,7 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
                                 textDecoration: 'none',
                             }}
                         >
-                            <span className="material-symbols-outlined" style={{ fontSize: isMobile ? '16px' : '20px' }}>menu</span>
+                            <svg width={isMobile ? 16 : 20} height={isMobile ? 16 : 20} viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
                             <span>{centerAddress} 주변 시설 보기</span>
                         </div>
                     </div>
@@ -1656,7 +1656,7 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
                             pointerEvents: 'auto',
                         }}
                     >
-                        <span className="material-symbols-outlined" style={{ fontSize: '18px' }}>article</span>
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
                         <span>블로그</span>
                     </a>
                 )}

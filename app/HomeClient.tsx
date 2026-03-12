@@ -91,6 +91,7 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
   const [drawerFilterOpen, setDrawerFilterOpen] = useState(false); // 모바일 드로우
   const [tempCategory, setTempCategory] = useState<string[]>(['all']); // 드로우 임시 카테고리
   const [tempHideInquiry, setTempHideInquiry] = useState(false); // 드로우 임시 문의제외
+  const [tempInstitutionFilter, setTempInstitutionFilter] = useState<'all' | 'public' | 'private'>('all'); // 드로우 임시 공설/사설
   const [selectedFacility, setSelectedFacility] = useState<Facility | null>(null);
   const [mobileView, setMobileView] = useState<'map' | 'list'>('map');
   const [sortBy, setSortBy] = useState('rating');
@@ -883,6 +884,7 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
               onClick={() => {
                 setTempCategory([...activeCategory]);
                 setTempHideInquiry(hideInquiry);
+                setTempInstitutionFilter(institutionFilter);
                 setDrawerFilterOpen(true);
               }}
               style={{
@@ -1070,6 +1072,7 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
                   onClick={() => {
                     setTempCategory([...activeCategory]);
                     setTempHideInquiry(hideInquiry);
+                    setTempInstitutionFilter(institutionFilter);
                     setDrawerFilterOpen(true);
                   }}
                   style={{
@@ -1155,6 +1158,14 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
           <div style={{ padding: '20px 24px', flex: 1 }}>
             <Text fw={700} size="sm" mb={16}>시설 유형</Text>
             <Stack gap={14}>
+              <Checkbox
+                label="전체"
+                checked={tempCategory.includes('all')}
+                onChange={() => setTempCategory(['all'])}
+                size="md"
+                color="indigo"
+                styles={{ label: { fontSize: '15px', fontWeight: 500, cursor: 'pointer' }, input: { cursor: 'pointer' } }}
+              />
               {[
                 { value: 'charnel', label: '봉안당' },
                 { value: 'natural', label: '수목장' },
@@ -1178,7 +1189,7 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
                     }
                   }}
                   size="md"
-                  color="violet"
+                  color="indigo"
                   styles={{ label: { fontSize: '15px', fontWeight: 500, cursor: 'pointer' }, input: { cursor: 'pointer' } }}
                 />
               ))}
@@ -1187,13 +1198,31 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
             {/* 구분선 */}
             <div style={{ height: 1, backgroundColor: '#f1f3f5', margin: '20px 0' }} />
 
+            {/* 공설/사설 */}
+            <Text fw={700} size="sm" mb={12}>운영 주체</Text>
+            <SegmentedControl
+              fullWidth
+              value={tempInstitutionFilter}
+              onChange={(val) => setTempInstitutionFilter(val as 'all' | 'public' | 'private')}
+              data={[
+                { label: '전체', value: 'all' },
+                { label: '공설', value: 'public' },
+                { label: '사설', value: 'private' },
+              ]}
+              color="indigo"
+              styles={{ root: { marginBottom: 20 } }}
+            />
+
+            {/* 구분선 */}
+            <div style={{ height: 1, backgroundColor: '#f1f3f5', margin: '0 0 20px 0' }} />
+
             {/* 문의제외 */}
             <Checkbox
               label="문의 가격 시설 제외"
               checked={tempHideInquiry}
               onChange={() => setTempHideInquiry(!tempHideInquiry)}
               size="md"
-              color="violet"
+              color="indigo"
               styles={{ label: { fontSize: '15px', fontWeight: 500, cursor: 'pointer' }, input: { cursor: 'pointer' } }}
             />
           </div>
@@ -1204,6 +1233,7 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
               onClick={() => {
                 setTempCategory(['all']);
                 setTempHideInquiry(false);
+                setTempInstitutionFilter('all');
               }}
               style={{
                 flex: '0 0 auto',
@@ -1228,6 +1258,7 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
               onClick={() => {
                 startTransition(() => setActiveCategory(tempCategory));
                 setHideInquiry(tempHideInquiry);
+                setInstitutionFilter(tempInstitutionFilter);
                 setDrawerFilterOpen(false);
               }}
               style={{
@@ -1451,7 +1482,7 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
                         }
                       }}
                       size="md"
-                      color="violet"
+                      color="indigo"
                       styles={{ label: { fontSize: '15px', fontWeight: 500, cursor: 'pointer' }, input: { cursor: 'pointer' } }}
                     />
                   ))}
@@ -1462,7 +1493,7 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
                   checked={tempNearbyHideInquiry}
                   onChange={() => setTempNearbyHideInquiry(!tempNearbyHideInquiry)}
                   size="md"
-                  color="violet"
+                  color="indigo"
                   styles={{ label: { fontSize: '15px', fontWeight: 500, cursor: 'pointer' }, input: { cursor: 'pointer' } }}
                 />
               </div>
@@ -1502,7 +1533,7 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
                       checked={nearbyHideInquiry}
                       onChange={() => setNearbyHideInquiry(!nearbyHideInquiry)}
                       size="xs"
-                      color="violet"
+                      color="indigo"
                       styles={{ label: { fontSize: '12px', cursor: 'pointer', color: '#868e96', paddingLeft: 6 }, input: { cursor: 'pointer' } }}
                     />
                   </div>

@@ -325,7 +325,7 @@ function ListPageContent() {
                                         }
                                     }}
                                     size="md"
-                                    color="violet"
+                                    color="indigo"
                                     styles={{ label: { fontSize: '15px', fontWeight: 500, cursor: 'pointer' }, input: { cursor: 'pointer' } }}
                                 />
                             ))}
@@ -338,7 +338,7 @@ function ListPageContent() {
                             checked={tempHideInquiry}
                             onChange={() => setTempHideInquiry(!tempHideInquiry)}
                             size="md"
-                            color="violet"
+                            color="indigo"
                             styles={{ label: { fontSize: '15px', fontWeight: 500, cursor: 'pointer' }, input: { cursor: 'pointer' } }}
                         />
                     </div>
@@ -385,7 +385,7 @@ function ListPageContent() {
                                 checked={hideInquiry}
                                 onChange={() => setHideInquiry(!hideInquiry)}
                                 size="xs"
-                                color="violet"
+                                color="indigo"
                                 styles={{ label: { fontSize: '12px', color: '#868e96', cursor: 'pointer', paddingLeft: 6 }, input: { cursor: 'pointer' } }}
                             />
                         </div>
