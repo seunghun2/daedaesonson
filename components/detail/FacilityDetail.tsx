@@ -4622,6 +4622,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                     <span style={{ fontSize: 13, fontWeight: 600, color: '#333', letterSpacing: '-0.3px' }}>
                                         대손AI 상담사
                                     </span>
+                                    <span style={{ fontSize: 12, color: '#888', marginLeft: 2 }}>· 무엇을 도와드릴까요?</span>
                                 </Box>
                             )}
                             <Box

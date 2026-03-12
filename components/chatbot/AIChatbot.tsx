@@ -8,6 +8,7 @@ interface Message {
     role: 'user' | 'assistant';
     content: string;
     timestamp?: string;
+    imageUrl?: string;
 }
 
 interface FacilityContext {
@@ -65,6 +66,8 @@ export default function AIChatbot({ isOpen, onClose, facilityContext, onOpenCons
     });
     const [showContactForm, setShowContactForm] = useState(false);
     const [contactName, setContactName] = useState('');
+    const [pendingImage, setPendingImage] = useState<File | null>(null);
+    const [pendingImagePreview, setPendingImagePreview] = useState<string | null>(null);
     const [contactPhone, setContactPhone] = useState('');
     const [contactSubmitted, setContactSubmitted] = useState(false);
     const [messageCount, setMessageCount] = useState(() => {
@@ -104,19 +107,26 @@ export default function AIChatbot({ isOpen, onClose, facilityContext, onOpenCons
     }, [messages, isLoading]);
 
     const sendMessage = useCallback(async () => {
-        if (!input.trim() || isLoading) return;
-        const userMsg = input.trim();
+        if ((!input.trim() && !pendingImage) || isLoading) return;
+        const userMsg = input.trim() || (pendingImage ? '(이미지 첨부)' : '');
+        const imageUrl = pendingImagePreview || undefined;
         setInput('');
+        setPendingImage(null);
+        setPendingImagePreview(null);
 
-        setMessages(prev => [...prev, { role: 'user', content: userMsg, timestamp: new Date().toISOString() }]);
+        setMessages(prev => [...prev, { role: 'user', content: userMsg, timestamp: new Date().toISOString(), imageUrl }]);
         setIsLoading(true);
         setMessageCount(prev => prev + 1);
 
         try {
+            const msgToSend = pendingImage
+                ? `${userMsg} [사용자가 이미지를 첨부했습니다: ${pendingImage.name}]`
+                : userMsg;
+
             const res = await fetch('/api/chat', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ message: userMsg, history: messages, sessionId, facilityContext }),
+                body: JSON.stringify({ message: msgToSend, history: messages, sessionId, facilityContext }),
             });
             const data = await res.json();
             if (data.sessionId) setSessionId(data.sessionId);
@@ -139,7 +149,7 @@ export default function AIChatbot({ isOpen, onClose, facilityContext, onOpenCons
         } finally {
             setIsLoading(false);
         }
-    }, [input, isLoading, messages, sessionId, facilityContext, messageCount, contactSubmitted, showContactForm]);
+    }, [input, isLoading, messages, sessionId, facilityContext, messageCount, contactSubmitted, showContactForm, pendingImage, pendingImagePreview]);
 
     const submitContact = async () => {
         if (!contactName.trim() || !contactPhone.trim()) return;
@@ -219,7 +229,7 @@ export default function AIChatbot({ isOpen, onClose, facilityContext, onOpenCons
                 {/* ── 시설 컨텍스트 배너 ── */}
                 {facilityContext && (
                     <button
-                        onClick={() => { onClose(); router.push(`/facility/${facilityContext.id}`); }}
+                        onClick={() => { if (facilityContext.id) { onClose(); router.push(`/facility/${facilityContext.id}`); } }}
                         style={{
                             display: 'flex', alignItems: 'center', justifyContent: 'space-between',
                             width: '100%', background: '#f7f7fc', padding: '10px 20px',
@@ -271,6 +281,16 @@ export default function AIChatbot({ isOpen, onClose, facilityContext, onOpenCons
                             <div>
                                 {msg.role === 'assistant' && i <= 1 && (
                                     <div style={{ fontSize: 11, color: '#999', marginBottom: 4, marginLeft: 2 }}>대손이</div>
+                                )}
+                                {msg.imageUrl && (
+                                    <div style={{
+                                        maxWidth: 200, marginBottom: 6,
+                                        borderRadius: 12, overflow: 'hidden',
+                                    }}>
+                                        <img src={msg.imageUrl} alt="첨부 이미지" style={{
+                                            width: '100%', display: 'block', borderRadius: 12,
+                                        }} />
+                                    </div>
                                 )}
                                 <div style={{
                                     maxWidth: 268, padding: '11px 14px',
@@ -385,6 +405,16 @@ export default function AIChatbot({ isOpen, onClose, facilityContext, onOpenCons
 
                 {/* ── 입력 영역 ── */}
                 <div style={{ borderTop: '1px solid #eee', background: '#fff', flexShrink: 0 }}>
+                    {/* 이미지 미리보기 */}
+                    {pendingImage && (
+                        <div style={{ padding: '8px 12px', borderBottom: '1px solid #f0f0f0', display: 'flex', alignItems: 'center', gap: 8 }}>
+                            <img src={pendingImagePreview || ''} alt="미리보기" style={{ width: 48, height: 48, borderRadius: 8, objectFit: 'cover' }} />
+                            <span style={{ fontSize: 12, color: '#666', flex: 1 }}>{pendingImage.name}</span>
+                            <button onClick={() => { setPendingImage(null); setPendingImagePreview(null); }} style={{ background: 'none', border: 'none', color: '#999', cursor: 'pointer', padding: 4 }}>
+                                <X size={14} />
+                            </button>
+                        </div>
+                    )}
                     <div style={{ display: 'flex', alignItems: 'center', gap: 6, padding: '10px 12px 10px 10px' }}>
                         {/* 첨부파일 */}
                         <label style={{
@@ -393,11 +423,14 @@ export default function AIChatbot({ isOpen, onClose, facilityContext, onOpenCons
                             cursor: 'pointer', flexShrink: 0, color: '#999',
                             transition: 'color 0.2s',
                         }}>
-                            <input type="file" accept="image/*,.pdf,.doc,.docx" style={{ display: 'none' }}
+                            <input type="file" accept="image/*" style={{ display: 'none' }}
                                 onChange={(e) => {
                                     const file = e.target.files?.[0];
-                                    if (file) {
-                                        setInput(prev => prev + ` [첨부: ${file.name}]`);
+                                    if (file && file.type.startsWith('image/')) {
+                                        setPendingImage(file);
+                                        const reader = new FileReader();
+                                        reader.onload = (ev) => setPendingImagePreview(ev.target?.result as string);
+                                        reader.readAsDataURL(file);
                                     }
                                     e.target.value = '';
                                 }}
@@ -413,16 +446,16 @@ export default function AIChatbot({ isOpen, onClose, facilityContext, onOpenCons
                             placeholder="궁금한 점을 물어보세요"
                             style={{
                                 flex: 1, padding: '10px 14px', borderRadius: 22,
-                                border: '1px solid #e8e8e8', fontSize: 14, outline: 'none',
+                                border: '1px solid #e8e8e8', fontSize: 16, outline: 'none',
                                 background: '#f9f9f9', transition: 'border-color 0.2s',
                             }}
                             onFocus={e => e.target.style.borderColor = '#c0bfe0'}
                             onBlur={e => e.target.style.borderColor = '#e8e8e8'}
                         />
-                        <button onClick={sendMessage} disabled={!input.trim() || isLoading} style={{
+                        <button onClick={() => sendMessage()} disabled={(!input.trim() && !pendingImage) || isLoading} style={{
                             width: 38, height: 38, borderRadius: '50%',
-                            background: input.trim() ? NAVY : '#ddd', border: 'none',
-                            color: '#fff', cursor: input.trim() ? 'pointer' : 'default',
+                            background: (input.trim() || pendingImage) ? NAVY : '#ddd', border: 'none',
+                            color: '#fff', cursor: (input.trim() || pendingImage) ? 'pointer' : 'default',
                             display: 'flex', alignItems: 'center', justifyContent: 'center',
                             flexShrink: 0, transition: 'background 0.2s',
                         }}>
