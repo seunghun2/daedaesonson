@@ -71,7 +71,7 @@ export async function generateMetadata({ params }: PageProps) {
         openGraph: {
             title: post.title,
             description: post.excerpt || post.title,
-            url: `${baseUrl}/guide/${slug}`,
+            url: `${baseUrl}/blog/${slug}`,
             siteName: '대대손손',
             locale: 'ko_KR',
             type: 'article',
@@ -84,7 +84,7 @@ export async function generateMetadata({ params }: PageProps) {
             ...(ogImage ? { images: [ogImage] } : {}),
         },
         alternates: {
-            canonical: `/guide/${slug}`,
+            canonical: `/blog/${slug}`,
         },
     };
 }

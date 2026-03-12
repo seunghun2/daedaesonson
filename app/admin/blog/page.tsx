@@ -234,7 +234,7 @@ export default function AdminBlogPage() {
                                         <Text fw={500} size="sm" lineClamp={1} style={{ maxWidth: 300 }}>
                                             {post.title}
                                         </Text>
-                                        <Text size="xs" c="dimmed">/guide/{post.slug}</Text>
+                                        <Text size="xs" c="dimmed">/blog/{post.slug}</Text>
                                     </Table.Td>
                                     <Table.Td>
                                         <Badge variant="outline" size="xs">{post.category}</Badge>
@@ -256,7 +256,7 @@ export default function AdminBlogPage() {
                                                         variant="subtle"
                                                         color="blue"
                                                         component="a"
-                                                        href={`/guide/${post.slug}`}
+                                                        href={`/blog/${post.slug}`}
                                                         target="_blank"
                                                     >
                                                         <ExternalLink size={14} />
@@ -309,7 +309,7 @@ export default function AdminBlogPage() {
                     <TextInput
                         label="슬러그 (URL)"
                         placeholder="url-friendly-slug"
-                        description={`URL: /guide/${editingPost.slug || '...'}`}
+                        description={`URL: /blog/${editingPost.slug || '...'}`}
                         value={editingPost.slug || ''}
                         onChange={e => setEditingPost(prev => ({ ...prev, slug: e.target.value }))}
                         required

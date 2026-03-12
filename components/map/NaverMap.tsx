@@ -1631,7 +1631,7 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
                 {/* 블로그 버튼 (PC only) - 오른쪽 하단 */}
                 {isMapLoaded && !isMobile && (
                     <a
-                        href="/guide"
+                        href="/blog"
                         style={{
                             position: 'absolute',
                             bottom: '24px',

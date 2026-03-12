@@ -113,7 +113,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     // 블로그 페이지
     const blogPages: MetadataRoute.Sitemap = [
         {
-            url: `${baseUrl}/guide`,
+            url: `${baseUrl}/blog`,
             lastModified: new Date(),
             changeFrequency: 'daily' as const,
             priority: 0.9,
@@ -131,7 +131,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         if (posts) {
             posts.forEach(post => {
                 blogPages.push({
-                    url: `${baseUrl}/guide/${post.slug}`,
+                    url: `${baseUrl}/blog/${post.slug}`,
                     lastModified: new Date(post.updated_at),
                     changeFrequency: 'weekly' as const,
                     priority: 0.85,

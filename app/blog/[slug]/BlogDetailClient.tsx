@@ -95,7 +95,7 @@ export default function BlogDetailClient({ post, relatedPosts }: Props) {
                         <ActionIcon variant="transparent" onClick={() => router.back()} style={{ color: '#333' }}>
                             <ChevronLeft size={24} />
                         </ActionIcon>
-                        <Link href="/guide" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center', gap: 8 }}>
+                        <Link href="/blog" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center', gap: 8 }}>
                             <Text fw={800} size={isMobile ? 'lg' : 'xl'} c="dark.9">
                                 대대손손
                             </Text>
@@ -329,7 +329,7 @@ export default function BlogDetailClient({ post, relatedPosts }: Props) {
                                 {relatedPosts.map(rp => (
                                     <Link
                                         key={rp.id}
-                                        href={`/guide/${rp.slug}`}
+                                        href={`/blog/${rp.slug}`}
                                         style={{ textDecoration: 'none', color: 'inherit' }}
                                     >
                                         <div

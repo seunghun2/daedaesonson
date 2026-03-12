@@ -7,7 +7,7 @@ export const metadata: Metadata = {
     openGraph: {
         title: '대대손손 블로그 — 장지·봉안당·수목장 가이드',
         description: '봉안당, 수목장, 공원묘지 비용 비교부터 장례 절차, 시설 리뷰까지.',
-        url: 'https://daedaesonson.com/guide',
+        url: 'https://daedaesonson.com/blog',
         siteName: '대대손손',
         locale: 'ko_KR',
         type: 'website',
@@ -18,7 +18,7 @@ export const metadata: Metadata = {
         description: '봉안당, 수목장, 공원묘지 비용 비교부터 장례 절차, 시설 리뷰까지.',
     },
     alternates: {
-        canonical: '/guide',
+        canonical: '/blog',
     },
 };
 

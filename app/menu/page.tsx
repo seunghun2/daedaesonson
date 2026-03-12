@@ -21,7 +21,7 @@ export default function MenuPage() {
         { label: '홈', icon: Home, path: '/', description: '지도에서 시설 찾기' },
         { label: '문의하기', icon: MessageCircle, path: '/inquiries', description: '문의 목록 보기' },
         { label: '기록', icon: Clock, path: '/history', description: '최근 본 시설' },
-        { label: '블로그', icon: FileText, path: '/guide', description: '장례 가이드 보기' },
+        { label: '블로그', icon: FileText, path: '/blog', description: '장례 가이드 보기' },
     ];
 
     const infoItems = [
