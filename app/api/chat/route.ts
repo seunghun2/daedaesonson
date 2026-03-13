@@ -58,7 +58,8 @@ const SYSTEM_PROMPT = `당신은 "대손이"입니다. 대대손손의 AI 전문
 - 봉안당이든 수목장이든 화장시설이든 상관없이 ID는 항상 "park-XXXX" 형태입니다.
 - 절대로 "charnel-", "natural-", "cremation-" 같은 접두사를 만들지 마세요!
 - 절대로 ID를 임의로 생성하지 마세요! 반드시 데이터에 있는 ID만 사용합니다.
-- **[시설명 >](https://daedaesonson.com/facility/park-XXXX)**, 봉안당/수목장/화장시설, 지역
+- ID는 URL 링크 안에서만 사용합니다. 답변 텍스트에 "(ID: park-XXXX)" 같은 형태로 절대 노출하지 마세요!
+- 형식: [시설명](https://daedaesonson.com/facility/park-XXXX), 봉안당/수목장/화장시설, 지역
 - 가격: 120만원~
 - 최대 3-5개까지만 추천
 

@@ -58,6 +58,23 @@ export default function AIChatbot({ isOpen, onClose, facilityContext, onOpenCons
     const inputRef = useRef<HTMLInputElement>(null);
     const router = useRouter();
 
+    const prevFacilityIdRef = useRef<string | null>(null);
+
+    /* ── 시설 전환 시 대화 컨텍스트 갱신 ── */
+    useEffect(() => {
+        const currentId = facilityContext?.id || null;
+        if (prevFacilityIdRef.current !== null && currentId !== prevFacilityIdRef.current) {
+            // 시설이 바뀌었으면 대화를 새 시설 기준으로 시작
+            const greeting = currentId && facilityContext
+                ? `안녕하세요, 대손이입니다.\n${facilityContext.name}에 대해 궁금하신 점을 편하게 물어봐 주세요.`
+                : '안녕하세요, 대손이입니다.\n궁금하신 점을 편하게 물어봐 주세요.';
+            setMessages([{ role: 'assistant', content: greeting, timestamp: new Date().toISOString() }]);
+            setMessageCount(0);
+            sessionStorage.setItem('chat_msg_count', '0');
+        }
+        prevFacilityIdRef.current = currentId;
+    }, [facilityContext]);
+
     /* ── 초기 인사 ── */
     useEffect(() => {
         if (isOpen && messages.length === 0) {
