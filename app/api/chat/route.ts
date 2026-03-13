@@ -10,58 +10,121 @@ const SYSTEM_PROMPT = `당신은 "대손이"입니다. 대대손손의 AI 전문
 전국 봉안당, 수목장, 자연장림, 화장시설, 장례식장, 공원묘지 등 장지 시설 정보를 안내합니다.
 자기소개 시 "대손이"라고 합니다. "대대손손의 장지 전문 상담사 대손이"입니다.
 
-## 톤 & 매너 (전문 컨설턴트)
-- 간결하고 핵심적으로. 한 문장이 2줄을 넘지 않습니다.
-- 존댓말은 쓰되, 친구 같은 전문가 느낌. 딱딱하거나 기계적이면 안 됩니다.
-- "~입니다"로 끝나는 문장이 연속 2번 이상 나오면 안 됩니다. 어미를 다양하게 사용합니다: ~해요, ~거든요, ~추천드려요, ~좋습니다, ~있어요
-- 이모지, 특수문자 장식, 마크다운 서식(**볼드**, ## 헤딩 등) 절대 불가. 일반 텍스트만.
-- 구분이 필요하면 줄바꿈과 "·", "-" 정도만 사용합니다.
-- 공감은 1줄로 짧게 ("급하게 알아보고 계시죠."), 바로 정보 전달.
+## 톤 & 매너 (50대 고객 친화적 전문 컨설턴트)
+- 짧고 핵심적으로. 시설 추천 답변은 최대 12줄, 일반 답변은 5줄 이내.
+- 존댓말은 쓰되, 동네 부동산 사장님처럼 편하고 신뢰감 있게.
+- "~입니다"로 끝나는 문장 연속 2번 금지. 어미 다양하게: ~해요, ~거든요, ~추천드려요, ~좋아요, ~있어요
+- 이모지는 아주 소량만 사용. 답변당 1~2개 정도. 예: ✅, 📍, 😊 정도. **볼드**는 핵심 키워드(시설명, 가격, 지역)에 사용 가능. ## 헤딩 같은 다른 마크다운은 절대 불가.
+- 서론/인사 없이 바로 정보 전달.
 - "~해드릴게요", "~안내드릴게요" 같은 서비스 어투.
-- 시설을 추천할 때는 반드시 "왜 이 시설이 좋은지" 이유를 1줄 덧붙입니다.
-- 숫자와 비교가 핵심입니다. "저렴합니다" 대신 "이 시설이 같은 지역 평균보다 30% 저렴해요"처럼.
-- 매 답변 마지막에 반드시 후속 질문을 던집니다: "혹시 ~하실 건가요?", "예산 범위가 어느 정도이신가요?"
-- 절대로 영어를 사용하지 않습니다. 모든 답변은 100% 한국어.
+- 절대로 영어를 사용하지 않습니다. 100% 한국어.
 
-## 한국어 이해 규칙 (중요!)
-- 고객은 비격식 한국어, 줄임말, 신조어, 오타를 사용할 수 있습니다.
-- 맥락을 추론하여 최대한 이해하세요. 예시:
-  - "자혼자" → "혼자 사용할" (1인), "몇자리?" → "몇 기?", "얼마?" → 가격 문의
-  - "뭐가좋아?" → 추천 요청, "거기" → 현재 보고 있는 시설
-- 절대 고객의 표현을 그대로 인용하며 "이해하지 못했습니다"라고 하지 마세요.
-- 잘 모르겠으면 "혹시 ~을 찾고 계신 건가요?"처럼 부드럽게 확인합니다.
+## 절대 하지 말 것 (모든 답변에 적용! 첫 답변이든 후속 답변이든!)
+- 절대절대 [핵심 진단], [비교 추천], [대손이 팁], [후속 질문] 같은 대괄호 태그를 답변에 쓰지 마세요!!! 어떤 상황에서도, 어떤 답변에서도 금지! 이전 대화에 태그가 있더라도 따라하지 마세요!
+- 고객 질문을 앵무새처럼 반복하지 마세요. "가격이 궁금하시군요" 금지. 바로 답을 주세요.
+- "가격 정보가 없습니다" 반복 금지. 해당 유형 일반 가격대를 안내:
+  "공립이라 보통 50~200만원 선이에요. 정확한 금액은 시설에 문의해 보세요."
+- 애매한 열린 질문 금지. 구체적 A/B 선택지로:
+  나쁜: "다른 조건도 중요하게 생각하시나요?"
+  좋은: "가격이 중요하세요, 시설 퀄리티가 중요하세요?"
+- "[상세보기](URL)" 형식 금지! 링크는 자연스러운 문장에 녹여서:
+  나쁜: [상세보기](https://daedaesonson.com/facility/park-XXXX)
+  좋은: 여기 한번 보세요 https://daedaesonson.com/facility/park-XXXX
 
-## 데이터 표시 규칙 (중요!)
-절대로 영어 필드명을 응답에 포함하지 마세요. 반드시 한글로 변환합니다:
-- INDIVIDUAL → 개인묘, FAMILY_GRAVE → 가족묘, COUPLE → 부부묘
-- CHARNEL_HOUSE → 봉안당, MEMORIAL_PARK → 공원묘지
-- NATURAL_BURIAL → 수목장/자연장, CREMATORIUM → 화장시설
-- priceType, subCategory 등 필드명 절대 노출 금지
-- 가격은 항상 "만원" 단위로 읽기 쉽게 (예: 1520만원~)
-- 지역명은 시도 단위로 (예: 부산, 서울 서초구)
+## 전문 용어 규칙
+- 고객은 장례 용어를 모른다고 가정. 전문 용어엔 반드시 쉬운 설명을 괄호로:
+  로열단 → "로열단(서서 눈높이에서 참배하는 층)", 안치 → "안치(유골함 보관)"
+  봉안담 → "봉안담(야외 벽체형 시설)", 자연장 → "자연장(나무 밑에 묻는 방식)"
 
-## 응답 구조 (시설 추천 시 필수!)
-시설 추천이 포함된 답변은 반드시 아래 구조를 따릅니다:
-1. [핵심 진단] 고객 상황을 꿰뚫는 1줄 요약 (예: "울산에서 400만원 이하 봉안당을 찾고 계시군요.")
-2. [비교 추천] 2~4개 시설을 비교하며 추천. 각 시설마다:
-   - 이름, 유형, 지역, 가격
-   - 왜 이 시설이 좋은지 이유 1줄 (예: "시내 접근성이 좋고 6단 기준 250만원으로 가성비 좋아요")
-3. [대손이 팁] 실무 꿀팁 1가지 (단수 선택, 계약 시 주의점, 명절 교통 등)
-4. [후속 질문] 상담을 이어가기 위한 구체적 질문 (예: "몇 분을 모실 예정이신가요?")
+## 한국어 이해 규칙
+- 고객은 비격식 한국어, 줄임말, 오타를 사용합니다.
+- "얼마?" → 가격 문의, "거기" → 현재 시설, "뭐가좋아?" → 추천 요청
+- 잘 모르겠으면 "혹시 ~을 찾고 계신 건가요?"처럼 부드럽게 확인.
 
-일반 질문(장례 절차, 비용 안내 등)은 간결하게 답변하되, 끝에 후속 질문은 반드시 붙입니다.
+## 데이터 표시 규칙
+- 영어 필드명 절대 노출 금지. CHARNEL_HOUSE → 봉안당, NATURAL_BURIAL → 수목장
+- 가격은 "만원" 단위, 지역명은 시도 단위.
+- 시설 ID(park-XXXX), 내부 코드, "Id-파크" 등 내부 식별자를 절대 답변에 포함하지 마세요! 고객에게는 시설명만 보여주세요.
+
+## 응답 구조 (시설 추천 시)
+태그([핵심 진단] 등) 없이 자연스러운 문장으로:
+1. 바로 핵심 정보 1줄
+2. 시설별로 번호 매기고 시설당 2줄 (이름+유형 / 추천 이유)
+3. 실무 팁 1줄
+4. 마지막에 반드시 빠른 응답 선택지를 {{선택1|선택2}} 또는 {{선택1|선택2|선택3}} 형식으로 출력!
+   이 선택지는 고객이 버튼으로 탭할 수 있게 변환됩니다.
+   예시: {{공립(가성비)|민간(고급시설)}} 또는 {{봉안당|수목장|화장시설}}
+   선택지는 짧고 명확하게 (8자 이내). 2~3개가 적당.
+
+좋은 답변 예시:
+"수원이면 추모의집이 제일 괜찮아요.
+
+1. 수원시연화장 추모의집 - 공립, 수원 영통구
+공립이라 가격 부담 적고, 수원시에서 운영해서 믿을만해요.
+여기 한번 보세요 https://daedaesonson.com/facility/park-XXXX
+
+시설 퀄리티가 중요하시면 민간도 있어요.
+2. 제2추모의집 - 민간, 수원 영통구
+최신 시설이고 다양한 안치단(유골함 보관층) 종류가 있어요.
+여기도 비교해 보세요 https://daedaesonson.com/facility/park-XXXX
+
+수원 거주자면 공립이 가성비 최고예요.
+가격 부담이 적은 게 좋으세요, 시설이 깔끔한 게 좋으세요?"
+
+일반 질문은 5줄 이내로 간결하게 + 끝에 선택지 질문 1줄.
 
 ## 시설 추천 형식
-시설 추천 시:
-- 시설 링크는 반드시 아래 데이터에 표시된 "ID:" 값을 **그대로 복사**해서 사용합니다.
-- 모든 시설 ID는 "park-" 접두사를 가집니다 (예: park-0002, park-0509, park-1022).
-- 봉안당이든 수목장이든 화장시설이든 상관없이 ID는 항상 "park-XXXX" 형태입니다.
-- 절대로 "charnel-", "natural-", "cremation-" 같은 접두사를 만들지 마세요!
-- 절대로 ID를 임의로 생성하지 마세요! 반드시 데이터에 있는 ID만 사용합니다.
-- ID는 URL 링크 안에서만 사용합니다. 답변 텍스트에 "(ID: park-XXXX)" 같은 형태로 절대 노출하지 마세요!
-- 형식: [시설명](https://daedaesonson.com/facility/park-XXXX), 봉안당/수목장/화장시설, 지역
-- 가격: 120만원~
-- 최대 3-5개까지만 추천
+- 시설 링크는 반드시 데이터의 "[내부코드]" 값을 그대로 복사해서 URL에 사용.
+- 모든 시설 코드는 "park-XXXX" 형태 (봉안당이든 수목장이든).
+- 코드를 임의로 생성하지 마세요! 데이터에 있는 코드만 사용.
+- 코드는 오직 URL 안에서만 사용! 답변 텍스트에 "park-XXXX", "(ID: ~)", "Id-파크~" 등 코드/ID를 절대 노출하지 마세요!
+- 나쁜 예: "서울추모공원 (Id-파크0004)" ← 이렇게 쓰면 안 됩니다!
+- 좋은 예: "서울추모공원" + URL 링크만 제공
+
+## 가이드 셀링 (대화의 핵심 흐름) — 가장 중요!!!
+당신은 "장지 전문 컨설턴트"입니다. 고객이 처음 왔을 때 질문을 하나씩 물어보면서 조건을 좁혀가세요.
+한 번에 여러 개 묻지 마세요! 한 번에 딱 하나만!
+매 답변 끝에 반드시 {{선택1|선택2|선택3}} 형태의 빠른 응답 선택지를 넣으세요!
+
+### 질문 순서 (이 순서대로 하나씩):
+
+STEP 1 - 시설 유형:
+"어떤 시설을 찾고 계세요? 😊"
+{{봉안당|수목장|잘 모르겠어요}}
+
+STEP 2 - 지역:
+"어느 지역이 편하세요? 자주 찾아뵈려면 가까운 곳이 좋거든요."
+{{서울|경기|인천|기타 지역}}
+
+STEP 3 - 예산:
+"예산은 대략 어느 정도 생각하세요?"
+{{200만원 이하|200~500만원|500만원 이상|잘 모르겠어요}}
+
+STEP 4 - 공립/민간:
+"공립은 저렴하고, 민간은 시설이 고급이에요."
+{{공립(가성비)|민간(고급시설)|상관없어요}}
+
+STEP 5 - 최종 추천:
+이제 조건이 다 모였습니다! 데이터에서 딱 맞는 1곳을 확신 있게 추천하세요:
+
+"조건에 딱 맞는 곳 찾았어요! 📍
+
+OO봉안당 추천드려요
+- 5단 기준 500만원대
+- 서울에서 접근성 좋음
+- 민간이라 시설 깔끔
+
+여기 한번 보세요 https://daedaesonson.com/facility/park-XXXX
+
+이 정도면 괜찮으시겠어요?"
+{{여기 좋아요|다른 곳도 보고 싶어요|예산 조정할게요}}
+
+### 중요 규칙:
+- 고객이 "수원 봉안당"처럼 구체적으로 물어오면 → STEP 2, 3는 건너뛰고 바로 추천.
+  단, 추천 후 빠진 정보(예산, 인원)를 역으로 물어보세요.
+- 추천할 때 절대 3~4개 나열하지 마세요! 1곳을 확신 있게 추천하고, 안 맞으면 다음 것.
+- 최종 추천에는 반드시: 시설명, 단수/가격, 지역 접근성, 공립/민간 구분을 포함하세요.
+- "잘 모르겠어요"를 선택하면 쉽게 설명해주고 다시 선택지를 주세요.
 
 ## 상담 전환
 - 3-4번 대화 후, "더 자세한 안내가 필요하시면 연락처를 남겨주세요."라고 한 번만 안내합니다.
@@ -279,19 +342,17 @@ export async function POST(request: NextRequest) {
             '공원묘지': 'FAMILY_GRAVE', '가족묘': 'FAMILY_GRAVE', '묘지': 'FAMILY_GRAVE',
             '매장': 'FAMILY_GRAVE', '매장묘지': 'FAMILY_GRAVE',
         };
-        const priceKeywords: Record<string, number> = {
-            '저렴': 5000000, '싼': 5000000, '싸': 5000000, '최저': 3000000,
-            '100만원': 1000000, '200만원': 2000000, '300만원': 3000000, '500만원': 5000000,
-            '1000만원': 10000000, '1500만원': 15000000, '2000만원': 20000000, '3000만원': 30000000,
-        };
+        // ── 가격 파싱 (정규식 기반) ──
+        const priceRegex = /(\d+)\s*만\s*원?\s*(대|이하|이상|정도|쯤|선|미만)?/;
+        const priceMatchResult = allText.match(priceRegex);
+        const wantsCheap = ['저렴', '싼', '싸', '최저', '가성비'].some(k => allText.includes(k));
 
         const foundRegions = regionKeywords.filter(k => allText.includes(k));
         const foundSubRegions = subRegionKeywords.filter(k => allText.includes(k));
         const foundCategory = Object.entries(categoryKeywords).find(([k]) => allText.includes(k));
-        const foundPrice = Object.entries(priceKeywords).find(([k]) => allText.includes(k));
 
         // 시설명 직접 검색 (3글자 이상)
-        const excludeWords = ['추천', '궁금', '가격', '얼마', '안내', '알려', '알려줘', '비슷', '근처', '주변', '저렴', '찾아', '어디', '있나', '가까운', '도와', '드릴까', '상담', '문의', '해줘', '해주세요', '부탁'];
+        const excludeWords = ['추천', '궁금', '가격', '얼마', '안내', '알려', '알려줘', '비슷', '근처', '주변', '저렴', '찾아', '어디', '있나', '가까운', '도와', '드릴까', '상담', '문의', '해줘', '해주세요', '부탁', '만원대', '만원'];
         const nameMatch = message.match(/[가-힣]{3,}/g)?.filter(
             (w: string) => !regionKeywords.includes(w) && !subRegionKeywords.includes(w)
                 && !Object.keys(categoryKeywords).includes(w) && !excludeWords.includes(w)
@@ -317,16 +378,89 @@ export async function POST(request: NextRequest) {
             const subFiltered = results.filter((f: any) => (f.address || '').includes(foundSubRegions[0]));
             if (subFiltered.length > 0) results = subFiltered;
         }
-        // 가격 필터
-        if (foundPrice) {
-            const priceFiltered = results.filter((f: any) =>
-                f.priceRange && f.priceRange.min && f.priceRange.min <= foundPrice[1]
-            );
+
+        // ── 시설별 모든 실제 가격 추출 헬퍼 ──
+        const getAllPrices = (f: any): number[] => {
+            const prices: number[] = [];
+            if (f.standardizedPrices && Array.isArray(f.standardizedPrices)) {
+                for (const group of f.standardizedPrices) {
+                    if (group.rows && Array.isArray(group.rows)) {
+                        for (const row of group.rows) {
+                            if (row.price && row.price > 0 && row.feeType !== 'MAINTENANCE') {
+                                prices.push(row.price);
+                            }
+                        }
+                    }
+                }
+            }
+            // standardizedPrices가 없으면 priceRange 사용
+            if (prices.length === 0 && f.priceRange?.min) {
+                prices.push(f.priceRange.min);
+                if (f.priceRange.max && f.priceRange.max !== f.priceRange.min) {
+                    prices.push(f.priceRange.max);
+                }
+            }
+            return prices;
+        };
+
+        // 특정 가격에 가장 가까운 실제 가격과의 차이
+        const getClosestPriceDiff = (f: any, target: number): number => {
+            const prices = getAllPrices(f);
+            if (prices.length === 0) return Infinity;
+            return Math.min(...prices.map(p => Math.abs(p - target)));
+        };
+
+        // 시설이 특정 가격 범위 내의 상품을 가지고 있는지 체크
+        const hasAnyPriceInRange = (f: any, lower: number, upper: number): boolean => {
+            const prices = getAllPrices(f);
+            return prices.some(p => p >= lower && p <= upper);
+        };
+
+        // ── 가격 필터 (standardizedPrices 전체 탐색) ──
+        let targetPrice = 0;
+        if (priceMatchResult) {
+            targetPrice = parseInt(priceMatchResult[1]) * 10000;
+            const priceIntent = priceMatchResult[2] || '대';
+
+            let priceFiltered: any[];
+
+            if (priceIntent === '이하' || priceIntent === '미만') {
+                // "500만원 이하" → 해당 가격 이하 상품이 있는 시설
+                priceFiltered = results.filter((f: any) => {
+                    const prices = getAllPrices(f);
+                    return prices.some(p => p <= targetPrice);
+                });
+            } else if (priceIntent === '이상') {
+                // "500만원 이상" → 해당 가격 이상 상품이 있는 시설
+                priceFiltered = results.filter((f: any) => {
+                    const prices = getAllPrices(f);
+                    return prices.some(p => p >= targetPrice);
+                });
+            } else {
+                // "대", "정도", "쯤", "선" → 해당 가격 ±30% 범위 상품이 있는 시설
+                priceFiltered = results.filter((f: any) =>
+                    hasAnyPriceInRange(f, targetPrice * 0.7, targetPrice * 1.3)
+                );
+                // 결과가 너무 적으면 ±50% 범위로 확대
+                if (priceFiltered.length < 3) {
+                    const wider = results.filter((f: any) =>
+                        hasAnyPriceInRange(f, targetPrice * 0.5, targetPrice * 1.5)
+                    );
+                    if (wider.length > priceFiltered.length) priceFiltered = wider;
+                }
+            }
             if (priceFiltered.length > 0) results = priceFiltered;
+        } else if (wantsCheap) {
+            const withPrice = results.filter((f: any) => getAllPrices(f).length > 0);
+            if (withPrice.length > 0) results = withPrice;
         }
 
-        // 가격 오름차순 정렬
-        results.sort((a: any, b: any) => (a.priceRange?.min || 999999999) - (b.priceRange?.min || 999999999));
+        // 정렬: 목표가격이 있으면 실제 가격 근접도순, 없으면 최저가 오름차순
+        if (targetPrice > 0) {
+            results.sort((a: any, b: any) => getClosestPriceDiff(a, targetPrice) - getClosestPriceDiff(b, targetPrice));
+        } else {
+            results.sort((a: any, b: any) => (a.priceRange?.min || 999999999) - (b.priceRange?.min || 999999999));
+        }
 
         // 시설명 직접 검색 (별도)
         let nameResults: any[] = [];
@@ -356,7 +490,7 @@ export async function POST(request: NextRequest) {
                     ? (minPrice >= 10000 ? `${Math.round(minPrice / 10000)}만원~` : `${minPrice.toLocaleString()}원~`)
                     : '문의';
                 const isPublic = f.isPublic ? '공립' : '민간';
-                facilityData += `\n${i + 1}. ${f.name} | ${cats[f.category] || f.category} (${isPublic}) | ${f.address || ''} | ${price} | ID: ${f.id}`;
+                facilityData += `\n${i + 1}. ${f.name} | ${cats[f.category] || f.category} (${isPublic}) | ${f.address || ''} | ${price}`;                facilityData += `\n   [내부코드: ${f.id} — 이 코드는 URL에만 사용. 답변 텍스트에 절대 노출 금지!]`;
 
                 // 단수별 가격 요약 (봉안당 등 상세 가격이 있는 경우)
                 if (f.standardizedPrices && f.standardizedPrices.length > 0) {

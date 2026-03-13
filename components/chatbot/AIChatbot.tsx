@@ -187,12 +187,10 @@ export default function AIChatbot({ isOpen, onClose, facilityContext, onOpenCons
         } catch {}
     };
 
-    /* ── 마크다운 링크 렌더링 ── */
+    /* ── 마크다운 링크 + 볼드 렌더링 ── */
     const renderContent = (text: string) => {
-        // ** 마크다운 볼드 제거
-        let cleaned = text.replace(/\*\*(.*?)\*\*/g, '$1');
-        // * 이탤릭 제거
-        cleaned = cleaned.replace(/(?<!\*)\*(?!\*)(.*?)\*(?!\*)/g, '$1');
+        // * 이탤릭 제거 (볼드는 유지)
+        let cleaned = text.replace(/(?<!\*)\*(?!\*)(.*?)\*(?!\*)/g, '$1');
 
         // URL을 감지하여 클릭 가능한 버튼으로 변환
         const urlRegex = /(https?:\/\/[^\s),]+)/g;
@@ -207,10 +205,14 @@ export default function AIChatbot({ isOpen, onClose, facilityContext, onOpenCons
                         <a key={i} href={`/facility/${facilityMatch[1]}`}
                             onClick={(e) => { e.preventDefault(); router.push(`/facility/${facilityMatch[1]}`); onClose(); }}
                             style={{
-                                color: NAVY, fontSize: 12, fontWeight: 500,
-                                textDecoration: 'underline', cursor: 'pointer',
+                                display: 'inline-flex', alignItems: 'center', gap: 4,
+                                background: '#EEEDFA', color: NAVY,
+                                borderRadius: 20, padding: '6px 14px',
+                                fontSize: 13, fontWeight: 600,
+                                textDecoration: 'none', cursor: 'pointer',
+                                margin: '4px 0',
                             }}>
-                            상세보기
+                            바로가기
                         </a>
                     );
                 }
@@ -233,10 +235,14 @@ export default function AIChatbot({ isOpen, onClose, facilityContext, onOpenCons
                             <a key={`${i}-${j}`} href={`/facility/${facilityMatch2[1]}`}
                                 onClick={(e) => { e.preventDefault(); router.push(`/facility/${facilityMatch2[1]}`); onClose(); }}
                                 style={{
-                                    color: NAVY, fontSize: 12, fontWeight: 500,
-                                    textDecoration: 'underline', cursor: 'pointer',
+                                    display: 'inline-flex', alignItems: 'center', gap: 4,
+                                    background: '#EEEDFA', color: NAVY,
+                                    borderRadius: 20, padding: '6px 14px',
+                                    fontSize: 13, fontWeight: 600,
+                                    textDecoration: 'none', cursor: 'pointer',
+                                    margin: '4px 0',
                                 }}>
-                                상세보기
+                                {mdMatch[1] || '바로가기'}
                             </a>
                         );
                     }
@@ -247,7 +253,13 @@ export default function AIChatbot({ isOpen, onClose, facilityContext, onOpenCons
                         </a>
                     );
                 }
-                return <span key={`${i}-${j}`}>{mdPart}</span>;
+                // **볼드** 처리
+                const boldParts = mdPart.split(/(\*\*.*?\*\*)/g);
+                return boldParts.map((bp, bk) => {
+                    const boldMatch = bp.match(/^\*\*(.*?)\*\*$/);
+                    if (boldMatch) return <strong key={`${i}-${j}-${bk}`} style={{ fontWeight: 700 }}>{boldMatch[1]}</strong>;
+                    return <span key={`${i}-${j}-${bk}`}>{bp}</span>;
+                });
             });
         });
     };
@@ -339,13 +351,27 @@ export default function AIChatbot({ isOpen, onClose, facilityContext, onOpenCons
                     </div>
 
                     {/* 메시지 목록 */}
-                    {messages.map((msg, i) => (
-                        <div key={i} style={{
+                    {messages.map((msg, i) => {
+                        // AI 응답에서 {{선택1|선택2}} 빠른 응답 파싱
+                        const quickReplies: string[] = [];
+                        let displayContent = msg.content;
+                        if (msg.role === 'assistant') {
+                            const qrMatch = msg.content.match(/\{\{(.+?)\}\}/);
+                            if (qrMatch) {
+                                displayContent = msg.content.replace(/\{\{.+?\}\}/, '').trim();
+                                qrMatch[1].split('|').forEach(s => quickReplies.push(s.trim()));
+                            }
+                        }
+                        const isLastAssistant = msg.role === 'assistant' && i === messages.length - 1;
+
+                        return (
+                        <div key={i}>
+                        <div style={{
                             display: 'flex', justifyContent: msg.role === 'user' ? 'flex-end' : 'flex-start',
-                            marginBottom: 10, alignItems: 'flex-end', gap: 6,
+                            marginBottom: quickReplies.length > 0 && isLastAssistant ? 6 : 10, alignItems: 'flex-end', gap: 6,
                         }}>
 
-                            <div style={{ maxWidth: '75%' }}>
+                            <div style={{ maxWidth: msg.role === 'user' ? '75%' : '100%' }}>
                                 {/* 이미지 첨부 */}
                                 {msg.imageUrl && (
                                     <div style={{ marginBottom: 6, borderRadius: 14, overflow: 'hidden', maxWidth: 200 }}>
@@ -354,25 +380,91 @@ export default function AIChatbot({ isOpen, onClose, facilityContext, onOpenCons
                                 )}
                                 {/* 말풍선 */}
                                 <div style={{
-                                    padding: '10px 14px',
-                                    borderRadius: msg.role === 'user' ? '18px 18px 4px 18px' : '18px 18px 18px 4px',
-                                    background: msg.role === 'user' ? NAVY : '#f2f2f2',
+                                    padding: msg.role === 'user' ? '10px 14px' : '6px 2px',
+                                    borderRadius: msg.role === 'user' ? '18px 18px 4px 18px' : '0',
+                                    background: msg.role === 'user' ? NAVY : 'transparent',
                                     color: msg.role === 'user' ? '#fff' : '#1a1a1a',
                                     fontSize: 15, lineHeight: 1.55, letterSpacing: '-0.2px',
                                     whiteSpace: 'pre-wrap', wordBreak: 'break-word',
                                 }}>
-                                    {renderContent(msg.content)}
+                                    {renderContent(displayContent)}
                                 </div>
                             </div>
                         </div>
-                    ))}
+                        {/* 빠른 응답 버튼 (마지막 AI 메시지에서만) */}
+                        {isLastAssistant && quickReplies.length > 0 && !isLoading && (
+                            <div style={{
+                                display: 'flex', flexWrap: 'wrap', gap: 8,
+                                justifyContent: 'flex-end',
+                                marginBottom: 12, paddingRight: 4,
+                            }}>
+                                {quickReplies.map((qr, qi) => (
+                                    <button key={qi}
+                                        onClick={() => {
+                                            setInput(qr);
+                                            setTimeout(() => {
+                                                setInput('');
+                                                setMessages(prev => [...prev, { role: 'user', content: qr, timestamp: new Date().toISOString() }]);
+                                                setIsLoading(true);
+                                                fetch('/api/chat', {
+                                                    method: 'POST',
+                                                    headers: { 'Content-Type': 'application/json' },
+                                                    body: JSON.stringify({
+                                                        message: qr,
+                                                        sessionId,
+                                                        facilityContext: facilityContext || undefined,
+                                                        history: [...messages, { role: 'user', content: qr }].slice(-10),
+                                                    }),
+                                                }).then(r => r.json()).then(data => {
+                                                    setIsLoading(false);
+                                                    if (data.response) {
+                                                        setStreamingText('');
+                                                        const full = data.response;
+                                                        let idx = 0;
+                                                        const iv = setInterval(() => {
+                                                            idx += 2;
+                                                            if (idx >= full.length) {
+                                                                clearInterval(iv);
+                                                                setStreamingText(null);
+                                                                setMessages(prev => [...prev, { role: 'assistant', content: full, timestamp: new Date().toISOString() }]);
+                                                                // msgCount tracked in main handler
+                                                            } else {
+                                                                setStreamingText(full.slice(0, idx));
+                                                            }
+                                                        }, 15);
+                                                    }
+                                                    if (data.showContactForm) setShowContactForm(true);
+                                                }).catch(() => setIsLoading(false));
+                                            }, 50);
+                                        }}
+                                        style={{
+                                            background: '#fff',
+                                            border: '1px solid #e0e0e0',
+                                            borderRadius: 20,
+                                            padding: '8px 16px',
+                                            fontSize: 14, fontWeight: 500,
+                                            color: '#333',
+                                            cursor: 'pointer',
+                                            transition: 'all 0.15s',
+                                        }}
+                                        onMouseEnter={e => { e.currentTarget.style.borderColor = NAVY; e.currentTarget.style.color = NAVY; }}
+                                        onMouseLeave={e => { e.currentTarget.style.borderColor = '#e0e0e0'; e.currentTarget.style.color = '#333'; }}
+                                    >
+                                        {qr}
+                                    </button>
+                                ))}
+                            </div>
+                        )}
+                        </div>
+                    );
+                    })}
 
                     {/* 타이핑 스트리밍 */}
                     {streamingText !== null && (
                         <div style={{ display: 'flex', justifyContent: 'flex-start', marginBottom: 10, alignItems: 'flex-end', gap: 6 }}>
                             <div style={{
                                 maxWidth: '75%', padding: '12px 16px', borderRadius: '18px 18px 18px 4px',
-                                background: '#f2f2f2', fontSize: 14, lineHeight: 1.6, color: '#1a1a1a',
+                                background: '#ffffff', fontSize: 14, lineHeight: 1.6, color: '#1a1a1a',
                                 whiteSpace: 'pre-wrap', wordBreak: 'break-word',
                             }}>
                                 {renderContent(streamingText)}
@@ -385,7 +477,7 @@ export default function AIChatbot({ isOpen, onClose, facilityContext, onOpenCons
                     {isLoading && (
                         <div style={{ display: 'flex', gap: 6, alignItems: 'flex-end', marginBottom: 10 }}>
                             <div style={{
-                                padding: '12px 18px', borderRadius: 18, background: '#f2f2f2',
+                                padding: '12px 18px', borderRadius: 18, background: '#ffffff',
                                 display: 'flex', gap: 5, alignItems: 'center',
                             }}>
                                 <span style={{ fontSize: 13, color: '#888', marginRight: 4 }}>생각 중</span>
@@ -458,7 +550,7 @@ export default function AIChatbot({ isOpen, onClose, facilityContext, onOpenCons
                 )}
 
                 {/* ── 하단 입력 영역 (채널톡 스타일) ── */}
-                <div style={{ background: '#f2f2f2', flexShrink: 0 }}>
+                <div style={{ background: '#ffffff', flexShrink: 0 }}>
                     {/* 이미지 미리보기 */}
                     {pendingImage && (
                         <div style={{
