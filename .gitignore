@@ -84,3 +84,4 @@ data/partnership_inquiries.json
 google-vision-key.json
 credentials*.json
 scripts/
+.next 2/
