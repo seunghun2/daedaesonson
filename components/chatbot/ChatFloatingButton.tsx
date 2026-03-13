@@ -73,10 +73,10 @@ export default function ChatFloatingButton({ hidden = false }: { hidden?: boolea
 
     return (
         <>
-            {/* ── 라벨 말풍선 (롤링) ── */}
+            {/* ── 라벨 말풍선 (롤링) — FAB 위쪽에 표시 ── */}
             {!isOpen && showLabel && (
                 <div style={{
-                    position: 'fixed', right: 76, bottom: 80, zIndex: 9989,
+                    position: 'fixed', right: 8, bottom: 138, zIndex: 9989,
                     background: '#fff', borderRadius: 12,
                     boxShadow: '0 4px 20px rgba(0,0,0,0.12)',
                     padding: '10px 16px',
@@ -84,7 +84,7 @@ export default function ChatFloatingButton({ hidden = false }: { hidden?: boolea
                     width: 'fit-content', overflow: 'visible',
                     whiteSpace: 'nowrap', cursor: 'pointer',
                     opacity: labelVisible ? 1 : 0,
-                    transform: labelVisible ? 'translateX(0)' : 'translateX(12px)',
+                    transform: labelVisible ? 'translateY(0)' : 'translateY(8px)',
                     transition: 'opacity 0.3s ease, transform 0.3s ease',
                 }} onClick={handleToggle}>
                     <div style={{
@@ -96,12 +96,12 @@ export default function ChatFloatingButton({ hidden = false }: { hidden?: boolea
                         <span style={{ fontSize: 14, fontWeight: 600, color: '#222' }}>{msg.title}</span>
                         <span style={{ fontSize: 13, color: '#888' }}>{msg.sub}</span>
                     </div>
-                    {/* 말풍선 꼬리 */}
+                    {/* 말풍선 꼬리 (아래쪽 — FAB을 가리킴) */}
                     <div style={{
-                        position: 'absolute', right: -5, bottom: 14,
+                        position: 'absolute', right: 24, bottom: -5,
                         width: 10, height: 10, background: '#fff',
                         transform: 'rotate(45deg)',
-                        boxShadow: '2px -2px 4px rgba(0,0,0,0.06)',
+                        boxShadow: '2px 2px 4px rgba(0,0,0,0.06)',
                     }} />
                 </div>
             )}

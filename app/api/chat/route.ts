@@ -90,11 +90,11 @@ const SYSTEM_PROMPT = `당신은 "대손이"입니다. 대대손손의 AI 전문
 
 STEP 1 - 시설 유형:
 "어떤 시설을 찾고 계세요? 😊"
-{{봉안당|수목장|잘 모르겠어요}}
+{{봉안당|수목장|묘지|잘 모르겠어요}}
 
 STEP 2 - 지역:
 "어느 지역이 편하세요? 자주 찾아뵈려면 가까운 곳이 좋거든요."
-{{서울|경기|인천|기타 지역}}
+{{서울|경기|부산|제주|기타 지역}}
 
 STEP 3 - 예산:
 "예산은 대략 어느 정도 생각하세요?"
@@ -316,10 +316,33 @@ export async function POST(request: NextRequest) {
         }
 
         // ── 스마트 검색 (JSON 파일 기반) ──
+        // 카테고리/가격은 전체 텍스트에서, 지역은 사용자 메시지에서만 검색 (AI 응답 지역명 오염 방지)
         const allText = [message, ...history.map((m: ChatMessage) => m.content)].join(' ');
 
         const regionKeywords = ['서울', '경기', '인천', '부산', '대구', '대전', '광주', '울산', '세종',
             '강원', '충북', '충남', '전북', '전남', '경북', '경남', '제주'];
+        
+        // 약칭 → 실제 주소에 사용되는 풀네임 매핑
+        const regionFullNames: Record<string, string[]> = {
+            '서울': ['서울', '서울특별시'],
+            '경기': ['경기', '경기도'],
+            '인천': ['인천', '인천광역시'],
+            '부산': ['부산', '부산광역시'],
+            '대구': ['대구', '대구광역시'],
+            '대전': ['대전', '대전광역시'],
+            '광주': ['광주', '광주광역시'],
+            '울산': ['울산', '울산광역시'],
+            '세종': ['세종', '세종특별자치시'],
+            '강원': ['강원', '강원도', '강원특별자치도'],
+            '충북': ['충북', '충청북도'],
+            '충남': ['충남', '충청남도'],
+            '전북': ['전북', '전라북도', '전북특별자치도'],
+            '전남': ['전남', '전라남도'],
+            '경북': ['경북', '경상북도'],
+            '경남': ['경남', '경상남도'],
+            '제주': ['제주', '제주특별자치도'],
+        };
+
         const subRegionKeywords = [
             '강남', '서초', '송파', '강동', '강서', '마포', '종로', '용산', '영등포', '관악', '동작', '성북', '노원',
             '수원', '성남', '분당', '고양', '일산', '용인', '안양', '안산', '파주', '화성', '평택', '김포', '하남',
@@ -347,8 +370,38 @@ export async function POST(request: NextRequest) {
         const priceMatchResult = allText.match(priceRegex);
         const wantsCheap = ['저렴', '싼', '싸', '최저', '가성비'].some(k => allText.includes(k));
 
-        const foundRegions = regionKeywords.filter(k => allText.includes(k));
-        const foundSubRegions = subRegionKeywords.filter(k => allText.includes(k));
+        // ── 지역 필터: 현재 메시지 우선 → 사용자 히스토리 → (AI 응답은 제외!) ──
+        let foundRegion: string | null = null;
+        // 1. 현재 메시지에서 찾기
+        for (const k of regionKeywords) {
+            if (message.includes(k)) { foundRegion = k; break; }
+        }
+        // 2. 현재 메시지에 없으면, 사용자의 이전 메시지에서 찾기 (최신 우선)
+        if (!foundRegion) {
+            const userHistory = history.filter((m: ChatMessage) => m.role === 'user').reverse();
+            for (const msg of userHistory) {
+                for (const k of regionKeywords) {
+                    if (msg.content.includes(k)) { foundRegion = k; break; }
+                }
+                if (foundRegion) break;
+            }
+        }
+
+        // 세부 지역도 사용자 메시지 우선
+        let foundSubRegion: string | null = null;
+        for (const k of subRegionKeywords) {
+            if (message.includes(k)) { foundSubRegion = k; break; }
+        }
+        if (!foundSubRegion) {
+            const userHistory = history.filter((m: ChatMessage) => m.role === 'user').reverse();
+            for (const msg of userHistory) {
+                for (const k of subRegionKeywords) {
+                    if (msg.content.includes(k)) { foundSubRegion = k; break; }
+                }
+                if (foundSubRegion) break;
+            }
+        }
+
         const foundCategory = Object.entries(categoryKeywords).find(([k]) => allText.includes(k));
 
         // 시설명 직접 검색 (3글자 이상)
@@ -370,12 +423,16 @@ export async function POST(request: NextRequest) {
         if (foundCategory) {
             results = results.filter((f: any) => f.category === foundCategory[1]);
         }
-        // 지역 필터
-        if (foundRegions.length > 0) {
-            results = results.filter((f: any) => (f.address || '').includes(foundRegions[0]));
+        // 지역 필터 (풀네임 매핑 적용)
+        if (foundRegion) {
+            const fullNames = regionFullNames[foundRegion] || [foundRegion];
+            results = results.filter((f: any) => {
+                const addr = f.address || '';
+                return fullNames.some(name => addr.includes(name));
+            });
         }
-        if (foundSubRegions.length > 0) {
-            const subFiltered = results.filter((f: any) => (f.address || '').includes(foundSubRegions[0]));
+        if (foundSubRegion) {
+            const subFiltered = results.filter((f: any) => (f.address || '').includes(foundSubRegion));
             if (subFiltered.length > 0) results = subFiltered;
         }
 
@@ -482,31 +539,113 @@ export async function POST(request: NextRequest) {
             'FUNERAL_HOME': '장례식장', 'FAMILY_GRAVE': '공원묘지/매장묘지', 'ETC': '기타',
         };
 
-        if (uniqueFacilities.length > 0) {
-            facilityData += '\n\n[검색된 시설 목록]';
-            uniqueFacilities.forEach((f: any, i: number) => {
-                const minPrice = f.priceRange?.min;
-                const price = minPrice
-                    ? (minPrice >= 10000 ? `${Math.round(minPrice / 10000)}만원~` : `${minPrice.toLocaleString()}원~`)
-                    : '문의';
-                const isPublic = f.isPublic ? '공립' : '민간';
-                facilityData += `\n${i + 1}. ${f.name} | ${cats[f.category] || f.category} (${isPublic}) | ${f.address || ''} | ${price}`;                facilityData += `\n   [내부코드: ${f.id} — 이 코드는 URL에만 사용. 답변 텍스트에 절대 노출 금지!]`;
+        // ── 시설 데이터 → AI 컨텍스트 포맷팅 ──
+        const formatPrice = (p: number) => p >= 10000 ? `${Math.round(p / 10000)}만원` : `${p.toLocaleString()}원`;
 
-                // 단수별 가격 요약 (봉안당 등 상세 가격이 있는 경우)
-                if (f.standardizedPrices && f.standardizedPrices.length > 0) {
-                    const priceGroups = f.standardizedPrices.slice(0, 2); // 최대 2개 그룹
-                    priceGroups.forEach((pg: any) => {
-                        if (pg.rows && pg.rows.length > 0) {
-                            const summary = pg.rows
-                                .filter((r: any) => r.price && r.price > 0 && r.name)
-                                .map((r: any) => `${r.name}:${Math.round(r.price / 10000)}만`)
-                                .join(', ');
-                            if (summary) facilityData += `\n   └ ${pg.subType || pg.serviceType}: ${summary}`;
+        if (uniqueFacilities.length > 0) {
+            // targetPrice가 있으면 '매칭 추천서' 모드
+            if (targetPrice > 0) {
+                const targetStr = formatPrice(targetPrice);
+                facilityData += `\n\n[코드에서 미리 분석 완료된 추천 후보 — 아래 내용을 자연스럽게 전달하세요. 가격을 절대 변형하지 마세요!]`;
+                facilityData += `\n고객 요청: ${targetStr}대`;
+
+                uniqueFacilities.slice(0, 10).forEach((f: any, i: number) => {
+                    const isPublic = f.isPublic ? '공립' : '민간';
+                    facilityData += `\n\n${i + 1}. ${f.name} (${isPublic}, ${f.address || ''})`;
+                    facilityData += `\n   [URL용 코드: ${f.id} — 답변에 절대 노출 금지]`;
+
+                    if (f.standardizedPrices && f.standardizedPrices.length > 0) {
+                        // 매칭 상품 (±30%)
+                        const matchedItems: string[] = [];
+                        // 기타 상품 요약
+                        const otherItems: string[] = [];
+
+                        for (const pg of f.standardizedPrices) {
+                            if (!pg.rows) continue;
+                            for (const row of pg.rows) {
+                                if (!row.price || row.price <= 0 || row.feeType === 'MAINTENANCE') continue;
+                                const label = row.groupType
+                                    ? `${pg.subType || pg.serviceType} ${row.groupType} ${row.name}`
+                                    : `${pg.subType || pg.serviceType} ${row.name}`;
+                                const priceStr = formatPrice(row.price);
+
+                                if (row.price >= targetPrice * 0.7 && row.price <= targetPrice * 1.3) {
+                                    matchedItems.push(`${label}: ${priceStr}`);
+                                } else {
+                                    otherItems.push(`${label}: ${priceStr}`);
+                                }
+                            }
                         }
-                    });
-                }
-            });
-            facilityData += `\n\n[총 ${uniqueFacilities.length}개 검색됨. 이 중 가장 적합한 3-5개를 추천하세요.]`;
+
+                        if (matchedItems.length > 0) {
+                            facilityData += `\n   ✅ 예산 매칭 상품 (${targetStr} 근처):`;
+                            matchedItems.slice(0, 6).forEach(item => {
+                                facilityData += `\n      - ${item}`;
+                            });
+                        }
+
+                        // 기타 가격대 요약 (최저~최고만)
+                        if (otherItems.length > 0) {
+                            const allUsagePrices = getAllPrices(f);
+                            const minP = Math.min(...allUsagePrices);
+                            const maxP = Math.max(...allUsagePrices);
+                            facilityData += `\n   📊 전체 가격 범위: ${formatPrice(minP)} ~ ${formatPrice(maxP)}`;
+                        }
+
+                        // 관리비
+                        for (const pg of f.standardizedPrices) {
+                            if (!pg.rows) continue;
+                            const maint = pg.rows.find((r: any) => r.feeType === 'MAINTENANCE' && r.price > 0);
+                            if (maint) {
+                                facilityData += `\n   💰 관리비: ${formatPrice(maint.price)}${maint.grade ? ` (${maint.grade})` : ''}`;
+                                break;
+                            }
+                        }
+                    } else {
+                        // standardizedPrices 없으면 priceRange만
+                        if (f.priceRange?.min) {
+                            facilityData += `\n   가격: ${formatPrice(f.priceRange.min)}~${f.priceRange.max ? formatPrice(f.priceRange.max) : ''}`;
+                        }
+                    }
+                });
+
+                facilityData += `\n\n[중요 지시] 위 ✅ 예산 매칭 상품의 가격을 그대로 인용하세요. "~부터 시작" 같은 최저가 안내 금지! 고객이 요청한 ${targetStr}대에 맞는 구체적 상품명과 가격을 안내하세요.`;
+                facilityData += `\n[추천 개수] 가장 적합한 1~2개를 확신있게 추천. 나열 금지.`;
+
+            } else {
+                // targetPrice 없으면 기본 목록 모드
+                facilityData += '\n\n[검색된 시설 목록]';
+                uniqueFacilities.slice(0, 15).forEach((f: any, i: number) => {
+                    const isPublic = f.isPublic ? '공립' : '민간';
+                    facilityData += `\n${i + 1}. ${f.name} | ${cats[f.category] || f.category} (${isPublic}) | ${f.address || ''}`;
+                    facilityData += `\n   [URL용 코드: ${f.id} — 답변에 절대 노출 금지]`;
+
+                    if (f.standardizedPrices && f.standardizedPrices.length > 0) {
+                        for (const pg of f.standardizedPrices) {
+                            if (!pg.rows || pg.rows.length === 0) continue;
+                            const usageRows = pg.rows.filter((r: any) => r.price && r.price > 0 && r.feeType !== 'MAINTENANCE');
+                            if (usageRows.length === 0) continue;
+                            const summary = usageRows.slice(0, 8).map((r: any) => {
+                                const label = r.groupType ? `${r.groupType} ${r.name}` : r.name;
+                                return `${label}:${formatPrice(r.price)}`;
+                            }).join(', ');
+                            facilityData += `\n   └ ${pg.subType || pg.serviceType}: ${summary}`;
+                        }
+                        // 관리비
+                        for (const pg of f.standardizedPrices) {
+                            if (!pg.rows) continue;
+                            const maint = pg.rows.find((r: any) => r.feeType === 'MAINTENANCE' && r.price > 0);
+                            if (maint) {
+                                facilityData += `\n   └ 관리비: ${formatPrice(maint.price)}${maint.grade ? ` (${maint.grade})` : ''}`;
+                                break;
+                            }
+                        }
+                    } else if (f.priceRange?.min) {
+                        facilityData += `\n   └ 가격: ${formatPrice(f.priceRange.min)}~`;
+                    }
+                });
+                facilityData += `\n\n[총 ${uniqueFacilities.length}개 검색됨. 가장 적합한 1~3개를 추천하세요.]`;
+            }
         } else {
             facilityData += '\n\n[검색 결과: 0건. 해당 조건에 맞는 시설이 없습니다. 절대로 시설을 만들어내지 마세요. 조건을 넓혀볼 것을 안내하세요.]';
         }

@@ -1609,9 +1609,10 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
                         transform: uiHidden
                             ? (isMobile ? 'translateY(150%)' : 'translateX(-50%) translateY(150%)')
                             : (isMobile ? 'translateY(0)' : 'translateX(-50%) translateY(0)'),
-                        transition: 'transform 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                        opacity: uiHidden ? 0 : 1,
+                        pointerEvents: uiHidden ? 'none' : 'auto',
+                        transition: 'transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease',
                         zIndex: 200,
-                        pointerEvents: 'auto',
                         display: 'flex',
                         alignItems: 'center',
                         gap: '8px',

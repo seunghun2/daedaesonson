@@ -164,22 +164,28 @@ export default function RootLayout({
           `,
           }}
         />
-        {/* 🔤 Material Symbols 폰트 로드 감지 */}
+        {/* 🔤 Material Symbols 폰트 로드 감지 (실제 폰트 렌더링 가능 시점 정확 감지) */}
         <Script
           id="font-load-detect"
           strategy="afterInteractive"
           dangerouslySetInnerHTML={{
             __html: `
             (function() {
-              if (document.fonts) {
-                document.fonts.ready.then(function() {
+              function checkFont() {
+                if (document.fonts && document.fonts.check('24px "Material Symbols Outlined"')) {
                   document.documentElement.classList.add('fonts-loaded');
-                });
-              } else {
-                setTimeout(function() {
-                  document.documentElement.classList.add('fonts-loaded');
-                }, 1000);
+                } else {
+                  setTimeout(checkFont, 100);
+                }
               }
+              // fonts.ready 후에 check 시작 (네트워크 로드 완료 대기)
+              if (document.fonts) {
+                document.fonts.ready.then(checkFont);
+              }
+              // 안전장치: 3초 후 강제 표시
+              setTimeout(function() {
+                document.documentElement.classList.add('fonts-loaded');
+              }, 3000);
             })()
           `,
           }}
