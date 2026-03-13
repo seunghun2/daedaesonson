@@ -60,12 +60,12 @@ export default function AIChatbot({ isOpen, onClose, facilityContext, onOpenCons
     const inputRef = useRef<HTMLInputElement>(null);
     const router = useRouter();
 
-    const prevFacilityIdRef = useRef<string | null>(null);
+    const prevFacilityIdRef = useRef<string | number | null>(null);
 
     /* ── 시설 전환 시 대화 컨텍스트 갱신 ── */
     useEffect(() => {
-        const currentId = facilityContext?.id || null;
-        if (prevFacilityIdRef.current !== null && currentId !== prevFacilityIdRef.current) {
+        const currentId = facilityContext?.id ?? null;
+        if (prevFacilityIdRef.current !== null && currentId !== null && String(currentId) !== String(prevFacilityIdRef.current)) {
             // 시설이 바뀌었으면 대화를 새 시설 기준으로 시작
             const greeting = currentId && facilityContext
                 ? `안녕하세요, 대손이입니다.\n${facilityContext.name}에 대해 궁금하신 점을 편하게 물어봐 주세요.`
@@ -207,14 +207,10 @@ export default function AIChatbot({ isOpen, onClose, facilityContext, onOpenCons
                         <a key={i} href={`/facility/${facilityMatch[1]}`}
                             onClick={(e) => { e.preventDefault(); router.push(`/facility/${facilityMatch[1]}`); onClose(); }}
                             style={{
-                                display: 'inline-block', margin: '4px 0',
-                                padding: '5px 10px', borderRadius: 6,
-                                background: 'transparent', color: NAVY,
-                                border: `1px solid ${NAVY}`,
-                                fontSize: 12, fontWeight: 600,
-                                textDecoration: 'none', cursor: 'pointer',
+                                color: NAVY, fontSize: 12, fontWeight: 500,
+                                textDecoration: 'underline', cursor: 'pointer',
                             }}>
-                            상세 보기 →
+                            상세보기
                         </a>
                     );
                 }
@@ -237,14 +233,10 @@ export default function AIChatbot({ isOpen, onClose, facilityContext, onOpenCons
                             <a key={`${i}-${j}`} href={`/facility/${facilityMatch2[1]}`}
                                 onClick={(e) => { e.preventDefault(); router.push(`/facility/${facilityMatch2[1]}`); onClose(); }}
                                 style={{
-                                    display: 'inline-block', margin: '4px 0',
-                                    padding: '5px 10px', borderRadius: 6,
-                                    background: 'transparent', color: NAVY,
-                                    border: `1px solid ${NAVY}`,
-                                    fontSize: 12, fontWeight: 600,
-                                    textDecoration: 'none', cursor: 'pointer',
+                                    color: NAVY, fontSize: 12, fontWeight: 500,
+                                    textDecoration: 'underline', cursor: 'pointer',
                                 }}>
-                                상세 보기 →
+                                상세보기
                             </a>
                         );
                     }
