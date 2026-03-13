@@ -4612,7 +4612,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                         display: 'flex', alignItems: 'center', gap: 8,
                                         padding: '10px 16px',
                                         background: '#fff', border: '1px solid #eee',
-                                        borderRadius: 28,
+                                        borderRadius: 28, width: 'fit-content',
                                         boxShadow: '0 4px 16px rgba(0,0,0,0.08)',
                                         cursor: 'pointer', whiteSpace: 'nowrap',
                                         animation: 'labelExpand 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards',

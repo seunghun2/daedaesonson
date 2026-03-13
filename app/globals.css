@@ -44,10 +44,10 @@ body {
 /* 💬 FAB 라벨 확장/축소 */
 @keyframes labelExpand {
   from { max-width: 0; padding-left: 0; padding-right: 0; opacity: 0; }
-  to { max-width: 200px; padding-left: 16px; padding-right: 16px; opacity: 1; }
+  to { max-width: 400px; padding-left: 16px; padding-right: 16px; opacity: 1; }
 }
 @keyframes labelCollapse {
-  from { max-width: 200px; padding-left: 16px; padding-right: 16px; opacity: 1; }
+  from { max-width: 400px; padding-left: 16px; padding-right: 16px; opacity: 1; }
   to { max-width: 0; padding-left: 0; padding-right: 0; opacity: 0; }
 }
 

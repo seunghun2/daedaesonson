@@ -155,18 +155,74 @@ export default function AIChatbot({ isOpen, onClose, facilityContext, onOpenCons
 
     /* ── 마크다운 링크 렌더링 ── */
     const renderContent = (text: string) => {
-        const parts = text.split(/(\[.*?\]\(.*?\))/g);
+        // ** 마크다운 볼드 제거
+        let cleaned = text.replace(/\*\*(.*?)\*\*/g, '$1');
+        // * 이탤릭 제거
+        cleaned = cleaned.replace(/(?<!\*)\*(?!\*)(.*?)\*(?!\*)/g, '$1');
+
+        // URL을 감지하여 클릭 가능한 버튼으로 변환
+        const urlRegex = /(https?:\/\/[^\s),]+)/g;
+        const parts = cleaned.split(urlRegex);
+
         return parts.map((part, i) => {
-            const linkMatch = part.match(/\[(.*?)\]\((.*?)\)/);
-            if (linkMatch) {
+            if (urlRegex.test(part)) {
+                // 시설 상세 페이지 URL인지 확인
+                const facilityMatch = part.match(/daedaesonson\.com\/facility\/(park-\d+)/);
+                if (facilityMatch) {
+                    return (
+                        <a key={i} href={`/facility/${facilityMatch[1]}`}
+                            onClick={(e) => { e.preventDefault(); router.push(`/facility/${facilityMatch[1]}`); onClose(); }}
+                            style={{
+                                display: 'inline-block', margin: '4px 0',
+                                padding: '5px 10px', borderRadius: 6,
+                                background: 'transparent', color: NAVY,
+                                border: `1px solid ${NAVY}`,
+                                fontSize: 12, fontWeight: 600,
+                                textDecoration: 'none', cursor: 'pointer',
+                            }}>
+                            상세 보기 →
+                        </a>
+                    );
+                }
+                // 일반 URL
                 return (
-                    <a key={i} href={linkMatch[2]} target="_blank" rel="noopener noreferrer"
-                        style={{ color: NAVY, textDecoration: 'underline', fontWeight: 600 }}>
-                        {linkMatch[1]}
+                    <a key={i} href={part} target="_blank" rel="noopener noreferrer"
+                        style={{ color: NAVY, textDecoration: 'underline' }}>
+                        {part}
                     </a>
                 );
             }
-            return <span key={i}>{part}</span>;
+            // 마크다운 링크 [text](url) 처리
+            const mdParts = part.split(/(\[.*?\]\(.*?\))/g);
+            return mdParts.map((mdPart, j) => {
+                const mdMatch = mdPart.match(/\[(.*?)\]\((.*?)\)/);
+                if (mdMatch) {
+                    const facilityMatch2 = mdMatch[2].match(/facility\/(park-\d+)/);
+                    if (facilityMatch2) {
+                        return (
+                            <a key={`${i}-${j}`} href={`/facility/${facilityMatch2[1]}`}
+                                onClick={(e) => { e.preventDefault(); router.push(`/facility/${facilityMatch2[1]}`); onClose(); }}
+                                style={{
+                                    display: 'inline-block', margin: '4px 0',
+                                    padding: '5px 10px', borderRadius: 6,
+                                    background: 'transparent', color: NAVY,
+                                    border: `1px solid ${NAVY}`,
+                                    fontSize: 12, fontWeight: 600,
+                                    textDecoration: 'none', cursor: 'pointer',
+                                }}>
+                                상세 보기 →
+                            </a>
+                        );
+                    }
+                    return (
+                        <a key={`${i}-${j}`} href={mdMatch[2]} target="_blank" rel="noopener noreferrer"
+                            style={{ color: NAVY, textDecoration: 'underline', fontWeight: 600 }}>
+                            {mdMatch[1]}
+                        </a>
+                    );
+                }
+                return <span key={`${i}-${j}`}>{mdPart}</span>;
+            });
         });
     };
 
@@ -197,14 +253,12 @@ export default function AIChatbot({ isOpen, onClose, facilityContext, onOpenCons
                     borderBottom: '1px solid #f0f0f0', flexShrink: 0,
                 }}>
                     <div style={{
-                        width: 36, height: 36, borderRadius: 10,
-                        background: NAVY,
+                        width: 40, height: 40, borderRadius: 12,
+                        background: '#EEEDFA',
                         display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0,
+                        overflow: 'hidden',
                     }}>
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
-                            <path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"
-                                stroke="#fff" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
-                        </svg>
+                        <img src="/images/daesoni-icon.svg" alt="대손이" width={34} height={34} style={{ objectFit: 'contain' }} />
                     </div>
                     <div style={{ flex: 1 }}>
                         <div style={{ fontSize: 15, fontWeight: 700, color: '#1a1a1a' }}>대손이</div>
@@ -245,14 +299,12 @@ export default function AIChatbot({ isOpen, onClose, facilityContext, onOpenCons
                     {/* 브랜드 인트로 */}
                     <div style={{ textAlign: 'center', marginBottom: 20 }}>
                         <div style={{
-                            width: 48, height: 48, borderRadius: 14,
-                            background: NAVY, margin: '0 auto 10px',
+                            width: 56, height: 56, borderRadius: 16,
+                            background: '#EEEDFA', margin: '0 auto 10px',
                             display: 'flex', alignItems: 'center', justifyContent: 'center',
+                            overflow: 'hidden',
                         }}>
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                <path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"
-                                    stroke="#fff" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
-                            </svg>
+                            <img src="/images/daesoni-icon.svg" alt="대손이" width={46} height={46} style={{ objectFit: 'contain' }} />
                         </div>
                         <div style={{ fontSize: 16, fontWeight: 700, color: '#1a1a1a' }}>대대손손</div>
                         <div style={{ fontSize: 13, color: '#999', marginTop: 2 }}>
@@ -266,19 +318,7 @@ export default function AIChatbot({ isOpen, onClose, facilityContext, onOpenCons
                             display: 'flex', justifyContent: msg.role === 'user' ? 'flex-end' : 'flex-start',
                             marginBottom: 10, alignItems: 'flex-end', gap: 6,
                         }}>
-                            {msg.role === 'assistant' && (
-                                <div style={{
-                                    width: 28, height: 28, borderRadius: 8,
-                                    background: NAVY, flexShrink: 0,
-                                    display: 'flex', alignItems: 'center', justifyContent: 'center',
-                                    alignSelf: 'flex-start', marginTop: 2,
-                                }}>
-                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
-                                        <path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"
-                                            stroke="#fff" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
-                                    </svg>
-                                </div>
-                            )}
+
                             <div style={{ maxWidth: '75%' }}>
                                 {/* 이미지 첨부 */}
                                 {msg.imageUrl && (
@@ -304,15 +344,6 @@ export default function AIChatbot({ isOpen, onClose, facilityContext, onOpenCons
                     {/* 로딩 */}
                     {isLoading && (
                         <div style={{ display: 'flex', gap: 6, alignItems: 'flex-end', marginBottom: 10 }}>
-                            <div style={{
-                                width: 28, height: 28, borderRadius: 8, background: NAVY, flexShrink: 0,
-                                display: 'flex', alignItems: 'center', justifyContent: 'center',
-                            }}>
-                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
-                                    <path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"
-                                        stroke="#fff" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
-                                </svg>
-                            </div>
                             <div style={{
                                 padding: '12px 18px', borderRadius: 18, background: '#f2f2f2',
                                 display: 'flex', gap: 5,

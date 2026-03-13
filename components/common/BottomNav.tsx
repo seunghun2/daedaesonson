@@ -69,7 +69,7 @@ export default function BottomNav({ historyCount = 0, hidden = false }: BottomNa
 
     return (
         <>
-            <ChatFloatingButton />
+            <ChatFloatingButton hidden={hidden} />
             <Box
             style={{
                 position: 'fixed',

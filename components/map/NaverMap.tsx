@@ -922,8 +922,8 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
                     <text x="24" y="18.8" fill="#efefef" font-size="7" font-family="-apple-system, sans-serif" text-anchor="middle">${categoryLabel}</text>
                     <g transform="translate(16.814 0)">
                       <rect width="9.858" height="3.13" transform="translate(2.215 0)" fill="${colors.dark}"/>
-                      <rect width="6.976" height="3.13" transform="translate(2.213 0.001) rotate(45)" fill="#efefef"/>
-                      <rect width="13.234" height="3.13" transform="translate(14.29 2.216) rotate(135)" fill="#efefef"/>
+                      <rect width="6.976" height="3.13" transform="translate(2.213 0.001) rotate(45)" fill="#d5d5d5"/>
+                      <rect width="13.234" height="3.13" transform="translate(14.29 2.216) rotate(135)" fill="#d5d5d5"/>
                     </g>
                     <text x="24" y="30.8" fill="#efefef" font-size="11" font-weight="700" font-family="-apple-system, sans-serif" text-anchor="middle" opacity="0.95">${priceText}</text>
                   </g>
@@ -1605,10 +1605,10 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
                     <div style={{
                         position: 'absolute',
                         bottom: isMobile ? '70px' : '24px',
-                        left: '50%',
+                        left: isMobile ? '16px' : '50%',
                         transform: uiHidden
-                            ? 'translateX(-50%) translateY(150%)'
-                            : 'translateX(-50%) translateY(0)',
+                            ? (isMobile ? 'translateY(150%)' : 'translateX(-50%) translateY(150%)')
+                            : (isMobile ? 'translateY(0)' : 'translateX(-50%) translateY(0)'),
                         transition: 'transform 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
                         zIndex: 200,
                         pointerEvents: 'auto',
@@ -1625,20 +1625,22 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
                             style={{
                                 display: 'flex',
                                 alignItems: 'center',
-                                gap: '6px',
+                                gap: '8px',
                                 backgroundColor: '#1D0098',
                                 color: 'white',
-                                padding: isMobile ? '10px 14px' : '12px 20px',
+                                padding: isMobile ? '14px 20px' : '14px 24px',
                                 borderRadius: '30px',
                                 boxShadow: '0 4px 12px rgba(0,0,0,0.3)',
                                 cursor: 'pointer',
-                                fontSize: isMobile ? '12px' : '14px',
+                                fontSize: isMobile ? '14px' : '15px',
                                 fontWeight: 'bold',
                                 whiteSpace: 'nowrap',
                                 textDecoration: 'none',
                             }}
                         >
-                            <svg width={isMobile ? 16 : 20} height={isMobile ? 16 : 20} viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+                            {!isMobile && (
+                                <svg width={20} height={20} viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+                            )}
                             <span>{centerAddress} 주변 시설 보기</span>
                         </div>
                     </div>
@@ -1655,14 +1657,14 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
                             zIndex: 200,
                             display: 'flex',
                             alignItems: 'center',
-                            gap: '4px',
+                            gap: '8px',
                             backgroundColor: 'white',
                             color: '#1D0098',
-                            padding: '12px 16px',
+                            padding: '14px 24px',
                             borderRadius: '30px',
                             boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
                             cursor: 'pointer',
-                            fontSize: '14px',
+                            fontSize: '15px',
                             fontWeight: 'bold',
                             whiteSpace: 'nowrap',
                             textDecoration: 'none',
@@ -1672,7 +1674,7 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
                             pointerEvents: 'auto',
                         }}
                     >
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
                         <span>블로그</span>
                     </a>
                 )}
