@@ -40,6 +40,8 @@ export default function AIChatbot({ isOpen, onClose, facilityContext, onOpenCons
     });
     const [input, setInput] = useState('');
     const [isLoading, setIsLoading] = useState(false);
+    const [streamingText, setStreamingText] = useState<string | null>(null);
+    const streamingRef = useRef<ReturnType<typeof setInterval> | null>(null);
     const [sessionId, setSessionId] = useState<string | null>(() => {
         if (typeof window === 'undefined') return null;
         return sessionStorage.getItem('chat_session_id') || null;
@@ -98,10 +100,10 @@ export default function AIChatbot({ isOpen, onClose, facilityContext, onOpenCons
         sessionStorage.setItem('chat_msg_count', messageCount.toString());
     }, [messageCount]);
 
-    /* ── 스크롤 ── */
+    /* ── 스크롤 (즉시 최하단) ── */
     useEffect(() => {
-        if (isOpen) messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-    }, [messages, isLoading, isOpen]);
+        if (isOpen) messagesEndRef.current?.scrollIntoView({ behavior: 'instant' as ScrollBehavior });
+    }, [messages, isLoading, isOpen, streamingText]);
 
     /* ── Focus ── */
     useEffect(() => {
@@ -134,15 +136,30 @@ export default function AIChatbot({ isOpen, onClose, facilityContext, onOpenCons
             const data = await res.json();
             if (data.sessionId) setSessionId(data.sessionId);
 
-            setMessages(prev => [...prev, {
-                role: 'assistant',
-                content: data.response || '죄송합니다. 잠시 후 다시 시도해주세요.',
-                timestamp: new Date().toISOString(),
-            }]);
+            const fullText = data.response || '죄송합니다. 잠시 후 다시 시도해주세요.';
 
-            if (messageCount >= 3 && !contactSubmitted && !showContactForm) {
-                setTimeout(() => setShowContactForm(true), 1500);
-            }
+            // 타이핑 스트리밍 효과
+            setIsLoading(false);
+            setStreamingText('');
+            let idx = 0;
+            streamingRef.current = setInterval(() => {
+                idx++;
+                const chunk = fullText.slice(0, idx);
+                setStreamingText(chunk);
+                if (idx >= fullText.length) {
+                    if (streamingRef.current) clearInterval(streamingRef.current);
+                    setStreamingText(null);
+                    setMessages(prev => [...prev, {
+                        role: 'assistant',
+                        content: fullText,
+                        timestamp: new Date().toISOString(),
+                    }]);
+                    if (messageCount >= 3 && !contactSubmitted && !showContactForm) {
+                        setTimeout(() => setShowContactForm(true), 1500);
+                    }
+                }
+            }, 15); // 15ms per character
+            return; // finally block handles isLoading already set above
         } catch {
             setMessages(prev => [...prev, {
                 role: 'assistant',
@@ -358,13 +375,28 @@ export default function AIChatbot({ isOpen, onClose, facilityContext, onOpenCons
                         </div>
                     ))}
 
-                    {/* 로딩 */}
+                    {/* 타이핑 스트리밍 */}
+                    {streamingText !== null && (
+                        <div style={{ display: 'flex', justifyContent: 'flex-start', marginBottom: 10, alignItems: 'flex-end', gap: 6 }}>
+                            <div style={{
+                                maxWidth: '75%', padding: '12px 16px', borderRadius: '18px 18px 18px 4px',
+                                background: '#f2f2f2', fontSize: 14, lineHeight: 1.6, color: '#1a1a1a',
+                                whiteSpace: 'pre-wrap', wordBreak: 'break-word',
+                            }}>
+                                {renderContent(streamingText)}
+                                <span style={{ display: 'inline-block', width: 2, height: 14, background: '#302E92', marginLeft: 2, animation: 'cursorBlink 0.8s step-end infinite', verticalAlign: 'text-bottom' }} />
+                            </div>
+                        </div>
+                    )}
+
+                    {/* 로딩 (사고 중) */}
                     {isLoading && (
                         <div style={{ display: 'flex', gap: 6, alignItems: 'flex-end', marginBottom: 10 }}>
                             <div style={{
                                 padding: '12px 18px', borderRadius: 18, background: '#f2f2f2',
-                                display: 'flex', gap: 5,
+                                display: 'flex', gap: 5, alignItems: 'center',
                             }}>
+                                <span style={{ fontSize: 13, color: '#888', marginRight: 4 }}>생각 중</span>
                                 {[0, 1, 2].map(n => (
                                     <div key={n} style={{
                                         width: 7, height: 7, borderRadius: '50%', background: '#bbb',
