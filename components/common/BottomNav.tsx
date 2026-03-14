@@ -67,9 +67,11 @@ export default function BottomNav({ historyCount = 0, hidden = false }: BottomNa
         { id: 'menu', label: '전체', path: '/menu' },
     ];
 
-    return (
+        const hideChatFab = hidden || ['/inquiries', '/history', '/menu'].includes(pathname);
+
+        return (
         <>
-            <ChatFloatingButton hidden={hidden} />
+            <ChatFloatingButton hidden={hideChatFab} />
             <Box
             style={{
                 position: 'fixed',

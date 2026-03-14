@@ -4,6 +4,15 @@ import { getSupabaseServer } from '@/lib/supabaseServer';
 
 const supabase = getSupabaseServer();
 
+// Haversine 거리 계산 (km 단위)
+function haversineKm(lat1: number, lng1: number, lat2: number, lng2: number): number {
+    const R = 6371;
+    const dLat = (lat2 - lat1) * Math.PI / 180;
+    const dLng = (lng2 - lng1) * Math.PI / 180;
+    const a = Math.sin(dLat / 2) ** 2 + Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) * Math.sin(dLng / 2) ** 2;
+    return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+}
+
 const SYSTEM_PROMPT = `당신은 "대손이"입니다. 대대손손의 AI 전문 상담사입니다.
 
 ## 역할
@@ -404,6 +413,12 @@ export async function POST(request: NextRequest) {
 
         const foundCategory = Object.entries(categoryKeywords).find(([k]) => allText.includes(k));
 
+        // 공립/민간 감지
+        const publicKeywords = ['공립', '공설', '국립', '시립', '군립'];
+        const privateKeywords = ['민간', '사설', '사립', '민영'];
+        const wantsPublic = publicKeywords.some(k => allText.includes(k));
+        const wantsPrivate = privateKeywords.some(k => allText.includes(k));
+
         // 시설명 직접 검색 (3글자 이상)
         const excludeWords = ['추천', '궁금', '가격', '얼마', '안내', '알려', '알려줘', '비슷', '근처', '주변', '저렴', '찾아', '어디', '있나', '가까운', '도와', '드릴까', '상담', '문의', '해줘', '해주세요', '부탁', '만원대', '만원'];
         const nameMatch = message.match(/[가-힣]{3,}/g)?.filter(
@@ -422,6 +437,12 @@ export async function POST(request: NextRequest) {
         // 카테고리 필터
         if (foundCategory) {
             results = results.filter((f: any) => f.category === foundCategory[1]);
+        }
+        // 공립/민간 필터 (명시적 요청 시)
+        if (wantsPublic && !wantsPrivate) {
+            results = results.filter((f: any) => f.isPublic === true);
+        } else if (wantsPrivate && !wantsPublic) {
+            results = results.filter((f: any) => f.isPublic === false);
         }
         // 지역 필터 (풀네임 매핑 적용)
         if (foundRegion) {
@@ -650,6 +671,195 @@ export async function POST(request: NextRequest) {
             facilityData += '\n\n[검색 결과: 0건. 해당 조건에 맞는 시설이 없습니다. 절대로 시설을 만들어내지 마세요. 조건을 넓혀볼 것을 안내하세요.]';
         }
 
+        // ── 시설 비교 카드 데이터 생성 (프론트 카드 UI용) ──
+        // 카드 표시 조건: 현재 메시지에 추천 트리거가 있을 때만
+        const recommendTriggers = ['추천', '알려줘', '보여줘', '찾아줘', '어디', '어떤', '비교', '있나요', '있을까', '소개'];
+        const wantsOther = ['다른', '다른 곳', '다른데', '다른곳', '또 다른', '다른시설', '비슷한'].some(k => message.includes(k));
+        const wantsNearby = ['주변', '근처', '가까운', '근방', '인근', '가까이'].some(k => message.includes(k));
+        const hasSearchTrigger = Boolean(foundCategory) || Boolean(foundRegion) || targetPrice > 0
+            || recommendTriggers.some(k => message.includes(k)) || wantsOther || wantsNearby;
+        // facilityContext(시설 상세페이지)에서는 명시적 추천/비교/주변 요청 시에만 카드 표시
+        const wantsRecommendation = wantsOther || wantsNearby || ['추천', '비교', '비슷'].some(k => message.includes(k));
+        const shouldShowCards = hasSearchTrigger && uniqueFacilities.length > 0
+            && (!facilityContext || wantsRecommendation);
+
+        // 정보 완성도 스코어 (가격 데이터 풍부도 + 정보 완성도)
+        const cardScore = (f: any): number => {
+            let s = 0;
+            if (f.standardizedPrices?.length > 0) {
+                const rowCount = f.standardizedPrices.reduce((acc: number, pg: any) => acc + (pg.rows?.length || 0), 0);
+                s += Math.min(rowCount * 2, 20);
+            }
+            if (f.phone) s += 5;
+            if (f.amenities && Object.values(f.amenities).some((v: any) => v)) s += 5;
+            if (targetPrice > 0) {
+                const diff = getClosestPriceDiff(f, targetPrice);
+                if (diff < targetPrice * 0.3) s += 15;
+                else if (diff < targetPrice * 0.5) s += 10;
+            }
+            return s;
+        };
+
+        let cardCandidates: any[] = [];
+        if (shouldShowCards) {
+            // 현재 보고 있는 시설 제외 (상세페이지에서 추천 시)
+            const excludeId = facilityContext?.id ? String(facilityContext.id) : null;
+            const filteredForCards = excludeId
+                ? uniqueFacilities.filter((f: any) => String(f.id) !== excludeId)
+                : uniqueFacilities;
+
+            // ── 주변 시설 추천 (좌표 기반) ──
+            if (wantsNearby && facilityContext?.id) {
+                const baseFacility = allFacilitiesData.find((f: any) => String(f.id) === String(facilityContext.id));
+                if (baseFacility?.lat && baseFacility?.lng) {
+                    const nearby = allFacilitiesData
+                        .filter((f: any) => String(f.id) !== String(facilityContext.id) && f.lat && f.lng)
+                        .map((f: any) => ({
+                            ...f,
+                            _distKm: haversineKm(baseFacility.lat, baseFacility.lng, f.lat, f.lng),
+                        }))
+                        .filter((f: any) => f._distKm <= 50) // 반경 50km
+                        .sort((a: any, b: any) => a._distKm - b._distKm)
+                        .slice(0, 3);
+                    cardCandidates = nearby;
+                }
+            }
+
+            // ── 일반 추천 (기존 로직) ──
+            if (cardCandidates.length === 0) {
+                // "다른 곳" 요청 시 이전 대화에서 이미 보여준 것 스킵
+                const offset = wantsOther ? 3 : 0;
+
+                // 다양성 보장: 공립/민간 명시 시 해당만, 미명시 시 공립1+민간2 혼합
+                if (wantsPublic || wantsPrivate) {
+                    cardCandidates = [...filteredForCards].sort((a, b) => cardScore(b) - cardScore(a)).slice(offset, offset + 3);
+                } else {
+                    const pubPool = filteredForCards.filter((f: any) => f.isPublic === true).sort((a: any, b: any) => cardScore(b) - cardScore(a));
+                    const privPool = filteredForCards.filter((f: any) => f.isPublic === false).sort((a: any, b: any) => cardScore(b) - cardScore(a));
+                    if (pubPool.length > offset && privPool.length > offset) {
+                        cardCandidates = [pubPool[offset], ...privPool.slice(offset, offset + 2)];
+                        if (cardCandidates.length < 3 && pubPool.length > offset + 1) cardCandidates.push(pubPool[offset + 1]);
+                    } else {
+                        cardCandidates = [...filteredForCards].sort((a, b) => cardScore(b) - cardScore(a)).slice(offset, offset + 3);
+                    }
+                }
+            }
+        }
+
+        const facilityCards = cardCandidates.map((f: any) => {
+            const allUsagePrices = getAllPrices(f);
+            const minP = allUsagePrices.length > 0 ? Math.min(...allUsagePrices) : null;
+            let matchedPrice: number | null = null;
+            let matchedItem: string | null = null;
+            if (targetPrice > 0 && f.standardizedPrices) {
+                for (const pg of f.standardizedPrices) {
+                    if (!pg.rows) continue;
+                    for (const row of pg.rows) {
+                        if (!row.price || row.price <= 0 || row.feeType === 'MAINTENANCE') continue;
+                        if (row.price >= targetPrice * 0.7 && row.price <= targetPrice * 1.3) {
+                            matchedPrice = row.price;
+                            matchedItem = row.groupType
+                                ? `${pg.subType || pg.serviceType} ${row.groupType} ${row.name}`
+                                : `${pg.subType || pg.serviceType} ${row.name}`;
+                            break;
+                        }
+                    }
+                    if (matchedPrice) break;
+                }
+            }
+            return {
+                id: f.id,
+                name: f.name,
+                category: cats[f.category] || f.category,
+                address: (f.address || '').split(' ').slice(0, 2).join(' '),
+                isPublic: f.isPublic ?? null,
+                minPrice: minP ? Math.round(minP / 10000)
+                    : f.representativePrice ? Math.round(f.representativePrice / 10000)
+                    : f.priceRange?.min ? Math.round(f.priceRange.min / 10000)
+                    : null,
+                matchedPrice: matchedPrice ? Math.round(matchedPrice / 10000) : null,
+                matchedItem: matchedItem,
+                distanceKm: f._distKm ? Math.round(f._distKm * 10) / 10 : undefined,
+            };
+        });
+
+        // ── 가격표 인라인 데이터 생성 (가격 질문 시) ──
+        const priceQueryKeywords = ['가격', '얼마', '비용', '요금', '가격표', '얼마야', '얼마에요', '얼마인가요', '얼마인가', '얼마예요'];
+        const isPriceQuery = priceQueryKeywords.some(k => message.includes(k));
+
+        let pricingTable: any = null;
+        if (isPriceQuery) {
+            // 가격표 대상 시설 결정
+            let pricingTarget: any = null;
+
+            // 1순위: facilityContext (시설 상세페이지에서 상담)
+            if (facilityContext?.id) {
+                pricingTarget = allFacilitiesData.find((f: any) => f.id === facilityContext.id);
+            }
+            // 2순위: 이름 검색 결과
+            if (!pricingTarget && nameResults.length > 0) {
+                pricingTarget = nameResults[0];
+            }
+
+            if (pricingTarget?.standardizedPrices?.length > 0) {
+                const fmtPrice = (p: number) => p >= 10000 ? `${Math.round(p / 10000)}만원` : `${p.toLocaleString()}원`;
+                const sections: any[] = [];
+
+                for (const pg of pricingTarget.standardizedPrices) {
+                    if (!pg.rows || pg.rows.length === 0) continue;
+                    const usageRows = pg.rows.filter((r: any) => r.price && r.price > 0 && r.feeType !== 'MAINTENANCE');
+                    const maintRows = pg.rows.filter((r: any) => r.feeType === 'MAINTENANCE' && r.price > 0);
+
+                    if (usageRows.length === 0) continue;
+
+                    // groupType별로 묶기
+                    const groups = new Map<string, any[]>();
+                    for (const row of usageRows) {
+                        const key = row.groupType || '_default';
+                        if (!groups.has(key)) groups.set(key, []);
+                        groups.get(key)!.push(row);
+                    }
+
+                    const tableRows: any[] = [];
+                    for (const [groupName, rows] of groups) {
+                        if (rows.length <= 3) {
+                            // 행이 적으면 그대로
+                            rows.forEach(r => tableRows.push({
+                                name: r.name, grade: groupName !== '_default' ? groupName : undefined,
+                                price: fmtPrice(r.price),
+                            }));
+                        } else {
+                            // 행이 많으면 범위로 요약
+                            const prices = rows.map((r: any) => r.price);
+                            const minP = Math.min(...prices);
+                            const maxP = Math.max(...prices);
+                            tableRows.push({
+                                name: groupName !== '_default' ? groupName : pg.subType || pg.serviceType,
+                                price: minP === maxP ? fmtPrice(minP) : `${fmtPrice(minP)} ~ ${fmtPrice(maxP)}`,
+                            });
+                        }
+                    }
+
+                    sections.push({
+                        title: pg.subType || pg.serviceType || '기타',
+                        rows: tableRows.slice(0, 10),
+                        maintenance: maintRows.length > 0
+                            ? maintRows.map((m: any) => `${m.name}: ${fmtPrice(m.price)}${m.grade ? ` (${m.grade})` : ''}`).join(', ')
+                            : undefined,
+                    });
+                }
+
+                if (sections.length > 0) {
+                    pricingTable = {
+                        facilityName: pricingTarget.name,
+                        facilityId: pricingTarget.id,
+                        isPublic: pricingTarget.isPublic ?? null,
+                        sections,
+                    };
+                }
+            }
+        }
+
         // 2. Gemini 호출
         const genAI = new GoogleGenerativeAI(apiKey);
         const model = genAI.getGenerativeModel({
@@ -702,14 +912,15 @@ export async function POST(request: NextRequest) {
                     facility_id: facilityContext?.id || null,
                     messages: [newMsg, aiMsg],
                     user_agent: request.headers.get('user-agent') || '',
+                    ip_address: request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || request.headers.get('x-real-ip') || '',
                 })
                 .select('id')
                 .single();
 
-            return NextResponse.json({ response, sessionId: newSession?.id });
+            return NextResponse.json({ response, sessionId: newSession?.id, facilityCards: facilityCards.length > 0 ? facilityCards : undefined, pricingTable: pricingTable || undefined });
         }
 
-        return NextResponse.json({ response, sessionId });
+        return NextResponse.json({ response, sessionId, facilityCards: facilityCards.length > 0 ? facilityCards : undefined, pricingTable: pricingTable || undefined });
 
     } catch (error: any) {
         console.error('Chat API error:', error);

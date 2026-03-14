@@ -4656,7 +4656,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                             isOpen={aiChatOpen}
                             onClose={() => setAiChatOpen(false)}
                             facilityContext={{
-                                id: Number(facility.id),
+                                id: facility.id,
                                 name: facility.name,
                                 category: facility.category,
                                 address: facility.address,

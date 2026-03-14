@@ -4,15 +4,48 @@ import { useState, useRef, useEffect, useCallback } from 'react';
 import { X, Phone, ChevronRight } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 
+interface FacilityCard {
+    id: string;
+    name: string;
+    category: string;
+    address: string;
+    isPublic: boolean | null;
+    minPrice: number | null;
+    matchedPrice: number | null;
+    matchedItem: string | null;
+    distanceKm?: number;
+}
+
+interface PricingRow {
+    name: string;
+    grade?: string;
+    price: string;
+}
+
+interface PricingSection {
+    title: string;
+    rows: PricingRow[];
+    maintenance?: string;
+}
+
+interface PricingTable {
+    facilityName: string;
+    facilityId: string;
+    isPublic: boolean | null;
+    sections: PricingSection[];
+}
+
 interface Message {
     role: 'user' | 'assistant';
     content: string;
     timestamp?: string;
     imageUrl?: string;
+    facilityCards?: FacilityCard[];
+    pricingTable?: PricingTable;
 }
 
 interface FacilityContext {
-    id: number;
+    id: number | string;
     name: string;
     category: string;
     address?: string;
@@ -153,6 +186,8 @@ export default function AIChatbot({ isOpen, onClose, facilityContext, onOpenCons
                         role: 'assistant',
                         content: fullText,
                         timestamp: new Date().toISOString(),
+                        facilityCards: data.facilityCards || undefined,
+                        pricingTable: data.pricingTable || undefined,
                     }]);
                     if (messageCount >= 3 && !contactSubmitted && !showContactForm) {
                         setTimeout(() => setShowContactForm(true), 1500);
@@ -389,6 +424,166 @@ export default function AIChatbot({ isOpen, onClose, facilityContext, onOpenCons
                                 }}>
                                     {renderContent(displayContent)}
                                 </div>
+                                {/* 시설 비교 카드 */}
+                                {msg.facilityCards && msg.facilityCards.length > 0 && (
+                                    <div
+                                        onMouseDown={e => {
+                                            const el = e.currentTarget;
+                                            el.dataset.dragging = 'true';
+                                            el.dataset.startX = String(e.pageX - el.offsetLeft);
+                                            el.dataset.scrollLeft = String(el.scrollLeft);
+                                            el.style.cursor = 'grabbing';
+                                        }}
+                                        onMouseMove={e => {
+                                            const el = e.currentTarget;
+                                            if (el.dataset.dragging !== 'true') return;
+                                            e.preventDefault();
+                                            const x = e.pageX - el.offsetLeft;
+                                            const walk = (x - Number(el.dataset.startX)) * 1.5;
+                                            el.scrollLeft = Number(el.dataset.scrollLeft) - walk;
+                                        }}
+                                        onMouseUp={e => { e.currentTarget.dataset.dragging = 'false'; e.currentTarget.style.cursor = 'grab'; }}
+                                        onMouseLeave={e => { e.currentTarget.dataset.dragging = 'false'; e.currentTarget.style.cursor = 'grab'; }}
+                                        style={{
+                                            display: 'flex', gap: 10, overflowX: 'auto', paddingBottom: 6, marginTop: 10,
+                                            scrollSnapType: 'x mandatory', WebkitOverflowScrolling: 'touch',
+                                            msOverflowStyle: 'none', scrollbarWidth: 'none', cursor: 'grab',
+                                        }}>
+                                        {msg.facilityCards.map((card, ci) => (
+                                            <div key={ci} style={{
+                                                minWidth: 190, maxWidth: 200, background: '#fff', borderRadius: 14,
+                                                border: '1px solid #e8e8e8', padding: '14px 14px 10px',
+                                                scrollSnapAlign: 'start', flexShrink: 0,
+                                                boxShadow: '0 1px 4px rgba(0,0,0,0.06)',
+                                            }}>
+                                                {/* 뱃지 */}
+                                                <div style={{ display: 'flex', gap: 5, marginBottom: 8, flexWrap: 'wrap' }}>
+                                                    <span style={{
+                                                        fontSize: 11, fontWeight: 600, padding: '2px 8px', borderRadius: 10,
+                                                        background: '#EEEDFA', color: NAVY,
+                                                    }}>{card.category}</span>
+                                                    {card.isPublic !== null && (
+                                                        <span style={{
+                                                            fontSize: 11, fontWeight: 600, padding: '2px 8px', borderRadius: 10,
+                                                            background: card.isPublic ? '#E8F4FD' : '#FFF3E0',
+                                                            color: card.isPublic ? '#1565C0' : '#E65100',
+                                                        }}>{card.isPublic ? '공립' : '민간'}</span>
+                                                    )}
+                                                </div>
+                                                {/* 시설명 */}
+                                                <div style={{ fontSize: 14, fontWeight: 700, color: '#1a1a1a', marginBottom: 4, lineHeight: 1.3 }}>
+                                                    {card.name}
+                                                </div>
+                                                {/* 주소 + 거리 */}
+                                                <div style={{ fontSize: 12, color: '#888', marginBottom: 8, display: 'flex', alignItems: 'center', gap: 6 }}>
+                                                    <span>📍 {card.address}</span>
+                                                    {card.distanceKm !== undefined && (
+                                                        <span style={{
+                                                            fontSize: 11, fontWeight: 600, padding: '1px 6px', borderRadius: 8,
+                                                            background: NAVY, color: '#fff', whiteSpace: 'nowrap',
+                                                        }}>{card.distanceKm}km</span>
+                                                    )}
+                                                </div>
+                                                {/* 가격 */}
+                                                <div style={{ fontSize: 13, fontWeight: 600, color: NAVY, marginBottom: 10 }}>
+                                                    {card.matchedPrice ? (
+                                                        <><span style={{ fontSize: 11, color: '#888', fontWeight: 400 }}>매칭 </span>{card.matchedPrice}만원</>
+                                                    ) : card.minPrice ? (
+                                                        <>{card.minPrice}만원~</>
+                                                    ) : (
+                                                        <span style={{ color: '#aaa', fontWeight: 400 }}>가격 문의</span>
+                                                    )}
+                                                </div>
+                                                {/* 자세히 보기 */}
+                                                <button
+                                                    onClick={() => { router.push(`/facility/${card.id}`); onClose(); }}
+                                                    style={{
+                                                        width: '100%', padding: '8px 0', borderRadius: 8,
+                                                        border: `1px solid ${NAVY}`, background: 'transparent',
+                                                        color: NAVY, fontSize: 13, fontWeight: 600, cursor: 'pointer',
+                                                        transition: 'all 0.15s',
+                                                    }}
+                                                    onMouseEnter={e => { e.currentTarget.style.background = NAVY; e.currentTarget.style.color = '#fff'; }}
+                                                    onMouseLeave={e => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = NAVY; }}
+                                                >
+                                                    자세히 보기
+                                                </button>
+                                            </div>
+                                        ))}
+                                    </div>
+                                )}
+                                {/* 가격표 인라인 테이블 */}
+                                {msg.pricingTable && (
+                                    <div style={{
+                                        marginTop: 10, borderRadius: 14, overflow: 'hidden',
+                                        border: '1px solid #e0e0e0', background: '#fff',
+                                    }}>
+                                        {/* 헤더 */}
+                                        <div style={{
+                                            background: NAVY, color: '#fff', padding: '10px 14px',
+                                            display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+                                        }}>
+                                            <div style={{ fontSize: 14, fontWeight: 700 }}>
+                                                💰 {msg.pricingTable.facilityName}
+                                            </div>
+                                            {msg.pricingTable.isPublic !== null && (
+                                                <span style={{
+                                                    fontSize: 10, fontWeight: 600, padding: '2px 7px', borderRadius: 8,
+                                                    background: 'rgba(255,255,255,0.2)', color: '#fff',
+                                                }}>{msg.pricingTable.isPublic ? '공립' : '민간'}</span>
+                                            )}
+                                        </div>
+                                        {/* 섹션 */}
+                                        {msg.pricingTable.sections.map((sec, si) => (
+                                            <div key={si}>
+                                                <div style={{
+                                                    background: '#f8f8fa', padding: '7px 14px',
+                                                    fontSize: 12, fontWeight: 700, color: '#555',
+                                                    borderBottom: '1px solid #eee',
+                                                }}>{sec.title}</div>
+                                                {sec.rows.map((row, ri) => (
+                                                    <div key={ri} style={{
+                                                        display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+                                                        padding: '7px 14px', borderBottom: '1px solid #f2f2f2',
+                                                        fontSize: 13,
+                                                    }}>
+                                                        <div style={{ color: '#333', flex: 1 }}>
+                                                            {row.name}
+                                                            {row.grade && (
+                                                                <span style={{
+                                                                    fontSize: 10, color: '#999', marginLeft: 5,
+                                                                    background: '#f5f5f5', padding: '1px 5px', borderRadius: 4,
+                                                                }}>{row.grade}</span>
+                                                            )}
+                                                        </div>
+                                                        <div style={{ fontWeight: 600, color: NAVY, whiteSpace: 'nowrap' }}>
+                                                            {row.price}
+                                                        </div>
+                                                    </div>
+                                                ))}
+                                                {sec.maintenance && (
+                                                    <div style={{
+                                                        padding: '6px 14px', fontSize: 11, color: '#888',
+                                                        background: '#fafafa', borderBottom: '1px solid #eee',
+                                                    }}>🔄 {sec.maintenance}</div>
+                                                )}
+                                            </div>
+                                        ))}
+                                        {/* 자세히 보기 */}
+                                        <button
+                                            onClick={() => { router.push(`/facility/${msg.pricingTable!.facilityId}`); onClose(); }}
+                                            style={{
+                                                width: '100%', padding: '10px 0', border: 'none',
+                                                background: '#f8f8fa', color: NAVY, fontSize: 13, fontWeight: 600,
+                                                cursor: 'pointer', transition: 'background 0.15s',
+                                            }}
+                                            onMouseEnter={e => { e.currentTarget.style.background = '#EEEDFA'; }}
+                                            onMouseLeave={e => { e.currentTarget.style.background = '#f8f8fa'; }}
+                                        >
+                                            시설 상세 보기 →
+                                        </button>
+                                    </div>
+                                )}
                             </div>
                         </div>
                         {/* 빠른 응답 버튼 (마지막 AI 메시지에서만) */}
@@ -426,7 +621,7 @@ export default function AIChatbot({ isOpen, onClose, facilityContext, onOpenCons
                                                             if (idx >= full.length) {
                                                                 clearInterval(iv);
                                                                 setStreamingText(null);
-                                                                setMessages(prev => [...prev, { role: 'assistant', content: full, timestamp: new Date().toISOString() }]);
+                                                                setMessages(prev => [...prev, { role: 'assistant', content: full, timestamp: new Date().toISOString(), facilityCards: data.facilityCards || undefined, pricingTable: data.pricingTable || undefined }]);
                                                                 // msgCount tracked in main handler
                                                             } else {
                                                                 setStreamingText(full.slice(0, idx));

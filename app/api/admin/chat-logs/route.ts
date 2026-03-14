@@ -9,7 +9,7 @@ export async function GET() {
         .from('ChatSession')
         .select('*')
         .order('created_at', { ascending: false })
-        .limit(100);
+        .limit(200);
 
     if (error) {
         return NextResponse.json({ error: error.message }, { status: 500 });
@@ -18,22 +18,38 @@ export async function GET() {
     return NextResponse.json({ sessions: data });
 }
 
-// PATCH: 세션 상태 업데이트
+// PATCH: 세션 상태/메모/태그 업데이트
 export async function PATCH(request: NextRequest) {
     try {
-        const { sessionId, status } = await request.json();
+        const { sessionId, status, memo, tags } = await request.json();
 
-        if (!sessionId || !status) {
-            return NextResponse.json({ error: 'sessionId와 status가 필요합니다.' }, { status: 400 });
+        if (!sessionId) {
+            return NextResponse.json({ error: 'sessionId가 필요합니다.' }, { status: 400 });
         }
 
-        if (!['new', 'reviewed', 'contacted'].includes(status)) {
-            return NextResponse.json({ error: '올바른 상태값이 아닙니다.' }, { status: 400 });
+        // 업데이트할 필드 동적 구성
+        const updateFields: Record<string, any> = {
+            updated_at: new Date().toISOString(),
+        };
+
+        if (status !== undefined) {
+            if (!['new', 'reviewed', 'contacted'].includes(status)) {
+                return NextResponse.json({ error: '올바른 상태값이 아닙니다.' }, { status: 400 });
+            }
+            updateFields.status = status;
+        }
+
+        if (memo !== undefined) {
+            updateFields.admin_memo = memo;
+        }
+
+        if (tags !== undefined) {
+            updateFields.tags = tags;
         }
 
         const { error } = await supabase
             .from('ChatSession')
-            .update({ status, updated_at: new Date().toISOString() })
+            .update(updateFields)
             .eq('id', sessionId);
 
         if (error) {
