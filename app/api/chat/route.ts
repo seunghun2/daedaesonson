@@ -1,8 +1,20 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import { getSupabaseServer } from '@/lib/supabaseServer';
+import fs from 'fs';
+import path from 'path';
 
 const supabase = getSupabaseServer();
+
+// 시설 데이터 모듈 레벨 캐싱 (cold start마다 1회 로드)
+let _cachedFacilities: any[] = [];
+function getFacilities(): any[] {
+    if (_cachedFacilities.length === 0) {
+        const filePath = path.join(process.cwd(), 'data', 'facilities.json');
+        _cachedFacilities = JSON.parse(fs.readFileSync(filePath, 'utf-8'));
+    }
+    return _cachedFacilities;
+}
 
 // Haversine 거리 계산 (km 단위)
 function haversineKm(lat1: number, lng1: number, lat2: number, lng2: number): number {
@@ -258,6 +270,8 @@ export async function POST(request: NextRequest) {
                 })
                 .eq('id', sessionId);
 
+            if (error) console.error('ChatSession update error:', error);
+
             return NextResponse.json({
                 response: `${customerInfo.name}님, 감사합니다. 담당 상담사가 ${customerInfo.phone}으로 빠르게 연락드리겠습니다.`,
                 sessionId,
@@ -276,34 +290,53 @@ export async function POST(request: NextRequest) {
         // 1. 시설 데이터 구성
         let facilityData = '';
 
-        // facilityContext로 전달된 상세 시설 정보
-        if (facilityContext) {
+        // 버그 #8: 프롬프트 인젝션 방지 — facilityContext를 서버에서 검증
+        const allFacilitiesForContext = getFacilities();
+        let verifiedContext = facilityContext;
+        if (facilityContext?.id) {
+            const found = allFacilitiesForContext.find((f: any) => String(f.id) === String(facilityContext.id));
+            if (found) {
+                verifiedContext = {
+                    id: found.id, name: found.name, category: found.category,
+                    address: found.address, phone: found.phone,
+                    representativePrice: found.representativePrice,
+                    institutionType: found.institutionType,
+                    description: found.description,
+                    standardizedPrices: found.standardizedPrices,
+                    amenities: found.amenities,
+                };
+            } else {
+                verifiedContext = null; // DB에 없는 ID면 무시
+            }
+        }
+        // verifiedContext로 전달된 상세 시설 정보
+        if (verifiedContext) {
             facilityData += `\n\n[현재 조회 중인 시설 (고객이 이 시설 페이지에서 상담을 시작했습니다)]`;
-            facilityData += `\n이름: ${facilityContext.name}`;
-            facilityData += `\n카테고리: ${facilityContext.category}`;
-            facilityData += `\n지역: ${facilityContext.address || ''}`;
-            facilityData += `\n전화번호: ${facilityContext.phone || '문의'}`;
-            facilityData += `\nID: ${facilityContext.id}`;
+            facilityData += `\n이름: ${verifiedContext.name}`;
+            facilityData += `\n카테고리: ${verifiedContext.category}`;
+            facilityData += `\n지역: ${verifiedContext.address || ''}`;
+            facilityData += `\n전화번호: ${verifiedContext.phone || '문의'}`;
+            facilityData += `\nID: ${verifiedContext.id}`;
             
-            if (facilityContext.representativePrice) {
-                const price = facilityContext.representativePrice >= 10000
-                    ? `${Math.round(facilityContext.representativePrice / 10000)}만원`
-                    : `${facilityContext.representativePrice.toLocaleString()}원`;
+            if (verifiedContext.representativePrice) {
+                const price = verifiedContext.representativePrice >= 10000
+                    ? `${Math.round(verifiedContext.representativePrice / 10000)}만원`
+                    : `${verifiedContext.representativePrice.toLocaleString()}원`;
                 facilityData += `\n대표가격: ${price}`;
             }
 
-            if (facilityContext.institutionType) {
-                facilityData += `\n운영주체: ${facilityContext.institutionType}`;
+            if (verifiedContext.institutionType) {
+                facilityData += `\n운영주체: ${verifiedContext.institutionType}`;
             }
 
-            if (facilityContext.description) {
-                facilityData += `\n시설 설명: ${facilityContext.description}`;
+            if (verifiedContext.description) {
+                facilityData += `\n시설 설명: ${verifiedContext.description}`;
             }
 
             // 상세 가격표
-            if (facilityContext.standardizedPrices && facilityContext.standardizedPrices.length > 0) {
+            if (verifiedContext.standardizedPrices && verifiedContext.standardizedPrices.length > 0) {
                 facilityData += `\n\n[가격 상세]`;
-                facilityContext.standardizedPrices.forEach((p: any) => {
+                verifiedContext.standardizedPrices.forEach((p: any) => {
                     const priceStr = p.price >= 10000
                         ? `${Math.round(p.price / 10000)}만원`
                         : `${p.price?.toLocaleString()}원`;
@@ -312,21 +345,22 @@ export async function POST(request: NextRequest) {
             }
 
             // 편의시설
-            if (facilityContext.amenities && Object.keys(facilityContext.amenities).length > 0) {
+            if (verifiedContext.amenities && Object.keys(verifiedContext.amenities).length > 0) {
                 facilityData += `\n\n[편의시설]`;
                 const amenityLabels: Record<string, string> = {
                     parking: '주차장', restaurant: '식당', convenienceStore: '편의점',
                     accessibility: '장애인 편의', shuttle: '셔틀버스',
                 };
-                Object.entries(facilityContext.amenities).forEach(([key, val]) => {
+                Object.entries(verifiedContext.amenities).forEach(([key, val]) => {
                     if (val) facilityData += `\n- ${amenityLabels[key] || key}: ✅`;
                 });
             }
         }
 
         // ── 스마트 검색 (JSON 파일 기반) ──
-        // 카테고리/가격은 전체 텍스트에서, 지역은 사용자 메시지에서만 검색 (AI 응답 지역명 오염 방지)
-        const allText = [message, ...history.map((m: ChatMessage) => m.content)].join(' ');
+        // AI 응답 오염 방지: 모든 키워드 검색을 사용자 메시지에서만 수행
+        const userMessages = history.filter((m: ChatMessage) => m.role === 'user').map((m: ChatMessage) => m.content);
+        const userText = [message, ...userMessages].join(' ');
 
         const regionKeywords = ['서울', '경기', '인천', '부산', '대구', '대전', '광주', '울산', '세종',
             '강원', '충북', '충남', '전북', '전남', '경북', '경남', '제주'];
@@ -374,10 +408,36 @@ export async function POST(request: NextRequest) {
             '공원묘지': 'FAMILY_GRAVE', '가족묘': 'FAMILY_GRAVE', '묘지': 'FAMILY_GRAVE',
             '매장': 'FAMILY_GRAVE', '매장묘지': 'FAMILY_GRAVE',
         };
-        // ── 가격 파싱 (정규식 기반) ──
+        // ── 가격 파싱 (버그 #13: 한글 숫자 + 범위 지원) ──
+        // 한글 숫자 → 숫자 변환
+        const korNum: Record<string, number> = { '일': 1, '이': 2, '삼': 3, '사': 4, '오': 5, '육': 6, '칠': 7, '팔': 8, '구': 9, '십': 10, '백': 100, '천': 1000 };
+        const parseKorPrice = (text: string): number | null => {
+            // "500만원", "1000만원" 등
+            const numMatch = text.match(/(\d+)\s*만\s*원?/);
+            if (numMatch) return parseInt(numMatch[1]) * 10000;
+            // "5백만원", "2천만원" 등
+            const korMatch = text.match(/(\d+)\s*(백|천)\s*만\s*원?/);
+            if (korMatch) {
+                const mul = korMatch[2] === '천' ? 1000 : 100;
+                return parseInt(korMatch[1]) * mul * 10000;
+            }
+            return null;
+        };
+
         const priceRegex = /(\d+)\s*만\s*원?\s*(대|이하|이상|정도|쯤|선|미만)?/;
-        const priceMatchResult = allText.match(priceRegex);
-        const wantsCheap = ['저렴', '싼', '싸', '최저', '가성비'].some(k => allText.includes(k));
+        // 범위 파싱: "200~500만원"
+        const rangeRegex = /(\d+)\s*[~\-~]\s*(\d+)\s*만\s*원?/;
+        const rangeMatch = userText.match(rangeRegex);
+
+        let priceMatchResult = userText.match(priceRegex);
+        // 한글 가격 fallback
+        if (!priceMatchResult) {
+            const korPrice = parseKorPrice(userText);
+            if (korPrice) {
+                priceMatchResult = [`${korPrice / 10000}만원`, `${korPrice / 10000}`, '대'] as any;
+            }
+        }
+        const wantsCheap = ['저렴', '싼', '싸', '최저', '가성비'].some(k => userText.includes(k));
 
         // ── 지역 필터: 현재 메시지 우선 → 사용자 히스토리 → (AI 응답은 제외!) ──
         let foundRegion: string | null = null;
@@ -411,13 +471,13 @@ export async function POST(request: NextRequest) {
             }
         }
 
-        const foundCategory = Object.entries(categoryKeywords).find(([k]) => allText.includes(k));
+        const foundCategory = Object.entries(categoryKeywords).find(([k]) => userText.includes(k));
 
         // 공립/민간 감지
         const publicKeywords = ['공립', '공설', '국립', '시립', '군립'];
         const privateKeywords = ['민간', '사설', '사립', '민영'];
-        const wantsPublic = publicKeywords.some(k => allText.includes(k));
-        const wantsPrivate = privateKeywords.some(k => allText.includes(k));
+        const wantsPublic = publicKeywords.some(k => userText.includes(k));
+        const wantsPrivate = privateKeywords.some(k => userText.includes(k));
 
         // 시설명 직접 검색 (3글자 이상)
         const excludeWords = ['추천', '궁금', '가격', '얼마', '안내', '알려', '알려줘', '비슷', '근처', '주변', '저렴', '찾아', '어디', '있나', '가까운', '도와', '드릴까', '상담', '문의', '해줘', '해주세요', '부탁', '만원대', '만원'];
@@ -427,12 +487,9 @@ export async function POST(request: NextRequest) {
         );
 
         // JSON 파일에서 검색
-        const fs = await import('fs');
-        const path = await import('path');
-        const filePath = path.join(process.cwd(), 'data', 'facilities.json');
-        const allFacilitiesData: any[] = JSON.parse(fs.readFileSync(filePath, 'utf-8'));
+        const allFacilitiesData = getFacilities();
 
-        let results = allFacilitiesData;
+        let results = [...allFacilitiesData];
 
         // 카테고리 필터
         if (foundCategory) {
@@ -496,7 +553,15 @@ export async function POST(request: NextRequest) {
 
         // ── 가격 필터 (standardizedPrices 전체 탐색) ──
         let targetPrice = 0;
-        if (priceMatchResult) {
+
+        // 범위 파싱 우선: "200~500만원" 같은 표현
+        if (rangeMatch) {
+            const rangeLow = parseInt(rangeMatch[1]) * 10000;
+            const rangeHigh = parseInt(rangeMatch[2]) * 10000;
+            targetPrice = rangeLow;
+            const rangeFiltered = results.filter((f: any) => hasAnyPriceInRange(f, rangeLow, rangeHigh));
+            if (rangeFiltered.length > 0) results = rangeFiltered;
+        } else if (priceMatchResult) {
             targetPrice = parseInt(priceMatchResult[1]) * 10000;
             const priceIntent = priceMatchResult[2] || '대';
 
@@ -676,12 +741,17 @@ export async function POST(request: NextRequest) {
         const recommendTriggers = ['추천', '알려줘', '보여줘', '찾아줘', '어디', '어떤', '비교', '있나요', '있을까', '소개'];
         const wantsOther = ['다른', '다른 곳', '다른데', '다른곳', '또 다른', '다른시설', '비슷한'].some(k => message.includes(k));
         const wantsNearby = ['주변', '근처', '가까운', '근방', '인근', '가까이'].some(k => message.includes(k));
+
+        // 버그 #7: "다른 곳" 요청 시 AI에게 맥락 전달
+        if (wantsOther) {
+            facilityData += `\n\n[중요 맥락] 고객이 이전 추천을 거부하고 다른 시설을 요청했습니다. 가이드 셀링을 처음부터 다시 시작하지 마세요! 이전에 추천하지 않은 새로운 시설을 바로 추천해주세요.`;
+        }
         const hasSearchTrigger = Boolean(foundCategory) || Boolean(foundRegion) || targetPrice > 0
             || recommendTriggers.some(k => message.includes(k)) || wantsOther || wantsNearby;
         // facilityContext(시설 상세페이지)에서는 명시적 추천/비교/주변 요청 시에만 카드 표시
         const wantsRecommendation = wantsOther || wantsNearby || ['추천', '비교', '비슷'].some(k => message.includes(k));
         const shouldShowCards = hasSearchTrigger && uniqueFacilities.length > 0
-            && (!facilityContext || wantsRecommendation);
+            && (!verifiedContext || wantsRecommendation);
 
         // 정보 완성도 스코어 (가격 데이터 풍부도 + 정보 완성도)
         const cardScore = (f: any): number => {
@@ -703,17 +773,17 @@ export async function POST(request: NextRequest) {
         let cardCandidates: any[] = [];
         if (shouldShowCards) {
             // 현재 보고 있는 시설 제외 (상세페이지에서 추천 시)
-            const excludeId = facilityContext?.id ? String(facilityContext.id) : null;
+            const excludeId = verifiedContext?.id ? String(verifiedContext.id) : null;
             const filteredForCards = excludeId
                 ? uniqueFacilities.filter((f: any) => String(f.id) !== excludeId)
                 : uniqueFacilities;
 
             // ── 주변 시설 추천 (좌표 기반) ──
-            if (wantsNearby && facilityContext?.id) {
-                const baseFacility = allFacilitiesData.find((f: any) => String(f.id) === String(facilityContext.id));
+            if (wantsNearby && verifiedContext?.id) {
+                const baseFacility = allFacilitiesData.find((f: any) => String(f.id) === String(verifiedContext.id));
                 if (baseFacility?.lat && baseFacility?.lng) {
                     const nearby = allFacilitiesData
-                        .filter((f: any) => String(f.id) !== String(facilityContext.id) && f.lat && f.lng)
+                        .filter((f: any) => String(f.id) !== String(verifiedContext.id) && f.lat && f.lng)
                         .map((f: any) => ({
                             ...f,
                             _distKm: haversineKm(baseFacility.lat, baseFacility.lng, f.lat, f.lng),
@@ -725,22 +795,29 @@ export async function POST(request: NextRequest) {
                 }
             }
 
-            // ── 일반 추천 (기존 로직) ──
+            // ── 일반 추천 (버그 #6: 이전 대화에서 추천한 시설 제외) ──
             if (cardCandidates.length === 0) {
-                // "다른 곳" 요청 시 이전 대화에서 이미 보여준 것 스킵
-                const offset = wantsOther ? 3 : 0;
+                // 이전 AI 응답에서 이미 추천한 시설 ID 추출
+                const previouslyRecommended = new Set<string>();
+                history.filter((m: ChatMessage) => m.role === 'assistant').forEach((m: ChatMessage) => {
+                    const urls = m.content.match(/facility\/(park-\d+)/g);
+                    if (urls) urls.forEach(u => previouslyRecommended.add(u.replace('facility/', '')));
+                });
+
+                const notYetShown = filteredForCards.filter((f: any) => !previouslyRecommended.has(String(f.id)));
+                const pool = notYetShown.length > 0 ? notYetShown : filteredForCards;
 
                 // 다양성 보장: 공립/민간 명시 시 해당만, 미명시 시 공립1+민간2 혼합
                 if (wantsPublic || wantsPrivate) {
-                    cardCandidates = [...filteredForCards].sort((a, b) => cardScore(b) - cardScore(a)).slice(offset, offset + 3);
+                    cardCandidates = [...pool].sort((a, b) => cardScore(b) - cardScore(a)).slice(0, 3);
                 } else {
-                    const pubPool = filteredForCards.filter((f: any) => f.isPublic === true).sort((a: any, b: any) => cardScore(b) - cardScore(a));
-                    const privPool = filteredForCards.filter((f: any) => f.isPublic === false).sort((a: any, b: any) => cardScore(b) - cardScore(a));
-                    if (pubPool.length > offset && privPool.length > offset) {
-                        cardCandidates = [pubPool[offset], ...privPool.slice(offset, offset + 2)];
-                        if (cardCandidates.length < 3 && pubPool.length > offset + 1) cardCandidates.push(pubPool[offset + 1]);
+                    const pubPool = pool.filter((f: any) => f.isPublic === true).sort((a: any, b: any) => cardScore(b) - cardScore(a));
+                    const privPool = pool.filter((f: any) => f.isPublic === false).sort((a: any, b: any) => cardScore(b) - cardScore(a));
+                    if (pubPool.length > 0 && privPool.length > 0) {
+                        cardCandidates = [pubPool[0], ...privPool.slice(0, 2)];
+                        if (cardCandidates.length < 3 && pubPool.length > 1) cardCandidates.push(pubPool[1]);
                     } else {
-                        cardCandidates = [...filteredForCards].sort((a, b) => cardScore(b) - cardScore(a)).slice(offset, offset + 3);
+                        cardCandidates = [...pool].sort((a, b) => cardScore(b) - cardScore(a)).slice(0, 3);
                     }
                 }
             }
@@ -792,9 +869,9 @@ export async function POST(request: NextRequest) {
             // 가격표 대상 시설 결정
             let pricingTarget: any = null;
 
-            // 1순위: facilityContext (시설 상세페이지에서 상담)
-            if (facilityContext?.id) {
-                pricingTarget = allFacilitiesData.find((f: any) => f.id === facilityContext.id);
+            // 1순위: verifiedContext (시설 상세페이지에서 상담)
+            if (verifiedContext?.id) {
+                pricingTarget = allFacilitiesData.find((f: any) => f.id === verifiedContext.id);
             }
             // 2순위: 이름 검색 결과
             if (!pricingTarget && nameResults.length > 0) {
@@ -872,8 +949,8 @@ export async function POST(request: NextRequest) {
             parts: [{ text: msg.content }],
         }));
 
-        const greetingResponse = facilityContext
-            ? `네, "${facilityContext.name}" 시설에 대해 안내해드리겠습니다. 무엇이 궁금하신가요?`
+        const greetingResponse = verifiedContext
+            ? `네, "${verifiedContext.name}" 시설에 대해 안내해드리겠습니다. 무엇이 궁금하신가요?`
             : '네, 대대손손 장지 상담사입니다. 전국 봉안당, 수목장, 화장시설 정보를 안내해드려요. 어떤 장지를 찾고 계신가요?';
 
         const chat = model.startChat({
@@ -909,7 +986,7 @@ export async function POST(request: NextRequest) {
             const { data: newSession } = await supabase
                 .from('ChatSession')
                 .insert({
-                    facility_id: facilityContext?.id || null,
+                    facility_id: verifiedContext?.id || null,
                     messages: [newMsg, aiMsg],
                     user_agent: request.headers.get('user-agent') || '',
                     ip_address: request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || request.headers.get('x-real-ip') || '',

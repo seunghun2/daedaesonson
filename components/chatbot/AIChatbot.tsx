@@ -95,7 +95,14 @@ export default function AIChatbot({ isOpen, onClose, facilityContext, onOpenCons
 
     const prevFacilityIdRef = useRef<string | number | null>(null);
 
-    /* ── 시설 전환 시 대화 컨텍스트 갱신 ── */
+    /* ── 스트리밍 인터벌 cleanup (버그 #9) ── */
+    useEffect(() => {
+        return () => {
+            if (streamingRef.current) clearInterval(streamingRef.current);
+        };
+    }, []);
+
+    /* ── 시설 전환 시 대화 컨텍스트 갱신 (버그 #4: sessionId 초기화) ── */
     useEffect(() => {
         const currentId = facilityContext?.id ?? null;
         if (prevFacilityIdRef.current !== null && currentId !== null && String(currentId) !== String(prevFacilityIdRef.current)) {
@@ -104,6 +111,8 @@ export default function AIChatbot({ isOpen, onClose, facilityContext, onOpenCons
                 ? `안녕하세요, 대손이입니다.\n${facilityContext.name}에 대해 궁금하신 점을 편하게 물어봐 주세요.`
                 : '안녕하세요, 대손이입니다.\n궁금하신 점을 편하게 물어봐 주세요.';
             setMessages([{ role: 'assistant', content: greeting, timestamp: new Date().toISOString() }]);
+            setSessionId(null);
+            sessionStorage.removeItem('chat_session_id');
             setMessageCount(0);
             sessionStorage.setItem('chat_msg_count', '0');
         }
@@ -120,10 +129,11 @@ export default function AIChatbot({ isOpen, onClose, facilityContext, onOpenCons
         }
     }, [isOpen, facilityContext]);
 
-    /* ── 세션 저장 ── */
+    /* ── 세션 저장 (버그 #12: 볼륨오버 방지 - 카드/테이블 제외) ── */
     useEffect(() => {
         if (typeof window === 'undefined') return;
-        sessionStorage.setItem('chat_messages', JSON.stringify(messages));
+        const lite = messages.map(m => ({ role: m.role, content: m.content, timestamp: m.timestamp }));
+        try { sessionStorage.setItem('chat_messages', JSON.stringify(lite)); } catch { /* quota exceeded */ }
     }, [messages]);
     useEffect(() => {
         if (sessionId) sessionStorage.setItem('chat_session_id', sessionId);
@@ -145,7 +155,9 @@ export default function AIChatbot({ isOpen, onClose, facilityContext, onOpenCons
 
     /* ── 메시지 전송 ── */
     const sendMessage = useCallback(async () => {
-        if ((!input.trim() && !pendingImage) || isLoading) return;
+        if ((!input.trim() && !pendingImage) || isLoading || streamingText !== null) return;
+        // 버그 #3: 기존 스트리밍 인터벌 정리
+        if (streamingRef.current) { clearInterval(streamingRef.current); streamingRef.current = null; }
         const userMsg = input.trim() || (pendingImage ? '(이미지 첨부)' : '');
         const imageUrl = pendingImagePreview || undefined;
         setInput('');
@@ -164,7 +176,7 @@ export default function AIChatbot({ isOpen, onClose, facilityContext, onOpenCons
             const res = await fetch('/api/chat', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ message: msgToSend, history: messages, sessionId, facilityContext }),
+                body: JSON.stringify({ message: msgToSend, history: messages.slice(-20), sessionId, facilityContext }),
             });
             const data = await res.json();
             if (data.sessionId) setSessionId(data.sessionId);
@@ -204,7 +216,7 @@ export default function AIChatbot({ isOpen, onClose, facilityContext, onOpenCons
         } finally {
             setIsLoading(false);
         }
-    }, [input, isLoading, messages, sessionId, facilityContext, messageCount, contactSubmitted, showContactForm, pendingImage, pendingImagePreview]);
+    }, [input, isLoading, messages, sessionId, facilityContext, messageCount, contactSubmitted, showContactForm, pendingImage, pendingImagePreview, streamingText]);
 
     /* ── 상담 폼 제출 ── */
     const submitContact = async () => {
@@ -228,11 +240,11 @@ export default function AIChatbot({ isOpen, onClose, facilityContext, onOpenCons
         let cleaned = text.replace(/(?<!\*)\*(?!\*)(.*?)\*(?!\*)/g, '$1');
 
         // URL을 감지하여 클릭 가능한 버튼으로 변환
-        const urlRegex = /(https?:\/\/[^\s),]+)/g;
+        const urlRegex = /(https?:\/\/[^\s),]+)/;
         const parts = cleaned.split(urlRegex);
 
         return parts.map((part, i) => {
-            if (urlRegex.test(part)) {
+            if (/^https?:\/\//.test(part)) {
                 // 시설 상세 페이지 URL인지 확인
                 const facilityMatch = part.match(/daedaesonson\.com\/facility\/(park-\d+)/);
                 if (facilityMatch) {
@@ -596,6 +608,7 @@ export default function AIChatbot({ isOpen, onClose, facilityContext, onOpenCons
                                 {quickReplies.map((qr, qi) => (
                                     <button key={qi}
                                         onClick={() => {
+                                            if (isLoading || streamingText !== null) return;
                                             setInput(qr);
                                             setTimeout(() => {
                                                 setInput('');
@@ -608,7 +621,7 @@ export default function AIChatbot({ isOpen, onClose, facilityContext, onOpenCons
                                                         message: qr,
                                                         sessionId,
                                                         facilityContext: facilityContext || undefined,
-                                                        history: [...messages, { role: 'user', content: qr }].slice(-10),
+                                                        history: [...messages, { role: 'user', content: qr }].slice(-20),
                                                     }),
                                                 }).then(r => r.json()).then(data => {
                                                     setIsLoading(false);
