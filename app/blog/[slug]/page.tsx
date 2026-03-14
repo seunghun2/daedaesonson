@@ -35,11 +35,85 @@ export default async function GuideDetailPage({ params }: PageProps) {
         .order('created_at', { ascending: false })
         .limit(3);
 
+    // JSON-LD 구조화 데이터
+    const baseUrl = 'https://daedaesonson.com';
+    const fullImageUrl = post.thumbnail_url
+        ? post.thumbnail_url.startsWith('http')
+            ? post.thumbnail_url
+            : `${baseUrl}${post.thumbnail_url}`
+        : undefined;
+
+    const blogPostingJsonLd = {
+        '@context': 'https://schema.org',
+        '@type': 'BlogPosting',
+        headline: post.title,
+        description: post.excerpt || post.title,
+        ...(fullImageUrl ? { image: fullImageUrl } : {}),
+        datePublished: post.created_at,
+        dateModified: post.updated_at || post.created_at,
+        author: {
+            '@type': 'Organization',
+            name: '대대손손',
+            url: baseUrl,
+        },
+        publisher: {
+            '@type': 'Organization',
+            name: '대대손손',
+            url: baseUrl,
+        },
+        mainEntityOfPage: {
+            '@type': 'WebPage',
+            '@id': `${baseUrl}/blog/${slug}`,
+        },
+        ...(post.tags && post.tags.length > 0 ? { keywords: post.tags.join(', ') } : {}),
+    };
+
+    const breadcrumbJsonLd = {
+        '@context': 'https://schema.org',
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+            {
+                '@type': 'ListItem',
+                position: 1,
+                name: '홈',
+                item: baseUrl,
+            },
+            {
+                '@type': 'ListItem',
+                position: 2,
+                name: '블로그',
+                item: `${baseUrl}/blog`,
+            },
+            {
+                '@type': 'ListItem',
+                position: 3,
+                name: post.category,
+                item: `${baseUrl}/blog?category=${encodeURIComponent(post.category)}`,
+            },
+            {
+                '@type': 'ListItem',
+                position: 4,
+                name: post.title,
+                item: `${baseUrl}/blog/${slug}`,
+            },
+        ],
+    };
+
     return (
-        <BlogDetailClient
-            post={post}
-            relatedPosts={relatedData || []}
-        />
+        <>
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(blogPostingJsonLd) }}
+            />
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+            />
+            <BlogDetailClient
+                post={post}
+                relatedPosts={relatedData || []}
+            />
+        </>
     );
 }
 
