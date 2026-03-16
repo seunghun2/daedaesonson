@@ -1,14 +1,16 @@
 import { NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
 
-const supabase = createClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.SUPABASE_SERVICE_ROLE_KEY!
-);
+function getSupabase() {
+    return createClient(
+        process.env.NEXT_PUBLIC_SUPABASE_URL!,
+        process.env.SUPABASE_SERVICE_ROLE_KEY!
+    );
+}
 
 // GET - 전체 추천 요청 목록
 export async function GET() {
-    const { data, error } = await supabase
+    const { data, error } = await getSupabase()
         .from('recommendation_requests')
         .select('*')
         .order('created_at', { ascending: false });
@@ -28,7 +30,7 @@ export async function PATCH(request: Request) {
         return NextResponse.json({ error: 'Missing id or status' }, { status: 400 });
     }
 
-    const { error } = await supabase
+    const { error } = await getSupabase()
         .from('recommendation_requests')
         .update({ status })
         .eq('id', id);
@@ -48,7 +50,7 @@ export async function DELETE(request: Request) {
         return NextResponse.json({ error: 'Missing id' }, { status: 400 });
     }
 
-    const { error } = await supabase
+    const { error } = await getSupabase()
         .from('recommendation_requests')
         .delete()
         .eq('id', id);

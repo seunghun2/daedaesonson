@@ -1,10 +1,12 @@
 import { NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
 
-const supabase = createClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.SUPABASE_SERVICE_ROLE_KEY!
-);
+function getSupabase() {
+    return createClient(
+        process.env.NEXT_PUBLIC_SUPABASE_URL!,
+        process.env.SUPABASE_SERVICE_ROLE_KEY!
+    );
+}
 
 // Slack webhook (optional)
 const SLACK_WEBHOOK = process.env.SLACK_WEBHOOK_URL;
@@ -32,7 +34,7 @@ export async function POST(request: Request) {
         }
 
         // Supabase 저장
-        const { data, error } = await supabase
+        const { data, error } = await getSupabase()
             .from('recommendation_requests')
             .insert({
                 region,

@@ -105,6 +105,7 @@ function parseSimplePriceTable(text: string) {
 
 export const parsePdfFile = async (file: File, forceOcr: boolean = false): Promise<ParsedData> => {
     // 1. PDF.js 로드
+    // @ts-ignore
     const pdfjsLib = await import('pdfjs-dist');
     pdfjsLib.GlobalWorkerOptions.workerSrc = '/pdf.worker.min.mjs';
 
