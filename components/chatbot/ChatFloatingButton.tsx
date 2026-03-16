@@ -59,6 +59,13 @@ export default function ChatFloatingButton({ hidden = false }: { hidden?: boolea
         };
     }, [isOpen]);
 
+    // 외부에서 챗봇 열기 이벤트 리스너
+    useEffect(() => {
+        const handleOpenChat = () => setIsOpen(true);
+        window.addEventListener('open-chatbot', handleOpenChat);
+        return () => window.removeEventListener('open-chatbot', handleOpenChat);
+    }, []);
+
     const handleToggle = () => {
         setIsOpen(prev => !prev);
         if (showLabel) {

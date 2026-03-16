@@ -86,7 +86,7 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
   const [activeCategory, setActiveCategory] = useState<string[]>(['all']);
   const [isPending, startTransition] = useTransition();
   const [institutionFilter, setInstitutionFilter] = useState<'all' | 'public' | 'private'>('all'); // 공설/사설 필터
-  const [hideInquiry, setHideInquiry] = useState(false); // 문의제외 필터
+  const [hideInquiry, setHideInquiry] = useState(true); // 문의제외 필터 (기본 ON)
   const [pcPopoverOpen, setPcPopoverOpen] = useState(false); // PC 팝오버
   const [drawerFilterOpen, setDrawerFilterOpen] = useState(false); // 모바일 드로우
   const [tempCategory, setTempCategory] = useState<string[]>(['all']); // 드로우 임시 카테고리

@@ -70,7 +70,7 @@ const REGION_MAPPINGS: { [key: string]: string[] } = {
 // 좌표별 시설 ID 등록부 (전역 유지 - 필터링되어도 위치 고정)
 const LAYOUT_REGISTRY = new Map<string, string[]>();
 
-const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerClick, onBoundsChanged, onCenterAddressChange, isMobile, onViewList, onMapTap, onMapDrag, uiHidden, activeCategory = ['all'], institutionFilter = 'all', hideInquiry = false, onUserClick }, ref) => {
+const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerClick, onBoundsChanged, onCenterAddressChange, isMobile, onViewList, onMapTap, onMapDrag, uiHidden, activeCategory = ['all'], institutionFilter = 'all', hideInquiry = true, onUserClick }, ref) => {
     const mapRef = useRef<HTMLDivElement>(null);
     const [isMapLoaded, setIsMapLoaded] = useState(false);
     const [isMainLoaded, setIsMainLoaded] = useState(false);
@@ -1085,8 +1085,22 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
             regionMarkersArrayRef.current.forEach(m => m.setVisible(true));
         } else {
             const bounds = map.getBounds();
+            const catMapInit: Record<string, string> = { 'charnel': 'CHARNEL_HOUSE', 'natural': 'NATURAL_BURIAL', 'park': 'FAMILY_GRAVE', 'crematorium': 'CREMATORIUM' };
+            const acInit = activeCategoryRef.current;
+            const isAllInit = acInit.includes('all');
+            const selCatsInit = isAllInit ? [] : acInit.filter(c => catMapInit[c]).map(c => catMapInit[c]);
+            const instInit = institutionFilterRef.current;
+            const hiInit = hideInquiryRef.current;
             createdMarkers.forEach(m => {
-                m.setVisible(bounds.hasPoint(m.getPosition()));
+                const fac = (m as any).__facilityData;
+                let catOk = isAllInit || selCatsInit.includes(fac?.category);
+                if (catOk && instInit !== 'all') {
+                    catOk = instInit === 'public' ? fac?.isPublic === true : fac?.isPublic === false;
+                }
+                if (catOk && hiInit) {
+                    catOk = (fac?.priceRange?.min ?? 0) > 0;
+                }
+                m.setVisible(catOk && bounds.hasPoint(m.getPosition()));
             });
         }
 

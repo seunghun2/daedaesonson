@@ -18,7 +18,8 @@ import {
     FileEdit as IconFileEdit,
     Lock as IconLock,
     BookOpen as IconBlog,
-    Bot as IconBot
+    Bot as IconBot,
+    Gift as IconGift
 } from 'lucide-react';
 
 import { usePathname, useRouter } from 'next/navigation';
@@ -155,6 +156,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         { label: '회원 관리', icon: IconBriefcase, link: '/admin/members' },
         { label: '시설 데이터 관리', icon: IconDatabase, link: '/admin/upload' },
         { label: '상담신청관리', icon: IconPhoneCall, link: '/admin/consults' },
+        { label: '맞춤추천관리', icon: IconGift, link: '/admin/recommendations' },
         { label: 'AI 상담 관리', icon: IconBot, link: '/admin/chat-logs' },
         { label: '댓글문의관리', icon: IconMessage, link: '/admin/inquiries' },
         { label: '정보수정요청', icon: IconFileEdit, link: '/admin/corrections' },

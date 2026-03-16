@@ -38,7 +38,7 @@ function ListPageContent() {
 
     // 필터
     const [activeCategory, setActiveCategory] = useState<string[]>(['all']);
-    const [hideInquiry, setHideInquiry] = useState(false);
+    const [hideInquiry, setHideInquiry] = useState(true); // 문의제외 기본 ON
     const [isPending, startTransition] = useTransition();
 
     const [categoryFilterOpen, setCategoryFilterOpen] = useState(false);

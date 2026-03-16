@@ -1,0 +1,713 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>화장하고 나면 선택지가 이렇게 많은 줄 몰랐어요</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+/* Override strong tags inside headings to maintain consistent weight */
+h1 strong,
+h2 strong,
+h3 strong {
+	font-weight: 600;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 10px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.collection-content td {
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.callout img.notion-static-icon {
+	width: 1em;
+	height: 1em;
+}
+
+.callout p {
+	margin: 0;
+}
+
+.callout h1,
+.callout h2,
+.callout h3 {
+	margin: 0 0 0.6rem;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+blockquote.quote-large {
+	font-size: 1.25em;
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.highlight-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.highlight-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.highlight-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.highlight-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.highlight-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.highlight-default_background {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray_background {
+	background: rgba(42, 28, 0, 0.07);
+}
+.highlight-brown_background {
+	background: rgba(139, 46, 0, 0.086);
+}
+.highlight-orange_background {
+	background: rgba(224, 101, 1, 0.129);
+}
+.highlight-yellow_background {
+	background: rgba(211, 168, 0, 0.137);
+}
+.highlight-teal_background {
+	background: rgba(0, 100, 45, 0.09);
+}
+.highlight-blue_background {
+	background: rgba(0, 124, 215, 0.094);
+}
+.highlight-purple_background {
+	background: rgba(102, 0, 178, 0.078);
+}
+.highlight-pink_background {
+	background: rgba(197, 0, 93, 0.086);
+}
+.highlight-red_background {
+	background: rgba(223, 22, 0, 0.094);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.block-color-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.block-color-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.block-color-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.block-color-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.block-color-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.block-color-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.block-color-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.block-color-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(229, 242, 252, 1);
+}
+.block-color-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.block-color-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.block-color-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.select-value-color-default { background-color: rgba(42, 28, 0, 0.07); }
+.select-value-color-gray { background-color: rgba(28, 19, 1, 0.11); }
+.select-value-color-brown { background-color: rgba(127, 51, 0, 0.156); }
+.select-value-color-orange { background-color: rgba(196, 88, 0, 0.203); }
+.select-value-color-yellow { background-color: rgba(209, 156, 0, 0.282); }
+.select-value-color-green { background-color: rgba(0, 96, 38, 0.156); }
+.select-value-color-blue { background-color: rgba(0, 118, 217, 0.203); }
+.select-value-color-purple { background-color: rgba(92, 0, 163, 0.141); }
+.select-value-color-pink { background-color: rgba(183, 0, 78, 0.152); }
+.select-value-color-red { background-color: rgba(206, 24, 0, 0.164); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="32387842-09a9-80d5-8294-ea596e8858d5" class="page sans"><header><h1 class="page-title" dir="auto">화장하고 나면 선택지가 이렇게 많은 줄 몰랐어요</h1><p class="page-description" dir="auto"></p></header><div class="page-body"><div style="display:contents" dir="auto"><p id="32387842-09a9-801a-b5b7-c75d900eb142" class="">봉안당·수목장·잔디장·산분장·해양장 — 화장 후 고인을 모실 수 있는 방식을 한눈에 비교했어요. 방식별 특징, 비용, 법적 조건까지 정리했어요.</p></div><div style="display:contents" dir="ltr"><table id="32387842-09a9-801f-a348-ff52c8b9fd0f" class="simple-table"><thead class="simple-table-header"><div style="display:contents" dir="ltr"><tr id="32387842-09a9-80fd-9b98-e7201e14d0f7"><th id="MlVv" class="simple-table-header-color simple-table-header">항목</th><th id="&gt;Xdr" class="simple-table-header-color simple-table-header">내용</th></tr></div></thead><tbody><div style="display:contents" dir="ltr"><tr id="32387842-09a9-80d2-9a52-d4502211020d"><td id="MlVv" class=""><strong>제목</strong></td><td id="&gt;Xdr" class="">화장하고 나면 선택지가 이렇게 많은 줄 몰랐어요</td></tr></div><div style="display:contents" dir="ltr"><tr id="32387842-09a9-8079-ada9-dec9fcaedada"><td id="MlVv" class=""><strong>메타 설명</strong></td><td id="&gt;Xdr" class="">봉안당·수목장·잔디장·산분장·해양장 — 화장 후 고인을 모실 수 있는 방식을 한눈에 비교했어요. 방식별 특징, 비용, 법적 조건까지 정리했어요.</td></tr></div><div style="display:contents" dir="ltr"><tr id="32387842-09a9-80fe-bf0e-eafc9a55f27a"><td id="MlVv" class=""><strong>키워드</strong></td><td id="&gt;Xdr" class="">화장 후 장지, 자연장 종류, 장지 선택, 산분장 해양장</td></tr></div><div style="display:contents" dir="ltr"><tr id="32387842-09a9-8019-89fe-ec6c44aea595"><td id="MlVv" class=""><strong>슬러그</strong></td><td id="&gt;Xdr" class="">/blog/after-cremation-complete-guide</td></tr></div></tbody></table></div><div style="display:contents" dir="auto"><hr id="32387842-09a9-8032-8688-e6225104bcb1"/></div><div style="display:contents" dir="ltr"><figure id="32387842-09a9-80ec-83c9-dfa98f84d4e8" class="image"><a href="https://images.pexels.com/photos/7197360/pexels-photo-7197360.jpeg"><img src="https://images.pexels.com/photos/7197360/pexels-photo-7197360.jpeg"/></a></figure></div><div style="display:contents" dir="auto"><p id="32387842-09a9-809b-9e6f-e7c93e5c25f3" class=""><em>출처: Pexels (CC0) — 화장을 결정한 순간, 그 다음 선택이 시작돼요.</em></p></div><div style="display:contents" dir="auto"><hr id="32387842-09a9-80fa-ad07-c6692de4d28d"/></div><div style="display:contents" dir="auto"><h2 id="32387842-09a9-80da-9840-cb697f7c9201" class="">화장하고 나면 선택지가 이렇게 많은 줄 몰랐어요</h2></div><div style="display:contents" dir="auto"><p id="32387842-09a9-80c9-a792-f4e9b134392f" class="">화장을 결정하면 다 된 거라고 생각하기 쉬워요.</p></div><div style="display:contents" dir="auto"><p id="32387842-09a9-803b-ba91-c2973925b133" class="">근데 막상 장례 절차가 시작되고 나면 바로 다음 질문이 닥쳐요.</p></div><div style="display:contents" dir="auto"><p id="32387842-09a9-8071-b37d-c64548e69ebc" class=""><em>&quot;화장하고 나서 유골은 어디다 모셔야 하나요?&quot;</em></p></div><div style="display:contents" dir="auto"><p id="32387842-09a9-802e-9bee-c88c5f12d409" class="">이때 대부분 봉안당 한 가지만 떠올려요. 그런데 실제로는 선택지가 다섯 개예요. 봉안당, 수목장, 잔디장, 산분장, 해양장. 각각 방식도 다르고, 비용도 다르고, 법적 조건도 달라요. 그리고 한 번 선택하면 되돌리기 어려운 것들도 있어요.</p></div><div style="display:contents" dir="auto"><p id="32387842-09a9-808f-adcc-d35042d965d6" class="">결정을 서두르기 전에, 어떤 방식이 있는지부터 알아볼게요.</p></div><div style="display:contents" dir="auto"><hr id="32387842-09a9-803f-b4f8-e2fad778aeff"/></div><div style="display:contents" dir="auto"><h3 id="32387842-09a9-80e5-b61e-c2059a1bfa8c" class="">먼저 알아야 할 것 — 고인의 자리가 남는가, 남지 않는가</h3></div><div style="display:contents" dir="auto"><p id="32387842-09a9-8023-925c-f7f0f49b2dee" class="">선택지가 다섯 개지만, 가장 먼저 정해야 할 방향은 딱 하나예요.</p></div><div style="display:contents" dir="auto"><p id="32387842-09a9-80bd-bc0f-ec62b77de7f3" class=""><strong>나중에 찾아갈 수 있는 장소가 필요한가, 아닌가.</strong></p></div><div style="display:contents" dir="auto"><p id="32387842-09a9-8082-8292-fcc8321505ae" class="">봉안당·수목장·잔디장은 안치 장소가 특정돼요. 명절에, 기일에, 보고 싶을 때 찾아갈 수 있는 자리가 생겨요. 반면 산분장·해양장은 골분을 자연에 뿌리는 방식이라 특정 장소가 남지 않아요.</p></div><div style="display:contents" dir="auto"><p id="32387842-09a9-80fd-8e9e-e617db39b0e5" class="">이 차이가 나머지 선택 전체를 좌우해요. 가족 중 누군가가 &quot;정해진 장소에서 찾아뵙고 싶다&quot;는 마음이 크다면 앞의 세 가지 중에서, 장소보다 자연 회귀 자체가 의미 있다면 뒤의 두 가지를 더 깊이 살펴보면 돼요.</p></div><div style="display:contents" dir="auto"><hr id="32387842-09a9-8035-bd60-ff7100352584"/></div><div style="display:contents" dir="auto"><h3 id="32387842-09a9-8069-a517-e19c0d305c87" class="">봉안당 — 가장 익숙하고, 가장 많이 선택하는 방식</h3></div><div style="display:contents" dir="auto"><p id="32387842-09a9-802b-97a0-ce71cf661d5f" class="">화장 후 유골함을 실내 건물 안 안치단에 모시는 방식이에요. 전국에서 가장 많이 이용하는 장지 방식이고, 선호도 조사에서도 34.2%로 1위예요.</p></div><div style="display:contents" dir="auto"><p id="32387842-09a9-80d5-bd0e-c65a3c6479a7" class="">날씨와 상관없이 방문할 수 있고, 유골함과 유품을 함께 보관할 수 있어요. 계약 기간 중엔 이장도 가능해서 나중에 다른 장지로 옮기고 싶을 때 선택지가 열려 있어요. 이게 다른 방식과 가장 크게 다른 점이에요.</p></div><div style="display:contents" dir="auto"><p id="32387842-09a9-806b-b095-f66b5162d21f" class="">비용 폭은 가장 넓어요.</p></div><div style="display:contents" dir="ltr"><table id="32387842-09a9-80be-8d6d-da84dd7bc86a" class="simple-table"><thead class="simple-table-header"><div style="display:contents" dir="ltr"><tr id="32387842-09a9-80b8-9621-e41289681df6"><th id="zdI]" class="simple-table-header-color simple-table-header">구분</th><th id="qbfx" class="simple-table-header-color simple-table-header">2025년 수도권 기준</th></tr></div></thead><tbody><div style="display:contents" dir="ltr"><tr id="32387842-09a9-8081-a5ee-d1532e0b3f9f"><td id="zdI]" class="">공설 봉안당</td><td id="qbfx" class="">5년 기준 10~30만원</td></tr></div><div style="display:contents" dir="ltr"><tr id="32387842-09a9-8078-9bf7-eab840f7500d"><td id="zdI]" class="">사설 일반형</td><td id="qbfx" class="">150~500만원</td></tr></div><div style="display:contents" dir="ltr"><tr id="32387842-09a9-8036-9ce3-d55313347d71"><td id="zdI]" class="">사설 프리미엄</td><td id="qbfx" class="">500만원~3,000만원+</td></tr></div><div style="display:contents" dir="ltr"><tr id="32387842-09a9-802b-b9db-c89d8dd372a0"><td id="zdI]" class="">평균 개인단</td><td id="qbfx" class="">약 690만원</td></tr></div></tbody></table></div><div style="display:contents" dir="auto"><p id="32387842-09a9-8089-a697-d9cbbcc4badc" class="">서울시립 봉안당은 현재 신규 봉안이 중단된 상태예요. 수도권에서 공설을 이용하려면 경기·인천 지역 시설을 같이 알아봐야 해요.</p></div><div style="display:contents" dir="auto"><p id="32387842-09a9-80f0-b9b0-c4e21f34083f" class=""><a href="https://www.kfcpi.or.kr/link/2025/10/01/de065eab-8172-44fa-a366-af15855e56ab.pdf">한국장례문화진흥원 2025 시설 현황</a></p></div><div style="display:contents" dir="auto"><hr id="32387842-09a9-80ce-a780-e2fcad738c48"/></div><div style="display:contents" dir="ltr"><figure id="32387842-09a9-807f-a18b-ea9fb5451a8d" class="image"><a href="https://images.pexels.com/photos/10499276/pexels-photo-10499276.jpeg"><img src="https://images.pexels.com/photos/10499276/pexels-photo-10499276.jpeg"/></a></figure></div><div style="display:contents" dir="auto"><p id="32387842-09a9-80ca-87a8-e3004ba898eb" class=""><em>출처: Pexels (CC0) — 봉안당은 날씨 영향 없이 방문 가능하고, 이장도 가능한 유일한 방식이에요.</em></p></div><div style="display:contents" dir="auto"><hr id="32387842-09a9-8099-bc14-c319d1f474db"/></div><div style="display:contents" dir="auto"><h3 id="32387842-09a9-80d3-bf6a-f9ed037308ab" class="">수목장 — 나무가 고인의 자리가 되는 방식</h3></div><div style="display:contents" dir="auto"><p id="32387842-09a9-8059-9420-ef4e65cfb78d" class="">화장 후 골분을 나무 뿌리 주변 땅에 안치해요. 나무가 고인의 자리가 되는 거예요. 자연친화적이고 관리 부담이 없다는 게 핵심 장점이에요.</p></div><div style="display:contents" dir="auto"><p id="32387842-09a9-80d3-bfc7-ca8c65f20211" class="">유형은 네 가지예요. 나무 한 그루를 혼자 쓰는 개인목, 부부가 함께 쓰는 부부목, 가족 전원이 순차로 안치하는 가족목, 여러 가족이 구좌 단위로 나눠 쓰는 공동목이에요.</p></div><div style="display:contents" dir="auto"><p id="32387842-09a9-8064-996c-c0647683b0d6" class="">비용은 유형과 시설에 따라 범위가 커요.</p></div><div style="display:contents" dir="ltr"><table id="32387842-09a9-8069-b6cc-d3d44b08cdde" class="simple-table"><thead class="simple-table-header"><div style="display:contents" dir="ltr"><tr id="32387842-09a9-802b-a299-c6df419f125b"><th id="x&lt;Aa" class="simple-table-header-color simple-table-header">유형</th><th id="J`;&gt;" class="simple-table-header-color simple-table-header">2025년 수도권 기준</th></tr></div></thead><tbody><div style="display:contents" dir="ltr"><tr id="32387842-09a9-8071-9530-d0ca8ebcf29b"><td id="x&lt;Aa" class="">공설 잔디·수목</td><td id="J`;&gt;" class="">50~150만원</td></tr></div><div style="display:contents" dir="ltr"><tr id="32387842-09a9-8077-b37a-ca564470fb2c"><td id="x&lt;Aa" class="">공동목</td><td id="J`;&gt;" class="">200~500만원</td></tr></div><div style="display:contents" dir="ltr"><tr id="32387842-09a9-8091-80ce-ebe9dfb29ffa"><td id="x&lt;Aa" class="">개인목</td><td id="J`;&gt;" class="">300~800만원 (평균 455만원)</td></tr></div><div style="display:contents" dir="ltr"><tr id="32387842-09a9-80b9-8d88-c6cb332a75cc"><td id="x&lt;Aa" class="">부부목</td><td id="J`;&gt;" class="">500~1,200만원 (평균 825만원)</td></tr></div><div style="display:contents" dir="ltr"><tr id="32387842-09a9-8012-8d42-ec8ddff40b99"><td id="x&lt;Aa" class="">가족목</td><td id="J`;&gt;" class="">800~2,500만원+</td></tr></div></tbody></table></div><div style="display:contents" dir="auto"><p id="32387842-09a9-8046-be46-d2dfb77b551c" class="">한 가지 반드시 알아야 할 점은 <strong>이장이 사실상 불가능</strong>하다는 거예요. 골분이 흙과 섞이면 분리 회수가 안 돼요. 수목장은 선택하는 순간 영구 결정에 가까워요. 나중에 마음이 바뀔 가능성이 있다면, 봉안당을 먼저 선택하고 나중에 이장하는 방법이 더 안전해요.</p></div><div style="display:contents" dir="auto"><hr id="32387842-09a9-8011-8fce-f236dd33be07"/></div><div style="display:contents" dir="auto"><h3 id="32387842-09a9-80f2-a9e7-ef9925b2ab66" class="">잔디장 — 가장 부담 없이 시작할 수 있는 자연장</h3></div><div style="display:contents" dir="auto"><p id="32387842-09a9-801f-ab2b-cc783f1daedf" class="">잔디장은 수목장과 비슷한 개념인데, 나무 대신 잔디 구획에 골분을 안치해요. 자연장 중에서 가격 접근성이 가장 낮고, 넓게 펼쳐진 잔디밭 환경이라 여러 가족이 함께 방문하기에 편해요.</p></div><div style="display:contents" dir="auto"><p id="32387842-09a9-8063-ae25-e04a23d570eb" class="">공설 잔디장 기준으로 50~150만원 수준이에요. 수목장 개인목 평균(455만원)의 3분의 1 수준이에요. 예산이 제한적이면서 자연장을 원하는 경우 가장 현실적인 선택지가 돼요.</p></div><div style="display:contents" dir="auto"><p id="32387842-09a9-80b8-b4cb-e7812c85d25c" class="">단점은 수목장과 같아요. 야외 환경이라 날씨 영향을 받고, 이장도 어려워요.</p></div><div style="display:contents" dir="auto"><p id="32387842-09a9-808e-845c-f85d7d2e18a3" class=""><a href="https://www.goifuneral.co.kr/guidebook/tip/after/7/">자연장 종류 정리 — 고이 장례 가이드북</a></p></div><div style="display:contents" dir="auto"><hr id="32387842-09a9-8073-be6a-fe7b859b2047"/></div><div style="display:contents" dir="auto"><h3 id="32387842-09a9-80ad-9f52-ce050a6a7651" class="">산분장 — 2025년 처음 합법화된 가장 새로운 방식</h3></div><div style="display:contents" dir="auto"><p id="32387842-09a9-80e1-8ddd-c6a90da91a41" class="">골분을 지정 장소에 뿌리는 방식이에요. 2025년 1월 24일부터 「장사 등에 관한 법률」 개정으로 공식 허용됐어요.</p></div><div style="display:contents" dir="auto"><p id="32387842-09a9-80a0-b404-cc32dad8e7bb" class="">합법화 전까지는 법적으로 애매한 상태였어요. 몰래 산에 뿌리거나 강에 흩뿌리는 일이 있었지만, 법적 근거가 없었어요. 이제는 기준이 생겼어요.</p></div><div style="display:contents" dir="auto"><p id="32387842-09a9-80d9-8e58-ceb2d7a55e2a" class="">허용 장소는 두 곳으로 제한돼요. 산분 설비가 갖춰진 지정 장사시설, 그리고 육지 해안선에서 5km 이상 떨어진 해양이에요. 산·강·도시 공원 같은 곳에 임의로 뿌리는 건 여전히 불법이에요. 이걸 헷갈리는 분들이 많아요.</p></div><div style="display:contents" dir="auto"><p id="32387842-09a9-806f-bac1-e893fc4528cc" class="">추모 장소가 남지 않는다는 게 가장 큰 차이예요. 어떤 가족에게는 그게 고인의 뜻과 맞고, 어떤 가족에게는 뭔가 아쉬움으로 남아요. 이 부분을 가족끼리 충분히 이야기하고 선택해야 해요.</p></div><div style="display:contents" dir="auto"><p id="32387842-09a9-80a8-9aa5-e1cac766f4e2" class=""><a href="https://www.hani.co.kr/arti/society/rights/1177748.html">산분장 합법화 내용 — 한겨레</a></p></div><div style="display:contents" dir="auto"><hr id="32387842-09a9-808c-ae06-e513c9f03d7b"/></div><div style="display:contents" dir="ltr"><figure id="32387842-09a9-807a-841d-fbe5ce987de3" class="image"><a href="https://pxhere.com/en/photo/1191209"><img src="https://pxhere.com/en/photo/1191209"/></a></figure></div><div style="display:contents" dir="auto"><p id="32387842-09a9-8027-81bc-e40519c15444" class=""><em>출처: PxHere (CC0) — 산분장은 2025년 1월부터 합법화됐지만, 허용 장소는 지정 시설과 해안선 5km 이상 해역으로 제한돼요.</em></p></div><div style="display:contents" dir="auto"><hr id="32387842-09a9-80af-b851-d5a8c713c2c2"/></div><div style="display:contents" dir="auto"><h3 id="32387842-09a9-808f-a362-ece669ed394d" class="">해양장 — 바다를 마지막 장소로 삼는 방식</h3></div><div style="display:contents" dir="auto"><p id="32387842-09a9-801b-a01c-fd649fb5ab37" class="">해양장은 산분장의 해양 버전이에요. 해양수산부에 등록된 업체 선박을 타고 해안선 5km 이상 떨어진 공해로 나가서 유골을 바다에 뿌려요. 진행이 끝나면 위성 좌표 기반의 해양 안장 확인서가 발급돼요.</p></div><div style="display:contents" dir="auto"><p id="32387842-09a9-80c0-b35b-c1eebbdf43cf" class="">비용은 방식 중 가장 저렴한 편이에요.</p></div><div style="display:contents" dir="ltr"><table id="32387842-09a9-80c6-b417-df8236cdff93" class="simple-table"><thead class="simple-table-header"><div style="display:contents" dir="ltr"><tr id="32387842-09a9-8098-9f84-ce3951afece0"><th id="B\W~" class="simple-table-header-color simple-table-header">진행 방식</th><th id="&gt;?jq" class="simple-table-header-color simple-table-header">비용</th></tr></div></thead><tbody><div style="display:contents" dir="ltr"><tr id="32387842-09a9-80e9-87c7-c040c1b959dd"><td id="B\W~" class="">합동 해양장</td><td id="&gt;?jq" class="">30~80만원</td></tr></div><div style="display:contents" dir="ltr"><tr id="32387842-09a9-806c-9dac-f1ef3270778b"><td id="B\W~" class="">개별 단독 해양장</td><td id="&gt;?jq" class="">80~200만원+</td></tr></div></tbody></table></div><div style="display:contents" dir="auto"><p id="32387842-09a9-8030-8e97-d2baaa0d9b89" class="">고인이 바다를 특별히 좋아했거나, 자녀에게 관리 부담을 아예 남기고 싶지 않은 경우, 또는 간소하고 자연스러운 이별을 원하는 경우에 선택하는 방식이에요.</p></div><div style="display:contents" dir="auto"><p id="32387842-09a9-80b0-a924-ffd669d1b1f8" class="">주의할 점은 날씨예요. 출항 당일 기상 상태에 따라 일정이 미뤄질 수 있어서, 일정 조율을 여유 있게 해야 해요.</p></div><div style="display:contents" dir="auto"><p id="32387842-09a9-80da-9898-da67d3675f32" class=""><a href="https://blog.snlife.co.kr/blog/%EC%9E%A5%EB%A1%80%EC%A0%95%EB%B3%B4/%ED%95%B4%EC%96%91%EC%9E%A5-%EB%B9%84%EC%9A%A9%EB%B6%80%ED%84%B0-%EC%A0%88%EC%B0%A8%EA%B9%8C%EC%A7%80,-%EC%B9%9C%ED%99%98%EA%B2%BD-%EB%B0%94%EB%8B%A4-%EC%9E%A5%EB%A1%80-%EC%99%84%EB%B2%BD-%EA%B0%80%EC%9D%B4%EB%93%9C">해양장 비용·절차 — SNLife 블로그</a></p></div><div style="display:contents" dir="auto"><hr id="32387842-09a9-8006-b6f4-ef429ae5c516"/></div><div style="display:contents" dir="auto"><h3 id="32387842-09a9-8037-856f-fd1314f7ff9e" class="">5가지 방식 한눈에 비교</h3></div><div style="display:contents" dir="ltr"><table id="32387842-09a9-8081-8c03-f26e12e00023" class="simple-table"><thead class="simple-table-header"><div style="display:contents" dir="ltr"><tr id="32387842-09a9-8049-830f-f1e03eb4ab06"><th id="MlGc" class="simple-table-header-color simple-table-header">방식</th><th id="mu|P" class="simple-table-header-color simple-table-header">추모 장소</th><th id="n@Co" class="simple-table-header-color simple-table-header">이장</th><th id=";nFW" class="simple-table-header-color simple-table-header">날씨 영향</th><th id="?kCZ" class="simple-table-header-color simple-table-header">가격대</th></tr></div></thead><tbody><div style="display:contents" dir="ltr"><tr id="32387842-09a9-80d8-a806-ef76d34b9aa8"><td id="MlGc" class="">봉안당</td><td id="mu|P" class="">있음 (실내)</td><td id="n@Co" class="">가능</td><td id=";nFW" class="">없음</td><td id="?kCZ" class="">10만~3,000만원+</td></tr></div><div style="display:contents" dir="ltr"><tr id="32387842-09a9-804a-a81d-dfd3ca0e0461"><td id="MlGc" class="">수목장</td><td id="mu|P" class="">있음 (야외)</td><td id="n@Co" class="">불가</td><td id=";nFW" class="">있음</td><td id="?kCZ" class="">50만~2,500만원+</td></tr></div><div style="display:contents" dir="ltr"><tr id="32387842-09a9-80da-aa57-ce6ccfd269de"><td id="MlGc" class="">잔디장</td><td id="mu|P" class="">있음 (야외)</td><td id="n@Co" class="">불가</td><td id=";nFW" class="">있음</td><td id="?kCZ" class="">50~300만원</td></tr></div><div style="display:contents" dir="ltr"><tr id="32387842-09a9-80f9-8f5b-f4dc99c81293"><td id="MlGc" class="">산분장</td><td id="mu|P" class="">없음</td><td id="n@Co" class="">없음</td><td id=";nFW" class="">있음</td><td id="?kCZ" class="">시설별 상이</td></tr></div><div style="display:contents" dir="ltr"><tr id="32387842-09a9-80fd-9632-d7fd6c7b3f3c"><td id="MlGc" class="">해양장</td><td id="mu|P" class="">없음</td><td id="n@Co" class="">없음</td><td id=";nFW" class="">있음</td><td id="?kCZ" class="">30~200만원+</td></tr></div></tbody></table></div><div style="display:contents" dir="auto"><hr id="32387842-09a9-80c7-9686-ff8ce732686f"/></div><div style="display:contents" dir="auto"><h3 id="32387842-09a9-8044-a081-d30bb6262636" class="">결정이 어렵다면 이 3가지부터 답해보세요</h3></div><div style="display:contents" dir="auto"><p id="32387842-09a9-80ad-8b80-d66cc3aa535f" class="">방식이 많아서 오히려 혼란스러울 수 있어요. 그럴 땐 질문 세 개에 먼저 답해보면 좁혀져요.</p></div><div style="display:contents" dir="auto"><p id="32387842-09a9-80d1-a493-dc671f9dcc62" class=""><strong>① 고인을 찾아갈 장소가 필요한가?</strong> → 필요하다면 봉안당·수목장·잔디장으로 범위를 좁혀요.</p></div><div style="display:contents" dir="auto"><p id="32387842-09a9-8098-a899-ed44e540c40d" class=""><strong>② 나중에 이장할 가능성이 있는가?</strong> → 있다면 봉안당 하나만 남아요.</p></div><div style="display:contents" dir="auto"><p id="32387842-09a9-80d1-9975-f97ed698d6dd" class=""><strong>③ 예산이 얼마인가?</strong> → 100만원 이하라면 공설 잔디장·봉안당, 자리를 남기지 않아도 된다면 해양장이 가장 저렴해요.</p></div></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>
