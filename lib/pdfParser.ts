@@ -1,3 +1,4 @@
+// @ts-ignore
 import { createWorker } from 'tesseract.js';
 
 export interface ParsedData {
