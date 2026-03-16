@@ -375,9 +375,9 @@ export default function AboutClient() {
             <section className={`${s.section} ${s.sectionDark}`} ref={transparencyRef}>
                 <div className={s.sectionInner}>
                     <h2 className={`${s.sectionTitle} ${s.sectionTitleDark} ${s.fadeIn}`}>
-                        장례 업계 최초,<br />
                         전국 장지 가격을<br />
-                        한눈에 공개합니다
+                        한눈에<br />
+                        공개합니다
                     </h2>
 
                     <div className={`${s.transparencyCard} ${s.fadeIn} ${s.fadeInDelay1}`}>
@@ -443,7 +443,7 @@ export default function AboutClient() {
                 ================================================ */}
             <section className={`${s.section} ${s.sectionDark}`} ref={anatomyRef}>
                 <div className={s.sectionInner}>
-                    <div className={`${s.dataTag} ${s.fadeIn}`}>DATA SECTION 01</div>
+                    <div className={`${s.dataTag} ${s.fadeIn}`}>데이터 분석 01</div>
                     <h2 className={`${s.dataTitle} ${s.fadeIn}`}>장지 가격 구조</h2>
                     <p className={`${s.dataSub} ${s.fadeIn}`}>
                         장지 비용, 3가지 핵심 항목으로 분해합니다
@@ -474,7 +474,7 @@ export default function AboutClient() {
                     </div>
 
                     <div className={`${s.exampleCard} ${s.fadeIn} ${s.fadeInDelay3}`}>
-                        <div className={s.exampleLabel}>● Interactive Example</div>
+                        <div className={s.exampleLabel}>● 실제 비교 예시</div>
                         <div className={s.exampleText}>
                             실내 봉안당, 1단 → 5단으로 변경 시:
                         </div>
@@ -489,7 +489,7 @@ export default function AboutClient() {
                 ================================================ */}
             <section className={`${s.section} ${s.sectionLight}`} ref={typesRef}>
                 <div className={s.sectionInner}>
-                    <div className={`${s.dataTagLight} ${s.fadeIn}`}>DATA SECTION 02</div>
+                    <div className={`${s.dataTagLight} ${s.fadeIn}`}>데이터 분석 02</div>
                     <h2 className={`${s.dataTitleLight} ${s.fadeIn}`}>
                         6가지 시설 유형
                     </h2>
@@ -536,7 +536,7 @@ export default function AboutClient() {
                 ================================================ */}
             <section className={`${s.section} ${s.sectionDark}`} ref={comparisonRef}>
                 <div className={s.sectionInner}>
-                    <div className={`${s.dataTag} ${s.fadeIn}`}>DATA SECTION 03</div>
+                    <div className={`${s.dataTag} ${s.fadeIn}`}>데이터 분석 03</div>
                     <h2 className={`${s.dataTitle} ${s.fadeIn}`}>직접 비교해보세요</h2>
                     <p className={`${s.dataSub} ${s.fadeIn}`}>서울 관악구 주변 봉안당 실제 가격 비교</p>
 
@@ -593,7 +593,7 @@ export default function AboutClient() {
                 ================================================ */}
             <section className={`${s.section} ${s.sectionDark}`} ref={calcRef}>
                 <div className={s.sectionInner}>
-                    <div className={`${s.dataTag} ${s.fadeIn}`}>INTERACTIVE CALCULATOR</div>
+                    <div className={`${s.dataTag} ${s.fadeIn}`}>장지 비용 계산기</div>
                     <h2 className={`${s.dataTitle} ${s.fadeIn}`}>장지 예상 비용</h2>
                     <p className={`${s.dataSub} ${s.fadeIn}`}>
                         조건을 선택하면 실제 데이터 기반 예상 비용을 확인할 수 있습니다
@@ -675,7 +675,7 @@ export default function AboutClient() {
                 ================================================ */}
             <section className={`${s.section} ${s.movementSection}`} ref={movementRef}>
                 <div className={s.sectionInner}>
-                    <div className={`${s.movementTag} ${s.fadeIn}`}>TRANSPARENCY MOVEMENT</div>
+                    <div className={`${s.movementTag} ${s.fadeIn}`}>가격 투명화 운동</div>
                     <h2 className={`${s.movementTitle} ${s.fadeIn}`}>
                         당신이 알려주는 시설 정보가<br />
                         <span className={s.movementTitleHighlight}>대한민국의 장지 시장을</span><br />
@@ -689,7 +689,7 @@ export default function AboutClient() {
                     <div className={`${s.movementCard} ${s.fadeIn} ${s.fadeInDelay2}`}>
                         <div className={s.movementCardInner}>
                             <div className={s.movementOffer}>
-                                <div className={s.movementOfferTag}>SPECIAL OFFER</div>
+                                <div className={s.movementOfferTag}>특별 혜택</div>
                                 <div className={s.movementOfferTitle}>
                                     시설 가격 정보를<br />제보해주시면
                                 </div>
@@ -703,7 +703,7 @@ export default function AboutClient() {
                             </div>
 
                             <div className={s.movementHowTo}>
-                                <div className={s.movementHowToTag}>HOW TO PARTICIPATE</div>
+                                <div className={s.movementHowToTag}>참여 방법</div>
                                 <div className={s.movementStep}>
                                     <div className={s.movementStepNum}>1</div>
                                     <div className={s.movementStepContent}>
@@ -829,7 +829,7 @@ export default function AboutClient() {
 
                     {/* GUARANTEE BANNER */}
                     <div className={`${s.guaranteeBanner} ${s.fadeIn} ${s.fadeInDelay2}`}>
-                        <div className={s.guaranteeBannerTag}>DAEDAESONSON GUARANTEE</div>
+                        <div className={s.guaranteeBannerTag}>대대손손 보증</div>
                         <div className={s.guaranteeBannerTitle}>
                             표시된 가격과 실제 가격이 다르면,<br />
                             즉시 수정하겠습니다.
@@ -847,7 +847,7 @@ export default function AboutClient() {
                 ================================================ */}
             <section className={`${s.section} ${s.aiSectionLight}`} ref={aiRef}>
                 <div className={s.sectionInner}>
-                    <div className={`${s.dataTagLight} ${s.fadeIn}`}>DATA SECTION 04</div>
+                    <div className={`${s.dataTagLight} ${s.fadeIn}`}>데이터 분석 04</div>
                     <h2 className={`${s.dataTitleLight} ${s.fadeIn}`}>AI 맞춤 추천 시스템</h2>
                     <p className={`${s.dataSubLight} ${s.fadeIn}`}>6가지 질문으로 나에게 맞는 장지를 찾아드립니다</p>
 
@@ -900,7 +900,7 @@ export default function AboutClient() {
                 ================================================ */}
             <section className={`${s.section} ${s.previewSection}`} ref={previewRef}>
                 <div className={s.sectionInner}>
-                    <div className={`${s.dataTag} ${s.fadeIn}`}>PREMIUM PREVIEW</div>
+                    <div className={`${s.dataTag} ${s.fadeIn}`}>시설 미리보기</div>
                     <h2 className={`${s.dataTitle} ${s.fadeIn}`}>
                         이런 시설들을<br />비교할 수 있습니다.
                     </h2>
@@ -1217,7 +1217,7 @@ export default function AboutClient() {
                         <Link href="/blog" className={s.footerLink}>장례 가이드</Link>
                     </div>
                     <div className={s.footerText}>
-                        © 2025 대대손손. All rights reserved.
+                        © {new Date().getFullYear()} 대대손손. All rights reserved.
                     </div>
                 </div>
             </section>
