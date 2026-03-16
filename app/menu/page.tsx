@@ -18,14 +18,13 @@ export default function MenuPage() {
     const avatarUrl = profile?.avatar_url || user?.user_metadata?.avatar_url;
 
     const serviceItems = [
-        { label: '홈', icon: Home, path: '/', description: '지도에서 시설 찾기' },
+        { label: '대대손손 소개', icon: Home, path: '/about', description: '서비스 안내' },
         { label: '문의하기', icon: MessageCircle, path: '/inquiries', description: '문의 목록 보기' },
         { label: '기록', icon: Clock, path: '/history', description: '최근 본 시설' },
         { label: '블로그', icon: FileText, path: '/blog', description: '장례 가이드 보기' },
     ];
 
     const infoItems = [
-        { label: '서비스 안내', icon: Info, path: '/about' },
         { label: '용어 가이드', icon: BookOpen, path: '/glossary' },
         { label: '자주 묻는 질문', icon: HelpCircle, path: '/faq' },
     ];

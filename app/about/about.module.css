@@ -857,6 +857,55 @@
   .calcLayout {
     grid-template-columns: 1fr;
   }
+
+  /* solution 카드 1열 */
+  .solutionCards {
+    grid-template-columns: 1fr;
+  }
+
+  .solutionCard {
+    min-height: auto;
+    padding: 28px 20px;
+  }
+
+  /* 비교 카드 1열 */
+  .comparisonGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .comparisonInsight {
+    grid-column: span 1;
+  }
+
+  /* 폼 1열 */
+  .formRow {
+    grid-template-columns: 1fr;
+  }
+
+  /* preview 카드 1열 */
+  .previewGrid {
+    grid-template-columns: 1fr;
+  }
+
+  /* guarantee 카드 1열 */
+  .guaranteeCards {
+    grid-template-columns: 1fr;
+  }
+
+  .guaranteeNumbers {
+    grid-template-columns: 1fr;
+  }
+
+  /* 히어로 타이틀 축소 */
+  .heroTitle {
+    font-size: 30px;
+  }
+
+  /* 섹션 패딩 축소 */
+  .section {
+    padding: 80px 20px;
+    min-height: auto;
+  }
 }
 
 /* ============================================
@@ -2160,5 +2209,579 @@
     width: auto;
     padding: 20px 44px;
     font-size: 18px;
+  }
+}
+
+/* ============================================
+   Responsive — Small Mobile (480px 이하, 360px 기준)
+   ============================================ */
+@media (max-width: 480px) {
+  /* --- 공통 섹션 --- */
+  .section {
+    padding: 64px 16px;
+    min-height: auto;
+  }
+
+  .sectionInner {
+    max-width: 100%;
+  }
+
+  /* --- 헤더 --- */
+  .stickyHeader {
+    height: 56px;
+  }
+
+  .headerInner {
+    padding: 0 12px;
+  }
+
+  .headerCta {
+    padding: 8px 14px;
+    font-size: 12px;
+  }
+
+  /* --- 히어로 --- */
+  .hero {
+    padding-top: 80px !important;
+    padding-bottom: 48px !important;
+  }
+
+  .heroTitle {
+    font-size: 26px;
+    letter-spacing: -0.8px;
+    line-height: 1.35;
+  }
+
+  .heroTitleAccent {
+    font-size: inherit;
+  }
+
+  .heroSub {
+    font-size: 13px;
+    line-height: 1.6;
+    word-break: keep-all;
+  }
+
+  .heroPhilosophy {
+    font-size: 14px;
+  }
+
+  .heroCta {
+    padding: 16px 32px;
+    font-size: 15px;
+  }
+
+  .statsRow {
+    gap: 20px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .statNumber {
+    font-size: 28px;
+  }
+
+  .statLabel {
+    font-size: 12px;
+  }
+
+  .statUnit {
+    font-size: 14px;
+  }
+
+  /* --- Pain Points --- */
+  .painIntro {
+    font-size: 14px;
+  }
+
+  .painItem {
+    padding: 14px 0;
+  }
+
+  .painX {
+    font-size: 20px;
+  }
+
+  .painText {
+    font-size: 14px;
+  }
+
+  /* --- Section Titles 통일 (모바일) --- */
+  .sectionTitle,
+  .sectionTitleLight,
+  .sectionTitleDark {
+    font-size: 22px;
+    letter-spacing: -0.6px;
+    line-height: 1.35;
+    word-break: keep-all;
+  }
+
+  .dataTitle,
+  .dataTitleLight {
+    font-size: 22px;
+    letter-spacing: -0.6px;
+  }
+
+  .moralTitle {
+    font-size: 22px;
+    letter-spacing: -0.6px;
+    line-height: 1.4;
+  }
+
+  .movementTitle {
+    font-size: 22px;
+    letter-spacing: -0.6px;
+  }
+
+  .finalCtaTitle {
+    font-size: 22px;
+    letter-spacing: -0.6px;
+  }
+
+  .dataSub,
+  .dataSubLight {
+    font-size: 13px;
+  }
+
+  /* --- Solution 카드 (3열→1열) --- */
+  .solutionCards {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .solutionCard {
+    padding: 20px 16px;
+  }
+
+  .solutionCardNumber {
+    font-size: 14px;
+  }
+
+  .solutionCardTitle {
+    font-size: 16px;
+  }
+
+  .solutionCardSub,
+  .solutionCardDetail {
+    font-size: 13px;
+  }
+
+  /* --- Transparency --- */
+  .transparencyCard {
+    padding: 24px 16px;
+  }
+
+  .transparencyCardTitle {
+    font-size: 18px;
+    line-height: 1.45;
+  }
+
+  .transparencyCardSub {
+    font-size: 13px;
+  }
+
+  /* --- Detail Steps --- */
+  .detailStep {
+    padding: 16px 0;
+  }
+
+  .detailStepTitle {
+    font-size: 16px;
+  }
+
+  .detailStepDesc {
+    font-size: 13px;
+  }
+
+  /* --- 가격 구조 (Data 01) --- */
+  .formulaCard {
+    padding: 20px 16px;
+  }
+
+  .formulaMain {
+    font-size: 14px;
+    word-break: keep-all;
+  }
+
+  .decompItem {
+    gap: 8px;
+  }
+
+  .decompLabel {
+    font-size: 13px;
+  }
+
+  .decompDesc {
+    font-size: 12px;
+  }
+
+  .exampleCard,
+  .exampleCardLight {
+    padding: 16px;
+  }
+
+  .examplePrice {
+    font-size: 22px;
+  }
+
+  /* --- 시설 유형 테이블 (Data 02) --- */
+  .typeTable {
+    font-size: 12px;
+    display: block;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .typeTable th,
+  .typeTable td {
+    padding: 8px 10px;
+    white-space: nowrap;
+  }
+
+  /* --- 가격 비교 (Data 03) --- */
+  .comparisonGrid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .comparisonInsight {
+    grid-column: span 1;
+  }
+
+  .comparisonCard {
+    padding: 20px 16px;
+  }
+
+  .comparisonPrice {
+    font-size: 20px;
+  }
+
+  /* --- 계산기 --- */
+  .calcButtons {
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+
+  .calcBtn {
+    padding: 10px 14px;
+    font-size: 13px;
+    min-width: 60px;
+  }
+
+  .calcResult {
+    padding: 24px 16px;
+  }
+
+  .calcResultPrice {
+    font-size: 26px;
+  }
+
+  .calcResultRow {
+    font-size: 13px;
+  }
+
+  /* --- Transparency Movement --- */
+  .movementTag {
+    font-size: 10px;
+    letter-spacing: 1.5px;
+  }
+
+  .movementSub {
+    font-size: 14px;
+  }
+
+  .movementCard {
+    padding: 0;
+  }
+
+  .movementCardInner {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  .movementOffer {
+    padding: 24px 16px;
+  }
+
+  .movementOfferBig {
+    font-size: 40px;
+  }
+
+  .movementOfferSuffix {
+    font-size: 14px;
+  }
+
+  .movementOfferDesc {
+    font-size: 13px;
+  }
+
+  .movementHowTo {
+    padding: 20px 16px;
+  }
+
+  .movementStep {
+    padding: 12px 0;
+  }
+
+  .movementStepNum {
+    width: 28px;
+    height: 28px;
+    font-size: 12px;
+  }
+
+  .movementStepTitle {
+    font-size: 14px;
+  }
+
+  .movementStepDesc {
+    font-size: 12px;
+  }
+
+  .movementContact {
+    padding: 16px;
+  }
+
+  .movementContactBtn {
+    font-size: 15px;
+    padding: 14px 24px;
+  }
+
+  .movementProofCount {
+    font-size: 28px;
+  }
+
+  .movementProofItem {
+    font-size: 12px;
+  }
+
+  /* --- Moral --- */
+  .moralSub {
+    font-size: 14px;
+  }
+
+  /* --- Guarantee --- */
+  .guaranteeCards {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .guaranteeCard {
+    padding: 24px 16px;
+  }
+
+  .guaranteeCardTitle {
+    font-size: 16px;
+  }
+
+  .guaranteeCardDesc {
+    font-size: 13px;
+  }
+
+  .guaranteeNumbers {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .guaranteeNumCard {
+    padding: 20px 16px;
+  }
+
+  .guaranteeNumValue {
+    font-size: 32px;
+  }
+
+  .guaranteeBanner {
+    padding: 24px 16px;
+  }
+
+  .guaranteeBannerTitle {
+    font-size: 18px;
+  }
+
+  .guaranteeBannerSub {
+    font-size: 13px;
+  }
+
+  /* --- AI 스텝 카드 (2열→1열) --- */
+  .aiStepGrid {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .aiStepCard {
+    padding: 16px 14px;
+  }
+
+  .aiStepCardNum {
+    width: 28px;
+    height: 28px;
+    font-size: 12px;
+    margin-bottom: 10px;
+  }
+
+  .aiStepCardTitle {
+    font-size: 14px;
+    margin-bottom: 6px;
+  }
+
+  .aiStepCardDesc {
+    font-size: 12px;
+  }
+
+  .inlineCtaLight {
+    font-size: 15px;
+    padding: 14px 28px;
+  }
+
+  /* --- Facility Preview --- */
+  .previewGrid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .previewCard {
+    padding: 20px 16px;
+  }
+
+  .previewCardType {
+    font-size: 11px;
+  }
+
+  .previewCardName {
+    font-size: 16px;
+  }
+
+  .previewCardPrice {
+    font-size: 22px;
+  }
+
+  .previewNote {
+    font-size: 13px;
+  }
+
+  /* --- Service Scope --- */
+  .scopeGrid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .scopeCard {
+    padding: 20px 16px;
+  }
+
+  .scopeCardTitle {
+    font-size: 16px;
+  }
+
+  .scopeItemTitle {
+    font-size: 14px;
+  }
+
+  .scopeItemDesc {
+    font-size: 12px;
+  }
+
+  .scopeSub {
+    font-size: 14px;
+  }
+
+  /* --- 폼 (2열→1열) --- */
+  .formSection {
+    padding: 48px 16px;
+  }
+
+  .formSectionSub {
+    font-size: 14px;
+    margin-bottom: 20px;
+  }
+
+  .urgencyBanner {
+    padding: 20px 16px;
+  }
+
+  .urgencyTitle {
+    font-size: 14px;
+  }
+
+  .urgencyStat {
+    font-size: 13px;
+  }
+
+  .urgencyStats {
+    gap: 8px 16px;
+  }
+
+  .formCard {
+    padding: 24px 16px;
+  }
+
+  .formRow {
+    grid-template-columns: 1fr;
+    gap: 16px;
+    margin-bottom: 16px;
+  }
+
+  .formLabel {
+    font-size: 13px;
+  }
+
+  .formSelect,
+  .formInput {
+    font-size: 14px;
+    padding: 12px 14px;
+  }
+
+  .formTextarea {
+    font-size: 14px;
+    padding: 12px 14px;
+  }
+
+  .formSubmit {
+    padding: 18px;
+    font-size: 16px;
+  }
+
+  .formPromise {
+    font-size: 12px;
+  }
+
+  /* --- Final CTA --- */
+  .finalCta {
+    padding: 64px 16px;
+  }
+
+  .ctaButtons {
+    gap: 10px;
+  }
+
+  .ctaPrimary,
+  .ctaSecondary {
+    padding: 16px 24px;
+    font-size: 15px;
+  }
+
+  /* --- Footer --- */
+  .footer {
+    padding: 40px 16px;
+  }
+
+  .footerBrand {
+    font-size: 28px;
+  }
+
+  .footerTagline {
+    font-size: 13px;
+  }
+
+  .footerLinks {
+    gap: 16px;
+  }
+
+  .footerLink {
+    font-size: 13px;
+  }
+
+  .footerText {
+    font-size: 11px;
   }
 }

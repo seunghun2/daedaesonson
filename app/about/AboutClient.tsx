@@ -1197,9 +1197,12 @@ export default function AboutClient() {
                         <Link href="/list" className={s.ctaPrimary}>
                             전국 장지 비교 시작&nbsp;&nbsp;→
                         </Link>
-                        <Link href="/" className={s.ctaSecondary}>
+                        <button
+                            className={s.ctaSecondary}
+                            onClick={() => window.dispatchEvent(new Event('open-chatbot'))}
+                        >
                             AI 상담사에게 물어보기
-                        </Link>
+                        </button>
                     </div>
                 </div>
             </section>
