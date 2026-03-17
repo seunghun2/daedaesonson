@@ -3,6 +3,8 @@
 import { useState, useRef, useEffect, useCallback } from 'react';
 import { X, Phone, ChevronRight } from 'lucide-react';
 import { useRouter } from 'next/navigation';
+import { useAuth } from '@/components/auth/AuthProvider';
+import LoginModal from '@/components/auth/LoginModal';
 
 interface FacilityCard {
     id: string;
@@ -65,8 +67,10 @@ interface AIChatbotProps {
 }
 
 const NAVY = '#302E92';
+const MAX_TURNS = 10;
 
 export default function AIChatbot({ isOpen, onClose, facilityContext, onOpenConsultForm }: AIChatbotProps) {
+    const { user } = useAuth();
     const [messages, setMessages] = useState<Message[]>(() => {
         if (typeof window === 'undefined') return [];
         try { return JSON.parse(sessionStorage.getItem('chat_messages') || '[]'); } catch { return []; }
@@ -89,9 +93,17 @@ export default function AIChatbot({ isOpen, onClose, facilityContext, onOpenCons
         if (typeof window === 'undefined') return 0;
         return parseInt(sessionStorage.getItem('chat_msg_count') || '0', 10);
     });
+    const [showLoginModal, setShowLoginModal] = useState(false);
     const messagesEndRef = useRef<HTMLDivElement>(null);
     const inputRef = useRef<HTMLInputElement>(null);
     const router = useRouter();
+
+    // 로그인 후 → 제한 해제 (대화 유지, 모달만 닫기)
+    useEffect(() => {
+        if (user && showLoginModal) {
+            setShowLoginModal(false);
+        }
+    }, [user]);
 
     const prevFacilityIdRef = useRef<string | number | null>(null);
 
@@ -156,6 +168,8 @@ export default function AIChatbot({ isOpen, onClose, facilityContext, onOpenCons
     /* ── 메시지 전송 ── */
     const sendMessage = useCallback(async () => {
         if ((!input.trim() && !pendingImage) || isLoading || streamingText !== null) return;
+        // 10턴 제한 (비로그인만)
+        if (!user && messageCount >= MAX_TURNS) return;
         // 버그 #3: 기존 스트리밍 인터벌 정리
         if (streamingRef.current) { clearInterval(streamingRef.current); streamingRef.current = null; }
         const userMsg = input.trim() || (pendingImage ? '(이미지 첨부)' : '');
@@ -201,9 +215,6 @@ export default function AIChatbot({ isOpen, onClose, facilityContext, onOpenCons
                         facilityCards: data.facilityCards || undefined,
                         pricingTable: data.pricingTable || undefined,
                     }]);
-                    if (messageCount >= 3 && !contactSubmitted && !showContactForm) {
-                        setTimeout(() => setShowContactForm(true), 1500);
-                    }
                 }
             }, 15); // 15ms per character
             return; // finally block handles isLoading already set above
@@ -609,7 +620,15 @@ export default function AIChatbot({ isOpen, onClose, facilityContext, onOpenCons
                                     <button key={qi}
                                         onClick={() => {
                                             if (isLoading || streamingText !== null) return;
+                                            if (!user && messageCount >= MAX_TURNS) return;
+                                            // "연락처 남기기" 선택 시 바로 폼 표시 (API 호출 불필요)
+                                            if (qr.includes('연락처')) {
+                                                setMessages(prev => [...prev, { role: 'user', content: qr, timestamp: new Date().toISOString() }]);
+                                                setTimeout(() => setShowContactForm(true), 300);
+                                                return;
+                                            }
                                             setInput(qr);
+                                            setMessageCount(prev => prev + 1);
                                             setTimeout(() => {
                                                 setInput('');
                                                 setMessages(prev => [...prev, { role: 'user', content: qr, timestamp: new Date().toISOString() }]);
@@ -635,7 +654,6 @@ export default function AIChatbot({ isOpen, onClose, facilityContext, onOpenCons
                                                                 clearInterval(iv);
                                                                 setStreamingText(null);
                                                                 setMessages(prev => [...prev, { role: 'assistant', content: full, timestamp: new Date().toISOString(), facilityCards: data.facilityCards || undefined, pricingTable: data.pricingTable || undefined }]);
-                                                                // msgCount tracked in main handler
                                                             } else {
                                                                 setStreamingText(full.slice(0, idx));
                                                             }
@@ -702,8 +720,9 @@ export default function AIChatbot({ isOpen, onClose, facilityContext, onOpenCons
                     {/* 상담 신청 폼 */}
                     {showContactForm && !contactSubmitted && (
                         <div style={{
-                            background: '#f8f8fc', borderRadius: 14, padding: 16, marginTop: 8,
-                            border: '1px solid #eee',
+                            background: '#f8f8fc', borderRadius: 14, padding: 14, marginTop: 8,
+                            border: '1px solid #eee', maxWidth: '75%',
+                            animation: 'contactFormSlide 0.4s ease-out',
                         }}>
                             <div style={{ fontSize: 14, fontWeight: 600, color: '#333', marginBottom: 10 }}>
                                 더 자세한 안내가 필요하시면 연락처를 남겨주세요.
@@ -759,6 +778,52 @@ export default function AIChatbot({ isOpen, onClose, facilityContext, onOpenCons
 
                 {/* ── 하단 입력 영역 (채널톡 스타일) ── */}
                 <div style={{ background: '#ffffff', flexShrink: 0 }}>
+                    {/* 10턴 제한 도달 시 */}
+                    {!user && messageCount >= MAX_TURNS ? (
+                        <div style={{
+                            padding: '16px', textAlign: 'center',
+                            background: '#f8f8fc', borderTop: '1px solid #f0f0f0',
+                        }}>
+                            <div style={{ fontSize: 14, fontWeight: 600, color: '#333', marginBottom: 6 }}>
+                                무료 상담 {MAX_TURNS}회를 모두 사용했어요
+                            </div>
+                            <div style={{ fontSize: 12, color: '#888', marginBottom: 12 }}>
+                                더 자세한 상담은 아래 방법을 이용해 주세요.
+                            </div>
+                            <div style={{ display: 'flex', gap: 8, justifyContent: 'center' }}>
+                                {onOpenConsultForm && (
+                                    <button onClick={() => { onClose(); onOpenConsultForm(); }} style={{
+                                        padding: '10px 20px', borderRadius: 10,
+                                        background: NAVY, color: '#fff', border: 'none',
+                                        fontSize: 13, fontWeight: 600, cursor: 'pointer',
+                                    }}>
+                                        📞 직접 상담 신청
+                                    </button>
+                                )}
+                                <button onClick={() => {
+                                    if (user) {
+                                        // 로그인 된 유저: 바로 리셋
+                                        setMessageCount(0);
+                                        setMessages([]);
+                                        setSessionId(null);
+                                        sessionStorage.removeItem('chat_session_id');
+                                        sessionStorage.setItem('chat_msg_count', '0');
+                                        sessionStorage.removeItem('chat_messages');
+                                    } else {
+                                        // 비로그인: 로그인 모달 열기
+                                        setShowLoginModal(true);
+                                    }
+                                }} style={{
+                                    padding: '10px 20px', borderRadius: 10,
+                                    background: '#fff', color: NAVY, border: `1px solid ${NAVY}`,
+                                    fontSize: 13, fontWeight: 600, cursor: 'pointer',
+                                }}>
+                                    {user ? '🔄 새 상담 시작' : '🔑 로그인 후 계속하기'}
+                                </button>
+                            </div>
+                        </div>
+                    ) : (
+                    <>
                     {/* 이미지 미리보기 */}
                     {pendingImage && (
                         <div style={{
@@ -773,6 +838,16 @@ export default function AIChatbot({ isOpen, onClose, facilityContext, onOpenCons
                                 style={{ background: 'none', border: 'none', color: '#999', cursor: 'pointer', padding: 4 }}>
                                 <X size={14} />
                             </button>
+                        </div>
+                    )}
+
+                    {/* 남은 횟수 표시 (비로그인 & 7턴 이상일 때) */}
+                    {!user && messageCount >= 7 && (
+                        <div style={{
+                            textAlign: 'center', padding: '4px 0', fontSize: 11, color: '#bbb',
+                            borderTop: '1px solid #f0f0f0',
+                        }}>
+                            남은 무료 상담: {MAX_TURNS - messageCount}회
                         </div>
                     )}
 
@@ -836,6 +911,7 @@ export default function AIChatbot({ isOpen, onClose, facilityContext, onOpenCons
                             </svg>
                         </button>
                     </div>
+                    </>)}
 
                     {/* 직접 문의 신청 */}
                     {onOpenConsultForm && (
@@ -861,6 +937,10 @@ export default function AIChatbot({ isOpen, onClose, facilityContext, onOpenCons
                     from { opacity: 0; transform: translateY(20px); }
                     to { opacity: 1; transform: translateY(0); }
                 }
+                @keyframes contactFormSlide {
+                    from { opacity: 0; transform: translateY(10px); max-height: 0; }
+                    to { opacity: 1; transform: translateY(0); max-height: 300px; }
+                }
                 .chatbot-container {
                     inset: 0; border-radius: 0;
                 }
@@ -873,6 +953,9 @@ export default function AIChatbot({ isOpen, onClose, facilityContext, onOpenCons
                     .chatbot-overlay { display: none; }
                 }
             `}</style>
+
+            {/* 로그인 모달 */}
+            <LoginModal isOpen={showLoginModal} onClose={() => setShowLoginModal(false)} />
         </>
     );
 }

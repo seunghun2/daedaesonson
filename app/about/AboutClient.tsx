@@ -177,6 +177,18 @@ export default function AboutClient() {
     const [formType, setFormType] = useState('');
     const [formBudget, setFormBudget] = useState('');
     const [formPhone, setFormPhone] = useState('');
+
+    // 전화번호 자동 하이픈 포맷팅 (010-1234-5678)
+    const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const raw = e.target.value.replace(/[^0-9]/g, '').slice(0, 11);
+        let formatted = raw;
+        if (raw.length > 3 && raw.length <= 7) {
+            formatted = `${raw.slice(0, 3)}-${raw.slice(3)}`;
+        } else if (raw.length > 7) {
+            formatted = `${raw.slice(0, 3)}-${raw.slice(3, 7)}-${raw.slice(7)}`;
+        }
+        setFormPhone(formatted);
+    };
     const [formMessage, setFormMessage] = useState('');
     const [formSubmitting, setFormSubmitting] = useState(false);
     const [formSubmitted, setFormSubmitted] = useState(false);
@@ -208,6 +220,14 @@ export default function AboutClient() {
             });
             if (res.ok) {
                 setFormSubmitted(true);
+                // 폼 리셋
+                setFormRegion('');
+                setFormType('');
+                setFormBudget('');
+                setFormPhone('');
+                setFormMessage('');
+                // 5초 후 성공 배너 자동 제거
+                setTimeout(() => setFormSubmitted(false), 5000);
             } else {
                 const data = await res.json();
                 setFormError(data.error || '오류가 발생했습니다.');
@@ -1083,19 +1103,54 @@ export default function AboutClient() {
                         * 최상의 데이터 품질을 위해 가격 정보를 정기적으로 업데이트합니다.
                     </div>
 
-                    {/* Form */}
-                    {formSubmitted ? (
-                        <div className={`${s.formCard} ${s.fadeIn}`} style={{ textAlign: 'center', padding: '60px 32px' }}>
-                            <div style={{ fontSize: 48, marginBottom: 16 }}>✅</div>
-                            <div style={{ fontSize: 22, fontWeight: 800, marginBottom: 12, color: 'var(--about-text-dark)' }}>
-                                접수 완료!
-                            </div>
-                            <div style={{ fontSize: 15, color: 'var(--about-text-muted)', lineHeight: 1.6 }}>
-                                3시간 내 맞춤 추천 결과를 보내드리겠습니다.<br />
-                                감사합니다.
+                    {/* 접수 완료 팝업 */}
+                    {formSubmitted && (
+                        <div
+                            onClick={() => setFormSubmitted(false)}
+                            style={{
+                                position: 'fixed', inset: 0, zIndex: 9999,
+                                background: 'rgba(0,0,0,0.5)', backdropFilter: 'blur(4px)',
+                                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                                padding: 24, animation: 'fadeIn 0.25s ease'
+                            }}
+                        >
+                            <div
+                                onClick={e => e.stopPropagation()}
+                                style={{
+                                    background: '#fff', borderRadius: 16, padding: '48px 36px',
+                                    maxWidth: 400, width: '100%', textAlign: 'center',
+                                    boxShadow: '0 20px 60px rgba(0,0,0,0.2)',
+                                    animation: 'slideUp 0.3s ease'
+                                }}
+                            >
+                                <div style={{
+                                    width: 56, height: 56, borderRadius: '50%',
+                                    background: 'var(--about-navy)', color: '#fff',
+                                    display: 'flex', alignItems: 'center', justifyContent: 'center',
+                                    margin: '0 auto 20px', fontSize: 24, fontWeight: 700
+                                }}>✓</div>
+                                <div style={{ fontSize: 22, fontWeight: 800, color: 'var(--about-text-dark)', marginBottom: 8, letterSpacing: '-0.5px' }}>
+                                    접수가 완료되었습니다
+                                </div>
+                                <div style={{ fontSize: 15, color: 'var(--about-text-muted)', lineHeight: 1.6, marginBottom: 28 }}>
+                                    3시간 내 맞춤 추천 결과를<br />연락드리겠습니다.
+                                </div>
+                                <button
+                                    onClick={() => setFormSubmitted(false)}
+                                    style={{
+                                        padding: '14px 40px', borderRadius: 8,
+                                        background: 'var(--about-navy)', color: '#fff',
+                                        fontSize: 15, fontWeight: 700, border: 'none',
+                                        cursor: 'pointer', transition: 'transform 0.2s'
+                                    }}
+                                >
+                                    확인
+                                </button>
                             </div>
                         </div>
-                    ) : (
+                    )}
+
+                    {
                         <div className={`${s.formCard} ${s.fadeIn} ${s.fadeInDelay2}`}>
                             <div className={s.formRow}>
                                 <div className={s.formGroup}>
@@ -1141,11 +1196,12 @@ export default function AboutClient() {
                                     <input
                                         className={s.formInput}
                                         type="tel"
-                                        placeholder="01012345678"
+                                        placeholder="010-1234-5678"
                                         value={formPhone}
-                                        onChange={e => setFormPhone(e.target.value)}
+                                        onChange={handlePhoneChange}
+                                        maxLength={13}
+                                        inputMode="numeric"
                                     />
-                                    <div className={s.formHelper}>- 없이 정확하게 적어주세요</div>
                                 </div>
                             </div>
 
@@ -1165,21 +1221,20 @@ export default function AboutClient() {
                                     {formError}
                                 </div>
                             )}
-
                             <button
                                 className={s.formSubmit}
                                 type="button"
                                 onClick={handleFormSubmit}
                                 disabled={formSubmitting}
-                                style={{ opacity: formSubmitting ? 0.6 : 1 }}
+                                style={{ opacity: formSubmitting ? 0.6 : 1, marginTop: 24 }}
                             >
                                 {formSubmitting ? '접수 중...' : '맞춤 추천 받기  →'}
                             </button>
                             <div className={s.formPromise}>
-                                * 입력하신 정보는 추천 목적으로만 사용되며, 제3자에게 제공되지 않습니다.
+                                개인정보 수집·이용에 동의하며, 정보 제공 등에 동의합니다.
                             </div>
                         </div>
-                    )}
+                    }
                 </div>
             </section>
 

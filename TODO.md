@@ -6,6 +6,12 @@
 ## 🔴 최우선 (즉시)
 
 - [x] ~~지역별 SEO 랜딩페이지~~ → `app/region/[slug]` 이미 구현됨 ✅
+- [ ] **OG Image (og-image.png) 제작** — 카카오톡/라인 공유 시 썸네일 표시
+  - 1200x630 사이즈 / 대대손손 로고 + 핵심 카피
+  - `public/og-image.png` 에 배치
+  - 메타태그에 이미 참조 중 (layout.tsx, about/page.tsx)
+- [ ] **API 에러 Slack 알림** — 서버 에러 발생 시 Slack 알림 전송
+  - chat API, recommendation API 에러 시 Slack webhook 호출
 - [ ] **플로팅 긴급 상담 버튼** — 메인 화면에 "📞 긴급 상담" 플로팅 CTA 추가
   - 카카오톡 or 전화 바로 연결
   - 긴급 사용자(임종 직후) 전환율 극대화
