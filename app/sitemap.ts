@@ -75,6 +75,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         allFacilities.forEach((f: any) => {
             if (!f.address || !f.category) return;
             if (f.category === 'FUNERAL_HOME') return;
+            if (!f.priceRange?.min || f.priceRange.min <= 0) return;
 
             const tokens = f.address.split(' ');
             const city = tokens[1];

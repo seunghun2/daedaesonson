@@ -128,7 +128,7 @@ export default async function CityPage({ params }: PageProps) {
                 {facilities.sort((a: any, b: any) => (a.priceRange?.min || 0) - (b.priceRange?.min || 0)).map((f: any) => (
                     <Link
                         key={f.id}
-                        href={`/facilities/${f.id}`}
+                        href={`/facility/${f.id}`}
                         style={{
                             display: 'block',
                             padding: '20px',
