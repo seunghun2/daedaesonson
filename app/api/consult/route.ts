@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getSupabaseServer } from '@/lib/supabaseServer';
+import { sendSlack, sendSlackError } from '@/lib/slack';
 
 const supabase = getSupabaseServer();
 
@@ -32,8 +33,13 @@ export async function POST(request: NextRequest) {
 
         if (error) {
             console.error('Insert consult error:', error);
+            await sendSlackError('consult', error);
             return NextResponse.json({ error: '상담 신청 실패' }, { status: 500 });
         }
+
+        // Slack 알림
+        const methodLabel = consultMethod === 'phone' ? '전화 상담' : consultMethod === 'field' ? '방문 상담' : consultMethod || '전화 상담';
+        await sendSlack('consult', `📞 *새 시설 상담 신청!*\n• 시설: ${facilityName || facilityId}\n• 이름: ${name}\n• 연락처: ${phone}\n• 연락 시간: ${preferredTime || '시간 무관'}\n• 문의 사항: ${question || '가격'}\n• 상담 방법: ${methodLabel}\n• 메시지: ${message || '없음'}\n• ID: #${data.id}`);
 
         return NextResponse.json({ success: true, consult: data });
 

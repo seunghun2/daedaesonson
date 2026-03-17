@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getSupabaseServer } from '@/lib/supabaseServer';
+import { sendSlack, sendSlackError } from '@/lib/slack';
 
 export async function POST(request: NextRequest) {
     try {
@@ -29,6 +30,9 @@ export async function POST(request: NextRequest) {
             .single();
 
         if (error) throw error;
+
+        // Slack 알림
+        await sendSlack('partnership', `🤝 *새 제휴 문의!*\n• 유형: ${type || '일반'}\n• 회사: ${companyName}\n• 담당자: ${name}\n• 연락처: ${phone}\n• 이메일: ${email}\n• 내용: ${content.slice(0, 100)}...`);
 
         return NextResponse.json({ success: true, inquiry: data });
     } catch (error) {

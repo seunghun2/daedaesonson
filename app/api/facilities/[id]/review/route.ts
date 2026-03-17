@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getSupabaseServer } from '@/lib/supabaseServer';
+import { sendSlack } from '@/lib/slack';
 import bcrypt from 'bcryptjs';
 
 const supabase = getSupabaseServer();
@@ -64,7 +65,7 @@ export async function POST(
         // Update facility reviewCount
         const { data: facility } = await supabase
             .from('Facility')
-            .select('reviewCount, rating')
+            .select('reviewCount, rating, name')
             .eq('id', id)
             .single();
 
@@ -86,6 +87,9 @@ export async function POST(
                 .update({ reviewCount: newCount, rating: avgRating })
                 .eq('id', id);
         }
+
+        // Slack 알림
+        await sendSlack('review', `⭐ *새 이용 후기!*\n• 시설: ${facility?.name || id}\n• 평점: ${'⭐'.repeat(rating)}\n• 작성자: ${author || '익명'}\n• 내용: ${content.slice(0, 100)}...`);
 
         // Return without password
         const { password: _, ...safeReview } = newReview;

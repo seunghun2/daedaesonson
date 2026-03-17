@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import { getSupabaseServer } from '@/lib/supabaseServer';
+import { sendSlack } from '@/lib/slack';
 import fs from 'fs';
 import path from 'path';
 
@@ -289,6 +290,9 @@ export async function POST(request: NextRequest) {
                 .eq('id', sessionId);
 
             if (error) console.error('ChatSession update error:', error);
+
+            // Slack 알림
+            await sendSlack('chatbot', `🤖 *챗봇 상담 신청!*\n• 이름: ${customerInfo.name}\n• 연락처: ${customerInfo.phone}\n• 세션: ${sessionId}`);
 
             return NextResponse.json({
                 response: `${customerInfo.name}님, 감사합니다. 담당 상담사가 ${customerInfo.phone}으로 빠르게 연락드리겠습니다.`,

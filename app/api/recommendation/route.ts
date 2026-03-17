@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
+import { sendSlack, sendSlackError } from '@/lib/slack';
 
 function getSupabase() {
     return createClient(
@@ -7,9 +8,6 @@ function getSupabase() {
         process.env.SUPABASE_SERVICE_KEY!
     );
 }
-
-// Slack webhook (optional)
-const SLACK_WEBHOOK = process.env.SLACK_WEBHOOK_URL;
 
 export async function POST(request: Request) {
     try {
@@ -49,26 +47,15 @@ export async function POST(request: Request) {
 
         if (error) {
             console.error('Supabase insert error:', error);
+            await sendSlackError('recommendation', error);
             return NextResponse.json(
                 { error: '저장 중 오류가 발생했습니다.' },
                 { status: 500 }
             );
         }
 
-        // Slack 알림 (webhook 설정 시)
-        if (SLACK_WEBHOOK) {
-            try {
-                await fetch(SLACK_WEBHOOK, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        text: `🔔 *새 맞춤 추천 요청!*\n• 지역: ${region}\n• 유형: ${facilityType}\n• 예산: ${budget || '미입력'}\n• 연락처: ${phoneClean}\n• 메모: ${message || '없음'}\n• ID: #${data.id}`,
-                    }),
-                });
-            } catch (e) {
-                console.error('Slack notification failed:', e);
-            }
-        }
+        // Slack 알림
+        await sendSlack('recommend', `🎯 *새 맞춤 추천 요청!*\n• 희망 지역: ${region}\n• 시설 유형: ${facilityType}\n• 예산 범위: ${budget || '미선택'}\n• 연락처: ${phoneClean}\n• 궁금하신 사항: ${message || '없음'}\n• ID: #${data.id}`);
 
         return NextResponse.json({ success: true, id: data.id });
     } catch (err) {

@@ -1,6 +1,7 @@
 // 정보 수정 요청 API
 import { getSupabaseServer } from '@/lib/supabaseServer';
 import { NextRequest, NextResponse } from 'next/server';
+import { sendSlack, sendSlackError } from '@/lib/slack';
 
 const supabase = getSupabaseServer();
 
@@ -31,8 +32,12 @@ export async function POST(request: NextRequest) {
 
         if (error) {
             console.error('Correction insert error:', error);
+            await sendSlackError('corrections', error);
             return NextResponse.json({ error: '등록에 실패했습니다.' }, { status: 500 });
         }
+
+        // Slack 알림
+        await sendSlack('correction', `✏️ *정보 수정 요청!*\n• 시설: ${facility_name}\n• 유형: ${correction_type}\n• 내용: ${content.slice(0, 100)}...\n• 요청자: ${name || '미입력'}\n• 연락처: ${contact || '미입력'}`);
 
         return NextResponse.json({ success: true, data });
     } catch (err) {
