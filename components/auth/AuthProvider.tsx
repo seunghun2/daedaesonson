@@ -97,23 +97,23 @@ export function AuthProvider({ children }: { children: ReactNode }) {
             // 카카오 로그인 콜백 처리
             if (typeof window !== 'undefined') {
                 const params = new URLSearchParams(window.location.search);
-                const kakaoAuth = params.get('kakao_auth');
-                if (kakaoAuth) {
-                    console.log('[auth] kakao_auth detected');
+                const kakaoSession = params.get('kakao_session');
+                if (kakaoSession) {
+                    console.log('[auth] kakao_session detected');
                     // URL에서 쿼리 제거
                     window.history.replaceState(null, '', window.location.pathname);
                     try {
-                        const decoded = atob(kakaoAuth);
-                        const parts = decoded.split(':');
-                        const email = parts[0];
-                        const password = parts.slice(1).join(':');
-                        console.log('[auth] email:', email, 'password length:', password?.length);
-                        if (email && password) {
-                            console.log('[auth] calling signInWithPassword...');
-                            const { data, error } = await supabase.auth.signInWithPassword({ email, password });
-                            console.log('[auth] signIn result:', !!data?.session, 'error:', error?.message);
-                            if (!error && data?.session) {
-                                console.log('[auth] SUCCESS! user:', data.session.user?.id);
+                        const decoded = atob(kakaoSession);
+                        const tokens = JSON.parse(decoded);
+                        console.log('[auth] Setting session from tokens');
+                        if (tokens.access_token && tokens.refresh_token) {
+                            const { error } = await supabase.auth.setSession({
+                                access_token: tokens.access_token,
+                                refresh_token: tokens.refresh_token,
+                            });
+                            console.log('[auth] setSession result - error:', error?.message);
+                            if (!error) {
+                                console.log('[auth] Session set successfully');
                                 return; // onAuthStateChange에서 처리
                             }
                         }

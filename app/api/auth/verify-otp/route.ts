@@ -14,16 +14,24 @@ export async function POST(request: NextRequest) {
         const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
         const anonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
 
-        const supabaseAdmin = createClient(supabaseUrl, serviceKey);
+        if (!serviceKey || !supabaseUrl || !anonKey) {
+            console.error('[verify-otp] Missing env vars:', { serviceKey: !!serviceKey, supabaseUrl: !!supabaseUrl, anonKey: !!anonKey });
+            return NextResponse.json({ error: '서버 설정 오류입니다' }, { status: 500 });
+        }
+
+        const supabaseAdmin = createClient(supabaseUrl, serviceKey, {
+            auth: { autoRefreshToken: false, persistSession: false }
+        });
 
         // OTP 확인
-        const { data: otpData } = await supabaseAdmin
+        const { data: otpData, error: otpError } = await supabaseAdmin
             .from('otp_codes')
             .select('*')
             .eq('phone', cleanPhone)
             .single();
 
-        if (!otpData) {
+        if (otpError || !otpData) {
+            console.error('[verify-otp] OTP lookup error:', otpError?.message);
             return NextResponse.json({ error: '인증번호를 먼저 발송해주세요' }, { status: 400 });
         }
 
@@ -45,67 +53,78 @@ export async function POST(request: NextRequest) {
         const email = `phone_${cleanPhone}@phone.local`;
         const password = `phone_${cleanPhone}_${serviceKey.slice(0, 12)}`;
 
-        // 기존 유저 확인 (REST API)
-        const usersRes = await fetch(`${supabaseUrl}/auth/v1/admin/users?per_page=50`, {
-            headers: { Authorization: `Bearer ${serviceKey}`, apikey: serviceKey },
-        });
-        const usersData = await usersRes.json();
-        const existingUser = usersData?.users?.find((u: any) => u.email === email);
+        // admin API로 유저 검색 (per_page 충분히 크게)
+        let userId: string = '';
 
-        let userId: string;
-
-        if (existingUser) {
-            userId = existingUser.id;
-            // 비밀번호 업데이트 (REST API)
-            await fetch(`${supabaseUrl}/auth/v1/admin/users/${userId}`, {
-                method: 'PUT',
-                headers: {
-                    Authorization: `Bearer ${serviceKey}`,
-                    apikey: serviceKey,
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ password }),
+        try {
+            // 기존 유저 확인 - Supabase JS admin client 사용
+            const { data: listData, error: listError } = await supabaseAdmin.auth.admin.listUsers({
+                perPage: 1000,
             });
-        } else {
-            // 신규 유저 생성 (REST API)
-            const createRes = await fetch(`${supabaseUrl}/auth/v1/admin/users`, {
-                method: 'POST',
-                headers: {
-                    Authorization: `Bearer ${serviceKey}`,
-                    apikey: serviceKey,
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
+
+            if (listError) {
+                console.error('[verify-otp] listUsers error:', listError.message);
+            }
+
+            const existingUser = listData?.users?.find((u: any) => u.email === email);
+
+            if (existingUser) {
+                userId = existingUser.id;
+                // 비밀번호 업데이트
+                const { error: updateError } = await supabaseAdmin.auth.admin.updateUserById(userId, {
+                    password,
+                });
+                if (updateError) {
+                    console.error('[verify-otp] updateUser error:', updateError.message);
+                }
+            } else {
+                // 신규 유저 생성
+                const { data: createData, error: createError } = await supabaseAdmin.auth.admin.createUser({
                     email,
                     password,
                     email_confirm: true,
                     user_metadata: { phone: cleanPhone, provider: 'phone' },
-                }),
-            });
-            const newUser = await createRes.json();
-            userId = newUser?.id || '';
-
-            // 프로필 생성
-            if (userId) {
-                await supabaseAdmin.from('profiles').upsert({
-                    id: userId,
-                    nickname: `사용자_${cleanPhone.slice(-4)}`,
-                    provider: 'phone',
-                    phone: cleanPhone,
-                    favorite_facilities: [],
-                    created_at: new Date().toISOString(),
-                    updated_at: new Date().toISOString(),
                 });
+
+                if (createError) {
+                    console.error('[verify-otp] createUser error:', createError.message);
+                    return NextResponse.json({ error: '계정 생성에 실패했습니다' }, { status: 500 });
+                }
+
+                userId = createData?.user?.id || '';
+
+                // 프로필 생성
+                if (userId) {
+                    await supabaseAdmin.from('profiles').upsert({
+                        id: userId,
+                        nickname: `사용자_${cleanPhone.slice(-4)}`,
+                        provider: 'phone',
+                        phone: cleanPhone,
+                        favorite_facilities: [],
+                        created_at: new Date().toISOString(),
+                        updated_at: new Date().toISOString(),
+                    });
+                }
             }
+        } catch (adminError: any) {
+            console.error('[verify-otp] Admin API error:', adminError?.message || adminError);
+            return NextResponse.json({ error: '사용자 처리에 실패했습니다' }, { status: 500 });
         }
 
         // anon key로 로그인하여 세션 토큰 발급
         if (userId) {
-            const loginClient = createClient(supabaseUrl, anonKey);
+            const loginClient = createClient(supabaseUrl, anonKey, {
+                auth: { autoRefreshToken: false, persistSession: false }
+            });
             const { data: signInData, error: signInError } = await loginClient.auth.signInWithPassword({
                 email,
                 password,
             });
+
+            if (signInError) {
+                console.error('[verify-otp] signIn error:', signInError.message);
+                return NextResponse.json({ error: '로그인 처리에 실패했습니다' }, { status: 500 });
+            }
 
             if (signInData?.session) {
                 return NextResponse.json({
@@ -116,12 +135,11 @@ export async function POST(request: NextRequest) {
                     },
                 });
             }
-            console.error('Sign in error:', signInError);
         }
 
         return NextResponse.json({ error: '로그인 처리에 실패했습니다' }, { status: 500 });
-    } catch (error) {
-        console.error('Verify OTP error:', error);
+    } catch (error: any) {
+        console.error('[verify-otp] FATAL error:', error?.message || error);
         return NextResponse.json({ error: '서버 오류가 발생했습니다' }, { status: 500 });
     }
 }
