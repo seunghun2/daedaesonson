@@ -227,7 +227,7 @@ export default function AIChatbot({ isOpen, onClose, facilityContext, onOpenCons
         } finally {
             setIsLoading(false);
         }
-    }, [input, isLoading, messages, sessionId, facilityContext, messageCount, contactSubmitted, showContactForm, pendingImage, pendingImagePreview, streamingText]);
+    }, [input, isLoading, messages, sessionId, facilityContext, messageCount, contactSubmitted, showContactForm, pendingImage, pendingImagePreview, streamingText, user]);
 
     /* ── 상담 폼 제출 ── */
     const submitContact = async () => {
@@ -660,7 +660,15 @@ export default function AIChatbot({ isOpen, onClose, facilityContext, onOpenCons
                                                         }, 15);
                                                     }
                                                     if (data.showContactForm) setShowContactForm(true);
-                                                }).catch(() => setIsLoading(false));
+                                                }).catch(() => {
+                                                    setIsLoading(false);
+                                                    setMessageCount(prev => Math.max(0, prev - 1));
+                                                    setMessages(prev => [...prev, {
+                                                        role: 'assistant',
+                                                        content: '네트워크 오류가 발생했어요. 잠시 후 다시 시도해주세요.',
+                                                        timestamp: new Date().toISOString(),
+                                                    }]);
+                                                });
                                             }, 50);
                                         }}
                                         style={{

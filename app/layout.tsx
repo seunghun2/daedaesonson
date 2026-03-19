@@ -9,17 +9,17 @@ import { ColorSchemeScript, MantineProvider, createTheme } from '@mantine/core';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: '대대손손 - 전국 장지 조회 1등 플랫폼',
-  description: '전국 1,500여개 봉안당, 수목장, 공원묘지 가격을 한눈에 비교하세요. 지역별 최저가 시설을 쉽게 찾아보세요.',
-  keywords: ['봉안당', '수목장', '공원묘지', '장묘시설', '납골당', '자연장', '봉안시설 가격', '추모공원'],
+  title: '대대손손 - 전국 장지 비교 1등 플랫폼 | 봉안당·수목장·공원묘지 가격비교',
+  description: '전국 1,500여개 장지 가격을 한눈에 비교하세요. 봉안당, 수목장, 자연장, 공원묘지 가격 비교부터 장지 종류별 특징, 지역별 최저가 시설까지. 장지 비교는 대대손손.',
+  keywords: ['장지 비교', '장지 가격 비교', '장지 종류', '장지 추천', '봉안당', '수목장', '공원묘지', '장묘시설', '납골당', '자연장', '봉안시설 가격', '추모공원', '봉안당 가격', '수목장 가격', '장지 비용'],
   referrer: 'origin',
   metadataBase: new URL('https://daedaesonson.com'),
   alternates: {
     canonical: '/',
   },
   openGraph: {
-    title: '대대손손 - 전국 장지 조회 1등 플랫폼',
-    description: '전국 1,500여개 봉안당, 수목장, 공원묘지 가격을 한눈에 비교하세요.',
+    title: '대대손손 - 전국 장지 비교 1등 플랫폼 | 봉안당·수목장·공원묘지 가격비교',
+    description: '전국 1,500여개 장지 가격을 한눈에 비교하세요. 봉안당, 수목장, 자연장, 공원묘지 가격 비교부터 장지 종류별 특징까지.',
     url: 'https://daedaesonson.com',
     siteName: '대대손손',
     locale: 'ko_KR',
@@ -27,8 +27,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: '대대손손 - 전국 장지 조회 1등 플랫폼',
-    description: '전국 1,500여개 봉안당, 수목장, 공원묘지 가격을 한눈에 비교하세요.',
+    title: '대대손손 - 전국 장지 비교 1등 플랫폼 | 봉안당·수목장·공원묘지 가격비교',
+    description: '전국 1,500여개 장지 가격을 한눈에 비교하세요. 봉안당, 수목장, 자연장, 공원묘지 가격 비교부터 장지 종류별 특징까지.',
   },
   robots: {
     index: true,
@@ -86,7 +86,7 @@ export default function RootLayout({
               '@type': 'WebSite',
               name: '대대손손',
               url: 'https://daedaesonson.com',
-              description: '전국 봉안당, 수목장, 공원묘지 가격비교 플랫폼',
+              description: '전국 장지 비교 플랫폼. 봉안당, 수목장, 공원묘지 가격비교',
               potentialAction: {
                 '@type': 'SearchAction',
                 target: 'https://daedaesonson.com/list?q={search_term_string}',
@@ -125,6 +125,7 @@ export default function RootLayout({
               function gtag(){dataLayer.push(arguments);}
               gtag('js', new Date());
               gtag('config', 'G-XHCFVSDRDY');
+              gtag('config', 'AW-18001454717');
             `,
           }}
         />

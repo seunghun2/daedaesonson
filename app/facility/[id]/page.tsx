@@ -59,8 +59,9 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
     // 서비스 유형 키워드 (매장, 봉안, 수목장 등)
     const serviceTypes: string[] = [];
-    if (data.standardizedPrices?.length) {
-        const types = new Set(data.standardizedPrices.map((p: any) => p.serviceType));
+    const stdPrices = data.standardizedPrices || data.priceInfo?.standardizedPrices;
+    if (stdPrices?.length) {
+        const types = new Set(stdPrices.map((p: any) => p.serviceType));
         if (types.has('BURIAL') || types.has('FAMILY_GRAVE')) serviceTypes.push('매장');
         if (types.has('BONGSAN') || types.has('CHARNEL')) serviceTypes.push('봉안');
         if (types.has('NATURAL_BURIAL')) serviceTypes.push('수목장');

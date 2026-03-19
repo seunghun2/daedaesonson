@@ -62,6 +62,7 @@ export default function FacilityPageClient({ facilityBasic }: FacilityPageClient
     const theme = useMantineTheme();
     const isMobile = useMediaQuery(`(max-width: ${theme.breakpoints.sm})`);
     const [facility, setFacility] = useState<any>(facilityBasic);
+    const [allFacilities, setAllFacilities] = useState<any[]>([]);
     const [mounted, setMounted] = useState(false);
     const enriched = useRef(false);
     const redirected = useRef(false);
@@ -106,6 +107,11 @@ export default function FacilityPageClient({ facilityBasic }: FacilityPageClient
         if (!enriched.current) {
             enriched.current = true;
             fetchFacilityData();
+            // 📱 모바일: 주변 시설 추천용 전체 시설 로드
+            fetch('/data/facilities.json')
+                .then(res => res.ok ? res.json() : [])
+                .then(data => { if (Array.isArray(data)) setAllFacilities(data); })
+                .catch(() => {});
         }
 
         // 뒤로가기 등으로 페이지가 다시 보일 때 데이터 새로고침
@@ -165,6 +171,7 @@ export default function FacilityPageClient({ facilityBasic }: FacilityPageClient
         >
             <FacilityDetail
                 facility={facility}
+                allFacilities={allFacilities}
                 onClose={handleClose}
                 onMapView={() => {
                     // 🗺️ 지도보기: 좌표를 sessionStorage에 저장 → 메인 지도에서 해당 위치로 이동

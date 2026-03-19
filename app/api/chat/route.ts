@@ -324,7 +324,7 @@ export async function POST(request: NextRequest) {
                     representativePrice: found.representativePrice,
                     institutionType: found.institutionType,
                     description: found.description,
-                    standardizedPrices: found.standardizedPrices,
+                    standardizedPrices: found.standardizedPrices || found.priceInfo?.standardizedPrices,
                     amenities: found.amenities,
                 };
             } else {
@@ -536,11 +536,19 @@ export async function POST(request: NextRequest) {
             if (subFiltered.length > 0) results = subFiltered;
         }
 
+        // ── standardizedPrices 추출 헬퍼 (priceInfo 폴백 포함) ──
+        const getStdPrices = (f: any): any[] | null => {
+            if (f.standardizedPrices && Array.isArray(f.standardizedPrices) && f.standardizedPrices.length > 0) return f.standardizedPrices;
+            if (f.priceInfo?.standardizedPrices && Array.isArray(f.priceInfo.standardizedPrices) && f.priceInfo.standardizedPrices.length > 0) return f.priceInfo.standardizedPrices;
+            return null;
+        };
+
         // ── 시설별 모든 실제 가격 추출 헬퍼 ──
         const getAllPrices = (f: any): number[] => {
             const prices: number[] = [];
-            if (f.standardizedPrices && Array.isArray(f.standardizedPrices)) {
-                for (const group of f.standardizedPrices) {
+            const spSource = getStdPrices(f);
+            if (spSource) {
+                for (const group of spSource) {
                     if (group.rows && Array.isArray(group.rows)) {
                         for (const row of group.rows) {
                             if (row.price && row.price > 0 && row.feeType !== 'MAINTENANCE') {
@@ -662,13 +670,14 @@ export async function POST(request: NextRequest) {
                     facilityData += `\n\n${i + 1}. ${f.name} (${isPublic}, ${f.address || ''})`;
                     facilityData += `\n   [URL용 코드: ${f.id} — 답변에 절대 노출 금지]`;
 
-                    if (f.standardizedPrices && f.standardizedPrices.length > 0) {
+                    const fsp = getStdPrices(f);
+                    if (fsp) {
                         // 매칭 상품 (±30%)
                         const matchedItems: string[] = [];
                         // 기타 상품 요약
                         const otherItems: string[] = [];
 
-                        for (const pg of f.standardizedPrices) {
+                        for (const pg of fsp) {
                             if (!pg.rows) continue;
                             for (const row of pg.rows) {
                                 if (!row.price || row.price <= 0 || row.feeType === 'MAINTENANCE') continue;
@@ -701,7 +710,7 @@ export async function POST(request: NextRequest) {
                         }
 
                         // 관리비
-                        for (const pg of f.standardizedPrices) {
+                        for (const pg of fsp) {
                             if (!pg.rows) continue;
                             const maint = pg.rows.find((r: any) => r.feeType === 'MAINTENANCE' && r.price > 0);
                             if (maint) {
@@ -728,8 +737,9 @@ export async function POST(request: NextRequest) {
                     facilityData += `\n${i + 1}. ${f.name} | ${cats[f.category] || f.category} (${isPublic}) | ${f.address || ''}`;
                     facilityData += `\n   [URL용 코드: ${f.id} — 답변에 절대 노출 금지]`;
 
-                    if (f.standardizedPrices && f.standardizedPrices.length > 0) {
-                        for (const pg of f.standardizedPrices) {
+                    const fStdPrices2 = getStdPrices(f);
+                    if (fStdPrices2) {
+                        for (const pg of fStdPrices2) {
                             if (!pg.rows || pg.rows.length === 0) continue;
                             const usageRows = pg.rows.filter((r: any) => r.price && r.price > 0 && r.feeType !== 'MAINTENANCE');
                             if (usageRows.length === 0) continue;
@@ -740,7 +750,7 @@ export async function POST(request: NextRequest) {
                             facilityData += `\n   └ ${pg.subType || pg.serviceType}: ${summary}`;
                         }
                         // 관리비
-                        for (const pg of f.standardizedPrices) {
+                        for (const pg of fStdPrices2!) {
                             if (!pg.rows) continue;
                             const maint = pg.rows.find((r: any) => r.feeType === 'MAINTENANCE' && r.price > 0);
                             if (maint) {
@@ -778,8 +788,8 @@ export async function POST(request: NextRequest) {
         // 정보 완성도 스코어 (가격 데이터 풍부도 + 정보 완성도)
         const cardScore = (f: any): number => {
             let s = 0;
-            if (f.standardizedPrices?.length > 0) {
-                const rowCount = f.standardizedPrices.reduce((acc: number, pg: any) => acc + (pg.rows?.length || 0), 0);
+            if (getStdPrices(f)) {
+                const rowCount = getStdPrices(f)!.reduce((acc: number, pg: any) => acc + (pg.rows?.length || 0), 0);
                 s += Math.min(rowCount * 2, 20);
             }
             if (f.phone) s += 5;
@@ -850,8 +860,8 @@ export async function POST(request: NextRequest) {
             const minP = allUsagePrices.length > 0 ? Math.min(...allUsagePrices) : null;
             let matchedPrice: number | null = null;
             let matchedItem: string | null = null;
-            if (targetPrice > 0 && f.standardizedPrices) {
-                for (const pg of f.standardizedPrices) {
+            if (targetPrice > 0 && getStdPrices(f)) {
+                for (const pg of getStdPrices(f)!) {
                     if (!pg.rows) continue;
                     for (const row of pg.rows) {
                         if (!row.price || row.price <= 0 || row.feeType === 'MAINTENANCE') continue;
@@ -900,11 +910,12 @@ export async function POST(request: NextRequest) {
                 pricingTarget = nameResults[0];
             }
 
-            if (pricingTarget?.standardizedPrices?.length > 0) {
+            if (pricingTarget && (pricingTarget.standardizedPrices?.length > 0 || pricingTarget.priceInfo?.standardizedPrices?.length > 0)) {
+                const priceSource = pricingTarget.standardizedPrices?.length > 0 ? pricingTarget.standardizedPrices : pricingTarget.priceInfo.standardizedPrices;
                 const fmtPrice = (p: number) => p >= 10000 ? `${Math.round(p / 10000)}만원` : `${p.toLocaleString()}원`;
                 const sections: any[] = [];
 
-                for (const pg of pricingTarget.standardizedPrices) {
+                for (const pg of priceSource) {
                     if (!pg.rows || pg.rows.length === 0) continue;
                     const usageRows = pg.rows.filter((r: any) => r.price && r.price > 0 && r.feeType !== 'MAINTENANCE');
                     const maintRows = pg.rows.filter((r: any) => r.feeType === 'MAINTENANCE' && r.price > 0);

@@ -200,18 +200,15 @@ function PriceInfoSection({ priceInfo, hasPrice, facilityName, websiteUrl }: { p
         const [openDescSubType, setOpenDescSubType] = useState<string | null>(null);
         // 아코디언 열림 상태 (controlled) - 초기값은 아래에서 설정
         const [openAccItems, setOpenAccItems] = useState<string[]>(() => {
-            // 초기값: 카테고리가 1개인 서비스타입은 자동 열기
+            // 초기값: 각 서비스타입의 첫 번째 서브타입 자동 열기
             if (!standardizedPrices) return [];
             const byService: Record<string, string[]> = {};
             standardizedPrices.forEach(g => {
                 if (!byService[g.serviceType]) byService[g.serviceType] = [];
                 byService[g.serviceType].push(g.subType);
             });
-            const autoOpen: string[] = [];
-            Object.values(byService).forEach(subs => {
-                if (subs.length === 1) autoOpen.push(subs[0]);
-            });
-            return autoOpen;
+            // 각 서비스타입에서 첫 번째 서브타입만 열기
+            return Object.values(byService).map(subs => subs[0]);
         });
 
         // 서브타입 아코디언 아이템 렌더링
@@ -5180,7 +5177,6 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                         background: '#fff', borderRadius: '20px 20px 0 0',
                         padding: '0 0 40px 0',
                         animation: 'shareSlideUp 0.25s ease-out',
-                        left: isMobile ? 0 : 400,
                     }}>
                         {/* 헤더 */}
                         <div style={{
@@ -5250,7 +5246,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                 <div style={{
                     position: 'fixed',
                     bottom: isMobile ? 80 : 40,
-                    left: isMobile ? '50%' : 600,
+                    left: '50%',
                     transform: 'translateX(-50%)',
                     background: '#333', color: '#fff', padding: '12px 24px', borderRadius: 12,
                     fontSize: 14, fontWeight: 500, zIndex: 10060, pointerEvents: 'none' as const,
