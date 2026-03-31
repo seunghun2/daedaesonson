@@ -87,12 +87,13 @@ export async function POST(
                 : rating;
 
             // DB 업데이트는 fire-and-forget (응답 지연 방지)
-            supabase
-                .from('Facility')
-                .update({ reviewCount: newCount, rating: avgRating })
-                .eq('id', id)
-                .then(() => {})
-                .catch((e) => console.error('Facility update error:', e));
+            (async () => {
+                const { error } = await supabase
+                    .from('Facility')
+                    .update({ reviewCount: newCount, rating: avgRating })
+                    .eq('id', id);
+                if (error) console.error('Facility update error:', error);
+            })();
         }
 
         // Slack 알림 — fire-and-forget (응답 블로킹 제거)
