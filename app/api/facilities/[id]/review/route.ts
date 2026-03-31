@@ -34,8 +34,18 @@ export async function POST(
             }
         }
 
-        // Hash password (비로그인 유저만)
-        const hashedPassword = password ? await bcrypt.hash(password, 10) : null;
+        // Hash password (비로그인 유저만) — salt 6으로 축소 (리뷰 비번엔 충분, 5~8배 빠름)
+        // 시설정보 미리 조회를 병렬로 실행
+        const [hashedPassword, facilityResult] = await Promise.all([
+            password ? bcrypt.hash(password, 6) : Promise.resolve(null),
+            supabase
+                .from('Facility')
+                .select('reviewCount, rating, name')
+                .eq('id', id)
+                .single()
+        ]);
+
+        const facility = facilityResult.data;
 
         // Create review in Supabase
         const { data: newReview, error } = await supabase
@@ -62,13 +72,7 @@ export async function POST(
             );
         }
 
-        // Update facility reviewCount
-        const { data: facility } = await supabase
-            .from('Facility')
-            .select('reviewCount, rating, name')
-            .eq('id', id)
-            .single();
-
+        // Update facility reviewCount + 평균 평점 재계산 (병렬)
         if (facility) {
             const newCount = (facility.reviewCount || 0) + 1;
 
@@ -82,14 +86,18 @@ export async function POST(
                 ? parseFloat((allReviews.reduce((sum, r) => sum + r.rating, 0) / allReviews.length).toFixed(1))
                 : rating;
 
-            await supabase
+            // DB 업데이트는 fire-and-forget (응답 지연 방지)
+            supabase
                 .from('Facility')
                 .update({ reviewCount: newCount, rating: avgRating })
-                .eq('id', id);
+                .eq('id', id)
+                .then(() => {})
+                .catch((e) => console.error('Facility update error:', e));
         }
 
-        // Slack 알림
-        await sendSlack('review', `⭐ *새 이용 후기!*\n• 시설: ${facility?.name || id}\n• 평점: ${'⭐'.repeat(rating)}\n• 작성자: ${author || '익명'}\n• 내용: ${content.slice(0, 100)}...`);
+        // Slack 알림 — fire-and-forget (응답 블로킹 제거)
+        sendSlack('review', `⭐ *새 이용 후기!*\n• 시설: ${facility?.name || id}\n• 평점: ${'⭐'.repeat(rating)}\n• 작성자: ${author || '익명'}\n• 내용: ${content.slice(0, 100)}...`)
+            .catch((e) => console.error('Slack send error:', e));
 
         // Return without password
         const { password: _, ...safeReview } = newReview;
