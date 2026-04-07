@@ -168,6 +168,8 @@ export default function AIChatbot({ isOpen, onClose, facilityContext, onOpenCons
     /* ── 메시지 전송 ── */
     const sendMessage = useCallback(async () => {
         if ((!input.trim() && !pendingImage) || isLoading || streamingText !== null) return;
+        // 상담 신청 완료 후 추가 메시지 차단
+        if (contactSubmitted) return;
         // 10턴 제한 (비로그인만)
         if (!user && messageCount >= MAX_TURNS) return;
         // 버그 #3: 기존 스트리밍 인터벌 정리
@@ -609,8 +611,8 @@ export default function AIChatbot({ isOpen, onClose, facilityContext, onOpenCons
                                 )}
                             </div>
                         </div>
-                        {/* 빠른 응답 버튼 (마지막 AI 메시지에서만) */}
-                        {isLastAssistant && quickReplies.length > 0 && !isLoading && (
+                        {/* 빠른 응답 버튼 (마지막 AI 메시지에서만, 상담 신청 전) */}
+                        {isLastAssistant && quickReplies.length > 0 && !isLoading && !contactSubmitted && (
                             <div style={{
                                 display: 'flex', flexWrap: 'wrap', gap: 8,
                                 justifyContent: 'flex-end',
@@ -786,8 +788,37 @@ export default function AIChatbot({ isOpen, onClose, facilityContext, onOpenCons
 
                 {/* ── 하단 입력 영역 (채널톡 스타일) ── */}
                 <div style={{ background: '#ffffff', flexShrink: 0 }}>
-                    {/* 10턴 제한 도달 시 */}
-                    {!user && messageCount >= MAX_TURNS ? (
+                    {/* 상담 신청 완료 상태 */}
+                    {contactSubmitted ? (
+                        <div style={{
+                            padding: '20px 16px', textAlign: 'center',
+                            background: '#f0f8f0', borderTop: '1px solid #e0e8e0',
+                        }}>
+                            <div style={{ fontSize: 15, fontWeight: 700, color: '#2e7d32', marginBottom: 6 }}>
+                                ✅ 상담 신청이 완료되었습니다
+                            </div>
+                            <div style={{ fontSize: 13, color: '#666', marginBottom: 14 }}>
+                                전문 상담사가 빠르게 연락드릴게요.
+                            </div>
+                            <button onClick={() => {
+                                setContactSubmitted(false);
+                                setMessageCount(0);
+                                setMessages([]);
+                                setSessionId(null);
+                                setContactName('');
+                                setContactPhone('');
+                                sessionStorage.removeItem('chat_session_id');
+                                sessionStorage.setItem('chat_msg_count', '0');
+                                sessionStorage.removeItem('chat_messages');
+                            }} style={{
+                                padding: '10px 24px', borderRadius: 10,
+                                background: '#fff', color: NAVY, border: `1px solid ${NAVY}`,
+                                fontSize: 13, fontWeight: 600, cursor: 'pointer',
+                            }}>
+                                🔄 새 대화 시작
+                            </button>
+                        </div>
+                    ) : !user && messageCount >= MAX_TURNS ? (
                         <div style={{
                             padding: '16px', textAlign: 'center',
                             background: '#f8f8fc', borderTop: '1px solid #f0f0f0',
@@ -810,7 +841,6 @@ export default function AIChatbot({ isOpen, onClose, facilityContext, onOpenCons
                                 )}
                                 <button onClick={() => {
                                     if (user) {
-                                        // 로그인 된 유저: 바로 리셋
                                         setMessageCount(0);
                                         setMessages([]);
                                         setSessionId(null);
@@ -818,7 +848,6 @@ export default function AIChatbot({ isOpen, onClose, facilityContext, onOpenCons
                                         sessionStorage.setItem('chat_msg_count', '0');
                                         sessionStorage.removeItem('chat_messages');
                                     } else {
-                                        // 비로그인: 로그인 모달 열기
                                         setShowLoginModal(true);
                                     }
                                 }} style={{
