@@ -295,7 +295,7 @@ function PriceInfoSection({ priceInfo, hasPrice, facilityName, websiteUrl }: { p
                             <Group gap={6} align="center" wrap="nowrap">
                                 <Text fw={600} size="sm" c="dark.7">{group.subType}</Text>
                                 {desc && (
-                                    <span
+                                    <div
                                         role="button"
                                         tabIndex={0}
                                         onClick={(e) => {
@@ -307,21 +307,12 @@ function PriceInfoSection({ priceInfo, hasPrice, facilityName, websiteUrl }: { p
                                                 setOpenAccItems(prev => [...prev, group.subType]);
                                             }
                                         }}
-                                        style={{
-                                            display: 'inline-flex',
-                                            alignItems: 'center',
-                                            justifyContent: 'center',
-                                            width: 20,
-                                            height: 20,
-                                            borderRadius: '50%',
-                                            backgroundColor: isDescOpen ? '#868e96' : '#ced4da',
-                                            cursor: 'pointer',
-                                            flexShrink: 0,
-                                            transition: 'background-color 0.2s',
-                                        }}
+                                        style={{ padding: '12px', margin: '-12px', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', justifyContent: 'center' }}
                                     >
-                                        <span style={{ fontSize: '11px', color: '#fff', fontWeight: 500, lineHeight: 1 }}>?</span>
-                                    </span>
+                                        <span style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: 20, height: 20, borderRadius: '50%', backgroundColor: isDescOpen ? '#868e96' : '#ced4da', flexShrink: 0, transition: 'background-color 0.2s' }}>
+                                            <span style={{ fontSize: '11px', color: '#fff', fontWeight: 500, lineHeight: 1 }}>?</span>
+                                        </span>
+                                    </div>
                                 )}
                             </Group>
                             <Group gap={4} wrap="nowrap">
@@ -722,7 +713,7 @@ function PriceInfoSection({ priceInfo, hasPrice, facilityName, websiteUrl }: { p
                                                         <Group gap={6} align="center" wrap="nowrap">
                                                             <Text fw={600} size="sm" c="dark.7">{cat}</Text>
                                                             {catDesc && (
-                                                                <span
+                                                                <div
                                                                     role="button"
                                                                     tabIndex={0}
                                                                     onClick={(e) => {
@@ -731,20 +722,12 @@ function PriceInfoSection({ priceInfo, hasPrice, facilityName, websiteUrl }: { p
                                                                         const el = document.getElementById(`desc-${cat}`);
                                                                         if (el) el.style.display = el.style.display === 'none' ? 'block' : 'none';
                                                                     }}
-                                                                    style={{
-                                                                        display: 'inline-flex',
-                                                                        alignItems: 'center',
-                                                                        justifyContent: 'center',
-                                                                        width: 20,
-                                                                        height: 20,
-                                                                        borderRadius: '50%',
-                                                                        backgroundColor: '#ced4da',
-                                                                        cursor: 'pointer',
-                                                                        flexShrink: 0,
-                                                                    }}
+                                                                    style={{ padding: '12px', margin: '-12px', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', justifyContent: 'center' }}
                                                                 >
-                                                                    <span style={{ fontSize: '11px', color: '#fff', fontWeight: 500, lineHeight: 1 }}>?</span>
-                                                                </span>
+                                                                    <span style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: 20, height: 20, borderRadius: '50%', backgroundColor: '#ced4da', flexShrink: 0, transition: 'background-color 0.2s', }}>
+                                                                        <span style={{ fontSize: '11px', color: '#fff', fontWeight: 500, lineHeight: 1 }}>?</span>
+                                                                    </span>
+                                                                </div>
                                                             )}
                                                         </Group>
                                                         <Badge color="gray" variant="light" size="sm">
@@ -1775,7 +1758,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                     <Box bg="brand.8" px="md" py={10}>
                         <Group justify="space-between" align="center" wrap="nowrap">
                             <Group gap={4} wrap="nowrap" style={{ flex: 1, minWidth: 0 }}>
-                                <ActionIcon variant="transparent" color="white" w={32} h={32} onClick={onClose} style={{ flexShrink: 0 }}>
+                                <ActionIcon variant="transparent" color="white" w={44} h={44} onClick={onClose} style={{ flexShrink: 0 }}>
                                     <span className="material-symbols-outlined" style={{ fontSize: '22px', fontVariationSettings: "'FILL' 1" }}>arrow_back_ios_new</span>
                                 </ActionIcon>
                                 <Group gap={6} wrap="nowrap" style={{ overflow: 'hidden' }}>
@@ -1816,8 +1799,8 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                     <ActionIcon
                                         variant="transparent"
                                         color="white"
-                                        w={36}
-                                        h={36}
+                                        w={44}
+                                        h={44}
                                         onClick={(e) => {
                                             e.stopPropagation();
                                             e.preventDefault();
@@ -1840,8 +1823,8 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                 <ActionIcon
                                     variant="transparent"
                                     color="white"
-                                    w={36}
-                                    h={36}
+                                    w={44}
+                                    h={44}
                                     onClick={(e) => {
                                         e.stopPropagation();
                                         e.preventDefault();
