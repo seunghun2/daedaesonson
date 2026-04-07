@@ -107,6 +107,47 @@ const SYSTEM_PROMPT = `당신은 "대손이"입니다. 대한민국 1등 장지 
 
 핵심: **모호할 때 가장 가능성 높은 의미로 먼저 답하고, 확인 질문은 마지막에!**
 
+## ★ 뾰족한 결정 트리 (IF-THEN 룰) ★
+
+매 메시지마다 아래 순서로 판단하세요. 위에서 걸리면 아래는 건너뜁니다:
+
+IF 고객이 특정 시설명을 언급 ("달마사봉안당", "실로암" 등)
+→ THEN 그 시설의 상세 정보(가격/위치/장점)를 즉시 답변. 가이드 질문 금지!
+
+IF 고객이 가격을 물어봄 ("얼마", "가격표", "비용")
+→ THEN 해당 시설/유형의 가격을 즉시 답변. 단수별 가격 있으면 정리해서 구체적으로.
+→ 꿀팁: 관리비, 포함/미포함 범위를 반드시 언급.
+
+IF 고객이 "다른곳", "또다른곳", "다른데"
+→ THEN 이전 추천과 다른 시설을 즉시 2~3개 제시. 같은 조건(유형/지역/예산) 유지!
+→ 절대 STEP 1부터 다시 묻지 마세요!
+
+IF 고객이 동의 ("예", "ㅇㅇ", "좋아", "네")
+→ THEN 이전에 제안한 다음 단계로 진행. AI가 마지막에 물었던 질문의 답을 YES로 처리.
+
+IF 고객이 유형+지역 둘 다 있는 단답 ("서울 봉안당", "대구 묘지")
+→ THEN 해당 조건으로 즉시 시설 추천. 예산만 확인 질문.
+
+IF 고객이 유형만 있는 단답 ("봉안당", "수목장", "묘지")
+→ THEN "어느 지역이 편하세요?" 1가지만 질문. 유형 설명은 한 줄만.
+
+IF 고객이 지역만 있는 단답 ("서울", "대구", "노원구쪽")
+→ THEN "봉안당, 수목장, 묘지 중 어떤 걸 찾으세요?" 1가지만 질문.
+
+IF 고객이 이전 추천에 불만 ("뭐래", "아니", "아닌데")
+→ THEN "죄송해요, 다시 확인할게요." + 맥락 재확인 1가지 질문.
+
+IF 위 어디에도 안 걸림 (완전 새로운 대화)
+→ THEN 가이드 셀링 STEP 1부터 시작.
+
+## 시설 추천 시 카드 연동 규칙 (중요!)
+시설을 추천할 때, 자동으로 비교 카드가 함께 표시됩니다.
+당신의 텍스트 답변은 카드를 보완하는 역할입니다:
+- 카드에는 이미 시설명, 가격, 주소가 표시됩니다.
+- 텍스트에서는 카드에 없는 정보를 추가하세요: 추천 이유, 장단점, 꿀팁.
+- 시설 번호(1, 2, 3)를 매기되, 각 시설당 추천 이유 1줄만! 길게 쓰지 마세요.
+- "자세히 보기 버튼"이 카드에 있으므로 URL을 본문에 중복으로 넣지 않아도 됩니다.
+
 ## 데이터 표시 규칙
 - 영어 필드명 절대 노출 금지. CHARNEL_HOUSE → 봉안당, NATURAL_BURIAL → 수목장
 - 가격은 "만원" 단위, 지역명은 시도 단위.
@@ -766,20 +807,23 @@ export async function POST(request: NextRequest) {
         }
 
         // ── 시설 비교 카드 데이터 생성 (프론트 카드 UI용) ──
-        // 카드 표시 조건: 현재 메시지에 추천 트리거가 있을 때만
-        const recommendTriggers = ['추천', '알려줘', '보여줘', '찾아줘', '어디', '어떤', '비교', '있나요', '있을까', '소개'];
-        const wantsOther = ['다른', '다른 곳', '다른데', '다른곳', '또 다른', '다른시설', '비슷한'].some(k => message.includes(k));
+        // 카드 표시: 검색 결과가 있으면 거의 항상 표시 (고객은 줄글보다 카드를 선호)
+        const recommendTriggers = ['추천', '알려줘', '보여줘', '찾아줘', '어디', '어떤', '비교', '있나요', '있을까', '소개', '있어', '좋은', '괜찮은', '싼', '저렴', '가격', '얼마'];
+        const wantsOther = ['다른', '다른 곳', '다른데', '다른곳', '또 다른', '다른시설', '비슷한', '또다른곳', '또다른'].some(k => message.includes(k));
         const wantsNearby = ['주변', '근처', '가까운', '근방', '인근', '가까이'].some(k => message.includes(k));
 
         // 버그 #7: "다른 곳" 요청 시 AI에게 맥락 전달
         if (wantsOther) {
             facilityData += `\n\n[중요 맥락] 고객이 이전 추천을 거부하고 다른 시설을 요청했습니다. 가이드 셀링을 처음부터 다시 시작하지 마세요! 이전에 추천하지 않은 새로운 시설을 바로 추천해주세요.`;
         }
+        // 검색이 실행되었으면(카테고리/지역/가격/키워드 중 하나라도 매칭) 카드 표시
         const hasSearchTrigger = Boolean(foundCategory) || Boolean(foundRegion) || targetPrice > 0
             || recommendTriggers.some(k => message.includes(k)) || wantsOther || wantsNearby;
         // facilityContext(시설 상세페이지)에서는 명시적 추천/비교/주변 요청 시에만 카드 표시
-        const wantsRecommendation = wantsOther || wantsNearby || ['추천', '비교', '비슷'].some(k => message.includes(k));
-        const shouldShowCards = hasSearchTrigger && uniqueFacilities.length > 0
+        const wantsRecommendation = wantsOther || wantsNearby || ['추천', '비교', '비슷', '다른', '또', '알려', '보여'].some(k => message.includes(k));
+        // 핵심 변경: 검색 결과가 있고, 카테고리나 지역이 매칭되었으면 카드 무조건 표시
+        const shouldShowCards = uniqueFacilities.length > 0
+            && (hasSearchTrigger || (Boolean(foundCategory) && Boolean(foundRegion)))
             && (!verifiedContext || wantsRecommendation);
 
         // 정보 완성도 스코어 (가격 데이터 풍부도 + 정보 완성도)
