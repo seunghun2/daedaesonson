@@ -997,6 +997,16 @@ export async function POST(request: NextRequest) {
         const result = await chat.sendMessage(message);
         const response = result.response.text();
 
+        // 📊 실시간 대화 내용 슬랙 전송 (fire-and-forget)
+        const msgCount = history.length + 1;
+        const facilityLabel = verifiedContext?.name ? ` (${verifiedContext.name})` : '';
+        const sessionLabel = sessionId ? sessionId.slice(0, 8) : '신규';
+        const slackMsg = `💬 *챗봇 대화${facilityLabel}*\n` +
+            `• 세션: ${sessionLabel} | 메시지 #${msgCount}\n` +
+            `• 👤 고객: ${message.slice(0, 200)}\n` +
+            `• 🤖 대손이: ${response.slice(0, 300)}${response.length > 300 ? '...' : ''}`;
+        sendSlack('chatbot', slackMsg).catch(() => {});
+
         // 3. 세션 저장
         const newMsg: ChatMessage = { role: 'user', content: message, timestamp: new Date().toISOString() };
         const aiMsg: ChatMessage = { role: 'assistant', content: response, timestamp: new Date().toISOString() };
