@@ -1079,6 +1079,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
     });
     const [showLoginForFavorite, setShowLoginForFavorite] = useState(false);
     const [favoriteToast, setFavoriteToast] = useState<string | null>(null);
+    const [toastPanelRect, setToastPanelRect] = useState<{left: number; width: number; bottom: number} | null>(null);
     const { user, toggleFavorite, isFavorite } = useAuth();
     const isFavorited = isFavorite(String(facility.id));
     const [showAllInquiries, setShowAllInquiries] = useState(false);
@@ -1893,6 +1894,13 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                     }
                                     const willFavorite = !isFavorited;
                                     toggleFavorite(String(facility.id));
+                                    // PC에서 패널 위치 계산
+                                    if (containerRef.current) {
+                                        const rect = containerRef.current.getBoundingClientRect();
+                                        setToastPanelRect({ left: rect.left, width: rect.width, bottom: rect.bottom });
+                                    } else {
+                                        setToastPanelRect(null);
+                                    }
                                     setFavoriteToast(willFavorite ? '관심 장소로 선택되었습니다' : '관심 장소에서 해제되었습니다');
                                     setTimeout(() => setFavoriteToast(null), 2000);
                                     if (window.gtag) {
@@ -5105,13 +5113,18 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                 )}
             </Box >
             <LoginModal isOpen={showLoginForFavorite} onClose={() => setShowLoginForFavorite(false)} />
-            {/* 토스 스타일 토스트 */}
+            {/* 즐겨찾기 토스트 - PC: 상세 패널 기준 하단 / 모바일: 뷰포트 기준 */}
             {favoriteToast && (
                 <div style={{
                     position: 'fixed',
+                    // PC(isDesktop)에서 패널 rect가 있으면 패널 기준, 없으면 fallback
                     bottom: 100,
-                    left: '50%',
-                    transform: 'translateX(-50%)',
+                    left: isDesktop && toastPanelRect
+                        ? toastPanelRect.left + toastPanelRect.width / 2
+                        : '50%',
+                    transform: isDesktop && toastPanelRect
+                        ? 'translateX(-50%)'
+                        : 'translateX(-50%)',
                     zIndex: 99999,
                     pointerEvents: 'none',
                     animation: 'favToastAnim 2s ease-in-out forwards',

@@ -217,9 +217,16 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         }
     };
 
-    // 관심 시설 토글
+    // 관심 시설 토글 (Optimistic Update: 즉시 UI 반영 → 실패 시 롤백)
     const toggleFavorite = async (facilityId: string) => {
         if (!user || !session) return;
+        const isCurrentlyFav = favorites.includes(String(facilityId));
+        // ★ 즉시 UI 업데이트 (API 응답 전)
+        if (isCurrentlyFav) {
+            setFavorites(prev => prev.filter(id => id !== String(facilityId)));
+        } else {
+            setFavorites(prev => [...prev, String(facilityId)]);
+        }
         try {
             const res = await fetch('/api/favorites', {
                 method: 'POST',
@@ -229,14 +236,15 @@ export function AuthProvider({ children }: { children: ReactNode }) {
                 },
                 body: JSON.stringify({ facilityId }),
             });
-            const data = await res.json();
-            if (data.action === 'added') {
+            if (!res.ok) throw new Error('API error');
+        } catch (e) {
+            // 실패 시 롤백
+            console.error('toggleFavorite error:', e);
+            if (isCurrentlyFav) {
                 setFavorites(prev => [...prev, String(facilityId)]);
-            } else if (data.action === 'removed') {
+            } else {
                 setFavorites(prev => prev.filter(id => id !== String(facilityId)));
             }
-        } catch (e) {
-            console.error('toggleFavorite error:', e);
         }
     };
 
