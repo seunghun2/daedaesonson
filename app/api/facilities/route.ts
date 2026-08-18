@@ -74,7 +74,7 @@ async function loadPricingData(): Promise<Map<string, RepresentativePricing>> {
 export async function GET() {
     try {
         // 🚀 필요 컬럼만 선택 (pricing, images 등 무거운 JSONB 제외)
-        const FACILITY_COLUMNS = 'id,name,address,lat,lng,category,minPrice,maxPrice,representativePrice,operatorType,hasParking,hasRestaurant,hasStore,hasAccessibility,isPublic,isActive,isFull,reviewCount,rating,phone,fax,capacity,lastUpdated,websiteUrl,viewCount,description,originalName,updatedAt,thumbnail';
+        const FACILITY_COLUMNS = 'id,name,address,lat,lng,category,minPrice,maxPrice,representativePrice,operatorType,hasParking,hasRestaurant,hasStore,hasAccessibility,isPublic,isActive,isFull,reviewCount,rating,phone,fax,capacity,lastUpdated,websiteUrl,viewCount,favoriteCount,description,originalName,updatedAt,thumbnail';
 
         let facilitiesFromDb: any[] = [];
         let from = 0;
@@ -89,7 +89,7 @@ export async function GET() {
 
             if (error) {
                 console.error('Supabase Fetch Error:', error);
-                throw new Error('Database connection failed');
+                throw new Error(`Supabase Fetch Error: ${error.message || JSON.stringify(error)}`);
             }
 
             if (data) facilitiesFromDb.push(...data);
@@ -152,6 +152,7 @@ export async function GET() {
                 lastUpdated: f.lastUpdated,
                 websiteUrl: f.websiteUrl || '',
                 viewCount: f.viewCount || 0,
+                favoriteCount: f.favoriteCount || 0,
                 description: f.description || '',
                 originalName: f.originalName,
                 updatedAt: f.updatedAt,
