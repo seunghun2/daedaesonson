@@ -159,12 +159,12 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
     }
   };
 
-  // 🚀 SSR로 미리 로드된 데이터 사용 (API fetch 없음!)
+  // 🚀 SSR로 미리 로드된 데이터 사용 + 비어있을 경우 클라이언트 fetch 폴백
   const [dbFacilities, setDbFacilities] = useState<Facility[]>(initialFacilities);
 
-  // 🚀 캐시 저장은 비동기로 (메인스레드 블로킹 방지)
   useEffect(() => {
     if (initialFacilities.length > 0) {
+      setDbFacilities(initialFacilities);
       const save = () => {
         try { sessionStorage.setItem('facilitiesCache', JSON.stringify(initialFacilities)); } catch { }
       };
@@ -173,9 +173,19 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
       } else {
         setTimeout(save, 100);
       }
+    } else {
+      // Fallback: SSR이 비어있는 경우 클라이언트 API 호출
+      fetch('/api/facilities')
+        .then(res => res.json())
+        .then(data => {
+          if (Array.isArray(data) && data.length > 0) {
+            setDbFacilities(data);
+          }
+        })
+        .catch(err => console.error('Failed to load facilities fallback:', err));
     }
   }, [initialFacilities]);
-  const [isLoading, setIsLoading] = useState(false); // 이미 로드됨
+  const [isLoading, setIsLoading] = useState(false);
 
   // 현재 지도 좌표
   const [currentBounds, setCurrentBounds] = useState<{ south: number, north: number, west: number, east: number } | null>(null);
@@ -1163,7 +1173,7 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
                 checked={tempCategory.includes('all')}
                 onChange={() => setTempCategory(['all'])}
                 size="md"
-                color="indigo"
+                color="brand"
                 styles={{ label: { fontSize: '15px', fontWeight: 500, cursor: 'pointer' }, input: { cursor: 'pointer' } }}
               />
               {[
@@ -1189,7 +1199,7 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
                     }
                   }}
                   size="md"
-                  color="indigo"
+                  color="brand"
                   styles={{ label: { fontSize: '15px', fontWeight: 500, cursor: 'pointer' }, input: { cursor: 'pointer' } }}
                 />
               ))}
@@ -1209,7 +1219,7 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
                 { label: '공설', value: 'public' },
                 { label: '사설', value: 'private' },
               ]}
-              color="indigo"
+              color="brand"
               styles={{ root: { marginBottom: 20 } }}
             />
 
@@ -1222,7 +1232,7 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
               checked={tempHideInquiry}
               onChange={() => setTempHideInquiry(!tempHideInquiry)}
               size="md"
-              color="indigo"
+              color="brand"
               styles={{ label: { fontSize: '15px', fontWeight: 500, cursor: 'pointer' }, input: { cursor: 'pointer' } }}
             />
           </div>
@@ -1482,7 +1492,7 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
                         }
                       }}
                       size="md"
-                      color="indigo"
+                      color="brand"
                       styles={{ label: { fontSize: '15px', fontWeight: 500, cursor: 'pointer' }, input: { cursor: 'pointer' } }}
                     />
                   ))}
@@ -1493,7 +1503,7 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
                   checked={tempNearbyHideInquiry}
                   onChange={() => setTempNearbyHideInquiry(!tempNearbyHideInquiry)}
                   size="md"
-                  color="indigo"
+                  color="brand"
                   styles={{ label: { fontSize: '15px', fontWeight: 500, cursor: 'pointer' }, input: { cursor: 'pointer' } }}
                 />
               </div>
@@ -1533,7 +1543,7 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
                       checked={nearbyHideInquiry}
                       onChange={() => setNearbyHideInquiry(!nearbyHideInquiry)}
                       size="xs"
-                      color="indigo"
+                      color="brand"
                       styles={{ label: { fontSize: '12px', cursor: 'pointer', color: '#868e96', paddingLeft: 6 }, input: { cursor: 'pointer' } }}
                     />
                   </div>
