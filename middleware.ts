@@ -26,7 +26,7 @@ export function middleware(request: NextRequest) {
     // API 경로, 정적 파일, _next 등은 제외
     if (shouldLogAccess(pathname)) {
         const logUrl = new URL('/api/access-log', request.url);
-        
+
         fetch(logUrl.toString(), {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -35,7 +35,7 @@ export function middleware(request: NextRequest) {
                 referer: request.headers.get('referer') || '',
                 userAgent: request.headers.get('user-agent') || '',
             }),
-        }).catch(() => {}); // fire-and-forget: 로깅 실패해도 사용자 경험에 영향 없음
+        }).catch(() => { }); // fire-and-forget: 로깅 실패해도 사용자 경험에 영향 없음
     }
 
     return NextResponse.next();
@@ -50,7 +50,7 @@ function shouldLogAccess(pathname: string): boolean {
     if (pathname === '/robots.txt') return false;
     if (pathname === '/sitemap.xml') return false;
     if (pathname.includes('.')) return false; // 파일 확장자가 있는 경우 제외
-    
+
     return true;
 }
 

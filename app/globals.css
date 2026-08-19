@@ -113,3 +113,28 @@ body {
 .material-symbols-outlined.material-symbols-outlined--loaded {
   opacity: 1;
 }
+
+/* 🏷️ 지도 시설명 라벨 애니메이션 */
+@keyframes labelSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.facility-label-inner {
+  background: white;
+  padding: 5px 10px;
+  border-radius: 6px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  font-size: 12px;
+  font-weight: 700;
+  color: #333;
+  white-space: nowrap;
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  animation: labelSlideUp 0.25s ease-out forwards;
+}

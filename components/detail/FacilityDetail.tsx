@@ -1913,7 +1913,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                 }}
                             >
                                 <span className="material-symbols-outlined" style={{ fontSize: '18px', color: isFavorited ? '#FFD43B' : 'white', fontVariationSettings: isFavorited ? "'FILL' 1" : "'FILL' 0", transition: 'all 0.2s ease' }}>star</span>
-                                <span style={{ fontSize: '16px', color: isFavorited ? '#FFD43B' : 'white', fontWeight: 500, transition: 'color 0.2s ease' }}>{isFavorited ? 1 : 0}</span>
+                                <span style={{ fontSize: '16px', color: isFavorited ? '#FFD43B' : 'white', fontWeight: 500, transition: 'color 0.2s ease' }}>{(facility.favoriteCount || 0) + (isFavorited ? 1 : 0)}</span>
                             </div>
 
                             <div style={{ width: '1px', backgroundColor: 'rgba(255,255,255,0.12)', alignSelf: 'stretch' }} />

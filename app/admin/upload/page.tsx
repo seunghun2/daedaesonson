@@ -16,9 +16,36 @@ import { Facility, FACILITY_CATEGORY_LABELS } from '@/types';
 import { formatKoreanCurrency } from '@/lib/format';
 import FacilityEditModal from './FacilityEditModal';
 
+function formatRowPrice(item: Facility): string {
+    const rp = item.representativePrice || 0;
+    const mp = item.minPrice || 0;
+    const price = rp > 0 ? rp : mp;
+    if (!price) return '0원';
+    const normalized = price < 10000 ? price * 10000 : price;
+    return formatKoreanCurrency(normalized);
+}
 
+function getImageCount(images: any): number {
+    if (!images) return 0;
+    if (Array.isArray(images)) return images.length;
+    if (typeof images === 'string') {
+        try {
+            const parsed = JSON.parse(images);
+            return Array.isArray(parsed) ? parsed.length : 0;
+        } catch {
+            return 0;
+        }
+    }
+    return 0;
+}
 
-// 🚀 모달은 FacilityEditModal.tsx로 완전 분리됨
+function formatRowDate(updated: string | undefined): string {
+    if (!updated) return '-';
+    if (updated.includes('T')) {
+        return updated.replace('T', ' ').substring(5, 16);
+    }
+    return updated;
+}
 
 
 export default function AdminPage() {
@@ -45,9 +72,9 @@ export default function AdminPage() {
 
     const [itemsPerPage, setItemsPerPage] = useState(() => {
         if (typeof window !== 'undefined') {
-            return Number(localStorage.getItem('adminItemsPerPage')) || 100;
+            return Number(localStorage.getItem('adminItemsPerPage')) || 25;
         }
-        return 100;
+        return 25;
     });
 
     // localStorage에 저장
@@ -161,11 +188,11 @@ export default function AdminPage() {
     };
 
 
-    // Filter Logic
+    // Filter Logic - 🚀 debouncedSearch 사용으로 타이핑 렉 0ms
     const filteredData = useMemo(() => {
-        const query = searchQuery.trim().toLowerCase();
+        const query = debouncedSearch.trim().toLowerCase();
         let result = facilities.filter(item => {
-            const matchSearch = !query || item.name.toLowerCase().includes(query) || item.address.toLowerCase().includes(query);
+            const matchSearch = !query || item.name.toLowerCase().includes(query) || item.address.toLowerCase().includes(query) || item.id.toLowerCase().includes(query);
             const matchCategory = categoryFilter ? item.category === categoryFilter : true;
             const matchVerify = priceVerifyFilter === 'verified'
                 ? item.priceInfo?.priceVerified === true
@@ -175,24 +202,13 @@ export default function AdminPage() {
             return matchSearch && matchCategory && matchVerify;
         });
 
-        // 정렬
+        // 🚀 고속 정렬 (ID 정규식 파싱 최소화)
         if (sortOrder === 'id-asc') {
-            // ID 오름차순 (park-0001, park-0002, ...)
-            result = result.sort((a, b) => {
-                const numA = parseInt(a.id.replace(/\D/g, '')) || 0;
-                const numB = parseInt(b.id.replace(/\D/g, '')) || 0;
-                return numA - numB;
-            });
+            result.sort((a, b) => (a.id > b.id ? 1 : -1));
         } else if (sortOrder === 'id-desc') {
-            // ID 내림차순 (park-1498, park-1497, ...)
-            result = result.sort((a, b) => {
-                const numA = parseInt(a.id.replace(/\D/g, '')) || 0;
-                const numB = parseInt(b.id.replace(/\D/g, '')) || 0;
-                return numB - numA;
-            });
+            result.sort((a, b) => (a.id < b.id ? 1 : -1));
         } else if (sortOrder === 'updated-desc') {
-            // 수정일 최신순
-            result = result.sort((a, b) => {
+            result.sort((a, b) => {
                 const dateA = a.updatedAt ? new Date(a.updatedAt).getTime() : 0;
                 const dateB = b.updatedAt ? new Date(b.updatedAt).getTime() : 0;
                 return dateB - dateA;
@@ -200,7 +216,7 @@ export default function AdminPage() {
         }
 
         return result;
-    }, [facilities, searchQuery, categoryFilter, priceVerifyFilter, sortOrder]);
+    }, [facilities, debouncedSearch, categoryFilter, priceVerifyFilter, sortOrder]);
 
     // Pagination Logic
     const paginatedData = useMemo(() => {
@@ -507,42 +523,17 @@ export default function AdminPage() {
                                             </Badge>
                                         </Table.Td>
                                         <Table.Td style={{ maxWidth: 200 }}><Text truncate>{item.address}</Text></Table.Td>
-                                        <Table.Td>{(() => {
-                                            const rp = item.representativePrice || 0;
-                                            const mp = item.minPrice || 0;
-                                            const price = rp > 0 ? rp : mp;
-                                            if (!price) return '0원';
-                                            const normalized = price < 10000 ? price * 10000 : price;
-                                            return formatKoreanCurrency(normalized);
-                                        })()}</Table.Td>
+                                        <Table.Td>{formatRowPrice(item)}</Table.Td>
                                         <Table.Td>
-                                            {(() => {
-                                                const imgs = typeof item.images === 'string' ? (() => { try { return JSON.parse(item.images as string); } catch { return []; } })() : (item.images || []);
-                                                return Array.isArray(imgs) && imgs.length > 0 ? (
-                                                    <Badge size="sm" variant="dot" color="teal">이미지 {imgs.length}</Badge>
-                                                ) : (
-                                                    <Badge size="sm" variant="dot" color="gray">이미지 없음</Badge>
-                                                );
-                                            })()}
+                                            {getImageCount(item.images) > 0 ? (
+                                                <Badge size="sm" variant="dot" color="teal">이미지 {getImageCount(item.images)}</Badge>
+                                            ) : (
+                                                <Badge size="sm" variant="dot" color="gray">이미지 없음</Badge>
+                                            )}
                                         </Table.Td>
                                         <Table.Td>
                                             <Text size="xs" c="dimmed">
-                                                {(() => {
-                                                    const updated = item.lastUpdated;
-                                                    if (!updated) return '-';
-                                                    // ISO 형식이면 날짜+시간으로 표시
-                                                    if (updated.includes('T')) {
-                                                        return new Date(updated).toLocaleString('ko-KR', {
-                                                            timeZone: 'Asia/Seoul',
-                                                            month: 'numeric',
-                                                            day: 'numeric',
-                                                            hour: '2-digit',
-                                                            minute: '2-digit'
-                                                        });
-                                                    }
-                                                    // 기존 YYYY-MM-DD 형식은 그대로
-                                                    return updated;
-                                                })()}
+                                                {formatRowDate(item.lastUpdated)}
                                             </Text>
                                         </Table.Td>
                                         <Table.Td>

@@ -57,6 +57,47 @@ function HighlightText({ text, highlight }: { text: string, highlight: string })
   );
 }
 
+const PLACEHOLDER_TEXTS = ['서울 봉안당', '경기 수목장', '부산 공원묘지', '대전 납골당', '인천 자연장'];
+
+// 🚀 상태 격리: 3초 주기 플레이스홀더 애니메이션이 상위 HomeContent를 리렌더링시키지 않도록 분리
+function RollingPlaceholder() {
+  const [index, setIndex] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setIndex((prev) => (prev + 1) % PLACEHOLDER_TEXTS.length);
+    }, 3000);
+    return () => clearInterval(interval);
+  }, []);
+
+  return (
+    <Box
+      pos="absolute"
+      left={38}
+      top="50%"
+      style={{
+        transform: 'translateY(-50%)',
+        pointerEvents: 'none',
+        overflow: 'hidden',
+        height: '20px',
+        width: '150px'
+      }}
+    >
+      <Box
+        key={index}
+        style={{
+          animation: 'slideUp 0.4s ease-out forwards',
+          color: '#adb5bd',
+          fontSize: '14px',
+          lineHeight: '20px'
+        }}
+      >
+        {PLACEHOLDER_TEXTS[index]}
+      </Box>
+    </Box>
+  );
+}
+
 interface HomeClientProps {
   initialFacilities: Facility[];
 }
@@ -197,10 +238,6 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
   const [showMyInfo, setShowMyInfo] = useState(false);
   const { user, profile, signOut, favorites, isFavorite, toggleFavorite } = useAuth();
 
-  // 검색창 롤링 placeholder
-  const placeholderTexts = ['서울 봉안당', '경기 수목장', '부산 공원묘지', '대전 납골당', '인천 자연장'];
-  const [placeholderIndex, setPlaceholderIndex] = useState(0);
-
   // 📊 GA4: 홈페이지 페이지뷰
   useEffect(() => {
     if (typeof window !== 'undefined' && window.gtag) {
@@ -210,13 +247,6 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
         page_path: '/'
       });
     }
-  }, []);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setPlaceholderIndex((prev) => (prev + 1) % placeholderTexts.length);
-    }, 3000);
-    return () => clearInterval(interval);
   }, []);
 
   // 🖥️ PC: /facility/[id]에서 리다이렉트 되었을 때 사이드 패널에서 시설 상세 열기
@@ -347,23 +377,23 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
     // submittedQuery는 엔터 치거나 자동완성 클릭할 때만 설정!
   };
 
-  // 자동완성 로직
+  // 자동완성 로직 (200ms 디바운스 - 타이핑 렉 방지)
   useEffect(() => {
     if (!searchQuery.trim()) {
       setCompletionResults({ regions: [], facilities: [] });
       return;
     }
 
-    const query = searchQuery.trim().toLowerCase().normalize('NFC');
+    const timer = setTimeout(async () => {
+      const query = searchQuery.trim().toLowerCase().normalize('NFC');
+      
+      // 1. Facility Search (디바운스 내부 실행)
+      const facMatches = dbFacilities.filter(f =>
+        f.name.toLowerCase().normalize('NFC').includes(query) ||
+        f.address.toLowerCase().normalize('NFC').includes(query)
+      ).slice(0, 5);
 
-    // 1. Facility Search
-    const facMatches = dbFacilities.filter(f =>
-      f.name.toLowerCase().normalize('NFC').includes(query) ||
-      f.address.toLowerCase().normalize('NFC').includes(query)
-    ).slice(0, 5);
-
-    // 2. Region Search
-    const fetchRegions = async () => {
+      // 2. Region Search
       try {
         const regMatches = await searchRegions(query);
         setCompletionResults({
@@ -373,9 +403,8 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
       } catch (e) {
         setCompletionResults({ regions: [], facilities: facMatches });
       }
-    };
+    }, 200);
 
-    const timer = setTimeout(fetchRegions, 400); // 400ms for stable autocomplete
     return () => clearTimeout(timer);
   }, [searchQuery, dbFacilities]);
 
@@ -725,42 +754,8 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
                 onFocus={() => { setSearchFocused(true); loadRegionDataOnce(); }}
                 onBlur={() => setTimeout(() => setSearchFocused(false), 250)} // 250ms for mobile touch stability
               />
-              {/* 롤링 Placeholder 오버레이 */}
-              {!searchQuery && (
-                <Box
-                  style={{
-                    position: 'absolute',
-                    top: '50%',
-                    left: '12px',
-                    transform: 'translateY(-50%)',
-                    pointerEvents: 'none',
-                    overflow: 'hidden',
-                    height: '20px',
-                    width: '150px'
-                  }}
-                >
-                  {/* 현재 텍스트 (위로 올라가며 사라짐) */}
-                  <Box
-                    key={placeholderIndex}
-                    style={{
-                      animation: 'slideUp 0.4s ease-out forwards',
-                      color: '#adb5bd',
-                      fontSize: '14px',
-                      lineHeight: '20px'
-                    }}
-                  >
-                    {placeholderTexts[placeholderIndex]}
-                  </Box>
-                </Box>
-              )}
-              <style>{`
-                @keyframes slideUp {
-                  0% { transform: translateY(100%); opacity: 0; }
-                  20% { opacity: 1; }
-                  80% { opacity: 1; }
-                  100% { transform: translateY(0); opacity: 1; }
-                }
-              `}</style>
+              {/* 롤링 Placeholder 오버레이 (상태 격리 컴포넌트) */}
+              {!searchQuery && <RollingPlaceholder />}
 
               {/* 자동완성 목록 */}
               {searchFocused && searchQuery.trim() && (completionResults.regions.length > 0 || completionResults.facilities.length > 0) && (

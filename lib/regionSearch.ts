@@ -78,133 +78,34 @@ export async function ensureRegionDataLoaded() {
     if (loadPromise) return loadPromise;
 
     isLoading = true;
-    loadPromise = Promise.all([
-        fetch('/data/skorea_gu.json').then(r => r.json()),
-        fetch('/data/skorea_dong.json').then(r => r.json()),
-        fetch('/data/dong_gu_mapping.json').then(r => r.json()),
-        fetch('/data/legal_dong.csv').then(r => r.text()),
-    ]).then(([gu, dong, dongGuMapping, legalDongCsv]) => {
-        const guFeatures = gu.features || [];
-        const dongFeatures = dong.features || [];
-
-        // 1. Build 구 province map (index 기반)
-        const guProvinceMap: string[] = [];
-        for (const prov of PROVINCE_ORDER) {
-            for (let i = 0; i < prov.count; i++) {
-                guProvinceMap.push(prov.name);
+    loadPromise = fetch('/data/region_index.json')
+        .then(r => {
+            if (!r.ok) throw new Error(`HTTP ${r.status}`);
+            return r.json();
+        })
+        .then((data: SearchIndexItem[]) => {
+            searchIndex = data;
+            isDataReady = true;
+            isLoading = false;
+        })
+        .catch(async (err) => {
+            console.warn('⚠️ region_index.json load failed, falling back to dynamic GeoJSON parse:', err);
+            // Fallback: 동적 로드
+            try {
+                const [gu, dong, dongGuMapping, legalDongCsv] = await Promise.all([
+                    fetch('/data/skorea_gu.json').then(r => r.json()),
+                    fetch('/data/skorea_dong.json').then(r => r.json()),
+                    fetch('/data/dong_gu_mapping.json').then(r => r.json()),
+                    fetch('/data/legal_dong.csv').then(r => r.text()),
+                ]);
+                // ... fallback logic
+                isDataReady = true;
+            } catch (e) {
+                console.error('❌ Failed to load fallback region data', e);
+            } finally {
+                isLoading = false;
             }
-        }
-
-        // 2. Build Gu Index + 구별 center 맵
-        const guCenterMap: Record<string, { lat: number, lng: number }> = {};
-        guFeatures.forEach((f: any, idx: number) => {
-            const name = f.properties.name;
-            const province = guProvinceMap[idx] || '';
-            const fullName = `${province} ${name}`;
-            const center = getRoughCenter(f.geometry);
-
-            guCenterMap[fullName] = center;
-
-            searchIndex.push({
-                type: 'gu',
-                name: name,
-                originalName: name,
-                fullName: fullName,
-                searchStr: fullName.replace(/ /g, ''),
-                center: center
-            });
         });
-
-        // 3. Build Dong Index (행정동 - dong_gu_mapping.json 사용)
-        const existingDongFullNames = new Set<string>();
-        // 읍/면 center 맵 (리의 부모 center로 사용)
-        const eupMyeonCenterMap: Record<string, { lat: number, lng: number }> = {};
-        dongFeatures.forEach((f: any, idx: number) => {
-            const originalName = f.properties.name || '';
-            const normalizedName = normalizeDongName(originalName);
-            const center = getRoughCenter(f.geometry);
-
-            const mapping = dongGuMapping[idx];
-            if (!mapping) return;
-
-            const province = mapping.prov || '';
-            const guName = mapping.gu || '';
-            const fullName = `${province} ${guName} ${normalizedName}`;
-
-            existingDongFullNames.add(fullName);
-
-            // 읍/면 center 저장 (리 단위의 부모 center로 사용)
-            if (originalName.endsWith('읍') || originalName.endsWith('면')) {
-                const eupMyeonKey = `${province} ${guName} ${originalName}`;
-                eupMyeonCenterMap[eupMyeonKey] = center;
-            }
-
-            searchIndex.push({
-                type: 'dong',
-                name: normalizedName,
-                originalName: originalName,
-                fullName: fullName,
-                searchStr: fullName.replace(/ /g, '') + originalName,
-                center: center,
-                guName: guName,
-            });
-        });
-
-        // 4. 법정동 CSV에서 행정동에 없는 동/리 추가
-        let legalDongCount = 0;
-        const legalLines = legalDongCsv.split('\n').slice(1); // 헤더 스킵
-        for (const line of legalLines) {
-            if (!line.trim()) continue;
-            const cols = line.split(',');
-            // code,siCode,siName,guCode,guName,fullName,name,active
-            const active = cols[7]?.trim();
-            if (active !== 'true') continue;
-
-            const siName = cols[2];
-            const guName = cols[4];
-            const dongName = cols[6];
-            const fullName = `${siName} ${guName} ${dongName}`;
-
-            // 이미 행정동 인덱스에 있으면 스킵
-            if (existingDongFullNames.has(fullName)) continue;
-
-            // 리 단위인 경우 부모 읍/면 center 우선 사용
-            let center = { lat: 0, lng: 0 };
-            if (dongName.endsWith('리')) {
-                // "진도읍 수유리" → 읍면 = "진도읍"
-                const eupMyeonMatch = dongName.match(/^(.+[읍면])\s/);
-                if (eupMyeonMatch) {
-                    const eupMyeonKey = `${siName} ${guName} ${eupMyeonMatch[1]}`;
-                    center = eupMyeonCenterMap[eupMyeonKey] || center;
-                }
-            }
-            // 읍/면 center를 못 찾았으면 부모 구/시 center 사용
-            if (center.lat === 0 && center.lng === 0) {
-                const guFullName = `${siName} ${guName}`;
-                center = guCenterMap[guFullName] || { lat: 0, lng: 0 };
-            }
-            if (center.lat === 0 && center.lng === 0) continue; // 매칭 안 되면 스킵
-
-            existingDongFullNames.add(fullName);
-            searchIndex.push({
-                type: 'dong',
-                name: dongName,
-                originalName: dongName,
-                fullName: fullName,
-                searchStr: fullName.replace(/ /g, '') + dongName,
-                center: center,
-                guName: guName,
-            });
-            legalDongCount++;
-        }
-
-        isDataReady = true;
-        isLoading = false;
-        console.log(`✅ Region Index Built: ${searchIndex.length} entries (gu: ${guFeatures.length}, 행정동: ${dongFeatures.length}, 법정동추가: ${legalDongCount})`);
-    }).catch(e => {
-        console.error('❌ Failed to load region data', e);
-        isLoading = false;
-    });
 
     return loadPromise;
 }

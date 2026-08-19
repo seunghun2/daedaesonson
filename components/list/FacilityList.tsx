@@ -67,7 +67,7 @@ export default function FacilityList({ facilities, loading, onFacilityClick, sel
                                 checked={hideInquiry ?? false}
                                 onChange={() => setHideInquiry(!hideInquiry)}
                                 size="xs"
-                                color="violet"
+                                color="brand"
                                 styles={{ label: { fontSize: '12px', cursor: 'pointer', color: '#868e96', paddingLeft: 6 }, input: { cursor: 'pointer' } }}
                             />
                         )}

@@ -1,5 +1,4 @@
-'use client';
-
+import React, { memo } from 'react';
 import { Card, Text, Badge, Group, Flex, ThemeIcon, Box } from '@mantine/core';
 import NextImage from 'next/image';
 import { MapPin, Building, Trees, Cross, User } from 'lucide-react';
@@ -22,7 +21,7 @@ const CATEGORY_CONFIG: Record<FacilityCategory, { icon: any; color: string; bg: 
     OTHER: { icon: MapPin, color: 'gray', bg: '#f1f3f5' },
 };
 
-export default function FacilityCard({ facility, onClick }: FacilityCardProps) {
+function FacilityCardComponent({ facility, onClick }: FacilityCardProps) {
     const config = CATEGORY_CONFIG[facility.category] || CATEGORY_CONFIG.OTHER;
     const Icon = config.icon;
 
@@ -189,7 +188,13 @@ export default function FacilityCard({ facility, onClick }: FacilityCardProps) {
                         </Text>
                     </div>
 
-                    {/* 별점/후기 제거 */}
+                    {/* 관심(별표) 숫자 노출 */}
+                    {(facility.favoriteCount ?? 0) > 0 && (
+                        <Group gap={4} mt={4}>
+                            <span className="material-symbols-outlined" style={{ fontSize: '13px', color: '#fcc419', fontVariationSettings: "'FILL' 1" }}>star</span>
+                            <Text size="xs" c="dimmed" fw={600}>{facility.favoriteCount}</Text>
+                        </Group>
+                    )}
 
                     {/* 하단: 가격 강조 */}
                     <Group justify="space-between" align="flex-end">
@@ -205,3 +210,6 @@ export default function FacilityCard({ facility, onClick }: FacilityCardProps) {
         </Card>
     );
 }
+
+const FacilityCard = memo(FacilityCardComponent);
+export default FacilityCard;

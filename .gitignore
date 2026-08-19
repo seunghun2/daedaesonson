@@ -85,3 +85,6 @@ google-vision-key.json
 credentials*.json
 scripts/
 .next 2/
+/scraped-images
+/scraped-reviews
+/scratch

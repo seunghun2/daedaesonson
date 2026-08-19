@@ -3,10 +3,10 @@
 import { useState, useEffect } from 'react';
 import { SimpleGrid, Paper, Group, Text, ThemeIcon, Table, Badge, Card, RingProgress, Center, LoadingOverlay, Stack } from '@mantine/core';
 import { Database, TrendingUp, UserCheck, AlertCircle, PhoneCall, MessageCircle, Star, Briefcase } from 'lucide-react';
-import { FACILITY_CATEGORY_LABELS, Facility } from '@/types';
+import { FACILITY_CATEGORY_LABELS, Facility, FacilityCategory } from '@/types';
 
-interface DashboardData {
-    facilities: Facility[];
+interface DashboardStats {
+    totalFacilities: number;
     membersCount: number;
     consultsCount: number;
     inquiriesCount: number;
@@ -15,9 +15,16 @@ interface DashboardData {
     partnershipCount: number;
 }
 
+interface RecentFacility {
+    id: string;
+    name: string;
+    category: string;
+    rating: number;
+}
+
 export default function AdminDashboard() {
-    const [data, setData] = useState<DashboardData>({
-        facilities: [],
+    const [statsData, setStatsData] = useState<DashboardStats>({
+        totalFacilities: 0,
         membersCount: 0,
         consultsCount: 0,
         inquiriesCount: 0,
@@ -25,74 +32,45 @@ export default function AdminDashboard() {
         correctionsCount: 0,
         partnershipCount: 0,
     });
+    const [categoryCounts, setCategoryCounts] = useState<Record<string, number>>({});
+    const [recentItems, setRecentItems] = useState<RecentFacility[]>([]);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        async function fetchAll() {
+        async function fetchStats() {
             try {
-                const [
-                    facilitiesRes,
-                    membersRes,
-                    consultsRes,
-                    inquiriesRes,
-                    reviewsRes,
-                    correctionsRes,
-                    partnershipRes,
-                ] = await Promise.all([
-                    fetch('/api/facilities').then(r => r.ok ? r.json() : []),
-                    fetch('/api/admin/members').then(r => r.ok ? r.json() : []),
-                    fetch('/api/consult').then(r => r.ok ? r.json() : { consults: [] }),
-                    fetch('/api/admin/inquiries/count').then(r => r.ok ? r.json() : { count: 0 }),
-                    fetch('/api/admin/reviews').then(r => r.ok ? r.json() : { reviews: [] }),
-                    fetch('/api/corrections').then(r => r.ok ? r.json() : { data: [] }),
-                    fetch('/api/partnership').then(r => r.ok ? r.json() : { inquiries: [] }),
-                ]);
-
-                setData({
-                    facilities: Array.isArray(facilitiesRes) ? facilitiesRes : [],
-                    membersCount: Array.isArray(membersRes) ? membersRes.length : 0,
-                    consultsCount: consultsRes?.consults?.length ?? 0,
-                    inquiriesCount: inquiriesRes?.count ?? 0,
-                    reviewsCount: reviewsRes?.reviews?.length ?? 0,
-                    correctionsCount: correctionsRes?.data?.length ?? 0,
-                    partnershipCount: partnershipRes?.inquiries?.length ?? 0,
-                });
+                const res = await fetch('/api/admin/stats');
+                if (res.ok) {
+                    const json = await res.json();
+                    if (json.stats) setStatsData(json.stats);
+                    if (json.categoryCounts) setCategoryCounts(json.categoryCounts);
+                    if (json.recentFacilities) setRecentItems(json.recentFacilities);
+                }
             } catch (e) {
                 console.error('Dashboard fetch error:', e);
             } finally {
                 setLoading(false);
             }
         }
-        fetchAll();
+        fetchStats();
     }, []);
 
-    const { facilities, membersCount, consultsCount, inquiriesCount, reviewsCount, correctionsCount, partnershipCount } = data;
-    const totalCount = facilities.length;
-
-    // 최근 등록 시설
-    const recentItems = [...facilities].slice(0, 5);
-
-    // 카테고리 통계
-    const categoryCounts = facilities.reduce((acc, curr) => {
-        acc[curr.category] = (acc[curr.category] || 0) + 1;
-        return acc;
-    }, {} as Record<string, number>);
-
+    const totalCount = statsData.totalFacilities;
     const getPercent = (count: number) => totalCount > 0 ? Math.round((count / totalCount) * 100) : 0;
 
     const charnelCount = categoryCounts['CHARNEL_HOUSE'] || 0;
     const naturalCount = categoryCounts['NATURAL_BURIAL'] || 0;
     const parkCount = categoryCounts['FAMILY_GRAVE'] || 0;
-    const otherCount = totalCount - (charnelCount + naturalCount + parkCount);
+    const otherCount = Math.max(0, totalCount - (charnelCount + naturalCount + parkCount));
 
     const stats = [
         { title: '총 등록 시설', value: totalCount.toLocaleString(), icon: Database, color: 'blue' },
-        { title: '가입 회원', value: membersCount.toLocaleString(), icon: UserCheck, color: 'grape' },
-        { title: '상담 신청', value: consultsCount.toLocaleString(), icon: PhoneCall, color: 'teal' },
-        { title: '수정 요청', value: correctionsCount.toLocaleString(), icon: AlertCircle, color: 'red' },
-        { title: '댓글 문의', value: inquiriesCount.toLocaleString(), icon: MessageCircle, color: 'cyan' },
-        { title: '방문 후기', value: reviewsCount.toLocaleString(), icon: Star, color: 'yellow' },
-        { title: '제휴 문의', value: partnershipCount.toLocaleString(), icon: Briefcase, color: 'indigo' },
+        { title: '가입 회원', value: statsData.membersCount.toLocaleString(), icon: UserCheck, color: 'grape' },
+        { title: '상담 신청', value: statsData.consultsCount.toLocaleString(), icon: PhoneCall, color: 'teal' },
+        { title: '수정 요청', value: statsData.correctionsCount.toLocaleString(), icon: AlertCircle, color: 'red' },
+        { title: '댓글 문의', value: statsData.inquiriesCount.toLocaleString(), icon: MessageCircle, color: 'cyan' },
+        { title: '방문 후기', value: statsData.reviewsCount.toLocaleString(), icon: Star, color: 'yellow' },
+        { title: '제휴 문의', value: statsData.partnershipCount.toLocaleString(), icon: Briefcase, color: 'indigo' },
     ];
 
     if (loading) return <LoadingOverlay visible />;
@@ -148,7 +126,7 @@ export default function AdminDashboard() {
                                     <Table.Td>{item.name}</Table.Td>
                                     <Table.Td>
                                         <Badge size="xs" variant="dot" color="gray">
-                                            {FACILITY_CATEGORY_LABELS[item.category] || item.category}
+                                            {FACILITY_CATEGORY_LABELS[item.category as FacilityCategory] || item.category}
                                         </Badge>
                                     </Table.Td>
                                     <Table.Td>⭐ {item.rating}</Table.Td>

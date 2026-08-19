@@ -107,8 +107,8 @@ export default function FacilityPageClient({ facilityBasic }: FacilityPageClient
         if (!enriched.current) {
             enriched.current = true;
             fetchFacilityData();
-            // 📱 모바일: 주변 시설 추천용 전체 시설 로드
-            fetch('/data/facilities.json')
+            // 📱 모바일: 주변 시설 추천용 경량 목록 로드 (/api/facilities)
+            fetch('/api/facilities')
                 .then(res => res.ok ? res.json() : [])
                 .then(data => { if (Array.isArray(data)) setAllFacilities(data); })
                 .catch(() => {});

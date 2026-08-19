@@ -273,6 +273,7 @@ export interface Facility {
     // 런타임 확장 필드 (API에서 동적으로 추가)
     thumbnail?: string;             // 대표 이미지 URL
     viewCount?: number;             // 조회수
+    favoriteCount?: number;         // 💛 찜하기(별표) 숫자
     inquiries?: any[];              // 문의 목록
     representativePrice?: number;   // 대표 가격 (숫자)
     minPrice?: number;              // 최소 가격

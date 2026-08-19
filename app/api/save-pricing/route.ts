@@ -41,14 +41,15 @@ export async function POST(request: Request) {
             return NextResponse.json({ error: 'Database update failed', details: updateError.message }, { status: 500 });
         }
 
-        // 3. PriceItem의 isRepresentative 업데이트 (기존 로직 유지)
-        for (const row of rows) {
-            if (row.id) {
-                await supabase
-                    .from('PriceItem')
-                    .update({ isRepresentative: row.isRepresentative || false })
-                    .eq('id', row.id);
-            }
+        // 3. 🚀 PriceItem 일괄 업데이트 (50회 순차 루프 제거 -> 단 1회 병렬 일괄 쿼리)
+        const repIds = rows.filter((r: any) => r.id && r.isRepresentative).map((r: any) => r.id);
+        const nonRepIds = rows.filter((r: any) => r.id && !r.isRepresentative).map((r: any) => r.id);
+
+        if (repIds.length > 0) {
+            await supabase.from('PriceItem').update({ isRepresentative: true }).in('id', repIds);
+        }
+        if (nonRepIds.length > 0) {
+            await supabase.from('PriceItem').update({ isRepresentative: false }).in('id', nonRepIds);
         }
 
 

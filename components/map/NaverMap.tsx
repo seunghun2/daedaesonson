@@ -1346,37 +1346,9 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
                             map: map,
                             icon: {
                                 content: `
-                                    <div class="facility-label" style="
-                                        display: flex;
-                                        flex-direction: column;
-                                        align-items: center;
-                                        transform: translateX(-50%);
-                                        animation: labelSlideUp 0.3s ease-out forwards;
-                                    ">
-                                        <div style="
-                                            background: white;
-                                            padding: 5px 10px;
-                                            border-radius: 6px;
-                                            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-                                            font-size: 12px;
-                                            font-weight: 700;
-                                            color: #333;
-                                            white-space: nowrap;
-                                            font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-                                        ">${name}</div>
+                                    <div class="facility-label" style="display: flex; flex-direction: column; align-items: center; transform: translateX(-50%);">
+                                        <div class="facility-label-inner">${name}</div>
                                     </div>
-                                    <style>
-                                        @keyframes labelSlideUp {
-                                            from {
-                                                opacity: 0;
-                                                transform: translateX(-50%) translateY(10px);
-                                            }
-                                            to {
-                                                opacity: 1;
-                                                transform: translateX(-50%) translateY(0);
-                                            }
-                                        }
-                                    </style>
                                 `,
                                 anchor: new window.naver.maps.Point(-30, 96),
                             },

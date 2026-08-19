@@ -24,13 +24,16 @@ export default function ConsultPage({ params }: ConsultPageProps) {
         });
 
         params.then(p => {
-            // 시설 데이터 로드
-            import('@/data/facilities.json').then(module => {
-                const facilities = module.default as any[];
-                const found = facilities.find((f: any) => f.id === p.id);
-                setFacility(found);
-                setLoading(false);
-            });
+            // 시설 개별 데이터 로드 (10.9MB 번들 청크 방지)
+            fetch(`/api/facilities/${p.id}`)
+                .then(res => res.ok ? res.json() : null)
+                .then(data => {
+                    setFacility(data);
+                    setLoading(false);
+                })
+                .catch(() => {
+                    setLoading(false);
+                });
         });
     }, [params]);
 
