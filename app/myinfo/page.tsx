@@ -7,6 +7,7 @@ import { ChevronLeft, Star, LogOut, Trash2, ChevronRight, MapPin } from 'lucide-
 import BottomNav from '@/components/common/BottomNav';
 import { useAuth } from '@/components/auth/AuthProvider';
 import { useMediaQuery } from '@mantine/hooks';
+import { getSupabaseClient } from '@/lib/supabase';
 
 export default function MyInfoPage() {
     const router = useRouter();
@@ -74,9 +75,15 @@ export default function MyInfoPage() {
     const handleDeleteAccount = async () => {
         if (!confirm('정말 탈퇴하시겠습니까?\n모든 데이터가 삭제됩니다.')) return;
         try {
+            const supabase = getSupabaseClient();
+            const { data: { session: currentSession } } = await supabase.auth.getSession();
+            const token = currentSession?.access_token || session?.access_token;
             await fetch('/api/auth/delete-account', {
                 method: 'DELETE',
-                headers: { 'Content-Type': 'application/json' },
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`,
+                },
                 body: JSON.stringify({ userId: user.id }),
             });
             await signOut();

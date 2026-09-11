@@ -1,7 +1,10 @@
-
 import { NextResponse } from 'next/server';
+import { requireAdmin } from '@/lib/adminAuth';
 
 export async function POST(request: Request) {
+    const authError = await requireAdmin();
+    if (authError) return authError;
+
     try {
         const body = await request.json();
         const { facilityId } = body;

@@ -60,18 +60,17 @@ export default function InquiryPanel({ facility, isOpen, onClose, allFacilities 
     const [pinError, setPinError] = useState('');
     const [unlockedIds, setUnlockedIds] = useState<Set<string>>(new Set());
 
-    // 문의 목록 로드 (전체 문의 - 풍성하게!)
+    // 문의 목록 로드
     useEffect(() => {
-        if (isOpen) {
+        if (isOpen && facility?.id) {
             loadInquiries();
         }
-    }, [isOpen]);
+    }, [isOpen, facility?.id]);
 
     const loadInquiries = async () => {
         setIsLoading(true);
         try {
-            // 전체 문의 로드
-            const res = await fetch('/api/admin/inquiries');
+            const res = await fetch(`/api/facilities/${facility.id}/inquiries`);
             const data = await res.json();
             if (data.inquiries) {
                 // 최신순 정렬

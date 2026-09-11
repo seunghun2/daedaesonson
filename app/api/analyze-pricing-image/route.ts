@@ -1,9 +1,13 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { GoogleGenerativeAI } from '@google/generative-ai';
+import { requireAdmin } from '@/lib/adminAuth';
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || '');
 
 export async function POST(request: NextRequest) {
+    const authError = await requireAdmin();
+    if (authError) return authError;
+
     try {
         const formData = await request.formData();
         const file = formData.get('file') as File;

@@ -22,7 +22,7 @@ interface Inquiry {
     title: string;
     content: string;
     isPrivate: boolean;
-    phone: string;
+    phone: string | null;
     type?: string;
     createdAt: string;
     replies?: { id: string; content: string; author: string; createdAt: string }[];

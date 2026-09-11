@@ -1,7 +1,14 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
+import { rateLimit } from '@/lib/rateLimit';
 
 export async function POST(request: NextRequest) {
+    const ip = request.headers.get('x-forwarded-for') || 'unknown';
+    const { success } = rateLimit({ key: `verify-otp:${ip}`, limit: 10, windowMs: 60 * 1000 });
+    if (!success) {
+        return NextResponse.json({ error: 'Too many attempts. Please try again later.' }, { status: 429 });
+    }
+
     try {
         const { phone, code } = await request.json();
 

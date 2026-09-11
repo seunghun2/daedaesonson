@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 
-const ADMIN_PASSWORD = '0612';
+const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || '0612';
 const ADMIN_TOKEN = 'dds_admin_verified';
 
 // POST: 로그인

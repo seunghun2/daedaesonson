@@ -79,6 +79,9 @@ export async function GET(request: NextRequest) {
 
 // PATCH: 상태 업데이트 (어드민)
 export async function PATCH(request: NextRequest) {
+    const authError = await requireAdmin();
+    if (authError) return authError;
+
     try {
         const body = await request.json();
         const { id, status, admin_note } = body;

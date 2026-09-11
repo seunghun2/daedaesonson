@@ -980,10 +980,15 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
             .then(data => data?.viewCount && setViewCount(data.viewCount))
             .catch(() => { }); // 실패해도 무시
 
-        // 전체 문의 개수 가져오기 (빠른 count API)
-        fetch('/api/admin/inquiries/count')
-            .then(res => res.json())
-            .then(data => setTotalInquiryCount(data.count || 0))
+        // 문의 개수 가져오기 (공개 API)
+        fetch(`/api/facilities/${facility.id}/inquiries`)
+            .then(res => res.ok ? res.json() : null)
+            .then(data => {
+                if (data?.inquiries) {
+                    setInquiries(data.inquiries);
+                    setTotalInquiryCount(data.inquiries.length);
+                }
+            })
             .catch(() => { });
     }, [facility.id]);
 

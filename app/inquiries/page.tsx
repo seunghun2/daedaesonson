@@ -18,7 +18,7 @@ interface Inquiry {
     title: string;
     content: string;
     isPrivate: boolean;
-    phone: string;
+    phone: string | null;
     type?: string;
     createdAt: string;
     replies?: { id: string; content: string; author: string; createdAt: string }[];
@@ -54,7 +54,14 @@ async function getInquiries(): Promise<Inquiry[]> {
 
 export default async function InquiriesPage() {
     // 🚀 서버에서 미리 데이터 로드 (SSR)
-    const initialInquiries = await getInquiries();
+    const inquiries = await getInquiries();
+
+    const maskedInquiries = inquiries?.map(item => ({
+        ...item,
+        phone: item.phone ? item.phone.slice(0, 7) + '****' : null,
+        content: item.isPrivate ? '비밀글입니다.' : item.content,
+        title: item.isPrivate ? '비밀 문의' : item.title,
+    })) || [];
 
     // 시설 목록 (상위 200개만 - 성능)
     const facilities = (facilitiesData as any[]).slice(0, 200).map(f => ({
@@ -64,7 +71,7 @@ export default async function InquiriesPage() {
 
     return (
         <Suspense fallback={<div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100vh' }}>로딩 중...</div>}>
-            <InquiriesClient initialInquiries={initialInquiries} facilities={facilities} />
+            <InquiriesClient initialInquiries={maskedInquiries} facilities={facilities} />
         </Suspense>
     );
 }

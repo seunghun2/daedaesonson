@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { GoogleGenerativeAI } from '@google/generative-ai';
+import { requireAdmin } from '@/lib/adminAuth';
 
 // API Key 설정 (환경변수 체크)
 const API_KEY = process.env.GEMINI_API_KEY;
@@ -7,6 +8,9 @@ const API_KEY = process.env.GEMINI_API_KEY;
 
 
 export async function POST(req: NextRequest) {
+    const authError = await requireAdmin();
+    if (authError) return authError;
+
     if (!API_KEY) {
 
         // Mock Data 반환 (프론트엔드 UI 테스트용)

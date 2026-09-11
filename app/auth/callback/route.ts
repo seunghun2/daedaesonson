@@ -31,7 +31,6 @@ export async function GET(request: NextRequest) {
             });
 
             const tokenData = await tokenRes.json();
-            console.log('[kakao] Token exchange status:', tokenRes.status, 'has access_token:', !!tokenData.access_token);
 
             if (!tokenData.access_token) {
                 console.error('[kakao] No access_token:', JSON.stringify(tokenData));
@@ -43,7 +42,6 @@ export async function GET(request: NextRequest) {
                 headers: { Authorization: `Bearer ${tokenData.access_token}` },
             });
             const userData = await userRes.json();
-            console.log('[kakao] User info - id:', userData.id, 'nickname:', userData.kakao_account?.profile?.nickname);
 
             const kakaoId = userData.id;
             const nickname = userData.kakao_account?.profile?.nickname || '사용자';
@@ -69,7 +67,6 @@ export async function GET(request: NextRequest) {
                 }
 
                 const existingUser = listData?.users?.find((u: any) => u.email === email);
-                console.log('[kakao] Existing user found:', !!existingUser, 'email:', email);
 
                 if (existingUser) {
                     userId = existingUser.id;
@@ -79,8 +76,6 @@ export async function GET(request: NextRequest) {
                     });
                     if (updateError) {
                         console.error('[kakao] updateUser error:', updateError.message);
-                    } else {
-                        console.log('[kakao] Password updated for user:', userId);
                     }
                 } else {
                     // 신규 유저 생성
@@ -101,7 +96,6 @@ export async function GET(request: NextRequest) {
                     }
 
                     userId = createData?.user?.id || '';
-                    console.log('[kakao] Created user:', userId);
 
                     // 프로필 생성
                     if (userId) {
@@ -130,10 +124,7 @@ export async function GET(request: NextRequest) {
                     password,
                 });
 
-                console.log('[kakao] SignIn result - session:', !!signInData?.session, 'error:', signInError?.message);
-
                 if (signInData?.session) {
-                    console.log('[kakao] Redirecting with session tokens');
                     // 세션 토큰을 직접 전달 — 클라이언트에서 setSession으로 바로 적용
                     const tokenPayload = JSON.stringify({
                         access_token: signInData.session.access_token,
@@ -152,6 +143,5 @@ export async function GET(request: NextRequest) {
         }
     }
 
-    console.log('[kakao] Falling back to /');
     return NextResponse.redirect(new URL('/', origin));
 }
