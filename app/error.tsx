@@ -53,12 +53,12 @@ export default function Error({ error, reset }: { error: Error & { digest?: stri
             }}>
                 {Array.from({ length: 30 }).map((_, i) => (
                     <span key={i} className="star" style={{
-                        top: `${Math.random() * 100}%`,
-                        left: `${Math.random() * 100}%`,
-                        width: `${1 + Math.random() * 3}px`,
-                        height: `${1 + Math.random() * 3}px`,
-                        animationDuration: `${2 + Math.random() * 3}s`,
-                        animationDelay: `${Math.random() * 3}s`,
+                        top: `${(i * 37) % 100}%`,
+                        left: `${(i * 73 + 17) % 100}%`,
+                        width: `${1 + (i % 3)}px`,
+                        height: `${1 + (i % 3)}px`,
+                        animationDuration: `${2 + (i % 3)}s`,
+                        animationDelay: `${i * 0.15}s`,
                     }} />
                 ))}
 

@@ -6,8 +6,7 @@ const supabase = getSupabaseServer();
 
 async function checkAdminAuth(): Promise<boolean> {
     const cookieStore = await cookies();
-    const token = cookieStore.get('admin_token')?.value;
-    return token === process.env.ADMIN_TOKEN;
+    return cookieStore.get('admin_session')?.value === 'dds_admin_verified';
 }
 
 // PUT: 블로그 글 수정

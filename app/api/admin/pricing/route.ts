@@ -38,39 +38,11 @@ export async function GET(request: Request) {
     }
 }
 
-// POST: 데이터 수정 (안전하게 복구)
-export async function POST(request: Request) {
-    try {
-        const body = await request.json();
-        // ID 기반 업데이트는 현재 데이터가 재로드되면 ID가 바뀔 수 있어 주의 필요
-        // 하지만 일단 저장은 가능하게 함
-
-        if (!fs.existsSync(DATA_FILE)) {
-            return NextResponse.json({ success: false, message: 'Data file not found' }, { status: 404 });
-        }
-        const content = fs.readFileSync(DATA_FILE, 'utf-8');
-        let data = JSON.parse(content);
-
-        // Update logic... (Simplified)
-        const updates = Array.isArray(body) ? body : [body];
-        let updateCount = 0;
-
-        updates.forEach((update: any) => {
-            const index = data.findIndex((item: any) => item.id === update.id);
-            if (index !== -1) {
-                // Allow specific field updates
-                const fields = ['price', 'rawText', 'category1', 'category2', 'category3', 'itemName1', 'itemName2', 'category0'];
-                fields.forEach(f => {
-                    if (update[f] !== undefined) data[index][f] = update[f];
-                });
-                updateCount++;
-            }
-        });
-
-        fs.writeFileSync(DATA_FILE, JSON.stringify(data, null, 2));
-        return NextResponse.json({ success: true, count: updateCount });
-
-    } catch (error) {
-        return NextResponse.json({ success: false, error: String(error) }, { status: 500 });
-    }
+// POST: 데이터 수정 — Vercel 서버리스 환경에서 파일 쓰기 불가 (EROFS)
+// TODO: Supabase DB 기반으로 전환 필요
+export async function POST() {
+    return NextResponse.json(
+        { success: false, error: '이 API는 현재 비활성화되어 있습니다. Supabase DB를 통해 가격을 관리해주세요.' },
+        { status: 501 }
+    );
 }

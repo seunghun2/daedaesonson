@@ -1,33 +1,14 @@
 import { NextResponse } from 'next/server';
-import fs from 'fs';
-import path from 'path';
+import { requireAdmin } from '@/lib/adminAuth';
 
-export async function POST(req: Request) {
-    try {
-        const body = await req.json();
-        const { id, result } = body;
+// POST: Gemini 결과 저장 — Vercel 서버리스 환경에서 파일 쓰기 불가 (EROFS)
+// TODO: Supabase DB 기반으로 전환 필요
+export async function POST() {
+    const authError = await requireAdmin();
+    if (authError) return authError;
 
-        const savePath = path.join(process.cwd(), 'data/gemini_results.json');
-
-        let currentData = [];
-        if (fs.existsSync(savePath)) {
-            currentData = JSON.parse(fs.readFileSync(savePath, 'utf8'));
-        }
-
-        // Update or Add
-        const existingIndex = currentData.findIndex((d: any) => d.id === id);
-        if (existingIndex >= 0) {
-            currentData[existingIndex] = { id, result, updatedAt: new Date().toISOString() };
-        } else {
-            currentData.push({ id, result, updatedAt: new Date().toISOString() });
-        }
-
-        fs.writeFileSync(savePath, JSON.stringify(currentData, null, 2));
-
-        return NextResponse.json({ success: true });
-
-    } catch (e) {
-        console.error(e);
-        return NextResponse.json({ error: 'Failed to save' }, { status: 500 });
-    }
+    return NextResponse.json(
+        { success: false, error: '이 API는 현재 비활성화되어 있습니다. Supabase DB를 통해 결과를 저장해주세요.' },
+        { status: 501 }
+    );
 }

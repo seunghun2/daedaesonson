@@ -119,7 +119,7 @@ export default async function RegionPage({ params }: PageProps) {
                 {facilities.map((f: any) => (
                     <Link
                         key={f.id}
-                        href={`/facilities/${f.id}`}
+                        href={`/facility/${f.id}`}
                         style={{
                             display: 'block',
                             padding: '20px',
@@ -142,7 +142,7 @@ export default async function RegionPage({ params }: PageProps) {
                             fontWeight: 'bold',
                             color: '#1D0098'
                         }}>
-                            {f.priceRange?.min?.toLocaleString()}만 ~
+                            {Math.round(f.priceRange?.min / 10000).toLocaleString()}만원 ~
                         </div>
                     </Link>
                 ))}

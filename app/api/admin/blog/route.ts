@@ -7,8 +7,7 @@ const supabase = getSupabaseServer();
 // 어드민 인증 확인
 async function checkAdminAuth(): Promise<boolean> {
     const cookieStore = await cookies();
-    const token = cookieStore.get('admin_token')?.value;
-    return token === process.env.ADMIN_TOKEN;
+    return cookieStore.get('admin_session')?.value === 'dds_admin_verified';
 }
 
 // GET: 모든 블로그 글 (어드민용, 미발행 포함)

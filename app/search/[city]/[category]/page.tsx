@@ -119,8 +119,8 @@ export default async function CityPage({ params }: PageProps) {
                 </h1>
                 <p style={{ color: '#666', fontSize: '16px', margin: '0' }}>
                     <strong>{facilities.length}개</strong> 시설 |
-                    최저 <strong style={{ color: '#1D0098' }}>{minPrice.toLocaleString()}만원</strong> ~
-                    최고 {maxPrice.toLocaleString()}만원
+                    최저 <strong style={{ color: '#1D0098' }}>{Math.round(minPrice / 10000).toLocaleString()}만원</strong> ~
+                    최고 {Math.round(maxPrice / 10000).toLocaleString()}만원
                 </p>
             </header>
 
@@ -147,7 +147,7 @@ export default async function CityPage({ params }: PageProps) {
                         </p>
                         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                             <span style={{ fontSize: '20px', fontWeight: 'bold', color: '#1D0098' }}>
-                                {f.priceRange?.min?.toLocaleString()}만원~
+                                {Math.round(f.priceRange?.min / 10000).toLocaleString()}만원~
                             </span>
                             <span style={{ fontSize: '12px', color: '#aaa' }}>
                                 {f.isPublic ? '공설' : '사설'}
@@ -166,7 +166,7 @@ export default async function CityPage({ params }: PageProps) {
                     {city} 지역에서 {categoryInfo.label} 시설을 찾고 계신가요?
                     대대손손에서 {city} 지역 {facilities.length}개 {categoryInfo.label} 시설의
                     가격 정보를 투명하게 비교해드립니다.
-                    최저가 {minPrice.toLocaleString()}만원부터 다양한 가격대의 시설이 있으며,
+                    최저가 {Math.round(minPrice / 10000).toLocaleString()}만원부터 다양한 가격대의 시설이 있으며,
                     각 시설의 상세 가격표, 위치, 연락처 정보를 확인하실 수 있습니다.
                 </p>
             </section>
