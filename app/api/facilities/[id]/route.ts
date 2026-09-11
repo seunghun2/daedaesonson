@@ -4,6 +4,7 @@ import path from 'path';
 import { parse } from 'csv-parse/sync';
 import { getSupabaseServer } from '@/lib/supabaseServer';
 import { RepresentativePricing } from '@/types';
+import { requireAdmin } from '@/lib/adminAuth';
 
 const supabase = getSupabaseServer();
 
@@ -215,6 +216,9 @@ export async function PATCH(
     { params }: { params: Promise<{ id: string }> }
 ) {
     try {
+        const authError = await requireAdmin();
+        if (authError) return authError;
+
         const { id } = await params;
         const body = await request.json();
 

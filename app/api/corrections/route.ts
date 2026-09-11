@@ -2,6 +2,7 @@
 import { getSupabaseServer } from '@/lib/supabaseServer';
 import { NextRequest, NextResponse } from 'next/server';
 import { sendSlack, sendSlackError } from '@/lib/slack';
+import { requireAdmin } from '@/lib/adminAuth';
 
 const supabase = getSupabaseServer();
 
@@ -48,6 +49,9 @@ export async function POST(request: NextRequest) {
 
 // GET: 정보 수정 요청 목록 (어드민)
 export async function GET(request: NextRequest) {
+    const authError = await requireAdmin();
+    if (authError) return authError;
+
     try {
         const { searchParams } = new URL(request.url);
         const status = searchParams.get('status');

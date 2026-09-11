@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { getSupabaseServer } from '@/lib/supabaseServer';
+import { requireAdmin } from '@/lib/adminAuth';
 
 const supabase = getSupabaseServer();
 
@@ -7,6 +8,9 @@ export const dynamic = 'force-dynamic';
 export const revalidate = 0;
 
 export async function POST(request: Request) {
+    const authError = await requireAdmin();
+    if (authError) return authError;
+
     try {
         const body = await request.json();
         const { facilityId, rows } = body;

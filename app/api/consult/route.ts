@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getSupabaseServer } from '@/lib/supabaseServer';
 import { sendSlack, sendSlackError } from '@/lib/slack';
+import { requireAdmin } from '@/lib/adminAuth';
 
 const supabase = getSupabaseServer();
 
@@ -51,6 +52,9 @@ export async function POST(request: NextRequest) {
 
 // GET: 모든 상담 조회 (어드민용)
 export async function GET() {
+    const authError = await requireAdmin();
+    if (authError) return authError;
+
     try {
         const { data: consults, error } = await supabase
             .from('Consult')

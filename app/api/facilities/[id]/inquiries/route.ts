@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { cookies } from 'next/headers';
 import { getSupabaseServer } from '@/lib/supabaseServer';
 
 const supabase = getSupabaseServer();
@@ -11,7 +12,7 @@ export async function GET(
     const { id: facilityId } = await context.params;
 
     try {
-        const { data: inquiries, error } = await supabase
+        const { data, error } = await supabase
             .from('Inquiry')
             .select(`
                 *,
@@ -25,25 +26,14 @@ export async function GET(
             return NextResponse.json({ error: '문의 조회 실패' }, { status: 500 });
         }
 
-        // 민감 정보(전화번호 전체, 비밀번호) 숨기기
-        const safeInquiries = inquiries?.map(inq => ({
-            id: inq.id,
-            facilityId: inq.facilityId,
-            type: inq.type || 'other',
-            title: inq.title,
-            content: inq.content,
-            isPrivate: inq.isPrivate,
-            createdAt: inq.createdAt,
-            replies: inq.replies?.map((r: any) => ({
-                id: r.id,
-                author: r.author,
-                content: r.content,
-                createdAt: r.createdAt
-            })) || []
-            // phone, passwordLast4 제외
-        })) || [];
+        // Mask private inquiry content
+        const maskedData = data?.map(item => ({
+            ...item,
+            content: item.isPrivate ? '비밀글입니다.' : item.content,
+            title: item.isPrivate ? '비밀 문의' : item.title,
+        }));
 
-        return NextResponse.json({ inquiries: safeInquiries });
+        return NextResponse.json({ inquiries: maskedData });
 
     } catch (error) {
         console.error('Inquiries GET error:', error);
@@ -125,7 +115,9 @@ export async function DELETE(
 
     try {
         const body = await request.json();
-        const { inquiryId, pin, isAdmin } = body;
+        const { inquiryId, pin } = body;
+        const cookieStore = await cookies();
+        const isAdmin = cookieStore.get('admin_session')?.value === 'dds_admin_verified';
 
         if (!inquiryId) {
             return NextResponse.json({ error: '문의 ID가 필요합니다.' }, { status: 400 });

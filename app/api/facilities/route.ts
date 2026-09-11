@@ -5,6 +5,7 @@ import { parse } from 'csv-parse/sync';
 import { getSupabaseServer } from '@/lib/supabaseServer';
 import { RepresentativePricing } from '@/types';
 import { randomUUID } from 'crypto';
+import { requireAdmin } from '@/lib/adminAuth';
 
 const supabase = getSupabaseServer();
 
@@ -173,6 +174,9 @@ export async function GET() {
 // ==========================================
 export async function POST(req: Request) {
     try {
+        const authError = await requireAdmin();
+        if (authError) return authError;
+
         const payloadRaw = await req.json();
         const isBulk = Array.isArray(payloadRaw);
 
@@ -458,6 +462,9 @@ export async function POST(req: Request) {
 // ==========================================
 export async function DELETE(req: Request) {
     try {
+        const authError = await requireAdmin();
+        if (authError) return authError;
+
         const { searchParams } = new URL(req.url);
         const id = searchParams.get('id');
 

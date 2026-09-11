@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { cookies } from 'next/headers';
 import { getSupabaseServer } from '@/lib/supabaseServer';
 import { sendSlack } from '@/lib/slack';
 import bcrypt from 'bcryptjs';
@@ -129,7 +130,9 @@ export async function DELETE(
 
     try {
         const body = await request.json();
-        const { reviewId, password, isAdmin } = body;
+        const { reviewId, password } = body;
+        const cookieStore = await cookies();
+        const isAdmin = cookieStore.get('admin_session')?.value === 'dds_admin_verified';
 
         if (!reviewId) {
             return NextResponse.json(

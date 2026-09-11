@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getSupabaseServer } from '@/lib/supabaseServer';
 import { sendSlack, sendSlackError } from '@/lib/slack';
+import { requireAdmin } from '@/lib/adminAuth';
 
 export async function POST(request: NextRequest) {
     try {
@@ -46,6 +47,9 @@ export async function POST(request: NextRequest) {
 
 // GET - 제휴 문의 목록 조회 (관리자용)
 export async function GET() {
+    const authError = await requireAdmin();
+    if (authError) return authError;
+
     try {
         const supabase = getSupabaseServer();
         const { data, error } = await supabase

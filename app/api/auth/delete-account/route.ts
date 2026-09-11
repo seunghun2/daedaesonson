@@ -3,10 +3,28 @@ import { createClient } from '@supabase/supabase-js';
 
 export async function DELETE(request: NextRequest) {
     try {
+        const authHeader = request.headers.get('authorization');
+        if (!authHeader?.startsWith('Bearer ')) {
+            return NextResponse.json({ error: '인증이 필요합니다.' }, { status: 401 });
+        }
+        const token = authHeader.split(' ')[1];
+        const supabase = createClient(
+            process.env.NEXT_PUBLIC_SUPABASE_URL!,
+            process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+        );
+        const { data: { user }, error: authError } = await supabase.auth.getUser(token);
+        if (authError || !user) {
+            return NextResponse.json({ error: '유효하지 않은 인증입니다.' }, { status: 401 });
+        }
+
         const { userId } = await request.json();
 
         if (!userId) {
             return NextResponse.json({ error: '사용자 ID가 필요합니다' }, { status: 400 });
+        }
+
+        if (user.id !== userId) {
+            return NextResponse.json({ error: '권한이 없습니다.' }, { status: 403 });
         }
 
         const serviceKey = process.env.SUPABASE_SERVICE_KEY!;

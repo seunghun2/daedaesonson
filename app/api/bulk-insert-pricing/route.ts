@@ -1,10 +1,14 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getSupabaseServer } from '@/lib/supabaseServer';
 import { randomUUID } from 'crypto';
+import { requireAdmin } from '@/lib/adminAuth';
 
 const supabase = getSupabaseServer();
 
 export async function POST(request: NextRequest) {
+    const authError = await requireAdmin();
+    if (authError) return authError;
+
     try {
         const body = await request.json();
         const { facilityId, pricing } = body;

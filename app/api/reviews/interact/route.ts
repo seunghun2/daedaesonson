@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { cookies } from 'next/headers';
 import { getSupabaseServer } from '@/lib/supabaseServer';
 import bcrypt from 'bcryptjs';
 
@@ -7,7 +8,9 @@ const supabase = getSupabaseServer();
 export async function POST(request: NextRequest) {
     try {
         const body = await request.json();
-        const { facilityId, reviewId, action, content, author, password, replyId, isAdmin, photos } = body;
+        const { facilityId, reviewId, action, content, author, password, replyId, photos } = body;
+        const cookieStore = await cookies();
+        const isAdmin = cookieStore.get('admin_session')?.value === 'dds_admin_verified';
 
         // Base validation
         if (!reviewId || !action) {

@@ -1,9 +1,13 @@
 import { NextResponse } from 'next/server';
 import { getSupabaseServer } from '@/lib/supabaseServer';
+import { requireAdmin } from '@/lib/adminAuth';
 
 const supabase = getSupabaseServer();
 
 export async function GET() {
+    const authError = await requireAdmin();
+    if (authError) return authError;
+
     try {
         // 카테고리 가져오기
         let allCats: any[] = [];

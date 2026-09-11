@@ -1,10 +1,14 @@
 import { NextResponse } from 'next/server';
 import { getSupabaseServer } from '@/lib/supabaseServer';
+import { requireAdmin } from '@/lib/adminAuth';
 
 const supabase = getSupabaseServer();
 
 // GET: 1:1 문의 목록 (어드민용)
 export async function GET() {
+    const authError = await requireAdmin();
+    if (authError) return authError;
+
     try {
         const { data, error } = await supabase
             .from('contact_inquiries')
