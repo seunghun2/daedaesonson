@@ -3,8 +3,7 @@ import HomeClient from './HomeClient';
 import { Facility } from '@/types';
 import { getSupabaseServer } from '@/lib/supabaseServer';
 
-export const dynamic = 'force-dynamic';
-export const revalidate = 0;
+export const revalidate = 60; // 60초마다 재검증 (ISR)
 
 // 📁 Supabase DB에서 시설 데이터 로드 (isActive, representativePrice 실시간 반영)
 async function getFacilities(): Promise<Facility[]> {

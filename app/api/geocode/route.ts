@@ -1,7 +1,14 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { rateLimit } from '@/lib/rateLimit';
 
-export async function GET(req: NextRequest) {
-    const { searchParams } = new URL(req.url);
+export async function GET(request: NextRequest) {
+    const ip = request.headers.get('x-forwarded-for') || 'unknown';
+    const { success } = rateLimit({ key: `geo:${ip}`, limit: 30, windowMs: 60 * 1000 });
+    if (!success) {
+        return NextResponse.json({ error: 'Too many requests' }, { status: 429 });
+    }
+
+    const { searchParams } = new URL(request.url);
     const address = searchParams.get('address');
 
     if (!address) {

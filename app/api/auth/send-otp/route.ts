@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import crypto from 'crypto';
+import { rateLimit } from '@/lib/rateLimit';
 
 // OTP를 임시 저장 (프로덕션에서는 Redis/DB 사용 권장)
 // Vercel serverless에서는 메모리가 요청간 공유 안 되므로 Supabase에 저장
@@ -15,6 +16,12 @@ function getSolapiSignature(apiKey: string, apiSecret: string, date: string, sal
 }
 
 export async function POST(request: NextRequest) {
+    const ip = request.headers.get('x-forwarded-for') || 'unknown';
+    const { success } = rateLimit({ key: `otp:${ip}`, limit: 5, windowMs: 60 * 1000 });
+    if (!success) {
+        return NextResponse.json({ error: 'Too many requests. Please try again later.' }, { status: 429 });
+    }
+
     try {
         const { phone } = await request.json();
 

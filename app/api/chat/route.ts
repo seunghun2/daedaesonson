@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import { getSupabaseServer } from '@/lib/supabaseServer';
 import { sendSlack } from '@/lib/slack';
+import { rateLimit } from '@/lib/rateLimit';
 import fs from 'fs';
 import path from 'path';
 
@@ -307,6 +308,12 @@ interface ChatMessage {
 
 // POST: 챗봇 메시지 처리
 export async function POST(request: NextRequest) {
+    const ip = request.headers.get('x-forwarded-for') || 'unknown';
+    const { success } = rateLimit({ key: `chat:${ip}`, limit: 20, windowMs: 60 * 1000 });
+    if (!success) {
+        return NextResponse.json({ error: '요청이 너무 많습니다. 1분 후 다시 시도해주세요.' }, { status: 429 });
+    }
+
     try {
         const body = await request.json();
         const { message, history = [], sessionId, facilityContext, customerInfo } = body;
