@@ -88,3 +88,4 @@ scripts/
 /scraped-images
 /scraped-reviews
 /scratch
+.env*.local

@@ -4592,7 +4592,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                             position: 'fixed',
                             bottom: isMobile ? 16 : 24,
                             ...(isMobile ? { right: 16 } : { left: 322 }),
-                            zIndex: 100,
+                            zIndex: 9990,
                         }}>
                             {/* 컴팩트 1줄 라벨 */}
                             {!aiChatOpen && (
