@@ -42,6 +42,10 @@ export async function POST(request: NextRequest) {
             return NextResponse.json({ error: '인증번호를 먼저 발송해주세요' }, { status: 400 });
         }
 
+        if (otpData.verified) {
+            return NextResponse.json({ error: '이미 사용된 인증번호입니다. 다시 요청해주세요' }, { status: 400 });
+        }
+
         if (otpData.code !== code) {
             return NextResponse.json({ error: '인증번호가 일치하지 않습니다' }, { status: 400 });
         }
@@ -50,10 +54,10 @@ export async function POST(request: NextRequest) {
             return NextResponse.json({ error: '인증번호가 만료되었습니다. 다시 요청해주세요' }, { status: 400 });
         }
 
-        // OTP 사용 완료 처리
+        // OTP 사용 완료 처리 (재사용 방지를 위해 code 무효화)
         await supabaseAdmin
             .from('otp_codes')
-            .update({ verified: true })
+            .update({ verified: true, code: '' })
             .eq('phone', cleanPhone);
 
         // Supabase 유저 생성/찾기

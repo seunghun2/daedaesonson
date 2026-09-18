@@ -1,12 +1,16 @@
 import { NextResponse } from 'next/server';
 import fs from 'fs';
 import path from 'path';
+import { requireAdmin } from '@/lib/adminAuth';
 
 // JSON 파일 경로
 const DATA_FILE = path.join(process.cwd(), 'data/pricing_db.json');
 
 // GET: 전체 데이터 조회
 export async function GET(request: Request) {
+    const authError = await requireAdmin();
+    if (authError) return authError;
+
     try {
         if (!fs.existsSync(DATA_FILE)) {
             return NextResponse.json([]);
@@ -41,6 +45,8 @@ export async function GET(request: Request) {
 // POST: 데이터 수정 — Vercel 서버리스 환경에서 파일 쓰기 불가 (EROFS)
 // TODO: Supabase DB 기반으로 전환 필요
 export async function POST() {
+    const authError = await requireAdmin();
+    if (authError) return authError;
     return NextResponse.json(
         { success: false, error: '이 API는 현재 비활성화되어 있습니다. Supabase DB를 통해 가격을 관리해주세요.' },
         { status: 501 }

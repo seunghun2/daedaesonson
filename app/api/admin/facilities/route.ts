@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { getSupabaseServer } from '@/lib/supabaseServer';
+import { requireAdmin } from '@/lib/adminAuth';
 
 const supabase = getSupabaseServer();
 
@@ -10,6 +11,9 @@ export const dynamic = 'force-dynamic';
 // GET: 어드민용 시설 목록 (서버 사이드 페이지네이션)
 // ==========================================
 export async function GET(request: Request) {
+    const authError = await requireAdmin();
+    if (authError) return authError;
+
     try {
         const { searchParams } = new URL(request.url);
 
@@ -37,15 +41,18 @@ export async function GET(request: Request) {
 
         // 검색 필터 (서버 사이드)
         if (search) {
-            if (searchTarget === 'name') {
-                query = query.ilike('name', `%${search}%`);
-            } else if (searchTarget === 'address') {
-                query = query.ilike('address', `%${search}%`);
-            } else if (searchTarget === 'id') {
-                query = query.ilike('id', `%${search}%`);
-            } else {
-                // 'all' - OR 조건
-                query = query.or(`name.ilike.%${search}%,address.ilike.%${search}%,id.ilike.%${search}%`);
+            const cleanSearch = search.replace(/[,().\\]/g, '').trim();
+            if (cleanSearch) {
+                if (searchTarget === 'name') {
+                    query = query.ilike('name', `%${cleanSearch}%`);
+                } else if (searchTarget === 'address') {
+                    query = query.ilike('address', `%${cleanSearch}%`);
+                } else if (searchTarget === 'id') {
+                    query = query.ilike('id', `%${cleanSearch}%`);
+                } else {
+                    // 'all' - OR 조건
+                    query = query.or(`name.ilike.%${cleanSearch}%,address.ilike.%${cleanSearch}%,id.ilike.%${cleanSearch}%`);
+                }
             }
         }
 

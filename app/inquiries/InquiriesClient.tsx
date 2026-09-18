@@ -188,7 +188,7 @@ export default function InquiriesClient({ initialInquiries, facilities = [] }: I
     };
 
     return (
-        <Box h="100vh" bg="white">
+        <Box h="100dvh" bg="white">
             {/* 헤더 */}
             <Box
                 px="lg" py={14}
@@ -211,7 +211,7 @@ export default function InquiriesClient({ initialInquiries, facilities = [] }: I
             </Box>
 
             {/* 문의 목록 */}
-            <ScrollArea h="calc(100vh - 130px - 56px)">
+            <ScrollArea h="calc(100dvh - 130px - 56px)">
                 {inquiries.length === 0 ? (
                     <Box p="xl" ta="center">
                         <Text c="dimmed" size="sm">등록된 문의가 없습니다.</Text>

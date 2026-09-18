@@ -26,8 +26,8 @@ export async function GET(
             return NextResponse.json({ error: '문의 조회 실패' }, { status: 500 });
         }
 
-        // Mask private inquiry content
-        const maskedData = data?.map(item => ({
+        // Mask private inquiry content and strip PII / credentials
+        const maskedData = data?.map(({ phone, passwordLast4, ...item }) => ({
             ...item,
             content: item.isPrivate ? '비밀글입니다.' : item.content,
             title: item.isPrivate ? '비밀 문의' : item.title,

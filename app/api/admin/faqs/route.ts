@@ -1,10 +1,14 @@
 import { NextResponse } from 'next/server';
 import { getSupabaseServer } from '@/lib/supabaseServer';
+import { requireAdmin } from '@/lib/adminAuth';
 
 const supabase = getSupabaseServer();
 
 // GET: FAQ 목록 조회
 export async function GET() {
+    const authError = await requireAdmin();
+    if (authError) return authError;
+
     try {
         const { data, error } = await supabase
             .from('faqs')
@@ -22,6 +26,8 @@ export async function GET() {
 
 // POST: FAQ 추가
 export async function POST(request: Request) {
+    const authError = await requireAdmin();
+    if (authError) return authError;
     try {
         const body = await request.json();
         const { question, answer, category = '일반' } = body;

@@ -7,7 +7,7 @@ import { rateLimit } from '@/lib/rateLimit';
 import { createClient } from '@supabase/supabase-js';
 
 function generateOtp(): string {
-    return Math.floor(100000 + Math.random() * 900000).toString();
+    return crypto.randomInt(100000, 1000000).toString();
 }
 
 function getSolapiSignature(apiKey: string, apiSecret: string, date: string, salt: string) {
@@ -30,9 +30,22 @@ export async function POST(request: NextRequest) {
         }
 
         // 번호 정리: 하이픈 제거
-        const cleanPhone = phone.replace(/-/g, '');
+        const cleanPhone = phone.replace(/-/g, '').trim();
 
-        // OTP 생성
+        // 전화번호별 발송 제한 (1분에 최대 3회)
+        const { success: phoneSuccess } = rateLimit({
+            key: `otp-phone:${cleanPhone}`,
+            limit: 3,
+            windowMs: 60 * 1000
+        });
+        if (!phoneSuccess) {
+            return NextResponse.json(
+                { error: '인증번호 요청이 너무 많습니다. 1분 후 다시 시도해주세요.' },
+                { status: 429 }
+            );
+        }
+
+        // OTP 생성 (암호학적으로 안전한 난수)
         const otp = generateOtp();
         const expiresAt = new Date(Date.now() + 5 * 60 * 1000).toISOString(); // 5분 후 만료
 

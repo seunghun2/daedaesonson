@@ -6,6 +6,7 @@ import { X, ChevronLeft, ChevronRight } from 'lucide-react';
 import { useState, useEffect, useRef } from 'react';
 import { Facility } from '@/types';
 import { formatRelativeTime } from '@/lib/format';
+import { compressImageFile } from '@/lib/clientImageCompress';
 
 interface ReviewsPanelProps {
     facility: Facility;
@@ -54,14 +55,14 @@ export default function ReviewsPanel({ facility, isOpen, onClose }: ReviewsPanel
         finally { setLoading(false); }
     };
 
-    const handleReplyPhotoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleReplyPhotoUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
         const files = Array.from(e.target.files || []);
         if (replyPhotos.length + files.length > 3) { alert('이미지는 최대 3장까지 첨부할 수 있습니다.'); return; }
-        files.forEach(file => {
-            const reader = new FileReader();
-            reader.onload = () => setReplyPhotos(prev => [...prev, reader.result as string]);
-            reader.readAsDataURL(file);
-        });
+        const compressedList = await Promise.all(
+            files.map(file => compressImageFile(file, 1200, 0.7))
+        );
+        const validPhotos = compressedList.filter(Boolean);
+        setReplyPhotos(prev => [...prev, ...validPhotos]);
         e.target.value = '';
     };
 

@@ -1,10 +1,14 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getSupabaseServer } from '@/lib/supabaseServer';
+import { requireAdmin } from '@/lib/adminAuth';
 
 const supabase = getSupabaseServer();
 
 // GET: 챗봇 세션 목록 조회
 export async function GET() {
+    const authError = await requireAdmin();
+    if (authError) return authError;
+
     const { data, error } = await supabase
         .from('ChatSession')
         .select('*')
@@ -12,7 +16,8 @@ export async function GET() {
         .limit(200);
 
     if (error) {
-        return NextResponse.json({ error: error.message }, { status: 500 });
+        console.error('Chat logs GET error:', error);
+        return NextResponse.json({ error: '데이터를 불러올 수 없습니다.' }, { status: 500 });
     }
 
     return NextResponse.json({ sessions: data });
@@ -20,6 +25,9 @@ export async function GET() {
 
 // PATCH: 세션 상태/메모/태그 업데이트
 export async function PATCH(request: NextRequest) {
+    const authError = await requireAdmin();
+    if (authError) return authError;
+
     try {
         const { sessionId, status, memo, tags } = await request.json();
 

@@ -4,6 +4,7 @@ import { useState, useRef } from 'react';
 import { Drawer, Box, Text, Textarea, Select, Button, Group, Stack, ActionIcon, Image, TextInput, ScrollArea } from '@mantine/core';
 import { useMediaQuery } from '@mantine/hooks';
 import { ChevronDown, AlertCircle, CheckCircle, X, Camera } from 'lucide-react';
+import { compressImageFile } from '@/lib/clientImageCompress';
 
 interface CorrectionRequestModalProps {
     facilityId: string;
@@ -35,20 +36,18 @@ export default function CorrectionRequestModal({ facilityId, facilityName, isOpe
     const [error, setError] = useState('');
     const fileInputRef = useRef<HTMLInputElement>(null);
 
-    const handlePhotoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handlePhotoUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
         const files = e.target.files;
         if (!files || files.length === 0) return;
         if (photos.length + files.length > 10) {
             alert('이미지는 최대 10장까지 첨부할 수 있습니다.');
             return;
         }
-        Array.from(files).forEach(file => {
-            const reader = new FileReader();
-            reader.onloadend = () => {
-                setPhotos(prev => [...prev, reader.result as string]);
-            };
-            reader.readAsDataURL(file);
-        });
+        const compressedList = await Promise.all(
+            Array.from(files).map(file => compressImageFile(file, 1200, 0.7))
+        );
+        const validPhotos = compressedList.filter(Boolean);
+        setPhotos(prev => [...prev, ...validPhotos]);
         e.target.value = '';
     };
 

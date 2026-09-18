@@ -163,25 +163,35 @@ export async function GET(
         }
 
         // 6. 응답 데이터 구성
-        const facility = {
+        const sanitizedInquiries = inquiries?.map(({ phone, passwordLast4, ...item }: any) => ({
+            ...item,
+            content: item.isPrivate ? '비밀글입니다.' : item.content,
+            title: item.isPrivate ? '비밀 문의' : item.title,
+        })) || [];
+
+        const sanitizedReviews = reviews?.map(({ password, ...r }: any) => ({
+            ...r,
+        })) || [];
+
+        const facility: any = {
             id: dbData.id,
             name: dbData.name,
-            address: dbData.address || '',
-            coordinates: { lat: dbData.lat || 0, lng: dbData.lng || 0 },
-            category: dbData.category || 'OTHER',
-            priceRange: { min: dbData.minPrice || 0, max: dbData.maxPrice || 0 },
-            operatorType: dbData.operatorType,
-            hasParking: dbData.hasParking ?? false,
-            hasRestaurant: dbData.hasRestaurant ?? false,
-            hasStore: dbData.hasStore ?? false,
-            hasAccessibility: dbData.hasAccessibility ?? false,
-            isPublic: dbData.isPublic ?? false,
-            isActive: dbData.isActive ?? true,
-            images: parsedImages,
-            imageGallery: parsedImages,
+            category: dbData.category,
+            address: dbData.address,
+            roadAddress: dbData.roadAddress || dbData.address,
+            jibunAddress: dbData.jibunAddress || '',
+            lat: dbData.lat,
+            lng: dbData.lng,
+            representativePrice: dbData.representativePrice,
             priceInfo: parsedPriceInfo,
-            pricing: parsedPriceInfo,
-            representativePricing: null,
+            hasParking: dbData.hasParking,
+            hasRestaurant: dbData.hasRestaurant,
+            hasStore: dbData.hasStore,
+            hasAccessibility: dbData.hasAccessibility,
+            hasShuttle: dbData.hasShuttle,
+            isPublic: dbData.isPublic,
+            operatingHours: dbData.operatingHours,
+            images: dbData.images || [],
             reviewCount: dbData.reviewCount || 0,
             rating: dbData.rating || 0,
             phone: dbData.phone || '',
@@ -193,8 +203,8 @@ export async function GET(
             viewCount: dbData.viewCount || 0,
             description: dbData.description || '',
             originalName: dbData.originalName,
-            reviews: reviews || [],
-            inquiries: inquiries || [],
+            reviews: sanitizedReviews,
+            inquiries: sanitizedInquiries,
         };
 
 

@@ -143,28 +143,7 @@ export default function RootLayout({
             `,
           }}
         />
-        {/* 🚀 더블탭 차단: afterInteractive로 이동 */}
-        <Script
-          id="prevent-doubletap"
-          strategy="afterInteractive"
-          dangerouslySetInnerHTML={{
-            __html: `
-            (function() {
-              var lastTouchEnd = 0;
-              document.addEventListener('touchend', function(e) {
-                var now = Date.now();
-                if (now - lastTouchEnd <= 300) {
-                  e.preventDefault();
-                }
-                lastTouchEnd = now;
-              }, { passive: false });
-              document.addEventListener('dblclick', function(e) {
-                e.preventDefault();
-              }, { passive: false });
-            })()
-          `,
-          }}
-        />
+
         {/* 🔤 Material Symbols 폰트 로드 감지 (실제 폰트 렌더링 가능 시점 정확 감지) */}
         <Script
           id="font-load-detect"

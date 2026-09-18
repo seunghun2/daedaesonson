@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { cookies } from 'next/headers';
 import { getSupabaseServer } from '@/lib/supabaseServer';
+import { rateLimit } from '@/lib/rateLimit';
 import bcrypt from 'bcryptjs';
 
 const supabase = getSupabaseServer();
@@ -29,27 +30,41 @@ export async function POST(request: NextRequest) {
         }
 
         // Handle Actions
-        if (action === 'LIKE') {
-            const { error } = await supabase
-                .from('Review')
-                .update({ likes: (review.likes || 0) + 1 })
-                .eq('id', reviewId);
+        if (action === 'LIKE' || action === 'UNLIKE') {
+            const ip = request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || 'unknown-ip';
+            const { success: allowed } = rateLimit({
+                key: `review-interact:${ip}:${reviewId}`,
+                limit: 10,
+                windowMs: 60 * 1000,
+            });
 
-            if (error) throw error;
+            if (!allowed) {
+                return NextResponse.json(
+                    { error: '요청이 너무 많습니다. 잠시 후 다시 시도해주세요.' },
+                    { status: 429 }
+                );
+            }
 
-            return NextResponse.json({ success: true, likes: (review.likes || 0) + 1 });
+            if (action === 'LIKE') {
+                const { error } = await supabase
+                    .from('Review')
+                    .update({ likes: (review.likes || 0) + 1 })
+                    .eq('id', reviewId);
 
-        } else if (action === 'UNLIKE') {
-            const newLikes = Math.max(0, (review.likes || 0) - 1);
-            const { error } = await supabase
-                .from('Review')
-                .update({ likes: newLikes })
-                .eq('id', reviewId);
+                if (error) throw error;
 
-            if (error) throw error;
+                return NextResponse.json({ success: true, likes: (review.likes || 0) + 1 });
+            } else {
+                const newLikes = Math.max(0, (review.likes || 0) - 1);
+                const { error } = await supabase
+                    .from('Review')
+                    .update({ likes: newLikes })
+                    .eq('id', reviewId);
 
-            return NextResponse.json({ success: true, likes: newLikes });
+                if (error) throw error;
 
+                return NextResponse.json({ success: true, likes: newLikes });
+            }
         } else if (action === 'REPLY') {
             if (!content) {
                 return NextResponse.json({ error: 'Reply content required' }, { status: 400 });
@@ -107,20 +122,22 @@ export async function POST(request: NextRequest) {
             const { error } = await supabase.from('Review').delete().eq('id', reviewId);
             if (error) throw error;
 
-            // Update facility reviewCount
+            // Update facility reviewCount and rating accurately
             if (review.facilityId) {
-                const { data: facility } = await supabase
-                    .from('Facility')
-                    .select('reviewCount')
-                    .eq('id', review.facilityId)
-                    .single();
+                const { data: remainingReviews } = await supabase
+                    .from('Review')
+                    .select('rating')
+                    .eq('facilityId', review.facilityId);
 
-                if (facility && facility.reviewCount > 0) {
-                    await supabase
-                        .from('Facility')
-                        .update({ reviewCount: facility.reviewCount - 1 })
-                        .eq('id', review.facilityId);
-                }
+                const count = remainingReviews?.length || 0;
+                const avgRating = count > 0
+                    ? parseFloat((remainingReviews!.reduce((sum, r) => sum + (r.rating || 0), 0) / count).toFixed(1))
+                    : 0;
+
+                await supabase
+                    .from('Facility')
+                    .update({ reviewCount: count, rating: avgRating })
+                    .eq('id', review.facilityId);
             }
 
             return NextResponse.json({ success: true });

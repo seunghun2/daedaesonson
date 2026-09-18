@@ -1,10 +1,14 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getSupabaseServer } from '@/lib/supabaseServer';
+import { requireAdmin } from '@/lib/adminAuth';
 
 const supabase = getSupabaseServer();
 
 // PATCH: 상태 또는 메모 업데이트
 export async function PATCH(request: NextRequest) {
+    const authError = await requireAdmin();
+    if (authError) return authError;
+
     try {
         const body = await request.json();
         const { consultId, status, adminNote } = body;
@@ -48,6 +52,9 @@ export async function PATCH(request: NextRequest) {
 
 // DELETE: 상담 신청 삭제
 export async function DELETE(request: NextRequest) {
+    const authError = await requireAdmin();
+    if (authError) return authError;
+
     try {
         const body = await request.json();
         const { consultId } = body;

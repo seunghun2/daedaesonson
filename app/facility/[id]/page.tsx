@@ -2,8 +2,7 @@ import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { FacilityCategory, FACILITY_CATEGORY_LABELS } from '@/types';
 import FacilityPageClient from './FacilityPageClient';
-import fs from 'fs';
-import path from 'path';
+import { getCachedFacility } from '@/lib/facilityDataLoader';
 
 // 🚀 ISR: 60초마다 갱신
 export const revalidate = 60;
@@ -12,22 +11,10 @@ interface PageProps {
     params: Promise<{ id: string }>;
 }
 
-// 📁 로컬 facilities.json에서 시설 데이터 로드 (Supabase 왕복 없이 즉시)
-function getFacilityById(id: string) {
-    try {
-        const filePath = path.join(process.cwd(), 'data', 'facilities.json');
-        const raw = fs.readFileSync(filePath, 'utf-8');
-        const facilities = JSON.parse(raw);
-        return facilities.find((f: any) => f.id === id) || null;
-    } catch {
-        return null;
-    }
-}
-
 // 🔥 SSR 메타데이터 생성 (SEO + Open Graph)
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
     const { id } = await params;
-    const data = getFacilityById(id);
+    const data = getCachedFacility(id);
 
     if (!data) {
         return { title: '시설을 찾을 수 없습니다 | 대대손손' };
@@ -125,7 +112,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 // 🚀 서버 컴포넌트: 로컬 JSON에서 즉시 로드 (Supabase 호출 제거)
 export default async function FacilityPage({ params }: PageProps) {
     const { id } = await params;
-    const data = getFacilityById(id);
+    const data = getCachedFacility(id);
 
     if (!data) {
         notFound();

@@ -369,7 +369,7 @@ export default function InquiryPanel({ facility, isOpen, onClose, allFacilities 
                 withCloseButton={false}
                 lockScroll={false}
                 styles={{
-                    root: { zIndex: 9999 },
+                    root: { zIndex: 10020 },
                     content: { padding: 0 },
                     body: { padding: '28px 24px' }
                 }}

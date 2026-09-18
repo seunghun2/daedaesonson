@@ -1,10 +1,14 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getSupabaseServer } from '@/lib/supabaseServer';
+import { requireAdmin } from '@/lib/adminAuth';
 
 const supabase = getSupabaseServer();
 
 // GET: 모든 리뷰 조회 (어드민용)
 export async function GET() {
+    const authError = await requireAdmin();
+    if (authError) return authError;
+
     try {
         const { data: reviews, error } = await supabase
             .from('Review')
@@ -44,7 +48,7 @@ export async function GET() {
 
         return NextResponse.json({ reviews: enrichedReviews }, {
             headers: {
-                'Cache-Control': 'public, s-maxage=30, stale-while-revalidate=60'
+                'Cache-Control': 'private, no-store, no-cache, must-revalidate'
             }
         });
 
@@ -56,6 +60,9 @@ export async function GET() {
 
 // DELETE: 리뷰 삭제 (어드민)
 export async function DELETE(request: NextRequest) {
+    const authError = await requireAdmin();
+    if (authError) return authError;
+
     try {
         const body = await request.json();
         const { reviewId } = body;
@@ -82,20 +89,22 @@ export async function DELETE(request: NextRequest) {
             return NextResponse.json({ error: '삭제 실패' }, { status: 500 });
         }
 
-        // Update facility reviewCount
-        if (review) {
-            const { data: facility } = await supabase
-                .from('Facility')
-                .select('reviewCount')
-                .eq('id', review.facilityId)
-                .single();
+        // Update facility reviewCount and rating accurately
+        if (review?.facilityId) {
+            const { data: remainingReviews } = await supabase
+                .from('Review')
+                .select('rating')
+                .eq('facilityId', review.facilityId);
 
-            if (facility && facility.reviewCount > 0) {
-                await supabase
-                    .from('Facility')
-                    .update({ reviewCount: facility.reviewCount - 1 })
-                    .eq('id', review.facilityId);
-            }
+            const count = remainingReviews?.length || 0;
+            const avgRating = count > 0
+                ? Number((remainingReviews!.reduce((acc, r) => acc + (r.rating || 0), 0) / count).toFixed(1))
+                : 0;
+
+            await supabase
+                .from('Facility')
+                .update({ reviewCount: count, rating: avgRating })
+                .eq('id', review.facilityId);
         }
 
         return NextResponse.json({ success: true });

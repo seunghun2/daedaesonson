@@ -19,6 +19,30 @@ const DATA_DIR = path.join(process.cwd(), 'data');
 let _pricingCache: { data: Map<string, RepresentativePricing>; timestamp: number } | null = null;
 const PRICING_CACHE_TTL = 5 * 60 * 1000; // 5분
 
+// 🚀 가격 카테고리 카운트 메모리 캐싱 (5분)
+let _categoryCountCache: { data: Map<string, number>; timestamp: number } | null = null;
+const CATEGORY_COUNT_TTL = 5 * 60 * 1000;
+
+async function loadCategoryCountMap(): Promise<Map<string, number>> {
+    if (_categoryCountCache && (Date.now() - _categoryCountCache.timestamp) < CATEGORY_COUNT_TTL) {
+        return _categoryCountCache.data;
+    }
+
+    const { data: categories } = await supabase
+        .from('PriceCategory')
+        .select('facilityId');
+
+    const categoryCountMap = new Map<string, number>();
+    if (categories) {
+        categories.forEach((c: any) => {
+            categoryCountMap.set(c.facilityId, (categoryCountMap.get(c.facilityId) || 0) + 1);
+        });
+    }
+
+    _categoryCountCache = { data: categoryCountMap, timestamp: Date.now() };
+    return categoryCountMap;
+}
+
 // Helper: Load and parse pricing CSVs
 async function loadPricingData(): Promise<Map<string, RepresentativePricing>> {
     // 🚀 캐시가 유효하면 바로 반환
@@ -98,17 +122,8 @@ export async function GET() {
             from += PAGE_SIZE;
         }
 
-        // 2. 가격 카테고리 개수 (hasDetailedPrices 용)
-        const { data: categories } = await supabase
-            .from('PriceCategory')
-            .select('facilityId');
-
-        const categoryCountMap = new Map();
-        if (categories) {
-            categories.forEach((c: any) => {
-                categoryCountMap.set(c.facilityId, (categoryCountMap.get(c.facilityId) || 0) + 1);
-            });
-        }
+        // 2. 가격 카테고리 개수 (hasDetailedPrices 용 - 5분 메모리 캐시)
+        const categoryCountMap = await loadCategoryCountMap();
 
         // 3. 대표 가격 로드 (CSV)
         const pricingMap = await loadPricingData();
@@ -161,7 +176,11 @@ export async function GET() {
             };
         });
 
-        return NextResponse.json(liteData);
+        return NextResponse.json(liteData, {
+            headers: {
+                'Cache-Control': 'public, s-maxage=300, stale-while-revalidate=600',
+            },
+        });
 
     } catch (e) {
         console.error('API Error:', e);

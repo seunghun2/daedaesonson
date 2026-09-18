@@ -1,10 +1,14 @@
 import { NextResponse } from 'next/server';
 import { getSupabaseServer } from '@/lib/supabaseServer';
+import { requireAdmin } from '@/lib/adminAuth';
 
 const supabase = getSupabaseServer();
 
 // GET: 상담 통계 집계
 export async function GET() {
+    const authError = await requireAdmin();
+    if (authError) return authError;
+
     try {
         // 모든 세션 가져오기
         const { data: sessions, error } = await supabase

@@ -43,8 +43,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
 
     const checkAuth = async () => {
         try {
-            // admin API를 호출해서 401이면 미인증
-            const res = await fetch('/api/admin/faqs', { method: 'GET' });
+            const res = await fetch('/api/admin/auth', { method: 'GET' });
             setIsAuthenticated(res.ok);
         } catch {
             setIsAuthenticated(false);

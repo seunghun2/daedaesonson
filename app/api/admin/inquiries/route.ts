@@ -1,10 +1,14 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getSupabaseServer } from '@/lib/supabaseServer';
+import { requireAdmin } from '@/lib/adminAuth';
 
 const supabase = getSupabaseServer();
 
 // GET: 모든 문의 조회 (어드민용) - 최적화
 export async function GET() {
+    const authError = await requireAdmin();
+    if (authError) return authError;
+
     try {
         const { data: inquiries, error } = await supabase
             .from('Inquiry')
@@ -42,10 +46,10 @@ export async function GET() {
             facilityName: facilityNameMap.get(inq.facilityId) || '시설'
         }));
 
-        // 🔥 30초 캐시 (빠른 응답)
+        // 관리자 전용 응답 (캐시 불가)
         return NextResponse.json({ inquiries: enrichedInquiries }, {
             headers: {
-                'Cache-Control': 'public, s-maxage=30, stale-while-revalidate=60'
+                'Cache-Control': 'private, no-store, no-cache, must-revalidate'
             }
         });
 
@@ -57,6 +61,9 @@ export async function GET() {
 
 // POST: 답변 등록
 export async function POST(request: NextRequest) {
+    const authError = await requireAdmin();
+    if (authError) return authError;
+
     try {
         const body = await request.json();
         const { inquiryId, content } = body;
@@ -92,6 +99,8 @@ export async function POST(request: NextRequest) {
 
 // DELETE: 문의 삭제 (어드민)
 export async function DELETE(request: NextRequest) {
+    const authError = await requireAdmin();
+    if (authError) return authError;
     try {
         const body = await request.json();
         const { inquiryId } = body;

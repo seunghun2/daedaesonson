@@ -1,8 +1,7 @@
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import fs from 'fs';
-import path from 'path';
 import Link from 'next/link';
+import { loadFacilitiesJson as loadFacilities } from '@/lib/facilityDataLoader';
 
 const CATEGORY_MAP: Record<string, { code: string; label: string }> = {
     '봉안당': { code: 'CHARNEL_HOUSE', label: '봉안당' },
@@ -12,13 +11,6 @@ const CATEGORY_MAP: Record<string, { code: string; label: string }> = {
 
 interface PageProps {
     params: Promise<{ city: string; category: string }>;
-}
-
-// 시설 데이터 로드 (캐시)
-function loadFacilities() {
-    const dataPath = path.join(process.cwd(), 'data', 'facilities.json');
-    const fileContent = fs.readFileSync(dataPath, 'utf-8');
-    return JSON.parse(fileContent);
 }
 
 // 동적 메타데이터

@@ -1,8 +1,7 @@
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import fs from 'fs';
-import path from 'path';
 import Link from 'next/link';
+import { loadFacilitiesJson } from '@/lib/facilityDataLoader';
 
 // 지역-카테고리 조합 정의
 const REGIONS = ['서울', '경기', '인천', '부산', '대구', '광주', '대전', '울산', '세종', '강원', '충북', '충남', '전북', '전남', '경북', '경남', '제주'];
@@ -88,10 +87,8 @@ export default async function RegionPage({ params }: PageProps) {
         notFound();
     }
 
-    // 시설 데이터 로드
-    const dataPath = path.join(process.cwd(), 'data', 'facilities.json');
-    const fileContent = fs.readFileSync(dataPath, 'utf-8');
-    const allFacilities = JSON.parse(fileContent);
+    // 시설 데이터 로드 (캐시)
+    const allFacilities = loadFacilitiesJson();
 
     // 해당 지역 + 카테고리 필터링
     const facilities = allFacilities.filter((f: any) => {

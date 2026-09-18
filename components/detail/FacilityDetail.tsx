@@ -16,6 +16,7 @@ import { Facility, FACILITY_CATEGORY_LABELS, Review } from '@/types';
 import { PRICE_TAB_CATEGORIES, OTHER_TAB_CATEGORY } from '@/lib/constants';
 import { formatKoreanCurrency, formatRelativeTime } from '@/lib/format';
 import { getSingleFacilityImageUrl } from '@/lib/supabaseImage';
+import { compressImageFile } from '@/lib/clientImageCompress';
 
 // ... (Existing code) ...
 
@@ -1122,7 +1123,11 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
     useEffect(() => {
         const handlePopState = () => {
             const params = new URLSearchParams(window.location.search);
-            setConsultModalOpenState(params.get('consult') === 'true');
+            const isOpen = params.get('consult') === 'true';
+            setConsultModalOpenState(isOpen);
+            if (!isOpen) {
+                setConsultSuccess(false);
+            }
         };
         window.addEventListener('popstate', handlePopState);
         return () => window.removeEventListener('popstate', handlePopState);
@@ -1143,6 +1148,13 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
             // 닫을 때는 replaceState로 현재 히스토리만 업데이트
             window.history.replaceState({}, '', url.toString());
             setConsultModalOpenState(false);
+            if (typeof window !== 'undefined' && window.location.pathname.endsWith('/consult')) {
+                if (onClose) {
+                    onClose();
+                } else {
+                    router.replace(`/facility/${facility.id}`);
+                }
+            }
         }
     };
     const [consultForm, setConsultForm] = useState({
@@ -1416,23 +1428,22 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
         }
     };
 
-    const handleReviewPhotoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleReviewPhotoChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
         const files = e.target.files;
         if (!files || files.length === 0) return;
         if (reviewForm.photos.length + files.length > 10) {
             alert('사진은 최대 10장까지 첨부할 수 있습니다.');
             return;
         }
-        Array.from(files).forEach(file => {
-            const reader = new FileReader();
-            reader.onloadend = () => {
-                setReviewForm(prev => ({
-                    ...prev,
-                    photos: [...prev.photos, reader.result as string]
-                }));
-            };
-            reader.readAsDataURL(file);
-        });
+        const compressedList = await Promise.all(
+            Array.from(files).map(file => compressImageFile(file, 1200, 0.7))
+        );
+        const validPhotos = compressedList.filter(Boolean);
+        setReviewForm(prev => ({
+            ...prev,
+            photos: [...prev.photos, ...validPhotos]
+        }));
+        e.target.value = '';
     };
 
     const removeReviewPhoto = (index: number) => {
@@ -1442,7 +1453,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
         }));
     };
 
-    const handlePhotoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handlePhotoChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
         const files = e.target.files;
         if (!files || files.length === 0) return;
 
@@ -1452,16 +1463,15 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
             return;
         }
 
-        Array.from(files).forEach(file => {
-            const reader = new FileReader();
-            reader.onloadend = () => {
-                setInquiryForm(prev => ({
-                    ...prev,
-                    photos: [...prev.photos, reader.result as string]
-                }));
-            };
-            reader.readAsDataURL(file);
-        });
+        const compressedList = await Promise.all(
+            Array.from(files).map(file => compressImageFile(file, 1200, 0.7))
+        );
+        const validPhotos = compressedList.filter(Boolean);
+        setInquiryForm(prev => ({
+            ...prev,
+            photos: [...prev.photos, ...validPhotos]
+        }));
+        e.target.value = '';
     };
 
     const removePhoto = (index: number) => {
@@ -3078,7 +3088,9 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                                         styles={{ root: { height: 52, flex: 1 } }}
                                                         onClick={() => {
                                                             setConsultModalOpened(false);
-                                                            setConsultSuccess(false);
+                                                            setTimeout(() => {
+                                                                setConsultSuccess(false);
+                                                            }, 350);
                                                         }}
                                                     >
                                                         확인
@@ -3363,7 +3375,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                                 size="lg"
                                                 radius="md"
                                                 loading={consultSubmitting}
-                                                disabled={!consultForm.name || !consultForm.phone || !consultForm.preferredTime || !consultForm.consultMethod || !consultForm.question || !consultForm.message?.trim()}
+                                                disabled={!consultForm.name?.trim() || !consultForm.phone?.trim() || !consultForm.preferredTime || !consultForm.consultMethod || !consultForm.question}
                                                 styles={{ root: { height: 52 } }}
                                                 onClick={async () => {
                                                     setConsultSubmitting(true);
@@ -3536,7 +3548,9 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                                         styles={{ root: { height: 52, flex: 1 } }}
                                                         onClick={() => {
                                                             setConsultModalOpened(false);
-                                                            setConsultSuccess(false);
+                                                            setTimeout(() => {
+                                                                setConsultSuccess(false);
+                                                            }, 350);
                                                         }}
                                                     >
                                                         확인
@@ -3803,7 +3817,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                                 size="lg"
                                                 radius="md"
                                                 loading={consultSubmitting}
-                                                disabled={!consultForm.name || !consultForm.phone || !consultForm.preferredTime || !consultForm.consultMethod || !consultForm.question || !consultForm.message?.trim()}
+                                                disabled={!consultForm.name?.trim() || !consultForm.phone?.trim() || !consultForm.preferredTime || !consultForm.consultMethod || !consultForm.question}
                                                 styles={{ root: { height: 52 } }}
                                                 onClick={async () => {
                                                     setConsultSubmitting(true);
@@ -4658,7 +4672,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                 institutionType: facility.operatorType,
                                 description: facility.description,
                                 standardizedPrices: facility.priceInfo?.standardizedPrices?.flatMap(g =>
-                                    g.rows.map(r => ({ type: g.subType, subType: r.name, price: r.price, notes: r.description }))
+                                    g.rows?.map(r => ({ type: g.subType, subType: r.name, price: r.price, notes: r.description })) || []
                                 ),
                                 amenities: {
                                     parking: !!facility.hasParking,

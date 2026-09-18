@@ -2,6 +2,7 @@ import { MetadataRoute } from 'next';
 import fs from 'fs';
 import path from 'path';
 import { createClient } from '@supabase/supabase-js';
+import { loadFacilitiesJson } from '@/lib/facilityDataLoader';
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://jbydmhfuqnpukfutvrgs.supabase.co';
 const supabaseKey = process.env.SUPABASE_SERVICE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || '';
@@ -66,11 +67,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     }
     // 시/군 단위 랜딩페이지 (세분화 SEO)
     const cityPages: MetadataRoute.Sitemap = [];
-    try {
-        const dataPath = path.join(process.cwd(), 'data', 'facilities.json');
-        const fileContent = fs.readFileSync(dataPath, 'utf-8');
-        const allFacilities = JSON.parse(fileContent);
+    const allFacilities = loadFacilitiesJson();
 
+    try {
         const combos = new Map<string, number>();
         allFacilities.forEach((f: any) => {
             if (!f.address || !f.category) return;
@@ -110,11 +109,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     let facilityPages: MetadataRoute.Sitemap = [];
 
     try {
-        const dataPath = path.join(process.cwd(), 'data', 'facilities.json');
-        const fileContent = fs.readFileSync(dataPath, 'utf-8');
-        const facilities = JSON.parse(fileContent);
-
-        facilityPages = facilities
+        facilityPages = allFacilities
             .filter((f: any) => f.category !== 'FUNERAL_HOME')
             .map((f: any) => {
                 let lastMod = new Date();

@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { cookies } from 'next/headers';
+import { createClient } from '@supabase/supabase-js';
 import { getSupabaseServer } from '@/lib/supabaseServer';
 import { sendSlack } from '@/lib/slack';
 import bcrypt from 'bcryptjs';
@@ -155,8 +156,22 @@ export async function DELETE(
             );
         }
 
-        // Admin bypass, owner bypass, or password check
-        const isOwner = body.userId && review.userId && body.userId === review.userId;
+        // Admin bypass, owner bypass (verified via JWT), or password check
+        let tokenUserId: string | null = null;
+        const authHeader = request.headers.get('authorization');
+        if (authHeader?.startsWith('Bearer ')) {
+            const token = authHeader.substring(7);
+            const supabaseAnon = createClient(
+                process.env.NEXT_PUBLIC_SUPABASE_URL!,
+                process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+            );
+            const { data: { user } } = await supabaseAnon.auth.getUser(token);
+            if (user) {
+                tokenUserId = user.id;
+            }
+        }
+
+        const isOwner = Boolean(tokenUserId && review.userId && tokenUserId === review.userId);
         if (!isAdmin && !isOwner) {
             if (!password) {
                 return NextResponse.json(
@@ -188,21 +203,23 @@ export async function DELETE(
             );
         }
 
-        // Update facility reviewCount
-        const { data: facility } = await supabase
+        // Update facility reviewCount & recalculate average rating accurately
+        const { data: remainingReviews } = await supabase
+            .from('Review')
+            .select('rating')
+            .eq('facilityId', facilityId);
+
+        const count = remainingReviews?.length || 0;
+        const avgRating = count > 0
+            ? parseFloat((remainingReviews!.reduce((sum, r) => sum + (r.rating || 0), 0) / count).toFixed(1))
+            : 0;
+
+        await supabase
             .from('Facility')
-            .select('reviewCount')
-            .eq('id', facilityId)
-            .single();
+            .update({ reviewCount: count, rating: avgRating })
+            .eq('id', facilityId);
 
-        if (facility && facility.reviewCount > 0) {
-            await supabase
-                .from('Facility')
-                .update({ reviewCount: facility.reviewCount - 1 })
-                .eq('id', facilityId);
-        }
-
-        return NextResponse.json({ success: true });
+        return NextResponse.json({ success: true, updatedStats: { reviewCount: count, rating: avgRating } });
 
     } catch (error) {
         console.error('Failed to delete review:', error);

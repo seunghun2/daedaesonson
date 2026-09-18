@@ -14,7 +14,16 @@ public/images/facilities/
 public/uploads/
 대대손손 파일리스트/
 
-# Large Data Dumps
+# Large Data Dumps & Backups
+data/verify_*.json
+data/*.bak
+data/*backup*
+data/*rollback*
+data/*.csv
+data/*.xlsx
+data/구글 api/
+data/데이터 - *.csv
+data/체크용.csv
 dump*.json
 crawled_*.json
 full_data.json

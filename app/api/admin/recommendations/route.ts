@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
+import { requireAdmin } from '@/lib/adminAuth';
 
 function getSupabase() {
     return createClient(
@@ -10,6 +11,9 @@ function getSupabase() {
 
 // GET - 전체 추천 요청 목록
 export async function GET() {
+    const authError = await requireAdmin();
+    if (authError) return authError;
+
     const { data, error } = await getSupabase()
         .from('recommendation_requests')
         .select('*')
@@ -23,6 +27,9 @@ export async function GET() {
 
 // PATCH - 상태 변경
 export async function PATCH(request: Request) {
+    const authError = await requireAdmin();
+    if (authError) return authError;
+
     const body = await request.json();
     const { id, status } = body;
 
@@ -43,6 +50,8 @@ export async function PATCH(request: Request) {
 
 // DELETE - 삭제
 export async function DELETE(request: Request) {
+    const authError = await requireAdmin();
+    if (authError) return authError;
     const body = await request.json();
     const { id } = body;
 

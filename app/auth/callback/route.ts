@@ -125,13 +125,21 @@ export async function GET(request: NextRequest) {
                 });
 
                 if (signInData?.session) {
-                    // 세션 토큰을 직접 전달 — 클라이언트에서 setSession으로 바로 적용
+                    // 세션 토큰을 쿠키로 안전하게 전달 (URL 노출 차단)
                     const tokenPayload = JSON.stringify({
                         access_token: signInData.session.access_token,
                         refresh_token: signInData.session.refresh_token,
                     });
                     const encoded = Buffer.from(tokenPayload).toString('base64');
-                    return NextResponse.redirect(new URL(`/?kakao_session=${encoded}`, origin));
+                    const redirectRes = NextResponse.redirect(new URL('/', origin));
+                    redirectRes.cookies.set('kakao_session_transient', encoded, {
+                        path: '/',
+                        maxAge: 60,
+                        sameSite: 'lax',
+                        secure: process.env.NODE_ENV === 'production',
+                        httpOnly: false,
+                    });
+                    return redirectRes;
                 } else {
                     console.error('[kakao] SignIn failed:', signInError?.message);
                 }

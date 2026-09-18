@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { getSupabaseServer } from '@/lib/supabaseServer';
+import { requireAdmin } from '@/lib/adminAuth';
 
 const supabase = getSupabaseServer();
 
@@ -8,6 +9,9 @@ export async function GET(
     request: Request,
     { params }: { params: Promise<{ type: string }> }
 ) {
+    const authError = await requireAdmin();
+    if (authError) return authError;
+
     try {
         const { type } = await params;
 
@@ -30,6 +34,9 @@ export async function PUT(
     request: Request,
     { params }: { params: Promise<{ type: string }> }
 ) {
+    const authError = await requireAdmin();
+    if (authError) return authError;
+
     try {
         const { type } = await params;
         const body = await request.json();

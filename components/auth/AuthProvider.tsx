@@ -96,24 +96,34 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         const initSession = async () => {
             // 카카오 로그인 콜백 처리
             if (typeof window !== 'undefined') {
-                const params = new URLSearchParams(window.location.search);
-                const kakaoSession = params.get('kakao_session');
+                let kakaoSession: string | null = null;
+
+                // 1) 쿠키에서 임시 세션 확인 (보안 우선)
+                const cookieMatch = document.cookie.match(/kakao_session_transient=([^;]+)/);
+                if (cookieMatch) {
+                    kakaoSession = decodeURIComponent(cookieMatch[1]);
+                    document.cookie = 'kakao_session_transient=; path=/; max-age=0';
+                }
+
+                // 2) URL 파라미터 확인 (하위 호환)
+                if (!kakaoSession) {
+                    const params = new URLSearchParams(window.location.search);
+                    kakaoSession = params.get('kakao_session');
+                    if (kakaoSession) {
+                        window.history.replaceState(null, '', window.location.pathname);
+                    }
+                }
+
                 if (kakaoSession) {
-                    console.log('[auth] kakao_session detected');
-                    // URL에서 쿼리 제거
-                    window.history.replaceState(null, '', window.location.pathname);
                     try {
                         const decoded = atob(kakaoSession);
                         const tokens = JSON.parse(decoded);
-                        console.log('[auth] Setting session from tokens');
                         if (tokens.access_token && tokens.refresh_token) {
                             const { error } = await supabase.auth.setSession({
                                 access_token: tokens.access_token,
                                 refresh_token: tokens.refresh_token,
                             });
-                            console.log('[auth] setSession result - error:', error?.message);
                             if (!error) {
-                                console.log('[auth] Session set successfully');
                                 return; // onAuthStateChange에서 처리
                             }
                         }

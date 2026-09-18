@@ -3,6 +3,15 @@ import { NextRequest, NextResponse } from 'next/server';
 const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || '0612';
 const ADMIN_TOKEN = 'dds_admin_verified';
 
+// GET: 인증 상태 확인
+export async function GET(request: NextRequest) {
+    const sessionCookie = request.cookies.get('admin_session');
+    if (!sessionCookie || sessionCookie.value !== ADMIN_TOKEN) {
+        return NextResponse.json({ authenticated: false }, { status: 401 });
+    }
+    return NextResponse.json({ authenticated: true });
+}
+
 // POST: 로그인
 export async function POST(request: NextRequest) {
     try {
