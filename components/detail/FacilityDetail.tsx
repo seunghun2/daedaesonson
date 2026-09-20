@@ -2571,17 +2571,37 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                                 </ActionIcon>
                                             </Group>
                                             <Text size="md" mb="xs" style={{ whiteSpace: 'pre-wrap', lineHeight: 1.5, color: '#343a40' }}>
-                                                {review.content}
+                                                {typeof review.content === 'string' ? review.content.replace(/\n?\[bugo:\d+\]/g, '').trim() : review.content}
                                             </Text>
-                                            {/* Review Photos - 클릭 시 확대 */}
+                                            {/* Review Photos - 가로 슬라이드 및 클릭 시 확대 */}
                                             {review.photos && review.photos.length > 0 && (
-                                                <Group gap="xs" mb="sm">
+                                                <Box
+                                                    mb="sm"
+                                                    style={{
+                                                        display: 'flex',
+                                                        gap: '8px',
+                                                        overflowX: 'auto',
+                                                        overflowY: 'hidden',
+                                                        scrollSnapType: 'x mandatory',
+                                                        WebkitOverflowScrolling: 'touch',
+                                                        scrollbarWidth: 'none',
+                                                        paddingBottom: '4px',
+                                                    }}
+                                                >
                                                     {review.photos.map((photo, idx) => (
-                                                        <Box key={idx} style={{ cursor: 'pointer' }} onClick={() => openImageViewer(review.photos ?? [], idx)}>
+                                                        <Box
+                                                            key={idx}
+                                                            style={{
+                                                                flexShrink: 0,
+                                                                scrollSnapAlign: 'start',
+                                                                cursor: 'pointer',
+                                                            }}
+                                                            onClick={() => openImageViewer(review.photos ?? [], idx)}
+                                                        >
                                                             <Image src={photo} w={100} h={100} radius="md" style={{ objectFit: 'cover', border: '1px solid #f1f3f5' }} />
                                                         </Box>
                                                     ))}
-                                                </Group>
+                                                </Box>
                                             )}
 
                                             <Group gap="lg">

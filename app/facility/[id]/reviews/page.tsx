@@ -267,18 +267,39 @@ export default function ReviewsListPage() {
 
                                 {/* 리뷰 내용 */}
                                 <Text size="md" style={{ whiteSpace: 'pre-wrap', lineHeight: 1.6, color: '#343a40' }} ml={32}>
-                                    {review.content}
+                                    {typeof review.content === 'string' ? review.content.replace(/\n?\[bugo:\d+\]/g, '').trim() : review.content}
                                 </Text>
 
-                                {/* 리뷰 사진 */}
+                                {/* 리뷰 사진 - 가로 슬라이드 및 클릭 시 확대 */}
                                 {review.photos && review.photos.length > 0 && (
-                                    <Group gap="xs" mt="sm" ml={32}>
+                                    <Box
+                                        mt="sm"
+                                        ml={32}
+                                        style={{
+                                            display: 'flex',
+                                            gap: '8px',
+                                            overflowX: 'auto',
+                                            overflowY: 'hidden',
+                                            scrollSnapType: 'x mandatory',
+                                            WebkitOverflowScrolling: 'touch',
+                                            scrollbarWidth: 'none',
+                                            paddingBottom: '4px',
+                                        }}
+                                    >
                                         {review.photos.map((photo: string, idx: number) => (
-                                            <Box key={idx} style={{ cursor: 'pointer' }} onClick={() => openImageViewer(review.photos, idx)}>
+                                            <Box
+                                                key={idx}
+                                                style={{
+                                                    flexShrink: 0,
+                                                    scrollSnapAlign: 'start',
+                                                    cursor: 'pointer',
+                                                }}
+                                                onClick={() => openImageViewer(review.photos, idx)}
+                                            >
                                                 <img src={photo} alt="리뷰 사진" onError={(e) => { e.currentTarget.style.display = 'none'; }} style={{ width: 100, height: 100, objectFit: 'cover', borderRadius: '8px', border: '1px solid #f1f3f5' }} />
                                             </Box>
                                         ))}
-                                    </Group>
+                                    </Box>
                                 )}
 
                                 {/* 좋아요 / 답글달기 */}

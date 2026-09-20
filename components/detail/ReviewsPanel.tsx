@@ -158,16 +158,39 @@ export default function ReviewsPanel({ facility, isOpen, onClose }: ReviewsPanel
                                                         <X size={14} />
                                                     </ActionIcon>
                                                 </Group>
-                                                <Text size="md" style={{ whiteSpace: 'pre-wrap', lineHeight: 1.6, color: '#343a40' }} ml={32}>{review.content}</Text>
+                                                <Text size="md" style={{ whiteSpace: 'pre-wrap', lineHeight: 1.6, color: '#343a40' }} ml={32}>
+                                                    {typeof review.content === 'string' ? review.content.replace(/\n?\[bugo:\d+\]/g, '').trim() : review.content}
+                                                </Text>
 
                                                 {review.photos && review.photos.length > 0 && (
-                                                    <Group gap="xs" mt="sm" ml={32}>
+                                                    <Box
+                                                        mt="sm"
+                                                        ml={32}
+                                                        style={{
+                                                            display: 'flex',
+                                                            gap: '8px',
+                                                            overflowX: 'auto',
+                                                            overflowY: 'hidden',
+                                                            scrollSnapType: 'x mandatory',
+                                                            WebkitOverflowScrolling: 'touch',
+                                                            scrollbarWidth: 'none',
+                                                            paddingBottom: '4px',
+                                                        }}
+                                                    >
                                                         {review.photos.map((photo: string, idx: number) => (
-                                                            <Box key={idx} style={{ cursor: 'pointer' }} onClick={() => { setEnlargedImages(review.photos); setEnlargedImageIndex(idx); }}>
+                                                            <Box
+                                                                key={idx}
+                                                                style={{
+                                                                    flexShrink: 0,
+                                                                    scrollSnapAlign: 'start',
+                                                                    cursor: 'pointer',
+                                                                }}
+                                                                onClick={() => { setEnlargedImages(review.photos); setEnlargedImageIndex(idx); }}
+                                                            >
                                                                 <img src={photo} alt="리뷰 사진" onError={(e) => { e.currentTarget.style.display = 'none'; }} style={{ width: 80, height: 80, objectFit: 'cover', borderRadius: '8px', border: '1px solid #f1f3f5' }} />
                                                             </Box>
                                                         ))}
-                                                    </Group>
+                                                    </Box>
                                                 )}
 
                                                 <Group gap="lg" mt="sm" ml={32}>
