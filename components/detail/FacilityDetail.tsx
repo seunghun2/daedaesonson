@@ -905,10 +905,29 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
     const containerRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
-        // 🚀 초기 데이터로 렌더링 + thumbnail → imageGallery 매핑
+        // 🚀 초기 데이터로 렌더링 + 이미지 목록 정규화
         const enriched = { ...initialFacility };
-        if (!enriched.imageGallery?.length && enriched.thumbnail) {
-            enriched.imageGallery = [enriched.thumbnail];
+        let initialImages: string[] = [];
+        if (Array.isArray(enriched.imageGallery) && enriched.imageGallery.length > 0) {
+            initialImages = enriched.imageGallery;
+        } else if (Array.isArray(enriched.images) && enriched.images.length > 0) {
+            initialImages = enriched.images;
+        } else if (typeof enriched.images === 'string' && enriched.images.trim()) {
+            try {
+                const parsed = JSON.parse(enriched.images);
+                if (Array.isArray(parsed) && parsed.length > 0) initialImages = parsed;
+                else initialImages = enriched.images.split(',').map((s: string) => s.trim()).filter(Boolean);
+            } catch {
+                initialImages = enriched.images.split(',').map((s: string) => s.trim()).filter(Boolean);
+            }
+        } else if (enriched.thumbnail) {
+            initialImages = [enriched.thumbnail];
+        }
+
+        if (initialImages.length > 0) {
+            enriched.imageGallery = initialImages;
+            enriched.images = initialImages;
+            if (!enriched.thumbnail) enriched.thumbnail = initialImages[0];
         }
         setFacility(enriched);
 
@@ -935,7 +954,20 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                 .then(res => res.json())
                 .then(fullData => {
                     if (!fullData || fullData.error) return;
-                    setFacility(prev => ({ ...prev, ...fullData }));
+                    setFacility(prev => {
+                        const mergedImages = (Array.isArray(fullData.imageGallery) && fullData.imageGallery.length > 0)
+                            ? fullData.imageGallery
+                            : (Array.isArray(fullData.images) && fullData.images.length > 0)
+                                ? fullData.images
+                                : (prev.imageGallery || prev.images || initialImages || []);
+                        return {
+                            ...prev,
+                            ...fullData,
+                            images: mergedImages,
+                            imageGallery: mergedImages,
+                            thumbnail: fullData.thumbnail || prev.thumbnail || enriched.thumbnail || mergedImages[0] || '',
+                        };
+                    });
                 })
                 .catch(() => { });
         }
@@ -1683,12 +1715,26 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
     // 갤러리 이미지 처리 (엄격한 필터링)
     // 🔥 실제 시설 사진만 표시 (thumbnail/로고 제외)
     // 🚀 imageGallery가 아직 없으면 thumbnail로 즉시 표시 (API 응답 전)
-    const rawImages = (facility.imageGallery && facility.imageGallery.length > 0)
-        ? facility.imageGallery
-        : (facility.thumbnail ? [facility.thumbnail] : []);
+    let rawImages: string[] = [];
+    if (Array.isArray(facility.imageGallery) && facility.imageGallery.length > 0) {
+        rawImages = facility.imageGallery;
+    } else if (Array.isArray(facility.images) && facility.images.length > 0) {
+        rawImages = facility.images;
+    } else if (typeof facility.images === 'string' && facility.images.trim()) {
+        try {
+            const p = JSON.parse(facility.images);
+            if (Array.isArray(p)) rawImages = p;
+            else rawImages = facility.images.split(',').map((s: string) => s.trim()).filter(Boolean);
+        } catch {
+            rawImages = facility.images.split(',').map((s: string) => s.trim()).filter(Boolean);
+        }
+    } else if (facility.thumbnail) {
+        rawImages = [facility.thumbnail];
+    }
+
     const galleryImages = rawImages
         .filter((img: string) => img && typeof img === 'string' && img.trim() !== '')
-        .filter((img: string) => img.startsWith('http') || img.startsWith('blob:') || img.startsWith('data:'))
+        .filter((img: string) => img.startsWith('http') || img.startsWith('blob:') || img.startsWith('data:') || img.startsWith('/') || img.startsWith('.'))
         .filter((img: string) => !img.includes('/logos/') && !img.includes('logo')); // 로고 이미지 제외
 
     const visibleImages = galleryImages.slice(0, 2);

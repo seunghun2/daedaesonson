@@ -99,7 +99,22 @@ export default function FacilityPageClient({ facilityBasic }: FacilityPageClient
             fetch(`/api/facilities/${facilityBasic.id}`, { cache: 'no-store' })
                 .then(res => res.ok ? res.json() : null)
                 .then(data => {
-                    if (data) setFacility(data);
+                    if (data) {
+                        setFacility((prev: any) => {
+                            const mergedImages = (Array.isArray(data.imageGallery) && data.imageGallery.length > 0)
+                                ? data.imageGallery
+                                : (Array.isArray(data.images) && data.images.length > 0)
+                                    ? data.images
+                                    : (prev?.imageGallery || prev?.images || facilityBasic.images || []);
+                            return {
+                                ...prev,
+                                ...data,
+                                images: mergedImages,
+                                imageGallery: mergedImages,
+                                thumbnail: data.thumbnail || prev?.thumbnail || facilityBasic.thumbnail || mergedImages[0] || '',
+                            };
+                        });
+                    }
                 })
                 .catch(() => { /* SSR 데이터로 폴백 */ });
         };

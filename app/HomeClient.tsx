@@ -267,7 +267,22 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
       fetch(`/api/facilities/${openId}`)
         .then(res => res.ok ? res.json() : null)
         .then(data => {
-          if (data) setSelectedFacility(data);
+          if (data) {
+            setSelectedFacility(prev => {
+              const mergedImages = (Array.isArray(data.imageGallery) && data.imageGallery.length > 0)
+                ? data.imageGallery
+                : (Array.isArray(data.images) && data.images.length > 0)
+                  ? data.images
+                  : (prev?.imageGallery || prev?.images || []);
+              return {
+                ...prev,
+                ...data,
+                images: mergedImages,
+                imageGallery: mergedImages,
+                thumbnail: data.thumbnail || prev?.thumbnail || mergedImages[0] || '',
+              };
+            });
+          }
         })
         .catch(() => { });
     }
@@ -593,7 +608,18 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
           if (detailLoadingIdRef.current !== requestId) return;
           if (data) {
             data.coordinates = facility.coordinates || data.coordinates;
-            setSelectedFacility(data);
+            const mergedImages = (Array.isArray(data.imageGallery) && data.imageGallery.length > 0)
+              ? data.imageGallery
+              : (Array.isArray(data.images) && data.images.length > 0)
+                ? data.images
+                : (facility.imageGallery || facility.images || []);
+            setSelectedFacility({
+              ...facility,
+              ...data,
+              images: mergedImages,
+              imageGallery: mergedImages,
+              thumbnail: data.thumbnail || facility.thumbnail || mergedImages[0] || '',
+            });
           }
           setIsDetailLoading(false);
         })

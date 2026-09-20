@@ -120,6 +120,24 @@ export default async function FacilityPage({ params }: PageProps) {
         notFound();
     }
 
+    // 이미지 목록 파싱
+    let parsedImages: string[] = [];
+    if (Array.isArray(data.imageGallery) && data.imageGallery.length > 0) {
+        parsedImages = data.imageGallery;
+    } else if (Array.isArray(data.images) && data.images.length > 0) {
+        parsedImages = data.images;
+    } else if (typeof data.images === 'string' && data.images.trim()) {
+        try {
+            const p = JSON.parse(data.images);
+            if (Array.isArray(p)) parsedImages = p;
+            else parsedImages = data.images.split(',').map((s: string) => s.trim()).filter(Boolean);
+        } catch {
+            parsedImages = data.images.split(',').map((s: string) => s.trim()).filter(Boolean);
+        }
+    } else if (data.thumbnail) {
+        parsedImages = [data.thumbnail];
+    }
+
     const facilityBasic = {
         id: data.id,
         name: data.name,
@@ -129,7 +147,9 @@ export default async function FacilityPage({ params }: PageProps) {
         priceRange: data.priceRange || { min: data.minPrice || 0, max: data.maxPrice || 0 },
         operatorType: data.operatorType,
         isPublic: data.isPublic ?? false,
-        thumbnail: data.thumbnail || (data.images?.[0]) || '',
+        thumbnail: data.thumbnail || parsedImages[0] || '',
+        images: parsedImages,
+        imageGallery: parsedImages,
         rating: data.rating || 0,
         reviewCount: data.reviewCount || 0,
         description: data.description || '',
@@ -156,7 +176,7 @@ export default async function FacilityPage({ params }: PageProps) {
             }
         } : {}),
         ...(data.phone ? { telephone: data.phone } : {}),
-        ...(data.thumbnail || data.images?.[0] ? { image: data.thumbnail || data.images[0] } : {}),
+        ...(facilityBasic.thumbnail ? { image: facilityBasic.thumbnail } : {}),
         url: `https://daedaesonson.com/facility/${id}`,
     };
 

@@ -5,6 +5,7 @@ import { parse } from 'csv-parse/sync';
 import { getSupabaseServer } from '@/lib/supabaseServer';
 import { RepresentativePricing } from '@/types';
 import { requireAdmin } from '@/lib/adminAuth';
+import { getCachedFacility } from '@/lib/facilityDataLoader';
 
 const supabase = getSupabaseServer();
 
@@ -140,7 +141,34 @@ export async function GET(
                 parsedImages = typeof dbData.images === 'string'
                     ? JSON.parse(dbData.images)
                     : (Array.isArray(dbData.images) ? dbData.images : []);
-            } catch (e) { parsedImages = []; }
+            } catch (e) {
+                if (typeof dbData.images === 'string') {
+                    parsedImages = dbData.images.split(',').map((s: string) => s.trim()).filter(Boolean);
+                } else {
+                    parsedImages = [];
+                }
+            }
+        }
+        // DB 이미지 필드가 비어있거나 누락된 경우 facilities.json에서 안전하게 폴백
+        if (!parsedImages || parsedImages.length === 0) {
+            const fallbackFac = getCachedFacility(id);
+            if (fallbackFac) {
+                if (Array.isArray(fallbackFac.imageGallery) && fallbackFac.imageGallery.length > 0) {
+                    parsedImages = fallbackFac.imageGallery;
+                } else if (Array.isArray(fallbackFac.images) && fallbackFac.images.length > 0) {
+                    parsedImages = fallbackFac.images;
+                } else if (typeof fallbackFac.images === 'string' && fallbackFac.images.trim()) {
+                    try {
+                        const p = JSON.parse(fallbackFac.images);
+                        if (Array.isArray(p)) parsedImages = p;
+                        else parsedImages = fallbackFac.images.split(',').map((s: string) => s.trim()).filter(Boolean);
+                    } catch {
+                        parsedImages = fallbackFac.images.split(',').map((s: string) => s.trim()).filter(Boolean);
+                    }
+                } else if (fallbackFac.thumbnail) {
+                    parsedImages = [fallbackFac.thumbnail];
+                }
+            }
         }
 
         // 3. pricing JSON 파싱 + standardizedPrices 자동 변환
@@ -194,7 +222,9 @@ export async function GET(
             hasShuttle: dbData.hasShuttle,
             isPublic: dbData.isPublic,
             operatingHours: dbData.operatingHours,
-            images: dbData.images || [],
+            thumbnail: dbData.thumbnail || (parsedImages.length > 0 ? parsedImages[0] : ''),
+            images: parsedImages,
+            imageGallery: parsedImages,
             reviewCount: dbData.reviewCount || 0,
             rating: dbData.rating || 0,
             phone: dbData.phone || '',

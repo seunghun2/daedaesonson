@@ -25,8 +25,21 @@ archive*
 archive*/**
 
 # Local Data Dumps, Backups & Business Docs
-data
-data/**
+data/verify_*.json
+data/*.bak
+data/*backup*
+data/*rollback*
+data/*.xlsx
+data/ordinance_hwp
+data/ordinance_hwp/**
+data/ordinance_screenshots
+data/ordinance_screenshots/**
+data/구글 api
+data/구글 api/**
+data/pdf_extracted_pricing.json
+data/pricing_class_final.*
+data/address_match*.json
+data/gemini_results*.json
 facility_data
 facility_data/**
 대대손손 파일리스트
