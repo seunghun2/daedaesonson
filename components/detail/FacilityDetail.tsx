@@ -1236,7 +1236,8 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
         const shareUrl = getShareUrl();
         const text = `[대대손손] ${facility.name}\n${facility.address || ''}\n\n시설 정보 보기: ${shareUrl}`;
         if (window.gtag) window.gtag('event', '공유_클릭', { 방법: '문자', 시설ID: facility.id, 시설명: facility.name });
-        window.location.href = `sms:?body=${encodeURIComponent(text)}`;
+        const isIOS = typeof navigator !== 'undefined' && /iPad|iPhone|iPod/.test(navigator.userAgent);
+        window.location.href = `sms:${isIOS ? '&' : '?'}body=${encodeURIComponent(text)}`;
         setShareModalOpen(false);
     };
 
@@ -1882,8 +1883,9 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                             <div
                                 style={{ display: 'flex', alignItems: 'center', gap: '6px', cursor: 'pointer', padding: '10px 12px', flex: 1, justifyContent: 'center' }}
                                 onClick={() => {
-                                    if (facility.phone) {
-                                        window.location.href = `tel:${facility.phone}`;
+                                    const cleanPhone = (facility.phone || '').replace(/[^0-9+]/g, '');
+                                    if (cleanPhone.length >= 7) {
+                                        window.location.href = `tel:${cleanPhone}`;
                                         if (window.gtag) {
                                             window.gtag('event', '직접전화_클릭', {
                                                 시설ID: facility.id,
@@ -3122,7 +3124,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                         <Box style={{
                                             flex: 1,
                                             overflowY: 'auto',
-                                            padding: '24px 20px 100px',
+                                            padding: '24px 20px 24px',
                                             WebkitOverflowScrolling: 'touch',
                                             touchAction: 'pan-y'
                                         }}>
@@ -3382,10 +3384,8 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                             style={{
                                                 borderTop: '1px solid #f1f3f5',
                                                 background: 'white',
-                                                position: 'fixed',
-                                                bottom: 0,
-                                                left: 0,
-                                                right: 0,
+                                                flexShrink: 0,
+                                                paddingBottom: 'max(16px, env(safe-area-inset-bottom))',
                                                 zIndex: 10
                                             }}
                                         >
@@ -3579,7 +3579,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                             </Box>
                                         </Box>
                                     ) : (
-                                        <Box style={{ flex: 1, overflowY: 'auto', padding: '24px 20px 100px' }}>
+                                        <Box style={{ flex: 1, overflowY: 'auto', padding: '24px 20px 24px' }}>
                                             <Box mb="xl">
                                                 <Text size="24px" fw={700} lh={1.3} style={{ wordBreak: 'keep-all' }}>
                                                     상담을 신청하려면{'\n'}

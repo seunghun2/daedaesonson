@@ -16,7 +16,7 @@ export async function GET() {
             .select('id, facility_id, customer_phone, status, tags, messages, created_at');
 
         if (error) {
-            return NextResponse.json({ error: error.message }, { status: 500 });
+            return NextResponse.json({ error: '요청을 처리할 수 없습니다.' }, { status: 500 });
         }
 
         const all = sessions || [];

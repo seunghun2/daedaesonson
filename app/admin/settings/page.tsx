@@ -1,10 +1,10 @@
 'use client';
 
 import { Box, Text, Group, Stack, TextInput, Textarea, Button, ActionIcon, Modal, Table, Badge, Tabs, Switch, Loader } from '@mantine/core';
-import { ArrowLeft, Plus, Trash2, Edit, MessageSquare, FileText, HelpCircle, Save, Mail } from 'lucide-react';
+import { notifications } from '@mantine/notifications';
+import { ArrowLeft, Plus, Trash2, Edit, FileText, HelpCircle, Save, Mail } from 'lucide-react';
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
-import BottomNav from '@/components/common/BottomNav';
 
 interface FAQ {
     id: number;
@@ -22,16 +22,6 @@ interface Policy {
     version: string;
 }
 
-interface Inquiry {
-    id: string;
-    title: string;
-    content: string;
-    contactInfo?: string;
-    contact?: string;
-    createdAt: string;
-    replies?: any[];
-    facilityName?: string;
-}
 
 interface ContactInquiry {
     id: number;
@@ -47,7 +37,6 @@ interface ContactInquiry {
 export default function AdminSettingsPage() {
     const [activeTab, setActiveTab] = useState<string | null>('faq');
     const [faqs, setFaqs] = useState<FAQ[]>([]);
-    const [inquiries, setInquiries] = useState<Inquiry[]>([]);
     const [contactInquiries, setContactInquiries] = useState<ContactInquiry[]>([]);
     const [termsPolicy, setTermsPolicy] = useState<Policy | null>(null);
     const [privacyPolicy, setPrivacyPolicy] = useState<Policy | null>(null);
@@ -63,11 +52,6 @@ export default function AdminSettingsPage() {
     const [termsContent, setTermsContent] = useState('');
     const [editingPrivacy, setEditingPrivacy] = useState(false);
     const [privacyContent, setPrivacyContent] = useState('');
-
-    // 답변 모달
-    const [replyModalOpen, setReplyModalOpen] = useState(false);
-    const [selectedInquiry, setSelectedInquiry] = useState<Inquiry | null>(null);
-    const [replyContent, setReplyContent] = useState('');
 
     // 1:1 문의 답변 모달
     const [contactReplyModalOpen, setContactReplyModalOpen] = useState(false);
@@ -89,12 +73,6 @@ export default function AdminSettingsPage() {
                 setFaqs(Array.isArray(faqData) ? faqData : []);
             }
 
-            // 문의 로드
-            const inquiryRes = await fetch('/api/admin/inquiries');
-            if (inquiryRes.ok) {
-                const inquiryData = await inquiryRes.json();
-                setInquiries(inquiryData.inquiries || []);
-            }
 
             // 약관 로드
             const termsRes = await fetch('/api/admin/policies/terms');
@@ -126,25 +104,30 @@ export default function AdminSettingsPage() {
     // FAQ 저장
     const saveFaq = async () => {
         try {
-            if (editingFaq) {
-                await fetch(`/api/admin/faqs/${editingFaq.id}`, {
+            const res = editingFaq
+                ? await fetch(`/api/admin/faqs/${editingFaq.id}`, {
                     method: 'PUT',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ ...faqForm, is_active: true }),
-                });
-            } else {
-                await fetch('/api/admin/faqs', {
+                })
+                : await fetch('/api/admin/faqs', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(faqForm),
                 });
+
+            if (!res.ok) {
+                const data = await res.json().catch(() => ({}));
+                throw new Error(data.error || 'FAQ 저장에 실패했습니다.');
             }
+
+            notifications.show({ color: 'green', message: 'FAQ가 저장되었습니다.' });
             setFaqModalOpen(false);
             setEditingFaq(null);
             setFaqForm({ question: '', answer: '', category: '일반' });
             loadData();
-        } catch (error) {
-            alert('저장 실패');
+        } catch (error: any) {
+            notifications.show({ color: 'red', message: error.message || '저장 실패' });
         }
     };
 
@@ -152,10 +135,15 @@ export default function AdminSettingsPage() {
     const deleteFaq = async (id: number) => {
         if (!confirm('삭제하시겠습니까?')) return;
         try {
-            await fetch(`/api/admin/faqs/${id}`, { method: 'DELETE' });
+            const res = await fetch(`/api/admin/faqs/${id}`, { method: 'DELETE' });
+            if (!res.ok) {
+                const data = await res.json().catch(() => ({}));
+                throw new Error(data.error || '삭제 실패');
+            }
+            notifications.show({ color: 'green', message: 'FAQ가 삭제되었습니다.' });
             loadData();
-        } catch (error) {
-            alert('삭제 실패');
+        } catch (error: any) {
+            notifications.show({ color: 'red', message: error.message || '삭제 실패' });
         }
     };
 
@@ -165,41 +153,29 @@ export default function AdminSettingsPage() {
             const content = type === 'terms' ? termsContent : privacyContent;
             const title = type === 'terms' ? '이용약관' : '개인정보 처리방침';
 
-            await fetch(`/api/admin/policies/${type}`, {
+            const res = await fetch(`/api/admin/policies/${type}`, {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ title, content, version: '1.0' }),
             });
 
+            if (!res.ok) {
+                const data = await res.json().catch(() => ({}));
+                throw new Error(data.error || '약관 저장에 실패했습니다.');
+            }
+
             if (type === 'terms') setEditingTerms(false);
             else setEditingPrivacy(false);
 
             loadData();
-            alert('저장되었습니다');
-        } catch (error) {
-            alert('저장 실패');
-        }
-    };
-
-    // 답변 등록
-    const submitReply = async () => {
-        if (!selectedInquiry || !replyContent.trim()) return;
-        try {
-            await fetch('/api/admin/inquiries', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ inquiryId: selectedInquiry.id, content: replyContent }),
-            });
-            setReplyModalOpen(false);
-            setSelectedInquiry(null);
-            setReplyContent('');
-            loadData();
-        } catch (error) {
-            alert('답변 등록 실패');
+            notifications.show({ color: 'green', message: `${title}이(가) 저장되었습니다.` });
+        } catch (error: any) {
+            notifications.show({ color: 'red', message: error.message || '저장 실패' });
         }
     };
 
     if (loading) {
+
         return (
             <Box style={{ minHeight: '100dvh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                 <Loader color="violet" />
@@ -364,29 +340,8 @@ export default function AdminSettingsPage() {
                 </Stack>
             </Modal>
 
-            {/* 답변 모달 */}
-            <Modal opened={replyModalOpen} onClose={() => setReplyModalOpen(false)} title="문의 상세" centered size="lg">
-                {selectedInquiry && (
-                    <Stack gap="md">
-                        <Box>
-                            <Text size="sm" fw={600}>{selectedInquiry.title}</Text>
-                            <Text size="xs" c="dimmed" mt="xs">{selectedInquiry.content}</Text>
-                        </Box>
-
-                        {selectedInquiry.replies?.map((reply: any, idx: number) => (
-                            <Box key={idx} bg="violet.0" p="sm" style={{ borderRadius: 8 }}>
-                                <Text size="xs" c="dimmed">{reply.author} · {new Date(reply.createdAt).toLocaleDateString()}</Text>
-                                <Text size="sm" mt={4}>{reply.content}</Text>
-                            </Box>
-                        ))}
-
-                        <Textarea label="답변 작성" value={replyContent} onChange={(e) => setReplyContent(e.target.value)} minRows={3} />
-                        <Button color="violet" onClick={submitReply}>답변 등록</Button>
-                    </Stack>
-                )}
-            </Modal>
-
             {/* 1:1 문의 답변 모달 */}
+
             <Modal opened={contactReplyModalOpen} onClose={() => setContactReplyModalOpen(false)} title="1:1 문의 상세" centered size="lg">
                 {selectedContactInquiry && (
                     <Stack gap="md">
@@ -414,16 +369,25 @@ export default function AdminSettingsPage() {
                             minRows={3}
                         />
                         <Button color="blue" onClick={async () => {
+                            if (!contactReplyContent.trim()) {
+                                notifications.show({ color: 'yellow', message: '답변 내용을 입력해주세요.' });
+                                return;
+                            }
                             try {
-                                await fetch(`/api/contact/${selectedContactInquiry.id}`, {
+                                const res = await fetch(`/api/contact/${selectedContactInquiry.id}`, {
                                     method: 'PUT',
                                     headers: { 'Content-Type': 'application/json' },
                                     body: JSON.stringify({ admin_reply: contactReplyContent, status: 'answered' }),
                                 });
+                                if (!res.ok) {
+                                    const data = await res.json().catch(() => ({}));
+                                    throw new Error(data.error || '답변 등록 실패');
+                                }
+                                notifications.show({ color: 'green', message: '답변이 성공적으로 등록되었습니다.' });
                                 setContactReplyModalOpen(false);
                                 loadData();
-                            } catch (error) {
-                                alert('답변 등록 실패');
+                            } catch (error: any) {
+                                notifications.show({ color: 'red', message: error.message || '답변 등록 실패' });
                             }
                         }}>
                             답변 등록
@@ -431,8 +395,7 @@ export default function AdminSettingsPage() {
                     </Stack>
                 )}
             </Modal>
-
-            <BottomNav />
         </Box>
     );
 }
+

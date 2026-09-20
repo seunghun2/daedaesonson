@@ -39,6 +39,7 @@ export default function AdminCorrectionsPage() {
     const [corrections, setCorrections] = useState<Correction[]>([]);
     const [loading, setLoading] = useState(true);
     const [statusFilter, setStatusFilter] = useState('all');
+    const [statusCounts, setStatusCounts] = useState<Record<string, number>>({ all: 0, pending: 0, in_progress: 0, resolved: 0, rejected: 0 });
     const [searchText, setSearchText] = useState('');
     const [selectedCorrection, setSelectedCorrection] = useState<Correction | null>(null);
     const [adminNote, setAdminNote] = useState('');
@@ -50,12 +51,16 @@ export default function AdminCorrectionsPage() {
             const res = await fetch(`/api/corrections?status=${statusFilter}`);
             const data = await res.json();
             setCorrections(data.data || []);
+            if (data.counts) {
+                setStatusCounts(data.counts);
+            }
         } catch (err) {
             console.error('Failed to fetch corrections:', err);
         } finally {
             setLoading(false);
         }
     };
+
 
     useEffect(() => {
         fetchCorrections();
@@ -127,16 +132,30 @@ export default function AdminCorrectionsPage() {
             {/* 통계 */}
             <Group mb="lg" gap="sm">
                 {['pending', 'in_progress', 'resolved', 'rejected'].map(status => {
-                    const count = corrections.filter(c => c.status === status).length;
+                    const count = statusCounts[status] ?? 0;
                     const info = STATUS_LABELS[status];
+                    const isSelected = statusFilter === status;
                     return (
-                        <Paper key={status} p="sm" withBorder radius="md" style={{ flex: 1, cursor: 'pointer' }} onClick={() => setStatusFilter(status)}>
-                            <Text size="xs" c="dimmed">{info.label}</Text>
-                            <Text size="xl" fw={700}>{count}</Text>
+                        <Paper
+                            key={status}
+                            p="sm"
+                            withBorder
+                            radius="md"
+                            style={{
+                                flex: 1,
+                                cursor: 'pointer',
+                                borderColor: isSelected ? '#7950f2' : undefined,
+                                backgroundColor: isSelected ? '#f8f0fc' : undefined,
+                            }}
+                            onClick={() => setStatusFilter(isSelected ? 'all' : status)}
+                        >
+                            <Text size="xs" c={isSelected ? 'violet' : 'dimmed'} fw={isSelected ? 600 : 400}>{info.label}</Text>
+                            <Text size="xl" fw={700} c={isSelected ? 'violet' : undefined}>{count}</Text>
                         </Paper>
                     );
                 })}
             </Group>
+
 
             {/* 목록 */}
             {loading ? (

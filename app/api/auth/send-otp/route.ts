@@ -29,8 +29,11 @@ export async function POST(request: NextRequest) {
             return NextResponse.json({ error: '전화번호를 입력해주세요' }, { status: 400 });
         }
 
-        // 번호 정리: 하이픈 제거
-        const cleanPhone = phone.replace(/-/g, '').trim();
+        // 번호 정리: 숫자만 추출 및 한국 휴대전화 번호 형식 검증
+        const cleanPhone = String(phone || '').replace(/[^0-9]/g, '');
+        if (!/^01[016789]\d{7,8}$/.test(cleanPhone)) {
+            return NextResponse.json({ error: '올바른 휴대폰 번호를 입력해주세요.' }, { status: 400 });
+        }
 
         // 전화번호별 발송 제한 (1분에 최대 3회)
         const { success: phoneSuccess } = rateLimit({

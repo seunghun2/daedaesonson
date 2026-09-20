@@ -84,6 +84,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
         '장묘', '묘지', '추모', '대대손손',
     ].filter(Boolean);
 
+    const ogImageUrl = thumbnail || 'https://daedaesonson.com/icon.svg';
+
     return {
         title,
         description,
@@ -95,7 +97,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
             title: `${data.name} ${categoryLabel} 가격정보 | 대대손손`,
             description,
             url: `https://daedaesonson.com/facility/${id}`,
-            images: thumbnail ? [{ url: thumbnail, width: 1200, height: 630, alt: `${data.name} ${categoryLabel}` }] : [],
+            images: [{ url: ogImageUrl, width: 1200, height: 630, alt: `${data.name} ${categoryLabel}` }],
             type: 'website',
             siteName: '대대손손',
             locale: 'ko_KR',
@@ -104,7 +106,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
             card: 'summary_large_image',
             title: `${data.name} ${categoryLabel} 가격정보 | 대대손손`,
             description,
-            images: thumbnail ? [thumbnail] : [],
+            images: [ogImageUrl],
         },
     };
 }

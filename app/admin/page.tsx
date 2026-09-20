@@ -129,7 +129,7 @@ export default function AdminDashboard() {
                                             {FACILITY_CATEGORY_LABELS[item.category as FacilityCategory] || item.category}
                                         </Badge>
                                     </Table.Td>
-                                    <Table.Td>⭐ {item.rating}</Table.Td>
+                                    <Table.Td>⭐ {item.rating != null ? Number(item.rating).toFixed(1) : '-'}</Table.Td>
                                 </Table.Tr>
                             ))}
                         </Table.Tbody>

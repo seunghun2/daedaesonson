@@ -35,7 +35,7 @@ export async function PUT(
         return NextResponse.json(data);
     } catch (error: any) {
         console.error('1:1 문의 수정 오류:', error);
-        return NextResponse.json({ error: error.message }, { status: 500 });
+        return NextResponse.json({ error: '요청을 처리할 수 없습니다.' }, { status: 500 });
     }
 }
 
@@ -59,6 +59,6 @@ export async function DELETE(
         return NextResponse.json({ success: true });
     } catch (error: any) {
         console.error('1:1 문의 삭제 오류:', error);
-        return NextResponse.json({ error: error.message }, { status: 500 });
+        return NextResponse.json({ error: '요청을 처리할 수 없습니다.' }, { status: 500 });
     }
 }

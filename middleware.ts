@@ -1,31 +1,33 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { verifyAdminToken } from '@/lib/adminAuth';
 
-const ADMIN_TOKEN = 'dds_admin_verified';
-
-export function middleware(request: NextRequest) {
+export async function middleware(request: NextRequest) {
     const { pathname } = request.nextUrl;
 
-    // /api/admin/auth는 인증 없이 접근 가능 (로그인 API)
+    // /api/admin/auth는 로그인 엔드포인트이므로 통과
     if (pathname === '/api/admin/auth') {
         return NextResponse.next();
     }
 
-    // /api/admin/* 경로 보호
-    if (pathname.startsWith('/api/admin')) {
-        const sessionCookie = request.cookies.get('admin_session');
-
-        if (!sessionCookie || sessionCookie.value !== ADMIN_TOKEN) {
-            return NextResponse.json(
-                { error: '인증이 필요합니다. 관리자 로그인을 해주세요.' },
-                { status: 401 }
-            );
-        }
+    const sessionCookie = request.cookies.get('admin_session');
+    if (!(await verifyAdminToken(sessionCookie?.value))) {
+        return NextResponse.json(
+            { error: '인증이 필요합니다. 관리자 로그인을 해주세요.' },
+            { status: 401 }
+        );
     }
+
     return NextResponse.next();
 }
 
 export const config = {
     matcher: [
         '/api/admin/:path*',
+        '/api/upload',
+        '/api/crawl',
+        '/api/analyze-pdf',
+        '/api/save-pricing',
+        '/api/analyze-pricing-image',
     ],
 };
+

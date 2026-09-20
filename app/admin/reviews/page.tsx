@@ -2,8 +2,11 @@
 
 import { useState, useEffect, useRef } from 'react';
 import { Title, Table, Badge, ActionIcon, Paper, Text, Group, TextInput, Modal, Button, Stack, LoadingOverlay, Card, Image as MantineImage, Box, Textarea, Divider } from '@mantine/core';
+import { notifications } from '@mantine/notifications';
 import { useDisclosure, useMediaQuery } from '@mantine/hooks';
 import { Search, Trash, Eye, Star, Image as ImageIcon, MessageCircle, X, Send } from 'lucide-react';
+import { compressImageFile } from '@/lib/clientImageCompress';
+
 
 interface Reply {
     id: string;
@@ -78,11 +81,11 @@ export default function ReviewsAdminPage() {
             if (res.ok) {
                 setReviews(prev => prev.filter(r => r.id !== id));
                 if (selectedReview?.id === id) closeDetail();
-                alert('삭제되었습니다.');
+                notifications.show({ color: 'green', message: '리뷰가 삭제되었습니다.' });
             }
         } catch (e) {
             console.error(e);
-            alert('삭제 중 오류가 발생했습니다.');
+            notifications.show({ color: 'red', message: '삭제 중 오류가 발생했습니다.' });
         }
     };
 
@@ -133,12 +136,13 @@ export default function ReviewsAdminPage() {
                 setSelectedReview(prev => prev ? { ...prev, replies: [...(prev.replies || []), newReply] } : prev);
                 setReplyContent('');
                 setReplyPhotos([]);
+                notifications.show({ color: 'green', message: '답글이 등록되었습니다.' });
             } else {
-                alert('대댓글 등록에 실패했습니다.');
+                notifications.show({ color: 'red', message: '답글 등록에 실패했습니다.' });
             }
         } catch (e) {
             console.error(e);
-            alert('대댓글 등록 중 오류가 발생했습니다.');
+            notifications.show({ color: 'red', message: '답글 등록 중 오류가 발생했습니다.' });
         } finally {
             setReplySubmitting(false);
         }
@@ -166,28 +170,40 @@ export default function ReviewsAdminPage() {
                     return r;
                 }));
                 setSelectedReview(prev => prev ? { ...prev, replies: (prev.replies || []).filter(rep => rep.id !== replyId) } : prev);
+                notifications.show({ color: 'green', message: '답글이 삭제되었습니다.' });
+            } else {
+                const data = await res.json().catch(() => ({}));
+                notifications.show({ color: 'red', message: data.error || '답글 삭제에 실패했습니다.' });
             }
         } catch (e) {
             console.error(e);
+            notifications.show({ color: 'red', message: '답글 삭제 중 오류가 발생했습니다.' });
         }
     };
 
-    // 대댓글 이미지 업로드
-    const handleReplyPhotoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    // 대댓글 이미지 업로드 (자동 압축 적용으로 4.5MB 페이로드 한도 초과 방지)
+    const handleReplyPhotoUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
         const files = Array.from(e.target.files || []);
         if (replyPhotos.length + files.length > 3) {
-            alert('이미지는 최대 3장까지 첨부할 수 있습니다.');
+            notifications.show({ color: 'orange', message: '이미지는 최대 3장까지 첨부할 수 있습니다.' });
             return;
         }
-        files.forEach(file => {
-            const reader = new FileReader();
-            reader.onload = () => {
-                setReplyPhotos(prev => [...prev, reader.result as string]);
-            };
-            reader.readAsDataURL(file);
-        });
+        for (const file of files) {
+            try {
+                const compressedDataUrl = await compressImageFile(file, 1200, 1200, 0.8);
+                setReplyPhotos(prev => [...prev, compressedDataUrl]);
+            } catch (err) {
+                console.error('이미지 압축 실패, 원본 로드:', err);
+                const reader = new FileReader();
+                reader.onload = () => {
+                    setReplyPhotos(prev => [...prev, reader.result as string]);
+                };
+                reader.readAsDataURL(file);
+            }
+        }
         e.target.value = '';
     };
+
 
     const renderStars = (rating: number) => {
         return (

@@ -16,6 +16,11 @@ export async function POST(request: NextRequest) {
             return NextResponse.json({ error: 'No file provided' }, { status: 400 });
         }
 
+        // 파일 크기 상한 (10MB)
+        if (file.size > 10 * 1024 * 1024) {
+            return NextResponse.json({ error: '파일 크기는 10MB 이하만 허용됩니다.' }, { status: 400 });
+        }
+
         // Convert to base64
         const bytes = await file.arrayBuffer();
         const buffer = Buffer.from(bytes);
@@ -93,7 +98,7 @@ JSON만 응답하세요. 다른 텍스트는 포함하지 마세요.
     } catch (error) {
         console.error('Vision API Error:', error);
         return NextResponse.json(
-            { error: String(error) },
+            { error: '이미지 분석 중 오류가 발생했습니다.' },
             { status: 500 }
         );
     }

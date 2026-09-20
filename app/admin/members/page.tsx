@@ -4,7 +4,9 @@ import { useState, useEffect } from 'react';
 import {
     Paper, Text, Table, Badge, Group, TextInput,
     Card, SimpleGrid, LoadingOverlay, Select, ActionIcon, Tooltip, Avatar,
+    Modal, Button, Divider,
 } from '@mantine/core';
+import { notifications } from '@mantine/notifications';
 import { Search, Users, UserCheck, UserPlus, Shield } from 'lucide-react';
 
 interface Member {
@@ -186,11 +188,12 @@ export default function AdminMembersPage() {
                                             <Badge
                                                 size="sm"
                                                 variant="light"
-                                                color={provider === 'kakao' ? 'yellow' : 'blue'}
+                                                color={provider === 'kakao' ? 'yellow' : (provider === 'phone' || phone ? 'blue' : 'gray')}
                                             >
-                                                {provider === 'kakao' ? '카카오' : '휴대전화'}
+                                                {provider === 'kakao' ? '카카오' : (provider === 'phone' || phone ? '휴대전화' : (member.email ? '이메일' : '-'))}
                                             </Badge>
                                         </Table.Td>
+
                                         <Table.Td>
                                             <Text size="sm">{phone ? formatPhoneDisplay(phone) : '-'}</Text>
                                         </Table.Td>
@@ -266,12 +269,20 @@ function StatCard({ icon: Icon, label, value, color, textColor }: {
 }
 
 function formatPhoneDisplay(phone: string) {
-    const clean = phone.replace(/\D/g, '');
+    if (!phone) return '-';
+    let clean = phone.replace(/\D/g, '');
+    if (clean.startsWith('82') && clean.length >= 11) {
+        clean = '0' + clean.slice(2);
+    }
     if (clean.length === 11) {
         return `${clean.slice(0, 3)}-${clean.slice(3, 7)}-${clean.slice(7)}`;
     }
+    if (clean.length === 10) {
+        return `${clean.slice(0, 3)}-${clean.slice(3, 6)}-${clean.slice(6)}`;
+    }
     return phone;
 }
+
 
 function MemberDetailModal({ member, onClose, formatDateTime, onDelete }: {
     member: Member;
@@ -295,88 +306,73 @@ function MemberDetailModal({ member, onClose, formatDateTime, onDelete }: {
                 body: JSON.stringify({ userId: member.id }),
             });
             if (res.ok) {
-                alert('회원이 삭제되었습니다.');
+                notifications.show({ color: 'green', message: '회원이 삭제되었습니다.' });
                 onDelete(member.id);
             } else {
                 const data = await res.json();
-                alert(data.error || '삭제 실패');
+                notifications.show({ color: 'red', message: data.error || '삭제에 실패했습니다.' });
             }
         } catch {
-            alert('네트워크 오류');
+            notifications.show({ color: 'red', message: '네트워크 오류가 발생했습니다.' });
         } finally {
             setDeleting(false);
         }
     };
 
     return (
-        <>
-            <div onClick={onClose} style={{
-                position: 'fixed', top: 0, left: 0, right: 0, bottom: 0,
-                backgroundColor: 'rgba(0,0,0,0.4)', zIndex: 9998,
-            }} />
-            <div style={{
-                position: 'fixed', top: '50%', left: '50%',
-                transform: 'translate(-50%, -50%)',
-                backgroundColor: 'white', borderRadius: 16,
-                padding: 24, width: '100%', maxWidth: 480,
-                zIndex: 9999, boxShadow: '0 20px 60px rgba(0,0,0,0.3)',
-            }}>
-                <Group justify="space-between" mb="md">
-                    <Text size="lg" fw={700}>회원 상세 정보</Text>
-                    <ActionIcon variant="subtle" onClick={onClose} size="sm">✕</ActionIcon>
-                </Group>
-
-                <Group mb="md">
-                    <Avatar src={avatar} size={48} radius="xl" color="grape">
-                        {name.charAt(0)}
-                    </Avatar>
-                    <div>
-                        <Text fw={600}>{name}</Text>
-                        <Text size="sm" c="dimmed">{member.email}</Text>
-                    </div>
-                </Group>
-
-                <SimpleGrid cols={2} spacing="xs">
-                    <InfoItem label="로그인 방식" value={provider === 'kakao' ? '카카오' : '휴대전화'} />
-                    <InfoItem label="전화번호" value={phone ? formatPhoneDisplay(phone) : '-'} />
-                    <InfoItem label="가입일" value={formatDateTime(member.created_at)} />
-                    <InfoItem label="마지막 접속" value={formatDateTime(member.last_sign_in_at)} />
-                    <InfoItem label="약관 동의" value={member.profile?.agreed_terms ? '✅ 완료' : '❌ 미동의'} />
-                    <InfoItem label="마케팅 동의" value={member.profile?.agreed_marketing ? '✅ 동의' : '❌ 미동의'} />
-                    <InfoItem label="동의 일시" value={formatDateTime(member.profile?.agreed_at || null)} />
-                    <InfoItem label="관심 시설" value={`${member.profile?.favorite_facilities?.length || 0}개`} />
-                </SimpleGrid>
-
-                {member.profile?.favorite_facilities && member.profile.favorite_facilities.length > 0 && (
-                    <div style={{ marginTop: 12 }}>
-                        <Text size="xs" c="dimmed" mb={4}>관심 시설 ID</Text>
-                        <Group gap={4}>
-                            {member.profile.favorite_facilities.map((id) => (
-                                <Badge key={id} size="xs" variant="light">{id}</Badge>
-                            ))}
-                        </Group>
-                    </div>
-                )}
-
-                {/* 회원 삭제 버튼 */}
-                <div style={{ marginTop: 20, borderTop: '1px solid #f1f3f5', paddingTop: 16 }}>
-                    <button
-                        onClick={handleDelete}
-                        disabled={deleting}
-                        style={{
-                            display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8,
-                            width: '100%', padding: '12px', borderRadius: 10,
-                            backgroundColor: deleting ? '#ffe3e3' : '#fff5f5',
-                            border: '1px solid #ffc9c9',
-                            fontSize: 14, fontWeight: 600,
-                            color: '#e03131', cursor: deleting ? 'not-allowed' : 'pointer',
-                        }}
-                    >
-                        {deleting ? '삭제 중...' : '회원 삭제'}
-                    </button>
+        <Modal
+            opened={true}
+            onClose={onClose}
+            title={<Text size="lg" fw={700}>회원 상세 정보</Text>}
+            centered
+            radius="lg"
+            size="md"
+        >
+            <Group mb="md">
+                <Avatar src={avatar} size={48} radius="xl" color="grape">
+                    {name.charAt(0)}
+                </Avatar>
+                <div>
+                    <Text fw={600}>{name}</Text>
+                    <Text size="sm" c="dimmed">{member.email}</Text>
                 </div>
-            </div>
-        </>
+            </Group>
+
+            <SimpleGrid cols={2} spacing="xs">
+                <InfoItem label="로그인 방식" value={provider === 'kakao' ? '카카오' : (provider === 'phone' || phone ? '휴대전화' : (member.email ? '이메일' : '-'))} />
+                <InfoItem label="전화번호" value={phone ? formatPhoneDisplay(phone) : '-'} />
+                <InfoItem label="가입일" value={formatDateTime(member.created_at)} />
+                <InfoItem label="마지막 접속" value={formatDateTime(member.last_sign_in_at)} />
+                <InfoItem label="약관 동의" value={member.profile?.agreed_terms ? '✅ 완료' : '❌ 미동의'} />
+                <InfoItem label="마케팅 동의" value={member.profile?.agreed_marketing ? '✅ 동의' : '❌ 미동의'} />
+                <InfoItem label="동의 일시" value={formatDateTime(member.profile?.agreed_at || null)} />
+                <InfoItem label="관심 시설" value={`${member.profile?.favorite_facilities?.length || 0}개`} />
+            </SimpleGrid>
+
+            {member.profile?.favorite_facilities && member.profile.favorite_facilities.length > 0 && (
+                <div style={{ marginTop: 12 }}>
+                    <Text size="xs" c="dimmed" mb={4}>관심 시설 ID</Text>
+                    <Group gap={4}>
+                        {member.profile.favorite_facilities.map((id) => (
+                            <Badge key={id} size="xs" variant="light">{id}</Badge>
+                        ))}
+                    </Group>
+                </div>
+            )}
+
+            <Divider my="md" />
+
+            {/* 회원 삭제 버튼 */}
+            <Button
+                color="red"
+                variant="light"
+                fullWidth
+                onClick={handleDelete}
+                loading={deleting}
+            >
+                회원 삭제
+            </Button>
+        </Modal>
     );
 }
 

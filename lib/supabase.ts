@@ -5,10 +5,15 @@ let _client: SupabaseClient | null = null;
 export function getSupabaseClient(): SupabaseClient {
     if (_client) return _client;
 
-    const url = process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://jbydmhfuqnpukfutvrgs.supabase.co';
-    const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImpieWRtaGZ1cW5wdWtmdXR2cmdzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjUzMzA1NTcsImV4cCI6MjA4MDkwNjU1N30.r-xb6Bb6APibiHO1B3-aUQV0krU_TEGWPJ-HFynBR0E';
+    const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
+    const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+
+    if (!url || !key) {
+        throw new Error('Supabase client error: NEXT_PUBLIC_SUPABASE_URL or NEXT_PUBLIC_SUPABASE_ANON_KEY is missing.');
+    }
 
     _client = createClient(url, key, {
+
         auth: {
             // navigator.locks 우회 — 'Lock broken by steal' 에러 방지
             lock: async (name: string, acquireTimeout: number, fn: () => Promise<any>) => {

@@ -78,7 +78,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         // 1. 인증 상태 변경 리스너 (먼저 등록)
         const { data: { subscription } } = supabase.auth.onAuthStateChange(
             async (_event, session) => {
-                console.log('[auth] onAuthStateChange:', _event, 'user:', session?.user?.id);
+                // 인증 상태 변경 처리
                 setSession(session);
                 setUser(session?.user ?? null);
                 if (session?.user) {
@@ -98,12 +98,20 @@ export function AuthProvider({ children }: { children: ReactNode }) {
             if (typeof window !== 'undefined') {
                 let kakaoSession: string | null = null;
 
-                // 1) 쿠키에서 임시 세션 확인 (보안 우선)
-                const cookieMatch = document.cookie.match(/kakao_session_transient=([^;]+)/);
-                if (cookieMatch) {
-                    kakaoSession = decodeURIComponent(cookieMatch[1]);
-                    document.cookie = 'kakao_session_transient=; path=/; max-age=0';
-                }
+                // 1) API를 통해 httpOnly 쿠키에서 세션 읽기
+                try {
+                    const res = await fetch('/api/auth/session');
+                    if (res.ok) {
+                        const data = await res.json();
+                        if (data.session && data.session.access_token) {
+                            const { error } = await supabase.auth.setSession({
+                                access_token: data.session.access_token,
+                                refresh_token: data.session.refresh_token,
+                            });
+                            if (!error) return; // 성공
+                        }
+                    }
+                } catch (e) { console.error('[auth] error reading session:', e); }
 
                 // 2) URL 파라미터 확인 (하위 호환)
                 if (!kakaoSession) {
@@ -147,9 +155,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
     // 카카오 로그인 — 카카오 직접 호출 (account_email 제외)
     const signInWithKakao = async () => {
+        const state = crypto.randomUUID();
+        document.cookie = `oauth_state=${state}; path=/; max-age=300; SameSite=Lax`;
         const kakaoClientId = '7ab050573fb230302ee849167cc26762';
         const redirectUri = `${window.location.origin}/auth/callback`;
-        const authUrl = `https://kauth.kakao.com/oauth/authorize?client_id=${kakaoClientId}&redirect_uri=${encodeURIComponent(redirectUri)}&response_type=code&scope=profile_nickname,profile_image`;
+        const authUrl = `https://kauth.kakao.com/oauth/authorize?client_id=${kakaoClientId}&redirect_uri=${encodeURIComponent(redirectUri)}&response_type=code&scope=profile_nickname,profile_image&state=${state}`;
         window.location.href = authUrl;
     };
 

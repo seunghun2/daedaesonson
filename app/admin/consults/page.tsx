@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { Title, Table, Badge, ActionIcon, Paper, Text, Group, TextInput, Modal, Button, Stack, LoadingOverlay, Card, Box, Textarea } from '@mantine/core';
+import { notifications } from '@mantine/notifications';
 import { useDisclosure, useMediaQuery } from '@mantine/hooks';
 import { Search, Trash, Eye, Phone, Clock, MessageSquare, Building, Lock, Save } from 'lucide-react';
 
@@ -90,10 +91,11 @@ export default function ConsultsPage() {
                 if (selectedConsult?.id === id) {
                     setSelectedConsult(prev => prev ? { ...prev, status: status as Consult['status'] } : null);
                 }
+                notifications.show({ color: 'green', message: '상태가 변경되었습니다.' });
             }
         } catch (e) {
             console.error(e);
-            alert('상태 변경 중 오류가 발생했습니다.');
+            notifications.show({ color: 'red', message: '상태 변경 중 오류가 발생했습니다.' });
         }
     };
 
@@ -109,11 +111,11 @@ export default function ConsultsPage() {
             if (res.ok) {
                 setConsults(prev => prev.filter(c => c.id !== id));
                 closeDetail();
-                alert('삭제되었습니다.');
+                notifications.show({ color: 'green', message: '상담 신청이 삭제되었습니다.' });
             }
         } catch (e) {
             console.error(e);
-            alert('삭제 중 오류가 발생했습니다.');
+            notifications.show({ color: 'red', message: '삭제 중 오류가 발생했습니다.' });
         }
     };
 
@@ -137,11 +139,11 @@ export default function ConsultsPage() {
             if (res.ok) {
                 setConsults(prev => prev.map(c => c.id === selectedConsult.id ? { ...c, adminNote } : c));
                 setSelectedConsult(prev => prev ? { ...prev, adminNote } : null);
-                alert('메모가 저장되었습니다.');
+                notifications.show({ color: 'green', message: '메모가 저장되었습니다.' });
             }
         } catch (e) {
             console.error(e);
-            alert('메모 저장 중 오류가 발생했습니다.');
+            notifications.show({ color: 'red', message: '메모 저장 중 오류가 발생했습니다.' });
         } finally {
             setNoteSaving(false);
         }

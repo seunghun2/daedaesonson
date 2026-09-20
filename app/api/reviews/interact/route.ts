@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { cookies } from 'next/headers';
 import { getSupabaseServer } from '@/lib/supabaseServer';
 import { rateLimit } from '@/lib/rateLimit';
+import { verifyAdminToken } from '@/lib/adminAuth';
 import bcrypt from 'bcryptjs';
 
 const supabase = getSupabaseServer();
@@ -11,7 +12,9 @@ export async function POST(request: NextRequest) {
         const body = await request.json();
         const { facilityId, reviewId, action, content, author, password, replyId, photos } = body;
         const cookieStore = await cookies();
-        const isAdmin = cookieStore.get('admin_session')?.value === 'dds_admin_verified';
+        const isAdmin = await verifyAdminToken(cookieStore.get('admin_session')?.value);
+
+
 
         // Base validation
         if (!reviewId || !action) {
@@ -103,6 +106,10 @@ export async function POST(request: NextRequest) {
             return NextResponse.json({ success: true, reply: safeReply });
 
         } else if (action === 'DELETE_REVIEW') {
+            const ip = request.headers.get('x-forwarded-for')?.split(',')[0].trim() || 'unknown';
+            const rateCheck = rateLimit({ key: `review-interact-del:${ip}:${reviewId}`, limit: 5, windowMs: 60000 });
+            if (!rateCheck.success) return NextResponse.json({ error: '너무 많은 요청입니다.' }, { status: 429 });
+            
             // Check permission
             if (!isAdmin) {
                 if (!password) {
@@ -143,6 +150,10 @@ export async function POST(request: NextRequest) {
             return NextResponse.json({ success: true });
 
         } else if (action === 'DELETE_REPLY') {
+            const ip = request.headers.get('x-forwarded-for')?.split(',')[0].trim() || 'unknown';
+            const rateCheck = rateLimit({ key: `reply-del:${ip}:${replyId}`, limit: 5, windowMs: 60000 });
+            if (!rateCheck.success) return NextResponse.json({ error: '너무 많은 요청입니다.' }, { status: 429 });
+            
             if (!replyId) {
                 return NextResponse.json({ error: 'Reply ID required' }, { status: 400 });
             }

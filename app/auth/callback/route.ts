@@ -4,7 +4,16 @@ import { createClient } from '@supabase/supabase-js';
 export async function GET(request: NextRequest) {
     const requestUrl = new URL(request.url);
     const code = requestUrl.searchParams.get('code');
+    const state = requestUrl.searchParams.get('state');
     const origin = requestUrl.origin;
+
+    const oauthStateCookie = request.cookies.get('oauth_state')?.value;
+
+    if (state !== oauthStateCookie) {
+        const errorRes = NextResponse.redirect(new URL('/?login_error=csrf', origin));
+        errorRes.cookies.delete('oauth_state');
+        return errorRes;
+    }
 
     if (code) {
         const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
@@ -48,7 +57,7 @@ export async function GET(request: NextRequest) {
             const avatarUrl = userData.kakao_account?.profile?.profile_image_url || '';
 
             const email = `kakao_${kakaoId}@kakao.local`;
-            const password = `kakao_${kakaoId}_${serviceKey.slice(0, 12)}`;
+            const password = crypto.randomUUID() + crypto.randomUUID();
 
             const supabaseAdmin = createClient(supabaseUrl, serviceKey, {
                 auth: { autoRefreshToken: false, persistSession: false }
@@ -132,12 +141,14 @@ export async function GET(request: NextRequest) {
                     });
                     const encoded = Buffer.from(tokenPayload).toString('base64');
                     const redirectRes = NextResponse.redirect(new URL('/', origin));
+                    // 상태 쿠키 삭제
+                    redirectRes.cookies.delete('oauth_state');
                     redirectRes.cookies.set('kakao_session_transient', encoded, {
                         path: '/',
                         maxAge: 60,
                         sameSite: 'lax',
                         secure: process.env.NODE_ENV === 'production',
-                        httpOnly: false,
+                        httpOnly: true,
                     });
                     return redirectRes;
                 } else {

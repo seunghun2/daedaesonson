@@ -22,7 +22,7 @@ export async function GET(request: NextRequest) {
         .eq('user_id', user.id)
         .order('created_at', { ascending: false });
 
-    if (error) return NextResponse.json({ error: error.message }, { status: 500 });
+    if (error) return NextResponse.json({ error: '요청을 처리할 수 없습니다.' }, { status: 500 });
     return NextResponse.json({ favorites: data });
 }
 
@@ -47,7 +47,7 @@ export async function POST(request: NextRequest) {
         .select('id')
         .eq('user_id', user.id)
         .eq('facility_id', String(facilityId))
-        .single();
+        .maybeSingle();
 
     if (existing) {
         // 삭제
@@ -59,7 +59,7 @@ export async function POST(request: NextRequest) {
             user_id: user.id,
             facility_id: String(facilityId),
         });
-        if (error) return NextResponse.json({ error: error.message }, { status: 500 });
+        if (error) return NextResponse.json({ error: '요청을 처리할 수 없습니다.' }, { status: 500 });
         return NextResponse.json({ action: 'added', facilityId });
     }
 }

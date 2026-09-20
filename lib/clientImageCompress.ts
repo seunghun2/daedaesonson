@@ -1,51 +1,55 @@
 /**
- * 클라이언트 브라우저 캔버스를 이용한 고효율 이미지 압축
- * - 원본 5~10MB 사진을 1200px 이하 / JPEG 70%로 리사이즈하여 50~100KB로 압축
- * - Vercel 4.5MB Payload 한도 초과(413) 방지 및 네트워크 전송 속도 극대화
+ * 브라우저 캔버스를 이용한 클라이언트 이미지 압축 유틸리티
+ * - 최대 해상도 제한 (기본 1200px)
+ * - JPEG 0.8 품질 압축으로 용량 90% 이상 절감
+ * - Vercel Serverless Payload 한도(4.5MB) 초과 방지
  */
-export function compressImageFile(file: File, maxDim = 1200, quality = 0.7): Promise<string> {
-    return new Promise((resolve) => {
-        if (!file.type.startsWith('image/')) {
-            resolve('');
-            return;
-        }
+export async function compressImageFile(
+    file: File,
+    maxWidth = 1200,
+    maxHeight = 1200,
+    quality = 0.8
+): Promise<string> {
+    return new Promise((resolve, reject) => {
+        const img = new Image();
+        const url = URL.createObjectURL(file);
+        img.src = url;
 
-        const reader = new FileReader();
-        reader.onload = (e) => {
-            const rawDataUrl = e.target?.result as string;
-            if (!rawDataUrl) {
-                resolve('');
+        img.onload = () => {
+            URL.revokeObjectURL(url);
+            let { width, height } = img;
+
+            if (width > maxWidth || height > maxHeight) {
+                if (width / height > maxWidth / maxHeight) {
+                    height = Math.round((height * maxWidth) / width);
+                    width = maxWidth;
+                } else {
+                    width = Math.round((width * maxHeight) / height);
+                    height = maxHeight;
+                }
+            }
+
+            const canvas = document.createElement('canvas');
+            canvas.width = width;
+            canvas.height = height;
+            const ctx = canvas.getContext('2d');
+            if (!ctx) {
+                // Canvas를 지원하지 않는 환경 fallback
+                const reader = new FileReader();
+                reader.onload = () => resolve(reader.result as string);
+                reader.onerror = () => reject(new Error('FileReader error'));
+                reader.readAsDataURL(file);
                 return;
             }
 
-            const img = new Image();
-            img.onload = () => {
-                let { width, height } = img;
-                if (width > maxDim || height > maxDim) {
-                    if (width > height) {
-                        height = Math.round((height * maxDim) / width);
-                        width = maxDim;
-                    } else {
-                        width = Math.round((width * maxDim) / height);
-                        height = maxDim;
-                    }
-                }
-
-                const canvas = document.createElement('canvas');
-                canvas.width = width;
-                canvas.height = height;
-                const ctx = canvas.getContext('2d');
-                if (ctx) {
-                    ctx.drawImage(img, 0, 0, width, height);
-                    resolve(canvas.toDataURL('image/jpeg', quality));
-                } else {
-                    resolve(rawDataUrl);
-                }
-            };
-            img.onerror = () => resolve(rawDataUrl);
-            img.src = rawDataUrl;
+            ctx.drawImage(img, 0, 0, width, height);
+            const dataUrl = canvas.toDataURL('image/jpeg', quality);
+            resolve(dataUrl);
         };
-        reader.onerror = () => resolve('');
-        reader.readAsDataURL(file);
+
+        img.onerror = () => {
+            URL.revokeObjectURL(url);
+            reject(new Error('이미지 로딩 실패'));
+        };
     });
 }

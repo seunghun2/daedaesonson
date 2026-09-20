@@ -3,8 +3,9 @@
 import { useState, useEffect } from 'react';
 import {
     Box, Text, Button, Group, Table, Badge, ActionIcon, Modal, TextInput,
-    Textarea, Switch, Select, TagsInput, Stack, Loader, Center, Paper, Tooltip
+    Textarea, Switch, Select, TagsInput, Stack, Loader, Center, Paper, Tooltip, Pagination
 } from '@mantine/core';
+import { notifications } from '@mantine/notifications';
 import { useDisclosure } from '@mantine/hooks';
 import { Plus, Edit, Trash2, Eye, ExternalLink } from 'lucide-react';
 
@@ -55,16 +56,20 @@ export default function AdminBlogPage() {
     const [isEditing, setIsEditing] = useState(false);
     const [deleteConfirm, setDeleteConfirm] = useState<string | null>(null);
 
-    useEffect(() => {
-        fetchPosts();
-    }, []);
+    const [page, setPage] = useState(1);
+    const [totalPages, setTotalPages] = useState(1);
 
-    const fetchPosts = async () => {
+    useEffect(() => {
+        fetchPosts(page);
+    }, [page]);
+
+    const fetchPosts = async (currentPage = 1) => {
         setLoading(true);
         try {
-            const res = await fetch('/api/admin/blog');
+            const res = await fetch(`/api/admin/blog?page=${currentPage}&limit=20`);
             const data = await res.json();
             setPosts(data.posts || []);
+            setTotalPages(data.totalPages || 1);
         } catch (error) {
             console.error('Failed to fetch posts:', error);
         } finally {
@@ -86,7 +91,7 @@ export default function AdminBlogPage() {
 
     const handleSave = async () => {
         if (!editingPost.title || !editingPost.slug || !editingPost.content) {
-            alert('제목, 슬러그, 본문은 필수입니다.');
+            notifications.show({ color: 'orange', message: '제목, 슬러그, 본문은 필수입니다.' });
             return;
         }
 
@@ -106,13 +111,14 @@ export default function AdminBlogPage() {
             if (res.ok) {
                 close();
                 fetchPosts();
+                notifications.show({ color: 'green', message: isEditing ? '글이 수정되었습니다.' : '새 글이 등록되었습니다.' });
             } else {
                 const err = await res.json();
-                alert(`저장 실패: ${err.error}`);
+                notifications.show({ color: 'red', message: `저장 실패: ${err.error || '알 수 없는 오류'}` });
             }
         } catch (error) {
             console.error('Save error:', error);
-            alert('저장 중 오류가 발생했습니다.');
+            notifications.show({ color: 'red', message: '저장 중 오류가 발생했습니다.' });
         } finally {
             setSaving(false);
         }
@@ -124,9 +130,13 @@ export default function AdminBlogPage() {
             if (res.ok) {
                 fetchPosts();
                 setDeleteConfirm(null);
+                notifications.show({ color: 'green', message: '글이 삭제되었습니다.' });
+            } else {
+                notifications.show({ color: 'red', message: '삭제에 실패했습니다.' });
             }
         } catch (error) {
             console.error('Delete error:', error);
+            notifications.show({ color: 'red', message: '삭제 중 오류가 발생했습니다.' });
         }
     };
 
@@ -279,6 +289,9 @@ export default function AdminBlogPage() {
                             ))}
                         </Table.Tbody>
                     </Table>
+                    <Group justify="center" mt="md">
+                        <Pagination total={totalPages} value={page} onChange={setPage} color="violet" />
+                    </Group>
                 </Table.ScrollContainer>
             )}
 

@@ -25,7 +25,7 @@ export async function GET(
         return NextResponse.json(data || null);
     } catch (error: any) {
         console.error('정책 조회 오류:', error);
-        return NextResponse.json({ error: error.message }, { status: 500 });
+        return NextResponse.json({ error: '요청을 처리할 수 없습니다.' }, { status: 500 });
     }
 }
 
@@ -59,6 +59,6 @@ export async function PUT(
         return NextResponse.json(data);
     } catch (error: any) {
         console.error('정책 수정 오류:', error);
-        return NextResponse.json({ error: error.message }, { status: 500 });
+        return NextResponse.json({ error: '요청을 처리할 수 없습니다.' }, { status: 500 });
     }
 }

@@ -176,15 +176,11 @@ export async function GET() {
             };
         });
 
-        return NextResponse.json(liteData, {
-            headers: {
-                'Cache-Control': 'public, s-maxage=300, stale-while-revalidate=600',
-            },
-        });
+        return NextResponse.json(liteData);
 
     } catch (e) {
         console.error('API Error:', e);
-        return NextResponse.json({ error: 'Failed to load data', details: String(e) }, { status: 500 });
+        return NextResponse.json({ error: 'Failed to load data', details: '요청을 처리할 수 없습니다.' }, { status: 500 });
     }
 }
 
@@ -362,7 +358,7 @@ export async function POST(req: Request) {
 
             if (error) {
                 console.error('[API POST] DB Error:', error);
-                return NextResponse.json({ error: 'Database save failed', details: error.message }, { status: 500 });
+                return NextResponse.json({ error: 'Database save failed', details: '요청을 처리할 수 없습니다.' }, { status: 500 });
             }
 
             // Pricing 동기화 (PriceCategory/PriceItem) - 🚀 Bulk Insert로 최적화
@@ -463,7 +459,7 @@ export async function POST(req: Request) {
 
             if (error) {
                 console.error('[API POST] Bulk DB Error:', error);
-                return NextResponse.json({ error: 'Bulk save failed', details: error.message }, { status: 500 });
+                return NextResponse.json({ error: 'Bulk save failed', details: '요청을 처리할 수 없습니다.' }, { status: 500 });
             }
 
 
@@ -472,7 +468,7 @@ export async function POST(req: Request) {
 
     } catch (e) {
         console.error('[API POST] Error:', e);
-        return NextResponse.json({ error: 'Internal error', details: String(e) }, { status: 500 });
+        return NextResponse.json({ error: 'Internal error', details: '요청을 처리할 수 없습니다.' }, { status: 500 });
     }
 }
 
@@ -502,7 +498,7 @@ export async function DELETE(req: Request) {
 
         if (error) {
             console.error('[API DELETE] Supabase error:', error);
-            return NextResponse.json({ error: 'Delete failed', details: error.message }, { status: 500 });
+            return NextResponse.json({ error: 'Delete failed', details: '요청을 처리할 수 없습니다.' }, { status: 500 });
         }
 
 
@@ -510,6 +506,6 @@ export async function DELETE(req: Request) {
 
     } catch (e) {
         console.error('[API DELETE] Error:', e);
-        return NextResponse.json({ error: 'Internal error', details: String(e) }, { status: 500 });
+        return NextResponse.json({ error: 'Internal error', details: '요청을 처리할 수 없습니다.' }, { status: 500 });
     }
 }

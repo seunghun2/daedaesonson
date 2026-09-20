@@ -1,29 +1,43 @@
 # Vercel Ignore File
-node_modules/
-.next/
-.git/
-.venv/
-.gemini/
+node_modules
+node_modules/**
+.next
+.next/**
+.git
+.git/**
+.venv
+.venv/**
+.gemini
+.gemini/**
 
-# Large Archives (Photos)
-archive/
-archive2/
-archive3/
-archive*/
-public/images/facilities/
-public/uploads/
-대대손손 파일리스트/
+# Large Local Image Archives (Stored on Supabase Storage)
+public/images/facilities
+public/images/facilities/**
+public/uploads
+public/uploads/**
+crawled_images_v2
+crawled_images_v2/**
+FLATTENED_IMAGES
+FLATTENED_IMAGES/**
+scraped-images
+scraped-images/**
+archive*
+archive*/**
 
-# Large Data Dumps & Backups
-data/verify_*.json
-data/*.bak
-data/*backup*
-data/*rollback*
-data/*.csv
-data/*.xlsx
-data/구글 api/
-data/데이터 - *.csv
-data/체크용.csv
+# Local Data Dumps, Backups & Business Docs
+data
+data/**
+facility_data
+facility_data/**
+대대손손 파일리스트
+대대손손 파일리스트/**
+0107_예비창업패키지
+0107_예비창업패키지/**
+plusplus
+plusplus/**
+블로그발행
+블로그발행/**
+seeds.json
 dump*.json
 crawled_*.json
 full_data.json
@@ -32,7 +46,9 @@ full_data.json
 *.sqlite3
 *.log
 
-# Misc
+# Misc & Tests
 .DS_Store
-test-results/
-playwright-report/
+test-results
+test-results/**
+playwright-report
+playwright-report/**

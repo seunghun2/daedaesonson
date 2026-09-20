@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { Title, Table, Badge, ActionIcon, Paper, Text, Group, TextInput, Modal, Button, Stack, LoadingOverlay, Card, Box } from '@mantine/core';
+import { notifications } from '@mantine/notifications';
 import { useDisclosure, useMediaQuery } from '@mantine/hooks';
 import { Search, Trash, Eye, Phone, MapPin, Wallet, MessageSquare } from 'lucide-react';
 
@@ -62,13 +63,11 @@ export default function RecommendationsPage() {
             });
             if (res.ok) {
                 setRequests(prev => prev.map(r => r.id === id ? { ...r, status } : r));
-                if (selected?.id === id) {
-                    setSelected(prev => prev ? { ...prev, status } : null);
-                }
+                notifications.show({ color: 'green', message: '상태가 변경되었습니다.' });
             }
         } catch (e) {
             console.error(e);
-            alert('상태 변경 중 오류가 발생했습니다.');
+            notifications.show({ color: 'red', message: '상태 변경 중 오류가 발생했습니다.' });
         }
     };
 
@@ -83,11 +82,11 @@ export default function RecommendationsPage() {
             if (res.ok) {
                 setRequests(prev => prev.filter(r => r.id !== id));
                 closeDetail();
-                alert('삭제되었습니다.');
+                notifications.show({ color: 'green', message: '삭제되었습니다.' });
             }
         } catch (e) {
             console.error(e);
-            alert('삭제 중 오류가 발생했습니다.');
+            notifications.show({ color: 'red', message: '삭제 중 오류가 발생했습니다.' });
         }
     };
 
@@ -97,6 +96,7 @@ export default function RecommendationsPage() {
     };
 
     const formatPhone = (p: string) => {
+        if (!p) return '-';
         if (p.length === 11) return `${p.slice(0, 3)}-${p.slice(3, 7)}-${p.slice(7)}`;
         if (p.length === 10) return `${p.slice(0, 3)}-${p.slice(3, 6)}-${p.slice(6)}`;
         return p;

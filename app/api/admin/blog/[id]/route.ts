@@ -1,22 +1,18 @@
+import DOMPurify from 'isomorphic-dompurify';
 import { NextRequest, NextResponse } from 'next/server';
 import { getSupabaseServer } from '@/lib/supabaseServer';
-import { cookies } from 'next/headers';
+import { requireAdmin } from '@/lib/adminAuth';
 
 const supabase = getSupabaseServer();
-
-async function checkAdminAuth(): Promise<boolean> {
-    const cookieStore = await cookies();
-    return cookieStore.get('admin_session')?.value === 'dds_admin_verified';
-}
 
 // PUT: 블로그 글 수정
 export async function PUT(
     request: NextRequest,
     { params }: { params: Promise<{ id: string }> }
 ) {
-    if (!(await checkAdminAuth())) {
-        return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-    }
+    const authError = await requireAdmin();
+    if (authError) return authError;
+
 
     try {
         const { id } = await params;
@@ -28,7 +24,7 @@ export async function PUT(
         if (slug !== undefined) updateData.slug = slug;
         if (category !== undefined) updateData.category = category;
         if (excerpt !== undefined) updateData.excerpt = excerpt;
-        if (content !== undefined) updateData.content = content;
+        if (content !== undefined) updateData.content = DOMPurify.sanitize(content);
         if (thumbnail_url !== undefined) updateData.thumbnail_url = thumbnail_url;
         if (author !== undefined) updateData.author = author;
         if (tags !== undefined) updateData.tags = tags;
@@ -43,7 +39,7 @@ export async function PUT(
 
         if (error) {
             console.error('Blog update error:', error);
-            return NextResponse.json({ error: error.message }, { status: 500 });
+            return NextResponse.json({ error: '요청을 처리할 수 없습니다.' }, { status: 500 });
         }
 
         return NextResponse.json(data);
@@ -58,9 +54,9 @@ export async function DELETE(
     request: NextRequest,
     { params }: { params: Promise<{ id: string }> }
 ) {
-    if (!(await checkAdminAuth())) {
-        return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-    }
+    const authError = await requireAdmin();
+    if (authError) return authError;
+
 
     try {
         const { id } = await params;
@@ -72,7 +68,7 @@ export async function DELETE(
 
         if (error) {
             console.error('Blog delete error:', error);
-            return NextResponse.json({ error: error.message }, { status: 500 });
+            return NextResponse.json({ error: '요청을 처리할 수 없습니다.' }, { status: 500 });
         }
 
         return NextResponse.json({ success: true });

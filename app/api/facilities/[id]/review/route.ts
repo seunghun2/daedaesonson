@@ -1,8 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { rateLimit } from '@/lib/rateLimit';
 import { cookies } from 'next/headers';
 import { createClient } from '@supabase/supabase-js';
 import { getSupabaseServer } from '@/lib/supabaseServer';
-import { sendSlack } from '@/lib/slack';
+import { sendSlack, escapeSlack } from '@/lib/slack';
+import { verifyAdminToken } from '@/lib/adminAuth';
 import bcrypt from 'bcryptjs';
 
 const supabase = getSupabaseServer();
@@ -14,20 +16,51 @@ export async function POST(
 ) {
     const { id } = await context.params;
 
+    // Rate Limiting (IP당 1분 3회)
+    const ip = request.headers.get('x-forwarded-for')?.split(',')[0].trim() || 'unknown';
+    const rateCheck = rateLimit({ key: `review-post:${ip}:${id}`, limit: 3, windowMs: 60000 });
+    if (!rateCheck.success) {
+        return NextResponse.json(
+            { error: '너무 많은 리뷰를 등록했습니다. 잠시 후 다시 시도해주세요.' },
+            { status: 429 }
+        );
+    }
+
     try {
         const body = await request.json();
         const { rating, content, author, password, photos, userId } = body;
 
-        // Validation
-        if (!rating || !content) {
+        // Validation: 평점 1~5 정수 검증 및 내용 길이 제한
+        const numRating = Number(rating);
+        if (!Number.isInteger(numRating) || numRating < 1 || numRating > 5) {
             return NextResponse.json(
-                { error: '평점과 내용은 필수입니다.' },
+                { error: '평점은 1점에서 5점 사이의 정수여야 합니다.' },
                 { status: 400 }
             );
         }
 
-        // 비로그인 유저만 비밀번호 필수
-        if (!userId) {
+        if (typeof content !== 'string' || content.trim().length < 2 || content.length > 2000) {
+            return NextResponse.json(
+                { error: '리뷰 내용은 2자 이상 2,000자 이내로 입력해주세요.' },
+                { status: 400 }
+            );
+        }
+
+        // Token verification for logged-in user (SEC-04 IDOR 방어)
+        let verifiedUserId: string | null = null;
+        if (userId) {
+            const authHeader = request.headers.get('authorization');
+            if (authHeader?.startsWith('Bearer ')) {
+                const token = authHeader.substring(7);
+                const { data: { user } } = await supabase.auth.getUser(token);
+                if (user && user.id === userId) {
+                    verifiedUserId = user.id;
+                }
+            }
+        }
+
+        // 비로그인 유저 또는 토큰 검증 실패한 경우 비밀번호 필수
+        if (!verifiedUserId) {
             if (!password || password.length < 4) {
                 return NextResponse.json(
                     { error: '비밀번호는 4자 이상 입력해주세요.' },
@@ -36,10 +69,10 @@ export async function POST(
             }
         }
 
-        // Hash password (비로그인 유저만) — salt 6으로 축소 (리뷰 비번엔 충분, 5~8배 빠름)
+        // Hash password (비로그인 유저만) - bcrypt rounds 10 (안전성 확보)
         // 시설정보 미리 조회를 병렬로 실행
         const [hashedPassword, facilityResult] = await Promise.all([
-            password ? bcrypt.hash(password, 6) : Promise.resolve(null),
+            password ? bcrypt.hash(password, 10) : Promise.resolve(null),
             supabase
                 .from('Facility')
                 .select('reviewCount, rating, name')
@@ -60,11 +93,12 @@ export async function POST(
                 password: hashedPassword,
                 photos: photos || [],
                 likes: 0,
-                userId: userId || null,
+                userId: verifiedUserId,
                 createdAt: new Date().toISOString()
             })
             .select()
             .single();
+
 
         if (error) {
             console.error('Supabase insert error:', error);
@@ -98,8 +132,8 @@ export async function POST(
             })();
         }
 
-        // Slack 알림 — fire-and-forget (응답 블로킹 제거)
-        sendSlack('review', `⭐ *새 이용 후기!*\n• 시설: ${facility?.name || id}\n• 평점: ${'⭐'.repeat(rating)}\n• 작성자: ${author || '익명'}\n• 내용: ${content.slice(0, 100)}...`)
+        // Slack 알림 — fire-and-forget (응답 블로킹 제거, 인젝션 방지 escapeSlack 적용)
+        sendSlack('review', `⭐ *새 이용 후기!*\n• 시설: ${escapeSlack(facility?.name || id)}\n• 평점: ${'⭐'.repeat(numRating)}\n• 작성자: ${escapeSlack(author || '익명')}\n• 내용: ${escapeSlack(content.slice(0, 100))}...`)
             .catch((e) => console.error('Slack send error:', e));
 
         // Return without password
@@ -133,7 +167,13 @@ export async function DELETE(
         const body = await request.json();
         const { reviewId, password } = body;
         const cookieStore = await cookies();
-        const isAdmin = cookieStore.get('admin_session')?.value === 'dds_admin_verified';
+        const isAdmin = await verifyAdminToken(cookieStore.get('admin_session')?.value);
+
+
+
+        const ip = request.headers.get('x-forwarded-for')?.split(',')[0].trim() || 'unknown';
+        const rateCheck = rateLimit({ key: `review-del:${ip}:${reviewId}`, limit: 5, windowMs: 60000 });
+        if (!rateCheck.success) return NextResponse.json({ error: '너무 많은 요청입니다.' }, { status: 429 });
 
         if (!reviewId) {
             return NextResponse.json(
@@ -153,6 +193,13 @@ export async function DELETE(
             return NextResponse.json(
                 { error: '리뷰를 찾을 수 없습니다.' },
                 { status: 404 }
+            );
+        }
+
+        if (review.facilityId !== facilityId) {
+            return NextResponse.json(
+                { error: '잘못된 요청입니다.' },
+                { status: 400 }
             );
         }
 

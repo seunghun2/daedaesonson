@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { Title, Table, Badge, ActionIcon, Paper, Text, Group, TextInput, Modal, Textarea, Button, Stack, LoadingOverlay, Box, Card } from '@mantine/core';
+import { notifications } from '@mantine/notifications';
 import { useDisclosure, useMediaQuery } from '@mantine/hooks';
 import { Search, Trash, Eye, MessageCircle, Phone, Lock } from 'lucide-react';
 
@@ -74,11 +75,17 @@ export default function InquiriesPage() {
             });
             if (res.ok) {
                 setInquiries(prev => prev.filter(i => i.id !== id));
-                alert('삭제되었습니다.');
+                if (selectedInquiry?.id === id) {
+                    closeDetail();
+                    setSelectedInquiry(null);
+                }
+                notifications.show({ color: 'green', message: '문의가 삭제되었습니다.' });
+            } else {
+                notifications.show({ color: 'red', message: '삭제에 실패했습니다.' });
             }
         } catch (e) {
             console.error(e);
-            alert('삭제 중 오류가 발생했습니다.');
+            notifications.show({ color: 'red', message: '삭제 중 오류가 발생했습니다.' });
         }
     };
 
@@ -112,11 +119,13 @@ export default function InquiriesPage() {
                 ));
                 setSelectedInquiry(prev => prev ? { ...prev, replies: [...prev.replies, data.reply] } : null);
                 setReplyContent('');
-                alert('답변이 등록되었습니다.');
+                notifications.show({ color: 'green', message: '답변이 등록되었습니다.' });
+            } else {
+                notifications.show({ color: 'red', message: '답변 등록에 실패했습니다.' });
             }
         } catch (e) {
             console.error(e);
-            alert('답변 등록 중 오류가 발생했습니다.');
+            notifications.show({ color: 'red', message: '답변 등록 중 오류가 발생했습니다.' });
         } finally {
             setSubmitting(false);
         }
@@ -262,7 +271,6 @@ export default function InquiriesPage() {
                         <Group gap="xs">
                             <Phone size={14} />
                             <Text size="sm" fw={500}>{selectedInquiry.phone}</Text>
-                            <Text size="xs" c="dimmed">(비밀번호: {selectedInquiry.passwordLast4})</Text>
                         </Group>
                         <Text size="xs" c="dimmed">시설: {selectedInquiry.facilityId}</Text>
                         <Paper p="md" bg="gray.0" radius="md">

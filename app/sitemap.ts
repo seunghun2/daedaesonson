@@ -58,7 +58,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     for (const region of REGIONS) {
         for (const category of CATEGORIES) {
             regionPages.push({
-                url: `${baseUrl}/지역/${region}-${category}`,
+                url: `${baseUrl}/%EC%A7%80%EC%97%AD/${encodeURIComponent(`${region}-${category}`)}`,
                 lastModified: new Date(),
                 changeFrequency: 'weekly' as const,
                 priority: 0.85,
@@ -94,7 +94,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
             if (count >= 2) {
                 const [city, category] = key.split('|');
                 cityPages.push({
-                    url: `${baseUrl}/search/${city}/${category}`,
+                    url: `${baseUrl}/search/${encodeURIComponent(city)}/${encodeURIComponent(category)}`,
                     lastModified: new Date(),
                     changeFrequency: 'weekly' as const,
                     priority: 0.8,
@@ -151,7 +151,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         if (posts) {
             posts.forEach(post => {
                 blogPages.push({
-                    url: `${baseUrl}/blog/${post.slug}`,
+                    url: `${baseUrl}/blog/${encodeURIComponent(post.slug)}`,
                     lastModified: new Date(post.updated_at),
                     changeFrequency: 'weekly' as const,
                     priority: 0.85,

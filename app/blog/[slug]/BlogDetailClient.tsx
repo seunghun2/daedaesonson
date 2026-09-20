@@ -6,6 +6,7 @@ import { useMediaQuery } from '@mantine/hooks';
 import { ChevronLeft, Share2, Eye } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import DOMPurify from 'isomorphic-dompurify';
 
 interface BlogPost {
     id: string;
@@ -249,7 +250,7 @@ export default function BlogDetailClient({ post, relatedPosts }: Props) {
                 >
                     <div
                         className="blog-content"
-                        dangerouslySetInnerHTML={{ __html: post.content }}
+                        dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(post.content) }}
                         style={{
                             fontSize: isMobile ? 16 : 17,
                             lineHeight: 1.8,

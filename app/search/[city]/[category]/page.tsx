@@ -16,14 +16,16 @@ interface PageProps {
 // 동적 메타데이터
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
     const { city, category } = await params;
-    const categoryInfo = CATEGORY_MAP[category];
+    const decodedCity = decodeURIComponent(city);
+    const decodedCategory = decodeURIComponent(category);
+    const categoryInfo = CATEGORY_MAP[decodedCategory];
 
     if (!categoryInfo) {
         return { title: '대대손손' };
     }
 
-    const title = `${city} ${categoryInfo.label} 가격비교 | 대대손손`;
-    const description = `${city} 지역 ${categoryInfo.label} 시설 가격을 비교해보세요. 최저가부터 시설 정보까지 한눈에 확인!`;
+    const title = `${decodedCity} ${categoryInfo.label} 가격비교 | 대대손손`;
+    const description = `${decodedCity} 지역 ${categoryInfo.label} 시설 가격을 비교해보세요. 최저가부터 시설 정보까지 한눈에 확인!`;
 
     return {
         title,
@@ -31,7 +33,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
         openGraph: {
             title,
             description,
-            url: `https://daedaesonson.com/search/${city}/${category}`,
+            url: `https://daedaesonson.com/search/${decodedCity}/${decodedCategory}`,
         },
     };
 }
@@ -75,7 +77,9 @@ export async function generateStaticParams() {
 
 export default async function CityPage({ params }: PageProps) {
     const { city, category } = await params;
-    const categoryInfo = CATEGORY_MAP[category];
+    const decodedCity = decodeURIComponent(city);
+    const decodedCategory = decodeURIComponent(category);
+    const categoryInfo = CATEGORY_MAP[decodedCategory];
 
     if (!categoryInfo) {
         notFound();
@@ -87,7 +91,7 @@ export default async function CityPage({ params }: PageProps) {
     const facilities = allFacilities.filter((f: any) => {
         if (!f.address) return false;
         const tokens = f.address.split(' ');
-        return tokens[1] === city &&
+        return tokens[1] === decodedCity &&
             f.category === categoryInfo.code &&
             f.priceRange?.min > 0;
     });

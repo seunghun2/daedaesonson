@@ -19,24 +19,29 @@ export async function GET(request: Request) {
 
         // 쿼리 파라미터 파싱
         const page = parseInt(searchParams.get('page') || '1');
-        const limit = parseInt(searchParams.get('limit') || '15');
+        const limit = parseInt(searchParams.get('limit') || '25');
         const search = searchParams.get('search') || '';
         const searchTarget = searchParams.get('searchTarget') || 'all';
         const category = searchParams.get('category') || 'all';
+        const priceVerified = searchParams.get('priceVerified') || 'all';
         const sortBy = searchParams.get('sortBy') || 'id';
         const sortOrder = searchParams.get('sortOrder') || 'asc';
 
-
-
-        // 기본 쿼리 - 목록 표시에 필요한 경량 필드만 선택
-        // pricing, images 등 대용량 JSONB는 편집 시 /api/facilities/[id]에서 개별 로드
+        // 기본 쿼리 - 목록 표시에 필요한 경량 필드 + 검토 상태 파싱용 pricing 선택
         let query = supabase
             .from('Facility')
-            .select('id, name, address, category, isPublic, capacity, lastUpdated, minPrice, maxPrice, representativePrice, operatorType, phone, rating, reviewCount, description, websiteUrl, viewCount, isActive, isFull, images', { count: 'exact' });
+            .select('id, name, address, category, isPublic, capacity, lastUpdated, minPrice, maxPrice, representativePrice, operatorType, phone, rating, reviewCount, description, websiteUrl, viewCount, isActive, isFull, images, pricing', { count: 'exact' });
 
         // 카테고리 필터
         if (category !== 'all') {
             query = query.eq('category', category);
+        }
+
+        // 가격 검토 상태 필터
+        if (priceVerified === 'verified') {
+            query = query.ilike('pricing', '%"priceVerified":true%');
+        } else if (priceVerified === 'unverified') {
+            query = query.or('pricing.is.null,pricing.not.ilike.%"priceVerified":true%');
         }
 
         // 검색 필터 (서버 사이드)
@@ -64,7 +69,7 @@ export async function GET(request: Request) {
             query = query.order('name', { ascending });
         } else if (sortBy === 'capacity') {
             query = query.order('capacity', { ascending, nullsFirst: false });
-        } else if (sortBy === 'updatedAt') {
+        } else if (sortBy === 'updatedAt' || sortBy === 'lastUpdated') {
             query = query.order('lastUpdated', { ascending, nullsFirst: false });
         }
 
@@ -77,13 +82,25 @@ export async function GET(request: Request) {
 
         if (error) {
             console.error('[Admin API] Error:', error);
-            return NextResponse.json({ error: error.message }, { status: 500 });
+            return NextResponse.json({ error: '요청을 처리할 수 없습니다.' }, { status: 500 });
         }
 
-
+        const formattedData = (data || []).map((item: any) => {
+            let parsedPriceInfo = null;
+            if (item.pricing) {
+                try {
+                    parsedPriceInfo = typeof item.pricing === 'string' ? JSON.parse(item.pricing) : item.pricing;
+                } catch { /* ignore parse error */ }
+            }
+            const { pricing: _pr, ...rest } = item;
+            return {
+                ...rest,
+                priceInfo: parsedPriceInfo || { priceTable: {} },
+            };
+        });
 
         return NextResponse.json({
-            data: data || [],
+            data: formattedData,
             pagination: {
                 page,
                 limit,

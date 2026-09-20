@@ -26,7 +26,8 @@ export async function POST(request: Request) {
                 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
                 'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
             },
-            body: params
+            body: params,
+            signal: AbortSignal.timeout(10000)
         });
 
         const json = await res.json();
@@ -100,6 +101,6 @@ export async function POST(request: Request) {
         });
 
     } catch (e: any) {
-        return NextResponse.json({ error: e.message }, { status: 500 });
+        return NextResponse.json({ error: '요청을 처리할 수 없습니다.' }, { status: 500 });
     }
 }

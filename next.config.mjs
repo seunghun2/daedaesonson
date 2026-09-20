@@ -20,8 +20,8 @@ const nextConfig = {
             },
         ],
     },
-    serverExternalPackages: ['@prisma/client', 'prisma'],
     // 🔗 한글 URL → 영문 라우트 매핑 (Next.js 16 Turbopack은 한글 디렉토리 미지원)
+
     async rewrites() {
         return [
             {

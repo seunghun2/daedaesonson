@@ -73,22 +73,24 @@ function ListPageContent() {
     // 데이터 로드 (캐시 우선)
     useEffect(() => {
         async function fetchData() {
-            // 1. 캐시된 데이터가 있으면 먼저 사용
-            const cached = sessionStorage.getItem('facilitiesCache');
-            if (cached) {
-                try {
+            // 1. 캐시된 데이터가 있으면 먼저 사용 (사파리 시크릿모드 에러 안전 방어)
+            try {
+                const cached = typeof window !== 'undefined' ? sessionStorage.getItem('facilitiesCache') : null;
+                if (cached) {
                     const parsedCache = JSON.parse(cached);
                     setAllFacilities(parsedCache);
                     setLoading(false);
-                } catch { }
-            }
+                }
+            } catch { }
 
-            // 2. 백그라운드에서 최신 데이터 fetch
+            // 2. 최신 데이터 fetch
             try {
                 const res = await fetch('/api/facilities');
                 const data = await res.json();
                 setAllFacilities(data);
-                sessionStorage.setItem('facilitiesCache', JSON.stringify(data));
+                try {
+                    sessionStorage.setItem('facilitiesCache', JSON.stringify(data));
+                } catch { }
             } catch (error) {
                 console.error('Failed to fetch facilities:', error);
             } finally {
@@ -119,8 +121,9 @@ function ListPageContent() {
             f.category !== 'OTHER'
         );
 
-        // 거리 기반 필터 + 거리 캐싱
-        if (centerLat && centerLng) {
+        // 거리 기반 필터 — URL에 lat/lng가 명시적으로 전달된 경우에만 적용
+        const hasExplicitCoords = searchParams.get('lat') && searchParams.get('lng');
+        if (hasExplicitCoords && centerLat && centerLng) {
             result = result
                 .map(f => {
                     if (!f.coordinates) return null;
@@ -135,7 +138,7 @@ function ListPageContent() {
         }
 
         return result;
-    }, [allFacilities, centerLat, centerLng]);
+    }, [allFacilities, centerLat, centerLng, searchParams]);
 
     // Step 2: 카테고리 필터만 (탭 클릭 시 이것만 재실행 → 빠름!)
     const filteredFacilities = useMemo(() => {

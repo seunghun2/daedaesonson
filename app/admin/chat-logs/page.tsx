@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
+import { notifications } from '@mantine/notifications';
 import {
     MessageCircle, Phone, User, Calendar, ArrowLeft,
     Search, Check, CheckCheck, Clock, ExternalLink, ChevronDown,
@@ -100,8 +101,9 @@ export default function AdminChatLogs() {
             if (selectedSession?.id === sessionId) {
                 setSelectedSession(prev => prev ? { ...prev, status } : null);
             }
+            notifications.show({ color: 'green', message: '상태가 업데이트되었습니다.' });
         } catch {
-            alert('상태 업데이트 실패');
+            notifications.show({ color: 'red', message: '상태 업데이트 실패' });
         }
     };
 
@@ -116,8 +118,9 @@ export default function AdminChatLogs() {
             });
             setSessions(prev => prev.map(s => s.id === selectedSession.id ? { ...s, admin_memo: memo } : s));
             setSelectedSession(prev => prev ? { ...prev, admin_memo: memo } : null);
+            notifications.show({ color: 'green', message: '메모가 저장되었습니다.' });
         } catch {
-            alert('메모 저장 실패');
+            notifications.show({ color: 'red', message: '메모 저장 실패' });
         } finally {
             setMemoSaving(false);
         }
@@ -140,8 +143,9 @@ export default function AdminChatLogs() {
             if (selectedSession?.id === sessionId) {
                 setSelectedSession(prev => prev ? { ...prev, tags: newTags } : null);
             }
+            notifications.show({ color: 'blue', message: '태그가 업데이트되었습니다.' });
         } catch {
-            alert('태그 업데이트 실패');
+            notifications.show({ color: 'red', message: '태그 업데이트 실패' });
         }
     };
 
@@ -150,32 +154,37 @@ export default function AdminChatLogs() {
             s.customer_name?.includes(searchTerm) ||
             s.customer_phone?.includes(searchTerm) ||
             s.admin_memo?.includes(searchTerm) ||
-            s.messages?.some(m => m.content.includes(searchTerm));
+            s.messages?.some(m => m.content?.includes(searchTerm));
         const matchesStatus = filterStatus === 'all' || s.status === filterStatus;
         const matchesTag = filterTag === 'all' || (s.tags || []).includes(filterTag);
         return matchesSearch && matchesStatus && matchesTag;
     });
 
-    // 고객 프로필 (전화번호 기준 그룹핑)
+    // 고객 프로필 (전화번호 기준 그룹핑, 미등록 세션은 개별 분리)
     const customerProfiles = (() => {
         const map: Record<string, ChatSession[]> = {};
         sessions.forEach(s => {
-            const key = s.customer_phone || '미등록';
+            const key = s.customer_phone || (s.id ? `anon_${s.id}` : `session_${Math.random()}`);
             if (!map[key]) map[key] = [];
             map[key].push(s);
         });
         return Object.entries(map)
-            .map(([phone, ss]) => ({
-                phone,
-                name: ss.find(s => s.customer_name)?.customer_name || '익명',
-                sessionCount: ss.length,
-                lastSession: ss[0].created_at,
-                totalMessages: ss.reduce((sum, s) => sum + (s.messages?.length || 0), 0),
-                tags: [...new Set(ss.flatMap(s => s.tags || []))],
-                sessions: ss,
-            }))
+            .map(([key, ss]) => {
+                const isAnon = key.startsWith('anon_') || key.startsWith('session_');
+                return {
+                    id: key,
+                    phone: isAnon ? '전화번호 미등록' : key,
+                    name: ss.find(s => s.customer_name)?.customer_name || (isAnon ? `익명 고객 (${ss[0].id?.slice(0, 8) || '세션'})` : '익명'),
+                    sessionCount: ss.length,
+                    lastSession: ss[0].created_at,
+                    totalMessages: ss.reduce((sum, s) => sum + (s.messages?.length || 0), 0),
+                    tags: [...new Set(ss.flatMap(s => s.tags || []))],
+                    sessions: ss,
+                };
+            })
             .sort((a, b) => b.sessionCount - a.sessionCount);
     })();
+
 
     const formatDate = (dateStr: string) => {
         const d = new Date(dateStr);
@@ -484,7 +493,7 @@ export default function AdminChatLogs() {
                             <div style={{ textAlign: 'center', padding: 40, color: '#aaa' }}>고객 데이터 없음</div>
                         ) : (
                             customerProfiles.map(cp => (
-                                <div key={cp.phone} style={{
+                                <div key={cp.id} style={{
                                     padding: '14px 16px', borderRadius: 12, border: '1px solid #eee',
                                     background: '#fff', marginBottom: 8, cursor: 'pointer',
                                 }} onClick={() => { if (cp.sessions[0]) setSelectedSession(cp.sessions[0]); }}>
@@ -499,7 +508,7 @@ export default function AdminChatLogs() {
                                             <div>
                                                 <div style={{ fontSize: 14, fontWeight: 600, color: '#333' }}>{cp.name}</div>
                                                 <div style={{ fontSize: 12, color: '#888' }}>
-                                                    {cp.phone !== '미등록' ? `📞 ${cp.phone}` : '연락처 미등록'}
+                                                    {!cp.phone.includes('미등록') ? `📞 ${cp.phone}` : '연락처 미등록'}
                                                 </div>
                                             </div>
                                         </div>

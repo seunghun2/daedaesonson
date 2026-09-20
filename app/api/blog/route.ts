@@ -9,8 +9,8 @@ export async function GET(request: NextRequest) {
         const { searchParams } = new URL(request.url);
         const category = searchParams.get('category');
         const tag = searchParams.get('tag');
-        const page = parseInt(searchParams.get('page') || '1');
-        const limit = parseInt(searchParams.get('limit') || '10');
+        const page = Math.max(1, parseInt(searchParams.get('page') || '1', 10));
+        const limit = Math.min(50, Math.max(1, parseInt(searchParams.get('limit') || '10', 10)));
         const offset = (page - 1) * limit;
 
         let query = supabase
@@ -32,7 +32,7 @@ export async function GET(request: NextRequest) {
 
         if (error) {
             console.error('Blog list error:', error);
-            return NextResponse.json({ error: error.message }, { status: 500 });
+            return NextResponse.json({ error: '블로그 목록을 불러올 수 없습니다.' }, { status: 500 });
         }
 
         return NextResponse.json({

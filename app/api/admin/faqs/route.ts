@@ -20,7 +20,7 @@ export async function GET() {
         return NextResponse.json(data || []);
     } catch (error: any) {
         console.error('FAQ 조회 오류:', error);
-        return NextResponse.json({ error: error.message }, { status: 500 });
+        return NextResponse.json({ error: '요청을 처리할 수 없습니다.' }, { status: 500 });
     }
 }
 
@@ -46,6 +46,6 @@ export async function POST(request: Request) {
         return NextResponse.json(data);
     } catch (error: any) {
         console.error('FAQ 추가 오류:', error);
-        return NextResponse.json({ error: error.message }, { status: 500 });
+        return NextResponse.json({ error: '요청을 처리할 수 없습니다.' }, { status: 500 });
     }
 }

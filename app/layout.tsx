@@ -1,12 +1,12 @@
 import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
 import Script from 'next/script';
 import { AuthProviderWrapper } from '@/components/auth/AuthProviderWrapper';
 import './globals.css';
 import '@mantine/core/styles.css';
 import { ColorSchemeScript, MantineProvider, createTheme } from '@mantine/core';
+import { Notifications } from '@mantine/notifications';
+import '@mantine/notifications/styles.css';
 
-const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
   title: '대대손손 - 전국 장지 비교 1등 플랫폼 | 봉안당·수목장·공원묘지 가격비교',
@@ -65,8 +65,9 @@ const theme = createTheme({
   },
   primaryColor: 'brand',
   primaryShade: 8, // 메인 컬러를 8번(진한 남색)으로 설정하여 무게감 줌
-  fontFamily: inter.style.fontFamily,
+  fontFamily: '-apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Pretendard", "Segoe UI", Roboto, Helvetica, Arial, sans-serif',
 });
+
 
 export default function RootLayout({
   children,
@@ -105,8 +106,9 @@ export default function RootLayout({
           href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0..1,0&display=swap"
         />
       </head>
-      <body className={inter.className}>
+      <body className="font-sans antialiased">
         <MantineProvider theme={theme}>
+          <Notifications position="top-right" />
           <AuthProviderWrapper>
             {children}
           </AuthProviderWrapper>

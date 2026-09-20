@@ -59,8 +59,21 @@ export async function sendSlack(channel: SlackChannel, message: string): Promise
     }
 }
 
+/**
+ * Slack 메시지용 특수문자 이스케이프 (인젝션 방지)
+ * Slack 메시지 형식 규칙: & -> &amp;, < -> &lt;, > -> &gt;
+ */
+export function escapeSlack(text: string | null | undefined): string {
+    if (!text) return '';
+    return String(text)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;');
+}
+
 // 에러 알림 헬퍼
 export async function sendSlackError(apiName: string, error: unknown): Promise<void> {
     const msg = error instanceof Error ? error.message : String(error);
-    await sendSlack('error', `🚨 *API 에러 발생*\n• API: ${apiName}\n• 에러: ${msg}\n• 시간: ${new Date().toLocaleString('ko-KR', { timeZone: 'Asia/Seoul' })}`);
+    await sendSlack('error', `🚨 *API 에러 발생*\n• API: ${escapeSlack(apiName)}\n• 에러: ${escapeSlack(msg)}\n• 시간: ${new Date().toLocaleString('ko-KR', { timeZone: 'Asia/Seoul' })}`);
 }
+

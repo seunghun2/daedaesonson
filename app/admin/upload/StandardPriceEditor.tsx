@@ -1,8 +1,9 @@
 'use client';
 
 import React, { useState, useCallback, memo } from 'react';
+import { notifications } from '@mantine/notifications';
 import {
-    Text, Group, Button, Paper, TextInput, ActionIcon,
+    Text, Group, Button, Paper, TextInput, ActionIcon, Modal,
     NumberInput, Select, Stack, Tabs, SimpleGrid, Badge,
     Box, Alert, Switch, SegmentedControl, Accordion, Tooltip, Divider
 } from '@mantine/core';
@@ -281,17 +282,25 @@ const ServiceGroupEditor = memo(({ group, groupIndex, onUpdate, onDelete }: {
         onUpdate({ ...group, rows: newRows });
     }, [group, onUpdate]);
 
+    const [newGroupName, setNewGroupName] = useState('');
+    const [showGroupNameModal, setShowGroupNameModal] = useState(false);
+
     // 새 그룹탭 추가
     const addGroupTab = useCallback(() => {
-        const name = prompt('새 그룹(관/실) 이름을 입력하세요:');
-        if (!name || name.trim() === '') return;
-        const trimmed = name.trim();
-        if (groupTypes[trimmed]) { alert('이미 존재하는 그룹입니다.'); return; }
+        setNewGroupName('');
+        setShowGroupNameModal(true);
+    }, []);
+
+    const confirmAddGroupTab = useCallback(() => {
+        const trimmed = newGroupName.trim();
+        if (!trimmed) { notifications.show({ color: 'orange', title: '입력 오류', message: '그룹 이름을 입력해주세요.' }); return; }
+        if (groupTypes[trimmed]) { notifications.show({ color: 'orange', title: '중복', message: '이미 존재하는 그룹입니다.' }); return; }
         const newRow = createEmptyRow();
         (newRow as any).groupType = trimmed;
         onUpdate({ ...group, rows: [...group.rows, newRow] });
         setActiveGroupTab(trimmed);
-    }, [group, groupTypes, onUpdate]);
+        setShowGroupNameModal(false);
+    }, [group, groupTypes, onUpdate, newGroupName]);
 
     const serviceLabel = SERVICE_TYPE_LABELS[group.serviceType] || group.serviceType;
     const serviceColor = group.serviceType === 'BONGSAN' ? 'blue' : group.serviceType === 'NATURAL' ? 'green' : 'orange';
@@ -349,6 +358,21 @@ const ServiceGroupEditor = memo(({ group, groupIndex, onUpdate, onDelete }: {
                 onClick={() => addRow(hasMultipleTabs ? activeGroupTab : undefined)}>
                 항목 추가
             </Button>
+
+            <Modal opened={showGroupNameModal} onClose={() => setShowGroupNameModal(false)} title="새 그룹 추가" size="sm" centered>
+                <TextInput
+                    label="그룹(관/실) 이름"
+                    placeholder="예: 1관, A실, 야외"
+                    value={newGroupName}
+                    onChange={(e) => setNewGroupName(e.target.value)}
+                    onKeyDown={(e) => { if (e.key === 'Enter') confirmAddGroupTab(); }}
+                    data-autofocus
+                />
+                <Group justify="flex-end" mt="md">
+                    <Button variant="default" size="sm" onClick={() => setShowGroupNameModal(false)}>취소</Button>
+                    <Button size="sm" onClick={confirmAddGroupTab}>추가</Button>
+                </Group>
+            </Modal>
         </Paper>
     );
 });
@@ -371,7 +395,7 @@ function StandardPriceEditor({ priceInfo, onChange }: StandardPriceEditorProps) 
     const addServiceGroup = useCallback((serviceType: ServiceType, subType: string) => {
         const exists = standardizedPrices.find(g => g.serviceType === serviceType && g.subType === subType);
         if (exists) {
-            alert(`"${subType}" 이미 있습니다.`);
+            notifications.show({ color: 'orange', title: '중복', message: `"${subType}" 이미 있습니다.` });
             return;
         }
         const newGroup = createEmptyServiceGroup(serviceType, subType);
@@ -393,6 +417,7 @@ function StandardPriceEditor({ priceInfo, onChange }: StandardPriceEditorProps) 
         if (!confirm('이 가격 그룹을 삭제하시겠습니까?')) return;
         const newPrices = standardizedPrices.filter((_, i) => i !== index);
         onChange({ ...priceInfo, standardizedPrices: newPrices });
+        notifications.show({ color: 'blue', title: '삭제됨', message: '가격 그룹이 삭제되었습니다.' });
     }, [priceInfo, standardizedPrices, onChange]);
 
     // 검토 완료 토글
@@ -463,7 +488,7 @@ function StandardPriceEditor({ priceInfo, onChange }: StandardPriceEditorProps) 
             priceVerified: false, // 자동 변환이므로 검토 미완료
         });
 
-        alert(`${groups.length}개 서비스 그룹을 가져왔습니다. 각 항목의 구조화 필드(비용유형, 관내/관외, 면적, 기간)를 수동으로 확인해주세요.`);
+        notifications.show({ color: 'green', title: '가져오기 완료', message: `${groups.length}개 서비스 그룹을 가져왔습니다. 각 항목의 구조화 필드를 확인해주세요.` });
     }, [priceInfo, onChange]);
 
     const totalItems = standardizedPrices.reduce((sum, g) => sum + g.rows.length, 0);

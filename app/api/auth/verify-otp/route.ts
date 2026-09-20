@@ -47,6 +47,14 @@ export async function POST(request: NextRequest) {
         }
 
         if (otpData.code !== code) {
+            const { success: attemptSuccess } = rateLimit({ key: `otp-verify:${cleanPhone}`, limit: 5, windowMs: 5 * 60 * 1000 });
+            if (!attemptSuccess) {
+                await supabaseAdmin
+                    .from('otp_codes')
+                    .update({ verified: true, code: '' })
+                    .eq('phone', cleanPhone);
+                return NextResponse.json({ error: '인증 횟수를 초과했습니다. 새 인증번호를 요청해주세요.' }, { status: 400 });
+            }
             return NextResponse.json({ error: '인증번호가 일치하지 않습니다' }, { status: 400 });
         }
 
@@ -62,7 +70,7 @@ export async function POST(request: NextRequest) {
 
         // Supabase 유저 생성/찾기
         const email = `phone_${cleanPhone}@phone.local`;
-        const password = `phone_${cleanPhone}_${serviceKey.slice(0, 12)}`;
+        const password = crypto.randomUUID() + crypto.randomUUID();
 
         // admin API로 유저 검색 (per_page 충분히 크게)
         let userId: string = '';

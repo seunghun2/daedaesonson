@@ -55,15 +55,21 @@ function SearchPageContent() {
             if (saved) setRecentFacilities(JSON.parse(saved).slice(0, 5));
         } catch { }
 
-        // 시설 데이터 (캐시 우선)
-        const cached = sessionStorage.getItem('facilitiesCache');
-        if (cached) {
-            try { setAllFacilities(JSON.parse(cached)); } catch { }
-        } else {
+        // 시설 데이터 (캐시 우선, 스토리지 접근 차단 안전 방어)
+        try {
+            const cached = typeof window !== 'undefined' ? sessionStorage.getItem('facilitiesCache') : null;
+            if (cached) {
+                setAllFacilities(JSON.parse(cached));
+            } else {
+                fetch('/api/facilities').then(r => r.json()).then(data => {
+                    setAllFacilities(data);
+                    try { sessionStorage.setItem('facilitiesCache', JSON.stringify(data)); } catch { }
+                }).catch(() => { });
+            }
+        } catch {
             fetch('/api/facilities').then(r => r.json()).then(data => {
                 setAllFacilities(data);
-                try { sessionStorage.setItem('facilitiesCache', JSON.stringify(data)); } catch { }
-            });
+            }).catch(() => { });
         }
 
         // 지역 데이터 미리 로드
@@ -146,7 +152,7 @@ function SearchPageContent() {
 
     // 최근 본 시설 클릭
     const handleRecentFacilityClick = (fac: any) => {
-        router.push(`/?id=${fac.id}`);
+        router.push(`/facility/${fac.id}`);
     };
 
     const hasResults = regionResults.length > 0 || facilityResults.length > 0;

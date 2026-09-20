@@ -73,6 +73,11 @@ export async function POST(req: NextRequest) {
             return NextResponse.json({ error: '파일이 제공되지 않았습니다.' }, { status: 400 });
         }
 
+        // 파일 크기 상한 (10MB)
+        if (file.size > 10 * 1024 * 1024) {
+            return NextResponse.json({ error: '파일 크기는 10MB 이하만 허용됩니다.' }, { status: 400 });
+        }
+
         // 파일 데이터를 ArrayBuffer로 읽어서 Base64로 변환
         const arrayBuffer = await file.arrayBuffer();
         const base64Data = Buffer.from(arrayBuffer).toString('base64');
@@ -206,15 +211,7 @@ export async function POST(req: NextRequest) {
         console.error('==========================================');
 
         return NextResponse.json(
-            {
-                error: 'PDF 분석 중 오류가 발생했습니다.',
-                details: error.message,
-                hint: error.message?.includes('API key')
-                    ? '.env 파일의 GEMINI_API_KEY를 확인해주세요.'
-                    : error.message?.includes('quota')
-                        ? 'Gemini API 무료 한도를 확인해주세요.'
-                        : '서버 로그를 확인해주세요.'
-            },
+            { error: 'PDF 분석 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요.' },
             { status: 500 }
         );
     }

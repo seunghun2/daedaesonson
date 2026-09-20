@@ -80,7 +80,7 @@ export async function DELETE(request: NextRequest) {
 
         if (error) {
             console.error('Delete user error:', error);
-            return NextResponse.json({ error: '회원 삭제 실패: ' + error.message }, { status: 500 });
+            return NextResponse.json({ error: '요청을 처리할 수 없습니다.' }, { status: 500 });
         }
 
         return NextResponse.json({ success: true });

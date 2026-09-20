@@ -162,16 +162,19 @@ export async function GET(
             }
         }
 
-        // 6. 응답 데이터 구성
+        // 6. 응답 데이터 구성 (비밀번호 및 비공개 데이터 철저 마스킹)
         const sanitizedInquiries = inquiries?.map(({ phone, passwordLast4, ...item }: any) => ({
             ...item,
             content: item.isPrivate ? '비밀글입니다.' : item.content,
             title: item.isPrivate ? '비밀 문의' : item.title,
+            replies: item.isPrivate ? [] : (item.replies || []),
         })) || [];
 
         const sanitizedReviews = reviews?.map(({ password, ...r }: any) => ({
             ...r,
+            replies: (r.replies || []).map(({ password: replyPw, ...rep }: any) => rep),
         })) || [];
+
 
         const facility: any = {
             id: dbData.id,
@@ -254,7 +257,7 @@ export async function PATCH(
 
         if (error) {
             console.error(`[PATCH] DB Error for ${id}:`, error);
-            return NextResponse.json({ error: 'Database save failed', details: error.message }, { status: 500 });
+            return NextResponse.json({ error: 'Database save failed', details: '요청을 처리할 수 없습니다.' }, { status: 500 });
         }
 
         return NextResponse.json({ success: true, id, updated: updateData });

@@ -31,7 +31,7 @@ export async function GET() {
             supabase.from('Review').select('*', { count: 'exact', head: true }),
             supabase.from('facility_corrections').select('*', { count: 'exact', head: true }),
             supabase.from('partnership_inquiries').select('*', { count: 'exact', head: true }),
-            supabase.from('Facility').select('category'),
+            supabase.from('Facility').select('category').limit(10000),
             supabase.from('Facility').select('id, name, category, rating, updatedAt').order('updatedAt', { ascending: false }).limit(5)
         ]);
 

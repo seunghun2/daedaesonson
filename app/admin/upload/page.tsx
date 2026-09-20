@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useMemo, useEffect, useCallback } from 'react';
+import { notifications } from '@mantine/notifications';
 import {
     Title, Text, Group, Button, Paper, TextInput, ActionIcon,
     Table, Badge, Select, ScrollArea,
@@ -14,7 +15,10 @@ import {
 } from 'lucide-react';
 import { Facility, FACILITY_CATEGORY_LABELS } from '@/types';
 import { formatKoreanCurrency } from '@/lib/format';
-import FacilityEditModal from './FacilityEditModal';
+import dynamic from 'next/dynamic';
+
+const FacilityEditModal = dynamic(() => import('./FacilityEditModal'), { ssr: false });
+
 
 function formatRowPrice(item: Facility): string {
     const rp = item.representativePrice || 0;
@@ -51,6 +55,8 @@ function formatRowDate(updated: string | undefined): string {
 export default function AdminPage() {
     // State
     const [facilities, setFacilities] = useState<Facility[]>([]);
+    const [totalCount, setTotalCount] = useState<number>(0);
+    const [totalPages, setTotalPages] = useState<number>(1);
     const [isLoadingData, setIsLoadingData] = useState(true);
     const [searchQuery, setSearchQuery] = useState('');
     const [debouncedSearch] = useDebouncedValue(searchQuery, 300); // 🚀 검색어 디바운스
@@ -82,81 +88,71 @@ export default function AdminPage() {
         localStorage.setItem('adminItemsPerPage', String(itemsPerPage));
     }, [itemsPerPage]);
 
-    // 🚀 경량 API 사용 (id, name, address, category 등만 → pricing 제외!)
+    // 전체 통계 상태 (경량 /api/admin/stats 활용)
+    const [dashboardStats, setDashboardStats] = useState({
+        totalCount: 0,
+        totalReviews: 0,
+        categoryCounts: {} as Record<string, number>,
+    });
+
+    // 1. 대시보드 통계 로드 (마운트 시 1회)
     useEffect(() => {
-        // 1. 캐시에서 즉시 로드
-        const cached = sessionStorage.getItem('admin_facilities_lite');
-        if (cached) {
+        const fetchStats = async () => {
             try {
-                const data = JSON.parse(cached);
-                if (Array.isArray(data) && data.length > 0) {
-                    setFacilities(data);
-                    setIsLoadingData(false);
-                }
-            } catch (e) { /* 캐시 파싱 실패 시 무시 */ }
-        }
-
-        // 2. 전체 데이터 가져오기 (Supabase 1000행 제한 우회 - 페이지네이션)
-        const fetchAllFacilities = async () => {
-            try {
-                const PAGE_SIZE = 1000;
-                // 첫 페이지 + 총 개수 확인
-                const res1 = await fetch(`/api/admin/facilities?limit=${PAGE_SIZE}&page=1&sortBy=id&sortOrder=asc`);
-                const json1 = await res1.json();
-                let allData = json1.data || [];
-                const total = json1.pagination?.total || allData.length;
-
-                // 1000개 초과 시 나머지 페이지 병렬 요청
-                if (total > PAGE_SIZE) {
-                    const totalPages = Math.ceil(total / PAGE_SIZE);
-                    const promises = [];
-                    for (let p = 2; p <= totalPages; p++) {
-                        promises.push(
-                            fetch(`/api/admin/facilities?limit=${PAGE_SIZE}&page=${p}&sortBy=id&sortOrder=asc`)
-                                .then(r => r.json())
-                                .then(j => j.data || [])
-                        );
+                const res = await fetch('/api/admin/stats');
+                if (res.ok) {
+                    const json = await res.json();
+                    if (json.stats) {
+                        setDashboardStats({
+                            totalCount: json.stats.totalFacilities || 0,
+                            totalReviews: json.stats.reviewsCount || 0,
+                            categoryCounts: json.categoryCounts || {},
+                        });
                     }
-                    const results = await Promise.all(promises);
-                    results.forEach(pageData => { allData = allData.concat(pageData); });
                 }
-
-                setFacilities(allData);
-                sessionStorage.setItem('admin_facilities_lite', JSON.stringify(allData));
-                setIsLoadingData(false);
             } catch (e) {
-                console.error('Data load failed:', e);
-                if (!cached) {
-                    alert('데이터를 불러오지 못했습니다.');
-                }
-                setIsLoadingData(false);
+                console.error('Stats load error:', e);
             }
         };
-
-        fetchAllFacilities();
+        fetchStats();
     }, []);
 
-    // Save to Server Helper
-    const saveToServer = async (payload: Facility | Facility[]) => {
+    // 2. 서버 사이드 데이터 로드 (페이지, 필터, 정렬 변경 시 실시간 요청)
+    const loadFacilities = useCallback(async () => {
+        setIsLoadingData(true);
         try {
-            const res = await fetch('/api/facilities', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(payload)
+            const params = new URLSearchParams({
+                page: String(activePage),
+                limit: String(itemsPerPage),
+                sortBy: sortOrder === 'updated-desc' ? 'lastUpdated' : 'id',
+                sortOrder: sortOrder.endsWith('desc') ? 'desc' : 'asc',
             });
-            if (!res.ok) {
-                const txt = await res.text();
-                throw new Error(txt);
-            }
-            // 저장 성공 시 시간 기록
-            const now = new Date();
-            const timeStr = `${now.getMonth() + 1}/${now.getDate()} ${now.getHours()}:${String(now.getMinutes()).padStart(2, '0')}`;
-            setLastSavedTime(timeStr);
+            if (debouncedSearch.trim()) params.set('search', debouncedSearch.trim());
+            if (categoryFilter) params.set('category', categoryFilter);
+            if (priceVerifyFilter) params.set('priceVerified', priceVerifyFilter);
+
+            const res = await fetch(`/api/admin/facilities?${params.toString()}`);
+            if (!res.ok) throw new Error(await res.text());
+            const json = await res.json();
+            setFacilities(json.data || []);
+            setTotalCount(json.pagination?.total || 0);
+            setTotalPages(json.pagination?.totalPages || 1);
         } catch (e) {
-            console.error('Save failed:', e);
-            alert('서버 저장에 실패했습니다: ' + String(e));
+            console.error('Data load failed:', e);
+            notifications.show({ color: 'red', title: '로드 실패', message: '데이터를 불러오지 못했습니다.' });
+        } finally {
+            setIsLoadingData(false);
         }
-    };
+    }, [activePage, itemsPerPage, debouncedSearch, categoryFilter, priceVerifyFilter, sortOrder]);
+
+    useEffect(() => {
+        loadFacilities();
+    }, [loadFacilities]);
+
+    // 검색어/필터/정렬 변경 시 1페이지로 리셋
+    useEffect(() => {
+        setActivePage(1);
+    }, [debouncedSearch, categoryFilter, priceVerifyFilter, sortOrder, itemsPerPage]);
 
     // 마커 표시 토글 핸들러 - isActive만 직접 업데이트 (전체 upsert 방지)
     const handleToggleMarker = async (item: Facility) => {
@@ -181,59 +177,19 @@ export default function AdminPage() {
             setLastSavedTime(`${now.getMonth() + 1}/${now.getDate()} ${now.getHours()}:${String(now.getMinutes()).padStart(2, '0')}`);
         } catch (e) {
             console.error('Toggle failed:', e);
-            alert('서버 저장에 실패했습니다: ' + String(e));
+            notifications.show({ color: 'red', title: '저장 실패', message: '서버 저장에 실패했습니다: ' + String(e) });
             // 실패 시 롤백
             setFacilities(prev => prev.map(f => f.id === item.id ? item : f));
         }
     };
 
-
-    // Filter Logic - 🚀 debouncedSearch 사용으로 타이핑 렉 0ms
-    const filteredData = useMemo(() => {
-        const query = debouncedSearch.trim().toLowerCase();
-        let result = facilities.filter(item => {
-            const matchSearch = !query || item.name.toLowerCase().includes(query) || item.address.toLowerCase().includes(query) || item.id.toLowerCase().includes(query);
-            const matchCategory = categoryFilter ? item.category === categoryFilter : true;
-            const matchVerify = priceVerifyFilter === 'verified'
-                ? item.priceInfo?.priceVerified === true
-                : priceVerifyFilter === 'unverified'
-                    ? !item.priceInfo?.priceVerified
-                    : true;
-            return matchSearch && matchCategory && matchVerify;
-        });
-
-        // 🚀 고속 정렬 (ID 정규식 파싱 최소화)
-        if (sortOrder === 'id-asc') {
-            result.sort((a, b) => (a.id > b.id ? 1 : -1));
-        } else if (sortOrder === 'id-desc') {
-            result.sort((a, b) => (a.id < b.id ? 1 : -1));
-        } else if (sortOrder === 'updated-desc') {
-            result.sort((a, b) => {
-                const dateA = a.updatedAt ? new Date(a.updatedAt).getTime() : 0;
-                const dateB = b.updatedAt ? new Date(b.updatedAt).getTime() : 0;
-                return dateB - dateA;
-            });
-        }
-
-        return result;
-    }, [facilities, debouncedSearch, categoryFilter, priceVerifyFilter, sortOrder]);
-
-    // Pagination Logic
-    const paginatedData = useMemo(() => {
-        const start = (activePage - 1) * itemsPerPage;
-        return filteredData.slice(start, start + itemsPerPage);
-    }, [filteredData, activePage]);
-
-    const totalPages = Math.ceil(filteredData.length / itemsPerPage);
-
     // Handlers
-    // 🚀 handleEdit/handleCreate는 이제 단순히 모달을 열기만 함
     const handleEdit = useCallback((facility: Facility) => {
-        const idx = filteredData.findIndex(f => f.id === facility.id);
+        const idx = facilities.findIndex(f => f.id === facility.id);
         setEditIndex(idx);
         setFacilityToEdit(facility);
         open();
-    }, [open, filteredData]);
+    }, [open, facilities]);
 
     const handleCreate = useCallback(() => {
         setFacilityToEdit(null); // null = 새 시설
@@ -242,37 +198,24 @@ export default function AdminPage() {
 
     // 모달에서 저장 완료 시 콜백
     const handleModalSaved = useCallback((savedFacility: Facility, isNew: boolean) => {
-        let updatedList: Facility[];
         if (isNew) {
-            updatedList = [savedFacility, ...facilities];
+            setFacilities(prev => [savedFacility, ...prev]);
+            setTotalCount(prev => prev + 1);
         } else {
-            updatedList = facilities.map(f => f.id === savedFacility.id ? { ...f, ...savedFacility } : f);
+            setFacilities(prev => prev.map(f => f.id === savedFacility.id ? { ...f, ...savedFacility } : f));
         }
-        setFacilities(updatedList);
-        // 🔑 sessionStorage 캐시도 즉시 업데이트 (새로고침 시 최신 데이터 반영)
-        try {
-            sessionStorage.setItem('admin_facilities_lite', JSON.stringify(updatedList));
-        } catch { /* 캐시 실패 무시 */ }
-        // 저장 시간 기록
         const now = new Date();
         setLastSavedTime(`${now.getMonth() + 1}/${now.getDate()} ${now.getHours()}:${String(now.getMinutes()).padStart(2, '0')}`);
-    }, [facilities]);
+    }, []);
 
     // 모달 네비게이션 (이전/다음 시설)
     const handleNavigate = useCallback((direction: 'prev' | 'next') => {
         const newIndex = direction === 'next' ? editIndex + 1 : editIndex - 1;
-        if (newIndex >= 0 && newIndex < filteredData.length) {
+        if (newIndex >= 0 && newIndex < facilities.length) {
             setEditIndex(newIndex);
-            setFacilityToEdit(filteredData[newIndex]);
+            setFacilityToEdit(facilities[newIndex]);
         }
-    }, [editIndex, filteredData]);
-
-    // 검토 진행률 계산
-    const reviewStats = useMemo(() => {
-        const total = facilities.length;
-        const reviewed = facilities.filter(f => f.priceInfo?.priceVerified === true).length;
-        return { total, reviewed, percent: total > 0 ? Math.round(reviewed / total * 100 * 10) / 10 : 0 };
-    }, [facilities]);
+    }, [editIndex, facilities]);
 
     const handleDelete = async (id: string) => {
         if (!confirm('정말 삭제하시겠습니까?')) return;
@@ -283,42 +226,21 @@ export default function AdminPage() {
 
             if (data.success) {
                 setFacilities(prev => prev.filter(f => f.id !== id));
-                alert('삭제되었습니다.');
+                notifications.show({ color: 'green', title: '삭제 완료', message: '시설이 삭제되었습니다.' });
             } else {
-                alert('삭제 실패: ' + (data.error || 'Unknown error'));
+                notifications.show({ color: 'red', title: '삭제 실패', message: data.error || 'Unknown error' });
             }
         } catch (err) {
             console.error('Delete error:', err);
-            alert('삭제 중 오류가 발생했습니다.');
+            notifications.show({ color: 'red', title: '삭제 오류', message: '삭제 중 오류가 발생했습니다.' });
         }
     };
 
-    const handleDeleteReview = (facilityId: string, reviewId: string) => {
-        if (!confirm('해당 리뷰를 정말 삭제하시겠습니까?')) return;
-        const newFacilities = facilities.map(f => {
-            if (f.id === facilityId) {
-                return {
-                    ...f,
-                    reviews: f.reviews?.filter(r => r.id !== reviewId)
-                };
-            }
-            return f;
-        });
-        setFacilities(newFacilities);
-        saveToServer(newFacilities);
-    };
 
-    const allReviews = useMemo(() => {
-        return facilities.flatMap(f => (f.reviews || []).map(r => ({ ...r, facilityName: f.name, facilityId: f.id })))
-            .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
-    }, [facilities]);
-    if (isLoadingData) {
-        return (
-            <Box p="lg" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '50vh' }}>
-                <Text c="dimmed">데이터 로딩 중...</Text>
-            </Box>
-        );
-    }
+    // 검토 통계 (대시보드)
+    const categoryCountSummary = useMemo(() => {
+        return Object.entries(dashboardStats.categoryCounts || {}).length;
+    }, [dashboardStats.categoryCounts]);
 
     return (
         <Box p="lg">
@@ -339,8 +261,17 @@ export default function AdminPage() {
                 <Paper withBorder p="md" radius="md">
                     <Group justify="space-between">
                         <div>
-                            <Text c="dimmed" size="xs">총 시설 수</Text>
-                            <Text fw={700} size="xl">{facilities.length}개</Text>
+                            <Text c="dimmed" size="xs">현재 조건 시설 수</Text>
+                            <Text fw={700} size="xl">{totalCount.toLocaleString()}개</Text>
+                        </div>
+                        <Building2 size={24} color="#339af0" />
+                    </Group>
+                </Paper>
+                <Paper withBorder p="md" radius="md">
+                    <Group justify="space-between">
+                        <div>
+                            <Text c="dimmed" size="xs">전체 DB 시설 수</Text>
+                            <Text fw={700} size="xl">{dashboardStats.totalCount.toLocaleString()}개</Text>
                         </div>
                         <Building2 size={24} color="#adb5bd" />
                     </Group>
@@ -349,9 +280,7 @@ export default function AdminPage() {
                     <Group justify="space-between">
                         <div>
                             <Text c="dimmed" size="xs">총 리뷰 수</Text>
-                            <Text fw={700} size="xl">
-                                {facilities.reduce((acc, f) => acc + (f.reviews?.length || 0), 0)}개
-                            </Text>
+                            <Text fw={700} size="xl">{dashboardStats.totalReviews.toLocaleString()}개</Text>
                         </div>
                         <MessageSquare size={24} color="#adb5bd" />
                     </Group>
@@ -359,49 +288,13 @@ export default function AdminPage() {
                 <Paper withBorder p="md" radius="md">
                     <Group justify="space-between">
                         <div>
-                            <Text c="dimmed" size="xs">최고가 시설 (Min기준)</Text>
-                            <Text fw={700} size="lg" truncate>
-                                {(() => {
-                                    const valid = facilities.filter(f => f.priceRange?.min != null);
-                                    if (valid.length === 0) return '-';
-                                    const max = Math.max(...valid.map(f => f.priceRange?.min ?? 0));
-                                    const f = valid.find(f => f.priceRange?.min === max);
-                                    return f ? `${f.name} (${max.toLocaleString()}만)` : '-';
-                                })()}
-                            </Text>
+                            <Text c="dimmed" size="xs">운영 카테고리 수</Text>
+                            <Text fw={700} size="xl">{categoryCountSummary}개 분야</Text>
                         </div>
-                        <TrendingUp size={24} color="#fa5252" />
-                    </Group>
-                </Paper>
-                <Paper withBorder p="md" radius="md">
-                    <Group justify="space-between">
-                        <div>
-                            <Text c="dimmed" size="xs">최저가 시설 (0원 제외)</Text>
-                            <Text fw={700} size="lg" truncate>
-                                {(() => {
-                                    const valid = facilities.filter(f => f.priceRange?.min != null && f.priceRange.min > 0);
-                                    if (valid.length === 0) return '-';
-                                    const min = Math.min(...valid.map(f => f.priceRange?.min ?? Infinity));
-                                    const f = valid.find(f => f.priceRange?.min === min);
-                                    return f ? `${f.name} (${min.toLocaleString()}만)` : '-';
-                                })()}
-                            </Text>
-                        </div>
-                        <TrendingDown size={24} color="#40c057" />
+                        <TrendingUp size={24} color="#40c057" />
                     </Group>
                 </Paper>
             </SimpleGrid>
-
-            {/* 검토 진행률 */}
-            <Paper withBorder p="md" radius="md" mb="xl" bg="blue.0" style={{ borderColor: '#339af0', borderStyle: 'solid' }}>
-                <Group justify="space-between" mb="xs">
-                    <Text fw={700} size="sm">📊 가격 검토 진행률</Text>
-                    <Text size="sm" fw={600} c="blue">
-                        {reviewStats.reviewed} / {reviewStats.total}개 검토완료 ({reviewStats.percent}%)
-                    </Text>
-                </Group>
-                <Progress value={reviewStats.percent} size="lg" radius="xl" color="blue" />
-            </Paper>
 
             {/* Filters */}
             <Group mb="md">
@@ -434,6 +327,7 @@ export default function AdminPage() {
                     placeholder="표시 개수"
                     data={[
                         { value: '10', label: '10개' },
+                        { value: '25', label: '25개' },
                         { value: '50', label: '50개' },
                         { value: '100', label: '100개' },
                     ]}
@@ -457,7 +351,7 @@ export default function AdminPage() {
             <Tabs defaultValue="facilities" mb="xl">
                 <Tabs.List mb="md">
                     <Tabs.Tab value="facilities" leftSection={<Building2 size={14} />}>시설 목록</Tabs.Tab>
-                    <Tabs.Tab value="reviews" leftSection={<MessageSquare size={14} />}>전체 리뷰 관리 ({allReviews.length})</Tabs.Tab>
+                    <Tabs.Tab value="reviews" leftSection={<MessageSquare size={14} />}>전체 리뷰 관리 ({dashboardStats.totalReviews})</Tabs.Tab>
                 </Tabs.List>
 
                 <Tabs.Panel value="facilities">
@@ -482,9 +376,17 @@ export default function AdminPage() {
                             <Table.Tbody>
                                 {isLoadingData ? (
                                     <Table.Tr>
-                                        <Table.Td colSpan={8} align="center">데이터 로딩 중...</Table.Td>
+                                        <Table.Td colSpan={12} align="center" py="xl">
+                                            <Text c="dimmed">데이터를 불러오는 중입니다...</Text>
+                                        </Table.Td>
                                     </Table.Tr>
-                                ) : paginatedData.map((item, index) => (
+                                ) : facilities.length === 0 ? (
+                                    <Table.Tr>
+                                        <Table.Td colSpan={12} align="center" py="xl">
+                                            <Text c="dimmed">조건에 일치하는 시설이 없습니다.</Text>
+                                        </Table.Td>
+                                    </Table.Tr>
+                                ) : facilities.map((item, index) => (
                                     <Table.Tr key={item.id}>
                                         <Table.Td>
                                             <Text c="dimmed" size="sm">
@@ -525,12 +427,16 @@ export default function AdminPage() {
                                         <Table.Td style={{ maxWidth: 200 }}><Text truncate>{item.address}</Text></Table.Td>
                                         <Table.Td>{formatRowPrice(item)}</Table.Td>
                                         <Table.Td>
-                                            {getImageCount(item.images) > 0 ? (
-                                                <Badge size="sm" variant="dot" color="teal">이미지 {getImageCount(item.images)}</Badge>
-                                            ) : (
-                                                <Badge size="sm" variant="dot" color="gray">이미지 없음</Badge>
-                                            )}
+                                            {(() => {
+                                                const imgCount = getImageCount(item.images);
+                                                return imgCount > 0 ? (
+                                                    <Badge size="sm" variant="dot" color="teal">이미지 {imgCount}</Badge>
+                                                ) : (
+                                                    <Badge size="sm" variant="dot" color="gray">이미지 없음</Badge>
+                                                );
+                                            })()}
                                         </Table.Td>
+
                                         <Table.Td>
                                             <Text size="xs" c="dimmed">
                                                 {formatRowDate(item.lastUpdated)}
@@ -568,49 +474,22 @@ export default function AdminPage() {
                             </Table.Tbody>
                         </Table>
                     </Paper>
-                    <Group justify="center" mt="md">
+                    <Group justify="space-between" mt="md">
+                        <Text size="sm" c="dimmed">
+                            총 {totalCount.toLocaleString()}개 시설 중 {totalCount > 0 ? (activePage - 1) * itemsPerPage + 1 : 0} - {Math.min(activePage * itemsPerPage, totalCount)}번째 표시
+                        </Text>
                         <Pagination total={totalPages} value={activePage} onChange={setActivePage} />
                     </Group>
                 </Tabs.Panel>
 
                 <Tabs.Panel value="reviews">
-                    <Paper shadow="sm" radius="md" withBorder>
-                        <ScrollArea h={600}>
-                            <Table striped highlightOnHover stickyHeader>
-                                <Table.Thead>
-                                    <Table.Tr>
-                                        <Table.Th>시설명</Table.Th>
-                                        <Table.Th>작성자</Table.Th>
-                                        <Table.Th>평점</Table.Th>
-                                        <Table.Th>내용</Table.Th>
-                                        <Table.Th>날짜</Table.Th>
-                                        <Table.Th>관리</Table.Th>
-                                    </Table.Tr>
-                                </Table.Thead>
-                                <Table.Tbody>
-                                    {allReviews.length === 0 ? (
-                                        <Table.Tr>
-                                            <Table.Td colSpan={6} align="center" py="xl">
-                                                <Text c="dimmed">등록된 리뷰가 없습니다.</Text>
-                                            </Table.Td>
-                                        </Table.Tr>
-                                    ) : allReviews.map((review) => (
-                                        <Table.Tr key={`${review.facilityId}-${review.id}`}>
-                                            <Table.Td fw={500}>{review.facilityName}</Table.Td>
-                                            <Table.Td>{review.author}</Table.Td>
-                                            <Table.Td><Badge color="yellow" variant="light">★ {review.rating}</Badge></Table.Td>
-                                            <Table.Td style={{ maxWidth: 300 }}><Text truncate>{review.content}</Text></Table.Td>
-                                            <Table.Td>{review.date}</Table.Td>
-                                            <Table.Td>
-                                                <ActionIcon color="red" variant="subtle" onClick={() => handleDeleteReview(review.facilityId, review.id)}>
-                                                    <Trash size={16} />
-                                                </ActionIcon>
-                                            </Table.Td>
-                                        </Table.Tr>
-                                    ))}
-                                </Table.Tbody>
-                            </Table>
-                        </ScrollArea>
+                    <Paper shadow="sm" radius="md" withBorder p="md">
+                        <Group justify="space-between" mb="md">
+                            <Text fw={600}>등록된 사용자 리뷰</Text>
+                            <Button component="a" href="/admin/reviews" variant="light" size="xs">
+                                리뷰 전용 관리 페이지 열기 →
+                            </Button>
+                        </Group>
                     </Paper>
                 </Tabs.Panel>
             </Tabs>
@@ -622,8 +501,8 @@ export default function AdminPage() {
                 onClose={close}
                 onSaved={handleModalSaved}
                 onNavigate={handleNavigate}
-                currentIndex={editIndex}
-                totalCount={filteredData.length}
+                currentIndex={editIndex >= 0 ? (activePage - 1) * itemsPerPage + editIndex : undefined}
+                totalCount={totalCount}
             />
         </Box >
     );

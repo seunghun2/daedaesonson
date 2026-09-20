@@ -18,7 +18,8 @@ interface PageProps {
 // 동적 메타데이터
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
     const { slug } = await params;
-    const [region, category] = slug.split('-');
+    const decodedSlug = decodeURIComponent(slug);
+    const [region, category] = decodedSlug.split('-');
 
     const categoryInfo = CATEGORIES.find(c => c.slug === category);
     if (!region || !categoryInfo) {
@@ -80,7 +81,8 @@ function extractRegion(address: string): string | null {
 
 export default async function RegionPage({ params }: PageProps) {
     const { slug } = await params;
-    const [region, categorySlug] = slug.split('-');
+    const decodedSlug = decodeURIComponent(slug);
+    const [region, categorySlug] = decodedSlug.split('-');
 
     const categoryInfo = CATEGORIES.find(c => c.slug === categorySlug);
     if (!region || !categoryInfo || !REGIONS.includes(region)) {

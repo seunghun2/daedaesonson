@@ -123,7 +123,7 @@ export async function GET(
     } catch (error) {
         console.error('Error fetching prices:', error);
         return NextResponse.json(
-            { error: 'Internal server error', details: String(error) },
+            { error: 'Internal server error', details: '요청을 처리할 수 없습니다.' },
             { status: 500 }
         );
     }

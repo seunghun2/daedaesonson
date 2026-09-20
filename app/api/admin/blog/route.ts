@@ -1,20 +1,15 @@
+import DOMPurify from 'isomorphic-dompurify';
 import { NextRequest, NextResponse } from 'next/server';
 import { getSupabaseServer } from '@/lib/supabaseServer';
-import { cookies } from 'next/headers';
+import { requireAdmin } from '@/lib/adminAuth';
 
 const supabase = getSupabaseServer();
 
-// 어드민 인증 확인
-async function checkAdminAuth(): Promise<boolean> {
-    const cookieStore = await cookies();
-    return cookieStore.get('admin_session')?.value === 'dds_admin_verified';
-}
-
 // GET: 모든 블로그 글 (어드민용, 미발행 포함)
 export async function GET(request: NextRequest) {
-    if (!(await checkAdminAuth())) {
-        return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-    }
+    const authError = await requireAdmin();
+    if (authError) return authError;
+
 
     try {
         const { searchParams } = new URL(request.url);
@@ -29,7 +24,7 @@ export async function GET(request: NextRequest) {
             .range(offset, offset + limit - 1);
 
         if (error) {
-            return NextResponse.json({ error: error.message }, { status: 500 });
+            return NextResponse.json({ error: '요청을 처리할 수 없습니다.' }, { status: 500 });
         }
 
         return NextResponse.json({
@@ -46,9 +41,9 @@ export async function GET(request: NextRequest) {
 
 // POST: 블로그 글 생성
 export async function POST(request: NextRequest) {
-    if (!(await checkAdminAuth())) {
-        return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-    }
+    const authError = await requireAdmin();
+    if (authError) return authError;
+
 
     try {
         const body = await request.json();
@@ -65,7 +60,7 @@ export async function POST(request: NextRequest) {
                 slug,
                 category: category || '가이드',
                 excerpt: excerpt || '',
-                content,
+                content: DOMPurify.sanitize(content),
                 thumbnail_url: thumbnail_url || '',
                 author: author || '대대손손',
                 tags: tags || [],
@@ -78,7 +73,7 @@ export async function POST(request: NextRequest) {
 
         if (error) {
             console.error('Blog insert error:', error);
-            return NextResponse.json({ error: error.message }, { status: 500 });
+            return NextResponse.json({ error: '요청을 처리할 수 없습니다.' }, { status: 500 });
         }
 
         return NextResponse.json(data);

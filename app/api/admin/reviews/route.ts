@@ -43,8 +43,10 @@ export async function GET() {
             return {
                 ...safeReview,
                 facilityName: facilityNameMap.get(r.facilityId) || '시설',
+                replies: (r.replies || []).map(({ password: replyPw, ...rep }: any) => rep),
             };
         });
+
 
         return NextResponse.json({ reviews: enrichedReviews }, {
             headers: {

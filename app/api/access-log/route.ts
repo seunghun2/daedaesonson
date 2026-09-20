@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import { rateLimit } from '@/lib/rateLimit';
 
 export async function POST(request: Request) {
     try {
@@ -9,6 +10,12 @@ export async function POST(request: Request) {
         const ip = forwarded?.split(',')[0]?.trim() || 
                    request.headers.get('x-real-ip') || 
                    'unknown';
+
+        // IP 기반 Rate Limit (분당 30회)
+        const rateCheck = rateLimit({ key: `access-log:${ip}`, limit: 30, windowMs: 60000 });
+        if (!rateCheck.success) {
+            return NextResponse.json({ success: true, filtered: 'rate_limited' });
+        }
 
         // 봇/크롤러 필터링
         const ua = userAgent || request.headers.get('user-agent') || '';
@@ -22,12 +29,13 @@ export async function POST(request: Request) {
         }
 
         // Supabase에 저장 (fire-and-forget 패턴)
-        const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://jbydmhfuqnpukfutvrgs.supabase.co';
+        const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || '';
         const supabaseKey = process.env.SUPABASE_SERVICE_KEY || '';
 
-        if (!supabaseKey) {
-            return NextResponse.json({ success: false, error: 'no key' });
+        if (!supabaseUrl || !supabaseKey) {
+            return NextResponse.json({ success: false, error: 'no config' });
         }
+
 
         // Edge-optimized: fetch 직접 호출 (클라이언트 초기화 비용 절약)
         fetch(`${supabaseUrl}/rest/v1/access_logs`, {
@@ -40,7 +48,7 @@ export async function POST(request: Request) {
             },
             body: JSON.stringify({
                 ip_address: ip,
-                path: path || '/',
+                path: (path || '/').substring(0, 200),
                 user_agent: ua.substring(0, 500), // 최대 500자
                 referer: (referer || '').substring(0, 1000),
             }),

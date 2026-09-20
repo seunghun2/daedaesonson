@@ -1,4 +1,5 @@
-import { NextResponse } from 'next/server';
+import { rateLimit } from '@/lib/rateLimit';
+import { NextRequest, NextResponse } from 'next/server';
 import { getSupabaseServer } from '@/lib/supabaseServer';
 import { requireAdmin } from '@/lib/adminAuth';
 
@@ -19,13 +20,17 @@ export async function GET() {
         return NextResponse.json(data || []);
     } catch (error: any) {
         console.error('1:1 문의 조회 오류:', error);
-        return NextResponse.json({ error: error.message }, { status: 500 });
+        return NextResponse.json({ error: '요청을 처리할 수 없습니다.' }, { status: 500 });
     }
 }
 
 // POST: 1:1 문의 등록 (사용자용)
 export async function POST(request: Request) {
     try {
+        const ip = request.headers.get('x-forwarded-for')?.split(',')[0].trim() || 'unknown';
+        const rateCheck = rateLimit({ key: `contact-post:${ip}`, limit: 10, windowMs: 60000 });
+        if (!rateCheck.success) return NextResponse.json({ error: '너무 많은 요청입니다.' }, { status: 429 });
+        
         const body = await request.json();
         const { inquiry_type, title, content, contact } = body;
 
@@ -49,6 +54,6 @@ export async function POST(request: Request) {
         return NextResponse.json(data);
     } catch (error: any) {
         console.error('1:1 문의 등록 오류:', error);
-        return NextResponse.json({ error: error.message }, { status: 500 });
+        return NextResponse.json({ error: '요청을 처리할 수 없습니다.' }, { status: 500 });
     }
 }

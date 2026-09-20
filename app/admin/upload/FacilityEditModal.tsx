@@ -1,17 +1,18 @@
 'use client';
 
 import React, { useState, useEffect, memo, useRef, useCallback } from 'react';
+import { notifications } from '@mantine/notifications';
 import {
-    Text, Group, Button, Paper, TextInput, ActionIcon,
+    Text, Group, Button, Paper, TextInput, ActionIcon, Textarea,
     Modal, NumberInput, Select, ScrollArea,
     Stack, Tabs, SimpleGrid, Card, Image, FileButton,
     Box, Alert, ThemeIcon, Switch, SegmentedControl, Accordion, Badge,
-    MultiSelect, Chip, Progress
+    MultiSelect, Chip, Progress, Tooltip
 } from '@mantine/core';
 import {
     Plus, Trash, Save, X, Image as ImageIcon,
     DollarSign, Building2, CloudDownload, FileText, Wand2, Scissors,
-    TrendingUp, TrendingDown, List, Star,
+    TrendingUp, TrendingDown, List, Star, MapPin,
     ChevronLeft, ChevronRight, CheckCircle2
 } from 'lucide-react';
 import { Facility, FACILITY_CATEGORY_LABELS, FacilityCategory, SERVICE_TYPE_LABELS, ServiceType } from '@/types';
@@ -20,173 +21,6 @@ import { PRICE_TAB_CATEGORIES, OTHER_TAB_CATEGORY } from '@/lib/constants';
 import { getSingleFacilityImageUrl } from '@/lib/supabaseImage';
 import StandardPriceEditor from './StandardPriceEditor';
 import ScrollableTabsList from '@/components/ScrollableTabsList';
-
-// ============================================================
-// PriceEditor (memo) - 자체 priceTable 상태 관리
-// ============================================================
-const PriceEditor = memo(({ initialPriceTable, onChange }: {
-    initialPriceTable: any;
-    onChange: (newTable: any) => void;
-}) => {
-    const [priceTable, setPriceTable] = useState<any>(initialPriceTable || {});
-    const debounceRef = useRef<NodeJS.Timeout | null>(null);
-
-    useEffect(() => {
-        setPriceTable(initialPriceTable || {});
-    }, [initialPriceTable]);
-
-    const notifyParent = useCallback((newTable: any) => {
-        if (debounceRef.current) clearTimeout(debounceRef.current);
-        debounceRef.current = setTimeout(() => onChange(newTable), 500);
-    }, [onChange]);
-
-    useEffect(() => () => { if (debounceRef.current) clearTimeout(debounceRef.current); }, []);
-
-    const updateTable = useCallback((updater: (prev: any) => any) => {
-        setPriceTable((prev: any) => {
-            const next = updater(prev);
-            notifyParent(next);
-            return next;
-        });
-    }, [notifyParent]);
-
-    const mainGroups: any[] = [];
-    const installationGroups: any[] = [];
-    const managementGroups: any[] = [];
-
-    Object.entries(priceTable).forEach(([groupName, groupData]: [string, any]) => {
-        if (groupName.includes('[별도]') || groupName.includes('시설') || groupName.includes('석물')) {
-            installationGroups.push({ groupName, groupData });
-        } else if (groupName.includes('[안내]') || groupName.includes('관리비') || groupName.includes('용역')) {
-            managementGroups.push({ groupName, groupData });
-        } else {
-            mainGroups.push({ groupName, groupData });
-        }
-    });
-
-    const renderGroup = (groups: { groupName: string; groupData: any }[], title: string, color: string) => {
-        if (groups.length === 0) return null;
-        return (
-            <Paper withBorder p="md" radius="md" mb="md">
-                <Text fw={700} mb="sm" c={color}>{title}</Text>
-                {groups.map(({ groupName, groupData }) => (
-                    <Paper key={groupName} withBorder p="sm" mb="sm" radius="sm">
-                        <Group justify="space-between" mb="xs">
-                            <TextInput
-                                value={groupName}
-                                size="sm"
-                                styles={{ input: { fontWeight: 600 } }}
-                                onChange={(e) => {
-                                    const newName = e.target.value;
-                                    updateTable(prev => {
-                                        const next = { ...prev };
-                                        next[newName] = next[groupName];
-                                        delete next[groupName];
-                                        return next;
-                                    });
-                                }}
-                            />
-                            <ActionIcon color="red" variant="light" size="sm" onClick={() => {
-                                if (!confirm(`"${groupName}" 그룹을 삭제하시겠습니까?`)) return;
-                                updateTable(prev => {
-                                    const next = { ...prev };
-                                    delete next[groupName];
-                                    return next;
-                                });
-                            }}>
-                                <Trash size={14} />
-                            </ActionIcon>
-                        </Group>
-                        <Stack gap="xs">
-                            {(groupData.rows || []).map((row: any, idx: number) => (
-                                <Group key={idx} gap="xs" wrap="nowrap">
-                                    <ActionIcon size="sm" variant="subtle" color={row.isRepresentative ? 'yellow' : 'gray'}
-                                        onClick={() => {
-                                            updateTable(prev => {
-                                                const next = { ...prev };
-                                                const rows = [...(next[groupName]?.rows || [])];
-                                                rows.forEach((r, i) => { r.isRepresentative = i === idx ? !r.isRepresentative : false; });
-                                                next[groupName] = { ...next[groupName], rows };
-                                                return next;
-                                            });
-                                        }}>
-                                        <Star size={14} fill={row.isRepresentative ? "currentColor" : "none"} />
-                                    </ActionIcon>
-                                    <TextInput placeholder="항목명" value={row.name || ''} style={{ flex: 2 }} size="sm"
-                                        onChange={(e) => {
-                                            updateTable(prev => {
-                                                const next = { ...prev };
-                                                const rows = [...(next[groupName]?.rows || [])];
-                                                rows[idx] = { ...rows[idx], name: e.target.value };
-                                                next[groupName] = { ...next[groupName], rows };
-                                                return next;
-                                            });
-                                        }} />
-                                    <TextInput placeholder="설명" value={row.grade || ''} style={{ flex: 1.5 }} size="sm"
-                                        onChange={(e) => {
-                                            updateTable(prev => {
-                                                const next = { ...prev };
-                                                const rows = [...(next[groupName]?.rows || [])];
-                                                rows[idx] = { ...rows[idx], grade: e.target.value };
-                                                next[groupName] = { ...next[groupName], rows };
-                                                return next;
-                                            });
-                                        }} />
-                                    <NumberInput value={row.price ?? 0} thousandSeparator="," suffix="원" style={{ flex: 1.5 }} size="sm"
-                                        onChange={(val) => {
-                                            updateTable(prev => {
-                                                const next = { ...prev };
-                                                const rows = [...(next[groupName]?.rows || [])];
-                                                rows[idx] = { ...rows[idx], price: Number(val) || 0 };
-                                                next[groupName] = { ...next[groupName], rows };
-                                                return next;
-                                            });
-                                        }} />
-                                    <ActionIcon color="red" variant="subtle" size="sm" onClick={() => {
-                                        updateTable(prev => {
-                                            const next = { ...prev };
-                                            const rows = [...(next[groupName]?.rows || [])];
-                                            rows.splice(idx, 1);
-                                            next[groupName] = { ...next[groupName], rows };
-                                            return next;
-                                        });
-                                    }}>
-                                        <X size={14} />
-                                    </ActionIcon>
-                                </Group>
-                            ))}
-                            <Button variant="light" size="xs" leftSection={<Plus size={14} />} onClick={() => {
-                                updateTable(prev => {
-                                    const next = { ...prev };
-                                    const rows = [...(next[groupName]?.rows || []), { name: '', grade: '', price: 0 }];
-                                    next[groupName] = { ...next[groupName], rows };
-                                    return next;
-                                });
-                            }}>
-                                항목 추가
-                            </Button>
-                        </Stack>
-                    </Paper>
-                ))}
-            </Paper>
-        );
-    };
-
-    return (
-        <Box>
-            {renderGroup(mainGroups, '📋 기본 가격표', 'blue')}
-            {renderGroup(installationGroups, '🔧 시설 설치 / 석물 비용', 'orange')}
-            {renderGroup(managementGroups, '📌 관리비 / 용역비', 'green')}
-            <Button variant="light" fullWidth mt="md" leftSection={<Plus size={16} />} onClick={() => {
-                const newName = `새 그룹 ${Object.keys(priceTable).length + 1}`;
-                updateTable(prev => ({ ...prev, [newName]: { unit: '원', rows: [{ name: '', price: 0 }] } }));
-            }}>
-                새 가격 그룹 추가
-            </Button>
-        </Box>
-    );
-});
-PriceEditor.displayName = 'PriceEditor';
 
 
 // ============================================================
@@ -237,10 +71,7 @@ function FacilityEditModal({ facilityToEdit, opened, onClose, onSaved, onNavigat
             const fetchId = parsed.id; // 클로저에서 ID 캡처
             (async () => {
                 try {
-                    const [detailRes, priceRes] = await Promise.all([
-                        fetch(`/api/facilities/${parsed.id}`, { cache: 'no-store' }),
-                        fetch(`/api/facilities/${parsed.id}/prices`, { cache: 'no-store' })
-                    ]);
+                    const detailRes = await fetch(`/api/facilities/${parsed.id}`, { cache: 'no-store' });
                     let merged = { ...parsed };
                     if (detailRes.ok) {
                         const latest = await detailRes.json();
@@ -251,12 +82,11 @@ function FacilityEditModal({ facilityToEdit, opened, onClose, onSaved, onNavigat
                             imageGallery: _ig2, images: _im2, thumbnail: _th,
                             ...detailOnly } = latest;
                         merged = { ...merged, ...detailOnly };
-                    }
-                    if (priceRes.ok) {
-                        const detailed = await priceRes.json();
-                        merged = { ...merged, priceInfo: { priceTable: detailed.priceTable, standardizedPrices: detailed.standardizedPrices } } as any;
-                        (merged as any)._detailedSource = 'prisma';
-                        (merged as any)._meta = detailed._meta;
+                        // 가격 데이터도 detail API에서 가져옴 (별도 /prices 호출 불필요)
+                        if (latest.standardizedPrices || latest.pricing) {
+                            merged = { ...merged, priceInfo: { priceTable: latest.pricing || merged.priceInfo?.priceTable || {}, standardizedPrices: latest.standardizedPrices || merged.priceInfo?.standardizedPrices } } as any;
+                            (merged as any)._detailedSource = 'prisma';
+                        }
                     }
                     // 🔑 유저가 이미 수정했으면 이미지를 덮어쓰지 않음
                     setEditForm(prev => {
@@ -285,7 +115,7 @@ function FacilityEditModal({ facilityToEdit, opened, onClose, onSaved, onNavigat
 
     // === e하늘 동기화 ===
     const handleSync = async () => {
-        if (!editingId?.startsWith('esky-')) { alert('e하늘 데이터만 동기화 가능'); return; }
+        if (!editingId?.startsWith('esky-')) { notifications.show({ color: 'orange', title: '동기화 불가', message: 'e하늘 데이터만 동기화 가능합니다.' }); return; }
         setSyncing(true);
         try {
             const res = await fetch('/api/crawl', {
@@ -303,9 +133,9 @@ function FacilityEditModal({ facilityToEdit, opened, onClose, onSaved, onNavigat
                         ? json.data.priceInfo : prev.priceInfo,
                     imageGallery: Array.from(new Set([...(prev.imageGallery || []), ...json.data.imageGallery]))
                 }));
-                alert('최신 데이터로 업데이트되었습니다!');
-            } else { alert('동기화 실패: ' + (json.error || '')); }
-        } catch { alert('네트워크 오류'); } finally { setSyncing(false); }
+                notifications.show({ color: 'green', title: '동기화 완료', message: '최신 데이터로 업데이트되었습니다.' });
+            } else { notifications.show({ color: 'red', title: '동기화 실패', message: json.error || '알 수 없는 오류' }); }
+        } catch { notifications.show({ color: 'red', title: '동기화 실패', message: '네트워크 오류가 발생했습니다.' }); } finally { setSyncing(false); }
     };
 
     // === PDF 업로드 ===
@@ -385,9 +215,9 @@ function FacilityEditModal({ facilityToEdit, opened, onClose, onSaved, onNavigat
                 description: parsedData.description || prev.description,
                 priceInfo: Object.keys(finalPriceTable).length > 0 ? { priceTable: finalPriceTable } : prev.priceInfo
             }));
-            alert('AI 분석이 완료되었습니다!');
+            notifications.show({ color: 'green', title: 'PDF 분석 완료', message: 'AI 분석이 완료되었습니다.' });
         } catch (error) {
-            alert(`분석 오류: ${error instanceof Error ? error.message : '알 수 없는 오류'}`);
+            notifications.show({ color: 'red', title: 'PDF 분석 오류', message: error instanceof Error ? error.message : '알 수 없는 오류' });
         } finally { setPdfLoading(false); }
     };
 
@@ -400,13 +230,26 @@ function FacilityEditModal({ facilityToEdit, opened, onClose, onSaved, onNavigat
             if (croppedImages.length > 0) {
                 userModified.current = true;
                 setEditForm(prev => ({ ...prev, imageGallery: [...(prev.imageGallery || []), ...croppedImages] }));
-                alert(`${croppedImages.length}개의 사진을 잘라냈습니다!`);
-            } else { alert('사진을 분리하지 못했습니다.'); }
-        } catch (e: any) { alert('오류: ' + e); } finally { setCropping(false); }
+                notifications.show({ color: 'green', title: '자르기 완료', message: `${croppedImages.length}개의 사진을 잘라냈습니다.` });
+            } else { notifications.show({ color: 'orange', title: '자르기 실패', message: '사진을 분리하지 못했습니다.' }); }
+        } catch (e: any) { notifications.show({ color: 'red', title: '자르기 오류', message: String(e) }); } finally { setCropping(false); }
     };
 
     // === 저장 ===
     const handleSave = async () => {
+        // [P0] 필수 필드 유효성 검증
+        if (!editForm.name?.trim()) {
+            notifications.show({ color: 'red', title: '입력 오류', message: '시설명을 입력해주세요.' });
+            return;
+        }
+        if (!editForm.address?.trim()) {
+            notifications.show({ color: 'red', title: '입력 오류', message: '주소를 입력해주세요.' });
+            return;
+        }
+        if (!editForm.category || editForm.category === 'OTHER') {
+            notifications.show({ color: 'orange', title: '카테고리 확인', message: '주 카테고리를 선택해주세요. (현재: 기타)' });
+        }
+
         const compressAndResizeImage = (blob: Blob): Promise<Blob> => new Promise((resolve) => {
             const img = new window.Image();
             const url = URL.createObjectURL(blob);
@@ -465,7 +308,7 @@ function FacilityEditModal({ facilityToEdit, opened, onClose, onSaved, onNavigat
                     } else { newGallery.push(img); }
                 }
                 processedGallery = newGallery;
-            } catch (e: any) { alert(`이미지 업로드 중 오류: ${e?.message || e}`); return; }
+            } catch (e: any) { notifications.show({ color: 'red', title: '업로드 오류', message: e?.message || String(e) }); return; }
         }
 
         // 가격 범위 재계산
@@ -523,7 +366,7 @@ function FacilityEditModal({ facilityToEdit, opened, onClose, onSaved, onNavigat
             }
         } catch (e) {
             console.error('[Save] 에러:', e);
-            alert('저장 실패: ' + String(e));
+            notifications.show({ color: 'red', title: '저장 실패', message: String(e) });
             return;
         }
 
@@ -550,7 +393,7 @@ function FacilityEditModal({ facilityToEdit, opened, onClose, onSaved, onNavigat
             onSaved(saveData as Facility, false);
             // 다음 시설로 이동
             if (onNavigate) onNavigate('next');
-        } catch (e) { alert('저장 실패: ' + String(e)); }
+        } catch (e) { notifications.show({ color: 'red', title: '저장 실패', message: String(e) }); }
     };
 
     // === Prisma DB 가격표 렌더 (기존 _detailedSource === 'prisma' 경로) ===
@@ -575,7 +418,7 @@ function FacilityEditModal({ facilityToEdit, opened, onClose, onSaved, onNavigat
         const allCats = [...new Set([...defaults, ...existingCats])];
 
         const addCategoryType = (type: string) => {
-            if (priceTable[type]) { alert(`'${type}' 이미 있습니다.`); return; }
+            if (priceTable[type]) { notifications.show({ color: 'orange', title: '중복', message: `'${type}' 이미 있습니다.` }); return; }
             setEditForm({ ...editForm, priceInfo: { ...editForm.priceInfo, priceTable: { ...priceTable, [type]: { rows: [], unit: '' } } } });
         };
 
@@ -769,7 +612,7 @@ function FacilityEditModal({ facilityToEdit, opened, onClose, onSaved, onNavigat
                     <Badge color="dark" variant="filled" size="sm">⛔ 만장</Badge>
                 )}
             </Group>
-        } size="lg" scrollAreaComponent={ScrollArea.Autosize}>
+        } size="xl" scrollAreaComponent={ScrollArea.Autosize}>
             <Group justify="flex-end" mb="md">
                 <Button variant="subtle" color="green" leftSection={<CloudDownload size={16} />} onClick={handleSync} loading={syncing} disabled={!editingId?.startsWith('esky-')} size="xs">
                     e하늘 실시간 동기화
@@ -853,25 +696,39 @@ function FacilityEditModal({ facilityToEdit, opened, onClose, onSaved, onNavigat
                         <Group align="flex-end" grow>
                             <TextInput label="주소" value={editForm.address} onChange={(e) => setEditForm(prev => ({ ...prev, address: e.target.value }))} style={{ flex: 1 }} />
                             <Button variant="light" onClick={async () => {
-                                if (!editForm.address) { alert('주소를 먼저 입력해주세요.'); return; }
+                                if (!editForm.address) { notifications.show({ color: 'orange', title: '입력 필요', message: '주소를 먼저 입력해주세요.' }); return; }
                                 try {
                                     const r = await fetch(`/api/geocode?address=${encodeURIComponent(editForm.address)}`);
                                     const d = await r.json();
                                     if (d.addresses?.length > 0) {
                                         const { x, y } = d.addresses[0];
-                                        setEditForm(prev => ({ ...prev, location: { lat: parseFloat(y), lng: parseFloat(x) } }));
-                                        alert(`좌표: 위도 ${y}, 경도 ${x}`);
-                                    } else { alert('주소를 찾을 수 없습니다.'); }
-                                } catch { alert('좌표 변환 오류'); }
+                                        setEditForm(prev => ({ ...prev, coordinates: { lat: parseFloat(y), lng: parseFloat(x) } }));
+                                        notifications.show({ color: 'green', title: '좌표 변환 완료', message: `위도 ${y}, 경도 ${x}` });
+                                    } else { notifications.show({ color: 'red', title: '좌표 오류', message: '주소를 찾을 수 없습니다.' }); }
+                                } catch { notifications.show({ color: 'red', title: '좌표 오류', message: '좌표 변환 중 오류가 발생했습니다.' }); }
                             }}>📍 좌표 찾기</Button>
                         </Group>
+                        <Paper withBorder p="sm" radius="md" bg="gray.0">
+                            <Group gap="xs" mb={4}>
+                                <MapPin size={14} />
+                                <Text size="xs" fw={600}>좌표 정보</Text>
+                                {editForm.coordinates?.lat && editForm.coordinates?.lng ? (
+                                    <Badge size="xs" color="green" variant="light">설정됨</Badge>
+                                ) : (
+                                    <Badge size="xs" color="red" variant="light">미설정</Badge>
+                                )}
+                            </Group>
+                            <Group grow>
+                                <NumberInput label="위도 (Latitude)" value={editForm.coordinates?.lat || 0} onChange={(val) => setEditForm(prev => ({ ...prev, coordinates: { ...prev.coordinates, lat: Number(val) || 0, lng: prev.coordinates?.lng || 0 } }))} decimalScale={7} size="xs" />
+                                <NumberInput label="경도 (Longitude)" value={editForm.coordinates?.lng || 0} onChange={(val) => setEditForm(prev => ({ ...prev, coordinates: { ...prev.coordinates, lat: prev.coordinates?.lat || 0, lng: Number(val) || 0 } }))} decimalScale={7} size="xs" />
+                            </Group>
+                        </Paper>
                         <Group grow>
                             <TextInput label="전화번호" value={editForm.phone || ''} placeholder="예: 055-123-4567" onChange={(e) => setEditForm(prev => ({ ...prev, phone: e.target.value }))} />
-                            <TextInput label="총매장능력" value={editForm.capacity || ''} placeholder="예: 10,000기" onChange={(e) => setEditForm(prev => ({ ...prev, capacity: parseInt(e.target.value) || 0 }))} />
                             <TextInput label="데이터 업데이트" value={editForm.lastUpdated || ''} placeholder="YYYY-MM-DD" onChange={(e) => setEditForm(prev => ({ ...prev, lastUpdated: e.target.value }))} />
                         </Group>
                         <TextInput label="홈페이지 URL" placeholder="https://example.com" value={editForm.websiteUrl || ''} onChange={(e) => setEditForm(prev => ({ ...prev, websiteUrl: e.target.value }))} />
-                        <TextInput label="설명" value={editForm.description || ''} onChange={(e) => setEditForm(prev => ({ ...prev, description: e.target.value }))} />
+                        <Textarea label="설명" value={editForm.description || ''} onChange={(e) => setEditForm(prev => ({ ...prev, description: e.target.value }))} autosize minRows={2} maxRows={5} />
                         <Paper withBorder p="md" mt="md" radius="md">
                             <Text size="sm" fw={700} mb="sm">편의시설 정보 (On/Off)</Text>
                             <SimpleGrid cols={2}>
@@ -910,13 +767,26 @@ function FacilityEditModal({ facilityToEdit, opened, onClose, onSaved, onNavigat
                     <Text size="sm" mb="md">등록된 이미지 ({editForm.imageGallery?.length || 0})</Text>
                     <SimpleGrid cols={3}>
                         {editForm.imageGallery?.map((img, idx) => (
-                            <Card key={idx} padding="0" radius="sm" withBorder>
+                            <Card key={idx} padding="0" radius="sm" withBorder style={idx === 0 ? { border: '2px solid #339af0' } : undefined}>
                                 <Box pos="relative" h={100}>
                                     <Image src={getSingleFacilityImageUrl(img)} h={100} w="100%" fit="cover" fallbackSrc="https://placehold.co/400x300?text=No+Image" />
-                                    <ActionIcon pos="absolute" top={4} right={4} color="red" variant="filled" size="xs"
-                                        onClick={() => { userModified.current = true; setEditForm(prev => ({ ...prev, imageGallery: prev.imageGallery!.filter((_, i) => i !== idx) })); }}>
-                                        <X size={12} />
-                                    </ActionIcon>
+                                    {idx === 0 && (
+                                        <Badge pos="absolute" top={4} left={4} size="xs" color="blue" variant="filled">대표</Badge>
+                                    )}
+                                    <Group pos="absolute" top={4} right={4} gap={2}>
+                                        {idx > 0 && (
+                                            <Tooltip label="대표 이미지로 설정">
+                                                <ActionIcon color="yellow" variant="filled" size="xs"
+                                                    onClick={() => { userModified.current = true; setEditForm(prev => { const g = [...(prev.imageGallery || [])]; const [moved] = g.splice(idx, 1); g.unshift(moved); return { ...prev, imageGallery: g }; }); }}>
+                                                    <Star size={10} fill="currentColor" />
+                                                </ActionIcon>
+                                            </Tooltip>
+                                        )}
+                                        <ActionIcon color="red" variant="filled" size="xs"
+                                            onClick={() => { userModified.current = true; setEditForm(prev => ({ ...prev, imageGallery: prev.imageGallery!.filter((_, i) => i !== idx) })); }}>
+                                            <X size={12} />
+                                        </ActionIcon>
+                                    </Group>
                                 </Box>
                             </Card>
                         ))}
