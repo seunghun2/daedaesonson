@@ -88,6 +88,9 @@ export default function AIChatbot({ isOpen, onClose, facilityContext, onOpenCons
     const [pendingImage, setPendingImage] = useState<File | null>(null);
     const [pendingImagePreview, setPendingImagePreview] = useState<string | null>(null);
     const [contactPhone, setContactPhone] = useState('');
+    const [contactMethod, setContactMethod] = useState<'call' | 'kakao'>('call');
+    const [contactNote, setContactNote] = useState('실시간 공실/할인 견적 문의');
+    const [isSubmittingContact, setIsSubmittingContact] = useState(false);
     const [contactSubmitted, setContactSubmitted] = useState(false);
     const [messageCount, setMessageCount] = useState(() => {
         if (typeof window === 'undefined') return 0;
@@ -97,6 +100,26 @@ export default function AIChatbot({ isOpen, onClose, facilityContext, onOpenCons
     const messagesEndRef = useRef<HTMLDivElement>(null);
     const inputRef = useRef<HTMLInputElement>(null);
     const router = useRouter();
+
+    // 유저 로그인 시 성함/연락처 자동 채움
+    useEffect(() => {
+        if (user) {
+            if (!contactName && user.user_metadata?.full_name) {
+                setContactName(user.user_metadata.full_name);
+            }
+            if (!contactPhone && user.user_metadata?.phone) {
+                setContactPhone(user.user_metadata.phone);
+            }
+        }
+    }, [user, contactName, contactPhone]);
+
+    // 전화번호 자동 포맷팅
+    const formatPhoneNumber = (val: string) => {
+        const nums = val.replace(/\D/g, '');
+        if (nums.length <= 3) return nums;
+        if (nums.length <= 7) return `${nums.slice(0, 3)}-${nums.slice(3)}`;
+        return `${nums.slice(0, 3)}-${nums.slice(3, 7)}-${nums.slice(7, 11)}`;
+    };
 
     // 로그인 후 → 제한 해제 (대화 유지, 모달만 닫기)
     useEffect(() => {
@@ -253,20 +276,53 @@ export default function AIChatbot({ isOpen, onClose, facilityContext, onOpenCons
         }
     }, [input, isLoading, messages, sessionId, facilityContext, messageCount, contactSubmitted, showContactForm, pendingImage, pendingImagePreview, streamingText, user]);
 
-    /* ── 상담 폼 제출 ── */
+    /* ── 상담 폼 제출 (리드 수집 & 대표님 알림) ── */
     const submitContact = async () => {
-        if (!contactName.trim() || !contactPhone.trim()) return;
+        if (!contactName.trim() || !contactPhone.trim() || isSubmittingContact) return;
+        setIsSubmittingContact(true);
         try {
+            const recentUserMsgs = messages
+                .filter(m => m.role === 'user')
+                .map(m => m.content)
+                .slice(-3)
+                .join(' | ');
+
             const res = await fetch('/api/chat', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ sessionId, customerInfo: { name: contactName, phone: contactPhone } }),
+                body: JSON.stringify({
+                    sessionId,
+                    customerInfo: {
+                        name: contactName.trim(),
+                        phone: contactPhone.trim(),
+                        contactMethod,
+                        note: contactNote,
+                        facilityName: facilityContext?.name || null,
+                        recentSummary: recentUserMsgs || '장지 비교 및 견적 문의',
+                    }
+                }),
             });
             const data = await res.json();
-            setMessages(prev => [...prev, { role: 'assistant', content: data.response, timestamp: new Date().toISOString() }]);
+            const contactMethodLabel = contactMethod === 'kakao' ? '카카오톡/문자' : '전화';
+            const defaultGreeting = `✨ **${contactName}님, 무료 상담 신청이 정상 접수되었습니다.**\n\n대대손손 수석 상담사(대표)가 남겨주신 연락처(${contactPhone})로 **10분 내에 ${contactMethodLabel}**로 친절히 안내해 드리겠습니다.\n\n그동안 대손이에게 궁금한 점(가격, 시설 특징, 절차 등)을 편하게 물어보세요! 😊`;
+            setMessages(prev => [...prev, {
+                role: 'assistant',
+                content: data.response || defaultGreeting,
+                timestamp: new Date().toISOString()
+            }]);
             setContactSubmitted(true);
             setShowContactForm(false);
-        } catch {}
+            if (typeof window !== 'undefined' && (window as any).gtag) {
+                (window as any).gtag('event', '상담신청_접수', {
+                    method: contactMethod,
+                    facility: facilityContext?.name || '일반'
+                });
+            }
+        } catch {
+            alert('상담 신청 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요.');
+        } finally {
+            setIsSubmittingContact(false);
+        }
     };
 
     /* ── 마크다운 링크 + 볼드 렌더링 ── */
@@ -386,11 +442,72 @@ export default function AIChatbot({ isOpen, onClose, facilityContext, onOpenCons
                             {facilityContext ? facilityContext.name : '장지 전문 AI 상담'}
                         </div>
                     </div>
+                    {/* 📞 대표 직통 전화상담 버튼 */}
+                    <a
+                        href="tel:01048375076"
+                        style={{
+                            display: 'inline-flex',
+                            alignItems: 'center',
+                            gap: 4,
+                            backgroundColor: '#eef2ff',
+                            color: NAVY,
+                            border: '1px solid #dbe4ff',
+                            borderRadius: 16,
+                            padding: '6px 11px',
+                            fontSize: 12,
+                            fontWeight: 700,
+                            textDecoration: 'none',
+                            marginRight: 4,
+                            cursor: 'pointer',
+                            flexShrink: 0,
+                        }}
+                    >
+                        <Phone size={13} style={{ fill: NAVY }} />
+                        <span>전화 상담</span>
+                    </a>
                     <button onClick={onClose} style={{
                         background: 'none', border: 'none', cursor: 'pointer',
                         padding: 6, color: '#999', display: 'flex',
                     }}>
                         <X size={20} />
+                    </button>
+                </div>
+
+                {/* ── ⚡️ 상단 실시간 상담 전환 바 (Sticky CTA Bar) ── */}
+                <div style={{
+                    backgroundColor: '#1D0098',
+                    color: '#ffffff',
+                    padding: '8px 16px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    fontSize: 12,
+                    boxShadow: '0 2px 6px rgba(29,0,152,0.15)',
+                    flexShrink: 0,
+                }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 6, overflow: 'hidden' }}>
+                        <span style={{ fontSize: 13 }}>⚡</span>
+                        <span style={{ fontWeight: 600, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                            실시간 공실·비공개 할인 1:1 맞춤 안내
+                        </span>
+                    </div>
+                    <button
+                        onClick={() => setShowContactForm(true)}
+                        style={{
+                            backgroundColor: '#ffffff',
+                            color: '#1D0098',
+                            border: 'none',
+                            borderRadius: 12,
+                            padding: '4px 10px',
+                            fontSize: 11,
+                            fontWeight: 700,
+                            cursor: 'pointer',
+                            flexShrink: 0,
+                            marginLeft: 8,
+                            boxShadow: '0 2px 4px rgba(0,0,0,0.15)',
+                        }}
+                    >
+                        무료 신청
                     </button>
                 </div>
 
@@ -674,6 +791,77 @@ export default function AIChatbot({ isOpen, onClose, facilityContext, onOpenCons
                                 ))}
                             </div>
                         )}
+
+                        {/* ── 2턴 이상 또는 시설 카드 추천 시 전문가 1:1 상담 매칭 카드 ── */}
+                        {isLastAssistant && (messages.filter(m => m.role === 'user').length >= 2 || (msg.facilityCards && msg.facilityCards.length > 0)) && !contactSubmitted && !showContactForm && (
+                            <div style={{
+                                marginTop: 10,
+                                marginBottom: 12,
+                                background: 'linear-gradient(135deg, #f8f9ff 0%, #eef2ff 100%)',
+                                border: '1.5px solid #bac8ff',
+                                borderRadius: 16,
+                                padding: '14px 16px',
+                                boxShadow: '0 4px 14px rgba(48,46,146,0.08)',
+                            }}>
+                                <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 6 }}>
+                                    <span style={{
+                                        background: '#1D0098', color: '#fff', fontSize: 10,
+                                        fontWeight: 700, padding: '2px 7px', borderRadius: 6
+                                    }}>
+                                        대대손손 직영
+                                    </span>
+                                    <span style={{ fontSize: 13, fontWeight: 700, color: '#1a1b4b' }}>
+                                        수석 장지 상담사(대표) 1:1 무료 상담
+                                    </span>
+                                </div>
+                                <div style={{ fontSize: 12, color: '#495057', lineHeight: 1.5, marginBottom: 10 }}>
+                                    조건에 맞는 시설의 <b>실시간 잔여 자리</b>와 <b>비공개 프로모션 할인</b>을 10분 내로 친절히 안내해 드립니다.
+                                </div>
+                                <div style={{ display: 'flex', gap: 8 }}>
+                                    <button
+                                        onClick={() => setShowContactForm(true)}
+                                        style={{
+                                            flex: 1,
+                                            background: '#1D0098',
+                                            color: '#fff',
+                                            border: 'none',
+                                            borderRadius: 10,
+                                            padding: '9px 0',
+                                            fontSize: 13,
+                                            fontWeight: 700,
+                                            cursor: 'pointer',
+                                            display: 'flex',
+                                            alignItems: 'center',
+                                            justifyContent: 'center',
+                                            gap: 6,
+                                            boxShadow: '0 2px 6px rgba(29,0,152,0.25)',
+                                        }}
+                                    >
+                                        <Phone size={14} />
+                                        <span>10분 내 무료 상담 예약하기</span>
+                                    </button>
+                                    <a
+                                        href="tel:01048375076"
+                                        style={{
+                                            background: '#fff',
+                                            color: '#1D0098',
+                                            border: '1px solid #bac8ff',
+                                            borderRadius: 10,
+                                            padding: '9px 12px',
+                                            fontSize: 12,
+                                            fontWeight: 700,
+                                            textDecoration: 'none',
+                                            display: 'flex',
+                                            alignItems: 'center',
+                                            justifyContent: 'center',
+                                            whiteSpace: 'nowrap',
+                                        }}
+                                    >
+                                        전화 걸기
+                                    </a>
+                                </div>
+                            </div>
+                        )}
                         </div>
                     );
                     })}
@@ -710,35 +898,143 @@ export default function AIChatbot({ isOpen, onClose, facilityContext, onOpenCons
                         </div>
                     )}
 
-                    {/* 상담 신청 폼 */}
+                    {/* ── 프리미엄 상담 신청 폼 ── */}
                     {showContactForm && !contactSubmitted && (
                         <div style={{
-                            background: '#f8f8fc', borderRadius: 14, padding: 14, marginTop: 8,
-                            border: '1px solid #eee', maxWidth: '75%',
-                            animation: 'contactFormSlide 0.4s ease-out',
+                            background: '#ffffff',
+                            borderRadius: 16,
+                            padding: '16px 18px',
+                            marginTop: 10,
+                            marginBottom: 10,
+                            border: '1.5px solid #1D0098',
+                            boxShadow: '0 6px 20px rgba(29,0,152,0.12)',
+                            animation: 'contactFormSlide 0.35s ease-out',
                         }}>
-                            <div style={{ fontSize: 14, fontWeight: 600, color: '#333', marginBottom: 10 }}>
-                                더 자세한 안내가 필요하시면 연락처를 남겨주세요.
+                            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 10 }}>
+                                <div>
+                                    <div style={{ fontSize: 15, fontWeight: 700, color: '#1a1a1a', display: 'flex', alignItems: 'center', gap: 6 }}>
+                                        <span>📞</span>
+                                        <span>수석 상담사(대표) 무료 상담 예약</span>
+                                    </div>
+                                    <div style={{ fontSize: 12, color: '#666', marginTop: 3 }}>
+                                        스팸 없이 10분 내로 최적의 시설과 비공개 견적을 안내해 드립니다.
+                                    </div>
+                                </div>
+                                <button
+                                    onClick={() => setShowContactForm(false)}
+                                    style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 2, color: '#999' }}
+                                >
+                                    <X size={18} />
+                                </button>
                             </div>
-                            <input value={contactName} onChange={e => setContactName(e.target.value)}
-                                placeholder="이름" style={{
-                                    width: '100%', padding: '10px 12px', borderRadius: 10,
-                                    border: '1px solid #e0e0e0', fontSize: 14, marginBottom: 8,
-                                    outline: 'none', boxSizing: 'border-box',
-                                }} />
-                            <input value={contactPhone} onChange={e => setContactPhone(e.target.value)}
-                                placeholder="연락처" type="tel" style={{
-                                    width: '100%', padding: '10px 12px', borderRadius: 10,
-                                    border: '1px solid #e0e0e0', fontSize: 14, marginBottom: 10,
-                                    outline: 'none', boxSizing: 'border-box',
-                                }} />
-                            <button onClick={submitContact} style={{
-                                width: '100%', padding: '10px', borderRadius: 10,
-                                background: NAVY, color: '#fff', border: 'none',
-                                fontSize: 14, fontWeight: 600, cursor: 'pointer',
-                            }}>
-                                상담 신청하기
+
+                            {/* 연락 방식 선택 */}
+                            <div style={{ display: 'flex', gap: 6, marginBottom: 12 }}>
+                                <button
+                                    type="button"
+                                    onClick={() => setContactMethod('call')}
+                                    style={{
+                                        flex: 1,
+                                        padding: '7px 0',
+                                        borderRadius: 8,
+                                        fontSize: 12,
+                                        fontWeight: 600,
+                                        cursor: 'pointer',
+                                        border: contactMethod === 'call' ? '1.5px solid #1D0098' : '1px solid #dee2e6',
+                                        background: contactMethod === 'call' ? '#eef2ff' : '#f8f9fa',
+                                        color: contactMethod === 'call' ? '#1D0098' : '#666',
+                                        transition: 'all 0.15s ease',
+                                    }}
+                                >
+                                    📞 전화 상담 희망
+                                </button>
+                                <button
+                                    type="button"
+                                    onClick={() => setContactMethod('kakao')}
+                                    style={{
+                                        flex: 1,
+                                        padding: '7px 0',
+                                        borderRadius: 8,
+                                        fontSize: 12,
+                                        fontWeight: 600,
+                                        cursor: 'pointer',
+                                        border: contactMethod === 'kakao' ? '1.5px solid #FEE500' : '1px solid #dee2e6',
+                                        background: contactMethod === 'kakao' ? '#FEF9C3' : '#f8f9fa',
+                                        color: contactMethod === 'kakao' ? '#854D0E' : '#666',
+                                        transition: 'all 0.15s ease',
+                                    }}
+                                >
+                                    💬 카카오톡/문자 희망
+                                </button>
+                            </div>
+
+                            {/* 이름 입력 */}
+                            <div style={{ marginBottom: 8 }}>
+                                <input
+                                    value={contactName}
+                                    onChange={e => setContactName(e.target.value)}
+                                    placeholder="성함 (예: 홍길동)"
+                                    style={{
+                                        width: '100%',
+                                        padding: '10px 12px',
+                                        borderRadius: 8,
+                                        border: '1px solid #dee2e6',
+                                        fontSize: 14,
+                                        outline: 'none',
+                                        boxSizing: 'border-box',
+                                        backgroundColor: '#fafafa',
+                                    }}
+                                />
+                            </div>
+
+                            {/* 연락처 입력 */}
+                            <div style={{ marginBottom: 12 }}>
+                                <input
+                                    value={contactPhone}
+                                    onChange={e => setContactPhone(formatPhoneNumber(e.target.value))}
+                                    placeholder="휴대전화번호 (010-0000-0000)"
+                                    type="tel"
+                                    maxLength={13}
+                                    style={{
+                                        width: '100%',
+                                        padding: '10px 12px',
+                                        borderRadius: 8,
+                                        border: '1px solid #dee2e6',
+                                        fontSize: 14,
+                                        outline: 'none',
+                                        boxSizing: 'border-box',
+                                        backgroundColor: '#fafafa',
+                                    }}
+                                />
+                            </div>
+
+                            {/* 제출 버튼 */}
+                            <button
+                                onClick={submitContact}
+                                disabled={!contactName.trim() || contactPhone.replace(/\D/g, '').length < 10 || isSubmittingContact}
+                                style={{
+                                    width: '100%',
+                                    padding: '12px',
+                                    borderRadius: 10,
+                                    background: (!contactName.trim() || contactPhone.replace(/\D/g, '').length < 10 || isSubmittingContact) ? '#ced4da' : '#1D0098',
+                                    color: '#ffffff',
+                                    border: 'none',
+                                    fontSize: 14,
+                                    fontWeight: 700,
+                                    cursor: (!contactName.trim() || contactPhone.replace(/\D/g, '').length < 10 || isSubmittingContact) ? 'not-allowed' : 'pointer',
+                                    boxShadow: '0 2px 8px rgba(29,0,152,0.25)',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                    gap: 6,
+                                }}
+                            >
+                                <span>{isSubmittingContact ? '신청 접수 중...' : '✨ 10분 내 무료 상담 신청하기'}</span>
                             </button>
+
+                            <div style={{ fontSize: 11, color: '#adb5bd', textAlign: 'center', marginTop: 8 }}>
+                                🔒 고객님의 소중한 정보는 상담 완료 후 안전하게 보호되며 스팸은 없습니다.
+                            </div>
                         </div>
                     )}
                     <div ref={messagesEndRef} />

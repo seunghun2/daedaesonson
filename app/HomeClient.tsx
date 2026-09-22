@@ -907,6 +907,38 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
               )}
             </Box>
 
+            {/* 👤 PC 상단 로그인/가입 버튼 */}
+            {!isMobile && (
+              <button
+                onClick={() => {
+                  if (user) {
+                    setShowMyInfo(true);
+                    setSelectedFacility(null);
+                  } else {
+                    setShowLoginFromMap(true);
+                  }
+                }}
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 5,
+                  padding: '7px 11px',
+                  borderRadius: 8,
+                  border: selectedFacility ? '1px solid rgba(255,255,255,0.4)' : '1px solid #dee2e6',
+                  backgroundColor: selectedFacility ? 'rgba(255,255,255,0.15)' : '#ffffff',
+                  color: selectedFacility ? '#ffffff' : '#302E92',
+                  fontSize: 13,
+                  fontWeight: 600,
+                  cursor: 'pointer',
+                  whiteSpace: 'nowrap',
+                  flexShrink: 0,
+                  transition: 'all 0.15s ease',
+                }}
+              >
+                <User size={15} />
+                <span>{user ? (user.user_metadata?.full_name || '마이') : '로그인/가입'}</span>
+              </button>
+            )}
 
           </Group>
 
@@ -1080,6 +1112,34 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
                   </Text>
                 </Box>
 
+                {/* 👤 모바일 상단 로그인 / 프로필 버튼 */}
+                <button
+                  onClick={() => {
+                    if (user) {
+                      router.push('/menu');
+                    } else {
+                      setShowLoginFromMap(true);
+                    }
+                  }}
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: 4,
+                    backgroundColor: 'rgba(255,255,255,0.2)',
+                    border: '1px solid rgba(255,255,255,0.35)',
+                    borderRadius: 8,
+                    padding: '8px 10px',
+                    color: '#ffffff',
+                    fontSize: 12,
+                    fontWeight: 700,
+                    cursor: 'pointer',
+                    flexShrink: 0,
+                    whiteSpace: 'nowrap',
+                  }}
+                >
+                  <User size={14} />
+                  <span>{user ? (user.user_metadata?.full_name || '마이') : '로그인'}</span>
+                </button>
 
               </Group>
             </Box>

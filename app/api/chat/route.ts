@@ -217,11 +217,11 @@ STEP 5 - 인원: "몇 분을 모실 건가요?" {{1인(개인)|2인(부부)|3인
 - 가성비단(최상단/최하단), 잔디장, 공동목 수목장 등 저렴한 대안을 제시하세요.
 - "좋은 시설의 가성비단이 낙후된 시설의 로열단보다 장기적으로 유리해요"라는 꿀팁을 전달하세요.
 
-## 상담 전환 (자연스럽게!)
-- 시설 추천 후: 빠른 응답에 "📞 연락처 남기기" 포함! → {{여기 좋아요|다른 곳도 볼래요|📞 연락처 남기기}}
-- 고객이 만족한 분위기면: {{여기로 할게요|📞 연락처 남기기}}
-- 텍스트로 직접 "연락처 남겨주세요" 금지. 버튼에만 포함!
-- 고객이 무시하면 더 이상 언급 금지.
+## 상담 전환 (자연스러운 전문가 인계!)
+- 고객이 시설이나 가격을 2~3턴 이상 탐색하거나 특정 지역/시설에 관심을 보이면:
+  "더 구체적인 단수별 잔여 자리와 비공개 프로모션 할인은 대대손손 수석 상담사(대표)가 10분 내로 친절히 안내해 드릴 수 있어요." 라는 멘트를 자연스럽게 건네며, 버튼에 {{📞 10분 내 무료 전화상담 예약|다른 곳도 볼래요}} 를 제공하세요.
+- 고객이 만족하거나 결정을 고민하면: {{📞 10분 내 무료 전화상담 예약|견적서 문자로 받기}}
+- 부담스러운 강요는 금지하되, 고객에게 실질적인 '시간 절약과 할인 혜택'의 가치를 제공하는 톤으로 부드럽게 권유하세요.
 
 
 ## 주제 벗어난 질문 대응
@@ -322,26 +322,34 @@ export async function POST(request: NextRequest) {
             return NextResponse.json({ error: '메시지를 입력해주세요.' }, { status: 400 });
         }
 
-        // 고객 정보 저장 요청
-        if (customerInfo && sessionId) {
-            const { error } = await supabase
-                .from('ChatSession')
-                .update({
-                    customer_name: customerInfo.name,
-                    customer_phone: customerInfo.phone,
-                    status: 'new',
-                    updated_at: new Date().toISOString(),
-                })
-                .eq('id', sessionId);
+        // 고객 정보 저장 요청 (리드 수집 & 대표님 실시간 슬랙 알림)
+        if (customerInfo) {
+            const sid = sessionId || `session_${Date.now()}`;
+            if (sessionId) {
+                const { error } = await supabase
+                    .from('ChatSession')
+                    .update({
+                        customer_name: customerInfo.name,
+                        customer_phone: customerInfo.phone,
+                        status: 'new',
+                        updated_at: new Date().toISOString(),
+                    })
+                    .eq('id', sessionId);
 
-            if (error) console.error('ChatSession update error:', error);
+                if (error) console.error('ChatSession update error:', error);
+            }
 
-            // Slack 알림
-            await sendSlack('chatbot', `🤖 *챗봇 상담 신청!*\n• 이름: ${customerInfo.name}\n• 연락처: ${customerInfo.phone}\n• 세션: ${sessionId}`);
+            const methodText = customerInfo.contactMethod === 'kakao' ? '💬 카카오톡/문자 상담 희망' : '📞 전화 상담 희망';
+            const facilityText = customerInfo.facilityName ? `• 관심 시설: *${customerInfo.facilityName}*\n` : '';
+            const summaryText = customerInfo.recentSummary ? `• 최근 대화 요약: ${customerInfo.recentSummary}\n` : '';
+            const noteText = customerInfo.note ? `• 문의 유형: ${customerInfo.note}\n` : '';
+
+            // Slack 실시간 VIP 알림 전송 (대표님 채널)
+            await sendSlack('chatbot', `🚨 *[대손이 챗봇 VIP 상담 신청 접수!]*\n• 고객명: *${customerInfo.name}*\n• 연락처: \`${customerInfo.phone}\`\n• 희망 방식: *${methodText}*\n${facilityText}${noteText}${summaryText}• 세션 ID: \`${sid}\`\n• 접수 시각: ${new Date().toLocaleString('ko-KR', { timeZone: 'Asia/Seoul' })}\n👉 *지금 바로 콜백해 주세요!*`);
 
             return NextResponse.json({
-                response: `${customerInfo.name}님, 감사합니다. 담당 상담사가 ${customerInfo.phone}으로 빠르게 연락드리겠습니다.`,
-                sessionId,
+                response: `✨ **${customerInfo.name}님, 무료 상담 신청이 정상 접수되었습니다.**\n\n대대손손 수석 상담사(대표)가 남겨주신 연락처(${customerInfo.phone})로 **10분 내에 ${methodText}**으로 친절히 안내해 드리겠습니다.\n\n그동안 대손이에게 궁금하신 점(가격, 시설 특징, 절차 등)이 있으시면 편하게 계속 물어보세요! 😊`,
+                sessionId: sid,
             });
         }
 

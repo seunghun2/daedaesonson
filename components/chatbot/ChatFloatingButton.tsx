@@ -8,6 +8,7 @@ const NAVY = '#302E92';
 const ROLLING_MESSAGES = [
     { title: '대손AI 상담사', sub: '무엇을 도와드릴까요?' },
     { title: '장지 비교·추천', sub: '맞춤 상담 도와드려요' },
+    { title: '수석 상담사 직통', sub: '1:1 맞춤 견적·할인 안내' },
     { title: '24시간 무료 상담', sub: '편하게 물어보세요' },
 ];
 
