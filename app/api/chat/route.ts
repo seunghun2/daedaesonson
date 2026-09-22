@@ -1023,7 +1023,7 @@ export async function POST(request: NextRequest) {
         const primaryModelName = process.env.GEMINI_CHAT_MODEL || 'gemini-2.5-flash';
         const model = genAI.getGenerativeModel({
             model: primaryModelName,
-            generationConfig: { temperature: 0.15, maxOutputTokens: 1024 },
+            generationConfig: { temperature: 0.15, maxOutputTokens: 4096 },
         });
 
         const chatHistory = history.map((msg: ChatMessage) => ({
@@ -1051,7 +1051,7 @@ export async function POST(request: NextRequest) {
             try {
                 const fallbackModel = genAI.getGenerativeModel({
                     model: 'gemini-flash-latest',
-                    generationConfig: { temperature: 0.15, maxOutputTokens: 1024 },
+                    generationConfig: { temperature: 0.15, maxOutputTokens: 4096 },
                 });
                 const fallbackChat = fallbackModel.startChat({ history: baseHistory });
                 const fallbackResult = await fallbackChat.sendMessage(message);
