@@ -1018,10 +1018,11 @@ export async function POST(request: NextRequest) {
             }
         }
 
-        // 2. Gemini 호출
+        // 2. Gemini 호출 (gemini-2.5-flash 기본 + fallback)
         const genAI = new GoogleGenerativeAI(apiKey);
+        const primaryModelName = process.env.GEMINI_CHAT_MODEL || 'gemini-2.5-flash';
         const model = genAI.getGenerativeModel({
-            model: 'gemini-2.0-flash',
+            model: primaryModelName,
             generationConfig: { temperature: 0.15 },
         });
 
@@ -1034,16 +1035,31 @@ export async function POST(request: NextRequest) {
             ? `네, "${verifiedContext.name}" 시설에 대해 안내해드리겠습니다. 무엇이 궁금하신가요?`
             : '네, 대대손손 장지 상담사입니다. 전국 봉안당, 수목장, 화장시설 정보를 안내해드려요. 어떤 장지를 찾고 계신가요?';
 
-        const chat = model.startChat({
-            history: [
-                { role: 'user', parts: [{ text: SYSTEM_PROMPT + facilityData }] },
-                { role: 'model', parts: [{ text: greetingResponse }] },
-                ...chatHistory,
-            ],
-        });
+        const baseHistory = [
+            { role: 'user', parts: [{ text: SYSTEM_PROMPT + facilityData }] },
+            { role: 'model', parts: [{ text: greetingResponse }] },
+            ...chatHistory,
+        ];
 
-        const result = await chat.sendMessage(message);
-        const response = result.response.text();
+        let response = '';
+        try {
+            const chat = model.startChat({ history: baseHistory });
+            const result = await chat.sendMessage(message);
+            response = result.response.text();
+        } catch (callErr: any) {
+            console.error(`Gemini primary model (${primaryModelName}) failed, trying fallback:`, callErr);
+            const fallbackModel = genAI.getGenerativeModel({
+                model: 'gemini-flash-latest',
+                generationConfig: { temperature: 0.15 },
+            });
+            const fallbackChat = fallbackModel.startChat({ history: baseHistory });
+            const fallbackResult = await fallbackChat.sendMessage(message);
+            response = fallbackResult.response.text();
+        }
+
+        if (!response) {
+            response = '죄송합니다. 일시적으로 상담 요청이 몰려 연결이 지연되고 있습니다. 잠시 후 다시 질문해 주시거나, 직접 상담을 신청해 주시면 친절히 안내해 드릴게요.';
+        }
 
         // 📊 실시간 대화 내용 슬랙 전송 (fire-and-forget)
         const msgCount = history.length + 1;

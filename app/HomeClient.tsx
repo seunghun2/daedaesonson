@@ -39,6 +39,7 @@ import { Facility, FACILITY_CATEGORY_LABELS } from '@/types';
 
 import { searchRegions, RegionResult } from '@/lib/regionSearch';
 import BottomNav from '@/components/common/BottomNav';
+import ChatFloatingButton from '@/components/chatbot/ChatFloatingButton';
 
 // Helper Component for highlighting text
 function HighlightText({ text, highlight }: { text: string, highlight: string }) {
@@ -1681,6 +1682,8 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
 
       {/* 모바일 하단 탭바 */}
       {isMobile && !selectedFacility && <BottomNav hidden={uiHidden} />}
+      {/* 데스크톱 플로팅 챗봇 버튼 */}
+      {!isMobile && !selectedFacility && <ChatFloatingButton />}
     </Flex >
   );
 }

@@ -135,3 +135,23 @@ body {
   font-family: -apple-system, BlinkMacSystemFont, sans-serif;
   animation: labelSlideUp 0.25s ease-out forwards;
 }
+
+/* 🤖 대손이 FAB & 말풍선 반응형 위치 (모바일: 하단바 위 70px / 데스크톱: 24px) */
+.chat-fab-button {
+  bottom: 70px;
+  right: 16px;
+}
+.chat-fab-tooltip {
+  bottom: 138px;
+  right: 8px;
+}
+@media (min-width: 768px) {
+  .chat-fab-button {
+    bottom: 24px;
+    right: 24px;
+  }
+  .chat-fab-tooltip {
+    bottom: 92px;
+    right: 16px;
+  }
+}

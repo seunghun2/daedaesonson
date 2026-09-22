@@ -82,18 +82,20 @@ export default function ChatFloatingButton({ hidden = false }: { hidden?: boolea
         <>
             {/* ── 라벨 말풍선 (롤링) — FAB 위쪽에 표시 ── */}
             {!isOpen && showLabel && (
-                <div style={{
-                    position: 'fixed', right: 8, bottom: 138, zIndex: 9989,
-                    background: '#fff', borderRadius: 12,
-                    boxShadow: '0 4px 20px rgba(0,0,0,0.12)',
-                    padding: '10px 16px',
-                    display: 'flex', alignItems: 'center', gap: 6,
-                    width: 'fit-content', overflow: 'visible',
-                    whiteSpace: 'nowrap', cursor: 'pointer',
-                    opacity: labelVisible ? 1 : 0,
-                    transform: labelVisible ? 'translateY(0)' : 'translateY(8px)',
-                    transition: 'opacity 0.3s ease, transform 0.3s ease',
-                }} onClick={handleToggle}>
+                <div
+                    className="chat-fab-tooltip"
+                    style={{
+                        position: 'fixed', zIndex: 9989,
+                        background: '#fff', borderRadius: 12,
+                        boxShadow: '0 4px 20px rgba(0,0,0,0.12)',
+                        padding: '10px 16px',
+                        display: 'flex', alignItems: 'center', gap: 6,
+                        width: 'fit-content', overflow: 'visible',
+                        whiteSpace: 'nowrap', cursor: 'pointer',
+                        opacity: labelVisible ? 1 : 0,
+                        transform: labelVisible ? 'translateY(0)' : 'translateY(8px)',
+                        transition: 'opacity 0.3s ease, transform 0.3s ease',
+                    }} onClick={handleToggle}>
                     <div style={{
                         display: 'flex', alignItems: 'center', gap: 6,
                         opacity: msgFade ? 1 : 0,
@@ -117,8 +119,9 @@ export default function ChatFloatingButton({ hidden = false }: { hidden?: boolea
             <button
                 onClick={handleToggle}
                 aria-label={isOpen ? '채팅 닫기' : '장지 상담하기'}
+                className="chat-fab-button"
                 style={{
-                    position: 'fixed', right: 16, bottom: 70, zIndex: 9991,
+                    position: 'fixed', zIndex: 9991,
                     width: 56, height: 56, borderRadius: '50%',
                     background: NAVY, border: 'none',
                     cursor: 'pointer', display: 'flex',

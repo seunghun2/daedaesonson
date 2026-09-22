@@ -166,17 +166,26 @@ export default function AIChatbot({ isOpen, onClose, facilityContext, onOpenCons
     }, [isOpen]);
 
     /* ── 메시지 전송 ── */
-    const sendMessage = useCallback(async () => {
-        if ((!input.trim() && !pendingImage) || isLoading || streamingText !== null) return;
+    const sendMessage = useCallback(async (overrideText?: string) => {
+        const textToSend = (typeof overrideText === 'string' ? overrideText : input).trim();
+        if ((!textToSend && !pendingImage) || isLoading || streamingText !== null) return;
         // 상담 신청 완료 후 추가 메시지 차단
         if (contactSubmitted) return;
         // 10턴 제한 (비로그인만)
-        if (!user && messageCount >= MAX_TURNS) return;
+        if (!user && messageCount >= MAX_TURNS) {
+            setMessages(prev => [...prev, {
+                role: 'assistant',
+                content: '비회원 무료 상담 횟수(10회)를 모두 사용하셨어요. 대화 내용을 계속 이어가시려면 로그인을 해주세요.',
+                timestamp: new Date().toISOString(),
+            }]);
+            setShowLoginModal(true);
+            return;
+        }
         // 버그 #3: 기존 스트리밍 인터벌 정리
         if (streamingRef.current) { clearInterval(streamingRef.current); streamingRef.current = null; }
-        const userMsg = input.trim() || (pendingImage ? '(이미지 첨부)' : '');
+        const userMsg = textToSend || (pendingImage ? '(이미지 첨부)' : '');
         const imageUrl = pendingImagePreview || undefined;
-        setInput('');
+        if (!overrideText) setInput('');
         setPendingImage(null);
         setPendingImagePreview(null);
 
@@ -197,6 +206,16 @@ export default function AIChatbot({ isOpen, onClose, facilityContext, onOpenCons
             const data = await res.json();
             if (data.sessionId) setSessionId(data.sessionId);
 
+            if (!res.ok || data.error) {
+                const errorMsg = data.error || '상담 서비스에 일시적인 지연이 발생했어요. 잠시 후 다시 시도해 주세요.';
+                setMessages(prev => [...prev, {
+                    role: 'assistant',
+                    content: errorMsg,
+                    timestamp: new Date().toISOString(),
+                }]);
+                return;
+            }
+
             const fullText = data.response || '죄송합니다. 잠시 후 다시 시도해주세요.';
 
             // 타이핑 스트리밍 효과
@@ -204,11 +223,12 @@ export default function AIChatbot({ isOpen, onClose, facilityContext, onOpenCons
             setStreamingText('');
             let idx = 0;
             streamingRef.current = setInterval(() => {
-                idx++;
+                idx += 2;
                 const chunk = fullText.slice(0, idx);
                 setStreamingText(chunk);
                 if (idx >= fullText.length) {
                     if (streamingRef.current) clearInterval(streamingRef.current);
+                    streamingRef.current = null;
                     setStreamingText(null);
                     setMessages(prev => [...prev, {
                         role: 'assistant',
@@ -218,8 +238,10 @@ export default function AIChatbot({ isOpen, onClose, facilityContext, onOpenCons
                         pricingTable: data.pricingTable || undefined,
                     }]);
                 }
-            }, 15); // 15ms per character
-            return; // finally block handles isLoading already set above
+            }, 15);
+
+            if (data.showContactForm) setShowContactForm(true);
+            return;
         } catch {
             setMessages(prev => [...prev, {
                 role: 'assistant',
@@ -622,56 +644,17 @@ export default function AIChatbot({ isOpen, onClose, facilityContext, onOpenCons
                                     <button key={qi}
                                         onClick={() => {
                                             if (isLoading || streamingText !== null) return;
-                                            if (!user && messageCount >= MAX_TURNS) return;
+                                            if (!user && messageCount >= MAX_TURNS) {
+                                                setShowLoginModal(true);
+                                                return;
+                                            }
                                             // "연락처 남기기" 선택 시 바로 폼 표시 (API 호출 불필요)
                                             if (qr.includes('연락처')) {
                                                 setMessages(prev => [...prev, { role: 'user', content: qr, timestamp: new Date().toISOString() }]);
                                                 setTimeout(() => setShowContactForm(true), 300);
                                                 return;
                                             }
-                                            setInput(qr);
-                                            setMessageCount(prev => prev + 1);
-                                            setTimeout(() => {
-                                                setInput('');
-                                                setMessages(prev => [...prev, { role: 'user', content: qr, timestamp: new Date().toISOString() }]);
-                                                setIsLoading(true);
-                                                fetch('/api/chat', {
-                                                    method: 'POST',
-                                                    headers: { 'Content-Type': 'application/json' },
-                                                    body: JSON.stringify({
-                                                        message: qr,
-                                                        sessionId,
-                                                        facilityContext: facilityContext || undefined,
-                                                        history: [...messages, { role: 'user', content: qr }].slice(-20),
-                                                    }),
-                                                }).then(r => r.json()).then(data => {
-                                                    setIsLoading(false);
-                                                    if (data.response) {
-                                                        setStreamingText('');
-                                                        const full = data.response;
-                                                        let idx = 0;
-                                                        const iv = setInterval(() => {
-                                                            idx += 2;
-                                                            if (idx >= full.length) {
-                                                                clearInterval(iv);
-                                                                setStreamingText(null);
-                                                                setMessages(prev => [...prev, { role: 'assistant', content: full, timestamp: new Date().toISOString(), facilityCards: data.facilityCards || undefined, pricingTable: data.pricingTable || undefined }]);
-                                                            } else {
-                                                                setStreamingText(full.slice(0, idx));
-                                                            }
-                                                        }, 15);
-                                                    }
-                                                    if (data.showContactForm) setShowContactForm(true);
-                                                }).catch(() => {
-                                                    setIsLoading(false);
-                                                    setMessageCount(prev => Math.max(0, prev - 1));
-                                                    setMessages(prev => [...prev, {
-                                                        role: 'assistant',
-                                                        content: '네트워크 오류가 발생했어요. 잠시 후 다시 시도해주세요.',
-                                                        timestamp: new Date().toISOString(),
-                                                    }]);
-                                                });
-                                            }, 50);
+                                            sendMessage(qr);
                                         }}
                                         style={{
                                             background: '#fff',
@@ -771,7 +754,7 @@ export default function AIChatbot({ isOpen, onClose, facilityContext, onOpenCons
                             ? ['가격이 궁금해요', '비슷한 가격대 장지', '위치·교통편', '편의시설 안내', '연락처 알려주세요', '장례 절차가 궁금해요']
                             : ['근처 봉안당 추천해주세요', '수목장이 뭔가요?', '장례 절차 안내', '가격대별 추천']
                         ).map(q => (
-                            <button key={q} onClick={() => setInput(q)} style={{
+                            <button key={q} onClick={() => sendMessage(q)} style={{
                                 padding: '8px 14px', borderRadius: 20,
                                 border: '1px solid #e5e5e5', background: '#fff',
                                 color: '#4a4a4a', fontSize: 13, fontWeight: 500,

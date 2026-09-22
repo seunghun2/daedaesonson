@@ -84,9 +84,9 @@ export async function POST(req: NextRequest) {
 
         // Gemini 클라이언트 초기화
         const genAI = new GoogleGenerativeAI(API_KEY);
-        // 문맥 이해와 속도가 뛰어난 2.0 Flash 모델 사용
+        // 문맥 이해와 속도가 뛰어난 2.5 Flash 모델 사용
         const model = genAI.getGenerativeModel({
-            model: "gemini-2.0-flash-exp",
+            model: "gemini-2.5-flash",
             generationConfig: {
                 responseMimeType: "application/json", // JSON 모드 강제
             }
