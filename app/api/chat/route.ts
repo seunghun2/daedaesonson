@@ -1023,7 +1023,7 @@ export async function POST(request: NextRequest) {
         const primaryModelName = process.env.GEMINI_CHAT_MODEL || 'gemini-2.5-flash';
         const model = genAI.getGenerativeModel({
             model: primaryModelName,
-            generationConfig: { temperature: 0.15 },
+            generationConfig: { temperature: 0.15, maxOutputTokens: 1024 },
         });
 
         const chatHistory = history.map((msg: ChatMessage) => ({
@@ -1048,13 +1048,17 @@ export async function POST(request: NextRequest) {
             response = result.response.text();
         } catch (callErr: any) {
             console.error(`Gemini primary model (${primaryModelName}) failed, trying fallback:`, callErr);
-            const fallbackModel = genAI.getGenerativeModel({
-                model: 'gemini-flash-latest',
-                generationConfig: { temperature: 0.15 },
-            });
-            const fallbackChat = fallbackModel.startChat({ history: baseHistory });
-            const fallbackResult = await fallbackChat.sendMessage(message);
-            response = fallbackResult.response.text();
+            try {
+                const fallbackModel = genAI.getGenerativeModel({
+                    model: 'gemini-flash-latest',
+                    generationConfig: { temperature: 0.15, maxOutputTokens: 1024 },
+                });
+                const fallbackChat = fallbackModel.startChat({ history: baseHistory });
+                const fallbackResult = await fallbackChat.sendMessage(message);
+                response = fallbackResult.response.text();
+            } catch (fallbackErr: any) {
+                console.error('Gemini fallback model also failed:', fallbackErr);
+            }
         }
 
         if (!response) {
