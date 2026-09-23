@@ -88,7 +88,8 @@ export default function AIChatbot({ isOpen, onClose, facilityContext, onOpenCons
     const [pendingImage, setPendingImage] = useState<File | null>(null);
     const [pendingImagePreview, setPendingImagePreview] = useState<string | null>(null);
     const [contactPhone, setContactPhone] = useState('');
-    const [contactMethod, setContactMethod] = useState<'call' | 'kakao'>('call');
+    const [contactMethod, setContactMethod] = useState<'call' | 'kakao'>('kakao'); // 기본값을 부담 없는 카카오톡/문자로 설정
+    const [contactPreferredTime, setContactPreferredTime] = useState('카톡/문자로 먼저 받기');
     const [contactNote, setContactNote] = useState('실시간 공실/할인 견적 문의');
     const [isSubmittingContact, setIsSubmittingContact] = useState(false);
     const [contactSubmitted, setContactSubmitted] = useState(false);
@@ -194,15 +195,9 @@ export default function AIChatbot({ isOpen, onClose, facilityContext, onOpenCons
         if ((!textToSend && !pendingImage) || isLoading || streamingText !== null) return;
         // 상담 신청 완료 후 추가 메시지 차단
         if (contactSubmitted) return;
-        // 10턴 제한 (비로그인만)
-        if (!user && messageCount >= MAX_TURNS) {
-            setMessages(prev => [...prev, {
-                role: 'assistant',
-                content: '비회원 무료 상담 횟수(10회)를 모두 사용하셨어요. 대화 내용을 계속 이어가시려면 로그인을 해주세요.',
-                timestamp: new Date().toISOString(),
-            }]);
-            setShowLoginModal(true);
-            return;
+        // 대화가 6턴 이상 진행되고 아직 상담 신청 안 한 경우 부드럽게 상담 폼 안내
+        if (!contactSubmitted && messageCount >= 6 && !showContactForm) {
+            setShowContactForm(true);
         }
         // 버그 #3: 기존 스트리밍 인터벌 정리
         if (streamingRef.current) { clearInterval(streamingRef.current); streamingRef.current = null; }
@@ -296,6 +291,7 @@ export default function AIChatbot({ isOpen, onClose, facilityContext, onOpenCons
                         name: contactName.trim(),
                         phone: contactPhone.trim(),
                         contactMethod,
+                        preferredTime: contactPreferredTime,
                         note: contactNote,
                         facilityName: facilityContext?.name || null,
                         recentSummary: recentUserMsgs || '장지 비교 및 견적 문의',
@@ -304,7 +300,7 @@ export default function AIChatbot({ isOpen, onClose, facilityContext, onOpenCons
             });
             const data = await res.json();
             const contactMethodLabel = contactMethod === 'kakao' ? '카카오톡/문자' : '전화';
-            const defaultGreeting = `✨ **${contactName}님, 무료 상담 신청이 정상 접수되었습니다.**\n\n대대손손 수석 상담사(대표)가 남겨주신 연락처(${contactPhone})로 **10분 내에 ${contactMethodLabel}**로 친절히 안내해 드리겠습니다.\n\n그동안 대손이에게 궁금한 점(가격, 시설 특징, 절차 등)을 편하게 물어보세요! 😊`;
+            const defaultGreeting = `✨ **${contactName}님, 맞춤 상담 신청이 정상 접수되었습니다.**\n\n불쑥 전화를 드리지 않으니 안심하세요! 대대손손 수석 상담사(대표)가 선택해주신 **[${contactPreferredTime}]**에 맞춰, 남겨주신 연락처(${contactPhone})로 **${contactMethodLabel} 맞춤 비교자료 및 비공개 견적**을 먼저 정성껏 보내드리겠습니다.\n\n그동안 대손이에게 시설이나 가격에 대해 편하게 더 물어보세요! 😊`;
             setMessages(prev => [...prev, {
                 role: 'assistant',
                 content: data.response || defaultGreeting,
@@ -903,57 +899,40 @@ export default function AIChatbot({ isOpen, onClose, facilityContext, onOpenCons
                         <div style={{
                             background: '#ffffff',
                             borderRadius: 16,
-                            padding: '16px 18px',
+                            padding: '18px',
                             marginTop: 10,
                             marginBottom: 10,
                             border: '1.5px solid #1D0098',
-                            boxShadow: '0 6px 20px rgba(29,0,152,0.12)',
+                            boxShadow: '0 8px 24px rgba(29,0,152,0.12)',
                             animation: 'contactFormSlide 0.35s ease-out',
                         }}>
-                            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 10 }}>
+                            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 12 }}>
                                 <div>
                                     <div style={{ fontSize: 15, fontWeight: 700, color: '#1a1a1a', display: 'flex', alignItems: 'center', gap: 6 }}>
-                                        <span>📞</span>
-                                        <span>수석 상담사(대표) 무료 상담 예약</span>
+                                        <span>📋</span>
+                                        <span>수석 상담사(대표) 1:1 맞춤 견적 신청</span>
                                     </div>
-                                    <div style={{ fontSize: 12, color: '#666', marginTop: 3 }}>
-                                        스팸 없이 10분 내로 최적의 시설과 비공개 견적을 안내해 드립니다.
+                                    <div style={{ fontSize: 12, color: '#4b5563', marginTop: 4, lineHeight: 1.4 }}>
+                                        모르는 번호로 불쑥 전화드리지 않습니다. 원하시는 시간대에 맞춰 맞춤 자료를 먼저 보내드립니다.
                                     </div>
                                 </div>
                                 <button
                                     onClick={() => setShowContactForm(false)}
                                     style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 2, color: '#999' }}
+                                    aria-label="닫기"
                                 >
                                     <X size={18} />
                                 </button>
                             </div>
 
                             {/* 연락 방식 선택 */}
-                            <div style={{ display: 'flex', gap: 6, marginBottom: 12 }}>
-                                <button
-                                    type="button"
-                                    onClick={() => setContactMethod('call')}
-                                    style={{
-                                        flex: 1,
-                                        padding: '7px 0',
-                                        borderRadius: 8,
-                                        fontSize: 12,
-                                        fontWeight: 600,
-                                        cursor: 'pointer',
-                                        border: contactMethod === 'call' ? '1.5px solid #1D0098' : '1px solid #dee2e6',
-                                        background: contactMethod === 'call' ? '#eef2ff' : '#f8f9fa',
-                                        color: contactMethod === 'call' ? '#1D0098' : '#666',
-                                        transition: 'all 0.15s ease',
-                                    }}
-                                >
-                                    📞 전화 상담 희망
-                                </button>
+                            <div style={{ display: 'flex', gap: 6, marginBottom: 10 }}>
                                 <button
                                     type="button"
                                     onClick={() => setContactMethod('kakao')}
                                     style={{
                                         flex: 1,
-                                        padding: '7px 0',
+                                        padding: '8px 0',
                                         borderRadius: 8,
                                         fontSize: 12,
                                         fontWeight: 600,
@@ -964,8 +943,61 @@ export default function AIChatbot({ isOpen, onClose, facilityContext, onOpenCons
                                         transition: 'all 0.15s ease',
                                     }}
                                 >
-                                    💬 카카오톡/문자 희망
+                                    💬 카카오톡/문자 우선
                                 </button>
+                                <button
+                                    type="button"
+                                    onClick={() => setContactMethod('call')}
+                                    style={{
+                                        flex: 1,
+                                        padding: '8px 0',
+                                        borderRadius: 8,
+                                        fontSize: 12,
+                                        fontWeight: 600,
+                                        cursor: 'pointer',
+                                        border: contactMethod === 'call' ? '1.5px solid #1D0098' : '1px solid #dee2e6',
+                                        background: contactMethod === 'call' ? '#eef2ff' : '#f8f9fa',
+                                        color: contactMethod === 'call' ? '#1D0098' : '#666',
+                                        transition: 'all 0.15s ease',
+                                    }}
+                                >
+                                    📞 전화 통화 희망
+                                </button>
+                            </div>
+
+                            {/* 희망 연락 시간대 선택 (우리 정식 시스템 연계) */}
+                            <div style={{ marginBottom: 10 }}>
+                                <div style={{ fontSize: 11, fontWeight: 600, color: '#666', marginBottom: 4 }}>
+                                    희망 연락 시간대
+                                </div>
+                                <div style={{ display: 'flex', flexWrap: 'wrap', gap: 4 }}>
+                                    {[
+                                        '카톡/문자로 먼저 받기',
+                                        '낮 시간(09~18시)',
+                                        '퇴근 후(18~21시)',
+                                        '주말 희망',
+                                        '시간 무관',
+                                    ].map(time => (
+                                        <button
+                                            key={time}
+                                            type="button"
+                                            onClick={() => setContactPreferredTime(time)}
+                                            style={{
+                                                padding: '5px 9px',
+                                                borderRadius: 6,
+                                                fontSize: 11,
+                                                fontWeight: 500,
+                                                cursor: 'pointer',
+                                                border: contactPreferredTime === time ? '1.5px solid #1D0098' : '1px solid #e5e7eb',
+                                                background: contactPreferredTime === time ? '#1D0098' : '#fff',
+                                                color: contactPreferredTime === time ? '#fff' : '#4b5563',
+                                                transition: 'all 0.15s ease',
+                                            }}
+                                        >
+                                            {time}
+                                        </button>
+                                    ))}
+                                </div>
                             </div>
 
                             {/* 이름 입력 */}
@@ -1029,11 +1061,11 @@ export default function AIChatbot({ isOpen, onClose, facilityContext, onOpenCons
                                     gap: 6,
                                 }}
                             >
-                                <span>{isSubmittingContact ? '신청 접수 중...' : '✨ 10분 내 무료 상담 신청하기'}</span>
+                                <span>{isSubmittingContact ? '신청 접수 중...' : '✨ 맞춤 비교견적 무료로 받기'}</span>
                             </button>
 
-                            <div style={{ fontSize: 11, color: '#adb5bd', textAlign: 'center', marginTop: 8 }}>
-                                🔒 고객님의 소중한 정보는 상담 완료 후 안전하게 보호되며 스팸은 없습니다.
+                            <div style={{ fontSize: 11, color: '#6b7280', textAlign: 'center', marginTop: 8 }}>
+                                🔒 고객님의 소중한 정보는 상담 목적으로만 안전하게 사용되며 스팸은 없습니다.
                             </div>
                         </div>
                     )}
@@ -1157,15 +1189,7 @@ export default function AIChatbot({ isOpen, onClose, facilityContext, onOpenCons
                         </div>
                     )}
 
-                    {/* 남은 횟수 표시 (비로그인 & 7턴 이상일 때) */}
-                    {!user && messageCount >= 7 && (
-                        <div style={{
-                            textAlign: 'center', padding: '4px 0', fontSize: 11, color: '#bbb',
-                            borderTop: '1px solid #f0f0f0',
-                        }}>
-                            남은 무료 상담: {MAX_TURNS - messageCount}회
-                        </div>
-                    )}
+
 
                     {/* 입력바 */}
                     <div style={{

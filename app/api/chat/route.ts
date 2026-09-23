@@ -339,16 +339,35 @@ export async function POST(request: NextRequest) {
                 if (error) console.error('ChatSession update error:', error);
             }
 
-            const methodText = customerInfo.contactMethod === 'kakao' ? '💬 카카오톡/문자 상담 희망' : '📞 전화 상담 희망';
+            const methodText = customerInfo.contactMethod === 'kakao' ? '💬 카카오톡/문자 선(先)자료 희망' : '📞 전화 통화 희망';
+            const timeText = customerInfo.preferredTime ? `• 희망 연락 시간: *${customerInfo.preferredTime}*\n` : '• 희망 연락 시간: *카톡/문자로 먼저 받기*\n';
             const facilityText = customerInfo.facilityName ? `• 관심 시설: *${customerInfo.facilityName}*\n` : '';
             const summaryText = customerInfo.recentSummary ? `• 최근 대화 요약: ${customerInfo.recentSummary}\n` : '';
             const noteText = customerInfo.note ? `• 문의 유형: ${customerInfo.note}\n` : '';
 
-            // Slack 실시간 VIP 알림 전송 (대표님 채널)
-            await sendSlack('chatbot', `🚨 *[대손이 챗봇 VIP 상담 신청 접수!]*\n• 고객명: *${customerInfo.name}*\n• 연락처: \`${customerInfo.phone}\`\n• 희망 방식: *${methodText}*\n${facilityText}${noteText}${summaryText}• 세션 ID: \`${sid}\`\n• 접수 시각: ${new Date().toLocaleString('ko-KR', { timeZone: 'Asia/Seoul' })}\n👉 *지금 바로 콜백해 주세요!*`);
+            // 1. 기존 Consult 테이블에도 안전하게 연동 (어드민 통합 관리)
+            try {
+                await supabase.from('Consult').insert({
+                    facilityId: customerInfo.facilityName || '대손이챗봇상담',
+                    facilityName: customerInfo.facilityName || '대손이 추천 시설',
+                    name: customerInfo.name,
+                    phone: customerInfo.phone,
+                    preferredTime: customerInfo.preferredTime || '카톡/문자 먼저',
+                    question: 'price',
+                    message: `[대손이 리드] 선호: ${methodText} | 최근대화: ${customerInfo.recentSummary || '없음'}`,
+                    consultMethod: customerInfo.contactMethod === 'call' ? 'phone' : 'kakao',
+                    status: 'pending',
+                    createdAt: new Date().toISOString()
+                });
+            } catch (dbErr) {
+                console.error('Consult insert error:', dbErr);
+            }
+
+            // 2. Slack 실시간 VIP 알림 전송 (대표님 채널)
+            await sendSlack('chatbot', `🚨 *[대손이 챗봇 1:1 맞춤 견적 신청 접수!]*\n• 고객명: *${customerInfo.name}*\n• 연락처: \`${customerInfo.phone}\`\n• 희망 방식: *${methodText}*\n${timeText}${facilityText}${noteText}${summaryText}• 세션 ID: \`${sid}\`\n• 접수 시각: ${new Date().toLocaleString('ko-KR', { timeZone: 'Asia/Seoul' })}\n👉 *안내: 불쑥 전화하지 마시고, 고객이 선택한 [${customerInfo.preferredTime || '카톡/문자'}]에 맞춰 맞춤 자료를 먼저 발송해 주세요!*`);
 
             return NextResponse.json({
-                response: `✨ **${customerInfo.name}님, 무료 상담 신청이 정상 접수되었습니다.**\n\n대대손손 수석 상담사(대표)가 남겨주신 연락처(${customerInfo.phone})로 **10분 내에 ${methodText}**으로 친절히 안내해 드리겠습니다.\n\n그동안 대손이에게 궁금하신 점(가격, 시설 특징, 절차 등)이 있으시면 편하게 계속 물어보세요! 😊`,
+                response: `✨ **${customerInfo.name}님, 맞춤 상담 신청이 정상 접수되었습니다.**\n\n불쑥 전화를 드리지 않으니 안심하세요! 대대손손 수석 상담사(대표)가 선택해주신 **[${customerInfo.preferredTime || '카톡/문자로 먼저 받기'}]**에 맞춰, 남겨주신 연락처(${customerInfo.phone})로 **${customerInfo.contactMethod === 'kakao' ? '카카오톡/문자' : '전화'} 맞춤 비교자료 및 비공개 견적**을 먼저 정성껏 보내드리겠습니다.\n\n그동안 대손이에게 궁금하신 점이 있으시면 편하게 계속 물어보세요! 😊`,
                 sessionId: sid,
             });
         }
