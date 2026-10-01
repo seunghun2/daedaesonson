@@ -101,9 +101,11 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
                     transform: 'translate(-50%, -50%)',
                     backgroundColor: 'white',
                     borderRadius: 16,
-                    padding: '32px 28px',
-                    width: '100%',
+                    padding: '32px 24px',
+                    width: 'calc(100% - 32px)',
                     maxWidth: 400,
+                    maxHeight: '90vh',
+                    overflowY: 'auto',
                     zIndex: 9999,
                     boxShadow: '0 20px 60px rgba(0, 0, 0, 0.3)',
                 }}

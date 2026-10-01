@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { Box, Text, Group, Stack, TextInput, Textarea, Button, Select, Checkbox, SegmentedControl, Collapse } from '@mantine/core';
 import { useRouter } from 'next/navigation';
-import { ArrowLeft, ChevronDown } from 'lucide-react';
+import { ArrowLeft, ChevronDown, Check } from 'lucide-react';
 import Link from 'next/link';
 import BottomNav from '@/components/common/BottomNav';
 
@@ -137,7 +137,7 @@ export default function PartnershipPage() {
                                 marginBottom: 20
                             }}
                         >
-                            <span className="material-symbols-outlined" style={{ fontSize: 36, color: 'white' }}>check</span>
+                            <Check size={36} color="white" strokeWidth={2.5} />
                         </Box>
                         <Text size="xl" fw={700} ta="center" mb={8}>
                             문의가 접수되었어요

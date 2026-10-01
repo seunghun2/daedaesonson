@@ -94,58 +94,76 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
         // 2. 초기 세션 확인
         const initSession = async () => {
-            // 카카오 로그인 콜백 처리
-            if (typeof window !== 'undefined') {
-                let kakaoSession: string | null = null;
+            try {
+                // 카카오 로그인 콜백 처리
+                if (typeof window !== 'undefined') {
+                    let kakaoSession: string | null = null;
 
-                // 1) API를 통해 httpOnly 쿠키에서 세션 읽기
-                try {
-                    const res = await fetch('/api/auth/session');
-                    if (res.ok) {
-                        const data = await res.json();
-                        if (data.session && data.session.access_token) {
-                            const { error } = await supabase.auth.setSession({
-                                access_token: data.session.access_token,
-                                refresh_token: data.session.refresh_token,
-                            });
-                            if (!error) return; // 성공
-                        }
-                    }
-                } catch (e) { console.error('[auth] error reading session:', e); }
-
-                // 2) URL 파라미터 확인 (하위 호환)
-                if (!kakaoSession) {
-                    const params = new URLSearchParams(window.location.search);
-                    kakaoSession = params.get('kakao_session');
-                    if (kakaoSession) {
-                        window.history.replaceState(null, '', window.location.pathname);
-                    }
-                }
-
-                if (kakaoSession) {
+                    // 1) API를 통해 httpOnly 쿠키에서 세션 읽기
                     try {
-                        const decoded = atob(kakaoSession);
-                        const tokens = JSON.parse(decoded);
-                        if (tokens.access_token && tokens.refresh_token) {
-                            const { error } = await supabase.auth.setSession({
-                                access_token: tokens.access_token,
-                                refresh_token: tokens.refresh_token,
-                            });
-                            if (!error) {
-                                return; // onAuthStateChange에서 처리
+                        const res = await fetch('/api/auth/session');
+                        if (res.ok) {
+                            const data = await res.json();
+                            if (data.session && data.session.access_token) {
+                                const { data: sessionData, error } = await supabase.auth.setSession({
+                                    access_token: data.session.access_token,
+                                    refresh_token: data.session.refresh_token,
+                                });
+                                if (!error && sessionData?.session) {
+                                    setSession(sessionData.session);
+                                    setUser(sessionData.session.user);
+                                    await fetchProfile(sessionData.session.user.id);
+                                    loadFavorites(sessionData.session.access_token);
+                                    setLoading(false);
+                                    return;
+                                }
                             }
                         }
-                    } catch (e) { console.error('[auth] error:', e); }
-                }
-            }
+                    } catch (e) { console.error('[auth] error reading session:', e); }
 
-            const { data: { session } } = await supabase.auth.getSession();
-            setSession(session);
-            setUser(session?.user ?? null);
-            if (session?.user) {
-                fetchProfile(session.user.id);
+                    // 2) URL 파라미터 확인 (하위 호환)
+                    if (!kakaoSession) {
+                        const params = new URLSearchParams(window.location.search);
+                        kakaoSession = params.get('kakao_session');
+                        if (kakaoSession) {
+                            window.history.replaceState(null, '', window.location.pathname);
+                        }
+                    }
+
+                    if (kakaoSession) {
+                        try {
+                            const decoded = atob(kakaoSession);
+                            const tokens = JSON.parse(decoded);
+                            if (tokens.access_token && tokens.refresh_token) {
+                                const { data: sessionData, error } = await supabase.auth.setSession({
+                                    access_token: tokens.access_token,
+                                    refresh_token: tokens.refresh_token,
+                                });
+                                if (!error && sessionData?.session) {
+                                    setSession(sessionData.session);
+                                    setUser(sessionData.session.user);
+                                    await fetchProfile(sessionData.session.user.id);
+                                    loadFavorites(sessionData.session.access_token);
+                                    setLoading(false);
+                                    return;
+                                }
+                            }
+                        } catch (e) { console.error('[auth] error:', e); }
+                    }
+                }
+
+                const { data: { session } } = await supabase.auth.getSession();
+                setSession(session);
+                setUser(session?.user ?? null);
+                if (session?.user) {
+                    await fetchProfile(session.user.id);
+                    loadFavorites(session.access_token);
+                }
+            } catch (err) {
+                console.error('[auth] initSession error:', err);
+            } finally {
+                setLoading(false);
             }
-            setLoading(false);
         };
 
         initSession();

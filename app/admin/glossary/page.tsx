@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { Container, Title, Text, TextInput, Group, Badge, Box, Stack, Paper, Tabs, Divider } from '@mantine/core';
+import { Search } from 'lucide-react';
 import Link from 'next/link';
 
 interface GlossaryItem {
@@ -88,7 +89,7 @@ export default function GlossaryPage() {
                 value={search}
                 onChange={(e) => setSearch(e.currentTarget.value)}
                 mb="lg"
-                leftSection={<span className="material-symbols-outlined" style={{ fontSize: '18px' }}>search</span>}
+                leftSection={<Search size={18} color="#868e96" />}
                 styles={{
                     input: {
                         border: '1px solid #dee2e6',

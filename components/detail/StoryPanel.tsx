@@ -1,6 +1,6 @@
 import { Drawer, Box, Text, Group, Button, Stack, Image, TextInput, ActionIcon, Paper, Modal, ScrollArea } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
-import { Camera, X, ChevronRight, PenLine, Trash } from 'lucide-react';
+import { Camera, X, ChevronRight, PenLine, Trash, Heart, MessageSquare } from 'lucide-react';
 import { useState } from 'react';
 import { Review, ReviewReply, Facility } from '@/types';
 
@@ -171,11 +171,11 @@ export default function StoryPanel({ facility, isOpen, onClose, onOpenWriteRevie
 
                                 <Group gap="lg" mb="sm">
                                     <Group gap={4}>
-                                        <span className="material-symbols-outlined" style={{ fontSize: '18px', color: '#fa5252' }}>favorite</span>
+                                        <Heart size={18} color="#fa5252" fill="#fa5252" />
                                         <Text size="xs">좋아요 {review.likes}</Text>
                                     </Group>
                                     <Group gap={4} style={{ cursor: 'pointer' }} onClick={() => setReplyingTo({ reviewId: review.id })}>
-                                        <span className="material-symbols-outlined" style={{ fontSize: '18px', color: '#adb5bd' }}>chat_bubble</span>
+                                        <MessageSquare size={18} color="#adb5bd" />
                                         <Text size="xs" c="dimmed">답글달기</Text>
                                     </Group>
                                 </Group>

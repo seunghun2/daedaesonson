@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { Box, Text, Group, Stack } from '@mantine/core';
 import { useRouter } from 'next/navigation';
-import { ChevronLeft, Star, LogOut, Trash2, ChevronRight, MapPin } from 'lucide-react';
+import { ChevronLeft, Star, LogOut, Trash2, ChevronRight, MapPin, MessageSquare } from 'lucide-react';
 import BottomNav from '@/components/common/BottomNav';
 import { useAuth } from '@/components/auth/AuthProvider';
 import { useMediaQuery } from '@mantine/hooks';
@@ -254,7 +254,7 @@ export default function MyInfoPage() {
                                 onClick={() => setShowFavorites(true)}
                             >
                                 <Group gap={8}>
-                                    <Star size={16} color="#adb5bd" fill="#adb5bd" />
+                                    <Star size={16} color={favorites.length > 0 ? '#fcc419' : '#adb5bd'} fill={favorites.length > 0 ? '#fcc419' : 'none'} />
                                     <Text size="sm" fw={500}>관심 시설</Text>
                                 </Group>
                                 <Group gap={4}>
@@ -272,12 +272,12 @@ export default function MyInfoPage() {
                                 onClick={() => setShowMyReviews(!showMyReviews)}
                             >
                                 <Group gap={8}>
-                                    <span className="material-symbols-outlined" style={{ fontSize: '18px', color: '#adb5bd' }}>chat_bubble</span>
+                                    <MessageSquare size={18} color="#adb5bd" />
                                     <Text size="sm" fw={500}>내 이야기</Text>
                                 </Group>
                                 <Group gap={4}>
                                     <Text size="sm" fw={600} c="dimmed">{myReviews.length}개</Text>
-                                    <span className="material-symbols-outlined" style={{ fontSize: '16px', color: '#adb5bd', transition: 'transform 0.2s', transform: showMyReviews ? 'rotate(90deg)' : 'none' }}>chevron_right</span>
+                                    <ChevronRight size={16} color="#adb5bd" style={{ transition: 'transform 0.2s', transform: showMyReviews ? 'rotate(90deg)' : 'none' }} />
                                 </Group>
                             </Box>
                         </Stack>
@@ -309,7 +309,7 @@ export default function MyInfoPage() {
                                                         onClick={(e: any) => { e.stopPropagation(); setDeleteReviewId(review.id); }}
                                                         style={{ cursor: 'pointer', padding: 4 }}
                                                     >
-                                                        <span className="material-symbols-outlined" style={{ fontSize: '16px', color: '#adb5bd' }}>delete</span>
+                                                        <Trash2 size={16} color="#adb5bd" />
                                                     </Box>
                                                 </Group>
                                             </Group>

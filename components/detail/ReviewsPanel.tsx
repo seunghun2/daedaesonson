@@ -2,7 +2,7 @@
 
 import { Drawer, Box, Text, Group, Stack, ActionIcon, ScrollArea, TextInput, Textarea, Button, LoadingOverlay } from '@mantine/core';
 import { useMediaQuery } from '@mantine/hooks';
-import { X, ChevronLeft, ChevronRight } from 'lucide-react';
+import { X, ChevronLeft, ChevronRight, User, MessageSquare, Camera } from 'lucide-react';
 import { useState, useEffect, useRef } from 'react';
 import { Facility } from '@/types';
 import { formatRelativeTime } from '@/lib/format';
@@ -151,7 +151,7 @@ export default function ReviewsPanel({ facility, isOpen, onClose, onOpenWriteRev
                                         {reviews.map((review: any) => (
                                             <Box key={review.id} pb="lg" style={{ borderBottom: '1px solid #f1f3f5' }}>
                                                 <Group gap="xs" mb={4}>
-                                                    <span className="material-symbols-outlined" style={{ fontSize: '24px', color: '#adb5bd' }}>account_circle</span>
+                                                    <User size={24} color="#adb5bd" />
                                                     <Text size="sm" fw={600} c="dark.8">{review.author}</Text>
                                                     <Text size="xs" c="dimmed">· {formatRelativeTime(review.createdAt || review.date)}</Text>
                                                     <ActionIcon variant="transparent" color="gray" size="xs" ml="auto"
@@ -199,7 +199,7 @@ export default function ReviewsPanel({ facility, isOpen, onClose, onOpenWriteRev
                                                         setReplyingTo(replyingTo === review.id ? null : review.id);
                                                         setReplyContent(''); setReplyPhotos([]); setReplyNickname(''); setReplyPassword('');
                                                     }}>
-                                                        <span className="material-symbols-outlined" style={{ fontSize: '16px', color: '#868e96' }}>chat_bubble_outline</span>
+                                                        <MessageSquare size={16} color="#868e96" />
                                                         <Text size="xs" c="dimmed">답글달기 {review.replies?.length || 0}</Text>
                                                     </Group>
                                                 </Group>
@@ -210,7 +210,7 @@ export default function ReviewsPanel({ facility, isOpen, onClose, onOpenWriteRev
                                                         {(expandedReplies.has(review.id) ? review.replies : review.replies.slice(0, 3)).map((reply: any) => (
                                                             <Box key={reply.id} mb="sm" pb="sm" style={{ borderBottom: '1px solid #f1f3f5' }}>
                                                                 <Group gap="xs" mb={4}>
-                                                                    <span className="material-symbols-outlined" style={{ fontSize: '18px', color: '#adb5bd' }}>account_circle</span>
+                                                                    <User size={18} color="#adb5bd" />
                                                                     <Text size="sm" fw={700} c="dark.8">{reply.author}</Text>
                                                                     <Text size="xs" c="dimmed">· {formatRelativeTime(reply.createdAt || reply.date)}</Text>
                                                                     <ActionIcon variant="transparent" color="gray" size="xs" ml="auto"
@@ -269,7 +269,7 @@ export default function ReviewsPanel({ facility, isOpen, onClose, onOpenWriteRev
                                                             <Group gap={4}>
                                                                 <input type="file" accept="image/*" multiple ref={replyFileInputRef} style={{ display: 'none' }} onChange={handleReplyPhotoUpload} />
                                                                 <ActionIcon variant="light" color="gray" size="sm" radius="xl" onClick={() => replyFileInputRef.current?.click()}>
-                                                                    <span className="material-symbols-outlined" style={{ fontSize: '16px', color: '#868e96' }}>photo_camera</span>
+                                                                    <Camera size={16} color="#868e96" />
                                                                 </ActionIcon>
                                                                 <Text size="xs" c="dimmed">{replyPhotos.length}/3</Text>
                                                             </Group>

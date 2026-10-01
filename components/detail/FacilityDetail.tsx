@@ -4,7 +4,7 @@ import Script from 'next/script';
 import NextImage from 'next/image';
 import { Image, Text, Badge, Group, Button, Stack, Box, Paper, Modal, Tabs, Collapse, ActionIcon, Rating, Textarea, TextInput, LoadingOverlay, useMantineTheme, Accordion, Table, Switch, Select, Drawer, Tooltip, Popover } from '@mantine/core';
 import { useDisclosure, useMediaQuery } from '@mantine/hooks';
-import { Car, Utensils, Accessibility, Store, Navigation, Globe, ChevronLeft, ChevronRight, TrendingUp, ChevronDown, ChevronUp, Star, Pencil, Camera, X, ImageIcon, Plus, Trash, Archive, Mountain, Trees, Layers, Lock, Unlock, Check, ExternalLink, Flame } from 'lucide-react';
+import { Car, Utensils, Accessibility, Store, Navigation, Globe, ChevronLeft, ChevronRight, TrendingUp, ChevronDown, ChevronUp, Star, Pencil, Camera, X, ImageIcon, Plus, Trash, Archive, Mountain, Trees, Layers, Lock, Unlock, Check, ExternalLink, Flame, MapPin, Share2, Headphones, MessageSquare, User, Copy, Trash2, Heart } from 'lucide-react';
 import InquiryPanel from './InquiryPanel';
 import CorrectionRequestModal from './CorrectionRequestModal';
 import ScrollableTabsList from '@/components/ScrollableTabsList';
@@ -1839,7 +1839,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                         <Group justify="space-between" align="center" wrap="nowrap">
                             <Group gap={4} wrap="nowrap" style={{ flex: 1, minWidth: 0 }}>
                                 <ActionIcon variant="transparent" color="white" w={44} h={44} onClick={onClose} style={{ flexShrink: 0 }}>
-                                    <span className="material-symbols-outlined" style={{ fontSize: '22px', fontVariationSettings: "'FILL' 1" }}>arrow_back_ios_new</span>
+                                    <ChevronLeft size={22} color="white" />
                                 </ActionIcon>
                                 <Group gap={6} wrap="nowrap" style={{ overflow: 'hidden' }}>
                                     <Badge
@@ -1897,7 +1897,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                             }
                                         }}
                                     >
-                                        <span className="material-symbols-outlined" style={{ fontSize: '22px' }}>location_on</span>
+                                        <MapPin size={20} color="white" />
                                     </ActionIcon>
                                 )}
                                 <ActionIcon
@@ -1911,7 +1911,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                         setShareModalOpen(true);
                                     }}
                                 >
-                                    <span className="material-symbols-outlined" style={{ fontSize: '22px' }}>share</span>
+                                    <Share2 size={20} color="white" />
                                 </ActionIcon>
                                 {isDesktop && (
                                     <ActionIcon
@@ -1925,7 +1925,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                             onClose();
                                         }}
                                     >
-                                        <span className="material-symbols-outlined" style={{ fontSize: '22px' }}>close</span>
+                                        <X size={22} color="white" />
                                     </ActionIcon>
                                 )}
                             </Group>
@@ -1956,7 +1956,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                     }
                                 }}
                             >
-                                <span className="material-symbols-outlined" style={{ fontSize: '18px', color: 'white', fontVariationSettings: "'FILL' 1" }}>support_agent</span>
+                                <Headphones size={18} color="white" />
                                 <span style={{ fontSize: '16px', color: 'white', fontWeight: 500 }}>상담예약</span>
                             </div>
 
@@ -1989,7 +1989,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                     }
                                 }}
                             >
-                                <span className="material-symbols-outlined" style={{ fontSize: '18px', color: isFavorited ? '#FFD43B' : 'white', fontVariationSettings: isFavorited ? "'FILL' 1" : "'FILL' 0", transition: 'all 0.2s ease' }}>star</span>
+                                <Star size={18} fill={isFavorited ? '#FFD43B' : 'none'} color={isFavorited ? '#FFD43B' : 'white'} />
                                 <span style={{ fontSize: '16px', color: isFavorited ? '#FFD43B' : 'white', fontWeight: 500, transition: 'color 0.2s ease' }}>{(facility.favoriteCount || 0) + (isFavorited ? 1 : 0)}</span>
                             </div>
 
@@ -2005,7 +2005,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                     }
                                 }}
                             >
-                                <span className="material-symbols-outlined" style={{ fontSize: '18px', color: 'white', fontVariationSettings: "'FILL' 1" }}>chat_bubble</span>
+                                <MessageSquare size={18} color="white" fill="white" />
                                 <span style={{ fontSize: '16px', color: 'white', fontWeight: 500 }}>이야기</span>
                             </div>
                         </div>
@@ -2623,7 +2623,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                             <Group justify="space-between" mb={4}>
                                                 <Group gap="xs">
                                                     <Box w={24} h={24} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                                                        <span className="material-symbols-outlined" style={{ fontSize: '24px', color: '#adb5bd' }}>account_circle</span>
+                                                        <User size={20} color="#adb5bd" />
                                                     </Box>
                                                     <Text size="sm" fw={600} c="dark.8">{review.author}</Text>
                                                     <Text size="xs" c="dimmed">· {formatRelativeTime(review.date)}</Text>
@@ -2668,16 +2668,11 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
 
                                             <Group gap="lg">
                                                 <Group gap={4} style={{ cursor: 'pointer' }} onClick={() => handleLike(review.id)}>
-                                                    <span
-                                                        className="material-symbols-outlined"
-                                                        style={{
-                                                            fontSize: '18px',
-                                                            color: likedReviews.has(review.id) ? '#fa5252' : '#adb5bd',
-                                                            fontVariationSettings: likedReviews.has(review.id) ? "'FILL' 1" : "'FILL' 0"
-                                                        }}
-                                                    >
-                                                        favorite
-                                                    </span>
+                                                    <Heart
+                                                        size={18}
+                                                        color={likedReviews.has(review.id) ? '#fa5252' : '#adb5bd'}
+                                                        fill={likedReviews.has(review.id) ? '#fa5252' : 'none'}
+                                                    />
                                                     <Text size="xs" c={likedReviews.has(review.id) ? 'red.6' : 'dimmed'} fw={likedReviews.has(review.id) ? 600 : 400}>
                                                         좋아요 {review.likes || 0}
                                                     </Text>
@@ -2694,7 +2689,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                                     setReplyNickname('');
                                                     setReplyPassword('');
                                                 }}>
-                                                    <span className="material-symbols-outlined" style={{ fontSize: '18px', color: '#adb5bd' }}>chat_bubble</span>
+                                                    <MessageSquare size={16} color="#adb5bd" />
                                                     <Text size="xs" c="dimmed">답글달기 {(review.replies?.length ?? 0) > 0 ? review.replies?.length : ''}</Text>
                                                 </Group>
                                             </Group>
@@ -2707,7 +2702,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                                     {(expandedReplies.has(review.id) ? review.replies : review.replies.slice(0, 3)).map((reply: any) => (
                                                         <Box key={reply.id} mb="sm" pb="sm" style={{ borderBottom: '1px solid #f1f3f5' }}>
                                                             <Group gap="xs" mb={4}>
-                                                                <span className="material-symbols-outlined" style={{ fontSize: '18px', color: '#adb5bd' }}>account_circle</span>
+                                                                <User size={16} color="#adb5bd" />
                                                                 <Text size="sm" fw={700} c="dark.8">{reply.author}</Text>
                                                                 <Text size="xs" c="dimmed">· {formatRelativeTime(reply.createdAt || reply.date)}</Text>
                                                                 <ActionIcon variant="transparent" color="gray" size="xs" onClick={() => openDeleteReplyModal(review.id, reply.id)} ml="auto">
@@ -2944,7 +2939,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                     }}
                                 >
                                     <Group justify="center" gap={6}>
-                                        <span className="material-symbols-outlined" style={{ fontSize: 16, color: 'rgba(255,255,255,0.6)' }}>content_copy</span>
+                                        <Copy size={16} color="rgba(255,255,255,0.6)" />
                                         <Text size="xs" c="rgba(255,255,255,0.8)" lineClamp={1}>
                                             daedaesonson.com/facility/{facility.id}
                                         </Text>
@@ -2981,7 +2976,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                 }}
                                 style={{ cursor: 'pointer' }}
                             >
-                                <span className="material-symbols-outlined" style={{ fontSize: 28, color: 'rgba(255,255,255,0.6)' }}>keyboard_arrow_up</span>
+                                <ChevronUp size={28} color="rgba(255,255,255,0.6)" />
                             </Box>
                         </Box>
 
@@ -4597,7 +4592,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                             <Box style={{ flex: 1 }}>
                                                 <Group gap={6} mb={4}>
                                                     {selectedInquiry.isPrivate && (
-                                                        <span className="material-symbols-outlined" style={{ fontSize: 16, color: '#868e96' }}>lock</span>
+                                                        <Lock size={16} color="#868e96" />
                                                     )}
                                                     <Text size="lg" fw={700} c="dark">{selectedInquiry.title}</Text>
                                                 </Group>
@@ -4629,7 +4624,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                                         borderRadius: 28
                                                     }}
                                                 >
-                                                    <span className="material-symbols-outlined" style={{ fontSize: 28, color: '#495057' }}>lock</span>
+                                                    <Lock size={28} color="#495057" />
                                                 </Box>
                                                 <Text size="md" fw={600} c="dark" mb={6}>비공개 문의입니다</Text>
                                                 <Text size="sm" c="dimmed" mb="xl">
@@ -4678,7 +4673,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                                 {selectedInquiry.replies && selectedInquiry.replies.length > 0 && (
                                                     <Box p="md" style={{ backgroundColor: '#f0f4ff', borderRadius: 12, borderLeft: '4px solid #1D0098' }}>
                                                         <Group gap={6} mb={6}>
-                                                            <span className="material-symbols-outlined" style={{ fontSize: 16, color: '#1D0098' }}>support_agent</span>
+                                                            <Headphones size={16} color="#1D0098" />
                                                             <Text size="xs" fw={600} c="brand">관리자 답변</Text>
                                                         </Group>
                                                         <Text size="sm" c="dark">{selectedInquiry.replies[0].content}</Text>
@@ -4691,7 +4686,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                                         variant="subtle"
                                                         color="gray"
                                                         size="sm"
-                                                        leftSection={<span className="material-symbols-outlined" style={{ fontSize: 16 }}>delete</span>}
+                                                        leftSection={<Trash2 size={16} />}
                                                         onClick={handleInquiryDelete}
                                                         style={{ alignSelf: 'center' }}
                                                     >
@@ -4705,62 +4700,64 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                             )}
                         </Modal>
 
-                        {/* 장지 상담 플로팅 버튼 (FAB) */}
-                        <Box style={{
-                            position: 'fixed',
-                            bottom: isMobile ? 16 : 24,
-                            ...(isMobile ? { right: 16 } : { left: 322 }),
-                            zIndex: 9990,
-                        }}>
-                            {/* 컴팩트 1줄 라벨 */}
-                            {!aiChatOpen && (
+                        {/* 💬 AI 장지 상담사 FAB 버튼 (데스크톱 전용 — 모바일에서는 상단 헤더 '상담예약' 사용 및 가격표 가림 방지) */}
+                        {isDesktop && (
+                            <Box style={{
+                                position: 'fixed',
+                                bottom: 24,
+                                left: 322,
+                                zIndex: 9990,
+                            }}>
+                                {/* 컴팩트 1줄 라벨 */}
+                                {!aiChatOpen && (
+                                    <Box
+                                        onClick={() => setAiChatOpen(true)}
+                                        style={{
+                                            position: 'absolute',
+                                            bottom: 8,
+                                            left: 64,
+                                            display: 'flex', alignItems: 'center', gap: 8,
+                                            padding: '10px 16px',
+                                            background: '#fff', border: '1px solid #eee',
+                                            borderRadius: 28, width: 'fit-content',
+                                            boxShadow: '0 4px 16px rgba(0,0,0,0.08)',
+                                            cursor: 'pointer', whiteSpace: 'nowrap',
+                                            animation: 'labelExpand 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+                                            transformOrigin: 'left center',
+                                        }}
+                                    >
+                                        <span style={{ fontSize: 13, fontWeight: 600, color: '#333', letterSpacing: '-0.3px' }}>
+                                            대손AI 상담사
+                                        </span>
+                                        <span style={{ fontSize: 12, color: '#888', marginLeft: 2 }}>· 무엇을 도와드릴까요?</span>
+                                    </Box>
+                                )}
                                 <Box
                                     onClick={() => setAiChatOpen(true)}
                                     style={{
-                                        position: 'absolute',
-                                        bottom: 8,
-                                        ...(isMobile ? { right: 64 } : { left: 64 }),
-                                        display: 'flex', alignItems: 'center', gap: 8,
-                                        padding: '10px 16px',
+                                        width: 56, height: 56, borderRadius: '50%',
                                         background: '#fff', border: '1px solid #eee',
-                                        borderRadius: 28, width: 'fit-content',
-                                        boxShadow: '0 4px 16px rgba(0,0,0,0.08)',
-                                        cursor: 'pointer', whiteSpace: 'nowrap',
-                                        animation: 'labelExpand 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards',
-                                        transformOrigin: isMobile ? 'right center' : 'left center',
+                                        boxShadow: '0 4px 16px rgba(0,0,0,0.1), 0 1px 4px rgba(0,0,0,0.06)',
+                                        display: 'flex', alignItems: 'center', justifyContent: 'center',
+                                        cursor: 'pointer',
+                                        transition: 'transform 0.2s, box-shadow 0.2s',
+                                    }}
+                                    onMouseEnter={(e) => {
+                                        e.currentTarget.style.transform = 'scale(1.08)';
+                                        e.currentTarget.style.boxShadow = '0 6px 24px rgba(0,0,0,0.14)';
+                                    }}
+                                    onMouseLeave={(e) => {
+                                        e.currentTarget.style.transform = 'scale(1)';
+                                        e.currentTarget.style.boxShadow = '0 4px 16px rgba(0,0,0,0.1), 0 1px 4px rgba(0,0,0,0.06)';
                                     }}
                                 >
-                                    <span style={{ fontSize: 13, fontWeight: 600, color: '#333', letterSpacing: '-0.3px' }}>
-                                        대손AI 상담사
-                                    </span>
-                                    <span style={{ fontSize: 12, color: '#888', marginLeft: 2 }}>· 무엇을 도와드릴까요?</span>
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                        <path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"
+                                            stroke="#302E92" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                                    </svg>
                                 </Box>
-                            )}
-                            <Box
-                                onClick={() => setAiChatOpen(true)}
-                                style={{
-                                    width: 56, height: 56, borderRadius: '50%',
-                                    background: '#fff', border: '1px solid #eee',
-                                    boxShadow: '0 4px 16px rgba(0,0,0,0.1), 0 1px 4px rgba(0,0,0,0.06)',
-                                    display: 'flex', alignItems: 'center', justifyContent: 'center',
-                                    cursor: 'pointer',
-                                    transition: 'transform 0.2s, box-shadow 0.2s',
-                                }}
-                                onMouseEnter={(e) => {
-                                    e.currentTarget.style.transform = 'scale(1.08)';
-                                    e.currentTarget.style.boxShadow = '0 6px 24px rgba(0,0,0,0.14)';
-                                }}
-                                onMouseLeave={(e) => {
-                                    e.currentTarget.style.transform = 'scale(1)';
-                                    e.currentTarget.style.boxShadow = '0 4px 16px rgba(0,0,0,0.1), 0 1px 4px rgba(0,0,0,0.06)';
-                                }}
-                            >
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                    <path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"
-                                        stroke="#302E92" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                                </svg>
                             </Box>
-                        </Box>
+                        )}
 
                         {/* 장지 상담 챗봇 */}
                         <AIChatbot
@@ -5093,7 +5090,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                                     radius="xl"
                                                     onClick={() => replyFileInputRef.current?.click()}
                                                 >
-                                                    <span className="material-symbols-outlined" style={{ fontSize: '20px', color: '#868e96' }}>photo_camera</span>
+                                                    <Camera size={20} color="#868e96" />
                                                 </ActionIcon>
                                                 <Text size="xs" c="dimmed">{replyPhotos.length}/3</Text>
                                             </Group>
@@ -5150,7 +5147,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                     <Group justify="space-between" mb="md">
                                         <Text fw={600} size="lg">이야기 삭제</Text>
                                         <ActionIcon variant="subtle" color="gray" onClick={() => setDeleteReviewModal(null)}>
-                                            <span className="material-symbols-outlined" style={{ fontSize: 20 }}>close</span>
+                                            <X size={20} />
                                         </ActionIcon>
                                     </Group>
                                     <Text size="sm" c="dimmed" mb="md">이야기를 삭제하려면 비밀번호를 입력하세요.</Text>
@@ -5203,7 +5200,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                     <Group justify="space-between" mb="md">
                                         <Text fw={600} size="lg">댓글 삭제</Text>
                                         <ActionIcon variant="subtle" color="gray" onClick={() => setDeleteReplyModal(null)}>
-                                            <span className="material-symbols-outlined" style={{ fontSize: 20 }}>close</span>
+                                            <X size={20} />
                                         </ActionIcon>
                                     </Group>
                                     <Text size="sm" c="dimmed" mb="md">댓글을 삭제하려면 비밀번호를 입력하세요.</Text>
@@ -5265,7 +5262,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                         whiteSpace: 'nowrap',
                         boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
                     }}>
-                        <span className="material-symbols-outlined" style={{ fontSize: '16px', color: '#FFD43B', fontVariationSettings: "'FILL' 1" }}>star</span>
+                        <Star size={16} fill="#FFD43B" color="#FFD43B" />
                         {favoriteToast}
                     </div>
                     <style>{`

@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { useRouter, useParams } from 'next/navigation';
 import { Box, Text, Group, Stack, Button, TextInput, ActionIcon, LoadingOverlay, Textarea } from '@mantine/core';
-import { ChevronLeft, ChevronRight, X, Camera, Star } from 'lucide-react';
+import { ChevronLeft, ChevronRight, X, Camera, Star, User, MessageSquare } from 'lucide-react';
 import { formatRelativeTime } from '@/lib/format';
 
 export default function ReviewsListPage() {
@@ -346,7 +346,7 @@ export default function ReviewsListPage() {
                             <Box key={review.id} pb="lg" style={{ borderBottom: '1px solid #f1f3f5' }}>
                                 {/* 리뷰 헤더 */}
                                 <Group gap="xs" mb={4}>
-                                    <span className="material-symbols-outlined" style={{ fontSize: '24px', color: '#adb5bd' }}>account_circle</span>
+                                    <User size={24} color="#adb5bd" />
                                     <Text size="sm" fw={600} c="dark.8">{review.author}</Text>
                                     <Text size="xs" c="dimmed">· {formatRelativeTime(review.createdAt || review.date)}</Text>
                                     <ActionIcon
@@ -407,7 +407,7 @@ export default function ReviewsListPage() {
                                         setReplyNickname('');
                                         setReplyPassword('');
                                     }}>
-                                        <span className="material-symbols-outlined" style={{ fontSize: '16px', color: '#868e96' }}>chat_bubble_outline</span>
+                                        <MessageSquare size={16} color="#868e96" />
                                         <Text size="xs" c="dimmed">답글달기 {review.replies?.length || 0}</Text>
                                     </Group>
                                 </Group>
@@ -418,7 +418,7 @@ export default function ReviewsListPage() {
                                         {(expandedReplies.has(review.id) ? review.replies : review.replies.slice(0, 3)).map((reply: any) => (
                                             <Box key={reply.id} mb="sm" pb="sm" style={{ borderBottom: '1px solid #f1f3f5' }}>
                                                 <Group gap="xs" mb={4}>
-                                                    <span className="material-symbols-outlined" style={{ fontSize: '18px', color: '#adb5bd' }}>account_circle</span>
+                                                    <User size={18} color="#adb5bd" />
                                                     <Text size="sm" fw={700} c="dark.8">{reply.author}</Text>
                                                     <Text size="xs" c="dimmed">· {formatRelativeTime(reply.createdAt || reply.date)}</Text>
                                                     <ActionIcon
@@ -566,7 +566,7 @@ export default function ReviewsListPage() {
                                         style={{ display: 'none' }} onChange={handleReplyPhotoUpload} />
                                     <ActionIcon variant="light" color="gray" size="lg" radius="xl"
                                         onClick={() => replyFileInputRef.current?.click()}>
-                                        <span className="material-symbols-outlined" style={{ fontSize: '20px', color: '#868e96' }}>photo_camera</span>
+                                        <Camera size={20} color="#868e96" />
                                     </ActionIcon>
                                     <Text size="xs" c="dimmed">{replyPhotos.length}/3</Text>
                                 </Group>
@@ -849,7 +849,7 @@ export default function ReviewsListPage() {
                                         radius="xl"
                                         onClick={() => writeFileInputRef.current?.click()}
                                     >
-                                        <span className="material-symbols-outlined" style={{ fontSize: '20px', color: '#868e96' }}>photo_camera</span>
+                                        <Camera size={20} color="#868e96" />
                                     </ActionIcon>
                                     <Text size="xs" c="dimmed">{writePhotos.length}/5</Text>
                                 </Group>

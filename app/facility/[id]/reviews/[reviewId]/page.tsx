@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { useRouter, useParams } from 'next/navigation';
 import { Box, Text, Group, Stack, Button, TextInput, ActionIcon, Modal, Image, Paper, LoadingOverlay } from '@mantine/core';
-import { ChevronLeft, X, Camera } from 'lucide-react';
+import { ChevronLeft, X, Camera, User } from 'lucide-react';
 import { formatRelativeTime } from '@/lib/format';
 
 export default function ReviewRepliesPage() {
@@ -186,7 +186,7 @@ export default function ReviewRepliesPage() {
             {/* 원본 리뷰 */}
             <Box p="md" style={{ borderBottom: '8px solid #f1f3f5' }}>
                 <Group gap="xs" mb={4}>
-                    <span className="material-symbols-outlined" style={{ fontSize: '24px', color: '#adb5bd' }}>account_circle</span>
+                    <User size={24} color="#adb5bd" />
                     <Text size="sm" fw={600} c="dark.8">{review.author}</Text>
                     <Text size="xs" c="dimmed">· {formatRelativeTime(review.createdAt || review.date)}</Text>
                 </Group>
@@ -211,7 +211,7 @@ export default function ReviewRepliesPage() {
                         {review.replies.map((reply: any) => (
                             <Box key={reply.id} pb="md" style={{ borderBottom: '1px solid #f1f3f5' }}>
                                 <Group gap="xs" mb={4}>
-                                    <span className="material-symbols-outlined" style={{ fontSize: '20px', color: '#adb5bd' }}>account_circle</span>
+                                    <User size={20} color="#adb5bd" />
                                     <Text size="sm" fw={700} c="dark.8">{reply.author}</Text>
                                     <Text size="xs" c="dimmed">· {formatRelativeTime(reply.createdAt || reply.date)}</Text>
                                     <ActionIcon
@@ -313,7 +313,7 @@ export default function ReviewRepliesPage() {
                             onChange={handleReplyPhotoUpload}
                         />
                         <ActionIcon variant="subtle" color="gray" size="sm" onClick={() => replyFileInputRef.current?.click()}>
-                            <span className="material-symbols-outlined" style={{ fontSize: '18px', color: '#868e96' }}>photo_camera</span>
+                            <Camera size={18} color="#868e96" />
                         </ActionIcon>
                         <Text size="xs" c="dimmed">{replyPhotos.length}/3</Text>
                     </Group>

@@ -1,7 +1,7 @@
 import React, { memo } from 'react';
 import { Card, Text, Badge, Group, Flex, ThemeIcon, Box } from '@mantine/core';
 import NextImage from 'next/image';
-import { MapPin, Building, Trees, Cross, User } from 'lucide-react';
+import { MapPin, Building, Trees, Cross, User, Star } from 'lucide-react';
 import { Facility, FACILITY_CATEGORY_LABELS, FacilityCategory } from '@/types';
 import { formatKoreanCurrency } from '@/lib/format';
 import { getFacilityImageUrl } from '@/lib/supabaseImage';
@@ -193,7 +193,7 @@ function FacilityCardComponent({ facility, onClick }: FacilityCardProps) {
                     {/* 관심(별표) 숫자 노출 */}
                     {(facility.favoriteCount ?? 0) > 0 && (
                         <Group gap={4} mt={4}>
-                            <span className="material-symbols-outlined" style={{ fontSize: '13px', color: '#fcc419', fontVariationSettings: "'FILL' 1" }}>star</span>
+                            <Star size={13} color="#fcc419" fill="#fcc419" />
                             <Text size="xs" c="dimmed" fw={600}>{facility.favoriteCount}</Text>
                         </Group>
                     )}

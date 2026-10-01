@@ -3,7 +3,7 @@
 import { useState, useMemo, useEffect, useRef, useTransition, Suspense } from 'react';
 import { Box, Flex, useMantineTheme, TextInput, Group, Text, ThemeIcon, ActionIcon, ScrollArea, Stack, Loader, Center, Button, Popover, Checkbox, Drawer, SegmentedControl } from '@mantine/core';
 import { useMediaQuery } from '@mantine/hooks';
-import { Search, MapPin, Building, MessageCircle, Clock, Info, User, ChevronLeft, ChevronDown } from 'lucide-react';
+import { Search, MapPin, Building, MessageCircle, Clock, Info, User, ChevronLeft, ChevronDown, ChevronRight, Heart, MessageSquare, Trash2, ArrowLeft, LogOut } from 'lucide-react';
 import LoginModal from '@/components/auth/LoginModal';
 import { useAuth } from '@/components/auth/AuthProvider';
 import { getSupabaseClient } from '@/lib/supabase';
@@ -248,6 +248,18 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
         page_location: window.location.href,
         page_path: '/'
       });
+    }
+  }, []);
+
+  // 로그인 에러 처리 알림
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const params = new URLSearchParams(window.location.search);
+      const loginError = params.get('login_error');
+      if (loginError) {
+        window.history.replaceState(null, '', window.location.pathname);
+        alert('로그인 처리 중 오류가 발생했습니다. 다시 시도해 주세요.');
+      }
     }
   }, []);
 
@@ -736,7 +748,7 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
                   marginLeft: '-8px'
                 }}
               >
-                <span className="material-symbols-outlined" style={{ fontSize: '24px', color: '#495057' }}>arrow_back</span>
+                <ArrowLeft size={24} color="#495057" />
               </button>
             ) : (
               <Link href="/" style={{ display: 'flex', alignItems: 'center', marginRight: 8 }} onClick={(e) => { if (!isMobile && selectedFacility) { e.preventDefault(); handleCloseDetail(); } }}>
@@ -1876,7 +1888,7 @@ function MyInfoPanel({
               else onClose();
             }}
           >
-            <span className="material-symbols-outlined" style={{ fontSize: '20px', color: 'white' }}>arrow_back_ios_new</span>
+            <ChevronLeft size={20} color="white" />
           </Box>
           <Text size="md" fw={700} c="white">{showFavList ? '관심 시설' : showMyReviews ? '내 이야기' : '내 정보'}</Text>
         </Group>
@@ -1887,7 +1899,7 @@ function MyInfoPanel({
         <Box p="md">
           {favFacilities.length === 0 ? (
             <Box py={60} style={{ textAlign: 'center' }}>
-              <span className="material-symbols-outlined" style={{ fontSize: '48px', color: '#dee2e6' }}>favorite</span>
+              <Heart size={48} color="#dee2e6" style={{ margin: '0 auto', display: 'block' }} />
               <Text c="dimmed" size="sm" mt={12}>관심 시설이 없습니다</Text>
               <Text c="dimmed" size="xs" mt={4}>시설 상세 페이지에서 ♡를 눌러 추가하세요</Text>
             </Box>
@@ -1912,11 +1924,11 @@ function MyInfoPanel({
                     <Box style={{ flex: 1, minWidth: 0 }}>
                       <Text size="sm" fw={600} truncate>{fac.name}</Text>
                       <Group gap={4} mt={4}>
-                        <span className="material-symbols-outlined" style={{ fontSize: '14px', color: '#868e96' }}>location_on</span>
+                        <MapPin size={14} color="#868e96" />
                         <Text size="xs" c="dimmed" truncate>{fac.address}</Text>
                       </Group>
                     </Box>
-                    <span className="material-symbols-outlined" style={{ fontSize: '16px', color: '#adb5bd' }}>chevron_right</span>
+                    <ChevronRight size={16} color="#adb5bd" />
                   </Group>
                 </Box>
               ))}
@@ -1928,7 +1940,7 @@ function MyInfoPanel({
         <Box p="md">
           {myReviews.length === 0 ? (
             <Box py={60} style={{ textAlign: 'center' }}>
-              <span className="material-symbols-outlined" style={{ fontSize: '48px', color: '#dee2e6' }}>chat_bubble</span>
+              <MessageSquare size={48} color="#dee2e6" style={{ margin: '0 auto', display: 'block' }} />
               <Text c="dimmed" mt="sm">아직 작성한 이야기가 없어요</Text>
             </Box>
           ) : (
@@ -1960,7 +1972,7 @@ function MyInfoPanel({
                         onMouseEnter={(e: any) => { e.currentTarget.style.backgroundColor = '#fff5f5'; }}
                         onMouseLeave={(e: any) => { e.currentTarget.style.backgroundColor = 'transparent'; }}
                       >
-                        <span className="material-symbols-outlined" style={{ fontSize: '16px', color: '#adb5bd' }}>delete</span>
+                        <Trash2 size={16} color="#adb5bd" />
                       </Box>
                     </Group>
                   </Group>
@@ -2038,12 +2050,12 @@ function MyInfoPanel({
               onMouseLeave={(e: any) => { e.currentTarget.style.backgroundColor = 'white'; }}
             >
               <Group gap={8}>
-                <span className="material-symbols-outlined" style={{ fontSize: '18px', color: '#ff6b6b', fontVariationSettings: "'FILL' 1" }}>favorite</span>
+                <Heart size={18} color="#ff6b6b" fill="#ff6b6b" />
                 <Text size="sm" fw={500}>관심 시설</Text>
               </Group>
               <Group gap={4}>
                 <Text size="sm" fw={700} style={{ color: 'var(--mantine-color-brand-7)' }}>{favorites.length}개</Text>
-                <span className="material-symbols-outlined" style={{ fontSize: '16px', color: '#adb5bd' }}>chevron_right</span>
+                <ChevronRight size={16} color="#adb5bd" />
               </Group>
             </Box>
           </Box>
@@ -2058,12 +2070,12 @@ function MyInfoPanel({
               onMouseLeave={(e: any) => { e.currentTarget.style.backgroundColor = 'white'; }}
             >
               <Group gap={8}>
-                <span className="material-symbols-outlined" style={{ fontSize: '18px', color: '#302E92' }}>chat_bubble</span>
+                <MessageSquare size={18} color="#302E92" />
                 <Text size="sm" fw={500}>내 이야기</Text>
               </Group>
               <Group gap={4}>
                 <Text size="sm" fw={700} style={{ color: 'var(--mantine-color-brand-7)' }}>{myReviews.length}개</Text>
-                <span className="material-symbols-outlined" style={{ fontSize: '16px', color: '#adb5bd' }}>chevron_right</span>
+                <ChevronRight size={16} color="#adb5bd" />
               </Group>
             </Box>
           </Box>
@@ -2090,7 +2102,7 @@ function MyInfoPanel({
                   fontSize: 14, fontWeight: 600, color: '#495057', cursor: 'pointer',
                 }}
               >
-                <span className="material-symbols-outlined" style={{ fontSize: '16px' }}>logout</span>
+                <LogOut size={16} />
                 로그아웃
               </button>
               <button
@@ -2102,7 +2114,7 @@ function MyInfoPanel({
                   fontSize: 13, color: '#adb5bd', cursor: 'pointer',
                 }}
               >
-                <span className="material-symbols-outlined" style={{ fontSize: '14px' }}>delete</span>
+                <Trash2 size={14} />
                 회원 탈퇴
               </button>
             </Stack>

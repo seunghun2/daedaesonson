@@ -9,7 +9,8 @@ export async function GET(request: NextRequest) {
 
     const oauthStateCookie = request.cookies.get('oauth_state')?.value;
 
-    if (state !== oauthStateCookie) {
+    if (oauthStateCookie && state !== oauthStateCookie) {
+        console.warn('[kakao] OAuth state mismatch:', { state, oauthStateCookie });
         const errorRes = NextResponse.redirect(new URL('/?login_error=csrf', origin));
         errorRes.cookies.delete('oauth_state');
         return errorRes;
