@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Box, Text, Group, Stack } from '@mantine/core';
+import { Box, Text, Group, Stack, ActionIcon } from '@mantine/core';
 import { useRouter } from 'next/navigation';
 import { ChevronLeft, Star, LogOut, Trash2, ChevronRight, MapPin, MessageSquare } from 'lucide-react';
 import BottomNav from '@/components/common/BottomNav';
@@ -136,13 +136,23 @@ export default function MyInfoPage() {
                     zIndex: 100,
                 }}
             >
-                <Group gap="md" align="center">
-                    <ChevronLeft
-                        size={22}
-                        color="#212529"
-                        style={{ cursor: 'pointer' }}
-                        onClick={() => router.back()}
-                    />
+                <Group gap="sm" align="center">
+                    <ActionIcon
+                        variant="subtle"
+                        color="gray"
+                        size={38}
+                        radius="md"
+                        onClick={() => {
+                            if (showFavorites) {
+                                setShowFavorites(false);
+                            } else {
+                                router.back();
+                            }
+                        }}
+                        aria-label="뒤로가기"
+                    >
+                        <ChevronLeft size={22} color="#212529" />
+                    </ActionIcon>
                     <Text size="lg" fw={700}>
                         {showFavorites ? '관심 시설' : '내 정보'}
                     </Text>

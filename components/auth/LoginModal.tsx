@@ -113,17 +113,21 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
                 {/* 닫기 버튼 */}
                 <button
                     onClick={handleClose}
+                    aria-label="닫기"
                     style={{
                         position: 'absolute',
-                        top: 16,
-                        right: 16,
+                        top: 12,
+                        right: 12,
                         background: 'none',
                         border: 'none',
-                        fontSize: 20,
+                        fontSize: 22,
                         cursor: 'pointer',
                         color: '#868e96',
-                        padding: 4,
+                        padding: 10,
                         lineHeight: 1,
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
                     }}
                 >
                     ✕

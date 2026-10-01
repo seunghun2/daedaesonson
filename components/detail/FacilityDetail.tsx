@@ -1963,6 +1963,9 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                             <div style={{ width: '1px', backgroundColor: 'rgba(255,255,255,0.12)', alignSelf: 'stretch' }} />
 
                             <div
+                                data-testid="favorite-btn"
+                                aria-label="관심 장소"
+                                role="button"
                                 style={{ display: 'flex', alignItems: 'center', gap: '6px', cursor: 'pointer', padding: '10px 12px', flex: 1, justifyContent: 'center' }}
                                 onClick={() => {
                                     if (!user) {
