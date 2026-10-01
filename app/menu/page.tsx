@@ -1,6 +1,6 @@
 'use client';
 
-import { Box, Text, Group, Stack } from '@mantine/core';
+import { Box, Text, Group, Stack, ActionIcon } from '@mantine/core';
 import { useRouter } from 'next/navigation';
 import { Home, MessageCircle, Clock, Info, HelpCircle, FileText, Mail, Shield, BookOpen, Briefcase, Search, Settings, ChevronRight } from 'lucide-react';
 import Link from 'next/link';
@@ -39,7 +39,7 @@ export default function MenuPage() {
             {/* 헤더 */}
             <Box
                 px="lg"
-                py="md"
+                py="xs"
                 style={{
                     backgroundColor: 'white',
                     borderBottom: '1px solid #e9ecef',
@@ -50,9 +50,13 @@ export default function MenuPage() {
             >
                 <Group justify="space-between" align="center">
                     <Text size="lg" fw={700}>전체</Text>
-                    <Group gap="lg">
-                        <Search size={20} color="#495057" style={{ cursor: 'pointer' }} onClick={() => router.push('/search')} />
-                        <Settings size={20} color="#495057" style={{ cursor: 'pointer' }} onClick={() => { if (user) { router.push('/myinfo'); } else { setShowLogin(true); } }} />
+                    <Group gap="xs">
+                        <ActionIcon variant="subtle" color="gray" size={38} radius="md" onClick={() => router.push('/search')} aria-label="검색">
+                            <Search size={20} color="#495057" />
+                        </ActionIcon>
+                        <ActionIcon variant="subtle" color="gray" size={38} radius="md" onClick={() => { if (user) { router.push('/myinfo'); } else { setShowLogin(true); } }} aria-label="설정">
+                            <Settings size={20} color="#495057" />
+                        </ActionIcon>
                     </Group>
                 </Group>
             </Box>

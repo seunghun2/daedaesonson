@@ -186,7 +186,7 @@ export default function GlossaryPage() {
                 }}
             >
                 <Group gap="sm">
-                    <Link href="/menu" style={{ display: 'flex', alignItems: 'center' }}>
+                    <Link href="/menu" style={{ width: 36, height: 36, display: 'flex', alignItems: 'center', justifyContent: 'center' }} aria-label="메뉴로 돌아가기">
                         <ArrowLeft size={20} color="#495057" />
                     </Link>
                     <Text size="lg" fw={700}>용어 가이드</Text>
