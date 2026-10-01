@@ -100,15 +100,16 @@ body {
   /* Chrome, Safari */
 }
 
-/* 🔤 Material Symbols: 폰트 로드 전 영어 텍스트 숨김 */
-.material-symbols-outlined {
-  opacity: 0;
-  transition: opacity 0.15s ease;
+/* 🔤 Material Symbols: 폰트 로드 전 영어 텍스트 완전 은폐 (FOUT 차단) */
+html:not(.fonts-loaded) .material-symbols-outlined {
+  visibility: hidden !important;
+  opacity: 0 !important;
 }
 
-.fonts-loaded .material-symbols-outlined,
-.material-symbols-outlined.material-symbols-outlined--loaded {
-  opacity: 1;
+html.fonts-loaded .material-symbols-outlined {
+  visibility: visible !important;
+  opacity: 1 !important;
+  transition: opacity 0.15s ease-out;
 }
 
 /* 🏷️ 지도 시설명 라벨 애니메이션 */

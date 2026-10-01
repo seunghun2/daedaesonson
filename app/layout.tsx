@@ -100,10 +100,35 @@ export default function RootLayout({
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
         {/* 🚫 iOS Safari 전화번호/주소 자동링크 비활성화 */}
         <meta name="format-detection" content="telephone=no, address=no, date=no" />
-        {/* 🚀 Google Material Symbols - 필수 아이콘만 로드 + display=swap */}
+        {/* 🚀 Google Material Symbols - 사전 연결 + display=block으로 영어 텍스트 노출 차단 */}
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link
           rel="stylesheet"
-          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0..1,0&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0..1,0&display=block"
+        />
+        {/* 🔤 폰트가 실제 다운로드 완료될 때까지 영어 텍스트 숨김 제어 */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function() {
+                try {
+                  if (document.fonts && document.fonts.load) {
+                    document.fonts.load('24px "Material Symbols Outlined"', 'star').then(function() {
+                      document.documentElement.classList.add('fonts-loaded');
+                    }).catch(function() {
+                      document.documentElement.classList.add('fonts-loaded');
+                    });
+                  }
+                  setTimeout(function() {
+                    document.documentElement.classList.add('fonts-loaded');
+                  }, 2000);
+                } catch(e) {
+                  document.documentElement.classList.add('fonts-loaded');
+                }
+              })();
+            `,
+          }}
         />
       </head>
       <body className="font-sans antialiased">
@@ -146,32 +171,6 @@ export default function RootLayout({
           }}
         />
 
-        {/* 🔤 Material Symbols 폰트 로드 감지 (실제 폰트 렌더링 가능 시점 정확 감지) */}
-        <Script
-          id="font-load-detect"
-          strategy="afterInteractive"
-          dangerouslySetInnerHTML={{
-            __html: `
-            (function() {
-              function checkFont() {
-                if (document.fonts && document.fonts.check('24px "Material Symbols Outlined"')) {
-                  document.documentElement.classList.add('fonts-loaded');
-                } else {
-                  setTimeout(checkFont, 100);
-                }
-              }
-              // fonts.ready 후에 check 시작 (네트워크 로드 완료 대기)
-              if (document.fonts) {
-                document.fonts.ready.then(checkFont);
-              }
-              // 안전장치: 3초 후 강제 표시
-              setTimeout(function() {
-                document.documentElement.classList.add('fonts-loaded');
-              }, 3000);
-            })()
-          `,
-          }}
-        />
         {/* 📱 카카오 공유 SDK */}
         <Script
           strategy="afterInteractive"
