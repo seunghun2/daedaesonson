@@ -9,6 +9,7 @@ import {
     Wallet, FileText, Clock, Infinity
 } from 'lucide-react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import BottomNav from '@/components/common/BottomNav';
 
@@ -154,13 +155,13 @@ type TermType = {
 };
 
 export default function GlossaryPage() {
+    const router = useRouter();
     const [selectedTerm, setSelectedTerm] = useState<TermType | null>(null);
     const brandColor = '#1D0098';
 
     const handleSelect = (term: TermType) => {
         if (term.link) {
-            // 상세 페이지가 있으면 이동
-            window.location.href = term.link;
+            router.push(term.link);
         } else {
             // 없으면 모달
             if (selectedTerm?.term === term.term) {
@@ -322,9 +323,8 @@ export default function GlossaryPage() {
                                     const TermIcon = term.Icon;
                                     const isSelected = selectedTerm?.term === term.term;
                                     const hasDetail = !!term.link;
-                                    return (
+                                    const content = (
                                         <Box
-                                            key={tIdx}
                                             p="sm"
                                             bg={isSelected ? `${group.color}10` : 'gray.0'}
                                             style={{
@@ -332,8 +332,9 @@ export default function GlossaryPage() {
                                                 cursor: 'pointer',
                                                 transition: 'all 0.2s ease',
                                                 border: isSelected ? `1.5px solid ${group.color}` : '1.5px solid transparent',
+                                                height: '100%',
                                             }}
-                                            onClick={() => handleSelect(term)}
+                                            onClick={!term.link ? () => handleSelect(term) : undefined}
                                         >
                                             <Group gap="xs" wrap="nowrap">
                                                 <TermIcon size={18} color={isSelected ? group.color : '#868e96'} />
@@ -350,6 +351,16 @@ export default function GlossaryPage() {
                                                 </Box>
                                             </Group>
                                         </Box>
+                                    );
+
+                                    return term.link ? (
+                                        <Link key={tIdx} href={term.link} style={{ textDecoration: 'none', color: 'inherit' }}>
+                                            {content}
+                                        </Link>
+                                    ) : (
+                                        <div key={tIdx}>
+                                            {content}
+                                        </div>
                                     );
                                 })}
                             </SimpleGrid>

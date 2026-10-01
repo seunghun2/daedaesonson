@@ -113,6 +113,8 @@ function FacilityCardComponent({ facility, onClick }: FacilityCardProps) {
             padding={0} // 패딩을 0으로 하고 내부 flex에서 제어
             radius="md"
             withBorder={false} // 호갱노노처럼 리스트 구분선은 상위에서, 카드 자체 테두리는 제거
+            data-testid="facility-card"
+            data-facility-id={facility.id}
             style={{
                 cursor: 'pointer',
                 backgroundColor: 'white',

@@ -1283,7 +1283,24 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
     };
 
     const shareViaLink = () => {
-        navigator.clipboard.writeText(getShareUrl());
+        const url = getShareUrl();
+        if (typeof navigator !== 'undefined' && navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(url).catch(() => {
+                const input = document.createElement('input');
+                input.value = url;
+                document.body.appendChild(input);
+                input.select();
+                document.execCommand('copy');
+                document.body.removeChild(input);
+            });
+        } else if (typeof document !== 'undefined') {
+            const input = document.createElement('input');
+            input.value = url;
+            document.body.appendChild(input);
+            input.select();
+            document.execCommand('copy');
+            document.body.removeChild(input);
+        }
         if (window.gtag) window.gtag('event', '공유_클릭', { 방법: '링크복사', 시설ID: facility.id, 시설명: facility.name });
         setShareToast('링크가 복사되었습니다');
         setTimeout(() => setShareToast(null), 2000);
@@ -1915,7 +1932,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                         </Group>
                     </Box>
 
-                    {/* 2. 액션바 3등분 (직접전화 / ♡ / 이야기) */}
+                    {/* 2. 액션바 3등분 (상담예약 / ♡ / 이야기) */}
                     <Box bg="brand.8" px={0} style={{
                         borderTop: '1px solid rgba(255,255,255,0.12)',
                         borderBottom: '1px solid rgba(255,255,255,0.12)',
@@ -1929,21 +1946,18 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                             <div
                                 style={{ display: 'flex', alignItems: 'center', gap: '6px', cursor: 'pointer', padding: '10px 12px', flex: 1, justifyContent: 'center' }}
                                 onClick={() => {
-                                    const cleanPhone = (facility.phone || '').replace(/[^0-9+]/g, '');
-                                    if (cleanPhone.length >= 7) {
-                                        window.location.href = `tel:${cleanPhone}`;
-                                        if (window.gtag) {
-                                            window.gtag('event', '직접전화_클릭', {
-                                                시설ID: facility.id,
-                                                시설명: facility.name,
-                                                전화번호: facility.phone
-                                            });
-                                        }
+                                    closeAllPanels();
+                                    setConsultModalOpened(true);
+                                    if (window.gtag) {
+                                        window.gtag('event', '상담예약_클릭', {
+                                            시설ID: facility.id,
+                                            시설명: facility.name,
+                                        });
                                     }
                                 }}
                             >
-                                <span className="material-symbols-outlined" style={{ fontSize: '18px', color: 'white', fontVariationSettings: "'FILL' 1" }}>call</span>
-                                <span style={{ fontSize: '16px', color: 'white', fontWeight: 500 }}>직접전화</span>
+                                <span className="material-symbols-outlined" style={{ fontSize: '18px', color: 'white', fontVariationSettings: "'FILL' 1" }}>support_agent</span>
+                                <span style={{ fontSize: '16px', color: 'white', fontWeight: 500 }}>상담예약</span>
                             </div>
 
                             <div style={{ width: '1px', backgroundColor: 'rgba(255,255,255,0.12)', alignSelf: 'stretch' }} />
@@ -2975,7 +2989,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                         {/* Story Panel Overlay */}
                         <InquiryPanel facility={facility} isOpen={inquiryOpen} onClose={() => { setInquiryOpen(false); document.body.style.overflow = ''; document.body.style.position = ''; document.body.style.touchAction = ''; }} allFacilities={allFacilities} />
                         <CorrectionRequestModal facilityId={facility.id} facilityName={facility.name} isOpen={correctionOpen} onClose={() => setCorrectionOpen(false)} />
-                        <ReviewsPanel facility={facility} isOpen={reviewsOpen} onClose={() => setReviewsOpen(false)} />
+                        <ReviewsPanel facility={facility} isOpen={reviewsOpen} onClose={() => setReviewsOpen(false)} onOpenWriteReview={() => { closeAllPanels(); openReviewModal(); }} />
 
                         {/* 상담 신청 - 모바일: Modal fullScreen, PC: Drawer 스타일 */}
                         {
@@ -3213,6 +3227,12 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                                                 size="lg"
                                                                 value={consultForm.name}
                                                                 onChange={(e) => setConsultForm({ ...consultForm, name: e.currentTarget.value })}
+                                                                onKeyDown={(e) => {
+                                                                    if (e.key === 'Enter' && consultForm.name?.trim()) {
+                                                                        e.preventDefault();
+                                                                        setConsultStep(2);
+                                                                    }
+                                                                }}
                                                                 styles={{ input: { borderBottom: '1px solid #dee2e6', borderRadius: 0, paddingBottom: 8 } }}
                                                                 onClick={(e) => e.stopPropagation()}
                                                             />
@@ -3246,6 +3266,12 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                                                 size="lg"
                                                                 value={consultForm.phone}
                                                                 onChange={(e) => setConsultForm({ ...consultForm, phone: formatPhoneNumber(e.currentTarget.value) })}
+                                                                onKeyDown={(e) => {
+                                                                    if (e.key === 'Enter' && consultForm.phone?.trim()) {
+                                                                        e.preventDefault();
+                                                                        setConsultStep(3);
+                                                                    }
+                                                                }}
                                                                 styles={{ input: { borderBottom: '1px solid #dee2e6', borderRadius: 0, paddingBottom: 8 } }}
                                                                 onClick={(e) => e.stopPropagation()}
                                                             />
@@ -3664,6 +3690,12 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                                                 size="md"
                                                                 value={consultForm.name}
                                                                 onChange={(e) => setConsultForm({ ...consultForm, name: e.currentTarget.value })}
+                                                                onKeyDown={(e) => {
+                                                                    if (e.key === 'Enter' && consultForm.name?.trim()) {
+                                                                        e.preventDefault();
+                                                                        setConsultStep(2);
+                                                                    }
+                                                                }}
                                                                 styles={{ input: { borderBottom: '1px solid #dee2e6', borderRadius: 0, paddingBottom: 8 } }}
                                                                 onClick={(e) => e.stopPropagation()}
                                                             />
@@ -3697,6 +3729,12 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                                                 size="md"
                                                                 value={consultForm.phone}
                                                                 onChange={(e) => setConsultForm({ ...consultForm, phone: formatPhoneNumber(e.currentTarget.value) })}
+                                                                onKeyDown={(e) => {
+                                                                    if (e.key === 'Enter' && consultForm.phone?.trim()) {
+                                                                        e.preventDefault();
+                                                                        setConsultStep(3);
+                                                                    }
+                                                                }}
                                                                 styles={{ input: { borderBottom: '1px solid #dee2e6', borderRadius: 0, paddingBottom: 8 } }}
                                                                 onClick={(e) => e.stopPropagation()}
                                                             />

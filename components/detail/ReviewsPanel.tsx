@@ -12,9 +12,10 @@ interface ReviewsPanelProps {
     facility: Facility;
     isOpen: boolean;
     onClose: () => void;
+    onOpenWriteReview?: () => void;
 }
 
-export default function ReviewsPanel({ facility, isOpen, onClose }: ReviewsPanelProps) {
+export default function ReviewsPanel({ facility, isOpen, onClose, onOpenWriteReview }: ReviewsPanelProps) {
     const isMobileQuery = useMediaQuery('(max-width: 800px)');
     const isMobile = isMobileQuery ?? true;
 
@@ -284,11 +285,37 @@ export default function ReviewsPanel({ facility, isOpen, onClose }: ReviewsPanel
                                 ) : (
                                     <Box ta="center" py="xl">
                                         <Text size="sm" c="dimmed">아직 이야기가 없습니다.</Text>
+                                        {onOpenWriteReview && (
+                                            <Button
+                                                variant="light"
+                                                color="brand"
+                                                size="sm"
+                                                radius="xl"
+                                                mt="md"
+                                                onClick={onOpenWriteReview}
+                                            >
+                                                첫 이야기 남기기
+                                            </Button>
+                                        )}
                                     </Box>
                                 )}
                             </Box>
                         )}
                     </ScrollArea>
+
+                    {onOpenWriteReview && (
+                        <Box p="md" style={{ borderTop: '1px solid #f1f3f5', backgroundColor: '#fff' }}>
+                            <Button
+                                fullWidth
+                                size="md"
+                                radius="xl"
+                                onClick={onOpenWriteReview}
+                                style={{ backgroundColor: '#1D0098', color: 'white', fontWeight: 600 }}
+                            >
+                                이야기 작성하기
+                            </Button>
+                        </Box>
+                    )}
                 </Stack>
             </Drawer>
 

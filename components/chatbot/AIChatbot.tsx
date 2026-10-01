@@ -100,8 +100,19 @@ export default function AIChatbot({ isOpen, onClose, facilityContext, onOpenCons
     });
     const [showLoginModal, setShowLoginModal] = useState(false);
     const messagesEndRef = useRef<HTMLDivElement>(null);
+    const chatScrollRef = useRef<HTMLDivElement>(null);
     const inputRef = useRef<HTMLInputElement>(null);
     const router = useRouter();
+
+    const scrollToBottom = useCallback((behavior: ScrollBehavior = 'smooth') => {
+        if (chatScrollRef.current) {
+            chatScrollRef.current.scrollTo({
+                top: chatScrollRef.current.scrollHeight,
+                behavior
+            });
+        }
+        messagesEndRef.current?.scrollIntoView({ behavior });
+    }, []);
 
     // 유저 로그인 시 성함/연락처 자동 채움
     useEffect(() => {
@@ -180,10 +191,15 @@ export default function AIChatbot({ isOpen, onClose, facilityContext, onOpenCons
         sessionStorage.setItem('chat_msg_count', messageCount.toString());
     }, [messageCount]);
 
-    /* ── 스크롤 (즉시 최하단) ── */
+    /* ── 스크롤 (즉시 또는 부드럽게 최하단) ── */
     useEffect(() => {
-        if (isOpen) messagesEndRef.current?.scrollIntoView({ behavior: 'instant' as ScrollBehavior });
-    }, [messages, isLoading, isOpen, streamingText]);
+        if (isOpen) {
+            const timer = setTimeout(() => {
+                scrollToBottom(showContactForm ? 'smooth' : 'instant');
+            }, 30);
+            return () => clearTimeout(timer);
+        }
+    }, [messages, isLoading, isOpen, streamingText, showContactForm, scrollToBottom]);
 
     /* ── Focus ── */
     useEffect(() => {
@@ -334,7 +350,7 @@ export default function AIChatbot({ isOpen, onClose, facilityContext, onOpenCons
         return parts.map((part, i) => {
             if (/^https?:\/\//.test(part)) {
                 // 시설 상세 페이지 URL인지 확인
-                const facilityMatch = part.match(/daedaesonson\.com\/facility\/(park-\d+)/);
+                const facilityMatch = part.match(/(?:daedaesonson\.com)?\/facility\/([a-zA-Z0-9_-]+)/);
                 if (facilityMatch) {
                     return (
                         <a key={i} href={`/facility/${facilityMatch[1]}`}
@@ -506,7 +522,7 @@ export default function AIChatbot({ isOpen, onClose, facilityContext, onOpenCons
                 )}
 
                 {/* ── 메시지 영역 ── */}
-                <div style={{
+                <div ref={chatScrollRef} style={{
                     flex: 1, overflowY: 'auto', padding: '20px 16px 12px',
                     background: '#fff',
                     WebkitOverflowScrolling: 'touch',
@@ -668,8 +684,9 @@ export default function AIChatbot({ isOpen, onClose, facilityContext, onOpenCons
                                             background: NAVY, color: '#fff', padding: '10px 14px',
                                             display: 'flex', alignItems: 'center', justifyContent: 'space-between',
                                         }}>
-                                            <div style={{ fontSize: 14, fontWeight: 700 }}>
-                                                💰 {msg.pricingTable.facilityName}
+                                            <div style={{ fontSize: 14, fontWeight: 700, display: 'flex', alignItems: 'center', gap: 6 }}>
+                                                <FileText size={16} />
+                                                <span>{msg.pricingTable.facilityName}</span>
                                             </div>
                                             {msg.pricingTable.isPublic !== null && (
                                                 <span style={{
@@ -710,7 +727,7 @@ export default function AIChatbot({ isOpen, onClose, facilityContext, onOpenCons
                                                     <div style={{
                                                         padding: '6px 14px', fontSize: 11, color: '#888',
                                                         background: '#fafafa', borderBottom: '1px solid #eee',
-                                                    }}>🔄 {sec.maintenance}</div>
+                                                    }}>관리비: {sec.maintenance}</div>
                                                 )}
                                             </div>
                                         ))}
@@ -1114,7 +1131,7 @@ export default function AIChatbot({ isOpen, onClose, facilityContext, onOpenCons
                                 background: '#fff', color: NAVY, border: `1px solid ${NAVY}`,
                                 fontSize: 13, fontWeight: 600, cursor: 'pointer',
                             }}>
-                                🔄 새 대화 시작
+                                새 대화 시작
                             </button>
                         </div>
                     ) : !user && messageCount >= MAX_TURNS ? (
@@ -1156,7 +1173,7 @@ export default function AIChatbot({ isOpen, onClose, facilityContext, onOpenCons
                                     background: '#fff', color: NAVY, border: `1px solid ${NAVY}`,
                                     fontSize: 13, fontWeight: 600, cursor: 'pointer',
                                 }}>
-                                    {user ? '🔄 새 상담 시작' : '🔑 로그인 후 계속하기'}
+                                    {user ? '새 상담 시작' : '로그인 후 계속하기'}
                                 </button>
                             </div>
                         </div>

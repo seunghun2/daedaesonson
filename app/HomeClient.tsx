@@ -528,10 +528,23 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
         f.coordinates.lng >= currentBounds.west &&
         f.coordinates.lng <= currentBounds.east
       );
+    } else {
+      // 🎯 초기 bounds가 아직 세팅되지 않은 경우 기본 중심(서울/경기 남부) 기준 필터링
+      const defaultSouth = 37.35;
+      const defaultNorth = 37.60;
+      const defaultWest = 126.85;
+      const defaultEast = 127.15;
+      base = base.filter(f =>
+        f.coordinates &&
+        f.coordinates.lat >= defaultSouth &&
+        f.coordinates.lat <= defaultNorth &&
+        f.coordinates.lng >= defaultWest &&
+        f.coordinates.lng <= defaultEast
+      );
     }
 
-    // 3. 정렬
-    return base.sort((a, b) => {
+    // 3. 정렬 (불변성 유지)
+    return [...base].sort((a, b) => {
       if (sortBy === 'price') return (a.priceRange?.min ?? 9999) - (b.priceRange?.min ?? 9999);
       if (sortBy === 'review') return (b.reviewCount || 0) - (a.reviewCount || 0);
       return Number(b.rating || 0) - Number(a.rating || 0);
@@ -588,9 +601,12 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
       router.push(`/facility/${facility.id}`);
       setMobileView('map');
     } else {
-      // 🖥️ PC: 왼쪽 패널에 상세 표시 + URL 업데이트
+      // 🖥️ PC: 왼쪽 패널에 상세 표시 + 지도 이동 + URL 업데이트
       setNearbyList(null); // 주변 시설 패널 닫기
       setShowMyInfo(false); // 내 정보 패널 닫기
+      if (mapRef.current && facility.coordinates) {
+        mapRef.current.panTo(facility.coordinates.lat, facility.coordinates.lng, 16, facility.id);
+      }
       const wasAlreadyOpen = !!selectedFacility;
       if (wasAlreadyOpen) {
         window.history.replaceState({ facilityId: facility.id }, '', `/facility/${facility.id}`);
@@ -807,10 +823,11 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
                   {completionResults.regions.map((region, i) => (
                     <Box
                       key={`reg-${i}`}
+                      data-testid="search-region-item"
                       px="md"
                       py={14} // Increased padding for better touch target
                       style={{ cursor: 'pointer', borderBottom: '1px solid #f8f9fa' }}
-                      className="hover:bg-gray-50"
+                      className="hover:bg-gray-50 search-region-item"
                       onClick={() => handleSelectRegion(region)}
                       onMouseDown={(e) => e.preventDefault()}
                     >
@@ -829,6 +846,7 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
                   {completionResults.facilities.map((fac, index) => (
                     <Box
                       key={`fac-${fac.id}-${index}`}
+                      data-testid="search-facility-item"
                       px="md"
                       py={14} // Increased padding for better touch target
                       style={{
@@ -836,7 +854,7 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
                         borderBottom: index === completionResults.facilities.length - 1 ? 'none' : '1px solid #f8f9fa',
                         transition: 'background-color 0.2s'
                       }}
-                      className="hover:bg-gray-50"
+                      className="hover:bg-gray-50 search-facility-item"
                       onClick={() => handleSelectFacility(fac)}
                       onMouseDown={(e) => e.preventDefault()}
                     >

@@ -166,6 +166,7 @@ function ListPageContent() {
     const visibleFacilities = finalFacilities.slice(0, visibleCount);
 
     const handleFacilityClick = (facility: Facility) => {
+        setSelectedFacility(facility);
         const params = new URLSearchParams(searchParams.toString());
         params.set('id', facility.id);
         router.push(`/list?${params.toString()}`, { scroll: false });
@@ -174,6 +175,7 @@ function ListPageContent() {
     };
 
     const handleCloseDetail = () => {
+        setSelectedFacility(null);
         const params = new URLSearchParams(searchParams.toString());
         params.delete('id');
         router.push(`/list?${params.toString()}`, { scroll: false });

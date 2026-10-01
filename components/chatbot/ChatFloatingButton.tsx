@@ -23,10 +23,12 @@ export default function ChatFloatingButton({ hidden = false }: { hidden?: boolea
 
     useEffect(() => {
         if (isOpen) return;
-        const dismissed = sessionStorage.getItem('chat_fab_dismissed');
+        const dismissedUntil = typeof window !== 'undefined' ? localStorage.getItem('chat_fab_dismissed_until') : null;
+        if (dismissedUntil && Number(dismissedUntil) > Date.now()) return;
+        const dismissed = typeof window !== 'undefined' ? sessionStorage.getItem('chat_fab_dismissed') : null;
         if (dismissed) return;
 
-        // 2초 후 라벨 슬라이드인
+        // 10초 후 라벨 슬라이드인 (사용자 탐색 방해 최소화)
         const t1 = setTimeout(() => {
             setShowLabel(true);
             setMsgIndex(0);
@@ -41,17 +43,18 @@ export default function ChatFloatingButton({ hidden = false }: { hidden?: boolea
                     setMsgFade(true); // 페이드인
                 }, 300);
             }, 3000);
-        }, 2000);
+        }, 10000);
 
-        // 전체 1사이클(9초) + 여유 4초 = 13초 후 자동 숨김
+        // 13초 동안 노출 후 자동 숨김
         const t2 = setTimeout(() => {
             if (rollingRef.current) clearInterval(rollingRef.current);
             setLabelVisible(false);
             setTimeout(() => {
                 setShowLabel(false);
                 sessionStorage.setItem('chat_fab_dismissed', '1');
+                localStorage.setItem('chat_fab_dismissed_until', String(Date.now() + 2 * 60 * 60 * 1000));
             }, 350);
-        }, 13000);
+        }, 23000);
 
         timerRef.current = [t1, t2];
         return () => {
@@ -74,6 +77,7 @@ export default function ChatFloatingButton({ hidden = false }: { hidden?: boolea
             setLabelVisible(false);
             setTimeout(() => setShowLabel(false), 300);
             sessionStorage.setItem('chat_fab_dismissed', '1');
+            localStorage.setItem('chat_fab_dismissed_until', String(Date.now() + 2 * 60 * 60 * 1000));
         }
     };
 

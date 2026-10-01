@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { useRouter, useParams } from 'next/navigation';
 import { Box, Text, Group, Stack, Button, TextInput, ActionIcon, LoadingOverlay, Textarea } from '@mantine/core';
-import { ChevronLeft, ChevronRight, X, Camera } from 'lucide-react';
+import { ChevronLeft, ChevronRight, X, Camera, Star } from 'lucide-react';
 import { formatRelativeTime } from '@/lib/format';
 
 export default function ReviewsListPage() {
@@ -22,6 +22,16 @@ export default function ReviewsListPage() {
     const [replyPassword, setReplyPassword] = useState('');
     const [replyPhotos, setReplyPhotos] = useState<string[]>([]);
     const replyFileInputRef = useRef<HTMLInputElement>(null);
+
+    // 후기 작성 모달 상태
+    const [writeModalOpened, setWriteModalOpened] = useState(false);
+    const [writeRating, setWriteRating] = useState(5);
+    const [writeAuthor, setWriteAuthor] = useState('');
+    const [writePassword, setWritePassword] = useState('');
+    const [writeContent, setWriteContent] = useState('');
+    const [writePhotos, setWritePhotos] = useState<string[]>([]);
+    const [isSubmittingReview, setIsSubmittingReview] = useState(false);
+    const writeFileInputRef = useRef<HTMLInputElement>(null);
 
     // 이미지 확대 (풀스크린 오버레이)
     const [enlargedImages, setEnlargedImages] = useState<string[]>([]);
@@ -121,6 +131,80 @@ export default function ReviewsListPage() {
             }
         } catch (e) {
             console.error(e);
+        }
+    };
+
+    const handleWritePhotoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const files = Array.from(e.target.files || []);
+        if (writePhotos.length + files.length > 5) {
+            alert('이미지는 최대 5장까지 첨부할 수 있습니다.');
+            return;
+        }
+        files.forEach(file => {
+            const reader = new FileReader();
+            reader.onload = () => {
+                setWritePhotos(prev => [...prev, reader.result as string]);
+            };
+            reader.readAsDataURL(file);
+        });
+        e.target.value = '';
+    };
+
+    const handleSubmitNewReview = async () => {
+        if (!writeContent.trim()) {
+            alert('후기 내용을 입력해주세요.');
+            return;
+        }
+        if (writeRating < 1 || writeRating > 5) {
+            alert('별점을 선택해주세요.');
+            return;
+        }
+        if (!writePassword.trim() || writePassword.length < 4) {
+            alert('비밀번호를 4자 이상 입력해주세요.');
+            return;
+        }
+
+        setIsSubmittingReview(true);
+        try {
+            const res = await fetch(`/api/facilities/${facilityId}/review`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    rating: writeRating,
+                    content: writeContent,
+                    author: writeAuthor.trim() || '방문자',
+                    password: writePassword,
+                    photos: writePhotos,
+                })
+            });
+
+            if (res.ok) {
+                const data = await res.json();
+                const newRev = data.review || {
+                    id: `rev-${Date.now()}`,
+                    author: writeAuthor.trim() || '방문자',
+                    content: writeContent,
+                    rating: writeRating,
+                    photos: writePhotos,
+                    createdAt: new Date().toISOString(),
+                    replies: []
+                };
+                setReviews(prev => [newRev, ...prev]);
+                setWriteContent('');
+                setWriteAuthor('');
+                setWritePassword('');
+                setWritePhotos([]);
+                setWriteRating(5);
+                setWriteModalOpened(false);
+                alert('후기가 등록되었습니다!');
+            } else {
+                const err = await res.json();
+                alert(err.error || '후기 등록에 실패했습니다.');
+            }
+        } catch {
+            alert('네트워크 오류가 발생했습니다.');
+        } finally {
+            setIsSubmittingReview(false);
         }
     };
 
@@ -227,11 +311,23 @@ export default function ReviewsListPage() {
                     zIndex: 10
                 }}
             >
-                <Group gap="xs">
-                    <ActionIcon variant="transparent" color="dark" onClick={() => router.back()}>
-                        <ChevronLeft size={20} />
-                    </ActionIcon>
-                    <Text fw={600} size="md">이야기 {reviews.length}개</Text>
+                <Group justify="space-between" align="center">
+                    <Group gap="xs">
+                        <ActionIcon variant="transparent" color="dark" onClick={() => router.back()}>
+                            <ChevronLeft size={20} />
+                        </ActionIcon>
+                        <Text fw={600} size="md">이야기 {reviews.length}개</Text>
+                    </Group>
+                    <Button
+                        size="xs"
+                        variant="filled"
+                        color="#1D0098"
+                        radius="xl"
+                        onClick={() => setWriteModalOpened(true)}
+                        styles={{ root: { fontWeight: 600 } }}
+                    >
+                        이야기 작성
+                    </Button>
                 </Group>
             </Box>
 
@@ -379,7 +475,17 @@ export default function ReviewsListPage() {
                     </Stack>
                 ) : (
                     <Box ta="center" py="xl">
-                        <Text size="sm" c="dimmed">아직 이야기가 없습니다.</Text>
+                        <Text size="sm" c="dimmed" mb="md">아직 등록된 이야기가 없습니다.</Text>
+                        <Button
+                            size="sm"
+                            variant="light"
+                            color="#1D0098"
+                            radius="xl"
+                            onClick={() => setWriteModalOpened(true)}
+                            styles={{ root: { fontWeight: 600 } }}
+                        >
+                            첫 이야기 남기기
+                        </Button>
                     </Box>
                 )}
             </Box>
@@ -622,6 +728,147 @@ export default function ReviewsListPage() {
                         </Group>
                     </Box>
                     <style>{`@keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }`}</style>
+                </>
+            )}
+
+            {/* ✍️ 이야기(후기) 작성 바텀시트 모달 */}
+            {writeModalOpened && (
+                <>
+                    <Box
+                        pos="fixed" top={0} left={0} w="100%" h="100%"
+                        style={{ zIndex: 9998, backgroundColor: 'rgba(0,0,0,0.4)' }}
+                        onClick={() => setWriteModalOpened(false)}
+                    />
+                    <Box
+                        pos="fixed" bottom={0} left={0} w="100%"
+                        style={{
+                            zIndex: 9999, backgroundColor: 'white',
+                            borderRadius: '16px 16px 0 0',
+                            boxShadow: '0 -4px 20px rgba(0,0,0,0.15)',
+                            animation: 'slideUp 0.15s ease-out',
+                            maxHeight: '90vh', overflowY: 'auto',
+                        }}
+                    >
+                        <Box ta="center" pt={8} pb={4}>
+                            <Box mx="auto" w={40} h={4} style={{ backgroundColor: '#dee2e6', borderRadius: 2 }} />
+                        </Box>
+                        <Box p="md" pt={4} maw={600} mx="auto">
+                            <Group justify="space-between" mb="md">
+                                <Text fw={700} size="lg">이야기 남기기</Text>
+                                <ActionIcon variant="subtle" color="gray" onClick={() => setWriteModalOpened(false)}>
+                                    <X size={20} />
+                                </ActionIcon>
+                            </Group>
+
+                            {/* 별점 선택 */}
+                            <Box mb="md">
+                                <Text size="xs" fw={600} c="dimmed" mb={6}>별점</Text>
+                                <Group gap={6}>
+                                    {[1, 2, 3, 4, 5].map((star) => (
+                                        <ActionIcon
+                                            key={star}
+                                            variant="transparent"
+                                            size="lg"
+                                            onClick={() => setWriteRating(star)}
+                                        >
+                                            <Star
+                                                size={28}
+                                                fill={star <= writeRating ? '#fab005' : 'none'}
+                                                color={star <= writeRating ? '#fab005' : '#ced4da'}
+                                            />
+                                        </ActionIcon>
+                                    ))}
+                                    <Text size="sm" fw={600} c="dark.7" ml="xs">
+                                        {writeRating}점
+                                    </Text>
+                                </Group>
+                            </Box>
+
+                            <Group gap="xs" mb="sm">
+                                <TextInput
+                                    placeholder="닉네임 (미입력 시 '방문자')"
+                                    size="sm"
+                                    value={writeAuthor}
+                                    onChange={(e) => setWriteAuthor(e.currentTarget.value)}
+                                    style={{ flex: 1 }}
+                                    styles={{ input: { borderRadius: 10, backgroundColor: '#f8f9fa', border: '1px solid #e9ecef' } }}
+                                />
+                                <TextInput
+                                    placeholder="비밀번호 4자리 이상"
+                                    size="sm"
+                                    type="password"
+                                    value={writePassword}
+                                    onChange={(e) => setWritePassword(e.currentTarget.value)}
+                                    style={{ flex: 1 }}
+                                    styles={{ input: { borderRadius: 10, backgroundColor: '#f8f9fa', border: '1px solid #e9ecef' } }}
+                                />
+                            </Group>
+
+                            <Textarea
+                                placeholder="시설에 대한 경험이나 이야기를 자유롭게 남겨주세요."
+                                size="sm"
+                                minRows={4}
+                                maxRows={8}
+                                autosize
+                                value={writeContent}
+                                onChange={(e) => setWriteContent(e.currentTarget.value)}
+                                styles={{ input: { borderRadius: 10, backgroundColor: '#f8f9fa', border: '1px solid #e9ecef', fontSize: '14px' } }}
+                            />
+
+                            {/* 사진 미리보기 */}
+                            {writePhotos.length > 0 && (
+                                <Group gap={8} mt="sm">
+                                    {writePhotos.map((photo, idx) => (
+                                        <Box key={idx} pos="relative" style={{ borderRadius: '10px', overflow: 'hidden' }}>
+                                            <img src={photo} alt="첨부 사진" onError={(e) => { e.currentTarget.style.display = 'none'; }} style={{ width: 64, height: 64, objectFit: 'cover', borderRadius: '10px', border: '1px solid #e9ecef' }} />
+                                            <ActionIcon
+                                                variant="filled" color="dark" size={18} radius="xl" pos="absolute" top={4} right={4}
+                                                onClick={() => setWritePhotos(prev => prev.filter((_, i) => i !== idx))}
+                                            >
+                                                <X size={10} />
+                                            </ActionIcon>
+                                        </Box>
+                                    ))}
+                                </Group>
+                            )}
+
+                            <Group justify="space-between" mt="md" pb="env(safe-area-inset-bottom, 16px)">
+                                <Group gap={6}>
+                                    <input
+                                        type="file"
+                                        accept="image/*"
+                                        multiple
+                                        ref={writeFileInputRef}
+                                        style={{ display: 'none' }}
+                                        onChange={handleWritePhotoUpload}
+                                    />
+                                    <ActionIcon
+                                        variant="light"
+                                        color="gray"
+                                        size="lg"
+                                        radius="xl"
+                                        onClick={() => writeFileInputRef.current?.click()}
+                                    >
+                                        <span className="material-symbols-outlined" style={{ fontSize: '20px', color: '#868e96' }}>photo_camera</span>
+                                    </ActionIcon>
+                                    <Text size="xs" c="dimmed">{writePhotos.length}/5</Text>
+                                </Group>
+                                <Button
+                                    size="sm"
+                                    variant="filled"
+                                    color="#1D0098"
+                                    radius="xl"
+                                    px="xl"
+                                    onClick={handleSubmitNewReview}
+                                    loading={isSubmittingReview}
+                                    disabled={!writeContent.trim() || !writePassword.trim() || writePassword.length < 4}
+                                    styles={{ root: { fontWeight: 600 } }}
+                                >
+                                    등록하기
+                                </Button>
+                            </Group>
+                        </Box>
+                    </Box>
                 </>
             )}
         </Box>

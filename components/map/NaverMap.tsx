@@ -1298,18 +1298,24 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
             });
             mapInstanceRef.current = map;
 
-            // 🔥 핵심: Idle(멈춤) 이벤트에서 마커 업데이트 호출
+            const notifyBounds = () => {
+                const cb = propsRef.current.onBoundsChanged;
+                if (cb && map) {
+                    const bounds = map.getBounds();
+                    if (bounds) {
+                        const sw = bounds.getSW();
+                        const ne = bounds.getNE();
+                        cb({
+                            south: sw.lat(), north: ne.lat(), west: sw.lng(), east: ne.lng(),
+                        });
+                    }
+                }
+            };
+
+            // 🔥 핵심: Idle(멈춤) 이벤트에서 마커 업데이트 및 bounds 알림
             window.naver.maps.Event.addListener(map, 'idle', () => {
                 // 부모에게 bounds 알림
-                const cb = propsRef.current.onBoundsChanged;
-                if (cb) {
-                    const bounds = map.getBounds();
-                    const sw = bounds.getSW();
-                    const ne = bounds.getNE();
-                    cb({
-                        south: sw.lat(), north: ne.lat(), west: sw.lng(), east: ne.lng(),
-                    });
-                }
+                notifyBounds();
 
                 // 중심 주소 업데이트
                 updateCenterAddress(map);
@@ -1496,8 +1502,9 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
             // updateVisibleMarkers() will be called by the useEffect when isMapLoaded becomes true
             setIsMapLoaded(true);
 
-            // 🎯 초기 로드 시에도 중심 주소 업데이트 (버튼 바로 표시)
+            // 🎯 초기 로드 시에도 중심 주소 및 bounds 업데이트
             updateCenterAddress(map);
+            notifyBounds();
 
         } catch (e) {
             console.error('❌ 지도 초기화 에러:', e);

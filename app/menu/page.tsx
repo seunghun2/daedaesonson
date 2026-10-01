@@ -52,7 +52,7 @@ export default function MenuPage() {
                     <Text size="lg" fw={700}>전체</Text>
                     <Group gap="lg">
                         <Search size={20} color="#495057" style={{ cursor: 'pointer' }} onClick={() => router.push('/search')} />
-                        <Settings size={20} color="#495057" style={{ cursor: 'pointer' }} />
+                        <Settings size={20} color="#495057" style={{ cursor: 'pointer' }} onClick={() => { if (user) { router.push('/myinfo'); } else { setShowLogin(true); } }} />
                     </Group>
                 </Group>
             </Box>

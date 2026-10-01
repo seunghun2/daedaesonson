@@ -83,7 +83,7 @@ export default function FacilityList({ facilities, loading, onFacilityClick, sel
                                 transition: 'all 0.2s ease'
                             }}
                         >
-                            <FacilityCard facility={fac} onClick={() => { }} />
+                            <FacilityCard facility={fac} onClick={() => onFacilityClick(fac)} />
                         </Box>
                     ))}
 
