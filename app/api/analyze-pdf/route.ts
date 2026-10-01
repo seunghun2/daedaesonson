@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import { requireAdmin } from '@/lib/adminAuth';
 
-// API Key 설정 (환경변수 체크)
+export const maxDuration = 60;
 const API_KEY = process.env.GEMINI_API_KEY;
 
 
