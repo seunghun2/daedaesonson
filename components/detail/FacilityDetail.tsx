@@ -1,10 +1,10 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useMemo } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Script from 'next/script';
 import NextImage from 'next/image';
 import { Image, Text, Badge, Group, Button, Stack, Box, Paper, Modal, Tabs, Collapse, ActionIcon, Rating, Textarea, TextInput, LoadingOverlay, useMantineTheme, Accordion, Table, Switch, Select, Drawer, Tooltip, Popover } from '@mantine/core';
 import { useDisclosure, useMediaQuery } from '@mantine/hooks';
-import { Car, Utensils, Accessibility, Store, Navigation, Globe, ChevronLeft, ChevronRight, TrendingUp, ChevronDown, ChevronUp, Star, Pencil, Camera, X, ImageIcon, Plus, Trash, Archive, Mountain, Trees, Layers, Lock, Unlock, Check, ExternalLink, Flame, MapPin, Share2, Headphones, MessageSquare, User, Copy, Trash2, Heart } from 'lucide-react';
+import { Car, Utensils, Accessibility, Store, Navigation, Globe, ChevronLeft, ChevronRight, TrendingUp, ChevronDown, ChevronUp, Star, Pencil, Camera, X, ImageIcon, Plus, Trash, Archive, Mountain, Trees, Layers, Lock, Unlock, Check, ExternalLink, Flame, MapPin, Share2, Headphones, MessageSquare, User, Copy, Trash2, Heart, Phone } from 'lucide-react';
 import InquiryPanel from './InquiryPanel';
 import CorrectionRequestModal from './CorrectionRequestModal';
 import ScrollableTabsList from '@/components/ScrollableTabsList';
@@ -1767,33 +1767,36 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
 
     // 🔥 랜덤 조회수 설정 제거됨 - API 호출로 대체 (line 341-354)
 
-    // 갤러리 이미지 처리 (엄격한 필터링)
-    // 🔥 실제 시설 사진만 표시 (thumbnail/로고 제외)
-    // 🚀 imageGallery가 아직 없으면 thumbnail로 즉시 표시 (API 응답 전)
-    let rawImages: string[] = [];
-    if (Array.isArray(facility.imageGallery) && facility.imageGallery.length > 0) {
-        rawImages = facility.imageGallery;
-    } else if (Array.isArray(facility.images) && facility.images.length > 0) {
-        rawImages = facility.images;
-    } else if (typeof facility.images === 'string' && facility.images.trim()) {
-        try {
-            const p = JSON.parse(facility.images);
-            if (Array.isArray(p)) rawImages = p;
-            else rawImages = facility.images.split(',').map((s: string) => s.trim()).filter(Boolean);
-        } catch {
-            rawImages = facility.images.split(',').map((s: string) => s.trim()).filter(Boolean);
+    // 갤러리 이미지 처리 (엄격한 필터링) - useMemo로 렌더링 최적화
+    const { galleryImages, visibleImages, extraInfoCount } = useMemo(() => {
+        let rawImages: string[] = [];
+        if (Array.isArray(facility.imageGallery) && facility.imageGallery.length > 0) {
+            rawImages = facility.imageGallery;
+        } else if (Array.isArray(facility.images) && facility.images.length > 0) {
+            rawImages = facility.images;
+        } else if (typeof facility.images === 'string' && facility.images.trim()) {
+            try {
+                const p = JSON.parse(facility.images);
+                if (Array.isArray(p)) rawImages = p;
+                else rawImages = facility.images.split(',').map((s: string) => s.trim()).filter(Boolean);
+            } catch {
+                rawImages = facility.images.split(',').map((s: string) => s.trim()).filter(Boolean);
+            }
+        } else if (facility.thumbnail) {
+            rawImages = [facility.thumbnail];
         }
-    } else if (facility.thumbnail) {
-        rawImages = [facility.thumbnail];
-    }
 
-    const galleryImages = rawImages
-        .filter((img: string) => img && typeof img === 'string' && img.trim() !== '')
-        .filter((img: string) => img.startsWith('http') || img.startsWith('blob:') || img.startsWith('data:') || img.startsWith('/') || img.startsWith('.'))
-        .filter((img: string) => !img.includes('/logos/') && !img.includes('logo')); // 로고 이미지 제외
+        const filtered = rawImages
+            .filter((img: string) => img && typeof img === 'string' && img.trim() !== '')
+            .filter((img: string) => img.startsWith('http') || img.startsWith('blob:') || img.startsWith('data:') || img.startsWith('/') || img.startsWith('.'))
+            .filter((img: string) => !img.includes('/logos/') && !img.includes('logo')); // 로고 이미지 제외
 
-    const visibleImages = galleryImages.slice(0, 2);
-    const extraInfoCount = galleryImages.length > 2 ? galleryImages.length - 2 : 0;
+        return {
+            galleryImages: filtered,
+            visibleImages: filtered.slice(0, 2),
+            extraInfoCount: filtered.length > 2 ? filtered.length - 2 : 0,
+        };
+    }, [facility.imageGallery, facility.images, facility.thumbnail]);
 
     // 이미지 클릭 핸들러
     const handleImageClick = (index: number) => {
@@ -1860,7 +1863,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
         <>
             <Box
                 ref={containerRef}
-                className="facility-detail-container"
+                className={`facility-detail-container ${isMobile ? 'facility-detail-pb-safe' : ''}`}
                 style={{ backgroundColor: '#302E92', height: '100%', position: 'relative', overflowY: 'auto', touchAction: 'pan-y', overscrollBehavior: 'contain', WebkitOverflowScrolling: 'touch' } as React.CSSProperties}
                 onTouchStart={(e) => e.stopPropagation()} // 🚀 지도 터치 간섭 방지 (재적용)
             >
@@ -1884,6 +1887,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                     onClick={onClose}
                                     aria-label="뒤로가기"
                                     data-testid="detail-back-btn"
+                                    className="touch-instant touch-press"
                                     style={{ flexShrink: 0 }}
                                 >
                                     <ChevronLeft size={22} color="white" />
@@ -1931,6 +1935,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                         w={44}
                                         h={44}
                                         aria-label="지도에서 보기"
+                                        className="touch-instant touch-press"
                                         onClick={(e) => {
                                             e.stopPropagation();
                                             e.preventDefault();
@@ -1956,6 +1961,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                     w={44}
                                     h={44}
                                     aria-label="공유하기"
+                                    className="touch-instant touch-press"
                                     onClick={(e) => {
                                         e.stopPropagation();
                                         e.preventDefault();
@@ -1970,6 +1976,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                         color="white"
                                         w={36}
                                         h={36}
+                                        className="touch-instant touch-press"
                                         onClick={(e) => {
                                             e.stopPropagation();
                                             e.preventDefault();
@@ -1995,6 +2002,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                             width: '100%',
                         }}>
                             <div
+                                className="touch-instant touch-press"
                                 style={{ display: 'flex', alignItems: 'center', gap: '6px', cursor: 'pointer', padding: '10px 12px', flex: 1, justifyContent: 'center' }}
                                 onClick={() => {
                                     closeAllPanels();
@@ -2022,6 +2030,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                 data-testid="favorite-btn"
                                 aria-label="관심 장소"
                                 role="button"
+                                className="touch-instant touch-press"
                                 style={{ display: 'flex', alignItems: 'center', gap: '6px', cursor: 'pointer', padding: '10px 12px', flex: 1, justifyContent: 'center' }}
                                 onClick={() => {
                                     if (!user) {
@@ -2055,6 +2064,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                             <div style={{ width: '1px', backgroundColor: 'rgba(255,255,255,0.12)', alignSelf: 'stretch' }} />
 
                             <div
+                                className="touch-instant touch-press"
                                 style={{ display: 'flex', alignItems: 'center', gap: '6px', cursor: 'pointer', padding: '10px 12px', flex: 1, justifyContent: 'center' }}
                                 onClick={() => {
                                     if (isDesktop) {
@@ -5393,6 +5403,102 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                     </>
                 )}
             </Box >
+
+            {/* 📱 모바일 전용: 엄지 영역에 고정되는 하단 플로팅 전화 & 상담 도크 */}
+            {isMobile && !consultModalOpened && !inquiryOpen && !correctionOpen && !opened && (
+                <div
+                    className="touch-instant"
+                    style={{
+                        position: 'fixed',
+                        bottom: 0,
+                        left: 0,
+                        right: 0,
+                        zIndex: 999,
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '8px',
+                        padding: '10px 16px',
+                        paddingBottom: 'calc(10px + env(safe-area-inset-bottom, 12px))',
+                        backgroundColor: 'rgba(255, 255, 255, 0.96)',
+                        backdropFilter: 'blur(16px)',
+                        WebkitBackdropFilter: 'blur(16px)',
+                        borderTop: '1px solid rgba(0, 0, 0, 0.08)',
+                        boxShadow: '0 -4px 16px rgba(0, 0, 0, 0.06)',
+                        transform: 'translateZ(0)',
+                    }}
+                >
+                    {/* 전화 상담 버튼 (시설 전화번호가 있을 때) */}
+                    {facility.phone && (
+                        <a
+                            href={`tel:${facility.phone.replace(/[^0-9]/g, '')}`}
+                            className="touch-press"
+                            onClick={() => {
+                                if (window.gtag) {
+                                    window.gtag('event', '하단전화상담_클릭', {
+                                        시설ID: facility.id,
+                                        시설명: facility.name,
+                                        전화번호: facility.phone,
+                                    });
+                                }
+                            }}
+                            style={{
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                gap: '6px',
+                                height: '46px',
+                                padding: '0 16px',
+                                borderRadius: '12px',
+                                backgroundColor: '#F3F0FF',
+                                color: '#302E92',
+                                fontWeight: 700,
+                                fontSize: '14px',
+                                textDecoration: 'none',
+                                border: '1px solid rgba(48, 46, 146, 0.15)',
+                                flexShrink: 0,
+                            }}
+                        >
+                            <Phone size={17} color="#302E92" />
+                            <span>전화상담</span>
+                        </a>
+                    )}
+
+                    {/* 간편 상담 예약 버튼 */}
+                    <button
+                        className="touch-press"
+                        onClick={() => {
+                            closeAllPanels();
+                            setConsultModalOpened(true);
+                            if (window.gtag) {
+                                window.gtag('event', '하단상담예약_클릭', {
+                                    시설ID: facility.id,
+                                    시설명: facility.name,
+                                });
+                            }
+                        }}
+                        style={{
+                            flex: 1,
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            gap: '8px',
+                            height: '46px',
+                            borderRadius: '12px',
+                            background: 'linear-gradient(135deg, #302E92 0%, #4c46b5 100%)',
+                            color: '#ffffff',
+                            fontWeight: 700,
+                            fontSize: '15px',
+                            border: 'none',
+                            boxShadow: '0 4px 12px rgba(48, 46, 146, 0.25)',
+                            cursor: 'pointer',
+                        }}
+                    >
+                        <Headphones size={18} color="#ffffff" />
+                        <span>1초 간편 상담예약</span>
+                    </button>
+                </div>
+            )}
+
             <LoginModal isOpen={showLoginForFavorite} onClose={() => setShowLoginForFavorite(false)} />
             {/* 즐겨찾기 토스트 - PC: 상세 패널 기준 하단 / 모바일: 뷰포트 기준 */}
             {favoriteToast && (

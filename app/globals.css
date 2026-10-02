@@ -28,6 +28,29 @@ body {
   transform: translateZ(0);
 }
 
+/* 🚀 모바일 터치 피드백 & 0ms 지연 최적화 */
+.touch-instant {
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+  -webkit-user-select: none;
+  cursor: pointer;
+}
+
+.touch-press {
+  transition: transform 0.12s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.12s ease;
+}
+
+.touch-press:active {
+  transform: scale(0.96);
+  opacity: 0.85;
+}
+
+/* 시설 상세 하단 플로팅 도크 안전 패딩 */
+.facility-detail-pb-safe {
+  padding-bottom: calc(72px + env(safe-area-inset-bottom, 16px)) !important;
+}
+
 /* 🎯 마커 통~~통~~통~~ 무한 바운스 애니메이션 */
 @keyframes markerBounce {
 

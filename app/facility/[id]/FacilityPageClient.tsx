@@ -122,11 +122,13 @@ export default function FacilityPageClient({ facilityBasic }: FacilityPageClient
         if (!enriched.current) {
             enriched.current = true;
             fetchFacilityData();
-            // 📱 모바일: 주변 시설 추천용 경량 목록 로드 (/api/facilities)
-            fetch('/api/facilities')
-                .then(res => res.ok ? res.json() : [])
-                .then(data => { if (Array.isArray(data)) setAllFacilities(data); })
-                .catch(() => {});
+            // 📱 모바일: 주변 시설 추천용 목록은 화면 전환 애니메이션 완료 후 지연 로드 (초기 60FPS 보장)
+            const recTimer = setTimeout(() => {
+                fetch('/api/facilities')
+                    .then(res => res.ok ? res.json() : [])
+                    .then(data => { if (Array.isArray(data)) setAllFacilities(data); })
+                    .catch(() => {});
+            }, 600);
         }
 
         // 뒤로가기 등으로 페이지가 다시 보일 때 데이터 새로고침
