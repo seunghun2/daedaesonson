@@ -619,17 +619,6 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
         }, 180);
     };
 
-    // 🚀 [초기 로딩 최적화] 처음엔 30개만 렌더링하고, 잠시 후 전체 렌더링
-    const [renderLimit, setRenderLimit] = useState(100);
-
-    useEffect(() => {
-        // 0.5초 뒤에 제한 해제 (사용자가 지도 보고 있을 때 스윽 로딩)
-        const timer = setTimeout(() => {
-            setRenderLimit(facilities.length); // 전체 로딩
-        }, 500);
-        return () => clearTimeout(timer);
-    }, [facilities.length]);
-
     // 🚀 [핵심 수정] 시설 데이터가 변경될 때마다 좌표 오프셋을 **영구 고정** (Global Registry)
     // 화면에 누가 보이고 안 보이고, 필터링이 되든 말든, 한 번 자리를 잡은 놈은 절대 안 움직임.
     // 🚀 [핵심 수정] 시설별 고정 좌표를 **캐시**하여 절대 변경되지 않도록 함
@@ -809,8 +798,8 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
 
         const createdMarkers: any[] = [];
 
-        // 2. 시설에 대해 개별 마커 점진적 생성 (초기 100개 우선 렌더 후 전체 확장)
-        for (const fac of processedFacilities.slice(0, renderLimit)) {
+        // 2. 모든 시설에 대해 개별 마커 생성 (전체 1,495개 초기 완전 로딩)
+        for (const fac of processedFacilities) {
             if (!fac.fixedCoordinates?.lat || !fac.fixedCoordinates?.lng) continue;
 
             const { lat, lng } = fac.fixedCoordinates;
@@ -1111,7 +1100,7 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
         // 🔒 초기화 완료 플래그
         isMarkersInitializedRef.current = true;
 
-    }, [processedFacilities, regionGroups, provinceGroups, regionGroupCenters, onMarkerClick, renderLimit]);
+    }, [processedFacilities, regionGroups, provinceGroups, regionGroupCenters, onMarkerClick]);
 
     // 🚀 Effect: 데이터 변경 시 업데이트 (최적화: 즉시 1회만 호출)
     useEffect(() => {

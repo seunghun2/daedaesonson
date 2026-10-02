@@ -940,39 +940,6 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
               )}
             </Box>
 
-            {/* 👤 PC 상단 로그인/가입 버튼 */}
-            {!isMobile && (
-              <button
-                onClick={() => {
-                  if (user) {
-                    setShowMyInfo(true);
-                    setSelectedFacility(null);
-                  } else {
-                    setShowLoginFromMap(true);
-                  }
-                }}
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: 5,
-                  padding: '7px 11px',
-                  borderRadius: 8,
-                  border: selectedFacility ? '1px solid rgba(255,255,255,0.4)' : '1px solid #dee2e6',
-                  backgroundColor: selectedFacility ? 'rgba(255,255,255,0.15)' : '#ffffff',
-                  color: selectedFacility ? '#ffffff' : '#302E92',
-                  fontSize: 13,
-                  fontWeight: 600,
-                  cursor: 'pointer',
-                  whiteSpace: 'nowrap',
-                  flexShrink: 0,
-                  transition: 'all 0.15s ease',
-                }}
-              >
-                <User size={15} />
-                <span>{user ? (user.user_metadata?.full_name || '마이') : '로그인/가입'}</span>
-              </button>
-            )}
-
           </Group>
 
           {/* PC 필터 버튼 (다중 선택) - PC 상세보기 시 숨김 */}
