@@ -20,8 +20,7 @@ import {
     BookOpen as IconBlog,
     Bot as IconBot,
     Gift as IconGift,
-    List as IconList,
-    Coins as IconCoin
+    List as IconList
 } from 'lucide-react';
 
 import { usePathname, useRouter } from 'next/navigation';
@@ -157,7 +156,6 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         { label: '회원 관리', icon: IconBriefcase, link: '/admin/members' },
         { label: '시설 데이터 관리', icon: IconDatabase, link: '/admin/upload' },
         { label: '시설 목록', icon: IconList, link: '/admin/facilities' },
-        { label: '가격 관리', icon: IconCoin, link: '/admin/pricing-v3' },
         { label: '상담신청관리', icon: IconPhoneCall, link: '/admin/consults' },
         { label: '맞춤추천관리', icon: IconGift, link: '/admin/recommendations' },
         { label: 'AI 상담 관리', icon: IconBot, link: '/admin/chat-logs' },
