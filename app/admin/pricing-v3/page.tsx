@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { Loader2, Trash2, Save, RefreshCw, Star, ArrowUp, ArrowDown, Check, X } from 'lucide-react';
+import { Loader2, Trash2, Save, RefreshCw, Star, ArrowUp, ArrowDown, Check, X, Download } from 'lucide-react';
 
 // --- Types ---
 interface PricingRow {
@@ -56,30 +56,40 @@ export default function PricingManagerV3() {
             .then(res => res.json())
             .then(data => {
                 const newRows: PricingRow[] = [];
-                if (data.pricing) {
+                const pricingSource = data.pricing || data.priceInfo?.priceTable;
+
+                if (pricingSource && typeof pricingSource === 'object') {
                     // Extract rows from '매장묘', '봉안당', '수목장', '옵션', '기타'
-                    // We define a fixed order for categories to appear in the list initially logic-wise, 
-                    // though display filtering handles the UI order.
                     const categories = ['매장묘', '봉안당', '수목장', '옵션', '기타'];
 
                     // First, standard categories
                     categories.forEach(cat => {
-                        if (data.pricing[cat]?.rows) {
-                            data.pricing[cat].rows.forEach((r: any, idx: number) => {
+                        if (pricingSource[cat]?.rows) {
+                            pricingSource[cat].rows.forEach((r: any, idx: number) => {
                                 newRows.push(createRow(selectedFacility, data.name, cat, r, idx));
                             });
                         }
                     });
 
                     // Then, any other categories found in the JSON but not in standard list
-                    Object.keys(data.pricing).forEach(key => {
-                        if (!categories.includes(key) && data.pricing[key]?.rows) {
-                            data.pricing[key].rows.forEach((r: any, idx: number) => {
+                    Object.keys(pricingSource).forEach(key => {
+                        if (!categories.includes(key) && pricingSource[key]?.rows) {
+                            pricingSource[key].rows.forEach((r: any, idx: number) => {
                                 newRows.push(createRow(selectedFacility, data.name, key, r, idx));
                             });
                         }
                     });
+                } else if (data.priceInfo?.standardizedPrices && Array.isArray(data.priceInfo.standardizedPrices)) {
+                    data.priceInfo.standardizedPrices.forEach((group: any) => {
+                        const cat = group.subType || group.serviceType || '기타';
+                        if (Array.isArray(group.rows)) {
+                            group.rows.forEach((r: any, idx: number) => {
+                                newRows.push(createRow(selectedFacility, data.name, cat, r, idx));
+                            });
+                        }
+                    });
                 }
+
                 setRows(newRows);
                 setLoading(false);
             })
@@ -95,11 +105,11 @@ export default function PricingManagerV3() {
         facilityId: facId,
         facilityName: facName,
         category: cat,
-        name: r.name,
-        desc: r.description || '',
-        price: r.price,
+        name: r.groupType ? `[${r.groupType}] ${r.name}` : (r.name || '항목명 없음'),
+        desc: r.note || r.grade || r.desc || r.description || '',
+        price: typeof r.price === 'number' ? r.price : (parseInt(String(r.price).replace(/[^0-9]/g, '')) || 0),
         isDeleted: false,
-        isRepresentative: r.isRepresentative || false
+        isRepresentative: Boolean(r.isRepresentative)
     });
 
     // --- Actions ---
@@ -262,33 +272,45 @@ export default function PricingManagerV3() {
             {/* 2. Main Workspace */}
             <div className="flex-1 flex flex-col min-w-0 h-screen overflow-hidden">
                 {/* Header Toolbar */}
-                <div className="bg-white border-b border-slate-200 px-8 py-4 flex justify-between items-center shadow-sm z-10 flex-shrink-0 h-20">
-                    <div>
-                        <h1 className="text-2xl font-bold text-slate-800 flex items-center gap-3">
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '14px 24px', backgroundColor: '#ffffff', borderBottom: '1px solid #e2e8f0', minHeight: '64px', gap: '16px', flexWrap: 'wrap' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '12px', minWidth: 0 }}>
+                        <div style={{ fontSize: '18px', fontWeight: 700, color: '#1e293b', whiteSpace: 'nowrap' }}>
                             가격 정보 관리 V3
-                            {selectedFacility && (
-                                <span className="text-sm font-medium text-slate-500 bg-slate-100 px-3 py-1 rounded-full border border-slate-200">
-                                    {facilities.find(f => f.id === selectedFacility)?.name} ({rows.length} items)
-                                </span>
-                            )}
-                        </h1>
+                        </div>
+                        {selectedFacility && (
+                            <span style={{ fontSize: '13px', fontWeight: 600, color: '#475569', backgroundColor: '#f1f5f9', padding: '4px 10px', borderRadius: '9999px', border: '1px solid #cbd5e1', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', maxWidth: '300px' }}>
+                                {facilities.find(f => f.id === selectedFacility)?.name} ({rows.length}개 항목)
+                            </span>
+                        )}
                     </div>
-                    <div className="flex gap-3">
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexShrink: 0 }}>
+                        <a
+                            href="/data/facility_pricing_audit_sheet.csv"
+                            download="대대손손_전국장사시설_가격표_전수조사_리터치시트.csv"
+                            style={{ display: 'inline-flex', alignItems: 'center', padding: '8px 14px', borderRadius: '8px', border: '1px solid #a7f3d0', backgroundColor: '#ecfdf5', color: '#047857', fontSize: '13px', fontWeight: 600, textDecoration: 'none', cursor: 'pointer', transition: 'all 0.15s ease' }}
+                            title="1,495개 시설의 웹사이트 및 가격현황이 우선순위(S/A/B/C)별로 정리된 마스터 시트를 다운로드합니다."
+                        >
+                            <Download style={{ width: '16px', height: '16px', marginRight: '6px', color: '#059669' }} />
+                            전수조사 시트 (CSV)
+                        </a>
                         <button
                             onClick={() => setRows(prev => prev.map(r => ({ ...r, isDeleted: false })))}
-                            className="flex items-center px-4 py-2 border border-slate-200 text-slate-600 rounded-lg hover:bg-slate-50 text-sm font-medium transition-colors"
+                            style={{ display: 'inline-flex', alignItems: 'center', padding: '8px 12px', borderRadius: '8px', border: '1px solid #e2e8f0', backgroundColor: '#ffffff', color: '#475569', fontSize: '13px', fontWeight: 500, cursor: 'pointer' }}
                         >
-                            <RefreshCw className="w-4 h-4 mr-2" /> 초기화
+                            <RefreshCw style={{ width: '14px', height: '14px', marginRight: '6px' }} /> 초기화
                         </button>
-                        <button onClick={handleAutoFilter} className="px-4 py-2 border border-rose-200 text-rose-600 rounded-lg text-sm font-medium hover:bg-rose-50 flex items-center transition-colors">
-                            <Trash2 className="w-4 h-4 mr-2" /> 자동 쓰레기 정리
+                        <button 
+                            onClick={handleAutoFilter} 
+                            style={{ display: 'inline-flex', alignItems: 'center', padding: '8px 12px', borderRadius: '8px', border: '1px solid #fecdd3', backgroundColor: '#fff1f2', color: '#e11d48', fontSize: '13px', fontWeight: 500, cursor: 'pointer' }}
+                        >
+                            <Trash2 style={{ width: '14px', height: '14px', marginRight: '6px' }} /> 자동 쓰레기 정리
                         </button>
                         <button
                             onClick={handleSave}
                             disabled={isSaving}
-                            className={`px-6 py-2 bg-blue-600 text-white rounded-lg text-sm font-bold shadow-md shadow-blue-200 flex items-center gap-2 transition-all active:scale-95 ${isSaving ? 'opacity-70 cursor-wait' : 'hover:bg-blue-700'}`}
+                            style={{ display: 'inline-flex', alignItems: 'center', padding: '8px 16px', borderRadius: '8px', border: 'none', backgroundColor: '#2563eb', color: '#ffffff', fontSize: '13px', fontWeight: 700, cursor: isSaving ? 'wait' : 'pointer', opacity: isSaving ? 0.7 : 1, boxShadow: '0 1px 3px rgba(37,99,235,0.3)' }}
                         >
-                            {isSaving ? <Loader2 className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />}
+                            {isSaving ? <Loader2 style={{ width: '14px', height: '14px', marginRight: '6px' }} /> : <Save style={{ width: '14px', height: '14px', marginRight: '6px' }} />}
                             저장하기
                         </button>
                     </div>
