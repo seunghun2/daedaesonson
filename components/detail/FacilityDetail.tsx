@@ -3296,49 +3296,24 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                                 </Text>
                                             </Box>
 
-                                            {/* 💬 카카오 1초 간편상담 배너/버튼 */}
-                                            {!user ? (
-                                                <Button
-                                                    fullWidth
-                                                    size="md"
-                                                    radius="md"
-                                                    mb="md"
-                                                    style={{
-                                                        backgroundColor: '#FEE500',
-                                                        color: '#191919',
-                                                        fontWeight: 700,
-                                                        height: 48,
-                                                        border: 'none',
-                                                    }}
-                                                    leftSection={
-                                                        <svg width="20" height="20" viewBox="0 0 24 24" fill="#191919">
-                                                            <path d="M12 3C6.477 3 2 6.477 2 10.767c0 2.76 1.87 5.177 4.673 6.529l-.97 3.59c-.085.314.238.57.514.402l4.24-2.585c.504.053 1.018.084 1.543.084 5.523 0 10-3.477 10-7.767C22 6.477 17.523 3 12 3z" />
-                                                        </svg>
-                                                    }
-                                                    onClick={() => signInWithKakao()}
-                                                >
-                                                    카카오로 1초 간편 신청
-                                                </Button>
-                                            ) : (
+                                            {/* 로그인 회원 정보 자동 연동 배너 */}
+                                            {user && (
                                                 <Box
                                                     p="xs"
                                                     px="md"
                                                     mb="md"
                                                     style={{
-                                                        backgroundColor: '#FEE50018',
-                                                        border: '1px solid #FEE500',
+                                                        backgroundColor: 'var(--mantine-color-brand-0)',
+                                                        border: '1px solid var(--mantine-color-brand-2)',
                                                         borderRadius: 10,
                                                         display: 'flex',
                                                         alignItems: 'center',
                                                         justifyContent: 'space-between',
                                                     }}
                                                 >
-                                                    <Text size="xs" fw={700} c="dark.8">
-                                                        💬 {profile?.nickname || (user.user_metadata?.name as string) || '카카오 회원'}님으로 자동 연동됨
+                                                    <Text size="xs" fw={700} c="brand.8">
+                                                        💬 {profile?.nickname || (user.user_metadata?.name as string) || '회원'}님 정보가 자동 입력되었습니다
                                                     </Text>
-                                                    <Badge size="xs" color="yellow" variant="filled" style={{ color: '#191919' }}>
-                                                        간편인증
-                                                    </Badge>
                                                 </Box>
                                             )}
 
@@ -3812,49 +3787,24 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                                 </Text>
                                             </Box>
 
-                                            {/* 카카오 1초 간편 신청 버튼 or 연동 배지 */}
-                                            {!user ? (
-                                                <Button
-                                                    fullWidth
-                                                    size="md"
-                                                    radius="md"
-                                                    mb="md"
-                                                    style={{
-                                                        backgroundColor: '#FEE500',
-                                                        color: '#191919',
-                                                        fontWeight: 700,
-                                                        height: 48,
-                                                        border: 'none',
-                                                    }}
-                                                    leftSection={
-                                                        <svg width="20" height="20" viewBox="0 0 24 24" fill="#191919">
-                                                            <path d="M12 3C6.477 3 2 6.477 2 10.767c0 2.76 1.87 5.177 4.673 6.529l-.97 3.59c-.085.314.238.57.514.402l4.24-2.585c.504.053 1.018.084 1.543.084 5.523 0 10-3.477 10-7.767C22 6.477 17.523 3 12 3z" />
-                                                        </svg>
-                                                    }
-                                                    onClick={() => signInWithKakao()}
-                                                >
-                                                    카카오로 1초 간편 신청
-                                                </Button>
-                                            ) : (
+                                            {/* 로그인 회원 정보 자동 연동 배너 */}
+                                            {user && (
                                                 <Box
                                                     p="xs"
                                                     px="md"
                                                     mb="md"
                                                     style={{
-                                                        backgroundColor: '#FEE50018',
-                                                        border: '1px solid #FEE500',
+                                                        backgroundColor: 'var(--mantine-color-brand-0)',
+                                                        border: '1px solid var(--mantine-color-brand-2)',
                                                         borderRadius: 10,
                                                         display: 'flex',
                                                         alignItems: 'center',
                                                         justifyContent: 'space-between',
                                                     }}
                                                 >
-                                                    <Text size="xs" fw={700} c="dark.8">
-                                                        💬 {profile?.nickname || (user.user_metadata?.name as string) || '카카오 회원'}님으로 자동 연동됨
+                                                    <Text size="xs" fw={700} c="brand.8">
+                                                        💬 {profile?.nickname || (user.user_metadata?.name as string) || '회원'}님 정보가 자동 입력되었습니다
                                                     </Text>
-                                                    <Badge size="xs" color="yellow" variant="filled" style={{ color: '#191919' }}>
-                                                        간편인증
-                                                    </Badge>
                                                 </Box>
                                             )}
 
