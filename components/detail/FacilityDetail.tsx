@@ -1118,10 +1118,21 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
     const [showLoginForFavorite, setShowLoginForFavorite] = useState(false);
     const [favoriteToast, setFavoriteToast] = useState<string | null>(null);
     const [toastPanelRect, setToastPanelRect] = useState<{left: number; width: number; bottom: number} | null>(null);
-    const { user, toggleFavorite, isFavorite } = useAuth();
+    const { user, profile, signInWithKakao, toggleFavorite, isFavorite } = useAuth();
     const isFavorited = isFavorite(String(facility.id));
     const [showAllInquiries, setShowAllInquiries] = useState(false);
     const [totalInquiryCount, setTotalInquiryCount] = useState(0);
+
+    // 🚀 로그인 유저인 경우 닉네임과 전화번호 자동 채움
+    useEffect(() => {
+        if (user) {
+            setConsultForm(prev => ({
+                ...prev,
+                name: prev.name || profile?.nickname || (user.user_metadata?.name as string) || (user.user_metadata?.full_name as string) || '',
+                phone: prev.phone || profile?.phone || '',
+            }));
+        }
+    }, [user, profile]);
 
     // AI 챗봇 상태
     const [aiChatOpen, setAiChatOpen] = useState(false);
@@ -1192,7 +1203,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
     const [consultForm, setConsultForm] = useState({
         name: '',
         phone: '',
-        preferredTime: '',
+        preferredTime: '시간 무관',
         question: 'price', // price, location, grave, other
         message: '',
         consultMethod: 'phone' // phone, visit, field
@@ -3283,6 +3294,52 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                                 </Text>
                                             </Box>
 
+                                            {/* 💬 카카오 1초 간편상담 배너/버튼 */}
+                                            {!user ? (
+                                                <Button
+                                                    fullWidth
+                                                    size="md"
+                                                    radius="md"
+                                                    mb="md"
+                                                    style={{
+                                                        backgroundColor: '#FEE500',
+                                                        color: '#191919',
+                                                        fontWeight: 700,
+                                                        height: 48,
+                                                        border: 'none',
+                                                    }}
+                                                    leftSection={
+                                                        <svg width="20" height="20" viewBox="0 0 24 24" fill="#191919">
+                                                            <path d="M12 3C6.477 3 2 6.477 2 10.767c0 2.76 1.87 5.177 4.673 6.529l-.97 3.59c-.085.314.238.57.514.402l4.24-2.585c.504.053 1.018.084 1.543.084 5.523 0 10-3.477 10-7.767C22 6.477 17.523 3 12 3z" />
+                                                        </svg>
+                                                    }
+                                                    onClick={() => signInWithKakao()}
+                                                >
+                                                    카카오로 1초 간편 신청
+                                                </Button>
+                                            ) : (
+                                                <Box
+                                                    p="xs"
+                                                    px="md"
+                                                    mb="md"
+                                                    style={{
+                                                        backgroundColor: '#FEE50018',
+                                                        border: '1px solid #FEE500',
+                                                        borderRadius: 10,
+                                                        display: 'flex',
+                                                        alignItems: 'center',
+                                                        justifyContent: 'space-between',
+                                                    }}
+                                                >
+                                                    <Text size="xs" fw={700} c="dark.8">
+                                                        💬 {profile?.nickname || (user.user_metadata?.name as string) || '카카오 회원'}님으로 자동 연동됨
+                                                    </Text>
+                                                    <Badge size="xs" color="yellow" variant="filled" style={{ color: '#191919' }}>
+                                                        간편인증
+                                                    </Badge>
+                                                </Box>
+                                            )}
+
                                             <Stack gap="sm">
                                                 {/* 1. 이름 - 클릭하면 1번만 열림 */}
                                                 <Box
@@ -3551,7 +3608,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                                 size="lg"
                                                 radius="md"
                                                 loading={consultSubmitting}
-                                                disabled={!consultForm.name?.trim() || !consultForm.phone?.trim() || !consultForm.preferredTime || !consultForm.consultMethod || !consultForm.question}
+                                                disabled={!consultForm.name?.trim() || consultForm.phone.replace(/[^0-9]/g, '').length < 10}
                                                 styles={{ root: { height: 52 } }}
                                                 onClick={async () => {
                                                     setConsultSubmitting(true);
@@ -3562,6 +3619,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                                             body: JSON.stringify({
                                                                 facilityId: facility.id,
                                                                 facilityName: facility.name,
+                                                                userId: user?.id,
                                                                 ...consultForm
                                                             })
                                                         });
@@ -3746,6 +3804,52 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                                     {facility.name}
                                                 </Text>
                                             </Box>
+
+                                            {/* 카카오 1초 간편 신청 버튼 or 연동 배지 */}
+                                            {!user ? (
+                                                <Button
+                                                    fullWidth
+                                                    size="md"
+                                                    radius="md"
+                                                    mb="md"
+                                                    style={{
+                                                        backgroundColor: '#FEE500',
+                                                        color: '#191919',
+                                                        fontWeight: 700,
+                                                        height: 48,
+                                                        border: 'none',
+                                                    }}
+                                                    leftSection={
+                                                        <svg width="20" height="20" viewBox="0 0 24 24" fill="#191919">
+                                                            <path d="M12 3C6.477 3 2 6.477 2 10.767c0 2.76 1.87 5.177 4.673 6.529l-.97 3.59c-.085.314.238.57.514.402l4.24-2.585c.504.053 1.018.084 1.543.084 5.523 0 10-3.477 10-7.767C22 6.477 17.523 3 12 3z" />
+                                                        </svg>
+                                                    }
+                                                    onClick={() => signInWithKakao()}
+                                                >
+                                                    카카오로 1초 간편 신청
+                                                </Button>
+                                            ) : (
+                                                <Box
+                                                    p="xs"
+                                                    px="md"
+                                                    mb="md"
+                                                    style={{
+                                                        backgroundColor: '#FEE50018',
+                                                        border: '1px solid #FEE500',
+                                                        borderRadius: 10,
+                                                        display: 'flex',
+                                                        alignItems: 'center',
+                                                        justifyContent: 'space-between',
+                                                    }}
+                                                >
+                                                    <Text size="xs" fw={700} c="dark.8">
+                                                        💬 {profile?.nickname || (user.user_metadata?.name as string) || '카카오 회원'}님으로 자동 연동됨
+                                                    </Text>
+                                                    <Badge size="xs" color="yellow" variant="filled" style={{ color: '#191919' }}>
+                                                        간편인증
+                                                    </Badge>
+                                                </Box>
+                                            )}
 
                                             <Stack gap="sm">
                                                 {/* 1. 이름 - 클릭하면 1번만 열림 */}
@@ -4006,7 +4110,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                                 size="lg"
                                                 radius="md"
                                                 loading={consultSubmitting}
-                                                disabled={!consultForm.name?.trim() || !consultForm.phone?.trim() || !consultForm.preferredTime || !consultForm.consultMethod || !consultForm.question}
+                                                disabled={!consultForm.name?.trim() || consultForm.phone.replace(/[^0-9]/g, '').length < 10}
                                                 styles={{ root: { height: 52 } }}
                                                 onClick={async () => {
                                                     setConsultSubmitting(true);
@@ -4017,6 +4121,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                                             body: JSON.stringify({
                                                                 facilityId: facility.id,
                                                                 facilityName: facility.name,
+                                                                userId: user?.id,
                                                                 ...consultForm
                                                             })
                                                         });

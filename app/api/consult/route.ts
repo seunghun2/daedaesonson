@@ -17,7 +17,7 @@ export async function POST(request: NextRequest) {
 
     try {
         const body = await request.json();
-        const { facilityId, facilityName, name, phone, preferredTime, question, message, consultMethod } = body;
+        const { facilityId, facilityName, name, phone, preferredTime, question, message, consultMethod, userId } = body;
 
         if (!facilityId || !name || !phone) {
             return NextResponse.json({ error: '필수 정보를 입력해주세요.' }, { status: 400 });
@@ -58,6 +58,19 @@ export async function POST(request: NextRequest) {
             console.error('Insert consult error:', error);
             await sendSlackError('consult', error);
             return NextResponse.json({ error: '상담 신청 실패' }, { status: 500 });
+        }
+
+        // 회원 ID가 전달되었고, 프로필에 연락처가 비어있다면 자동 연동/업데이트
+        if (userId) {
+            try {
+                await supabase
+                    .from('profiles')
+                    .update({ phone: cleanPhone })
+                    .eq('id', userId)
+                    .is('phone', null);
+            } catch (pErr) {
+                console.warn('Failed to backfill phone to profile:', pErr);
+            }
         }
 
         // 통합 알림 발송 (고객 알림톡 + 관리자 Slack 듀얼 노티)
