@@ -1,15 +1,15 @@
 import { Suspense } from 'react';
 import { getSupabaseServer } from '@/lib/supabaseServer';
 import InquiriesClient from './InquiriesClient';
-import facilitiesData from '@/data/facilities.json';
+import { loadFacilitiesJson } from '@/lib/facilityDataLoader';
 
 // 🔥 30초 캐시 (빠른 로딩)
 export const revalidate = 30;
 
-// 시설명 맵 (정적 JSON에서)
-const facilityNameMap = new Map(
-    (facilitiesData as any[]).map(f => [f.id, f.name])
-);
+function getFacilityNameMap(): Map<string, string> {
+    const list = loadFacilitiesJson();
+    return new Map(list.map((f: any) => [f.id, f.name]));
+}
 
 interface Inquiry {
     id: string;
@@ -42,9 +42,10 @@ async function getInquiries(): Promise<Inquiry[]> {
             return [];
         }
 
+        const nameMap = getFacilityNameMap();
         return (inquiries || []).map(inq => ({
             ...inq,
-            facilityName: facilityNameMap.get(inq.facilityId) || inq.facilityId
+            facilityName: nameMap.get(inq.facilityId) || inq.facilityId
         }));
     } catch (error) {
         console.error('Failed to load inquiries:', error);
@@ -64,7 +65,8 @@ export default async function InquiriesPage() {
     })) || [];
 
     // 시설 목록 (상위 200개만 - 성능)
-    const facilities = (facilitiesData as any[]).slice(0, 200).map(f => ({
+    const allFacilities = loadFacilitiesJson();
+    const facilities = allFacilities.slice(0, 200).map((f: any) => ({
         id: f.id,
         name: f.name
     }));

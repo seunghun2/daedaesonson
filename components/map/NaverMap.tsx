@@ -801,8 +801,8 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
 
         const createdMarkers: any[] = [];
 
-        // 2. 모든 시설에 대해 개별 마커 생성
-        for (const fac of processedFacilities) {
+        // 2. 시설에 대해 개별 마커 점진적 생성 (초기 100개 우선 렌더 후 전체 확장)
+        for (const fac of processedFacilities.slice(0, renderLimit)) {
             if (!fac.fixedCoordinates?.lat || !fac.fixedCoordinates?.lng) continue;
 
             const { lat, lng } = fac.fixedCoordinates;
@@ -1103,7 +1103,7 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
         // 🔒 초기화 완료 플래그
         isMarkersInitializedRef.current = true;
 
-    }, [processedFacilities, regionGroups, provinceGroups, regionGroupCenters, onMarkerClick]);
+    }, [processedFacilities, regionGroups, provinceGroups, regionGroupCenters, onMarkerClick, renderLimit]);
 
     // 🚀 Effect: 데이터 변경 시 업데이트 (최적화: 즉시 1회만 호출)
     useEffect(() => {

@@ -1,8 +1,9 @@
 import { NextResponse } from 'next/server';
-import facilities from '@/data/facilities.json';
+import { loadFacilitiesJson } from '@/lib/facilityDataLoader';
 
 export async function GET() {
     try {
+        const facilities = loadFacilitiesJson();
         const list = facilities.map((f: any) => ({
             id: f.id,
             name: f.name

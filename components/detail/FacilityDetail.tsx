@@ -2598,6 +2598,30 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                     </Text>
                                 </Group>
 
+                                {/* 대표 문의 전화번호 */}
+                                {facility.phone && (
+                                    <Group justify="space-between">
+                                        <Text size="sm" c="gray.6">문의전화</Text>
+                                        <Text
+                                            component="a"
+                                            href={`tel:${facility.phone.replace(/[^0-9]/g, '')}`}
+                                            size="sm"
+                                            fw={600}
+                                            c="brand.7"
+                                            style={{ textDecoration: 'none' }}
+                                            onClick={() => {
+                                                fetch('/api/analytics/conversion', {
+                                                    method: 'POST',
+                                                    headers: { 'Content-Type': 'application/json' },
+                                                    body: JSON.stringify({ type: 'call_click', facilityId: facility.id, facilityName: facility.name }),
+                                                }).catch(() => {});
+                                            }}
+                                        >
+                                            📞 {facility.phone}
+                                        </Text>
+                                    </Group>
+                                )}
+
                                 {/* 총매장능력 (값이 0보다 클 때만 노출) */}
                                 {Number(facility.capacity) > 0 && (
                                     <Group justify="space-between">
@@ -2636,6 +2660,11 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                             시설명: facility.name
                                         });
                                     }
+                                    fetch('/api/analytics/conversion', {
+                                        method: 'POST',
+                                        headers: { 'Content-Type': 'application/json' },
+                                        body: JSON.stringify({ type: 'consult_click', facilityId: facility.id, facilityName: facility.name }),
+                                    }).catch(() => {});
                                 }}
                             >
                                 <Text style={{ fontSize: 15 }} fw={600} c="brand.6">이 시설에 대해 더 자세히 알아보기</Text>
@@ -3197,7 +3226,8 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                                 <Box>
                                                     <Text size="xs" c="dimmed" mb={12} fw={600}>안내 사항</Text>
                                                     <Stack gap={8}>
-                                                        <Text size="sm" c="dimmed">• 입력하신 연락처로 전문 상담사가 연락드립니다</Text>
+                                                        <Text size="sm" c="brand.6" fw={600}>• 입력하신 번호로 카카오 알림톡 접수 안내가 발송되었습니다</Text>
+                                                        <Text size="sm" c="dimmed">• 신청 내용을 확인 후 전문 상담사가 빠르게 연락드립니다</Text>
                                                         <Text size="sm" c="dimmed">• 상담은 무료이며, 부담 없이 질문해 주세요</Text>
                                                         <Text size="sm" c="dimmed">• 개인정보는 상담 목적으로만 사용됩니다</Text>
                                                     </Stack>
@@ -3667,7 +3697,8 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                                 <Box>
                                                     <Text size="xs" c="dimmed" mb={12} fw={600}>안내 사항</Text>
                                                     <Stack gap={8}>
-                                                        <Text size="sm" c="dimmed">• 입력하신 연락처로 전문 상담사가 연락드립니다</Text>
+                                                        <Text size="sm" c="brand.6" fw={600}>• 입력하신 번호로 카카오 알림톡 접수 안내가 발송되었습니다</Text>
+                                                        <Text size="sm" c="dimmed">• 신청 내용을 확인 후 전문 상담사가 빠르게 연락드립니다</Text>
                                                         <Text size="sm" c="dimmed">• 상담은 무료이며, 부담 없이 질문해 주세요</Text>
                                                         <Text size="sm" c="dimmed">• 개인정보는 상담 목적으로만 사용됩니다</Text>
                                                     </Stack>

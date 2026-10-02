@@ -37,7 +37,7 @@ const FacilityDetail = dynamic(() => import('@/components/detail/FacilityDetail'
 });
 import { Facility, FACILITY_CATEGORY_LABELS } from '@/types';
 
-import { searchRegions, RegionResult } from '@/lib/regionSearch';
+import type { RegionResult } from '@/lib/regionSearch';
 import BottomNav from '@/components/common/BottomNav';
 import ChatFloatingButton from '@/components/chatbot/ChatFloatingButton';
 
@@ -424,6 +424,7 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
 
       // 2. Region Search
       try {
+        const { searchRegions } = await import('@/lib/regionSearch');
         const regMatches = await searchRegions(query);
         setCompletionResults({
           regions: regMatches.slice(0, 5),
