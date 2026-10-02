@@ -38,7 +38,8 @@ export async function POST(request: NextRequest) {
 
         // Slack 알림 (인젝션 방지 escapeSlack 적용)
         const typeLabels: Record<string, string> = { price: '가격 문의', location: '위치/교통', reservation: '예약/절차', facility: '시설 이용', other: '기타' };
-        await sendSlack('inquiry', `💬 *새 댓글 문의!*\n• 시설: ${escapeSlack(facilityId || '일반')}\n• 문의 종류: ${escapeSlack(typeLabels[type] || type || '기타')}\n• 제목: ${escapeSlack(title)}\n• 내용: ${escapeSlack(content.slice(0, 100))}...\n• 연락처: ${escapeSlack(phone)}\n• 비밀글: ${isPrivate ? '예' : '아니오'}`);
+        const facilityLabel = (!facilityId || facilityId === 'general') ? '일반' : facilityId;
+        await sendSlack('inquiry', `💬 *새 댓글 문의!*\n• 시설: ${escapeSlack(facilityLabel)}\n• 문의 종류: ${escapeSlack(typeLabels[type] || type || '기타')}\n• 제목: ${escapeSlack(title)}\n• 내용: ${escapeSlack(content.slice(0, 100))}...\n• 연락처: ${escapeSlack(phone)}\n• 비밀글: ${isPrivate ? '예' : '아니오'}`);
 
         const { passwordLast4: _pin, phone: _ph, ...safeData } = data || {};
         return NextResponse.json(safeData);

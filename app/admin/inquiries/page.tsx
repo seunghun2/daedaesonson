@@ -9,6 +9,7 @@ import { Search, Trash, Eye, MessageCircle, Phone, Lock } from 'lucide-react';
 interface Inquiry {
     id: string;
     facilityId: string;
+    facilityName?: string;
     type: string;
     title: string;
     content: string;
@@ -61,7 +62,8 @@ export default function InquiriesPage() {
     const filtered = inquiries.filter(inq =>
         inq.title.toLowerCase().includes(search.toLowerCase()) ||
         inq.content.toLowerCase().includes(search.toLowerCase()) ||
-        inq.facilityId.toLowerCase().includes(search.toLowerCase())
+        (inq.facilityName || '').toLowerCase().includes(search.toLowerCase()) ||
+        (inq.facilityId === 'general' ? '일반' : inq.facilityId).toLowerCase().includes(search.toLowerCase())
     );
 
     // Delete inquiry
@@ -159,6 +161,9 @@ export default function InquiriesPage() {
                             <Card key={inq.id} p="sm" radius="md" withBorder onClick={() => handleView(inq)} style={{ cursor: 'pointer' }}>
                                 <Group justify="space-between" mb={4}>
                                     <Group gap={4}>
+                                        <Badge size="xs" variant="outline" color="gray">
+                                            {inq.facilityName || (inq.facilityId === 'general' ? '일반' : inq.facilityId)}
+                                        </Badge>
                                         <Badge size="xs" variant="light" color="brand">
                                             {TYPE_LABELS[inq.type] || '기타'}
                                         </Badge>
@@ -191,7 +196,7 @@ export default function InquiriesPage() {
                     <Table verticalSpacing="sm" striped highlightOnHover>
                         <Table.Thead bg="gray.1">
                             <Table.Tr>
-                                <Table.Th>시설ID</Table.Th>
+                                <Table.Th>시설</Table.Th>
                                 <Table.Th>제목</Table.Th>
                                 <Table.Th>연락처</Table.Th>
                                 <Table.Th>날짜</Table.Th>
@@ -204,7 +209,7 @@ export default function InquiriesPage() {
                                 filtered.map((inq) => (
                                     <Table.Tr key={inq.id}>
                                         <Table.Td>
-                                            <Text size="xs" c="dimmed">{inq.facilityId}</Text>
+                                            <Text size="xs" c="dimmed">{inq.facilityName || (inq.facilityId === 'general' ? '일반' : inq.facilityId)}</Text>
                                         </Table.Td>
                                         <Table.Td>
                                             <Group gap={4}>
@@ -272,7 +277,7 @@ export default function InquiriesPage() {
                             <Phone size={14} />
                             <Text size="sm" fw={500}>{selectedInquiry.phone}</Text>
                         </Group>
-                        <Text size="xs" c="dimmed">시설: {selectedInquiry.facilityId}</Text>
+                        <Text size="xs" c="dimmed">시설: {selectedInquiry.facilityName || (selectedInquiry.facilityId === 'general' ? '일반' : selectedInquiry.facilityId)}</Text>
                         <Paper p="md" bg="gray.0" radius="md">
                             <Text style={{ whiteSpace: 'pre-wrap' }}>{selectedInquiry.content}</Text>
                         </Paper>

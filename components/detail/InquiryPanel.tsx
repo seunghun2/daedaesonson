@@ -291,7 +291,7 @@ export default function InquiryPanel({ facility, isOpen, onClose, allFacilities 
                                         {/* [시설명] 카테고리 + 날짜 */}
                                         <Group justify="space-between" mb={4}>
                                             <Group gap={4}>
-                                                <Text size="xs" c="dimmed">[{facilityNameMap.get(inquiry.facilityId) || '시설'}]</Text>
+                                                <Text size="xs" c="dimmed">[{inquiry.facilityId === 'general' ? '일반' : (facilityNameMap.get(inquiry.facilityId) || '일반')}]</Text>
                                                 <Text size="xs" c="brand" fw={500}>
                                                     {(inquiry as any).type === 'price' ? '가격 문의' :
                                                         (inquiry as any).type === 'reservation' ? '예약/절차' :

@@ -41,10 +41,16 @@ export async function GET() {
         }
 
         // 시설명 추가
-        const enrichedInquiries = (inquiries || []).map(inq => ({
-            ...inq,
-            facilityName: facilityNameMap.get(inq.facilityId) || '시설'
-        }));
+        const enrichedInquiries = (inquiries || []).map(inq => {
+            const resolvedName = facilityNameMap.get(inq.facilityId);
+            const facilityName = (!inq.facilityId || inq.facilityId === 'general' || resolvedName === 'general')
+                ? '일반'
+                : (resolvedName || '일반');
+            return {
+                ...inq,
+                facilityName,
+            };
+        });
 
         // 관리자 전용 응답 (캐시 불가)
         return NextResponse.json({ inquiries: enrichedInquiries }, {

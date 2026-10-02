@@ -43,10 +43,16 @@ async function getInquiries(): Promise<Inquiry[]> {
         }
 
         const nameMap = getFacilityNameMap();
-        return (inquiries || []).map(inq => ({
-            ...inq,
-            facilityName: nameMap.get(inq.facilityId) || inq.facilityId
-        }));
+        return (inquiries || []).map(inq => {
+            const resolvedName = inq.facilityId ? nameMap.get(inq.facilityId) : null;
+            const facilityName = (!inq.facilityId || inq.facilityId === 'general' || resolvedName === 'general')
+                ? '일반'
+                : (resolvedName || inq.facilityId || '일반');
+            return {
+                ...inq,
+                facilityName,
+            };
+        });
     } catch (error) {
         console.error('Failed to load inquiries:', error);
         return [];

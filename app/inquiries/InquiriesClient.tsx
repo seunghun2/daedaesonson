@@ -253,7 +253,7 @@ export default function InquiriesClient({ initialInquiries, facilities = [] }: I
                                     {/* [시설명] 카테고리 + 날짜 */}
                                     <Group justify="space-between" mb={8}>
                                         <Group gap={6}>
-                                            <Text size="xs" c="dimmed">[{inquiry.facilityName || '시설'}]</Text>
+                                            <Text size="xs" c="dimmed">[{(!inquiry.facilityName || inquiry.facilityName === 'general' || inquiry.facilityId === 'general') ? '일반' : inquiry.facilityName}]</Text>
                                             <Text size="xs" c="brand" fw={600}>
                                                 {inquiry.type === 'price' ? '가격 문의' :
                                                     inquiry.type === 'reservation' ? '예약/절차' :
