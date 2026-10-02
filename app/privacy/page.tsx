@@ -3,9 +3,21 @@
 import { Box, Text, Stack, Group, Divider, Table, ActionIcon } from '@mantine/core';
 import { ArrowLeft } from 'lucide-react';
 import Link from 'next/link';
+import { useState, useEffect } from 'react';
 import BottomNav from '@/components/common/BottomNav';
 
 export default function PrivacyPage() {
+    const [dbContent, setDbContent] = useState<string | null>(null);
+
+    useEffect(() => {
+        fetch('/api/policies/privacy')
+            .then(res => res.json())
+            .then(data => {
+                if (data?.content) setDbContent(data.content);
+            })
+            .catch(console.error);
+    }, []);
+
     return (
         <Box style={{ minHeight: '100dvh', backgroundColor: 'white', paddingBottom: 70 }}>
             {/* 헤더 */}
@@ -37,6 +49,11 @@ export default function PrivacyPage() {
 
             {/* 내용 */}
             <Box p="md">
+                {dbContent ? (
+                    <Text size="sm" c="dark.6" lh={1.8} style={{ whiteSpace: 'pre-wrap' }}>
+                        {dbContent}
+                    </Text>
+                ) : (
                 <Stack gap="xl">
                     {/* 서문 */}
                     <Box>
@@ -255,6 +272,7 @@ export default function PrivacyPage() {
                         </Text>
                     </Box>
                 </Stack>
+                )}
             </Box>
 
             <BottomNav />

@@ -296,3 +296,31 @@ export async function PATCH(
         return NextResponse.json({ error: 'Failed to update' }, { status: 500 });
     }
 }
+
+// DELETE: 시설 삭제 (관리자 전용)
+export async function DELETE(
+    request: NextRequest,
+    { params }: { params: Promise<{ id: string }> }
+) {
+    try {
+        const authError = await requireAdmin();
+        if (authError) return authError;
+
+        const { id } = await params;
+
+        const { error } = await supabase
+            .from('Facility')
+            .delete()
+            .eq('id', id);
+
+        if (error) {
+            console.error(`[DELETE] DB Error for ${id}:`, error);
+            return NextResponse.json({ error: '삭제 실패: ' + error.message }, { status: 500 });
+        }
+
+        return NextResponse.json({ success: true, id });
+    } catch (e) {
+        console.error('DELETE Error:', e);
+        return NextResponse.json({ error: 'Failed to delete' }, { status: 500 });
+    }
+}

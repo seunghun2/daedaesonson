@@ -3,7 +3,7 @@
 import { Box, Text, Stack, Group, Accordion, ActionIcon } from '@mantine/core';
 import { ArrowLeft } from 'lucide-react';
 import Link from 'next/link';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import BottomNav from '@/components/common/BottomNav';
 
 // FAQ 카테고리별 데이터
@@ -16,7 +16,7 @@ const FAQ_CATEGORIES = [
     { value: 'etc', label: '기타' },
 ];
 
-const FAQ_DATA = [
+const DEFAULT_FAQ_DATA = [
     // 서비스 이용
     {
         category: 'service',
@@ -208,10 +208,27 @@ PC, 태블릿, 스마트폰 등 모든 기기에서 편리하게 이용해보세
 
 export default function FAQPage() {
     const [activeTab, setActiveTab] = useState('all');
+    const [faqData, setFaqData] = useState(DEFAULT_FAQ_DATA);
+
+    useEffect(() => {
+        fetch('/api/faqs')
+            .then(res => res.json())
+            .then(data => {
+                if (Array.isArray(data) && data.length > 0) {
+                    const dbFaqs = data.map((f: any) => ({
+                        category: f.category || 'etc',
+                        question: f.question,
+                        answer: f.answer,
+                    }));
+                    setFaqData(dbFaqs);
+                }
+            })
+            .catch(console.error);
+    }, []);
 
     const filteredFAQ = activeTab === 'all'
-        ? FAQ_DATA
-        : FAQ_DATA.filter(item => item.category === activeTab);
+        ? faqData
+        : faqData.filter(item => item.category === activeTab);
 
     return (
         <Box style={{ minHeight: '100dvh', backgroundColor: '#f8f9fa', paddingBottom: 70 }}>

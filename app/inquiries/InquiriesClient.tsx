@@ -296,6 +296,27 @@ export default function InquiriesClient({ initialInquiries, facilities = [] }: I
                                     >
                                         {inquiry.content || '문의 내용'}
                                     </Text>
+
+                                    {/* 관리자 답변 내용 */}
+                                    {!showBlur && inquiry.replies && inquiry.replies.length > 0 && (
+                                        <Box mt="sm" p="sm" bg="brand.0" style={{ borderRadius: 8 }}>
+                                            {inquiry.replies.map((reply) => (
+                                                <Box key={reply.id} mb="xs">
+                                                    <Group gap="xs" mb={4}>
+                                                        <Text size="xs" fw={700} c="brand">
+                                                            관리자 답변
+                                                        </Text>
+                                                        <Text size="xs" c="dimmed">
+                                                            {new Date(reply.createdAt).toLocaleDateString('ko-KR')}
+                                                        </Text>
+                                                    </Group>
+                                                    <Text size="sm" c="dark.7" style={{ whiteSpace: 'pre-wrap' }}>
+                                                        {reply.content}
+                                                    </Text>
+                                                </Box>
+                                            ))}
+                                        </Box>
+                                    )}
                                 </Box>
                             );
                         })}
