@@ -1204,9 +1204,9 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
         name: '',
         phone: '',
         preferredTime: '시간 무관',
-        question: 'price', // price, location, grave, other
+        question: '가격 문의',
         message: '',
-        consultMethod: 'phone' // phone, visit, field
+        consultMethod: '전화 상담'
     });
     const [consultSubmitting, setConsultSubmitting] = useState(false);
     const [consultStep, setConsultStep] = useState(0); // 0: 1,2,3 열림, 4: 4번만 열림, 5: 5번만 열림
@@ -3211,10 +3211,11 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                                         <Group justify="space-between">
                                                             <Text size="sm" c="dimmed">궁금한 점</Text>
                                                             <Text size="sm" fw={600}>
-                                                                {submittedConsultData?.question === 'price' && '가격 문의'}
-                                                                {submittedConsultData?.question === 'location' && '위치/교통'}
-                                                                {submittedConsultData?.question === 'grave' && '장지 유형'}
-                                                                {submittedConsultData?.question === 'other' && '기타'}
+                                                                {submittedConsultData?.question === 'price' ? '가격 문의' :
+                                                                 submittedConsultData?.question === 'location' ? '위치/교통' :
+                                                                 submittedConsultData?.question === 'grave' ? '장지 유형' :
+                                                                 submittedConsultData?.question === 'other' ? '기타 문의' :
+                                                                 (submittedConsultData?.question || '가격 문의')}
                                                             </Text>
                                                         </Group>
                                                         {submittedConsultData?.message && (
@@ -3226,8 +3227,9 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                                         <Group justify="space-between">
                                                             <Text size="sm" c="dimmed">상담 방식</Text>
                                                             <Text size="sm" fw={600}>
-                                                                {submittedConsultData?.consultMethod === 'phone' && '전화 상담'}
-                                                                {submittedConsultData?.consultMethod === 'field' && '방문 상담'}
+                                                                {submittedConsultData?.consultMethod === 'phone' ? '전화 상담' :
+                                                                 submittedConsultData?.consultMethod === 'field' ? '방문 상담' :
+                                                                 (submittedConsultData?.consultMethod || '전화 상담')}
                                                             </Text>
                                                         </Group>
                                                     </Stack>
@@ -3476,7 +3478,8 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                                         <Group gap="xs">
                                                             {consultStep !== 4 && consultForm.consultMethod && <Text size="sm" c="dimmed">{
                                                                 consultForm.consultMethod === 'phone' ? '전화 상담' :
-                                                                    consultForm.consultMethod === 'phone' ? '전화 상담' : '방문 상담'
+                                                                consultForm.consultMethod === 'field' ? '방문 상담' :
+                                                                consultForm.consultMethod
                                                             }</Text>}
                                                             <ChevronDown size={18} color="#adb5bd" style={{ transform: consultStep === 4 ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s' }} />
                                                         </Group>
@@ -3484,8 +3487,8 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                                     <Collapse in={consultStep === 4}>
                                                         <Stack gap="sm" mt="md" onClick={(e) => e.stopPropagation()}>
                                                             {[
-                                                                { value: 'phone', label: '전화 상담', desc: '전화로 상담받기' },
-                                                                { value: 'field', label: '방문 상담', desc: '시설 현장에서 상담' }
+                                                                { value: '전화 상담', label: '전화 상담', desc: '전화로 상담받기' },
+                                                                { value: '방문 상담', label: '방문 상담', desc: '시설 현장에서 상담' }
                                                             ].map(method => (
                                                                 <Box
                                                                     key={method.value}
@@ -3524,9 +3527,11 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                                         <Text size="md" fw={700}>5. 궁금한 점</Text>
                                                         <Group gap="xs">
                                                             {consultStep !== 5 && consultForm.question && <Text size="sm" c="dimmed">{
-                                                                consultForm.question === 'price' ? '비용/가격' :
-                                                                    consultForm.question === 'location' ? '위치/교통' :
-                                                                        consultForm.question === 'grave' ? '묘지 유형' : '기타'
+                                                                consultForm.question === 'price' ? '가격 문의' :
+                                                                consultForm.question === 'location' ? '위치/교통' :
+                                                                consultForm.question === 'grave' ? '장지/묘지 유형' :
+                                                                consultForm.question === 'other' ? '기타 문의' :
+                                                                consultForm.question
                                                             }</Text>}
                                                             <ChevronDown size={18} color="#adb5bd" style={{ transform: consultStep === 5 ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s' }} />
                                                         </Group>
@@ -3534,10 +3539,10 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                                     <Collapse in={consultStep === 5}>
                                                         <Stack gap="xs" mt="md">
                                                             {[
-                                                                { value: 'price', label: '비용/가격이 궁금해요' },
-                                                                { value: 'location', label: '위치/교통이 궁금해요' },
-                                                                { value: 'grave', label: '묘지 유형이 궁금해요' },
-                                                                { value: 'other', label: '기타 문의' }
+                                                                { value: '가격 문의', label: '비용/가격이 궁금해요' },
+                                                                { value: '위치/교통', label: '위치/교통이 궁금해요' },
+                                                                { value: '장지/묘지 유형', label: '묘지/장지 유형이 궁금해요' },
+                                                                { value: '기타 문의', label: '기타 문의' }
                                                             ].map((q) => (
                                                                 <Box key={q.value}
                                                                     onClick={(e) => {
@@ -3625,7 +3630,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                                         });
                                                         if (res.ok) {
                                                             setSubmittedConsultData({ ...consultForm }); // 성공 화면용 데이터 저장
-                                                            setConsultForm({ name: '', phone: '', preferredTime: '', question: 'price', message: '', consultMethod: 'phone' });
+                                                            setConsultForm({ name: '', phone: '', preferredTime: '', question: '가격 문의', message: '', consultMethod: '전화 상담' });
                                                             setConsultStep(0);
                                                             setConsultSuccess(true); // 성공 화면 표시
                                                         }
@@ -3729,10 +3734,11 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                                         <Group justify="space-between">
                                                             <Text size="sm" c="dimmed">궁금한 점</Text>
                                                             <Text size="sm" fw={600}>
-                                                                {submittedConsultData?.question === 'price' && '가격 문의'}
-                                                                {submittedConsultData?.question === 'location' && '위치/교통'}
-                                                                {submittedConsultData?.question === 'grave' && '장지 유형'}
-                                                                {submittedConsultData?.question === 'other' && '기타'}
+                                                                {submittedConsultData?.question === 'price' ? '가격 문의' :
+                                                                 submittedConsultData?.question === 'location' ? '위치/교통' :
+                                                                 submittedConsultData?.question === 'grave' ? '장지 유형' :
+                                                                 submittedConsultData?.question === 'other' ? '기타 문의' :
+                                                                 (submittedConsultData?.question || '가격 문의')}
                                                             </Text>
                                                         </Group>
                                                         {submittedConsultData?.message && (
@@ -3744,8 +3750,9 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                                         <Group justify="space-between">
                                                             <Text size="sm" c="dimmed">상담 방식</Text>
                                                             <Text size="sm" fw={600}>
-                                                                {submittedConsultData?.consultMethod === 'phone' && '전화 상담'}
-                                                                {submittedConsultData?.consultMethod === 'field' && '방문 상담'}
+                                                                {submittedConsultData?.consultMethod === 'phone' ? '전화 상담' :
+                                                                 submittedConsultData?.consultMethod === 'field' ? '방문 상담' :
+                                                                 (submittedConsultData?.consultMethod || '전화 상담')}
                                                             </Text>
                                                         </Group>
                                                     </Stack>
@@ -3987,7 +3994,8 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                                         <Group gap="xs">
                                                             {consultStep !== 4 && consultForm.consultMethod && <Text size="sm" c="dimmed">{
                                                                 consultForm.consultMethod === 'phone' ? '전화 상담' :
-                                                                    consultForm.consultMethod === 'phone' ? '전화 상담' : '방문 상담'
+                                                                consultForm.consultMethod === 'field' ? '방문 상담' :
+                                                                consultForm.consultMethod
                                                             }</Text>}
                                                             <ChevronDown size={18} color="#adb5bd" style={{ transform: consultStep === 4 ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s' }} />
                                                         </Group>
@@ -3995,8 +4003,8 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                                     <Collapse in={consultStep === 4}>
                                                         <Stack gap="sm" mt="md" onClick={(e) => e.stopPropagation()}>
                                                             {[
-                                                                { value: 'phone', label: '전화 상담', desc: '전화로 상담받기' },
-                                                                { value: 'field', label: '방문 상담', desc: '시설 현장에서 상담' }
+                                                                { value: '전화 상담', label: '전화 상담', desc: '전화로 상담받기' },
+                                                                { value: '방문 상담', label: '방문 상담', desc: '시설 현장에서 상담' }
                                                             ].map(method => (
                                                                 <Box
                                                                     key={method.value}
@@ -4035,9 +4043,11 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                                         <Text size="md" fw={700}>5. 궁금한 점</Text>
                                                         <Group gap="xs">
                                                             {consultStep !== 5 && consultForm.question && <Text size="sm" c="dimmed">{
-                                                                consultForm.question === 'price' ? '비용/가격' :
-                                                                    consultForm.question === 'location' ? '위치/교통' :
-                                                                        consultForm.question === 'grave' ? '묘지 유형' : '기타'
+                                                                consultForm.question === 'price' ? '가격 문의' :
+                                                                consultForm.question === 'location' ? '위치/교통' :
+                                                                consultForm.question === 'grave' ? '장지/묘지 유형' :
+                                                                consultForm.question === 'other' ? '기타 문의' :
+                                                                consultForm.question
                                                             }</Text>}
                                                             <ChevronDown size={18} color="#adb5bd" style={{ transform: consultStep === 5 ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s' }} />
                                                         </Group>
@@ -4045,10 +4055,10 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                                     <Collapse in={consultStep === 5}>
                                                         <Stack gap="xs" mt="md">
                                                             {[
-                                                                { value: 'price', label: '비용/가격이 궁금해요' },
-                                                                { value: 'location', label: '위치/교통이 궁금해요' },
-                                                                { value: 'grave', label: '묘지 유형이 궁금해요' },
-                                                                { value: 'other', label: '기타 문의' }
+                                                                { value: '가격 문의', label: '비용/가격이 궁금해요' },
+                                                                { value: '위치/교통', label: '위치/교통이 궁금해요' },
+                                                                { value: '장지/묘지 유형', label: '묘지/장지 유형이 궁금해요' },
+                                                                { value: '기타 문의', label: '기타 문의' }
                                                             ].map((q) => (
                                                                 <Box key={q.value}
                                                                     onClick={(e) => {
@@ -4127,7 +4137,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                                         });
                                                         if (res.ok) {
                                                             setSubmittedConsultData({ ...consultForm }); // 성공 화면용 데이터 저장
-                                                            setConsultForm({ name: '', phone: '', preferredTime: '', question: 'price', message: '', consultMethod: 'phone' });
+                                                            setConsultForm({ name: '', phone: '', preferredTime: '', question: '가격 문의', message: '', consultMethod: '전화 상담' });
                                                             setConsultStep(0);
                                                             setConsultSuccess(true); // 성공 화면 표시
                                                         }

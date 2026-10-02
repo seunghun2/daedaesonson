@@ -525,7 +525,7 @@ export default function InquiriesClient({ initialInquiries, facilities = [] }: I
                         <Box>
                             <Text size="sm" fw={500} mb={4}>제목 <Text span c="red">*</Text></Text>
                             <TextInput
-                                placeholder="ex) 봉안당 가격이 궁금합니다"
+                                placeholder="예) 봉안당 가격이 궁금합니다"
                                 value={inquiryForm.title}
                                 onChange={(e) => setInquiryForm({ ...inquiryForm, title: e.currentTarget.value })}
                                 variant="unstyled"

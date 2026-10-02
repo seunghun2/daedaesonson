@@ -56,6 +56,11 @@ export async function GET(request: NextRequest) {
             const kakaoId = userData.id;
             const nickname = userData.kakao_account?.profile?.nickname || '사용자';
             const avatarUrl = userData.kakao_account?.profile?.profile_image_url || '';
+            const rawPhone = userData.kakao_account?.phone_number;
+            let cleanPhone: string | null = null;
+            if (rawPhone) {
+                cleanPhone = rawPhone.replace(/\+82\s?/, '0').replace(/[^0-9]/g, '');
+            }
 
             const email = `kakao_${kakaoId}@kakao.local`;
             const password = crypto.randomUUID() + crypto.randomUUID();
@@ -87,6 +92,9 @@ export async function GET(request: NextRequest) {
                     if (updateError) {
                         console.error('[kakao] updateUser error:', updateError.message);
                     }
+                    if (cleanPhone) {
+                        await supabaseAdmin.from('profiles').update({ phone: cleanPhone }).eq('id', userId).is('phone', null);
+                    }
                 } else {
                     // 신규 유저 생성
                     const { data: createData, error: createError } = await supabaseAdmin.auth.admin.createUser({
@@ -98,6 +106,7 @@ export async function GET(request: NextRequest) {
                             avatar_url: avatarUrl,
                             provider: 'kakao',
                             kakao_id: kakaoId,
+                            phone: cleanPhone,
                         },
                     });
 
@@ -109,7 +118,7 @@ export async function GET(request: NextRequest) {
 
                     // 프로필 생성
                     if (userId) {
-                        await supabaseAdmin.from('profiles').upsert({
+                        const newProfile: Record<string, any> = {
                             id: userId,
                             nickname,
                             avatar_url: avatarUrl,
@@ -117,7 +126,11 @@ export async function GET(request: NextRequest) {
                             favorite_facilities: [],
                             created_at: new Date().toISOString(),
                             updated_at: new Date().toISOString(),
-                        });
+                        };
+                        if (cleanPhone) {
+                            newProfile.phone = cleanPhone;
+                        }
+                        await supabaseAdmin.from('profiles').upsert(newProfile);
                     }
                 }
             } catch (adminError: any) {

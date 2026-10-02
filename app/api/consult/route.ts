@@ -37,6 +37,24 @@ export async function POST(request: NextRequest) {
             return NextResponse.json({ error: '메모는 1,000자 이내로 입력해주세요.' }, { status: 400 });
         }
 
+        // 한국어 정규화 (영문 키값 유입 시에도 안전하게 한글로 변환 저장)
+        const questionMap: Record<string, string> = {
+            price: '가격 문의',
+            location: '위치/교통',
+            grave: '장지/묘지 유형',
+            counsel: '맞춤 상담',
+            visit: '방문 예약',
+            other: '기타 문의'
+        };
+        const normalizedQuestion = (question && questionMap[question]) ? questionMap[question] : (question || '가격 문의');
+
+        const methodMap: Record<string, string> = {
+            phone: '전화 상담',
+            field: '방문 상담',
+            visit: '방문 상담'
+        };
+        const normalizedMethod = (consultMethod && methodMap[consultMethod]) ? methodMap[consultMethod] : (consultMethod || '전화 상담');
+
         const { data, error } = await supabase
             .from('Consult')
             .insert({
@@ -44,10 +62,10 @@ export async function POST(request: NextRequest) {
                 facilityName,
                 name,
                 phone,
-                preferredTime: preferredTime || null,
-                question: question || 'price',
+                preferredTime: preferredTime || '시간 무관',
+                question: normalizedQuestion,
                 message: message || null,
-                consultMethod: consultMethod || 'phone',
+                consultMethod: normalizedMethod,
                 status: 'pending',
                 createdAt: new Date().toISOString()
             })
@@ -79,9 +97,9 @@ export async function POST(request: NextRequest) {
             facilityName: facilityName || facilityId,
             customerName: name,
             customerPhone: phone,
-            preferredTime,
-            question,
-            consultMethod,
+            preferredTime: preferredTime || '시간 무관',
+            question: normalizedQuestion,
+            consultMethod: normalizedMethod,
             message,
         }).catch(err => console.error('Notification error:', err));
 
