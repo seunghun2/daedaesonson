@@ -239,8 +239,12 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
                                 fontSize: 14,
                                 color: '#868e96',
                                 cursor: 'pointer',
-                                padding: 0,
-                                marginBottom: 16,
+                                padding: '6px 10px',
+                                marginLeft: -10,
+                                marginBottom: 12,
+                                display: 'inline-flex',
+                                alignItems: 'center',
+                                minHeight: 38,
                             }}
                         >
                             ← 뒤로
@@ -328,8 +332,12 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
                                 fontSize: 14,
                                 color: '#868e96',
                                 cursor: 'pointer',
-                                padding: 0,
-                                marginBottom: 16,
+                                padding: '6px 10px',
+                                marginLeft: -10,
+                                marginBottom: 12,
+                                display: 'inline-flex',
+                                alignItems: 'center',
+                                minHeight: 38,
                             }}
                         >
                             ← 뒤로

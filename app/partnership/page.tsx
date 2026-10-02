@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { Box, Text, Group, Stack, TextInput, Textarea, Button, Select, Checkbox, SegmentedControl, Collapse } from '@mantine/core';
+import { Box, Text, Group, Stack, TextInput, Textarea, Button, Select, Checkbox, SegmentedControl, Collapse, ActionIcon } from '@mantine/core';
 import { useRouter } from 'next/navigation';
 import { ArrowLeft, ChevronDown, Check } from 'lucide-react';
 import Link from 'next/link';
@@ -114,9 +114,17 @@ export default function PartnershipPage() {
                 >
                     <Group justify="space-between" align="center">
                         <Group gap="sm">
-                            <Link href="/menu" style={{ display: 'flex', alignItems: 'center' }}>
-                                <ArrowLeft size={20} color="#495057" />
-                            </Link>
+                            <ActionIcon
+                                component={Link}
+                                href="/menu"
+                                size={38}
+                                radius="md"
+                                variant="subtle"
+                                color="gray"
+                                aria-label="뒤로가기"
+                            >
+                                <ArrowLeft size={22} color="#495057" />
+                            </ActionIcon>
                             <Text size="lg" fw={700}>광고/제휴 문의</Text>
                         </Group>
                     </Group>
@@ -208,9 +216,17 @@ export default function PartnershipPage() {
             >
                 <Group justify="space-between" align="center">
                     <Group gap="sm">
-                        <Link href="/menu" style={{ display: 'flex', alignItems: 'center' }}>
-                            <ArrowLeft size={20} color="#495057" />
-                        </Link>
+                        <ActionIcon
+                            component={Link}
+                            href="/menu"
+                            size={38}
+                            radius="md"
+                            variant="subtle"
+                            color="gray"
+                            aria-label="뒤로가기"
+                        >
+                            <ArrowLeft size={22} color="#495057" />
+                        </ActionIcon>
                         <Text size="lg" fw={700}>광고/제휴 문의</Text>
                     </Group>
                 </Group>

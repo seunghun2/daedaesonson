@@ -11,7 +11,7 @@ import { getSupabaseClient } from '@/lib/supabase';
 
 export default function MyInfoPage() {
     const router = useRouter();
-    const { user, profile, signOut, favorites, session } = useAuth();
+    const { user, profile, signOut, favorites, session, toggleFavorite } = useAuth();
     const isMobile = useMediaQuery('(max-width: 768px)');
     const [showFavorites, setShowFavorites] = useState(false);
     const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
@@ -32,7 +32,9 @@ export default function MyInfoPage() {
                     headers: { Authorization: `Bearer ${s.access_token}` },
                 });
                 if (res.ok) setMyReviews(await res.json());
-            } catch { /* ignore */ }
+            } catch (error) {
+                console.error('리뷰 로드 실패:', error);
+            }
         };
         loadMyReviews();
     }, []);
@@ -51,7 +53,10 @@ export default function MyInfoPage() {
             if (res.ok) {
                 setMyReviews(prev => prev.filter(r => r.id !== deleteReviewId));
             }
-        } catch { /* ignore */ }
+        } catch (error) {
+            console.error('리뷰 삭제 실패:', error);
+            alert('리뷰 삭제에 실패했습니다.');
+        }
         setDeletingReview(false);
         setDeleteReviewId(null);
     };
@@ -78,7 +83,7 @@ export default function MyInfoPage() {
             const supabase = getSupabaseClient();
             const { data: { session: currentSession } } = await supabase.auth.getSession();
             const token = currentSession?.access_token || session?.access_token;
-            await fetch('/api/auth/delete-account', {
+            const res = await fetch('/api/auth/delete-account', {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json',
@@ -86,27 +91,47 @@ export default function MyInfoPage() {
                 },
                 body: JSON.stringify({ userId: user.id }),
             });
+            if (!res.ok) {
+                alert('회원 탈퇴에 실패했습니다. 다시 시도해주세요.');
+                return;
+            }
             await signOut();
             router.push('/');
-        } catch { /* ignore */ }
+        } catch {
+            alert('네트워크 오류가 발생했습니다. 다시 시도해주세요.');
+        }
     };
 
     // 관심 시설 상세 정보 로드
     useEffect(() => {
         if (showFavorites && favorites.length > 0) {
-            setLoadingFavorites(true);
-            // 로컬 facilities.json에서 가져오기
-            fetch('/api/facilities')
-                .then(r => r.json())
-                .then(data => {
-                    const facilities = data.facilities || data || [];
-                    const matched = favorites
-                        .map(fid => facilities.find((f: any) => String(f.id) === String(fid)))
-                        .filter(Boolean);
-                    setFacilityDetails(matched);
-                })
-                .catch(() => { })
-                .finally(() => setLoadingFavorites(false));
+            // 이미 로드된 시설이 있으면 favorites에 맞춰 즉시 필터링
+            if (facilityDetails.length > 0) {
+                setFacilityDetails(prev => prev.filter(f => favorites.map(String).includes(String(f.id))));
+            } else {
+                setLoadingFavorites(true);
+                // 로컬 facilities.json에서 가져오기
+                fetch('/api/facilities')
+                    .then(r => r.json())
+                    .then(data => {
+                        const facilities = data.facilities || data || [];
+                        const uniqueFavorites = Array.from(new Set(favorites.map(String)));
+                        const matched = uniqueFavorites
+                            .map(fid => facilities.find((f: any) => String(f.id) === String(fid)))
+                            .filter(Boolean);
+                        const seen = new Set();
+                        const deduplicated = matched.filter((f: any) => {
+                            if (seen.has(f.id)) return false;
+                            seen.add(f.id);
+                            return true;
+                        });
+                        setFacilityDetails(deduplicated);
+                    })
+                    .catch((error) => { console.error('관심 시설 로드 실패:', error); })
+                    .finally(() => setLoadingFavorites(false));
+            }
+        } else if (showFavorites && favorites.length === 0) {
+            setFacilityDetails([]);
         }
     }, [showFavorites, favorites]);
 
@@ -146,12 +171,16 @@ export default function MyInfoPage() {
                             if (showFavorites) {
                                 setShowFavorites(false);
                             } else {
-                                router.back();
+                                if (typeof window !== 'undefined' && window.history.length <= 1) {
+                                    router.push('/menu');
+                                } else {
+                                    router.back();
+                                }
                             }
                         }}
                         aria-label="뒤로가기"
                     >
-                        <ChevronLeft size={22} color="#212529" />
+                        <ChevronLeft size={22} color="#495057" />
                     </ActionIcon>
                     <Text size="lg" fw={700}>
                         {showFavorites ? '관심 시설' : '내 정보'}
@@ -187,7 +216,7 @@ export default function MyInfoPage() {
                                     }}
                                     onClick={() => router.push(`/facility/${fac.id}`)}
                                 >
-                                    <Group justify="space-between" wrap="nowrap">
+                                    <Group justify="space-between" wrap="nowrap" gap="sm">
                                         <Box style={{ flex: 1, minWidth: 0 }}>
                                             <Text size="sm" fw={600} truncate>{fac.name}</Text>
                                             <Group gap={4} mt={4}>
@@ -200,7 +229,23 @@ export default function MyInfoPage() {
                                                 </Text>
                                             )}
                                         </Box>
-                                        <ChevronRight size={16} color="#adb5bd" />
+                                        <Group gap={4} wrap="nowrap" align="center">
+                                            <ActionIcon
+                                                variant="subtle"
+                                                color="yellow"
+                                                size={38}
+                                                radius="md"
+                                                aria-label="관심 시설 해제"
+                                                onClick={(e) => {
+                                                    e.stopPropagation();
+                                                    toggleFavorite(String(fac.id));
+                                                    setFacilityDetails(prev => prev.filter(f => String(f.id) !== String(fac.id)));
+                                                }}
+                                            >
+                                                <Star size={20} color="#fcc419" fill="#fcc419" />
+                                            </ActionIcon>
+                                            <ChevronRight size={16} color="#adb5bd" />
+                                        </Group>
                                     </Group>
                                 </Box>
                             ))}
@@ -303,7 +348,7 @@ export default function MyInfoPage() {
                                             key={review.id}
                                             bg="white" p="md"
                                             style={{ borderRadius: 12, cursor: 'pointer' }}
-                                            onClick={() => router.push(`/?id=${review.facilityId}`)}
+                                            onClick={() => router.push(`/facility/${review.facilityId}`)}
                                         >
                                             <Group justify="space-between" mb={4}>
                                                 <Group gap={4}>

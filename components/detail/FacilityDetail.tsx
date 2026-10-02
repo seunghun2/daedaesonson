@@ -1257,7 +1257,9 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
             });
             if (window.gtag) window.gtag('event', '공유_클릭', { 방법: '카카오톡', 시설ID: facility.id, 시설명: facility.name });
         } else {
-            navigator.clipboard.writeText(shareUrl);
+            if (typeof navigator !== 'undefined' && navigator.clipboard) {
+                navigator.clipboard.writeText(shareUrl).catch(() => {});
+            }
             setShareToast('링크가 복사되었습니다');
             setTimeout(() => setShareToast(null), 2000);
         }
@@ -1558,11 +1560,35 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
             });
 
             if (!res.ok) {
-                // Revert on failure (optional, but good practice)
-                console.error('Failed to toggle like');
+                // Revert optimistic update on failure
+                setLikedReviews(prev => {
+                    const next = new Set(prev);
+                    if (isLiked) next.add(reviewId);
+                    else next.delete(reviewId);
+                    return next;
+                });
+                setReviews(prev => prev.map(r => {
+                    if (r.id === reviewId) {
+                        return { ...r, likes: Math.max(0, (r.likes || 0) + (isLiked ? 1 : -1)) };
+                    }
+                    return r;
+                }));
             }
         } catch (error) {
             console.error(error);
+            // Revert optimistic update on error
+            setLikedReviews(prev => {
+                const next = new Set(prev);
+                if (isLiked) next.add(reviewId);
+                else next.delete(reviewId);
+                return next;
+            });
+            setReviews(prev => prev.map(r => {
+                if (r.id === reviewId) {
+                    return { ...r, likes: Math.max(0, (r.likes || 0) + (isLiked ? 1 : -1)) };
+                }
+                return r;
+            }));
         }
     };
 
@@ -1621,6 +1647,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
             }
         } catch (error) {
             console.error(error);
+            alert('댓글 등록 중 오류가 발생했습니다. 다시 시도해주세요.');
         }
     };
 
@@ -1838,7 +1865,16 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                     <Box bg="brand.8" px="md" py={10}>
                         <Group justify="space-between" align="center" wrap="nowrap">
                             <Group gap={4} wrap="nowrap" style={{ flex: 1, minWidth: 0 }}>
-                                <ActionIcon variant="transparent" color="white" w={44} h={44} onClick={onClose} style={{ flexShrink: 0 }}>
+                                <ActionIcon
+                                    variant="transparent"
+                                    color="white"
+                                    w={44}
+                                    h={44}
+                                    onClick={onClose}
+                                    aria-label="뒤로가기"
+                                    data-testid="detail-back-btn"
+                                    style={{ flexShrink: 0 }}
+                                >
                                     <ChevronLeft size={22} color="white" />
                                 </ActionIcon>
                                 <Group gap={6} wrap="nowrap" style={{ overflow: 'hidden' }}>
@@ -1863,7 +1899,9 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                         style={{ fontSize: '16px', cursor: 'pointer' }}
                                         onClick={(e) => {
                                             e.stopPropagation();
-                                            navigator.clipboard.writeText(facility.name);
+                                            if (typeof navigator !== 'undefined' && navigator.clipboard) {
+                                                navigator.clipboard.writeText(facility.name).catch(() => {});
+                                            }
                                             const el = e.currentTarget;
                                             el.style.opacity = '0.5';
                                             setTimeout(() => { el.style.opacity = '1'; }, 200);
@@ -1881,6 +1919,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                         color="white"
                                         w={44}
                                         h={44}
+                                        aria-label="지도에서 보기"
                                         onClick={(e) => {
                                             e.stopPropagation();
                                             e.preventDefault();
@@ -1905,6 +1944,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                     color="white"
                                     w={44}
                                     h={44}
+                                    aria-label="공유하기"
                                     onClick={(e) => {
                                         e.stopPropagation();
                                         e.preventDefault();
@@ -2631,7 +2671,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                                     <Text size="sm" fw={600} c="dark.8">{review.author}</Text>
                                                     <Text size="xs" c="dimmed">· {formatRelativeTime(review.date)}</Text>
                                                 </Group>
-                                                <ActionIcon variant="transparent" color="gray" size="sm" onClick={() => openDeleteReviewModal(review.id)}>
+                                                <ActionIcon variant="transparent" color="gray" size={36} onClick={() => openDeleteReviewModal(review.id)}>
                                                     <Trash size={14} />
                                                 </ActionIcon>
                                             </Group>
@@ -2708,7 +2748,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                                                 <User size={16} color="#adb5bd" />
                                                                 <Text size="sm" fw={700} c="dark.8">{reply.author}</Text>
                                                                 <Text size="xs" c="dimmed">· {formatRelativeTime(reply.createdAt || reply.date)}</Text>
-                                                                <ActionIcon variant="transparent" color="gray" size="xs" onClick={() => openDeleteReplyModal(review.id, reply.id)} ml="auto">
+                                                                <ActionIcon variant="transparent" color="gray" size={36} onClick={() => openDeleteReplyModal(review.id, reply.id)} ml="auto">
                                                                     <X size={12} />
                                                                 </ActionIcon>
                                                             </Group>
@@ -2857,7 +2897,11 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                                     bg="gray.0"
                                                     style={{ borderRadius: 8, cursor: 'pointer' }}
                                                     onClick={() => {
-                                                        onSelectFacility?.(rec.id);
+                                                        if (onSelectFacility) {
+                                                            onSelectFacility(rec.id);
+                                                        } else {
+                                                            router.push(`/facility/${rec.id}`);
+                                                        }
                                                         // 🔥 상세 페이지 맨 위로 스크롤
                                                         window.scrollTo({ top: 0, behavior: 'instant' });
                                                     }}
@@ -2937,8 +2981,15 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                     }}
                                     onClick={() => {
                                         const url = `https://daedaesonson.com/facility/${facility.id}`;
-                                        navigator.clipboard.writeText(url);
-                                        alert('링크가 복사되었습니다!');
+                                        if (typeof navigator !== 'undefined' && navigator.clipboard) {
+                                            navigator.clipboard.writeText(url).then(() => {
+                                                alert('링크가 복사되었습니다!');
+                                            }).catch(() => {
+                                                alert('링크 복사에 실패했습니다.');
+                                            });
+                                        } else {
+                                            alert('링크가 복사되었습니다!');
+                                        }
                                     }}
                                 >
                                     <Group justify="center" gap={6}>
@@ -3043,10 +3094,10 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                             zIndex: 10
                                         }}
                                     >
-                                        <ActionIcon variant="subtle" color="gray" onClick={() => setConsultModalOpened(false)}>
+                                        <ActionIcon variant="subtle" color="gray" size={38} radius="md" onClick={() => setConsultModalOpened(false)} aria-label="닫기">
                                             <X size={20} />
                                         </ActionIcon>
-                                        <Box style={{ width: 36 }} />
+                                        <Box style={{ width: 38 }} />
                                     </Box>
 
                                     {/* 본문 - 스크롤 영역 */}
@@ -3519,10 +3570,10 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                             background: 'white'
                                         }}
                                     >
-                                        <ActionIcon variant="subtle" color="gray" onClick={() => { setConsultModalOpened(false); setConsultStep(1); }}>
+                                        <ActionIcon variant="subtle" color="gray" size={38} radius="md" onClick={() => { setConsultModalOpened(false); setConsultStep(1); }} aria-label="닫기">
                                             <X size={20} />
                                         </ActionIcon>
-                                        <Box style={{ width: 36 }} />
+                                        <Box style={{ width: 38 }} />
                                     </Box>
 
                                     {/* 본문 */}
@@ -4255,6 +4306,8 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                                             backgroundColor: idx === selectedImageIndex ? 'white' : 'rgba(255,255,255,0.4)',
                                                             transition: 'all 0.2s',
                                                             cursor: 'pointer',
+                                                            padding: 8,
+                                                            backgroundClip: 'content-box',
                                                         }}
                                                         onClick={(e) => {
                                                             e.stopPropagation();
@@ -4823,8 +4876,10 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                         <ActionIcon
                                             variant="transparent"
                                             c="white"
-                                            size="lg"
+                                            size={44}
+                                            radius="md"
                                             onClick={closeImageViewer}
+                                            aria-label="닫기"
                                         >
                                             <X size={28} />
                                         </ActionIcon>
@@ -4876,6 +4931,8 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                                         backgroundColor: idx === enlargedImageIndex ? 'white' : 'rgba(255,255,255,0.4)',
                                                         cursor: 'pointer',
                                                         transition: 'all 0.2s ease',
+                                                        padding: 8,
+                                                        backgroundClip: 'content-box',
                                                     }}
                                                     onClick={(e) => {
                                                         e.stopPropagation();
@@ -5149,7 +5206,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                     <Box mx="auto" mb="md" w={36} h={4} style={{ borderRadius: 2, backgroundColor: '#dee2e6' }} />
                                     <Group justify="space-between" mb="md">
                                         <Text fw={600} size="lg">이야기 삭제</Text>
-                                        <ActionIcon variant="subtle" color="gray" onClick={() => setDeleteReviewModal(null)}>
+                                        <ActionIcon variant="subtle" color="gray" size={38} radius="md" onClick={() => setDeleteReviewModal(null)} aria-label="닫기">
                                             <X size={20} />
                                         </ActionIcon>
                                     </Group>
@@ -5202,7 +5259,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                     <Box mx="auto" mb="md" w={36} h={4} style={{ borderRadius: 2, backgroundColor: '#dee2e6' }} />
                                     <Group justify="space-between" mb="md">
                                         <Text fw={600} size="lg">댓글 삭제</Text>
-                                        <ActionIcon variant="subtle" color="gray" onClick={() => setDeleteReplyModal(null)}>
+                                        <ActionIcon variant="subtle" color="gray" size={38} radius="md" onClick={() => setDeleteReplyModal(null)} aria-label="닫기">
                                             <X size={20} />
                                         </ActionIcon>
                                     </Group>
@@ -5305,9 +5362,12 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                             <span style={{ fontSize: 16, fontWeight: 600, color: '#111' }}>공유하기</span>
                             <button
                                 onClick={() => setShareModalOpen(false)}
+                                aria-label="닫기"
                                 style={{
-                                    width: 32, height: 32, background: 'transparent', border: 'none',
+                                    width: 44, height: 44, background: 'transparent', border: 'none',
                                     fontSize: 18, color: '#999', cursor: 'pointer',
+                                    display: 'flex', alignItems: 'center', justifyContent: 'center',
+                                    padding: 0,
                                 }}
                             >✕</button>
                         </div>

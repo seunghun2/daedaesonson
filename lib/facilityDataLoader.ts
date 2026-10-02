@@ -31,6 +31,7 @@ export function loadFacilitiesJson(): any[] {
  * ID로 특정 시설 조회 (Map 인덱스 캐시 적용: O(1) 조회)
  */
 export function getFacilityByIdCached(id: string): any | null {
+    if (!id) return null;
     if (!globalCachedFacilitiesMap) {
         const list = loadFacilitiesJson();
         globalCachedFacilitiesMap = new Map();
@@ -40,7 +41,10 @@ export function getFacilityByIdCached(id: string): any | null {
             }
         }
     }
-    return globalCachedFacilitiesMap.get(String(id)) || null;
+    const direct = globalCachedFacilitiesMap.get(String(id));
+    if (direct) return direct;
+    const normalized = String(id).replace(/_/g, '-');
+    return globalCachedFacilitiesMap.get(normalized) || null;
 }
 
 // React Cache 래퍼 (동일 SSR 렌더 패스 내 완전 메모이제이션)

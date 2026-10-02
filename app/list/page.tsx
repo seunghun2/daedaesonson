@@ -8,6 +8,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 
 import FacilityCard from '@/components/list/FacilityCard';
 import FacilityDetail from '@/components/detail/FacilityDetail';
+import BottomNav from '@/components/common/BottomNav';
 import { Facility, FACILITY_CATEGORY_LABELS, FacilityCategory } from '@/types';
 
 // 거리 계산 함수 (Haversine formula)
@@ -100,8 +101,9 @@ function ListPageContent() {
         fetchData();
     }, []);
 
-    // URL에서 시설 ID 읽기
+    // URL에서 시설 ID 읽기 (PC만 오버레이 사용)
     useEffect(() => {
+        if (isMobile) return;
         const facilityId = searchParams.get('id');
         if (facilityId && allFacilities.length > 0) {
             const facility = allFacilities.find(f => f.id === facilityId);
@@ -111,7 +113,7 @@ function ListPageContent() {
         } else if (!facilityId) {
             setSelectedFacility(null);
         }
-    }, [searchParams, allFacilities]);
+    }, [searchParams, allFacilities, isMobile]);
 
     // Step 1: 거리 계산 + 기본 필터 (좌표/지역 변경 시에만 재계산, 탭 변경 시 건너뜀)
     const baseFacilities = useMemo(() => {
@@ -166,6 +168,10 @@ function ListPageContent() {
     const visibleFacilities = finalFacilities.slice(0, visibleCount);
 
     const handleFacilityClick = (facility: Facility) => {
+        if (isMobile) {
+            router.push(`/facility/${facility.id}`);
+            return;
+        }
         setSelectedFacility(facility);
         const params = new URLSearchParams(searchParams.toString());
         params.set('id', facility.id);
@@ -186,7 +192,11 @@ function ListPageContent() {
     };
 
     const handleBack = () => {
-        router.push('/');
+        if (typeof window !== 'undefined' && window.history.length <= 1) {
+            router.push('/');
+        } else {
+            router.back();
+        }
     };
 
     return (
@@ -211,11 +221,15 @@ function ListPageContent() {
             >
                 <Group wrap="nowrap" align="center" justify="space-between">
                     <ActionIcon
-                        variant="transparent"
+                        variant="subtle"
+                        color="gray"
+                        size={38}
+                        radius="md"
                         onClick={handleBack}
+                        aria-label="뒤로가기"
                         style={{ color: '#495057' }}
                     >
-                        <ChevronLeft size={28} strokeWidth={2} />
+                        <ChevronLeft size={22} color="#495057" strokeWidth={2} />
                     </ActionIcon>
 
                     {/* 중앙: 지역명 + 주변 시설 보기 */}
@@ -224,7 +238,7 @@ function ListPageContent() {
                     </Text>
 
                     {/* 오른쪽 여백 맞추기용 */}
-                    <Box w={28} />
+                    <Box w={38} />
                 </Group>
             </Box>
 
@@ -297,11 +311,11 @@ function ListPageContent() {
                 >
                     {/* 헤더 */}
                     <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '16px 20px', borderBottom: '1px solid #f1f3f5' }}>
-                        <button onClick={() => setCategoryFilterOpen(false)} style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 4, display: 'flex', alignItems: 'center', justifyContent: 'center', width: 28, height: 28 }}>
+                        <button onClick={() => setCategoryFilterOpen(false)} style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 4, display: 'flex', alignItems: 'center', justifyContent: 'center', width: 44, height: 44 }}>
                             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#333" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" /></svg>
                         </button>
                         <Text fw={700} size="md">필터</Text>
-                        <div style={{ width: 28 }} />
+                        <div style={{ width: 44 }} />
                     </div>
 
                     {/* 시설 유형 */}
@@ -405,7 +419,7 @@ function ListPageContent() {
                                     transition: 'all 0.2s ease'
                                 }}
                             >
-                                <FacilityCard facility={facility} onClick={() => { }} />
+                                <FacilityCard facility={facility} onClick={() => handleFacilityClick(facility)} />
                             </Box>
                         ))}
 
@@ -422,15 +436,15 @@ function ListPageContent() {
                             </Button>
                         )}
 
-                        {/* 하단 여백 */}
-                        <Box h={50} />
+                        {/* 하단 여백 (하단 네비게이션 고려) */}
+                        <Box h={isMobile ? 80 : 50} />
                     </Stack>
                 )}
             </ScrollArea>
 
-            {/* 상세 페이지 */}
+            {/* 상세 페이지 (PC만 오버레이, 모바일은 /facility/:id 전용 페이지) */}
             {
-                selectedFacility && (
+                !isMobile && selectedFacility && (
                     <Box
                         pos="fixed"
                         top={0}
@@ -450,6 +464,9 @@ function ListPageContent() {
                     </Box>
                 )
             }
+
+            {/* 모바일 하단 네비게이션 */}
+            {isMobile && !selectedFacility && <BottomNav />}
         </Box >
     );
 }

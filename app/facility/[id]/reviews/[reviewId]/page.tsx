@@ -176,8 +176,21 @@ export default function ReviewRepliesPage() {
                 }}
             >
                 <Group gap="xs">
-                    <ActionIcon variant="transparent" color="dark" onClick={() => router.back()}>
-                        <ChevronLeft size={20} />
+                    <ActionIcon
+                        variant="subtle"
+                        color="gray"
+                        size={38}
+                        radius="md"
+                        onClick={() => {
+                            if (typeof window !== 'undefined' && window.history.length <= 1) {
+                                router.push(`/facility/${facilityId}/reviews`);
+                            } else {
+                                router.back();
+                            }
+                        }}
+                        aria-label="뒤로가기"
+                    >
+                        <ChevronLeft size={22} color="#495057" />
                     </ActionIcon>
                     <Text fw={600} size="md">댓글 {review.replies?.length || 0}개</Text>
                 </Group>

@@ -313,8 +313,21 @@ export default function ReviewsListPage() {
             >
                 <Group justify="space-between" align="center">
                     <Group gap="xs">
-                        <ActionIcon variant="transparent" color="dark" onClick={() => router.back()}>
-                            <ChevronLeft size={20} />
+                        <ActionIcon
+                            variant="subtle"
+                            color="gray"
+                            size={38}
+                            radius="md"
+                            onClick={() => {
+                                if (typeof window !== 'undefined' && window.history.length <= 1) {
+                                    router.push(`/facility/${facilityId}`);
+                                } else {
+                                    router.back();
+                                }
+                            }}
+                            aria-label="뒤로가기"
+                        >
+                            <ChevronLeft size={22} color="#495057" />
                         </ActionIcon>
                         <Text fw={600} size="md">이야기 {reviews.length}개</Text>
                     </Group>
@@ -400,12 +413,21 @@ export default function ReviewsListPage() {
 
                                 {/* 좋아요 / 답글달기 */}
                                 <Group gap="lg" mt="sm" ml={32}>
-                                    <Group gap={4} style={{ cursor: 'pointer' }} onClick={() => {
+                                    <Group gap={4} style={{ cursor: 'pointer' }} role="button" tabIndex={0} onClick={() => {
                                         setReplyingTo(replyingTo === review.id ? null : review.id);
                                         setReplyContent('');
                                         setReplyPhotos([]);
                                         setReplyNickname('');
                                         setReplyPassword('');
+                                    }} onKeyDown={(e: React.KeyboardEvent) => {
+                                        if (e.key === 'Enter' || e.key === ' ') {
+                                            e.preventDefault();
+                                            setReplyingTo(replyingTo === review.id ? null : review.id);
+                                            setReplyContent('');
+                                            setReplyPhotos([]);
+                                            setReplyNickname('');
+                                            setReplyPassword('');
+                                        }
                                     }}>
                                         <MessageSquare size={16} color="#868e96" />
                                         <Text size="xs" c="dimmed">답글달기 {review.replies?.length || 0}</Text>
@@ -517,7 +539,7 @@ export default function ReviewsListPage() {
                         <Box p="md" pt={4}>
                             <Group justify="space-between" mb="md">
                                 <Text fw={600} size="md">댓글 작성</Text>
-                                <ActionIcon variant="transparent" color="gray" onClick={() => {
+                                <ActionIcon variant="subtle" color="gray" size={38} radius="md" aria-label="댓글 닫기" onClick={() => {
                                     setReplyingTo(null); setReplyContent(''); setReplyPhotos([]);
                                     setReplyNickname(''); setReplyPassword('');
                                 }}>
@@ -755,7 +777,7 @@ export default function ReviewsListPage() {
                         <Box p="md" pt={4} maw={600} mx="auto">
                             <Group justify="space-between" mb="md">
                                 <Text fw={700} size="lg">이야기 남기기</Text>
-                                <ActionIcon variant="subtle" color="gray" onClick={() => setWriteModalOpened(false)}>
+                                <ActionIcon variant="subtle" color="gray" size={38} radius="md" aria-label="이야기 닫기" onClick={() => setWriteModalOpened(false)}>
                                     <X size={20} />
                                 </ActionIcon>
                             </Group>

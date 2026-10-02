@@ -1,6 +1,6 @@
 'use client';
 
-import { Box, Text, Stack, Group, Divider } from '@mantine/core';
+import { Box, Text, Stack, Group, Divider, ActionIcon } from '@mantine/core';
 import { ArrowLeft } from 'lucide-react';
 import Link from 'next/link';
 import BottomNav from '@/components/common/BottomNav';
@@ -20,9 +20,17 @@ export default function TermsPage() {
                 }}
             >
                 <Group gap="sm">
-                    <Link href="/menu" style={{ width: 36, height: 36, display: 'flex', alignItems: 'center', justifyContent: 'center' }} aria-label="메뉴로 돌아가기">
-                        <ArrowLeft size={20} color="#495057" />
-                    </Link>
+                    <ActionIcon
+                        component={Link}
+                        href="/menu"
+                        size={38}
+                        radius="md"
+                        variant="subtle"
+                        color="gray"
+                        aria-label="뒤로가기"
+                    >
+                        <ArrowLeft size={22} color="#495057" />
+                    </ActionIcon>
                     <Text size="lg" fw={700}>서비스 이용약관</Text>
                 </Group>
             </Box>

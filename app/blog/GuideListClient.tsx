@@ -109,8 +109,21 @@ export default function GuideListClient({ initialPosts, initialTotalPages }: Gui
                 >
                     <Group gap={12} align="center">
                         {isMobile && (
-                            <ActionIcon variant="transparent" onClick={() => router.push('/')} style={{ color: '#333' }}>
-                                <ChevronLeft size={24} />
+                            <ActionIcon
+                                variant="subtle"
+                                color="gray"
+                                size={38}
+                                radius="md"
+                                onClick={() => {
+                                    if (typeof window !== 'undefined' && window.history.length <= 1) {
+                                        router.push('/menu');
+                                    } else {
+                                        router.back();
+                                    }
+                                }}
+                                aria-label="뒤로가기"
+                            >
+                                <ChevronLeft size={22} color="#495057" />
                             </ActionIcon>
                         )}
                         <Link href="/blog" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center', gap: 8 }}>

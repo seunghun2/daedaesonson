@@ -63,7 +63,15 @@ export default function BlogDetailClient({ post, relatedPosts }: Props) {
         if (navigator.share) {
             try {
                 await navigator.share({ title: post?.title, url });
-            } catch { }
+            } catch (err: any) {
+                // User cancelled share — fall back to clipboard
+                if (err?.name !== 'AbortError') {
+                    try {
+                        await navigator.clipboard.writeText(url);
+                        alert('링크가 복사되었습니다!');
+                    } catch { /* ignore clipboard error */ }
+                }
+            }
         } else {
             await navigator.clipboard.writeText(url);
             alert('링크가 복사되었습니다!');
@@ -93,8 +101,22 @@ export default function BlogDetailClient({ post, relatedPosts }: Props) {
                     }}
                 >
                     <Group gap={12} align="center">
-                        <ActionIcon variant="transparent" onClick={() => router.back()} style={{ color: '#333' }}>
-                            <ChevronLeft size={24} />
+                        <ActionIcon
+                            variant="subtle"
+                            color="gray"
+                            size={38}
+                            radius="md"
+                            onClick={() => {
+                                if (typeof window !== 'undefined' && window.history.length <= 1) {
+                                    router.push('/blog');
+                                } else {
+                                    router.back();
+                                }
+                            }}
+                            aria-label="뒤로가기"
+                            style={{ color: '#333' }}
+                        >
+                            <ChevronLeft size={22} color="#495057" />
                         </ActionIcon>
                         <Link href="/blog" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center', gap: 8 }}>
                             <Text fw={800} size={isMobile ? 'lg' : 'xl'} c="dark.9">

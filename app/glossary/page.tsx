@@ -1,6 +1,6 @@
 'use client';
 
-import { Box, Text, Stack, Group, SimpleGrid } from '@mantine/core';
+import { Box, Text, Stack, Group, SimpleGrid, ActionIcon } from '@mantine/core';
 import {
     ArrowLeft, Building2, TreePine, Shovel, Banknote,
     Building, Trees, ParkingSquare, Mountain, Leaf, Shrub,
@@ -186,9 +186,17 @@ export default function GlossaryPage() {
                 }}
             >
                 <Group gap="sm">
-                    <Link href="/menu" style={{ width: 36, height: 36, display: 'flex', alignItems: 'center', justifyContent: 'center' }} aria-label="메뉴로 돌아가기">
-                        <ArrowLeft size={20} color="#495057" />
-                    </Link>
+                    <ActionIcon
+                        component={Link}
+                        href="/menu"
+                        size={38}
+                        radius="md"
+                        variant="subtle"
+                        color="gray"
+                        aria-label="뒤로가기"
+                    >
+                        <ArrowLeft size={22} color="#495057" />
+                    </ActionIcon>
                     <Text size="lg" fw={700}>용어 가이드</Text>
                 </Group>
             </Box>

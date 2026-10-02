@@ -1,6 +1,6 @@
 'use client';
 
-import { Box, Text, Stack, Group, Table } from '@mantine/core';
+import { Box, Text, Stack, Group, Table, ActionIcon } from '@mantine/core';
 import { ArrowLeft, Check, ChevronRight, Clock, MapPin, Phone } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -21,9 +21,7 @@ export default function HwajangPage() {
                 }}
             >
                 <Group gap="sm">
-                    <Link href="/glossary" style={{ display: 'flex', alignItems: 'center' }}>
-                        <ArrowLeft size={20} color="#495057" />
-                    </Link>
+                    <ActionIcon component={Link} href="/glossary" size={38} radius="md" variant="subtle" color="gray" aria-label="뒤로가기"><ArrowLeft size={22} color="#495057" /></ActionIcon>
                     <Text size="lg" fw={700}>용어 가이드</Text>
                 </Group>
             </Box>

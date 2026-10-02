@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { Box, Center, Loader, Text } from '@mantine/core';
+import { Box, Center, Loader, Text, Button, Stack } from '@mantine/core';
 import FacilityDetail from '@/components/detail/FacilityDetail';
 
 interface ConsultPageProps {
@@ -47,11 +47,24 @@ export default function ConsultPage({ params }: ConsultPageProps) {
 
     if (!facility) {
         return (
-            <Box p="xl" ta="center">
-                <Text size="xl" fw={700}>시설을 찾을 수 없습니다</Text>
-            </Box>
+            <Center style={{ height: '100dvh' }}>
+                <Stack align="center" gap="md">
+                    <Text size="xl" fw={700}>시설을 찾을 수 없습니다</Text>
+                    <Button variant="light" color="gray" radius="xl" onClick={() => router.push('/')}>
+                        홈으로 돌아가기
+                    </Button>
+                </Stack>
+            </Center>
         );
     }
+
+    const handleClose = () => {
+        if (typeof window !== 'undefined' && window.history.length <= 1) {
+            router.push(`/facility/${facility.id}`);
+        } else {
+            router.back();
+        }
+    };
 
     return (
         <Box
@@ -72,7 +85,7 @@ export default function ConsultPage({ params }: ConsultPageProps) {
         >
             <FacilityDetail
                 facility={facility}
-                onClose={() => router.back()}
+                onClose={handleClose}
                 initialConsultOpen={true}
             />
         </Box>

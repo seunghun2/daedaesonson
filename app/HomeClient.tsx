@@ -3,7 +3,7 @@
 import { useState, useMemo, useEffect, useRef, useTransition, Suspense } from 'react';
 import { Box, Flex, useMantineTheme, TextInput, Group, Text, ThemeIcon, ActionIcon, ScrollArea, Stack, Loader, Center, Button, Popover, Checkbox, Drawer, SegmentedControl } from '@mantine/core';
 import { useMediaQuery } from '@mantine/hooks';
-import { Search, MapPin, Building, MessageCircle, Clock, Info, User, ChevronLeft, ChevronDown, ChevronRight, Heart, MessageSquare, Trash2, ArrowLeft, LogOut } from 'lucide-react';
+import { Search, MapPin, Building, MessageCircle, Clock, Info, User, ChevronLeft, ChevronDown, ChevronRight, Heart, MessageSquare, Trash2, ArrowLeft, LogOut, Star } from 'lucide-react';
 import LoginModal from '@/components/auth/LoginModal';
 import { useAuth } from '@/components/auth/AuthProvider';
 import { getSupabaseClient } from '@/lib/supabase';
@@ -1047,6 +1047,7 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
               onClose={() => setShowMyInfo(false)}
               onSignOut={() => { signOut(); setShowMyInfo(false); }}
               onFacilityClick={(fac) => { setShowMyInfo(false); handleMarkerClick(fac); }}
+              toggleFavorite={toggleFavorite}
               router={router}
             />
           ) : selectedFacility && !isMobile ? (
@@ -1146,7 +1147,7 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
                 <button
                   onClick={() => {
                     if (user) {
-                      router.push('/menu');
+                      router.push('/myinfo');
                     } else {
                       setShowLoginFromMap(true);
                     }
@@ -1269,12 +1270,12 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '16px 20px', borderBottom: '1px solid #f1f3f5' }}>
             <button
               onClick={() => setDrawerFilterOpen(false)}
-              style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 4, display: 'flex', alignItems: 'center', justifyContent: 'center', width: 28, height: 28 }}
+              style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 4, display: 'flex', alignItems: 'center', justifyContent: 'center', width: 44, height: 44 }}
             >
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#333" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" /></svg>
             </button>
             <Text fw={700} size="md">필터</Text>
-            <div style={{ width: 28 }} />
+            <div style={{ width: 44 }} />
           </div>
 
           {/* 시설 유형 */}
@@ -1660,21 +1661,24 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
                       styles={{ label: { fontSize: '12px', cursor: 'pointer', color: '#868e96', paddingLeft: 6 }, input: { cursor: 'pointer' } }}
                     />
                   </div>
-                  {nearby.slice(0, nearbyVisibleCount).map(facility => (
-                    <Box key={facility.id}
-                      onClick={() => {
-                        // 주변 시설 리스트 닫기 + 상세 열기
-                        setNearbyList(null);
-                        if (mapRef.current && facility.coordinates) {
-                          mapRef.current.panTo(facility.coordinates.lat, facility.coordinates.lng, 17, facility.id);
-                        }
-                        handleMarkerClick(facility);
-                      }}
-                      style={{ cursor: 'pointer', borderRadius: '8px', transition: 'all 0.2s ease' }}
-                    >
-                      <FacilityCard facility={facility} onClick={() => { }} />
-                    </Box>
-                  ))}
+                  {nearby.slice(0, nearbyVisibleCount).map(facility => {
+                    const handleOpenNearby = () => {
+                      // 주변 시설 리스트 닫기 + 상세 열기
+                      setNearbyList(null);
+                      if (mapRef.current && facility.coordinates) {
+                        mapRef.current.panTo(facility.coordinates.lat, facility.coordinates.lng, 17, facility.id);
+                      }
+                      handleMarkerClick(facility);
+                    };
+                    return (
+                      <Box key={facility.id}
+                        onClick={handleOpenNearby}
+                        style={{ cursor: 'pointer', borderRadius: '8px', transition: 'all 0.2s ease' }}
+                      >
+                        <FacilityCard facility={facility} onClick={handleOpenNearby} />
+                      </Box>
+                    );
+                  })}
                   {nearbyVisibleCount < nearby.length && (
                     <Button variant="light" color="gray" fullWidth
                       onClick={() => setNearbyVisibleCount(p => p + 20)} mt="md"
@@ -1795,6 +1799,7 @@ function MyInfoPanel({
   onClose,
   onSignOut,
   onFacilityClick,
+  toggleFavorite,
   router,
 }: {
   user: any;
@@ -1804,6 +1809,7 @@ function MyInfoPanel({
   onClose: () => void;
   onSignOut: () => void;
   onFacilityClick: (fac: any) => void;
+  toggleFavorite?: (facilityId: string) => Promise<void>;
   router: any;
 }) {
   const [showFavList, setShowFavList] = useState(false);
@@ -1824,7 +1830,9 @@ function MyInfoPanel({
           headers: { Authorization: `Bearer ${session.access_token}` },
         });
         if (res.ok) setMyReviews(await res.json());
-      } catch { /* ignore */ }
+      } catch (error) {
+        console.error('리뷰 로드 실패:', error);
+      }
     };
     loadMyReviews();
   }, []);
@@ -1843,7 +1851,10 @@ function MyInfoPanel({
       if (res.ok) {
         setMyReviews(prev => prev.filter(r => r.id !== deleteReviewId));
       }
-    } catch { /* ignore */ }
+    } catch (error) {
+      console.error('리뷰 삭제 실패:', error);
+      alert('리뷰 삭제에 실패했습니다.');
+    }
     setDeletingReview(false);
     setDeleteReviewId(null);
   };
@@ -1862,7 +1873,7 @@ function MyInfoPanel({
     try {
       const supabase = getSupabaseClient();
       const { data: { session } } = await supabase.auth.getSession();
-      await fetch('/api/auth/delete-account', {
+      const res = await fetch('/api/auth/delete-account', {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
@@ -1870,9 +1881,15 @@ function MyInfoPanel({
         },
         body: JSON.stringify({ userId: user.id }),
       });
+      if (!res.ok) {
+        alert('회원 탈퇴에 실패했습니다. 다시 시도해주세요.');
+        return;
+      }
       onSignOut();
       router.push('/');
-    } catch { /* ignore */ }
+    } catch {
+      alert('네트워크 오류가 발생했습니다. 다시 시도해주세요.');
+    }
   };
 
   return (
@@ -1899,9 +1916,9 @@ function MyInfoPanel({
         <Box p="md">
           {favFacilities.length === 0 ? (
             <Box py={60} style={{ textAlign: 'center' }}>
-              <Heart size={48} color="#dee2e6" style={{ margin: '0 auto', display: 'block' }} />
+              <Star size={48} color="#FFD43B" fill="#FFD43B" style={{ margin: '0 auto', display: 'block' }} />
               <Text c="dimmed" size="sm" mt={12}>관심 시설이 없습니다</Text>
-              <Text c="dimmed" size="xs" mt={4}>시설 상세 페이지에서 ♡를 눌러 추가하세요</Text>
+              <Text c="dimmed" size="xs" mt={4}>시설 상세 페이지에서 ★를 눌러 추가하세요</Text>
             </Box>
           ) : (
             <Stack gap="sm">
@@ -1920,7 +1937,7 @@ function MyInfoPanel({
                   onMouseEnter={(e: any) => { e.currentTarget.style.transform = 'translateY(-1px)'; e.currentTarget.style.boxShadow = '0 2px 8px rgba(0,0,0,0.08)'; }}
                   onMouseLeave={(e: any) => { e.currentTarget.style.transform = ''; e.currentTarget.style.boxShadow = ''; }}
                 >
-                  <Group justify="space-between" wrap="nowrap">
+                  <Group justify="space-between" wrap="nowrap" gap="sm">
                     <Box style={{ flex: 1, minWidth: 0 }}>
                       <Text size="sm" fw={600} truncate>{fac.name}</Text>
                       <Group gap={4} mt={4}>
@@ -1928,7 +1945,24 @@ function MyInfoPanel({
                         <Text size="xs" c="dimmed" truncate>{fac.address}</Text>
                       </Group>
                     </Box>
-                    <ChevronRight size={16} color="#adb5bd" />
+                    <Group gap={4} wrap="nowrap" align="center">
+                      {toggleFavorite && (
+                        <ActionIcon
+                          variant="subtle"
+                          color="yellow"
+                          size={38}
+                          radius="md"
+                          aria-label="관심 시설 해제"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            toggleFavorite(String(fac.id));
+                          }}
+                        >
+                          <Star size={20} color="#fcc419" fill="#fcc419" />
+                        </ActionIcon>
+                      )}
+                      <ChevronRight size={16} color="#adb5bd" />
+                    </Group>
                   </Group>
                 </Box>
               ))}
@@ -1953,7 +1987,13 @@ function MyInfoPanel({
                   onClick={() => {
                     setShowMyReviews(false);
                     onClose();
-                    onFacilityClick({ id: review.facilityId });
+                    const fullFacility = allFacilities.find(f => String(f.id) === String(review.facilityId));
+                    if (fullFacility) {
+                      onFacilityClick(fullFacility);
+                    } else {
+                      // 시설 데이터에 없으면 상세 페이지로 직접 이동
+                      router.push(`/facility/${review.facilityId}`);
+                    }
                   }}
                 >
                   <Group justify="space-between" mb={4}>
@@ -1968,7 +2008,7 @@ function MyInfoPanel({
                       </Text>
                       <Box
                         onClick={(e: any) => { e.stopPropagation(); setDeleteReviewId(review.id); }}
-                        style={{ cursor: 'pointer', padding: 4, borderRadius: 6 }}
+                        style={{ cursor: 'pointer', padding: 10, borderRadius: 6, display: 'flex', alignItems: 'center', justifyContent: 'center', minWidth: 44, minHeight: 44 }}
                         onMouseEnter={(e: any) => { e.currentTarget.style.backgroundColor = '#fff5f5'; }}
                         onMouseLeave={(e: any) => { e.currentTarget.style.backgroundColor = 'transparent'; }}
                       >
@@ -2050,7 +2090,7 @@ function MyInfoPanel({
               onMouseLeave={(e: any) => { e.currentTarget.style.backgroundColor = 'white'; }}
             >
               <Group gap={8}>
-                <Heart size={18} color="#ff6b6b" fill="#ff6b6b" />
+                <Star size={18} color="#fcc419" fill="#fcc419" />
                 <Text size="sm" fw={500}>관심 시설</Text>
               </Group>
               <Group gap={4}>

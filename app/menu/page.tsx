@@ -19,7 +19,7 @@ export default function MenuPage() {
 
     const serviceItems = [
         { label: '대대손손 소개', icon: Home, path: '/about', description: '서비스 안내' },
-        { label: '문의하기', icon: MessageCircle, path: '/inquiries', description: '문의 목록 보기' },
+        { label: '내 문의 내역', icon: MessageCircle, path: '/inquiries', description: '문의 목록 보기' },
         { label: '기록', icon: Clock, path: '/history', description: '최근 본 시설' },
         { label: '블로그', icon: FileText, path: '/blog', description: '장례 가이드 보기' },
     ];

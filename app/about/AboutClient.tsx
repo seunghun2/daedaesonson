@@ -3,6 +3,8 @@
 import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
+import { ArrowLeft } from 'lucide-react';
 import ChatFloatingButton from '@/components/chatbot/ChatFloatingButton';
 import s from './about.module.css';
 
@@ -108,6 +110,7 @@ const IconArrowRight = () => (
 // About Client Component
 // ============================================
 export default function AboutClient() {
+    const router = useRouter();
     const heroRef = useFadeIn();
     const painRef = useFadeIn();
     const solutionRef = useFadeIn();
@@ -247,16 +250,44 @@ export default function AboutClient() {
                 ================================================ */}
             <header className={s.stickyHeader}>
                 <div className={s.headerInner}>
-                    <Link href="/" className={s.headerLogo}>
-                        <Image
-                            src="/logo-horizontal.svg?v=4"
-                            alt="대대손손"
-                            width={105}
-                            height={30}
-                            style={{ objectFit: 'contain' }}
-                            priority
-                        />
-                    </Link>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                        <button
+                            type="button"
+                            aria-label="뒤로가기"
+                            onClick={() => {
+                                if (typeof window !== 'undefined' && window.history.length <= 1) {
+                                    router.push('/menu');
+                                } else {
+                                    router.back();
+                                }
+                            }}
+                            style={{
+                                display: 'inline-flex',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                width: 38,
+                                height: 38,
+                                borderRadius: 10,
+                                border: 'none',
+                                background: 'transparent',
+                                cursor: 'pointer',
+                                padding: 0,
+                                color: '#495057',
+                            }}
+                        >
+                            <ArrowLeft size={22} />
+                        </button>
+                        <Link href="/" className={s.headerLogo}>
+                            <Image
+                                src="/logo-horizontal.svg?v=4"
+                                alt="대대손손"
+                                width={105}
+                                height={30}
+                                style={{ objectFit: 'contain' }}
+                                priority
+                            />
+                        </Link>
+                    </div>
                     <nav className={s.headerNav}>
                         <Link href="/about" className={s.headerNavLinkActive}>회사소개</Link>
                         <Link href="/list" className={s.headerNavLink}>장지 목록</Link>

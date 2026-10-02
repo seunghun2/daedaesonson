@@ -491,10 +491,6 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
         }
     }));
 
-    const handleInquiries = () => {
-        window.location.href = '/inquiries';
-    };
-
     const handleZoomIn = () => {
         if (mapInstanceRef.current) {
             const currentZoom = mapInstanceRef.current.getZoom();
@@ -1599,6 +1595,7 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
                         position: 'absolute',
                         bottom: isMobile ? '70px' : '24px',
                         left: isMobile ? '16px' : (typeof window !== 'undefined' && window.innerWidth <= 1200 ? '16px' : '50%'),
+                        maxWidth: isMobile ? 'calc(100vw - 88px)' : 'none',
                         transform: uiHidden
                             ? ((!isMobile && typeof window !== 'undefined' && window.innerWidth > 1200) ? 'translateX(-50%) translateY(150%)' : 'translateY(150%)')
                             : ((!isMobile && typeof window !== 'undefined' && window.innerWidth > 1200) ? 'translateX(-50%) translateY(0)' : 'translateY(0)'),
@@ -1622,7 +1619,7 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
                                 gap: '8px',
                                 backgroundColor: '#1D0098',
                                 color: 'white',
-                                padding: isMobile ? '14px 20px' : '14px 24px',
+                                padding: isMobile ? '12px 18px' : '14px 24px',
                                 borderRadius: '30px',
                                 boxShadow: '0 4px 12px rgba(0,0,0,0.3)',
                                 cursor: 'pointer',
@@ -1630,12 +1627,15 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
                                 fontWeight: 'bold',
                                 whiteSpace: 'nowrap',
                                 textDecoration: 'none',
+                                maxWidth: '100%',
                             }}
                         >
                             {!isMobile && (
                                 <svg width={20} height={20} viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
                             )}
-                            <span>{centerAddress} 주변 시설 보기</span>
+                            <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                                {centerAddress} 주변 시설 보기
+                            </span>
                         </div>
                     </div>
                 )}

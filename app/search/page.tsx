@@ -89,23 +89,27 @@ function SearchPageContent() {
 
         setIsLoading(true);
 
-        // 지역 검색
-        const regions = await searchRegions(keyword);
-        setRegionResults(regions);
+        try {
+            // 지역 검색
+            const regions = await searchRegions(keyword);
+            setRegionResults(regions);
 
-        // 시설 검색
-        const searchKey = keyword.trim().toLowerCase().normalize('NFC');
-        const facilities = allFacilities
-            .filter(f => f.isActive !== false)
-            .filter(f => {
-                const name = (f.name || '').toLowerCase().normalize('NFC');
-                const addr = (f.address || '').toLowerCase().normalize('NFC');
-                return name.includes(searchKey) || addr.includes(searchKey);
-            })
-            .slice(0, 10);
-        setFacilityResults(facilities);
-
-        setIsLoading(false);
+            // 시설 검색
+            const searchKey = keyword.trim().toLowerCase().normalize('NFC');
+            const facilities = allFacilities
+                .filter(f => f.isActive !== false)
+                .filter(f => {
+                    const name = (f.name || '').toLowerCase().normalize('NFC');
+                    const addr = (f.address || '').toLowerCase().normalize('NFC');
+                    return name.includes(searchKey) || addr.includes(searchKey);
+                })
+                .slice(0, 10);
+            setFacilityResults(facilities);
+        } catch (error) {
+            console.error('검색 중 오류:', error);
+        } finally {
+            setIsLoading(false);
+        }
     }, 200);
 
     const handleInputChange = (value: string) => {
@@ -185,11 +189,21 @@ function SearchPageContent() {
             >
                 <Group wrap="nowrap" gap={8} align="center">
                     <ActionIcon
-                        variant="transparent"
-                        onClick={() => router.back()}
+                        variant="subtle"
+                        color="gray"
+                        size={38}
+                        radius="md"
+                        onClick={() => {
+                            if (typeof window !== 'undefined' && window.history.length <= 1) {
+                                router.push('/');
+                            } else {
+                                router.back();
+                            }
+                        }}
+                        aria-label="뒤로가기"
                         style={{ color: '#495057', flexShrink: 0 }}
                     >
-                        <ChevronLeft size={26} strokeWidth={2} />
+                        <ChevronLeft size={22} color="#495057" strokeWidth={2} />
                     </ActionIcon>
 
                     <Box
@@ -379,12 +393,15 @@ function SearchPageContent() {
                                                 <Text size="sm" c="dark.7" truncate>{keyword}</Text>
                                             </Group>
                                             <ActionIcon
-                                                variant="transparent"
-                                                size="xs"
+                                                variant="subtle"
+                                                color="gray"
+                                                size={36}
+                                                radius="md"
+                                                aria-label="검색어 삭제"
                                                 onClick={(e) => { e.stopPropagation(); removeRecentSearch(keyword); }}
-                                                style={{ color: '#ced4da', flexShrink: 0 }}
+                                                style={{ color: '#adb5bd', flexShrink: 0 }}
                                             >
-                                                <X size={14} />
+                                                <X size={16} />
                                             </ActionIcon>
                                         </Group>
                                     </Box>

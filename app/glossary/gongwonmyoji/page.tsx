@@ -1,6 +1,6 @@
 'use client';
 
-import { Box, Text, Stack, Group } from '@mantine/core';
+import { Box, Text, Stack, Group, ActionIcon } from '@mantine/core';
 import { ArrowLeft, Check, ChevronRight, MapPin, TreePine, Building } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -11,9 +11,7 @@ export default function GongwonmyojiPage() {
         <Box style={{ minHeight: '100dvh', backgroundColor: 'white', paddingBottom: 80 }}>
             <Box p="md" style={{ backgroundColor: 'white', borderBottom: '1px solid #e9ecef', position: 'sticky', top: 0, zIndex: 100 }}>
                 <Group gap="sm">
-                    <Link href="/glossary" style={{ display: 'flex', alignItems: 'center' }}>
-                        <ArrowLeft size={20} color="#495057" />
-                    </Link>
+                    <ActionIcon component={Link} href="/glossary" size={38} radius="md" variant="subtle" color="gray" aria-label="뒤로가기"><ArrowLeft size={22} color="#495057" /></ActionIcon>
                     <Text size="lg" fw={700}>용어 가이드</Text>
                 </Group>
             </Box>

@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Box, Text, Group, Stack, Badge } from '@mantine/core';
+import { Box, Text, Group, Stack, Badge, ActionIcon } from '@mantine/core';
 import { useRouter } from 'next/navigation';
 import { Clock, Trash2, ArrowLeft } from 'lucide-react';
 import Link from 'next/link';
@@ -64,7 +64,25 @@ export default function HistoryPage() {
                 }}
             >
                 <Group justify="space-between" align="center">
-                    <Text size="lg" fw={700}>기록</Text>
+                    <Group gap="xs" align="center">
+                        <ActionIcon
+                            variant="subtle"
+                            color="gray"
+                            size={38}
+                            radius="md"
+                            onClick={() => {
+                                if (typeof window !== 'undefined' && window.history.length <= 1) {
+                                    router.push('/menu');
+                                } else {
+                                    router.back();
+                                }
+                            }}
+                            aria-label="뒤로가기"
+                        >
+                            <ArrowLeft size={22} color="#495057" />
+                        </ActionIcon>
+                        <Text size="lg" fw={700}>기록</Text>
+                    </Group>
                     {history.length > 0 && (
                         <Text
                             size="sm"
@@ -105,7 +123,7 @@ export default function HistoryPage() {
                                 cursor: 'pointer',
                                 boxShadow: '0 1px 3px rgba(0,0,0,0.05)',
                             }}
-                            onClick={() => router.push(`/?id=${item.id}`)}
+                            onClick={() => router.push(`/facility/${item.id}`)}
                         >
                             <Group wrap="nowrap" gap="sm">
                                 {/* 썸네일 */}
@@ -172,8 +190,13 @@ export default function HistoryPage() {
                                         removeItem(item.id);
                                     }}
                                     style={{
-                                        padding: 8,
+                                        padding: 10,
                                         cursor: 'pointer',
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        justifyContent: 'center',
+                                        minWidth: 44,
+                                        minHeight: 44,
                                     }}
                                 >
                                     <Trash2 size={16} color="#adb5bd" />

@@ -191,7 +191,7 @@ export default function InquiriesClient({ initialInquiries, facilities = [] }: I
         <Box h="100dvh" bg="white">
             {/* 헤더 */}
             <Box
-                px="lg" py={14}
+                px="md" py={10}
                 style={{
                     position: 'sticky',
                     top: 0,
@@ -200,7 +200,25 @@ export default function InquiriesClient({ initialInquiries, facilities = [] }: I
                     borderBottom: '1px solid #f1f3f5',
                 }}
             >
-                <Text fw={700} size="lg">문의</Text>
+                <Group gap="xs" align="center">
+                    <ActionIcon
+                        variant="subtle"
+                        color="gray"
+                        size={38}
+                        radius="md"
+                        onClick={() => {
+                            if (typeof window !== 'undefined' && window.history.length <= 1) {
+                                router.push('/menu');
+                            } else {
+                                router.back();
+                            }
+                        }}
+                        aria-label="뒤로가기"
+                    >
+                        <ChevronLeft size={22} color="#495057" />
+                    </ActionIcon>
+                    <Text fw={700} size="lg">문의</Text>
+                </Group>
             </Box>
 
             {/* 안내 메시지 */}
@@ -379,7 +397,7 @@ export default function InquiriesClient({ initialInquiries, facilities = [] }: I
             >
                 {/* 헤더 */}
                 <Box p="md" style={{ borderBottom: '1px solid #f1f3f5', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                    <ActionIcon variant="subtle" color="gray" onClick={closeWrite}>
+                    <ActionIcon variant="subtle" color="gray" size={38} radius="md" onClick={closeWrite} aria-label="닫기">
                         <X size={20} />
                     </ActionIcon>
                     <Text fw={700}>문의하기</Text>

@@ -263,7 +263,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         if (isCurrentlyFav) {
             setFavorites(prev => prev.filter(id => id !== String(facilityId)));
         } else {
-            setFavorites(prev => [...prev, String(facilityId)]);
+            setFavorites(prev => Array.from(new Set([...prev, String(facilityId)])));
         }
         try {
             const res = await fetch('/api/favorites', {
@@ -279,7 +279,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
             // 실패 시 롤백
             console.error('toggleFavorite error:', e);
             if (isCurrentlyFav) {
-                setFavorites(prev => [...prev, String(facilityId)]);
+                setFavorites(prev => Array.from(new Set([...prev, String(facilityId)])));
             } else {
                 setFavorites(prev => prev.filter(id => id !== String(facilityId)));
             }
@@ -296,7 +296,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
             });
             const data = await res.json();
             if (data.favorites) {
-                setFavorites(data.favorites.map((f: any) => f.facility_id));
+                setFavorites(Array.from(new Set(data.favorites.map((f: any) => String(f.facility_id)))));
             }
         } catch (e) {
             console.error('loadFavorites error:', e);

@@ -1,6 +1,6 @@
 'use client';
 
-import { Box, Text, Group, TextInput, Textarea, Select, Stack, UnstyledButton } from '@mantine/core';
+import { Box, Text, Group, TextInput, Textarea, Select, Stack, UnstyledButton, ActionIcon } from '@mantine/core';
 import { ArrowLeft, ChevronDown, Send } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
@@ -67,11 +67,24 @@ export default function ContactPage() {
                 }}
             >
                 <Group justify="space-between" align="center">
-                    <UnstyledButton onClick={() => router.back()}>
+                    <ActionIcon
+                        variant="subtle"
+                        color="gray"
+                        size={38}
+                        radius="md"
+                        onClick={() => {
+                            if (typeof window !== 'undefined' && window.history.length <= 1) {
+                                router.push('/menu');
+                            } else {
+                                router.back();
+                            }
+                        }}
+                        aria-label="뒤로가기"
+                    >
                         <ArrowLeft size={22} color="#495057" />
-                    </UnstyledButton>
+                    </ActionIcon>
                     <Text size="lg" fw={700}>문의하기</Text>
-                    <Box style={{ width: 22 }} />
+                    <Box style={{ width: 38 }} />
                 </Group>
             </Box>
 
@@ -170,6 +183,7 @@ export default function ContactPage() {
                     <UnstyledButton
                         onClick={handleSubmit}
                         disabled={!canSubmit || isSubmitting}
+                        aria-disabled={!canSubmit || isSubmitting}
                         style={{
                             width: '100%',
                             height: 56,
@@ -182,6 +196,7 @@ export default function ContactPage() {
                             alignItems: 'center',
                             justifyContent: 'center',
                             gap: 8,
+                            pointerEvents: (!canSubmit || isSubmitting) ? 'none' : 'auto',
                         }}
                     >
                         <Send size={18} />
