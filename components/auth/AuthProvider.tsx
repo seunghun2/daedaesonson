@@ -177,7 +177,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         document.cookie = `oauth_state=${state}; path=/; max-age=300; SameSite=Lax`;
         const kakaoClientId = '7ab050573fb230302ee849167cc26762';
         const redirectUri = `${window.location.origin}/auth/callback`;
-        const authUrl = `https://kauth.kakao.com/oauth/authorize?client_id=${kakaoClientId}&redirect_uri=${encodeURIComponent(redirectUri)}&response_type=code&scope=profile_nickname,profile_image&state=${state}`;
+        const authUrl = `https://kauth.kakao.com/oauth/authorize?client_id=${kakaoClientId}&redirect_uri=${encodeURIComponent(redirectUri)}&response_type=code&state=${state}`;
         window.location.href = authUrl;
     };
 
