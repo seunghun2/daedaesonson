@@ -225,7 +225,7 @@ export default function ConsultsPage() {
                                         </Table.Td>
                                         <Table.Td>
                                             <Badge size="xs" variant="light" color="brand">
-                                                {QUESTION_LABELS[c.question] || '기타'}
+                                                {QUESTION_LABELS[c.question] || c.question || '기타'}
                                             </Badge>
                                         </Table.Td>
                                         <Table.Td>
@@ -306,13 +306,13 @@ export default function ConsultsPage() {
                                 <Group justify="space-between">
                                     <Text size="sm" c="dimmed">궁금한 점</Text>
                                     <Badge variant="light" color="brand">
-                                        {QUESTION_LABELS[selectedConsult.question] || '기타'}
+                                        {QUESTION_LABELS[selectedConsult.question] || selectedConsult.question || '기타'}
                                     </Badge>
                                 </Group>
                                 <Group justify="space-between">
                                     <Text size="sm" c="dimmed">상담 방법</Text>
                                     <Badge variant="light" color="cyan">
-                                        {METHOD_LABELS[selectedConsult.consultMethod || 'phone'] || '전화 상담'}
+                                        {METHOD_LABELS[selectedConsult.consultMethod || ''] || selectedConsult.consultMethod || '전화 상담'}
                                     </Badge>
                                 </Group>
                                 <Group justify="space-between">
