@@ -308,6 +308,12 @@ export async function DELETE(
 
         const { id } = await params;
 
+        // 연관된 댓글 문의글 선제 정리 (외래키 제약조건 없는 테이블 방어)
+        await supabase
+            .from('Inquiry')
+            .delete()
+            .eq('facilityId', id);
+
         const { error } = await supabase
             .from('Facility')
             .delete()

@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getSupabaseServer } from '@/lib/supabaseServer';
 import { sendSlack, sendSlackError, escapeSlack } from '@/lib/slack';
+import { sendConsultNotification } from '@/lib/notification';
 import { requireAdmin } from '@/lib/adminAuth';
 import { rateLimit } from '@/lib/rateLimit';
 
@@ -59,9 +60,17 @@ export async function POST(request: NextRequest) {
             return NextResponse.json({ error: '상담 신청 실패' }, { status: 500 });
         }
 
-        // Slack 알림 (비동기 전송으로 폼 응답 지연 방지)
-        const methodLabel = consultMethod === 'phone' ? '전화 상담' : consultMethod === 'field' ? '방문 상담' : consultMethod || '전화 상담';
-        sendSlack('consult', `📞 *새 시설 상담 신청!*\n• 시설: ${escapeSlack(facilityName || facilityId)}\n• 이름: ${escapeSlack(name)}\n• 연락처: ${escapeSlack(phone)}\n• 연락 시간: ${escapeSlack(preferredTime || '시간 무관')}\n• 문의 사항: ${escapeSlack(question || '가격')}\n• 상담 방법: ${escapeSlack(methodLabel)}\n• 메시지: ${escapeSlack(message || '없음')}\n• ID: #${data.id}`).catch(err => console.error('Slack notify error:', err));
+        // 통합 알림 발송 (고객 알림톡 + 관리자 Slack 듀얼 노티)
+        sendConsultNotification({
+            consultId: data.id,
+            facilityName: facilityName || facilityId,
+            customerName: name,
+            customerPhone: phone,
+            preferredTime,
+            question,
+            consultMethod,
+            message,
+        }).catch(err => console.error('Notification error:', err));
 
         return NextResponse.json({ success: true, consult: data });
 

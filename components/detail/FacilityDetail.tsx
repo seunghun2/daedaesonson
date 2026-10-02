@@ -1994,6 +1994,11 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                             시설명: facility.name,
                                         });
                                     }
+                                    fetch('/api/analytics/conversion', {
+                                        method: 'POST',
+                                        headers: { 'Content-Type': 'application/json' },
+                                        body: JSON.stringify({ type: 'consult_click', facilityId: facility.id, facilityName: facility.name }),
+                                    }).catch(() => {});
                                 }}
                             >
                                 <Headphones size={18} color="white" />

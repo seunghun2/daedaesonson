@@ -48,7 +48,32 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
             changeFrequency: 'monthly' as const,
             priority: 0.5,
         },
+        {
+            url: `${baseUrl}/inquiries`,
+            lastModified: new Date(),
+            changeFrequency: 'daily' as const,
+            priority: 0.7,
+        },
+        {
+            url: `${baseUrl}/glossary`,
+            lastModified: new Date(),
+            changeFrequency: 'weekly' as const,
+            priority: 0.8,
+        },
     ];
+
+    // 장묘 용어 사전 상세 페이지 (롱테일 SEO 검색어 타겟팅)
+    const GLOSSARY_SLUGS = [
+        'jandijang', 'gongwonmyoji', 'ijang', 'bongandang',
+        'hapjang', 'jayeonjang', 'biyong', 'bonganham',
+        'sumokjang', 'anchi', 'chumogongwon', 'hwajang', 'napgol'
+    ];
+    const glossaryPages: MetadataRoute.Sitemap = GLOSSARY_SLUGS.map(slug => ({
+        url: `${baseUrl}/glossary/${slug}`,
+        lastModified: new Date(),
+        changeFrequency: 'monthly' as const,
+        priority: 0.75,
+    }));
 
     // 지역별 랜딩페이지 (프로그래매틱 SEO)
     const REGIONS = ['서울', '경기', '인천', '부산', '대구', '광주', '대전', '울산', '세종', '강원', '충북', '충남', '전북', '전남', '경북', '경남', '제주'];
@@ -162,5 +187,5 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         console.error('Sitemap: Failed to load blog posts', e);
     }
 
-    return [...staticPages, ...regionPages, ...cityPages, ...facilityPages, ...blogPages];
+    return [...staticPages, ...glossaryPages, ...regionPages, ...cityPages, ...facilityPages, ...blogPages];
 }
