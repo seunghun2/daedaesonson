@@ -14,9 +14,18 @@ body {
   touch-action: pan-x pan-y;
 }
 
-/* 지도 영역은 핀치줌 허용 */
-.naver-map-container {
+/* 지도 영역은 핀치줌 허용 및 GPU 하드웨어 가속 */
+.naver-map-container, #map {
   touch-action: auto;
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+  will-change: transform;
+}
+
+/* 시설 카드 레이아웃 독립 및 GPU 렌더링 최적화 */
+.facility-card-item {
+  contain: content;
+  transform: translateZ(0);
 }
 
 /* 🎯 마커 통~~통~~통~~ 무한 바운스 애니메이션 */

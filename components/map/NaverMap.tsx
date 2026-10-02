@@ -93,6 +93,11 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
     // GeoJSON 데이터 저장 Ref
     const geomRef = useRef<any>(null);
     const geomGuRef = useRef<any>(null);
+
+    // 🚀 모바일 60FPS 및 DOM 렉 방지 디바운스 타이머 Refs
+    const centerAddressTimerRef = useRef<NodeJS.Timeout | null>(null);
+    const labelDebounceTimerRef = useRef<NodeJS.Timeout | null>(null);
+    const boundsDebounceTimerRef = useRef<NodeJS.Timeout | null>(null);
     // 🎯 마커 호버 툴팁용 InfoWindow
     const hoverInfoWindowRef = useRef<any>(null);
 
@@ -554,61 +559,64 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
     const updateCenterAddress = (map: any) => {
         if (!map || !window.naver || !window.naver.maps.Service) return;
 
-        const center = map.getCenter();
-        // 중심 좌표 상태 업데이트
-        setCenterCoords({ lat: center.lat(), lng: center.lng() });
+        if (centerAddressTimerRef.current) {
+            clearTimeout(centerAddressTimerRef.current);
+        }
 
-        window.naver.maps.Service.reverseGeocode({
-            coords: center,
-            orders: [
-                window.naver.maps.Service.OrderType.ADDR,
-                window.naver.maps.Service.OrderType.ROAD_ADDR
-            ].join(',')
-        }, (status: any, response: any) => {
-            if (status !== window.naver.maps.Service.Status.OK) {
-                setCenterAddress('주변');
-                return;
-            }
+        centerAddressTimerRef.current = setTimeout(() => {
+            const center = map.getCenter();
+            // 중심 좌표 상태 업데이트
+            setCenterCoords({ lat: center.lat(), lng: center.lng() });
 
-            const result = response.v2; // v2 response structure
-            let text = '';
-
-            if (result && result.address && result.address.jibunAddress) {
-                text = result.address.jibunAddress;
-            } else if (result && result.results && result.results.length > 0) {
-                // Fallback to iterating results if jibunAddress is not direct
-                const region = result.results[0].region;
-                if (region) {
-                    if (region.area2 && region.area2.name) text += region.area2.name + ' ';
-                    if (region.area3 && region.area3.name) text += region.area3.name;
+            window.naver.maps.Service.reverseGeocode({
+                coords: center,
+                orders: [
+                    window.naver.maps.Service.OrderType.ADDR,
+                    window.naver.maps.Service.OrderType.ROAD_ADDR
+                ].join(',')
+            }, (status: any, response: any) => {
+                if (status !== window.naver.maps.Service.Status.OK) {
+                    setCenterAddress('주변');
+                    return;
                 }
-            }
 
-            if (!text) text = '주변';
-            // 간단하게 '동' 단위까지만 표시하거나 전체 주소 표시
-            // 대대손손 포맷: 지역명 (예: 강북구 수유동)
-            // jibunAddress가 보통 "서울특별시 강북구 수유동 123-4" 형식이므로 파싱 필요
+                const result = response.v2; // v2 response structure
+                let text = '';
 
-            if (result && result.results && result.results.length > 0) {
-                const r = result.results[0]; // First result
-                if (r.region) {
-                    const currentZoom = map.getZoom();
-                    const a1 = r.region.area1?.name || '';
-                    const a2 = r.region.area2?.name || '';
-                    const a3 = r.region.area3?.name || '';
-
-                    if (currentZoom < 14) {
-                        // Wide view: Area1 + Area2 (e.g., 경기도 성남시)
-                        text = `${a1} ${a2}`;
-                    } else {
-                        // Close view: Area2 + Area3 (e.g., 성남시 정자동)
-                        text = `${a2} ${a3}`;
+                if (result && result.address && result.address.jibunAddress) {
+                    text = result.address.jibunAddress;
+                } else if (result && result.results && result.results.length > 0) {
+                    // Fallback to iterating results if jibunAddress is not direct
+                    const region = result.results[0].region;
+                    if (region) {
+                        if (region.area2 && region.area2.name) text += region.area2.name + ' ';
+                        if (region.area3 && region.area3.name) text += region.area3.name;
                     }
                 }
-            }
-            setCenterAddress(text.trim());
-            onCenterAddressChange?.(text.trim());
-        });
+
+                if (!text) text = '주변';
+
+                if (result && result.results && result.results.length > 0) {
+                    const r = result.results[0]; // First result
+                    if (r.region) {
+                        const currentZoom = map.getZoom();
+                        const a1 = r.region.area1?.name || '';
+                        const a2 = r.region.area2?.name || '';
+                        const a3 = r.region.area3?.name || '';
+
+                        if (currentZoom < 14) {
+                            // Wide view: Area1 + Area2 (e.g., 경기도 성남시)
+                            text = `${a1} ${a2}`;
+                        } else {
+                            // Close view: Area2 + Area3 (e.g., 성남시 정자동)
+                            text = `${a2} ${a3}`;
+                        }
+                    }
+                }
+                setCenterAddress(text.trim());
+                onCenterAddressChange?.(text.trim());
+            });
+        }, 180);
     };
 
     // 🚀 [초기 로딩 최적화] 처음엔 30개만 렌더링하고, 잠시 후 전체 렌더링
@@ -1308,62 +1316,75 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
                 }
             };
 
-            // 🔥 핵심: Idle(멈춤) 이벤트에서 마커 업데이트 및 bounds 알림
+            // 🔥 핵심: Idle(멈춤) 이벤트에서 마커 업데이트 및 bounds 알림 (60FPS 디바운스 최적화)
             window.naver.maps.Event.addListener(map, 'idle', () => {
-                // 부모에게 bounds 알림
-                notifyBounds();
+                // 부모에게 bounds 알림 (40ms 디바운스로 미세 떨림/관성 중복 계산 방지)
+                if (boundsDebounceTimerRef.current) clearTimeout(boundsDebounceTimerRef.current);
+                boundsDebounceTimerRef.current = setTimeout(() => {
+                    notifyBounds();
+                }, 40);
 
-                // 중심 주소 업데이트
+                // 중심 주소 업데이트 (180ms 디바운스 내장)
                 updateCenterAddress(map);
 
                 // 🏷️ 줌 레벨에 따라 시설명 레이블 표시/숨김
                 const currentZoom = map.getZoom();
                 const SHOW_LABELS_ZOOM = 13; // 줌 13 이상이면 이름 표시
 
+                if (labelDebounceTimerRef.current) {
+                    clearTimeout(labelDebounceTimerRef.current);
+                }
+
                 if (currentZoom >= SHOW_LABELS_ZOOM) {
-                    // 레이블 표시 (항상 새로 그림 - 지도 이동 시에도)
-                    nameLabelsVisibleRef.current = true;
+                    labelDebounceTimerRef.current = setTimeout(() => {
+                        // 레이블 표시
+                        nameLabelsVisibleRef.current = true;
 
-                    // 기존 레이블 제거
-                    nameLabelMarkersRef.current.forEach(m => m.setMap(null));
-                    nameLabelMarkersRef.current = [];
+                        // 기존 레이블 제거
+                        nameLabelMarkersRef.current.forEach(m => m.setMap(null));
+                        nameLabelMarkersRef.current = [];
 
-                    // 화면에 보이는 마커들만 레이블 생성
-                    const bounds = map.getBounds();
-                    markersRef.current.forEach((marker, idx) => {
-                        // 필터로 숨겨진 마커는 라벨도 스킵
-                        if (!marker.getVisible()) return;
-                        const pos = marker.getPosition();
-                        if (!bounds.hasPoint(pos)) return;
+                        // 화면에 보이는 마커들만 레이블 생성 (모바일 DOM 과부하 방지: 최대 35개 제한)
+                        const bounds = map.getBounds();
+                        let labelCount = 0;
+                        const MAX_VISIBLE_LABELS = 35;
 
-                        const fac = (marker as any).__facilityData;
-                        if (!fac) return;
-                        if (fac.isFull) return; // 만장 시설은 이름 라벨 표시 안 함
+                        for (let idx = 0; idx < markersRef.current.length; idx++) {
+                            if (labelCount >= MAX_VISIBLE_LABELS) break;
+                            const marker = markersRef.current[idx];
+                            // 필터로 숨겨진 마커는 라벨도 스킵
+                            if (!marker.getVisible()) continue;
+                            const pos = marker.getPosition();
+                            if (!bounds.hasPoint(pos)) continue;
 
-                        // 시설명 (최대 10자)
-                        const name = fac.name?.length > 10 ? fac.name.slice(0, 10) + '...' : fac.name;
+                            const fac = (marker as any).__facilityData;
+                            if (!fac || fac.isFull) continue;
 
-                        const labelMarker = new window.naver.maps.Marker({
-                            position: pos,
-                            map: map,
-                            icon: {
-                                content: `
-                                    <div class="facility-label" style="display: flex; flex-direction: column; align-items: center; transform: translateX(-50%);">
-                                        <div class="facility-label-inner">${name}</div>
-                                    </div>
-                                `,
-                                anchor: new window.naver.maps.Point(-30, 96),
-                            },
-                            zIndex: 200
-                        });
+                            labelCount++;
+                            // 시설명 (최대 10자)
+                            const name = fac.name?.length > 10 ? fac.name.slice(0, 10) + '...' : fac.name;
 
-                        // 레이블 클릭 시 마커 클릭과 동일하게 동작
-                        window.naver.maps.Event.addListener(labelMarker, 'click', () => {
-                            onMarkerClick(fac);
-                        });
+                            const labelMarker = new window.naver.maps.Marker({
+                                position: pos,
+                                map: map,
+                                icon: {
+                                    content: `
+                                        <div class="facility-label" style="display: flex; flex-direction: column; align-items: center; transform: translateX(-50%); pointer-events: none;">
+                                            <div class="facility-label-inner">${name}</div>
+                                        </div>
+                                    `,
+                                    anchor: new window.naver.maps.Point(-30, 96),
+                                },
+                                zIndex: 200
+                            });
 
-                        nameLabelMarkersRef.current.push(labelMarker);
-                    });
+                            window.naver.maps.Event.addListener(labelMarker, 'click', () => {
+                                onMarkerClick(fac);
+                            });
+
+                            nameLabelMarkersRef.current.push(labelMarker);
+                        }
+                    }, 120);
                 } else if (currentZoom < SHOW_LABELS_ZOOM && nameLabelsVisibleRef.current) {
                     // 레이블 숨김
                     nameLabelsVisibleRef.current = false;

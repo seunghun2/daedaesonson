@@ -5,7 +5,7 @@ import { useWindowScroll, useMediaQuery } from '@mantine/hooks';
 import { ArrowUp } from 'lucide-react';
 import { Facility } from '@/types';
 import FacilityCard from './FacilityCard';
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, memo, useCallback } from 'react';
 
 interface FacilityListProps {
     facilities: Facility[];
@@ -15,6 +15,33 @@ interface FacilityListProps {
     hideInquiry?: boolean;
     setHideInquiry?: (val: boolean) => void;
 }
+
+interface FacilityListItemProps {
+    facility: Facility;
+    isSelected: boolean;
+    onSelect: (f: Facility) => void;
+}
+
+const FacilityListItem = memo(function FacilityListItem({ facility, isSelected, onSelect }: FacilityListItemProps) {
+    const handleClick = useCallback(() => {
+        onSelect(facility);
+    }, [facility, onSelect]);
+
+    return (
+        <Box
+            onClick={handleClick}
+            style={{
+                cursor: 'pointer',
+                border: isSelected ? '2px solid #228be6' : '2px solid transparent',
+                borderRadius: '8px',
+                transition: 'border-color 0.15s ease',
+                contain: 'content'
+            }}
+        >
+            <FacilityCard facility={facility} onClick={handleClick} />
+        </Box>
+    );
+});
 
 export default function FacilityList({ facilities, loading, onFacilityClick, selectedId, hideInquiry, setHideInquiry }: FacilityListProps) {
     const [visibleCount, setVisibleCount] = useState(20);
@@ -73,18 +100,12 @@ export default function FacilityList({ facilities, loading, onFacilityClick, sel
                         )}
                     </div>
                     {visibleFacilities.map((fac) => (
-                        <Box
+                        <FacilityListItem
                             key={fac.id}
-                            onClick={() => onFacilityClick(fac)}
-                            style={{
-                                cursor: 'pointer',
-                                border: selectedId === fac.id ? '2px solid #228be6' : '2px solid transparent',
-                                borderRadius: '8px',
-                                transition: 'all 0.2s ease'
-                            }}
-                        >
-                            <FacilityCard facility={fac} onClick={() => onFacilityClick(fac)} />
-                        </Box>
+                            facility={fac}
+                            isSelected={selectedId === fac.id}
+                            onSelect={onFacilityClick}
+                        />
                     ))}
 
                     {/* 더 보기 버튼 */}

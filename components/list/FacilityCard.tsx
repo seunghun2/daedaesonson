@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import React, { memo, useMemo } from 'react';
 import { Card, Text, Badge, Group, Flex, ThemeIcon, Box } from '@mantine/core';
 import NextImage from 'next/image';
 import { MapPin, Building, Trees, Cross, User, Star } from 'lucide-react';
@@ -8,7 +8,7 @@ import { getFacilityImageUrl } from '@/lib/supabaseImage';
 
 interface FacilityCardProps {
     facility: Facility;
-    onClick: () => void;
+    onClick?: () => void;
 }
 
 // 아이콘 매핑 (썸네일 없을 때 대체용)
@@ -25,62 +25,30 @@ function FacilityCardComponent({ facility, onClick }: FacilityCardProps) {
     const config = CATEGORY_CONFIG[facility.category] || CATEGORY_CONFIG.OTHER;
     const Icon = config.icon;
 
-    // ⭐ 별표(isRepresentative)만 사용. 없으면 "가격문의"
-    let displayPrice = '가격문의';
-    let priceLabel = '';
+    // 🚀 가격 연산 메모이제이션 (카드가 리렌더링될 때 중복 계산 방지)
+    const { displayPrice, priceLabel, showTilde } = useMemo(() => {
+        let displayPrice = '가격문의';
+        let priceLabel = '';
 
-    // 1) 신형(standardizedPrices) 먼저 확인
-    const sp = facility.priceInfo?.standardizedPrices;
-    if (Array.isArray(sp) && sp.length > 0) {
-        // Preferred category matching
-        let preferredKeywords: string[] = [];
-        if (facility.category === 'FAMILY_GRAVE') preferredKeywords = ['매장', '묘지', '분양', 'BURIAL'];
-        else if (facility.category === 'CHARNEL_HOUSE') preferredKeywords = ['봉안', '납골', '안치', 'BONGSAN'];
-        else if (facility.category === 'NATURAL_BURIAL') preferredKeywords = ['수목', '자연', '잔디', '화초', 'NATURAL'];
-
-        const subRepItems: { label: string; price: number }[] = [];
-        for (const group of sp) {
-            if (Array.isArray(group.rows)) {
-                const rep = group.rows.find((r: any) => r.isRepresentative);
-                if (rep && rep.price > 0) {
-                    const val = rep.price < 10000 ? rep.price * 10000 : rep.price;
-                    const labelMap: Record<string, string> = { 'BONGSAN': '봉안당', 'BURIAL': '매장묘지', 'NATURAL': '수목장', 'CREMATION': '화장' };
-                    subRepItems.push({ label: labelMap[group.serviceType] || group.serviceType || group.subType || '', price: val });
-                }
-            }
-        }
-
-        const mainItem = subRepItems.find(i =>
-            preferredKeywords.some(k => i.label.includes(k))
-        ) || subRepItems[0];
-
-        if (mainItem) {
-            displayPrice = formatKoreanCurrency(mainItem.price);
-        }
-    }
-
-    // 2) 구형(priceTable) 확인
-    if (displayPrice === '가격문의') {
-        const priceTable = facility.priceInfo?.priceTable || facility.pricing;
-        if (priceTable && typeof priceTable === 'object' && Object.keys(priceTable).length > 0) {
+        // 1) 신형(standardizedPrices) 먼저 확인
+        const sp = facility.priceInfo?.standardizedPrices;
+        if (Array.isArray(sp) && sp.length > 0) {
             let preferredKeywords: string[] = [];
-            if (facility.category === 'FAMILY_GRAVE') preferredKeywords = ['매장', '묘지', '분양'];
-            else if (facility.category === 'CHARNEL_HOUSE') preferredKeywords = ['봉안', '납골', '안치'];
-            else if (facility.category === 'NATURAL_BURIAL') preferredKeywords = ['수목', '자연', '잔디', '화초'];
+            if (facility.category === 'FAMILY_GRAVE') preferredKeywords = ['매장', '묘지', '분양', 'BURIAL'];
+            else if (facility.category === 'CHARNEL_HOUSE') preferredKeywords = ['봉안', '납골', '안치', 'BONGSAN'];
+            else if (facility.category === 'NATURAL_BURIAL') preferredKeywords = ['수목', '자연', '잔디', '화초', 'NATURAL'];
 
             const subRepItems: { label: string; price: number }[] = [];
-
-            Object.keys(priceTable).forEach(key => {
-                if (/옵션|관리비|기타|공통|제외|석물|비고|안내|별도/.test(key)) return;
-                const cat = priceTable[key];
-                if (cat && Array.isArray(cat.rows)) {
-                    const rep = cat.rows.find((r: any) => r.isRepresentative);
+            for (const group of sp) {
+                if (Array.isArray(group.rows)) {
+                    const rep = group.rows.find((r: any) => r.isRepresentative);
                     if (rep && rep.price > 0) {
                         const val = rep.price < 10000 ? rep.price * 10000 : rep.price;
-                        subRepItems.push({ label: key, price: val });
+                        const labelMap: Record<string, string> = { 'BONGSAN': '봉안당', 'BURIAL': '매장묘지', 'NATURAL': '수목장', 'CREMATION': '화장' };
+                        subRepItems.push({ label: labelMap[group.serviceType] || group.serviceType || group.subType || '', price: val });
                     }
                 }
-            });
+            }
 
             const mainItem = subRepItems.find(i =>
                 preferredKeywords.some(k => i.label.includes(k))
@@ -90,23 +58,63 @@ function FacilityCardComponent({ facility, onClick }: FacilityCardProps) {
                 displayPrice = formatKoreanCurrency(mainItem.price);
             }
         }
-    }
 
-    // 🔥 Fallback: 리스트 API에서는 priceTable을 안 내려줌 → representativePrice 또는 priceRange 사용
-    if (displayPrice === '가격문의') {
-        const repPrice = facility.representativePrice || 0;
-        const minPrice = facility.priceRange?.min || 0;
-        const fallbackPrice = repPrice > 0 ? repPrice : minPrice;
-        if (fallbackPrice > 0) {
-            const normalizedPrice = fallbackPrice < 10000 ? fallbackPrice * 10000 : fallbackPrice;
-            displayPrice = formatKoreanCurrency(normalizedPrice);
+        // 2) 구형(priceTable) 확인
+        if (displayPrice === '가격문의') {
+            const priceTable = facility.priceInfo?.priceTable || facility.pricing;
+            if (priceTable && typeof priceTable === 'object' && Object.keys(priceTable).length > 0) {
+                let preferredKeywords: string[] = [];
+                if (facility.category === 'FAMILY_GRAVE') preferredKeywords = ['매장', '묘지', '분양'];
+                else if (facility.category === 'CHARNEL_HOUSE') preferredKeywords = ['봉안', '납골', '안치'];
+                else if (facility.category === 'NATURAL_BURIAL') preferredKeywords = ['수목', '자연', '잔디', '화초'];
+
+                const subRepItems: { label: string; price: number }[] = [];
+
+                Object.keys(priceTable).forEach(key => {
+                    if (/옵션|관리비|기타|공통|제외|석물|비고|안내|별도/.test(key)) return;
+                    const cat = priceTable[key];
+                    if (cat && Array.isArray(cat.rows)) {
+                        const rep = cat.rows.find((r: any) => r.isRepresentative);
+                        if (rep && rep.price > 0) {
+                            const val = rep.price < 10000 ? rep.price * 10000 : rep.price;
+                            subRepItems.push({ label: key, price: val });
+                        }
+                    }
+                });
+
+                const mainItem = subRepItems.find(i =>
+                    preferredKeywords.some(k => i.label.includes(k))
+                ) || subRepItems[0];
+
+                if (mainItem) {
+                    displayPrice = formatKoreanCurrency(mainItem.price);
+                }
+            }
         }
-    }
 
-    // Flag for showing '~' (from)
-    let showTilde = true;
-    if (facility.category === 'CREMATORIUM' && priceLabel === '관내') showTilde = false; // Fixed fee for resident
-    if (displayPrice === '가격문의') showTilde = false;
+        // 3) Fallback: representativePrice 또는 priceRange 사용
+        if (displayPrice === '가격문의') {
+            const repPrice = facility.representativePrice || 0;
+            const minPrice = facility.priceRange?.min || 0;
+            const fallbackPrice = repPrice > 0 ? repPrice : minPrice;
+            if (fallbackPrice > 0) {
+                const normalizedPrice = fallbackPrice < 10000 ? fallbackPrice * 10000 : fallbackPrice;
+                displayPrice = formatKoreanCurrency(normalizedPrice);
+            }
+        }
+
+        let showTilde = true;
+        if (facility.category === 'CREMATORIUM' && priceLabel === '관내') showTilde = false;
+        if (displayPrice === '가격문의') showTilde = false;
+
+        return { displayPrice, priceLabel, showTilde };
+    }, [facility.priceInfo, facility.pricing, facility.representativePrice, facility.priceRange, facility.category]);
+
+    // 🚀 썸네일 URL 메모이제이션
+    const validThumbnailUrl = useMemo(() => {
+        const rawImg = facility.thumbnail || facility.imageUrl || (Array.isArray(facility.images) ? facility.images[0] : facility.images) || facility.imageGallery?.[0];
+        return getFacilityImageUrl(rawImg);
+    }, [facility.thumbnail, facility.imageUrl, facility.images, facility.imageGallery]);
 
     return (
         <Card
@@ -118,7 +126,6 @@ function FacilityCardComponent({ facility, onClick }: FacilityCardProps) {
             style={{
                 cursor: 'pointer',
                 backgroundColor: 'white',
-                // 호버 효과는 상위 Box에서 처리하거나 여기서 간단히
             }}
             onClick={onClick}
         >
@@ -129,36 +136,25 @@ function FacilityCardComponent({ facility, onClick }: FacilityCardProps) {
                     h={100}
                     style={{ flexShrink: 0, position: 'relative', overflow: 'hidden', borderRadius: '8px 0 0 8px' }}
                 >
-                    {/* Check for valid image URL first */}
-                    {(() => {
-                        // 🔥 thumbnail을 우선 체크 (초기 데이터)
-                        const rawImg = facility.thumbnail || facility.imageUrl || (Array.isArray(facility.images) ? facility.images[0] : facility.images) || facility.imageGallery?.[0];
-                        const validUrl = getFacilityImageUrl(rawImg);
-
-                        if (validUrl) {
-                            return (
-                                <NextImage
-                                    src={validUrl}
-                                    width={200}
-                                    height={200}
-                                    alt={facility.name}
-                                    style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                                    loading="lazy"
-                                    sizes="100px"
-                                />
-                            );
-                        } else {
-                            return (
-                                <Box h="100%" bg="#f1f3f5" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                                    <img
-                                        src="/logo-horizontal.svg"
-                                        alt="대대손손"
-                                        style={{ width: 60, height: 24, opacity: 0.25, filter: 'grayscale(100%)' }}
-                                    />
-                                </Box>
-                            );
-                        }
-                    })()}
+                    {validThumbnailUrl ? (
+                        <NextImage
+                            src={validThumbnailUrl}
+                            width={200}
+                            height={200}
+                            alt={facility.name}
+                            style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                            loading="lazy"
+                            sizes="100px"
+                        />
+                    ) : (
+                        <Box h="100%" bg="#f1f3f5" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                            <img
+                                src="/logo-horizontal.svg"
+                                alt="대대손손"
+                                style={{ width: 60, height: 24, opacity: 0.25, filter: 'grayscale(100%)' }}
+                            />
+                        </Box>
+                    )}
 
                     {/* 사진 위에 카테고리 뱃지 */}
                     <Badge

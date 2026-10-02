@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useMemo, useEffect, useRef, useTransition, Suspense } from 'react';
+import { useState, useMemo, useEffect, useRef, useTransition, useCallback, Suspense } from 'react';
 import { Box, Flex, useMantineTheme, TextInput, Group, Text, ThemeIcon, ActionIcon, ScrollArea, Stack, Loader, Center, Button, Popover, Checkbox, Drawer, SegmentedControl } from '@mantine/core';
 import { useMediaQuery } from '@mantine/hooks';
 import { Search, MapPin, Building, MessageCircle, Clock, Info, User, ChevronLeft, ChevronDown, ChevronRight, Heart, MessageSquare, Trash2, ArrowLeft, LogOut, Star } from 'lucide-react';
@@ -475,10 +475,12 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
   }, [submittedQuery, dbFacilities, isMobile]);
 
 
-  // 지도 이동 핸들러
-  const handleBoundsChanged = (bounds: { south: number, north: number, west: number, east: number }) => {
-    setCurrentBounds(bounds);
-  };
+  // 지도 이동 핸들러 (React 18 동시성 startTransition 적용 → 지도 터치 프레임 드랍 0)
+  const handleBoundsChanged = useCallback((bounds: { south: number, north: number, west: number, east: number }) => {
+    startTransition(() => {
+      setCurrentBounds(bounds);
+    });
+  }, [startTransition]);
 
   // 🚀 Step 1: 기본 필터 (dbFacilities 변경 시에만 재계산 → 탭 클릭 시 건너뜀!)
   const baseFacilities = useMemo(() => {
@@ -602,7 +604,7 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
     if (isMobile) setMobileView('map');
   };
 
-  const handleMarkerClick = (facility: Facility) => {
+  const handleMarkerClick = useCallback((facility: Facility) => {
     if (isMobile) {
       // 📱 모바일: 현재 지도 위치 저장 (뒤로가기 시 복원)
       if (mapRef.current) {
@@ -679,7 +681,7 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
       history = history.slice(0, 20);
       localStorage.setItem('facilityHistory', JSON.stringify(history));
     } catch { }
-  };
+  }, [isMobile, router, selectedFacility]);
 
   // 🗺️ PC: 시설 선택 시 지도 자동 이동 제거 (사용자 지도 위치 유지)
   // 마커 클릭 시 상세 패널만 열리고 지도는 현재 위치 그대로
