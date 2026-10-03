@@ -1,7 +1,14 @@
+import type { Metadata } from 'next';
 import { Suspense } from 'react';
 import HomeClient from './HomeClient';
 import { Facility } from '@/types';
 import { getSupabaseServer } from '@/lib/supabaseServer';
+
+export const metadata: Metadata = {
+  alternates: {
+    canonical: '/',
+  },
+};
 
 export const revalidate = 60; // 60초마다 재검증 (ISR)
 

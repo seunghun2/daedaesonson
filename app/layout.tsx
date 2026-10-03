@@ -14,9 +14,6 @@ export const metadata: Metadata = {
   keywords: ['장지 비교', '장지 가격 비교', '장지 종류', '장지 추천', '봉안당', '수목장', '공원묘지', '장묘시설', '납골당', '자연장', '봉안시설 가격', '추모공원', '봉안당 가격', '수목장 가격', '장지 비용'],
   referrer: 'origin',
   metadataBase: new URL('https://daedaesonson.com'),
-  alternates: {
-    canonical: '/',
-  },
   openGraph: {
     title: '대대손손 - 전국 장지 비교 1등 플랫폼 | 봉안당·수목장·공원묘지 가격비교',
     description: '전국 1,500여개 장지 가격을 한눈에 비교하세요. 봉안당, 수목장, 자연장, 공원묘지 가격 비교부터 장지 종류별 특징까지.',

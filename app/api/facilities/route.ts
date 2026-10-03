@@ -28,15 +28,30 @@ async function loadCategoryCountMap(): Promise<Map<string, number>> {
         return _categoryCountCache.data;
     }
 
-    const { data: categories } = await supabase
-        .from('PriceCategory')
-        .select('facilityId');
-
     const categoryCountMap = new Map<string, number>();
-    if (categories) {
-        categories.forEach((c: any) => {
-            categoryCountMap.set(c.facilityId, (categoryCountMap.get(c.facilityId) || 0) + 1);
-        });
+    const PAGE_SIZE = 1000;
+    let page = 0;
+
+    while (true) {
+        const { data: categories, error } = await supabase
+            .from('PriceCategory')
+            .select('facilityId')
+            .range(page * PAGE_SIZE, (page + 1) * PAGE_SIZE - 1);
+
+        if (error) {
+            console.error('Error fetching PriceCategory batch:', error);
+            break;
+        }
+
+        if (categories && categories.length > 0) {
+            for (const c of categories) {
+                categoryCountMap.set(c.facilityId, (categoryCountMap.get(c.facilityId) || 0) + 1);
+            }
+            if (categories.length < PAGE_SIZE) break;
+            page++;
+        } else {
+            break;
+        }
     }
 
     _categoryCountCache = { data: categoryCountMap, timestamp: Date.now() };

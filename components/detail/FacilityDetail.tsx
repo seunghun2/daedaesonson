@@ -2,7 +2,7 @@ import { useState, useEffect, useRef, useMemo } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Script from 'next/script';
 import NextImage from 'next/image';
-import { Image, Text, Badge, Group, Button, Stack, Box, Paper, Modal, Tabs, Collapse, ActionIcon, Rating, Textarea, TextInput, LoadingOverlay, useMantineTheme, Accordion, Table, Switch, Select, Drawer, Tooltip, Popover } from '@mantine/core';
+import { Image, Text, Badge, Group, Button, Stack, Box, Paper, Modal, Tabs, Collapse, ActionIcon, Rating, Textarea, TextInput, LoadingOverlay, useMantineTheme, Accordion, Table, Switch, Select, Drawer, Tooltip, Popover, Checkbox } from '@mantine/core';
 import { useDisclosure, useMediaQuery } from '@mantine/hooks';
 import { Car, Utensils, Accessibility, Store, Navigation, Globe, ChevronLeft, ChevronRight, TrendingUp, ChevronDown, ChevronUp, Star, Pencil, Camera, X, ImageIcon, Plus, Trash, Archive, Mountain, Trees, Layers, Lock, Unlock, Check, ExternalLink, Flame, MapPin, Share2, Headphones, MessageSquare, User, Copy, Trash2, Heart, Phone } from 'lucide-react';
 import InquiryPanel from './InquiryPanel';
@@ -75,10 +75,8 @@ const getDisplayName = (name: string) => {
 };
 
 function PriceInfoSection({ priceInfo, hasPrice, facilityName, websiteUrl }: { priceInfo: any, hasPrice: boolean, facilityName?: string, websiteUrl?: string }) {
-    if (!priceInfo) return null;
-
-    // === V2: 표준화 데이터가 있으면 새 형식으로 렌더링 ===
-    const standardizedPrices = priceInfo.standardizedPrices as Array<{
+    // === V2: 표준화 데이터 타입 ===
+    const standardizedPrices = priceInfo?.standardizedPrices as Array<{
         serviceType: string; subType: string; unit: string;
         rows: Array<{
             name: string; price: number; feeType?: string; residency?: string;
@@ -87,6 +85,21 @@ function PriceInfoSection({ priceInfo, hasPrice, facilityName, websiteUrl }: { p
             grade?: string; note?: string; isRepresentative?: boolean; groupType?: string;
         }>;
     }> | undefined;
+
+    // 서브타입 설명 토글 상태 (Rules of Hooks: 조건문 바깥 최상단 호출)
+    const [openDescSubType, setOpenDescSubType] = useState<string | null>(null);
+    // 아코디언 열림 상태 (controlled) - 초기값은 각 서비스타입의 첫 번째 서브타입 자동 열기
+    const [openAccItems, setOpenAccItems] = useState<string[]>(() => {
+        if (!standardizedPrices) return [];
+        const byService: Record<string, string[]> = {};
+        standardizedPrices.forEach(g => {
+            if (!byService[g.serviceType]) byService[g.serviceType] = [];
+            byService[g.serviceType].push(g.subType);
+        });
+        return Object.values(byService).map(subs => subs[0]);
+    });
+
+    if (!priceInfo) return null;
 
     const hasStandardized = standardizedPrices && standardizedPrices.length > 0 &&
         standardizedPrices.some(g => g?.rows?.length > 0);
@@ -196,21 +209,6 @@ function PriceInfoSection({ priceInfo, hasPrice, facilityName, websiteUrl }: { p
             const prices = usageRows.map(r => r.price).filter(p => p >= 100000);
             return prices.length > 0 ? Math.min(...prices) : 0;
         };
-
-        // 서브타입 설명 토글 상태
-        const [openDescSubType, setOpenDescSubType] = useState<string | null>(null);
-        // 아코디언 열림 상태 (controlled) - 초기값은 아래에서 설정
-        const [openAccItems, setOpenAccItems] = useState<string[]>(() => {
-            // 초기값: 각 서비스타입의 첫 번째 서브타입 자동 열기
-            if (!standardizedPrices) return [];
-            const byService: Record<string, string[]> = {};
-            standardizedPrices.forEach(g => {
-                if (!byService[g.serviceType]) byService[g.serviceType] = [];
-                byService[g.serviceType].push(g.subType);
-            });
-            // 각 서비스타입에서 첫 번째 서브타입만 열기
-            return Object.values(byService).map(subs => subs[0]);
-        });
 
         // 서브타입 아코디언 아이템 렌더링
         const renderSubTypeAccordionItem = (group: typeof standardizedPrices[0]) => {
@@ -1206,7 +1204,8 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
         preferredTime: '시간 무관',
         question: '가격 문의',
         message: '',
-        consultMethod: '전화 상담'
+        consultMethod: '전화 상담',
+        privacyAgreed: true,
     });
     const [consultSubmitting, setConsultSubmitting] = useState(false);
     const [consultStep, setConsultStep] = useState(0); // 0: 1,2,3 열림, 4: 4번만 열림, 5: 5번만 열림
@@ -3395,7 +3394,8 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                                                 value={consultForm.phone}
                                                                 onChange={(e) => setConsultForm({ ...consultForm, phone: formatPhoneNumber(e.currentTarget.value) })}
                                                                 onKeyDown={(e) => {
-                                                                    if (e.key === 'Enter' && consultForm.phone?.trim()) {
+                                                                    const digits = consultForm.phone.replace(/[^0-9]/g, '');
+                                                                    if (e.key === 'Enter' && /^01[016789]\d{7,8}$/.test(digits)) {
                                                                         e.preventDefault();
                                                                         setConsultStep(3);
                                                                     }
@@ -3403,7 +3403,11 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                                                 styles={{ input: { borderBottom: '1px solid #dee2e6', borderRadius: 0, paddingBottom: 8 } }}
                                                                 onClick={(e) => e.stopPropagation()}
                                                             />
-                                                            <Text size="xs" c="dimmed" mt="xs">연락처는 상담사와 제휴시설에만 전달됩니다.</Text>
+                                                            {consultForm.phone.length > 0 && !/^01[016789]\d{7,8}$/.test(consultForm.phone.replace(/[^0-9]/g, '')) ? (
+                                                                <Text size="xs" c="red" mt="xs">010으로 시작하는 10~11자리 번호를 입력해주세요.</Text>
+                                                            ) : (
+                                                                <Text size="xs" c="dimmed" mt="xs">연락처는 상담사와 제휴시설에만 전달됩니다.</Text>
+                                                            )}
                                                         </Box>
                                                     </Collapse>
                                                 </Box>
@@ -3592,15 +3596,52 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                                 zIndex: 10
                                             }}
                                         >
+                                            {/* 개인정보 수집 및 이용 동의 */}
+                                            <Box mb="sm">
+                                                <Checkbox
+                                                    checked={consultForm.privacyAgreed}
+                                                    onChange={(e) => setConsultForm({ ...consultForm, privacyAgreed: e.currentTarget.checked })}
+                                                    label={
+                                                        <Text size="xs" c="dark.7" fw={500}>
+                                                            <Text span c="brand" fw={700}>[필수] </Text>
+                                                            개인정보 수집 및 이용 동의
+                                                        </Text>
+                                                    }
+                                                    color="brand"
+                                                    size="xs"
+                                                />
+                                                <Box mt={6} p={8} bg="gray.0" style={{ borderRadius: 6 }}>
+                                                    <Text size="11px" c="dimmed" lh={1.4}>
+                                                        • 수집 항목: 이름, 연락처<br />
+                                                        • 이용 목적: {facility.name} 상담 및 방문 예약 안내<br />
+                                                        • 보유 및 이용 기간: 상담 완료 후 1년 또는 파기 요청 시까지
+                                                    </Text>
+                                                </Box>
+                                            </Box>
+
                                             <Button
                                                 fullWidth
                                                 color="brand"
                                                 size="lg"
                                                 radius="md"
                                                 loading={consultSubmitting}
-                                                disabled={!consultForm.name?.trim() || consultForm.phone.replace(/[^0-9]/g, '').length < 10}
+                                                disabled={!consultForm.name?.trim() || !/^01[016789]\d{7,8}$/.test(consultForm.phone.replace(/[^0-9]/g, '')) || !consultForm.privacyAgreed}
                                                 styles={{ root: { height: 52 } }}
                                                 onClick={async () => {
+                                                    if (!consultForm.name?.trim()) {
+                                                        alert('이름을 입력해주세요.');
+                                                        return;
+                                                    }
+                                                    const cleanPhone = consultForm.phone.replace(/[^0-9]/g, '');
+                                                    if (!/^01[016789]\d{7,8}$/.test(cleanPhone)) {
+                                                        alert('올바른 휴대폰 번호(010 등 10~11자리)를 입력해주세요.');
+                                                        return;
+                                                    }
+                                                    if (!consultForm.privacyAgreed) {
+                                                        alert('개인정보 수집 및 이용 동의가 필요합니다.');
+                                                        return;
+                                                    }
+
                                                     setConsultSubmitting(true);
                                                     try {
                                                         const res = await fetch('/api/consult', {
@@ -3615,7 +3656,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                                         });
                                                         if (res.ok) {
                                                             setSubmittedConsultData({ ...consultForm }); // 성공 화면용 데이터 저장
-                                                            setConsultForm({ name: '', phone: '', preferredTime: '', question: '가격 문의', message: '', consultMethod: '전화 상담' });
+                                                            setConsultForm({ name: '', phone: '', preferredTime: '', question: '가격 문의', message: '', consultMethod: '전화 상담', privacyAgreed: true });
                                                             setConsultStep(0);
                                                             setConsultSuccess(true); // 성공 화면 표시
                                                         }
@@ -3886,7 +3927,8 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                                                 value={consultForm.phone}
                                                                 onChange={(e) => setConsultForm({ ...consultForm, phone: formatPhoneNumber(e.currentTarget.value) })}
                                                                 onKeyDown={(e) => {
-                                                                    if (e.key === 'Enter' && consultForm.phone?.trim()) {
+                                                                    const digits = consultForm.phone.replace(/[^0-9]/g, '');
+                                                                    if (e.key === 'Enter' && /^01[016789]\d{7,8}$/.test(digits)) {
                                                                         e.preventDefault();
                                                                         setConsultStep(3);
                                                                     }
@@ -3894,7 +3936,11 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                                                 styles={{ input: { borderBottom: '1px solid #dee2e6', borderRadius: 0, paddingBottom: 8 } }}
                                                                 onClick={(e) => e.stopPropagation()}
                                                             />
-                                                            <Text size="xs" c="dimmed" mt="xs">연락처는 상담사와 제휴시설에만 전달됩니다.</Text>
+                                                            {consultForm.phone.length > 0 && !/^01[016789]\d{7,8}$/.test(consultForm.phone.replace(/[^0-9]/g, '')) ? (
+                                                                <Text size="xs" c="red" mt="xs">010으로 시작하는 10~11자리 번호를 입력해주세요.</Text>
+                                                            ) : (
+                                                                <Text size="xs" c="dimmed" mt="xs">연락처는 상담사와 제휴시설에만 전달됩니다.</Text>
+                                                            )}
                                                         </Box>
                                                     </Collapse>
                                                 </Box>
@@ -4074,15 +4120,52 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                     {/* 하단 버튼 - 성공 화면에서는 숨김 */}
                                     {!consultSuccess && (
                                         <Box p="md" style={{ borderTop: '1px solid #f1f3f5', background: 'white' }}>
+                                            {/* 개인정보 수집 및 이용 동의 */}
+                                            <Box mb="sm">
+                                                <Checkbox
+                                                    checked={consultForm.privacyAgreed}
+                                                    onChange={(e) => setConsultForm({ ...consultForm, privacyAgreed: e.currentTarget.checked })}
+                                                    label={
+                                                        <Text size="xs" c="dark.7" fw={500}>
+                                                            <Text span c="brand" fw={700}>[필수] </Text>
+                                                            개인정보 수집 및 이용 동의
+                                                        </Text>
+                                                    }
+                                                    color="brand"
+                                                    size="xs"
+                                                />
+                                                <Box mt={6} p={8} bg="gray.0" style={{ borderRadius: 6 }}>
+                                                    <Text size="11px" c="dimmed" lh={1.4}>
+                                                        • 수집 항목: 이름, 연락처<br />
+                                                        • 이용 목적: {facility.name} 상담 및 방문 예약 안내<br />
+                                                        • 보유 및 이용 기간: 상담 완료 후 1년 또는 파기 요청 시까지
+                                                    </Text>
+                                                </Box>
+                                            </Box>
+
                                             <Button
                                                 fullWidth
                                                 color="brand"
                                                 size="lg"
                                                 radius="md"
                                                 loading={consultSubmitting}
-                                                disabled={!consultForm.name?.trim() || consultForm.phone.replace(/[^0-9]/g, '').length < 10}
+                                                disabled={!consultForm.name?.trim() || !/^01[016789]\d{7,8}$/.test(consultForm.phone.replace(/[^0-9]/g, '')) || !consultForm.privacyAgreed}
                                                 styles={{ root: { height: 52 } }}
                                                 onClick={async () => {
+                                                    if (!consultForm.name?.trim()) {
+                                                        alert('이름을 입력해주세요.');
+                                                        return;
+                                                    }
+                                                    const cleanPhone = consultForm.phone.replace(/[^0-9]/g, '');
+                                                    if (!/^01[016789]\d{7,8}$/.test(cleanPhone)) {
+                                                        alert('올바른 휴대폰 번호(010 등 10~11자리)를 입력해주세요.');
+                                                        return;
+                                                    }
+                                                    if (!consultForm.privacyAgreed) {
+                                                        alert('개인정보 수집 및 이용 동의가 필요합니다.');
+                                                        return;
+                                                    }
+
                                                     setConsultSubmitting(true);
                                                     try {
                                                         const res = await fetch('/api/consult', {
@@ -4097,7 +4180,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                                         });
                                                         if (res.ok) {
                                                             setSubmittedConsultData({ ...consultForm }); // 성공 화면용 데이터 저장
-                                                            setConsultForm({ name: '', phone: '', preferredTime: '', question: '가격 문의', message: '', consultMethod: '전화 상담' });
+                                                            setConsultForm({ name: '', phone: '', preferredTime: '', question: '가격 문의', message: '', consultMethod: '전화 상담', privacyAgreed: true });
                                                             setConsultStep(0);
                                                             setConsultSuccess(true); // 성공 화면 표시
                                                         }

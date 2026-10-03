@@ -1,7 +1,16 @@
+import type { Metadata } from 'next';
 import { Suspense } from 'react';
 import { getSupabaseServer } from '@/lib/supabaseServer';
 import InquiriesClient from './InquiriesClient';
 import { loadFacilitiesJson } from '@/lib/facilityDataLoader';
+
+export const metadata: Metadata = {
+    title: '문의 | 대대손손',
+    description: '시설에 대해 궁금한 점을 문의하세요. 대대손손 고객센터 및 시설 문의.',
+    alternates: {
+        canonical: '/inquiries',
+    },
+};
 
 // 🔥 30초 캐시 (빠른 로딩)
 export const revalidate = 30;
@@ -63,12 +72,21 @@ export default async function InquiriesPage() {
     // 🚀 서버에서 미리 데이터 로드 (SSR)
     const inquiries = await getInquiries();
 
-    const maskedInquiries = inquiries?.map(item => ({
-        ...item,
-        phone: item.phone ? item.phone.slice(0, 7) + '****' : null,
-        content: item.isPrivate ? '비밀글입니다.' : item.content,
-        title: item.isPrivate ? '비밀 문의' : item.title,
-    })) || [];
+    const maskedInquiries = inquiries?.map(item => {
+        const isPriv = Boolean(item.isPrivate);
+        return {
+            id: item.id,
+            facilityId: item.facilityId,
+            facilityName: item.facilityName || '일반',
+            title: isPriv ? '비밀 문의' : item.title,
+            content: isPriv ? '비밀글입니다.' : item.content,
+            isPrivate: isPriv,
+            phone: null,
+            type: item.type || 'other',
+            createdAt: item.createdAt,
+            replies: isPriv ? [] : (item.replies || []),
+        };
+    }) || [];
 
     // 시설 목록 (상위 200개만 - 성능)
     const allFacilities = loadFacilitiesJson();

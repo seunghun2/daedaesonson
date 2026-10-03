@@ -2,8 +2,6 @@ import { NextRequest, NextResponse } from 'next/server';
 import { createAdminToken, verifyAdminToken, timingSafeCompare } from '@/lib/adminAuth';
 import { rateLimit } from '@/lib/rateLimit';
 
-const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || '0612';
-
 // GET: 인증 상태 확인
 export async function GET(request: NextRequest) {
     const sessionCookie = request.cookies.get('admin_session');
@@ -24,18 +22,32 @@ export async function POST(request: NextRequest) {
         );
     }
 
+    const adminPassword = process.env.ADMIN_PASSWORD;
+    if (!adminPassword) {
+        console.error('CRITICAL: ADMIN_PASSWORD environment variable is not configured.');
+        return NextResponse.json(
+            { error: '서버 인증 구성 오류가 발생했습니다. 관리자에게 문의하세요.' },
+            { status: 500 }
+        );
+    }
+
+    let password: string;
     try {
         const body = await request.json();
-        const { password } = body;
+        password = body?.password;
+    } catch {
+        return NextResponse.json({ error: '잘못된 요청 형식입니다.' }, { status: 400 });
+    }
 
-        if (!password || typeof password !== 'string') {
-            return NextResponse.json({ error: '비밀번호를 입력해주세요.' }, { status: 400 });
-        }
+    if (!password || typeof password !== 'string') {
+        return NextResponse.json({ error: '비밀번호를 입력해주세요.' }, { status: 400 });
+    }
 
-        if (!timingSafeCompare(password, ADMIN_PASSWORD)) {
-            return NextResponse.json({ error: '비밀번호가 올바르지 않습니다.' }, { status: 401 });
-        }
+    if (!timingSafeCompare(password, adminPassword)) {
+        return NextResponse.json({ error: '비밀번호가 올바르지 않습니다.' }, { status: 401 });
+    }
 
+    try {
         const signedToken = await createAdminToken();
 
         const response = NextResponse.json({ success: true });
@@ -48,8 +60,12 @@ export async function POST(request: NextRequest) {
         });
 
         return response;
-    } catch {
-        return NextResponse.json({ error: '요청을 처리할 수 없습니다.' }, { status: 400 });
+    } catch (error) {
+        console.error('Admin token creation error:', error);
+        return NextResponse.json(
+            { error: '인증 세션 생성에 실패했습니다.' },
+            { status: 500 }
+        );
     }
 }
 

@@ -32,10 +32,13 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     return {
         title,
         description,
+        alternates: {
+            canonical: `/region/${slug}`,
+        },
         openGraph: {
             title,
             description,
-            url: `https://daedaesonson.com/지역/${slug}`,
+            url: `https://daedaesonson.com/region/${slug}`,
         },
     };
 }

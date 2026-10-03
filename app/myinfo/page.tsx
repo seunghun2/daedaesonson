@@ -65,6 +65,39 @@ export default function MyInfoPage() {
         if (!user) router.push('/menu');
     }, [user, router]);
 
+    // 관심 시설 상세 정보 로드
+    useEffect(() => {
+        if (showFavorites && favorites.length > 0) {
+            // 이미 로드된 시설이 있으면 favorites에 맞춰 즉시 필터링
+            if (facilityDetails.length > 0) {
+                setFacilityDetails(prev => prev.filter(f => favorites.map(String).includes(String(f.id))));
+            } else {
+                setLoadingFavorites(true);
+                // 로컬 facilities.json에서 가져오기
+                fetch('/api/facilities')
+                    .then(r => r.json())
+                    .then(data => {
+                        const facilities = data.facilities || data || [];
+                        const uniqueFavorites = Array.from(new Set(favorites.map(String)));
+                        const matched = uniqueFavorites
+                            .map(fid => facilities.find((f: any) => String(f.id) === String(fid)))
+                            .filter(Boolean);
+                        const seen = new Set();
+                        const deduplicated = matched.filter((f: any) => {
+                            if (seen.has(f.id)) return false;
+                            seen.add(f.id);
+                            return true;
+                        });
+                        setFacilityDetails(deduplicated);
+                    })
+                    .catch((error) => { console.error('관심 시설 로드 실패:', error); })
+                    .finally(() => setLoadingFavorites(false));
+            }
+        } else if (showFavorites && favorites.length === 0) {
+            setFacilityDetails([]);
+        }
+    }, [showFavorites, favorites]);
+
     if (!user) {
         return null;
     }
@@ -101,39 +134,6 @@ export default function MyInfoPage() {
             alert('네트워크 오류가 발생했습니다. 다시 시도해주세요.');
         }
     };
-
-    // 관심 시설 상세 정보 로드
-    useEffect(() => {
-        if (showFavorites && favorites.length > 0) {
-            // 이미 로드된 시설이 있으면 favorites에 맞춰 즉시 필터링
-            if (facilityDetails.length > 0) {
-                setFacilityDetails(prev => prev.filter(f => favorites.map(String).includes(String(f.id))));
-            } else {
-                setLoadingFavorites(true);
-                // 로컬 facilities.json에서 가져오기
-                fetch('/api/facilities')
-                    .then(r => r.json())
-                    .then(data => {
-                        const facilities = data.facilities || data || [];
-                        const uniqueFavorites = Array.from(new Set(favorites.map(String)));
-                        const matched = uniqueFavorites
-                            .map(fid => facilities.find((f: any) => String(f.id) === String(fid)))
-                            .filter(Boolean);
-                        const seen = new Set();
-                        const deduplicated = matched.filter((f: any) => {
-                            if (seen.has(f.id)) return false;
-                            seen.add(f.id);
-                            return true;
-                        });
-                        setFacilityDetails(deduplicated);
-                    })
-                    .catch((error) => { console.error('관심 시설 로드 실패:', error); })
-                    .finally(() => setLoadingFavorites(false));
-            }
-        } else if (showFavorites && favorites.length === 0) {
-            setFacilityDetails([]);
-        }
-    }, [showFavorites, favorites]);
 
     const pageContent = (
         <Box style={{

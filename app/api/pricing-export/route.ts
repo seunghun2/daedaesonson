@@ -25,12 +25,21 @@ export async function GET() {
         const catMap: Record<string, string> = {};
         allCats.forEach(c => catMap[c.id] = c.name);
 
-        // 시설 가져오기
-        const { data: facilities } = await supabase
-            .from('Facility')
-            .select('id, name');
+        // 시설 가져오기 (1000개 제한 극복을 위한 range 루프)
+        let allFacilities: any[] = [];
+        let fPage = 0;
+        while (true) {
+            const { data: facilities } = await supabase
+                .from('Facility')
+                .select('id, name')
+                .range(fPage * 1000, (fPage + 1) * 1000 - 1);
+            if (!facilities || facilities.length === 0) break;
+            allFacilities = allFacilities.concat(facilities);
+            if (facilities.length < 1000) break;
+            fPage++;
+        }
         const nameMap: Record<string, string> = {};
-        (facilities || []).forEach((f: any) => nameMap[f.id] = f.name);
+        allFacilities.forEach((f: any) => nameMap[f.id] = f.name);
 
         // 가격 항목 가져오기
         let allItems: any[] = [];

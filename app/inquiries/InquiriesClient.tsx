@@ -1,6 +1,6 @@
 'use client';
 
-import { Box, Text, Group, Stack, Button, ScrollArea, Modal, TextInput, Drawer, Select, Textarea, Switch, ActionIcon } from '@mantine/core';
+import { Box, Text, Group, Stack, Button, ScrollArea, Modal, TextInput, Drawer, Select, Textarea, Switch, ActionIcon, Checkbox } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { ChevronLeft, Lock, Unlock, Pencil, X, ChevronDown, Check, Camera } from 'lucide-react';
 import { useState, useEffect } from 'react';
@@ -73,6 +73,15 @@ export default function InquiriesClient({ initialInquiries, facilities = [] }: I
     });
     const [isSubmitting, setIsSubmitting] = useState(false);
 
+    // 유효성 검사 (010 등 정상 휴대전화 10~11자리 + 필수 필드 + 개인정보 동의)
+    const phoneDigits = inquiryForm.phone.replace(/\D/g, '');
+    const isPhoneValid = /^01[016789]\d{7,8}$/.test(phoneDigits);
+    const isFormValid =
+        inquiryForm.title.trim().length > 0 &&
+        inquiryForm.content.trim().length > 0 &&
+        isPhoneValid &&
+        inquiryForm.privacyAgreed;
+
     // 🔗 URL 파라미터로 글쓰기 자동 열기 (시설 상세에서 넘어온 경우)
     useEffect(() => {
         const shouldWrite = searchParams.get('write');
@@ -128,6 +137,14 @@ export default function InquiriesClient({ initialInquiries, facilities = [] }: I
 
             if (data.success) {
                 setUnlockedIds(prev => new Set(prev).add(selectedInquiry.id));
+                if (data.inquiry) {
+                    setInquiries(prev => prev.map(inq => inq.id === selectedInquiry.id ? {
+                        ...inq,
+                        title: data.inquiry.title,
+                        content: data.inquiry.content,
+                        replies: data.inquiry.replies || [],
+                    } : inq));
+                }
                 closePw();
             } else {
                 setPinError(true);
@@ -139,8 +156,19 @@ export default function InquiriesClient({ initialInquiries, facilities = [] }: I
 
     // 문의 등록
     const submitInquiry = async () => {
-        if (!inquiryForm.title.trim() || !inquiryForm.content.trim() || !inquiryForm.phone.trim()) {
+        if (!inquiryForm.title.trim() || !inquiryForm.content.trim()) {
             alert('필수 항목을 입력해주세요.');
+            return;
+        }
+
+        const digits = inquiryForm.phone.replace(/\D/g, '');
+        if (!/^01[016789]\d{7,8}$/.test(digits)) {
+            alert('올바른 휴대전화 번호(010 등 10~11자리)를 입력해주세요.');
+            return;
+        }
+
+        if (!inquiryForm.privacyAgreed) {
+            alert('개인정보 수집 및 이용 동의가 필요합니다.');
             return;
         }
 
@@ -426,7 +454,7 @@ export default function InquiriesClient({ initialInquiries, facilities = [] }: I
                         size="xs"
                         radius="xl"
                         color="brand"
-                        disabled={!inquiryForm.title.trim() || !inquiryForm.content.trim() || !inquiryForm.phone.trim() || isSubmitting}
+                        disabled={!isFormValid || isSubmitting}
                         onClick={submitInquiry}
                         loading={isSubmitting}
                     >
@@ -576,7 +604,31 @@ export default function InquiriesClient({ initialInquiries, facilities = [] }: I
                                 onChange={(e) => setInquiryForm({ ...inquiryForm, phone: formatPhoneNumber(e.currentTarget.value) })}
                                 variant="filled"
                                 radius="md"
+                                error={inquiryForm.phone.length > 0 && !isPhoneValid ? '010으로 시작하는 10~11자리 번호를 입력해주세요.' : false}
                             />
+                        </Box>
+
+                        {/* 개인정보 수집 및 이용 동의 */}
+                        <Box py="md" style={{ borderTop: '1px solid #f1f3f5' }}>
+                            <Checkbox
+                                checked={inquiryForm.privacyAgreed}
+                                onChange={(e) => setInquiryForm({ ...inquiryForm, privacyAgreed: e.currentTarget.checked })}
+                                label={
+                                    <Text size="xs" c="dark.7" fw={500}>
+                                        <Text span c="brand" fw={700}>[필수] </Text>
+                                        개인정보 수집 및 이용 동의
+                                    </Text>
+                                }
+                                color="brand"
+                                size="xs"
+                            />
+                            <Box mt={8} p={10} bg="gray.0" style={{ borderRadius: 8 }}>
+                                <Text size="11px" c="dimmed" lh={1.5}>
+                                    • 수집 항목: 연락처, 문의 내용<br />
+                                    • 이용 목적: 문의 접수 및 답변 안내, 본인 확인(비밀번호 대용)<br />
+                                    • 보유 및 이용 기간: 문의 처리 완료 후 1년 또는 파기 요청 시까지
+                                </Text>
+                            </Box>
                         </Box>
                     </Stack>
                 </Box>

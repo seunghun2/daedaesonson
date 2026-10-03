@@ -41,9 +41,9 @@ git push origin main
 3. **환경 변수 설정** (중요!)
    - "Environment Variables" 섹션에서 다음을 추가:
    ```
-   GEMINI_API_KEY=AIzaSyCVo0fCTRxNuxe2N0XmqW5ZGPWao8wEEfQ
-   NEXT_PUBLIC_NAVER_MAP_CLIENT_ID=9ynkl22koz
-   NAVER_MAP_CLIENT_SECRET=ayNvCHQL45KqV0JbMjyd1vfpudqe8mB5mr6PUkVG
+   GEMINI_API_KEY=your_gemini_api_key_here # process.env.GEMINI_API_KEY
+   NEXT_PUBLIC_NAVER_MAP_CLIENT_ID=your_naver_client_id
+   NAVER_MAP_CLIENT_SECRET=your_naver_client_secret
    NAVER_GEOCODING_URL=https://maps.apigw.ntruss.com/map-geocode/v2/geocode
    DATABASE_URL=file:./dev.db
    ```

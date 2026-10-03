@@ -36,7 +36,10 @@ export async function POST(
         // Get inquiry
         const { data: inquiry, error } = await supabase
             .from('Inquiry')
-            .select('passwordLast4')
+            .select(`
+                *,
+                replies:InquiryReply(*)
+            `)
             .eq('id', inquiryId)
             .single();
 
@@ -49,7 +52,8 @@ export async function POST(
             return NextResponse.json({ error: '비밀번호가 일치하지 않습니다.' }, { status: 403 });
         }
 
-        return NextResponse.json({ success: true });
+        const { passwordLast4: _pin, phone: _ph, ...safeInquiry } = inquiry;
+        return NextResponse.json({ success: true, inquiry: safeInquiry });
 
     } catch (error) {
         console.error('Verify PIN error:', error);

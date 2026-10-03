@@ -4,7 +4,7 @@ import { NextResponse } from 'next/server';
 const SESSION_MAX_AGE_MS = 1000 * 60 * 60 * 24 * 7; // 7일 (유효기간)
 
 function getAdminSecret(): string {
-    const secret = process.env.ADMIN_SESSION_SECRET || process.env.SUPABASE_SERVICE_KEY;
+    const secret = (process.env.ADMIN_SESSION_SECRET || process.env.SUPABASE_SERVICE_KEY || '').trim();
     if (!secret) {
         throw new Error('ADMIN_SESSION_SECRET 또는 SUPABASE_SERVICE_KEY 환경변수가 설정되지 않았습니다.');
     }

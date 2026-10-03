@@ -3,7 +3,11 @@ const path = require('path');
 
 const facilitiesPath = path.join(__dirname, '../data/facilities.json');
 const outputPath1 = path.join(__dirname, '../data/facility_pricing_audit_sheet.csv');
-const outputPath2 = path.join(__dirname, '../public/data/facility_pricing_audit_sheet.csv');
+const auditDir = path.join(__dirname, '../data/audit');
+if (!fs.existsSync(auditDir)) {
+  fs.mkdirSync(auditDir, { recursive: true });
+}
+const outputPath2 = path.join(auditDir, 'facility_pricing_audit_sheet.csv');
 
 console.log('Loading facilities from:', facilitiesPath);
 const rawData = fs.readFileSync(facilitiesPath, 'utf8');
