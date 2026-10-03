@@ -11,7 +11,7 @@ import { getSupabaseClient } from '@/lib/supabase';
 
 export default function MyInfoPage() {
     const router = useRouter();
-    const { user, profile, signOut, favorites, session, toggleFavorite } = useAuth();
+    const { user, profile, signOut, favorites, session, toggleFavorite, loading } = useAuth();
     const isMobile = useMediaQuery('(max-width: 768px)');
     const [showFavorites, setShowFavorites] = useState(false);
     const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
@@ -62,8 +62,9 @@ export default function MyInfoPage() {
     };
 
     useEffect(() => {
-        if (!user) router.push('/menu');
-    }, [user, router]);
+        // 세션 복원 중(loading)에는 리다이렉트하지 않음
+        if (!loading && !user) router.push('/menu');
+    }, [user, loading, router]);
 
     // 관심 시설 상세 정보 로드
     useEffect(() => {

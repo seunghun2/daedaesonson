@@ -55,40 +55,37 @@ export function AuthProvider({ children }: { children: ReactNode }) {
             .single();
         if (data) {
             setProfile(data as Profile);
-            // 약관 동의가 필요한지 확인:
-            // agreed_terms 필드가 명시적으로 false이고, 최근 가입한 유저만
-            if (data.agreed_terms === false && data.created_at) {
-                const createdAt = new Date(data.created_at).getTime();
-                const fiveMinutesAgo = Date.now() - 5 * 60 * 1000;
-                // 5분 이내 신규 가입자만 약관 모달 표시
-                if (createdAt > fiveMinutesAgo) {
-                    setNeedsTerms(true);
-                } else {
-                    // 기존 유저는 자동 동의 처리
-                    setNeedsTerms(false);
-                }
-            } else {
-                setNeedsTerms(false);
-            }
+            // 약관 미동의(기존 가입자 포함) → 1회 동의 모달 표시
+            setNeedsTerms(data.agreed_terms !== true);
         }
     };
 
     // 세션 변경 감지
     useEffect(() => {
         // 1. 인증 상태 변경 리스너 (먼저 등록)
+        // ⚠️ 콜백 안에서 supabase 호출을 await 하면 supabase-js 내부 락과 교착(deadlock)되어
+        //    프로필/관심시설 로드가 영원히 멈춤 → 콜백은 동기로 두고 실제 작업은 setTimeout으로 미룸
         const { data: { subscription } } = supabase.auth.onAuthStateChange(
-            async (_event, session) => {
-                // 인증 상태 변경 처리
+            (event, session) => {
+                // 토큰 갱신 시에는 세션만 교체 (불필요한 재조회 방지)
                 setSession(session);
                 setUser(session?.user ?? null);
+                if (event === 'TOKEN_REFRESHED') return;
                 if (session?.user) {
-                    await fetchProfile(session.user.id);
-                    loadFavorites(session.access_token);
+                    const uid = session.user.id;
+                    const token = session.access_token;
+                    setTimeout(() => {
+                        fetchProfile(uid).finally(() => setLoading(false));
+                        loadFavorites(token);
+                    }, 0);
                 } else {
-                    setProfile(null);
-                    setFavorites([]);
+                    // INITIAL_SESSION(null)은 initSession이 처리 — 실제 로그아웃일 때만 비움
+                    if (event === 'SIGNED_OUT') {
+                        setProfile(null);
+                        setFavorites([]);
+                    }
+                    if (event !== 'INITIAL_SESSION') setLoading(false);
                 }
-                setLoading(false);
             }
         );
 
@@ -266,11 +263,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
             setFavorites(prev => Array.from(new Set([...prev, String(facilityId)])));
         }
         try {
+            // React state의 토큰은 만료됐을 수 있음(모바일 백그라운드 복귀 등) → 최신 세션 토큰 사용
+            const { data: { session: fresh } } = await supabase.auth.getSession();
+            const token = fresh?.access_token || session.access_token;
             const res = await fetch('/api/favorites', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${session.access_token}`,
+                    'Authorization': `Bearer ${token}`,
                 },
                 body: JSON.stringify({ facilityId }),
             });
@@ -307,7 +307,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     const agreeToTerms = async (marketing: boolean) => {
         if (!user) return;
         const now = new Date().toISOString();
-        await supabase
+        const { error } = await supabase
             .from('profiles')
             .update({
                 agreed_terms: true,
@@ -317,6 +317,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
                 updated_at: now,
             })
             .eq('id', user.id);
+        if (error) {
+            console.error('agreeToTerms error:', error);
+            alert('약관 동의 저장에 실패했습니다. 잠시 후 다시 시도해주세요.');
+            return;
+        }
         setNeedsTerms(false);
         if (profile) {
             setProfile({

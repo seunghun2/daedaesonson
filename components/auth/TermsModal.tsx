@@ -158,7 +158,7 @@ export default function TermsModal() {
                             boxShadow: allRequired ? '0 4px 16px rgba(92, 63, 191, 0.3)' : 'none',
                         }}
                     >
-                        {loading ? '처리 중...' : '가입 완료'}
+                        {loading ? '처리 중...' : '동의하고 계속하기'}
                     </button>
                 </div>
             </div>
