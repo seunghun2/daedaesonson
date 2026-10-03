@@ -90,3 +90,6 @@ scripts/
 /scraped-reviews
 /scratch
 .env*.local
+
+# 데이터 보강 산출물 (원본 스냅샷/후보/백업)
+data/enrichment/

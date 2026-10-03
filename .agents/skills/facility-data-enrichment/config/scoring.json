@@ -1,0 +1,45 @@
+{
+  "_comment": "대대손손 데이터 보강 점수 공식. tune_formula.mjs 가 사람 검수 결과로 scoring.suggested.json 을 만들고, 사람이 확인 후 이 파일에 반영한다.",
+  "version": 1,
+  "match": {
+    "weights": { "name_sim": 0.40, "addr_sim": 0.25, "phone_score": 0.20, "geo_score": 0.15 },
+    "geo_zero_km": 2.0,
+    "name_floor": 0.45,
+    "accept": 0.85,
+    "review": 0.65
+  },
+  "confidence": {
+    "freshness_halflife_months": 18,
+    "freshness_floor": 0.5,
+    "freshness_unknown": 0.7,
+    "auto_approve": 0.85,
+    "review_min": 0.50
+  },
+  "diff": {
+    "same_pct": 0.05,
+    "conflict_pct": 0.15
+  },
+  "sanity": {
+    "bands": {
+      "사용료": [100000, 300000000],
+      "안치료": [100000, 300000000],
+      "조성비": [100000, 300000000],
+      "관리비": [5000, 10000000],
+      "default": [5000, 300000000]
+    },
+    "out_of_band": 0.0,
+    "ratio_soft": 3.0,
+    "ratio_hard": 10.0,
+    "ratio_penalty": 0.5
+  },
+  "image": {
+    "min_width": 800,
+    "min_height": 500,
+    "good_labels": ["전경", "봉안실", "묘역", "수목장", "시설내부", "추모관", "진입로", "편의시설"],
+    "bad_labels": ["지도", "로고", "인물", "텍스트배너", "약도", "가격표", "기타"],
+    "novelty_hamming_dup": 6,
+    "max_new_per_facility": 8,
+    "auto_approve": 0.80,
+    "review_min": 0.45
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "_comment": "출처 레지스트리. trust = 가격 신뢰도, image_license = 이미지 사용 가능 기본값(official=시설 자체 공식자료, public=공공누리 등 확인 필요, none=사용 금지/참고용). 새 출처는 여기에 추가.",
+  "sources": [
+    { "id": "official_homepage", "name": "시설 공식 홈페이지", "tier": 1, "trust": 1.00, "image_license": "official",
+      "how": "Facility.websiteUrl → 가격/분양안내/이용안내/시설안내/갤러리 메뉴 탐색. PDF·이미지 가격표는 OCR." },
+    { "id": "esky", "name": "e하늘 장사정보시스템 (15774129.go.kr)", "tier": 1, "trust": 0.95, "image_license": "public",
+      "how": "장사시설 검색 → 시설 상세 → 사용료/관리비 표. 공공 데이터라 가격 신뢰 최고. 이미지는 공공누리 유형 확인 후 사용.",
+      "existing_script": "scripts/crawlEsky.js, scripts/crawlEskyDetails.js" },
+    { "id": "ordinance", "name": "지자체 조례·규칙 (국가법령정보센터/자치법규정보시스템 elis.go.kr)", "tier": 1, "trust": 0.92, "image_license": "none",
+      "how": "공설 시설의 사용료는 조례 별표에 확정. '○○시 장사시설 설치 및 운영 조례' 검색 → 별표 사용료.",
+      "existing_script": "scripts/crawl-ordinance-test.js" },
+    { "id": "local_gov_site", "name": "시군구청 / 시설관리공단 홈페이지", "tier": 1, "trust": 0.90, "image_license": "public",
+      "how": "공설 추모공원은 관리공단 사이트에 이용요금 공지." },
+    { "id": "naver_place", "name": "네이버 플레이스", "tier": 2, "trust": 0.55, "image_license": "none",
+      "how": "업체 사진은 업체가 올린 것과 사용자 리뷰 사진이 섞임 → 이미지 사용 금지(참고만). 가격은 업주 등록 '가격표'만, 최신성 확인." },
+    { "id": "kakao_map", "name": "카카오맵 장소", "tier": 2, "trust": 0.50, "image_license": "none",
+      "how": "전화/주소 교차검증용. 이미지 사용 금지." },
+    { "id": "myungdangga", "name": "명당가", "tier": 3, "trust": 0.60, "image_license": "none",
+      "how": "중개 플랫폼. 가격은 '참고' 등급, 공식 출처로 재확인 필요.",
+      "existing_script": "scripts/crawlMyungdangga.js" },
+    { "id": "cheotjang", "name": "첫장", "tier": 3, "trust": 0.60, "image_license": "none",
+      "existing_script": "scripts/crawlCheotjang.js" },
+    { "id": "goifuneral", "name": "고이장례", "tier": 3, "trust": 0.55, "image_license": "none",
+      "existing_script": "scripts/crawl_goifuneral.js" },
+    { "id": "blog_news", "name": "블로그·카페·뉴스", "tier": 4, "trust": 0.30, "image_license": "none",
+      "how": "단서(어느 페이지에 가격표가 있는지) 찾기 용도. 단독 근거로 승인 금지." }
+  ]
+}
