@@ -84,7 +84,7 @@ data/audit/
 # Sensitive API Keys (NEVER commit these!)
 google-vision-key.json
 credentials*.json
-scripts/
+/scripts/
 .next 2/
 /scraped-images
 /scraped-reviews

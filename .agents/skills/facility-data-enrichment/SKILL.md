@@ -21,13 +21,18 @@ description: 대대손손 시설 DB(원본)를 기준으로 다른 사이트(e�
 - 산출물: `data/enrichment/<RUN>/` (gitignore됨)
 
 ## 단계 (모두 프로젝트 루트에서 실행)
+- **원클릭 전체 실행**: `node .agents/skills/facility-data-enrichment/scripts/run_all.mjs` (DB 쓰기 절대 없음, 시트 생성 전용)
+
 | 단계 | 명령 | 결과 |
 |---|---|---|
 | 0. 원본 시트 | `node .agents/skills/facility-data-enrichment/scripts/export_master.mjs` | `00_master_facilities.csv`(결손·우선순위 S/A/B/C/D), `01_master_prices.csv`, `01_master_images.csv`, `master.json`, `crawl_queue.json` |
-| 1. 크롤링 | **AI 에이전트**가 `prompts/01_orchestrator.md` 대로 `crawl_queue.json` 순회 | `candidates/<source>.jsonl` (스키마: `references/sheet-schema.md`) |
+| 1-1. e하늘 공공 수집 | `node .../enrich_crawl_esky.mjs --run <RUN>` | `candidates/esky.jsonl` (공식 공공 사진, 화장시설/공설 사용료) |
+| 1-2. 고이장례 수집 | `node .../enrich_crawl_goifuneral.mjs --run <RUN>` | `candidates/goifuneral.jsonl` (봉안/자연장/수목장 가격 5,500+건) |
+| 1-3. 지자체 조례 수집 | `node .../enrich_crawl_ordinance.mjs --run <RUN>` | `candidates/ordinance.jsonl` (지자체 자치법규 공설 규정 요금) |
+| 1-4. AI 추가 탐색 | **AI 에이전트**가 `prompts/01_orchestrator.md` 대로 공식 홈페이지 등 추가 순회 | `candidates/<source>.jsonl` |
 | 2. 업데이트 시트 | `node .../build_update_sheets.mjs --run <RUN>` | `02_price_updates.csv`, `03_image_updates.csv`, `04_unmatched.csv`, `05_summary.md` |
 | 3. 검수 | 사람이 `review_decision` 열 입력 (Y/N/E/X) | |
-| 4. 반영 | `node .../apply_approved.mjs --run <RUN>` (미리보기) → `--apply` | DB 반영 + `backup_*.json` |
+| 4. 반영 (사용자 명시적 요청 시만) | `node .../apply_approved.mjs --run <RUN>` (미리보기) → `--apply` | DB 반영 + `backup_*.json` (절대 자동 실행 금지) |
 | 5. 공식 개선 | `node .../tune_formula.mjs --all` | `config/scoring.suggested.json`, `tuning_report.md` |
 
 검수 라벨: **Y**=승인, **E**=수정 승인(`final_price` 기입), **N**=시설은 맞지만 값/이미지가 부적합, **X**=엉뚱한 시설에 매칭됨. 비워두면 `AUTO_APPROVE` 항목만 반영.
