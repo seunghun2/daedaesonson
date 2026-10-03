@@ -272,7 +272,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${token}`,
                 },
-                body: JSON.stringify({ facilityId }),
+                body: JSON.stringify({ facilityId, action: isCurrentlyFav ? 'remove' : 'add' }),
             });
             if (!res.ok) throw new Error('API error');
         } catch (e) {
