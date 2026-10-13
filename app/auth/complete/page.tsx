@@ -1,10 +1,10 @@
 'use client';
 
-import { useEffect } from 'react';
+import { Suspense, useEffect } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { supabase } from '@/lib/supabase';
 
-export default function AuthCompletePage() {
+function AuthCompleteInner() {
     const searchParams = useSearchParams();
 
     useEffect(() => {
@@ -26,11 +26,18 @@ export default function AuthCompletePage() {
         }
     }, [searchParams]);
 
+    return null;
+}
+
+export default function AuthCompletePage() {
     return (
         <div style={{
             display: 'flex', alignItems: 'center', justifyContent: 'center',
             minHeight: '100vh', backgroundColor: '#f8f9fa',
         }}>
+            <Suspense fallback={null}>
+                <AuthCompleteInner />
+            </Suspense>
             <div style={{ textAlign: 'center' }}>
                 <div style={{
                     width: 40, height: 40, border: '3px solid #5c3fbf',
