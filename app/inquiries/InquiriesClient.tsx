@@ -2,16 +2,25 @@
 
 import { Box, Text, Group, Stack, Button, ScrollArea, Modal, TextInput, Drawer, Select, Textarea, Switch, ActionIcon, Checkbox } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
-import { ChevronLeft, Lock, Unlock, Pencil, X, ChevronDown, Check, Camera } from 'lucide-react';
-import { useState, useEffect } from 'react';
+import { ChevronLeft, Lock, Unlock, Pencil, X, ChevronDown, Check, Search, Info, AlertCircle, CheckCircle2 } from 'lucide-react';
+import { useState, useEffect, useMemo } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import BottomNav from '@/components/common/BottomNav';
 
-// 문의 유형
+// 문의 유형 (작성 폼용)
 const INQUIRY_TYPES = [
-    { value: 'price', label: '가격 문의' },
+    { value: 'price', label: '가격문의' },
     { value: 'reservation', label: '예약/절차' },
-    { value: 'facility', label: '시설' },
+    { value: 'facility', label: '시설문의' },
+    { value: 'other', label: '기타' },
+];
+
+// 상단 필터 칩
+const FILTER_CHIPS = [
+    { value: 'all', label: '전체' },
+    { value: 'price', label: '가격문의' },
+    { value: 'reservation', label: '예약/절차' },
+    { value: 'facility', label: '시설문의' },
     { value: 'other', label: '기타' },
 ];
 
@@ -19,6 +28,7 @@ interface Inquiry {
     id: string;
     facilityId: string;
     facilityName?: string;
+    author?: string;
     title: string;
     content: string;
     isPrivate: boolean;
@@ -51,6 +61,21 @@ export default function InquiriesClient({ initialInquiries, facilities = [] }: I
     const searchParams = useSearchParams();
     const [inquiries, setInquiries] = useState<Inquiry[]>(initialInquiries);
 
+    // 검색 및 카테고리 필터 상태
+    const [searchQuery, setSearchQuery] = useState('');
+    const [activeCategory, setActiveCategory] = useState('all');
+
+    // 토스트 알림 및 폼 인라인 에러 상태
+    const [toastMessage, setToastMessage] = useState<{ text: string; type: 'success' | 'error' } | null>(null);
+    const [formError, setFormError] = useState<string | null>(null);
+
+    const showToast = (text: string, type: 'success' | 'error' = 'success') => {
+        setToastMessage({ text, type });
+        setTimeout(() => {
+            setToastMessage(prev => (prev?.text === text ? null : prev));
+        }, 3000);
+    };
+
     // 비밀번호 모달
     const [pwOpened, { open: openPw, close: closePw }] = useDisclosure(false);
     const [selectedInquiry, setSelectedInquiry] = useState<Inquiry | null>(null);
@@ -82,14 +107,13 @@ export default function InquiriesClient({ initialInquiries, facilities = [] }: I
         isPhoneValid &&
         inquiryForm.privacyAgreed;
 
-    // 🔗 URL 파라미터로 글쓰기 자동 열기 (시설 상세에서 넘어온 경우)
+    // URL 파라미터로 글쓰기 자동 열기 (시설 상세에서 넘어온 경우)
     useEffect(() => {
         const shouldWrite = searchParams.get('write');
         const facilityId = searchParams.get('facilityId');
         const facilityName = searchParams.get('facilityName');
 
         if (shouldWrite === 'true') {
-            // 시설 자동 세팅
             if (facilityId && facilityName) {
                 setInquiryForm(prev => ({
                     ...prev,
@@ -97,14 +121,13 @@ export default function InquiriesClient({ initialInquiries, facilities = [] }: I
                     facilityName: decodeURIComponent(facilityName),
                 }));
             }
-            // 글쓰기 Drawer 열기
             setTimeout(() => {
                 openWrite();
             }, 300);
         }
     }, [searchParams]);
 
-    // 📊 GA4: 문의 페이지뷰
+    // GA4: 문의 페이지뷰
     useEffect(() => {
         if (typeof window !== 'undefined' && window.gtag) {
             window.gtag('event', '문의_페이지_조회', {
@@ -114,6 +137,22 @@ export default function InquiriesClient({ initialInquiries, facilities = [] }: I
             });
         }
     }, []);
+
+    // 검색어 + 카테고리 필터링
+    const filteredInquiries = useMemo(() => {
+        const q = searchQuery.trim().toLowerCase().normalize('NFC');
+        return inquiries.filter((inq) => {
+            const inqType = inq.type || 'other';
+            if (activeCategory !== 'all' && inqType !== activeCategory) {
+                return false;
+            }
+            if (!q) return true;
+            const title = (inq.title || '').toLowerCase().normalize('NFC');
+            const facName = (!inq.facilityName || inq.facilityName === 'general' || inq.facilityId === 'general' ? '일반' : inq.facilityName).toLowerCase().normalize('NFC');
+            const author = (inq.author || '').toLowerCase().normalize('NFC');
+            return title.includes(q) || facName.includes(q) || author.includes(q);
+        });
+    }, [inquiries, searchQuery, activeCategory]);
 
     const handleInquiryClick = (inquiry: Inquiry) => {
         if (inquiry.isPrivate && !unlockedIds.has(inquiry.id)) {
@@ -149,26 +188,28 @@ export default function InquiriesClient({ initialInquiries, facilities = [] }: I
             } else {
                 setPinError(true);
             }
-        } catch (e) {
+        } catch {
             setPinError(true);
         }
     };
 
     // 문의 등록
     const submitInquiry = async () => {
+        setFormError(null);
+
         if (!inquiryForm.title.trim() || !inquiryForm.content.trim()) {
-            alert('필수 항목을 입력해주세요.');
+            setFormError('제목과 문의 내용을 모두 입력해주세요.');
             return;
         }
 
         const digits = inquiryForm.phone.replace(/\D/g, '');
         if (!/^01[016789]\d{7,8}$/.test(digits)) {
-            alert('올바른 휴대전화 번호(010 등 10~11자리)를 입력해주세요.');
+            setFormError('올바른 휴대전화 번호(010 등 10~11자리)를 입력해주세요.');
             return;
         }
 
         if (!inquiryForm.privacyAgreed) {
-            alert('개인정보 수집 및 이용 동의가 필요합니다.');
+            setFormError('개인정보 수집 및 이용 동의가 필요합니다.');
             return;
         }
 
@@ -204,113 +245,239 @@ export default function InquiriesClient({ initialInquiries, facilities = [] }: I
                     isPrivate: true,
                     privacyAgreed: true,
                 });
-                alert('문의가 등록되었습니다!');
+                showToast('문의가 정상적으로 등록되었습니다.', 'success');
             } else {
-                alert('등록에 실패했습니다.');
+                setFormError('문의 등록에 실패했습니다. 잠시 후 다시 시도해주세요.');
             }
-        } catch (e) {
-            alert('오류가 발생했습니다.');
+        } catch {
+            setFormError('네트워크 오류가 발생했습니다. 잠시 후 다시 시도해주세요.');
         } finally {
             setIsSubmitting(false);
         }
     };
 
+    const getTypeLabel = (type?: string) => {
+        if (type === 'price') return '가격문의';
+        if (type === 'reservation') return '예약/절차';
+        if (type === 'facility') return '시설문의';
+        return '기타';
+    };
+
     return (
-        <Box h="100dvh" bg="white">
-            {/* 헤더 */}
+        <Box h="100dvh" bg="white" style={{ display: 'flex', flexDirection: 'column', maxWidth: 640, margin: '0 auto' }}>
+            {/* 상단 고정 영역: 헤더 + 검색창 + 카테고리 필터 칩 */}
             <Box
-                px="md" py={10}
                 style={{
                     position: 'sticky',
                     top: 0,
                     zIndex: 100,
                     backgroundColor: 'white',
-                    borderBottom: '1px solid #f1f3f5',
+                    borderBottom: '1px solid #E5E8EB',
+                    flexShrink: 0,
                 }}
             >
-                <Group gap="xs" align="center">
-                    <ActionIcon
-                        variant="subtle"
-                        color="gray"
-                        size={38}
-                        radius="md"
-                        onClick={() => {
-                            if (typeof window !== 'undefined' && window.history.length <= 1) {
-                                router.push('/menu');
-                            } else {
-                                router.back();
-                            }
+                {/* 헤더 */}
+                <Box px="md" py={10}>
+                    <Group gap="xs" align="center">
+                        <ActionIcon
+                            variant="subtle"
+                            color="gray"
+                            size={38}
+                            radius="md"
+                            onClick={() => {
+                                if (typeof window !== 'undefined' && window.history.length <= 1) {
+                                    router.push('/menu');
+                                } else {
+                                    router.back();
+                                }
+                            }}
+                            aria-label="뒤로가기"
+                        >
+                            <ChevronLeft size={22} color="#191F28" />
+                        </ActionIcon>
+                        <Text fw={700} size="lg" c="#191F28" style={{ letterSpacing: '-0.3px' }}>
+                            문의
+                        </Text>
+                    </Group>
+                </Box>
+
+                {/* 문의 검색창 */}
+                <Box px="md" pb={10}>
+                    <Box
+                        style={{
+                            display: 'flex',
+                            alignItems: 'center',
+                            backgroundColor: '#F2F4F6',
+                            borderRadius: 10,
+                            padding: '0 12px',
+                            height: 40,
                         }}
-                        aria-label="뒤로가기"
                     >
-                        <ChevronLeft size={22} color="#495057" />
-                    </ActionIcon>
-                    <Text fw={700} size="lg">문의</Text>
+                        <Search size={16} color="#8B95A1" style={{ flexShrink: 0 }} />
+                        <input
+                            type="text"
+                            value={searchQuery}
+                            onChange={(e) => setSearchQuery(e.target.value)}
+                            placeholder="제목, 작성자, 시설명 검색"
+                            style={{
+                                flex: 1,
+                                border: 'none',
+                                outline: 'none',
+                                background: 'transparent',
+                                fontSize: '14px',
+                                padding: '0 8px',
+                                color: '#191F28',
+                            }}
+                        />
+                        {searchQuery && (
+                            <ActionIcon
+                                variant="transparent"
+                                size="xs"
+                                onClick={() => setSearchQuery('')}
+                                aria-label="검색어 지우기"
+                                style={{ color: '#8B95A1' }}
+                            >
+                                <X size={15} />
+                            </ActionIcon>
+                        )}
+                    </Box>
+                </Box>
+
+                {/* 카테고리 필터 칩 */}
+                <Box
+                    px="md"
+                    pb={12}
+                    style={{
+                        display: 'flex',
+                        gap: 6,
+                        overflowX: 'auto',
+                        scrollbarWidth: 'none',
+                    }}
+                >
+                    {FILTER_CHIPS.map((chip) => {
+                        const active = activeCategory === chip.value;
+                        return (
+                            <button
+                                key={chip.value}
+                                type="button"
+                                onClick={() => setActiveCategory(chip.value)}
+                                style={{
+                                    padding: '6px 13px',
+                                    borderRadius: 999,
+                                    fontSize: '12.5px',
+                                    fontWeight: active ? 700 : 600,
+                                    backgroundColor: active ? '#191F28' : '#F2F4F6',
+                                    color: active ? '#FFFFFF' : '#4E5968',
+                                    border: 'none',
+                                    cursor: 'pointer',
+                                    whiteSpace: 'nowrap',
+                                    transition: 'all 0.15s',
+                                    flexShrink: 0,
+                                }}
+                            >
+                                {chip.label}
+                            </button>
+                        );
+                    })}
+                </Box>
+            </Box>
+
+            {/* 안내 메시지 (이모지 제거, SVG 아이콘 적용) */}
+            <Box px="md" py={10} bg="#F8FAFC" style={{ borderBottom: '1px solid #F2F4F6', flexShrink: 0 }}>
+                <Group gap={8} wrap="nowrap">
+                    <Info size={15} color="#2563EB" style={{ flexShrink: 0 }} />
+                    <Text size="xs" c="#4E5968" lh={1.45} fw={500}>
+                        시설에 대해 궁금한 점을 문의하세요. 비공개 설정 시 제목만 공개됩니다.
+                    </Text>
                 </Group>
             </Box>
 
-            {/* 안내 메시지 */}
-            <Box px="lg" py="md" bg="gray.0">
-                <Text size="sm" c="dimmed" lh={1.5}>
-                    💡 시설에 대해 궁금한 점을 문의하세요. 비공개 설정 시 제목만 공개됩니다.
-                </Text>
-            </Box>
+            {/* 토스트 알림 배너 */}
+            {toastMessage && (
+                <Box
+                    mx="md"
+                    mt="sm"
+                    p="sm"
+                    style={{
+                        borderRadius: 10,
+                        backgroundColor: toastMessage.type === 'success' ? '#ECFDF5' : '#FEF2F2',
+                        border: `1px solid ${toastMessage.type === 'success' ? '#A7F3D0' : '#FECACA'}`,
+                    }}
+                >
+                    <Group gap={8} wrap="nowrap">
+                        {toastMessage.type === 'success' ? (
+                            <CheckCircle2 size={16} color="#047857" />
+                        ) : (
+                            <AlertCircle size={16} color="#DC2626" />
+                        )}
+                        <Text size="xs" fw={600} c={toastMessage.type === 'success' ? '#047857' : '#DC2626'}>
+                            {toastMessage.text}
+                        </Text>
+                    </Group>
+                </Box>
+            )}
 
             {/* 문의 목록 */}
-            <ScrollArea h="calc(100dvh - 130px - 56px)">
-                {inquiries.length === 0 ? (
-                    <Box p="xl" ta="center">
-                        <Text c="dimmed" size="sm">등록된 문의가 없습니다.</Text>
+            <ScrollArea style={{ flex: 1 }}>
+                {filteredInquiries.length === 0 ? (
+                    <Box p="xl" py={60} ta="center">
+                        <Text c="#8B95A1" size="sm" fw={500}>
+                            {searchQuery.trim() || activeCategory !== 'all'
+                                ? '조건에 맞는 문의 내역이 없습니다.'
+                                : '등록된 문의가 없습니다.'}
+                        </Text>
                     </Box>
                 ) : (
-                    <Stack gap={0} px="lg" py="sm">
-                        {inquiries.map(inquiry => {
+                    <Stack gap={0} px="md" py="xs" pb={100}>
+                        {filteredInquiries.map(inquiry => {
                             const isUnlocked = unlockedIds.has(inquiry.id);
                             const showBlur = inquiry.isPrivate && !isUnlocked;
 
                             return (
                                 <Box
                                     key={inquiry.id}
-                                    py="lg"
+                                    py="md"
                                     style={{
-                                        borderBottom: '1px solid #f1f3f5',
+                                        borderBottom: '1px solid #F2F4F6',
                                         cursor: inquiry.isPrivate && !isUnlocked ? 'pointer' : 'default'
                                     }}
                                     onClick={() => handleInquiryClick(inquiry)}
                                 >
                                     {/* [시설명] 카테고리 + 날짜 */}
-                                    <Group justify="space-between" mb={8}>
+                                    <Group justify="space-between" mb={6}>
                                         <Group gap={6}>
-                                            <Text size="xs" c="dimmed">[{(!inquiry.facilityName || inquiry.facilityName === 'general' || inquiry.facilityId === 'general') ? '일반' : inquiry.facilityName}]</Text>
-                                            <Text size="xs" c="brand" fw={600}>
-                                                {inquiry.type === 'price' ? '가격 문의' :
-                                                    inquiry.type === 'reservation' ? '예약/절차' :
-                                                        inquiry.type === 'facility' ? '시설' : '기타'}
+                                            <Text size="xs" c="#6B7684" fw={600}>
+                                                [{(!inquiry.facilityName || inquiry.facilityName === 'general' || inquiry.facilityId === 'general') ? '일반' : inquiry.facilityName}]
+                                            </Text>
+                                            <Text size="xs" fw={700} style={{ color: '#2563EB' }}>
+                                                {getTypeLabel(inquiry.type)}
                                             </Text>
                                         </Group>
-                                        <Text size="xs" c="dimmed">
+                                        <Text size="xs" c="#8B95A1">
                                             {new Date(inquiry.createdAt).toLocaleDateString('ko-KR', { year: '2-digit', month: 'numeric', day: 'numeric' })}
                                         </Text>
                                     </Group>
 
                                     {/* 자물쇠 + 제목 */}
-                                    <Group gap={8} mb={8}>
+                                    <Group gap={8} mb={6} wrap="nowrap">
                                         {inquiry.isPrivate && (
                                             isUnlocked ?
-                                                <Unlock size={15} color="#22c55e" /> :
-                                                <Lock size={15} color="#adb5bd" />
+                                                <Unlock size={15} color="#22c55e" style={{ flexShrink: 0 }} /> :
+                                                <Lock size={15} color="#8B95A1" style={{ flexShrink: 0 }} />
                                         )}
-                                        <Text fw={600} c="dark.8" style={{ fontSize: 15 }}>{inquiry.title}</Text>
+                                        <Text fw={600} c="#191F28" style={{ fontSize: 15, flex: 1 }} lineClamp={1}>
+                                            {inquiry.title}
+                                        </Text>
                                         {inquiry.replies && inquiry.replies.length > 0 && (
-                                            <Box px={8} py={3} bg="brand.0" style={{ borderRadius: 6 }}>
-                                                <Text size="xs" c="brand" fw={600}>답변완료</Text>
+                                            <Box px={8} py={2} style={{ borderRadius: 6, backgroundColor: '#EFF6FF', flexShrink: 0 }}>
+                                                <Text size="xs" fw={700} style={{ color: '#2563EB', fontSize: '11px' }}>답변완료</Text>
                                             </Box>
                                         )}
                                     </Group>
 
                                     {/* 내용 (비공개면 블러) */}
                                     <Text
-                                        c="gray.6"
+                                        c="#4E5968"
                                         lineClamp={6}
                                         lh={1.6}
                                         style={{
@@ -327,18 +494,18 @@ export default function InquiriesClient({ initialInquiries, facilities = [] }: I
 
                                     {/* 관리자 답변 내용 */}
                                     {!showBlur && inquiry.replies && inquiry.replies.length > 0 && (
-                                        <Box mt="sm" p="sm" bg="brand.0" style={{ borderRadius: 8 }}>
+                                        <Box mt="sm" p="sm" style={{ borderRadius: 10, backgroundColor: '#EFF6FF' }}>
                                             {inquiry.replies.map((reply) => (
                                                 <Box key={reply.id} mb="xs">
                                                     <Group gap="xs" mb={4}>
-                                                        <Text size="xs" fw={700} c="brand">
+                                                        <Text size="xs" fw={700} style={{ color: '#2563EB' }}>
                                                             관리자 답변
                                                         </Text>
-                                                        <Text size="xs" c="dimmed">
+                                                        <Text size="xs" c="#8B95A1">
                                                             {new Date(reply.createdAt).toLocaleDateString('ko-KR')}
                                                         </Text>
                                                     </Group>
-                                                    <Text size="sm" c="dark.7" style={{ whiteSpace: 'pre-wrap' }}>
+                                                    <Text size="sm" c="#191F28" style={{ whiteSpace: 'pre-wrap' }}>
                                                         {reply.content}
                                                     </Text>
                                                 </Box>
@@ -354,16 +521,16 @@ export default function InquiriesClient({ initialInquiries, facilities = [] }: I
 
             {/* 글쓰기 플로팅 버튼 */}
             <Box
-                onClick={openWrite}
+                onClick={() => { setFormError(null); openWrite(); }}
                 style={{
                     position: 'fixed',
                     bottom: 80,
                     right: 20,
-                    backgroundColor: '#1D0098',
+                    backgroundColor: '#2563EB',
                     color: 'white',
                     padding: '12px 20px',
                     borderRadius: 30,
-                    boxShadow: '0 4px 12px rgba(0,0,0,0.25)',
+                    boxShadow: '0 4px 14px rgba(37, 99, 235, 0.35)',
                     cursor: 'pointer',
                     display: 'flex',
                     alignItems: 'center',
@@ -372,7 +539,7 @@ export default function InquiriesClient({ initialInquiries, facilities = [] }: I
                 }}
             >
                 <Pencil size={16} />
-                <Text size="sm" fw={600}>글쓰기</Text>
+                <Text size="sm" fw={700}>글쓰기</Text>
             </Box>
 
             {/* 비밀번호 입력 모달 */}
@@ -390,11 +557,11 @@ export default function InquiriesClient({ initialInquiries, facilities = [] }: I
                 }}
             >
                 <Stack gap="md" align="center">
-                    <Box p="md" bg="gray.1" style={{ borderRadius: '50%' }}>
-                        <Lock size={24} color="#868e96" />
+                    <Box p="md" bg="#F2F4F6" style={{ borderRadius: '50%' }}>
+                        <Lock size={24} color="#4E5968" />
                     </Box>
-                    <Text size="md" fw={600}>비공개 문의입니다</Text>
-                    <Text size="xs" c="dimmed" ta="center" lh={1.4}>
+                    <Text size="md" fw={700} c="#191F28">비공개 문의입니다</Text>
+                    <Text size="xs" c="#6B7684" ta="center" lh={1.4}>
                         작성 시 입력한 연락처 뒷자리 4자리를 입력해주세요.
                     </Text>
                     <TextInput
@@ -402,7 +569,10 @@ export default function InquiriesClient({ initialInquiries, facilities = [] }: I
                         onChange={(e) => {
                             const val = e.currentTarget.value.replace(/\D/g, '').slice(0, 4);
                             setPinValue(val);
+                            if (pinError) setPinError(false);
                         }}
+                        inputMode="numeric"
+                        pattern="[0-9]*"
                         placeholder="0 0 0 0"
                         maxLength={4}
                         size="lg"
@@ -413,21 +583,27 @@ export default function InquiriesClient({ initialInquiries, facilities = [] }: I
                                 textAlign: 'center',
                                 letterSpacing: '12px',
                                 fontSize: '20px',
-                                fontWeight: 500,
-                                backgroundColor: '#f8f9fa',
-                                border: '1px solid #e9ecef',
+                                fontWeight: 600,
+                                color: '#191F28',
+                                backgroundColor: '#F2F4F6',
+                                border: '1px solid #E5E8EB',
                             }
                         }}
                         error={pinError}
                     />
-                    {pinError && <Text size="xs" c="red">비밀번호가 일치하지 않습니다.</Text>}
+                    {pinError && <Text size="xs" c="red" fw={500}>비밀번호가 일치하지 않습니다.</Text>}
                     <Button
                         fullWidth
                         size="md"
                         radius="xl"
-                        color="brand"
                         onClick={verifyPassword}
                         disabled={pinValue.length !== 4}
+                        styles={{
+                            root: {
+                                backgroundColor: pinValue.length === 4 ? '#2563EB' : '#E5E8EB',
+                                color: pinValue.length === 4 ? '#FFFFFF' : '#8B95A1',
+                            }
+                        }}
                     >
                         확인하기
                     </Button>
@@ -445,35 +621,50 @@ export default function InquiriesClient({ initialInquiries, facilities = [] }: I
                 padding={0}
             >
                 {/* 헤더 */}
-                <Box p="md" style={{ borderBottom: '1px solid #f1f3f5', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <Box p="md" style={{ borderBottom: '1px solid #E5E8EB', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                     <ActionIcon variant="subtle" color="gray" size={38} radius="md" onClick={closeWrite} aria-label="닫기">
-                        <X size={20} />
+                        <X size={20} color="#191F28" />
                     </ActionIcon>
-                    <Text fw={700}>문의하기</Text>
+                    <Text fw={700} c="#191F28">문의하기</Text>
                     <Button
                         size="xs"
                         radius="xl"
-                        color="brand"
                         disabled={!isFormValid || isSubmitting}
                         onClick={submitInquiry}
                         loading={isSubmitting}
+                        styles={{
+                            root: {
+                                backgroundColor: isFormValid ? '#2563EB' : '#E5E8EB',
+                                color: isFormValid ? '#FFFFFF' : '#8B95A1',
+                            }
+                        }}
                     >
                         등록
                     </Button>
                 </Box>
 
                 {/* 안내 */}
-                <Box p="md" bg="gray.0">
-                    <Text size="xs" c="dimmed">다른 사람을 비방하거나 부적절한 표현은 삼가해주세요.</Text>
+                <Box p="md" bg="#F8FAFC">
+                    <Text size="xs" c="#6B7684">다른 사람을 비방하거나 부적절한 표현은 삼가해주세요.</Text>
                 </Box>
+
+                {/* 인라인 에러 메시지 */}
+                {formError && (
+                    <Box mx="md" mt="md" p="sm" style={{ borderRadius: 10, backgroundColor: '#FEF2F2', border: '1px solid #FECACA' }}>
+                        <Group gap={8} wrap="nowrap">
+                            <AlertCircle size={16} color="#DC2626" style={{ flexShrink: 0 }} />
+                            <Text size="xs" fw={600} c="#DC2626">{formError}</Text>
+                        </Group>
+                    </Box>
+                )}
 
                 {/* 폼 */}
                 <Box p="md">
                     <Stack gap="md">
                         {/* 문의 종류 */}
                         <Box>
-                            <Group justify="space-between" py="sm" style={{ borderBottom: '1px solid #f1f3f5' }}>
-                                <Text size="sm" fw={500}>문의 종류</Text>
+                            <Group justify="space-between" py="sm" style={{ borderBottom: '1px solid #F2F4F6' }}>
+                                <Text size="sm" fw={600} c="#191F28">문의 종류</Text>
                                 <Select
                                     data={INQUIRY_TYPES}
                                     value={inquiryForm.type}
@@ -482,7 +673,7 @@ export default function InquiriesClient({ initialInquiries, facilities = [] }: I
                                     variant="unstyled"
                                     rightSection={<ChevronDown size={14} />}
                                     styles={{
-                                        input: { textAlign: 'right', color: inquiryForm.type ? '#495057' : '#adb5bd' },
+                                        input: { textAlign: 'right', color: inquiryForm.type ? '#191F28' : '#8B95A1', fontWeight: 500 },
                                     }}
                                     comboboxProps={{ withinPortal: true, zIndex: 10001 }}
                                 />
@@ -494,15 +685,15 @@ export default function InquiriesClient({ initialInquiries, facilities = [] }: I
                             <Group
                                 justify="space-between"
                                 py="sm"
-                                style={{ borderBottom: '1px solid #f1f3f5', cursor: 'pointer' }}
+                                style={{ borderBottom: '1px solid #F2F4F6', cursor: 'pointer' }}
                                 onClick={() => setFacilitySelectOpened(!facilitySelectOpened)}
                             >
-                                <Text size="sm" fw={500}>시설</Text>
+                                <Text size="sm" fw={600} c="#191F28">시설</Text>
                                 <Group gap={4}>
-                                    <Text size="sm" c={inquiryForm.facilityName ? 'dark' : 'dimmed'}>
+                                    <Text size="sm" c={inquiryForm.facilityName ? '#191F28' : '#8B95A1'} fw={500}>
                                         {inquiryForm.facilityName || '선택안함'}
                                     </Text>
-                                    <ChevronDown size={14} />
+                                    <ChevronDown size={14} color="#8B95A1" />
                                 </Group>
                             </Group>
                             {facilitySelectOpened && (
@@ -512,8 +703,9 @@ export default function InquiriesClient({ initialInquiries, facilities = [] }: I
                                         <Box
                                             p="sm"
                                             style={{
-                                                backgroundColor: !inquiryForm.facilityId ? '#e7f5ff' : 'transparent',
+                                                backgroundColor: !inquiryForm.facilityId ? '#EFF6FF' : 'transparent',
                                                 cursor: 'pointer',
+                                                borderRadius: 8,
                                             }}
                                             onClick={() => {
                                                 setInquiryForm({ ...inquiryForm, facilityId: '', facilityName: '' });
@@ -521,8 +713,10 @@ export default function InquiriesClient({ initialInquiries, facilities = [] }: I
                                             }}
                                         >
                                             <Group justify="space-between">
-                                                <Text size="sm" fw={!inquiryForm.facilityId ? 600 : 500} c="dimmed">선택안함 (일반 문의)</Text>
-                                                {!inquiryForm.facilityId && <Check size={16} color="#1D0098" />}
+                                                <Text size="sm" fw={!inquiryForm.facilityId ? 700 : 500} c={!inquiryForm.facilityId ? '#2563EB' : '#6B7684'}>
+                                                    선택안함 (일반 문의)
+                                                </Text>
+                                                {!inquiryForm.facilityId && <Check size={16} color="#2563EB" />}
                                             </Group>
                                         </Box>
                                         {facilities.map(f => (
@@ -530,8 +724,9 @@ export default function InquiriesClient({ initialInquiries, facilities = [] }: I
                                                 key={f.id}
                                                 p="sm"
                                                 style={{
-                                                    backgroundColor: inquiryForm.facilityId === f.id ? '#e7f5ff' : 'transparent',
+                                                    backgroundColor: inquiryForm.facilityId === f.id ? '#EFF6FF' : 'transparent',
                                                     cursor: 'pointer',
+                                                    borderRadius: 8,
                                                 }}
                                                 onClick={() => {
                                                     setInquiryForm({ ...inquiryForm, facilityId: f.id, facilityName: f.name });
@@ -539,8 +734,10 @@ export default function InquiriesClient({ initialInquiries, facilities = [] }: I
                                                 }}
                                             >
                                                 <Group justify="space-between">
-                                                    <Text size="sm" fw={inquiryForm.facilityId === f.id ? 600 : 500}>{f.name}</Text>
-                                                    {inquiryForm.facilityId === f.id && <Check size={16} color="#1D0098" />}
+                                                    <Text size="sm" fw={inquiryForm.facilityId === f.id ? 700 : 500} c={inquiryForm.facilityId === f.id ? '#2563EB' : '#191F28'}>
+                                                        {f.name}
+                                                    </Text>
+                                                    {inquiryForm.facilityId === f.id && <Check size={16} color="#2563EB" />}
                                                 </Group>
                                             </Box>
                                         ))}
@@ -551,13 +748,13 @@ export default function InquiriesClient({ initialInquiries, facilities = [] }: I
 
                         {/* 제목 */}
                         <Box>
-                            <Text size="sm" fw={500} mb={4}>제목 <Text span c="red">*</Text></Text>
+                            <Text size="sm" fw={600} c="#191F28" mb={4}>제목 <Text span c="red">*</Text></Text>
                             <TextInput
                                 placeholder="예) 봉안당 가격이 궁금합니다"
                                 value={inquiryForm.title}
                                 onChange={(e) => setInquiryForm({ ...inquiryForm, title: e.currentTarget.value })}
                                 variant="unstyled"
-                                styles={{ input: { borderBottom: '1px solid #f1f3f5', borderRadius: 0 } }}
+                                styles={{ input: { borderBottom: '1px solid #F2F4F6', borderRadius: 0 } }}
                             />
                         </Box>
 
@@ -573,33 +770,34 @@ export default function InquiriesClient({ initialInquiries, facilities = [] }: I
                         </Box>
 
                         {/* 비공개 토글 */}
-                        <Box py="md" style={{ borderTop: '1px solid #f1f3f5' }}>
+                        <Box py="md" style={{ borderTop: '1px solid #F2F4F6' }}>
                             <Group justify="space-between">
                                 <Group gap="xs">
                                     <Box
                                         p={6}
                                         style={{
                                             borderRadius: 8,
-                                            backgroundColor: inquiryForm.isPrivate ? '#e7f5ff' : '#f1f3f5',
+                                            backgroundColor: inquiryForm.isPrivate ? '#EFF6FF' : '#F2F4F6',
                                         }}
                                     >
-                                        {inquiryForm.isPrivate ? <Lock size={16} color="#1D0098" /> : <Unlock size={16} color="#adb5bd" />}
+                                        {inquiryForm.isPrivate ? <Lock size={16} color="#2563EB" /> : <Unlock size={16} color="#8B95A1" />}
                                     </Box>
-                                    <Text size="sm" fw={500}>비공개</Text>
+                                    <Text size="sm" fw={600} c="#191F28">비공개</Text>
                                 </Group>
                                 <Switch
                                     checked={inquiryForm.isPrivate}
                                     onChange={(e) => setInquiryForm({ ...inquiryForm, isPrivate: e.currentTarget.checked })}
-                                    color="brand"
+                                    color="blue"
                                 />
                             </Group>
                         </Box>
 
                         {/* 연락처 */}
-                        <Box py="md" style={{ borderTop: '1px solid #f1f3f5' }}>
-                            <Text size="sm" fw={500} mb={8}>연락처 (비밀번호로 사용) <Text span c="red">*</Text></Text>
+                        <Box py="md" style={{ borderTop: '1px solid #F2F4F6' }}>
+                            <Text size="sm" fw={600} c="#191F28" mb={8}>연락처 (비밀번호로 사용) <Text span c="red">*</Text></Text>
                             <TextInput
                                 placeholder="010-0000-0000"
+                                inputMode="numeric"
                                 value={inquiryForm.phone}
                                 onChange={(e) => setInquiryForm({ ...inquiryForm, phone: formatPhoneNumber(e.currentTarget.value) })}
                                 variant="filled"
@@ -609,24 +807,24 @@ export default function InquiriesClient({ initialInquiries, facilities = [] }: I
                         </Box>
 
                         {/* 개인정보 수집 및 이용 동의 */}
-                        <Box py="md" style={{ borderTop: '1px solid #f1f3f5' }}>
+                        <Box py="md" style={{ borderTop: '1px solid #F2F4F6' }}>
                             <Checkbox
                                 checked={inquiryForm.privacyAgreed}
                                 onChange={(e) => setInquiryForm({ ...inquiryForm, privacyAgreed: e.currentTarget.checked })}
                                 label={
-                                    <Text size="xs" c="dark.7" fw={500}>
-                                        <Text span c="brand" fw={700}>[필수] </Text>
+                                    <Text size="xs" c="#191F28" fw={600}>
+                                        <Text span fw={700} style={{ color: '#2563EB' }}>[필수] </Text>
                                         개인정보 수집 및 이용 동의
                                     </Text>
                                 }
-                                color="brand"
+                                color="blue"
                                 size="xs"
                             />
-                            <Box mt={8} p={10} bg="gray.0" style={{ borderRadius: 8 }}>
-                                <Text size="11px" c="dimmed" lh={1.5}>
-                                    • 수집 항목: 연락처, 문의 내용<br />
-                                    • 이용 목적: 문의 접수 및 답변 안내, 본인 확인(비밀번호 대용)<br />
-                                    • 보유 및 이용 기간: 문의 처리 완료 후 1년 또는 파기 요청 시까지
+                            <Box mt={8} p={10} bg="#F8FAFC" style={{ borderRadius: 8 }}>
+                                <Text size="11px" c="#6B7684" lh={1.5}>
+                                    - 수집 항목: 연락처, 문의 내용<br />
+                                    - 이용 목적: 문의 접수 및 답변 안내, 본인 확인(비밀번호 대용)<br />
+                                    - 보유 및 이용 기간: 문의 처리 완료 후 1년 또는 파기 요청 시까지
                                 </Text>
                             </Box>
                         </Box>

@@ -9,6 +9,8 @@ import { getFacilityImageUrl } from '@/lib/supabaseImage';
 interface FacilityCardProps {
     facility: Facility;
     onClick?: () => void;
+    isCompared?: boolean;
+    onToggleCompare?: (facility: Facility, e: React.MouseEvent) => void;
 }
 
 // 아이콘 매핑 (썸네일 없을 때 대체용)
@@ -21,11 +23,11 @@ const CATEGORY_CONFIG: Record<FacilityCategory, { icon: any; color: string; bg: 
     OTHER: { icon: MapPin, color: 'gray', bg: '#f1f3f5' },
 };
 
-function FacilityCardComponent({ facility, onClick }: FacilityCardProps) {
+function FacilityCardComponent({ facility, onClick, isCompared = false, onToggleCompare }: FacilityCardProps) {
     const config = CATEGORY_CONFIG[facility.category] || CATEGORY_CONFIG.OTHER;
     const Icon = config.icon;
 
-    // 🚀 가격 연산 메모이제이션 (카드가 리렌더링될 때 중복 계산 방지)
+    // 가격 연산 메모이제이션 (카드가 리렌더링될 때 중복 계산 방지)
     const { displayPrice, priceLabel, showTilde } = useMemo(() => {
         let displayPrice = '가격문의';
         let priceLabel = '';
@@ -110,7 +112,7 @@ function FacilityCardComponent({ facility, onClick }: FacilityCardProps) {
         return { displayPrice, priceLabel, showTilde };
     }, [facility.priceInfo, facility.pricing, facility.representativePrice, facility.priceRange, facility.category]);
 
-    // 🚀 썸네일 URL 메모이제이션
+    // 썸네일 URL 메모이제이션
     const validThumbnailUrl = useMemo(() => {
         const rawImg = facility.thumbnail || facility.imageUrl || (Array.isArray(facility.images) ? facility.images[0] : facility.images) || facility.imageGallery?.[0];
         return getFacilityImageUrl(rawImg);
@@ -197,7 +199,7 @@ function FacilityCardComponent({ facility, onClick }: FacilityCardProps) {
                 {/* 2. 우측 정보 영역 (호갱노노 스타일 3단 위계) */}
                 <Box style={{ flex: 1, minWidth: 0, display: 'flex', flexDirection: 'column', justifyContent: 'space-between', paddingTop: 2, paddingBottom: 2 }}>
                     <div>
-                        {/* 상단: 카테고리 태그 + 관심/리뷰 */}
+                        {/* 상단: 카테고리 태그 + 관심/비교 */}
                         <Group justify="space-between" align="center" wrap="nowrap" mb={4}>
                             <span
                                 style={{
@@ -215,14 +217,38 @@ function FacilityCardComponent({ facility, onClick }: FacilityCardProps) {
                                 {FACILITY_CATEGORY_LABELS[facility.category]}
                             </span>
 
-                            {(facility.favoriteCount ?? 0) > 0 && (
-                                <Group gap={3} align="center">
-                                    <Star size={12} color="#F59E0B" fill="#F59E0B" />
-                                    <Text size="xs" c="#6B7684" fw={700} style={{ fontSize: '11.5px' }}>
-                                        {facility.favoriteCount}
-                                    </Text>
-                                </Group>
-                            )}
+                            <Group gap={6} align="center" wrap="nowrap">
+                                {(facility.favoriteCount ?? 0) > 0 && (
+                                    <Group gap={3} align="center">
+                                        <Star size={12} color="#F59E0B" fill="#F59E0B" />
+                                        <Text size="xs" c="#6B7684" fw={700} style={{ fontSize: '11.5px' }}>
+                                            {facility.favoriteCount}
+                                        </Text>
+                                    </Group>
+                                )}
+                                {onToggleCompare && (
+                                    <button
+                                        type="button"
+                                        onClick={(e) => {
+                                            e.stopPropagation();
+                                            onToggleCompare(facility, e);
+                                        }}
+                                        style={{
+                                            padding: '2px 7px',
+                                            borderRadius: 5,
+                                            fontSize: 10.5,
+                                            fontWeight: 700,
+                                            border: isCompared ? '1px solid #2563EB' : '1px solid #E2E8F0',
+                                            backgroundColor: isCompared ? '#EFF6FF' : '#FFFFFF',
+                                            color: isCompared ? '#2563EB' : '#64748B',
+                                            cursor: 'pointer',
+                                            lineHeight: 1.3,
+                                        }}
+                                    >
+                                        {isCompared ? '비교중' : '+ 비교'}
+                                    </button>
+                                )}
+                            </Group>
                         </Group>
 
                         {/* 중단: 시설명 & 지역 주소 */}

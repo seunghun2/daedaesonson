@@ -2,7 +2,7 @@
 
 import { Drawer, Box, Text, Group, Button, Stack, TextInput, Textarea, Switch, Paper, Modal, ActionIcon, PinInput, ScrollArea } from '@mantine/core';
 import { useDisclosure, useMediaQuery } from '@mantine/hooks';
-import { ChevronRight, PenLine, Lock, Unlock, X, MessageCircle } from 'lucide-react';
+import { ChevronRight, PenLine, Lock, Unlock, X, MessageCircle, Info } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { Facility } from '@/types';
@@ -52,6 +52,8 @@ export default function InquiryPanel({ facility, isOpen, onClose, allFacilities 
     const [phone, setPhone] = useState('');
     const [isPrivate, setIsPrivate] = useState(true);
     const [isSubmitting, setIsSubmitting] = useState(false);
+    const [writeError, setWriteError] = useState('');
+    const [statusMessage, setStatusMessage] = useState('');
 
     // 비밀번호 확인 모달
     const [pinOpened, { open: openPin, close: closePin }] = useDisclosure(false);
@@ -89,17 +91,18 @@ export default function InquiryPanel({ facility, isOpen, onClose, allFacilities 
     // 문의 등록
     const handleSubmit = async () => {
         if (!title.trim() || !content.trim() || !phone.trim()) {
-            alert('모든 항목을 입력해주세요.');
+            setWriteError('모든 항목을 입력해주세요.');
             return;
         }
 
         // 전화번호 형식 검증
         const phoneDigits = phone.replace(/\D/g, '');
         if (phoneDigits.length < 10) {
-            alert('올바른 전화번호를 입력해주세요.');
+            setWriteError('올바른 전화번호를 입력해주세요.');
             return;
         }
 
+        setWriteError('');
         setIsSubmitting(true);
         try {
             const res = await fetch(`/api/facilities/${facility.id}/inquiries`, {
@@ -120,15 +123,17 @@ export default function InquiryPanel({ facility, isOpen, onClose, allFacilities 
                 setContent('');
                 setPhone('');
                 setIsPrivate(true);
+                setWriteError('');
                 closeWrite();
-                alert('문의가 등록되었습니다!');
+                setStatusMessage('문의가 등록되었습니다.');
+                setTimeout(() => setStatusMessage(''), 3000);
             } else {
                 const err = await res.json();
-                alert(err.error || '등록 실패');
+                setWriteError(err.error || '등록에 실패했습니다.');
             }
         } catch (e) {
             console.error(e);
-            alert('등록 중 오류가 발생했습니다.');
+            setWriteError('등록 중 오류가 발생했습니다.');
         } finally {
             setIsSubmitting(false);
         }
@@ -238,7 +243,7 @@ export default function InquiryPanel({ facility, isOpen, onClose, allFacilities 
                     {/* Header */}
                     <Box p="md" style={{ borderBottom: '1px solid #f1f3f5' }}>
                         <Group justify="space-between">
-                            <Text fw={700} size="lg">문의 ({inquiries.length})</Text>
+                            <Text fw={700} size="lg" c="#191F28">문의 ({inquiries.length})</Text>
                             <Group gap={8}>
                                 <Button
                                     size="xs"
@@ -263,11 +268,26 @@ export default function InquiryPanel({ facility, isOpen, onClose, allFacilities 
                     <ScrollArea style={{ flex: 1, WebkitOverflowScrolling: 'touch', overscrollBehavior: 'contain' }} bg="gray.0" type="scroll">
                         <Stack gap="md" p="md">
                             {/* 안내 문구 */}
-                            <Paper p="sm" radius="md" bg="gray.0" style={{ border: '1px solid #f1f3f5' }}>
-                                <Text size="xs" c="dimmed">
-                                    💡 시설에 대해 궁금한 점을 문의하세요. 비공개 설정 시 제목만 공개됩니다.
-                                </Text>
+                            <Paper p="sm" radius="md" bg="#EFF6FF" style={{ border: '1px solid #DBEAFE' }}>
+                                <Group gap={6} wrap="nowrap" align="center">
+                                    <Info size={14} color="#2563EB" style={{ flexShrink: 0 }} />
+                                    <Text size="xs" c="#1E40AF" fw={500}>
+                                        시설에 대해 궁금한 점을 문의하세요. 비공개 설정 시 제목만 공개됩니다.
+                                    </Text>
+                                </Group>
                             </Paper>
+
+                            {statusMessage && (
+                                <Paper p="xs" radius="md" bg="#F0FDF4" style={{ border: '1px solid #DCFCE7' }}>
+                                    <Text size="xs" c="#16A34A" fw={600} ta="center">{statusMessage}</Text>
+                                </Paper>
+                            )}
+
+                            {writeError && (
+                                <Paper p="xs" radius="md" bg="#FEF2F2" style={{ border: '1px solid #FECACA' }}>
+                                    <Text size="xs" c="#DC2626" fw={500} ta="center">{writeError}</Text>
+                                </Paper>
+                            )}
 
                             {/* 문의 목록 */}
                             {isLoading ? (
@@ -308,7 +328,7 @@ export default function InquiryPanel({ facility, isOpen, onClose, allFacilities 
                                             {inquiry.isPrivate && (
                                                 <Lock size={14} color={isUnlocked ? '#40c057' : '#adb5bd'} />
                                             )}
-                                            <Text fw={500} c="dark" style={{ fontSize: 13 }}>{inquiry.title}</Text>
+                                            <Text fw={500} c="#191F28" style={{ fontSize: 13 }}>{inquiry.title}</Text>
                                             {inquiry.replies && inquiry.replies.length > 0 && (
                                                 <Box px={6} py={2} bg="brand.0" style={{ borderRadius: 4 }}>
                                                     <Text size="xs" c="brand" fw={500}>답변완료</Text>
@@ -359,7 +379,7 @@ export default function InquiryPanel({ facility, isOpen, onClose, allFacilities 
                     </ScrollArea>
                 </Stack>
             </Drawer >
-            {/* 비밀번호 입력 - 예쁜 팝업 */}
+            {/* 비밀번호 입력 - 팝업 */}
             <Modal
                 opened={pinOpened}
                 onClose={() => { closePin(); document.body.style.overflow = ''; document.body.style.position = ''; }}
@@ -378,22 +398,24 @@ export default function InquiryPanel({ facility, isOpen, onClose, allFacilities 
                     {/* 자물쇠 아이콘 */}
                     <Box
                         p="md"
-                        bg="gray.1"
+                        bg="#EFF6FF"
                         style={{ borderRadius: '50%' }}
                     >
-                        <Lock size={24} color="#868e96" />
+                        <Lock size={24} color="#2563EB" />
                     </Box>
 
-                    <Text size="md" fw={600}>비공개 문의입니다</Text>
+                    <Text size="md" fw={700} c="#191F28">비공개 문의입니다</Text>
                     <Text size="xs" c="dimmed" ta="center" lh={1.4}>
                         작성 시 입력한 연락처 뒷자리 4자리를 입력해주세요.
                     </Text>
 
                     <TextInput
+                        inputMode="numeric"
                         value={pinValue}
                         onChange={(e) => {
                             const val = e.currentTarget.value.replace(/\D/g, '').slice(0, 4);
                             setPinValue(val);
+                            if (pinError) setPinError('');
                         }}
                         placeholder="0 0 0 0"
                         maxLength={4}
@@ -405,9 +427,10 @@ export default function InquiryPanel({ facility, isOpen, onClose, allFacilities 
                                 textAlign: 'center',
                                 letterSpacing: '12px',
                                 fontSize: '20px',
-                                fontWeight: 500,
-                                backgroundColor: '#f8f9fa',
-                                border: '1px solid #e9ecef',
+                                fontWeight: 600,
+                                color: '#191F28',
+                                backgroundColor: '#F8FAFC',
+                                border: '1px solid #E2E8F0',
                                 '&::placeholder': {
                                     letterSpacing: '12px'
                                 }
@@ -416,7 +439,7 @@ export default function InquiryPanel({ facility, isOpen, onClose, allFacilities 
                         error={!!pinError}
                     />
 
-                    {pinError && <Text size="xs" c="red">{pinError}</Text>}
+                    {pinError && <Text size="xs" c="red" fw={500}>{pinError}</Text>}
 
                     <Button
                         fullWidth
@@ -425,13 +448,12 @@ export default function InquiryPanel({ facility, isOpen, onClose, allFacilities 
                         color="brand"
                         onClick={handlePinSubmit}
                         disabled={pinValue.length !== 4}
+                        style={{ backgroundColor: pinValue.length === 4 ? '#2563EB' : undefined }}
                     >
                         확인하기
                     </Button>
                 </Stack>
             </Modal>
-
-
         </>
     );
 }

@@ -46,22 +46,21 @@ export const metadata: Metadata = {
 
 const theme = createTheme({
   colors: {
-    // 사용자 요청 Deep Blue/Indigo (758만원 텍스트 컬러 기반)
     brand: [
-      '#eef2ff', // 0: 아주 연한 배경
-      '#dbe4ff', // 1
-      '#bac8ff', // 2
-      '#91a7ff', // 3
-      '#748aff', // 4
-      '#5c7cfa', // 5: 밝은 포인트 (헤더 등)
-      '#4263eb', // 6: 기본 버튼
-      '#364fc7', // 7: 강조
-      '#302E92', // 8: 텍스트/가장 진한 포인트 (이미지 컬러)
-      '#1e1b69'  // 9: 아주 어두운 배경
+      '#EFF6FF',
+      '#DBEAFE',
+      '#BFDBFE',
+      '#93C5FD',
+      '#60A5FA',
+      '#3B82F6',
+      '#2563EB',
+      '#1D4ED8',
+      '#1E40AF',
+      '#1E3A8A'
     ],
   },
   primaryColor: 'brand',
-  primaryShade: 8, // 메인 컬러를 8번(진한 남색)으로 설정하여 무게감 줌
+  primaryShade: 6,
   fontFamily: '-apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Pretendard", "Segoe UI", Roboto, Helvetica, Arial, sans-serif',
 });
 

@@ -1,18 +1,25 @@
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
+import { ChevronLeft, MapPin } from 'lucide-react';
 import { loadFacilitiesJson } from '@/lib/facilityDataLoader';
 
 // 지역-카테고리 조합 정의
 const REGIONS = ['서울', '경기', '인천', '부산', '대구', '광주', '대전', '울산', '세종', '강원', '충북', '충남', '전북', '전남', '경북', '경남', '제주'];
 const CATEGORIES = [
-    { slug: '봉안당', code: 'CHARNEL_HOUSE', label: '봉안당' },
-    { slug: '수목장', code: 'NATURAL_BURIAL', label: '수목장' },
-    { slug: '공원묘지', code: 'FAMILY_GRAVE', label: '공원묘지' },
+    { slug: '봉안당', code: 'CHARNEL_HOUSE', label: '봉안당', bg: '#EFF6FF', text: '#1D4ED8' },
+    { slug: '수목장', code: 'NATURAL_BURIAL', label: '수목장', bg: '#ECFDF5', text: '#047857' },
+    { slug: '공원묘지', code: 'FAMILY_GRAVE', label: '공원묘지', bg: '#F5F3FF', text: '#6D28D9' },
 ];
 
 interface PageProps {
     params: Promise<{ slug: string }>;
+}
+
+function formatManwon(val: number | undefined): string {
+    if (!val || val <= 0) return '가격문의';
+    const manwon = val >= 10000 ? Math.round(val / 10000) : Math.round(val);
+    return `${manwon.toLocaleString()}만원`;
 }
 
 // 동적 메타데이터
@@ -105,70 +112,159 @@ export default async function RegionPage({ params }: PageProps) {
     });
 
     return (
-        <div style={{ padding: '20px', maxWidth: '1200px', margin: '0 auto' }}>
-            <header style={{ marginBottom: '30px' }}>
-                <Link href="/" style={{ color: '#1D0098', textDecoration: 'none' }}>
-                    ← 지도로 돌아가기
-                </Link>
-                <h1 style={{ margin: '20px 0 10px', fontSize: '28px', color: '#1a1a1a' }}>
-                    {region} {categoryInfo.label} 가격비교
-                </h1>
-                <p style={{ color: '#666', fontSize: '16px' }}>
-                    총 {facilities.length}개 시설
-                </p>
-            </header>
-
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: '20px' }}>
-                {facilities.map((f: any) => (
+        <div style={{ minHeight: '100dvh', backgroundColor: '#F2F4F6' }}>
+            {/* 클린 상단 네비게이션 바 */}
+            <nav
+                style={{
+                    position: 'sticky',
+                    top: 0,
+                    zIndex: 100,
+                    backgroundColor: '#FFFFFF',
+                    borderBottom: '1px solid #E5E8EB',
+                    padding: '12px 20px',
+                }}
+            >
+                <div style={{ maxWidth: '1080px', margin: '0 auto', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                     <Link
-                        key={f.id}
-                        href={`/facility/${f.id}`}
+                        href="/"
                         style={{
-                            display: 'block',
-                            padding: '20px',
-                            backgroundColor: '#fff',
-                            borderRadius: '12px',
-                            boxShadow: '0 2px 8px rgba(0,0,0,0.08)',
+                            display: 'inline-flex',
+                            alignItems: 'center',
+                            gap: '4px',
+                            color: '#191F28',
                             textDecoration: 'none',
-                            color: 'inherit',
-                            transition: 'transform 0.2s, box-shadow 0.2s',
+                            fontSize: '14px',
+                            fontWeight: 600,
                         }}
                     >
-                        <h3 style={{ margin: '0 0 8px', fontSize: '18px', color: '#1a1a1a' }}>
-                            {f.name}
-                        </h3>
-                        <p style={{ margin: '0 0 12px', fontSize: '14px', color: '#666' }}>
-                            {f.address}
-                        </p>
-                        <div style={{
-                            fontSize: '20px',
-                            fontWeight: 'bold',
-                            color: '#1D0098'
-                        }}>
-                            {Math.round(f.priceRange?.min / 10000).toLocaleString()}만원 ~
-                        </div>
+                        <ChevronLeft size={20} color="#191F28" />
+                        <span>지도로 돌아가기</span>
                     </Link>
-                ))}
-            </div>
+                    <span
+                        style={{
+                            fontSize: '12px',
+                            fontWeight: 700,
+                            color: categoryInfo.text,
+                            backgroundColor: categoryInfo.bg,
+                            padding: '4px 10px',
+                            borderRadius: '999px',
+                        }}
+                    >
+                        {region} · {categoryInfo.label}
+                    </span>
+                </div>
+            </nav>
 
-            {facilities.length === 0 && (
-                <p style={{ textAlign: 'center', color: '#999', padding: '40px' }}>
-                    해당 지역에 {categoryInfo.label} 시설이 없습니다.
-                </p>
-            )}
+            <main style={{ padding: '28px 20px 60px', maxWidth: '1080px', margin: '0 auto' }}>
+                <header style={{ marginBottom: '24px' }}>
+                    <h1 style={{ margin: '0 0 8px', fontSize: '26px', fontWeight: 800, color: '#191F28', letterSpacing: '-0.5px' }}>
+                        {region} {categoryInfo.label} 가격비교
+                    </h1>
+                    <p style={{ margin: 0, color: '#6B7684', fontSize: '15px', fontWeight: 500 }}>
+                        총 <strong style={{ color: '#2563EB', fontWeight: 700 }}>{facilities.length}개</strong> 시설의 가격 정보를 비교해보세요
+                    </p>
+                </header>
 
-            {/* SEO용 텍스트 */}
-            <section style={{ marginTop: '60px', padding: '30px', backgroundColor: '#f8f9fa', borderRadius: '12px' }}>
-                <h2 style={{ fontSize: '20px', marginBottom: '15px' }}>
-                    {region} {categoryInfo.label} 안내
-                </h2>
-                <p style={{ color: '#555', lineHeight: '1.8' }}>
-                    {region} 지역의 {categoryInfo.label} 시설을 찾고 계신가요?
-                    대대손손에서는 {region} 지역 {facilities.length}개 {categoryInfo.label} 시설의
-                    가격 정보를 투명하게 비교해드립니다.
-                    각 시설의 상세 가격표, 위치, 연락처 정보를 확인하실 수 있습니다.
-                </p>
-            </section>
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: '16px' }}>
+                    {facilities.map((f: any) => (
+                        <Link
+                            key={f.id}
+                            href={`/facility/${f.id}`}
+                            style={{
+                                display: 'flex',
+                                flexDirection: 'column',
+                                justifyContent: 'space-between',
+                                padding: '20px',
+                                backgroundColor: '#FFFFFF',
+                                borderRadius: '16px',
+                                border: '1px solid rgba(15, 23, 42, 0.06)',
+                                textDecoration: 'none',
+                                color: 'inherit',
+                                transition: 'transform 0.2s, box-shadow 0.2s',
+                            }}
+                        >
+                            <div>
+                                <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '10px' }}>
+                                    <span
+                                        style={{
+                                            fontSize: '11px',
+                                            fontWeight: 700,
+                                            padding: '3px 8px',
+                                            borderRadius: '6px',
+                                            backgroundColor: categoryInfo.bg,
+                                            color: categoryInfo.text,
+                                        }}
+                                    >
+                                        {categoryInfo.label}
+                                    </span>
+                                    <span
+                                        style={{
+                                            fontSize: '11px',
+                                            fontWeight: 600,
+                                            padding: '3px 8px',
+                                            borderRadius: '6px',
+                                            backgroundColor: f.isPublic ? '#EFF6FF' : '#F2F4F6',
+                                            color: f.isPublic ? '#2563EB' : '#4E5968',
+                                        }}
+                                    >
+                                        {f.isPublic ? '공설' : '사설'}
+                                    </span>
+                                </div>
+
+                                <h3 style={{ margin: '0 0 6px', fontSize: '17px', fontWeight: 700, color: '#191F28', letterSpacing: '-0.3px' }}>
+                                    {f.name}
+                                </h3>
+                                <p style={{ margin: '0 0 16px', fontSize: '13px', color: '#6B7684', display: 'flex', alignItems: 'center', gap: '4px' }}>
+                                    <MapPin size={13} color="#8B95A1" style={{ flexShrink: 0 }} />
+                                    <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{f.address}</span>
+                                </p>
+                            </div>
+
+                            <div
+                                style={{
+                                    display: 'flex',
+                                    alignItems: 'baseline',
+                                    justifyContent: 'space-between',
+                                    paddingTop: '12px',
+                                    borderTop: '1px solid #F2F4F6',
+                                }}
+                            >
+                                <span style={{ fontSize: '12px', fontWeight: 600, color: '#8B95A1' }}>대표가격</span>
+                                <span style={{ fontSize: '19px', fontWeight: 800, color: '#2563EB', letterSpacing: '-0.4px' }}>
+                                    {formatManwon(f.priceRange?.min)}~
+                                </span>
+                            </div>
+                        </Link>
+                    ))}
+                </div>
+
+                {facilities.length === 0 && (
+                    <div style={{ textAlign: 'center', color: '#8B95A1', padding: '60px 20px', backgroundColor: '#FFFFFF', borderRadius: '16px' }}>
+                        해당 지역에 {categoryInfo.label} 시설이 없습니다.
+                    </div>
+                )}
+
+                {/* SEO용 텍스트 */}
+                <section
+                    style={{
+                        marginTop: '48px',
+                        padding: '28px',
+                        backgroundColor: '#FFFFFF',
+                        borderRadius: '16px',
+                        border: '1px solid rgba(15, 23, 42, 0.06)',
+                    }}
+                >
+                    <h2 style={{ fontSize: '18px', fontWeight: 700, color: '#191F28', margin: '0 0 12px' }}>
+                        {region} {categoryInfo.label} 안내
+                    </h2>
+                    <p style={{ color: '#4E5968', fontSize: '14px', lineHeight: '1.75', margin: 0 }}>
+                        {region} 지역의 {categoryInfo.label} 시설을 찾고 계신가요?
+                        대대손손에서는 {region} 지역 {facilities.length}개 {categoryInfo.label} 시설의
+                        가격 정보를 투명하게 비교해드립니다.
+                        각 시설의 상세 가격표, 위치, 연락처 정보를 확인하실 수 있습니다.
+                    </p>
+                </section>
+            </main>
         </div>
     );
 }

@@ -144,16 +144,17 @@ export default function CorrectionRequestModal({ facilityId, facilityName, isOpe
                 {/* 헤더 — 등록하기 버튼 포함 */}
                 <Box p="md" style={{ borderBottom: '1px solid #f1f3f5', flexShrink: 0 }}>
                     <Group justify="space-between" align="center">
-                        <Text fw={700} size="lg">정보 수정 요청</Text>
+                        <Text fw={700} size="lg" c="#191F28">정보 수정 요청</Text>
                         <Group gap={8}>
                             <Button
                                 size="xs"
                                 radius="md"
                                 fw={600}
+                                color="brand"
                                 onClick={handleSubmit}
                                 loading={loading}
                                 disabled={!isFormValid}
-                                style={{ backgroundColor: isFormValid ? '#1D0098' : undefined }}
+                                style={{ backgroundColor: isFormValid ? '#2563EB' : undefined }}
                             >
                                 등록하기
                             </Button>

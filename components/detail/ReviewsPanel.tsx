@@ -273,7 +273,7 @@ export default function ReviewsPanel({ facility, isOpen, onClose, onOpenWriteRev
                                                                 </ActionIcon>
                                                                 <Text size="xs" c="dimmed">{replyPhotos.length}/3</Text>
                                                             </Group>
-                                                            <Button size="xs" variant="filled" color="#302E92" radius="xl" px="lg"
+                                                            <Button size="xs" variant="filled" color="#2563EB" radius="xl" px="lg"
                                                                 onClick={() => handleSubmitReply(review.id)}
                                                                 disabled={!replyContent.trim() || !replyNickname.trim() || !replyPassword.trim()}>등록</Button>
                                                         </Group>
@@ -309,8 +309,9 @@ export default function ReviewsPanel({ facility, isOpen, onClose, onOpenWriteRev
                                 fullWidth
                                 size="md"
                                 radius="xl"
+                                color="brand"
                                 onClick={onOpenWriteReview}
-                                style={{ backgroundColor: '#1D0098', color: 'white', fontWeight: 600 }}
+                                style={{ backgroundColor: '#2563EB', color: 'white', fontWeight: 600 }}
                             >
                                 이야기 작성하기
                             </Button>

@@ -1,9 +1,9 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { Box, Text, Group, Stack, ActionIcon } from '@mantine/core';
 import { useRouter } from 'next/navigation';
-import { ChevronLeft, Star, LogOut, Trash2, ChevronRight, MapPin, MessageSquare } from 'lucide-react';
+import { ChevronLeft, Star, LogOut, Trash2, ChevronRight, MapPin, MessageSquare, Check } from 'lucide-react';
 import BottomNav from '@/components/common/BottomNav';
 import { useAuth } from '@/components/auth/AuthProvider';
 import { useMediaQuery } from '@mantine/hooks';
@@ -19,8 +19,49 @@ export default function MyInfoPage() {
     const [myReviews, setMyReviews] = useState<any[]>([]);
     const [deleteReviewId, setDeleteReviewId] = useState<string | null>(null);
     const [deletingReview, setDeletingReview] = useState(false);
+    const [allFacilities, setAllFacilities] = useState<any[]>([]);
     const [facilityDetails, setFacilityDetails] = useState<any[]>([]);
     const [loadingFavorites, setLoadingFavorites] = useState(false);
+
+    // 전체 시설 목록 로드 (리뷰 시설명 매핑 및 관심 시설 표시용)
+    useEffect(() => {
+        let loaded = false;
+        try {
+            const cached = typeof window !== 'undefined' ? sessionStorage.getItem('facilitiesCache') : null;
+            if (cached) {
+                const parsed = JSON.parse(cached);
+                const list = parsed.facilities || parsed || [];
+                if (Array.isArray(list) && list.length > 0) {
+                    setAllFacilities(list);
+                    loaded = true;
+                }
+            }
+        } catch { }
+
+        if (!loaded) {
+            fetch('/api/facilities')
+                .then(r => r.json())
+                .then(data => {
+                    const list = data.facilities || data || [];
+                    if (Array.isArray(list)) {
+                        setAllFacilities(list);
+                        try { sessionStorage.setItem('facilitiesCache', JSON.stringify(list)); } catch { }
+                    }
+                })
+                .catch(err => console.error('시설 목록 로드 실패:', err));
+        }
+    }, []);
+
+    // 시설 ID -> 시설명 매핑 테이블
+    const facilityNameMap = useMemo(() => {
+        const map: Record<string, string> = {};
+        allFacilities.forEach((f: any) => {
+            if (f && f.id) {
+                map[String(f.id)] = f.name || String(f.id);
+            }
+        });
+        return map;
+    }, [allFacilities]);
 
     useEffect(() => {
         const loadMyReviews = async () => {
@@ -55,7 +96,6 @@ export default function MyInfoPage() {
             }
         } catch (error) {
             console.error('리뷰 삭제 실패:', error);
-            alert('리뷰 삭제에 실패했습니다.');
         }
         setDeletingReview(false);
         setDeleteReviewId(null);
@@ -66,38 +106,42 @@ export default function MyInfoPage() {
         if (!loading && !user) router.push('/menu');
     }, [user, loading, router]);
 
-    // 관심 시설 상세 정보 로드
+    // 관심 시설 상세 정보 동기화
     useEffect(() => {
-        if (showFavorites && favorites.length > 0) {
-            // 이미 로드된 시설이 있으면 favorites에 맞춰 즉시 필터링
-            if (facilityDetails.length > 0) {
-                setFacilityDetails(prev => prev.filter(f => favorites.map(String).includes(String(f.id))));
-            } else {
-                setLoadingFavorites(true);
-                // 로컬 facilities.json에서 가져오기
-                fetch('/api/facilities')
-                    .then(r => r.json())
-                    .then(data => {
-                        const facilities = data.facilities || data || [];
-                        const uniqueFavorites = Array.from(new Set(favorites.map(String)));
-                        const matched = uniqueFavorites
-                            .map(fid => facilities.find((f: any) => String(f.id) === String(fid)))
-                            .filter(Boolean);
-                        const seen = new Set();
-                        const deduplicated = matched.filter((f: any) => {
-                            if (seen.has(f.id)) return false;
-                            seen.add(f.id);
-                            return true;
-                        });
-                        setFacilityDetails(deduplicated);
-                    })
-                    .catch((error) => { console.error('관심 시설 로드 실패:', error); })
-                    .finally(() => setLoadingFavorites(false));
-            }
-        } else if (showFavorites && favorites.length === 0) {
+        if (!showFavorites) return;
+        if (favorites.length === 0) {
             setFacilityDetails([]);
+            return;
         }
-    }, [showFavorites, favorites]);
+
+        const matchFavorites = (facilitiesList: any[]) => {
+            const uniqueFavorites = Array.from(new Set(favorites.map(String)));
+            const matched = uniqueFavorites
+                .map(fid => facilitiesList.find((f: any) => String(f.id) === String(fid)))
+                .filter(Boolean);
+            const seen = new Set();
+            return matched.filter((f: any) => {
+                if (seen.has(f.id)) return false;
+                seen.add(f.id);
+                return true;
+            });
+        };
+
+        if (allFacilities.length > 0) {
+            setFacilityDetails(matchFavorites(allFacilities));
+        } else {
+            setLoadingFavorites(true);
+            fetch('/api/facilities')
+                .then(r => r.json())
+                .then(data => {
+                    const facilities = data.facilities || data || [];
+                    setAllFacilities(facilities);
+                    setFacilityDetails(matchFavorites(facilities));
+                })
+                .catch((error) => { console.error('관심 시설 로드 실패:', error); })
+                .finally(() => setLoadingFavorites(false));
+        }
+    }, [showFavorites, favorites, allFacilities]);
 
     if (!user) {
         return null;
@@ -126,304 +170,318 @@ export default function MyInfoPage() {
                 body: JSON.stringify({ userId: user.id }),
             });
             if (!res.ok) {
-                alert('회원 탈퇴에 실패했습니다. 다시 시도해주세요.');
                 return;
             }
             await signOut();
             router.push('/');
         } catch {
-            alert('네트워크 오류가 발생했습니다. 다시 시도해주세요.');
+            // ignore network error
         }
     };
 
-    const pageContent = (
-        <Box style={{
-            minHeight: '100dvh',
-            backgroundColor: '#f8f9fa',
-            paddingBottom: isMobile ? 70 : 0,
-            width: isMobile ? '100%' : 400,
-            borderRight: isMobile ? 'none' : '1px solid #e9ecef',
-            position: isMobile ? 'relative' : 'fixed',
-            left: 0,
-            top: 0,
-            height: isMobile ? 'auto' : '100dvh',
-            overflowY: 'auto',
-            zIndex: isMobile ? 'auto' : 1000,
-        }}>
-            {/* 헤더 */}
+    return (
+        <Box style={{ minHeight: '100dvh', backgroundColor: '#F2F4F6' }}>
             <Box
-                px="lg"
-                py="md"
                 style={{
-                    backgroundColor: 'white',
-                    borderBottom: '1px solid #e9ecef',
-                    position: 'sticky',
-                    top: 0,
-                    zIndex: 100,
+                    minHeight: '100dvh',
+                    backgroundColor: '#F2F4F6',
+                    paddingBottom: isMobile ? 'calc(76px + env(safe-area-inset-bottom))' : 40,
+                    width: '100%',
+                    maxWidth: 600,
+                    margin: '0 auto',
+                    position: 'relative',
                 }}
             >
-                <Group gap="sm" align="center">
-                    <ActionIcon
-                        variant="subtle"
-                        color="gray"
-                        size={38}
-                        radius="md"
-                        onClick={() => {
-                            if (showFavorites) {
-                                setShowFavorites(false);
-                            } else {
-                                if (typeof window !== 'undefined' && window.history.length <= 1) {
-                                    router.push('/menu');
+                {/* 헤더 */}
+                <Box
+                    px="lg"
+                    py="md"
+                    style={{
+                        backgroundColor: 'white',
+                        borderBottom: '1px solid #E5E8EB',
+                        position: 'sticky',
+                        top: 0,
+                        zIndex: 100,
+                    }}
+                >
+                    <Group gap="sm" align="center">
+                        <ActionIcon
+                            variant="subtle"
+                            color="gray"
+                            size={38}
+                            radius="md"
+                            onClick={() => {
+                                if (showFavorites) {
+                                    setShowFavorites(false);
                                 } else {
-                                    router.back();
+                                    if (typeof window !== 'undefined' && window.history.length <= 1) {
+                                        router.push('/menu');
+                                    } else {
+                                        router.back();
+                                    }
                                 }
-                            }
-                        }}
-                        aria-label="뒤로가기"
-                    >
-                        <ChevronLeft size={22} color="#495057" />
-                    </ActionIcon>
-                    <Text size="lg" fw={700}>
-                        {showFavorites ? '관심 시설' : '내 정보'}
-                    </Text>
-                </Group>
-            </Box>
-
-            {showFavorites ? (
-                /* 관심 시설 리스트 */
-                <Box p="md">
-                    {loadingFavorites ? (
-                        <Box py={40} style={{ textAlign: 'center' }}>
-                            <Text c="dimmed">불러오는 중...</Text>
-                        </Box>
-                    ) : facilityDetails.length === 0 ? (
-                        <Box py={40} style={{ textAlign: 'center' }}>
-                            <Star size={40} color="#FFD43B" fill="#FFD43B" style={{ margin: '0 auto 12px' }} />
-                            <Text c="dimmed" size="sm">관심 시설이 없습니다</Text>
-                            <Text c="dimmed" size="xs" mt={4}>시설 상세 페이지에서 ★를 눌러 추가하세요</Text>
-                        </Box>
-                    ) : (
-                        <Stack gap="sm">
-                            {facilityDetails.map((fac: any) => (
-                                <Box
-                                    key={fac.id}
-                                    bg="white"
-                                    p="md"
-                                    style={{
-                                        borderRadius: 12,
-                                        cursor: 'pointer',
-                                        transition: 'all 0.2s',
-                                        border: '1px solid #f1f3f5',
-                                    }}
-                                    onClick={() => router.push(`/facility/${fac.id}`)}
-                                >
-                                    <Group justify="space-between" wrap="nowrap" gap="sm">
-                                        <Box style={{ flex: 1, minWidth: 0 }}>
-                                            <Text size="sm" fw={600} truncate>{fac.name}</Text>
-                                            <Group gap={4} mt={4}>
-                                                <MapPin size={12} color="#868e96" />
-                                                <Text size="xs" c="dimmed" truncate>{fac.address}</Text>
-                                            </Group>
-                                            {fac.priceRange?.min > 0 && (
-                                                <Text size="xs" c="brand.7" fw={600} mt={4}>
-                                                    {Math.round(fac.priceRange.min).toLocaleString()}만원~
-                                                </Text>
-                                            )}
-                                        </Box>
-                                        <Group gap={4} wrap="nowrap" align="center">
-                                            <ActionIcon
-                                                variant="subtle"
-                                                color="yellow"
-                                                size={38}
-                                                radius="md"
-                                                aria-label="관심 시설 해제"
-                                                onClick={(e) => {
-                                                    e.stopPropagation();
-                                                    toggleFavorite(String(fac.id));
-                                                    setFacilityDetails(prev => prev.filter(f => String(f.id) !== String(fac.id)));
-                                                }}
-                                            >
-                                                <Star size={20} color="#fcc419" fill="#fcc419" />
-                                            </ActionIcon>
-                                            <ChevronRight size={16} color="#adb5bd" />
-                                        </Group>
-                                    </Group>
-                                </Box>
-                            ))}
-                        </Stack>
-                    )}
+                            }}
+                            aria-label="뒤로가기"
+                        >
+                            <ChevronLeft size={22} color="#191F28" />
+                        </ActionIcon>
+                        <Text size="lg" fw={700} c="#191F28">
+                            {showFavorites ? '관심 시설' : '내 정보'}
+                        </Text>
+                    </Group>
                 </Box>
-            ) : (
-                <>
-                    {/* 프로필 카드 */}
+
+                {showFavorites ? (
+                    /* 관심 시설 리스트 */
                     <Box p="md">
-                        <Box p="xl" bg="white" style={{ borderRadius: 16, textAlign: 'center' }}>
-                            {avatarUrl ? (
-                                <img
-                                    src={avatarUrl}
-                                    alt={displayName}
-                                    width={72}
-                                    height={72}
-                                    style={{ borderRadius: '50%', objectFit: 'cover', margin: '0 auto 12px', display: 'block' }}
-                                />
-                            ) : (
-                                <Box
-                                    style={{
-                                        width: 72, height: 72, borderRadius: '50%',
-                                        backgroundColor: '#1D0098',
-                                        display: 'flex', alignItems: 'center', justifyContent: 'center',
-                                        margin: '0 auto 12px',
-                                    }}
-                                >
-                                    <Text c="white" fw={700} size="xl">{displayName.charAt(0)}</Text>
-                                </Box>
-                            )}
-                            <Text size="lg" fw={700} mb={2}>{displayName}</Text>
-                            <Text size="sm" c="dimmed">{provider} 로그인</Text>
-                        </Box>
-                    </Box>
-
-                    {/* 계정 정보 */}
-                    <Box px="md" pb="md">
-                        <Text size="xs" c="dimmed" mb={8} fw={600} px={4}>계정 정보</Text>
-                        <Stack gap={0} bg="white" style={{ borderRadius: 12, overflow: 'hidden' }}>
-                            <InfoRow label="닉네임" value={displayName} />
-                            {phone && <InfoRow label="전화번호" value={formatPhone(phone)} />}
-                            <InfoRow label="로그인 방식" value={provider} />
-                            <InfoRow label="가입일" value={createdAt} />
-                        </Stack>
-                    </Box>
-
-                    {/* 관심 시설 & 내 이야기 */}
-                    <Box px="md" pb="md">
-                        <Stack gap={0} bg="white" style={{ borderRadius: 12, overflow: 'hidden' }}>
-                            <Box
-                                px="md"
-                                py={14}
-                                style={{
-                                    cursor: 'pointer',
-                                    display: 'flex',
-                                    alignItems: 'center',
-                                    justifyContent: 'space-between',
-                                    borderBottom: '1px solid #f1f3f5',
-                                }}
-                                onClick={() => setShowFavorites(true)}
-                            >
-                                <Group gap={8}>
-                                    <Star size={16} color={favorites.length > 0 ? '#fcc419' : '#adb5bd'} fill={favorites.length > 0 ? '#fcc419' : 'none'} />
-                                    <Text size="sm" fw={500}>관심 시설</Text>
-                                </Group>
-                                <Group gap={4}>
-                                    <Text size="sm" fw={600} c="dimmed">{favorites.length}개</Text>
-                                    <ChevronRight size={16} color="#adb5bd" />
-                                </Group>
+                        {loadingFavorites ? (
+                            <Box py={40} style={{ textAlign: 'center' }}>
+                                <Text c="dimmed">불러오는 중...</Text>
                             </Box>
-
-                            <Box
-                                px="md" py={14}
-                                style={{
-                                    cursor: 'pointer',
-                                    display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-                                }}
-                                onClick={() => setShowMyReviews(!showMyReviews)}
-                            >
-                                <Group gap={8}>
-                                    <MessageSquare size={18} color="#adb5bd" />
-                                    <Text size="sm" fw={500}>내 이야기</Text>
-                                </Group>
-                                <Group gap={4}>
-                                    <Text size="sm" fw={600} c="dimmed">{myReviews.length}개</Text>
-                                    <ChevronRight size={16} color="#adb5bd" style={{ transition: 'transform 0.2s', transform: showMyReviews ? 'rotate(90deg)' : 'none' }} />
-                                </Group>
+                        ) : facilityDetails.length === 0 ? (
+                            <Box py={40} style={{ textAlign: 'center' }}>
+                                <Star size={40} color="#FFD43B" fill="#FFD43B" style={{ margin: '0 auto 12px' }} />
+                                <Text c="#6B7684" size="sm" fw={600}>관심 시설이 없습니다</Text>
+                                <Text c="#8B95A1" size="xs" mt={4}>시설 상세 페이지에서 별표 아이콘을 눌러 추가하세요</Text>
                             </Box>
-                        </Stack>
-                        {showMyReviews && (
-                            <Stack gap="xs" mt="xs">
-                                {myReviews.length === 0 ? (
-                                    <Box py={20} style={{ textAlign: 'center' }}>
-                                        <Text size="sm" c="dimmed">아직 작성한 이야기가 없어요</Text>
-                                    </Box>
-                                ) : (
-                                    myReviews.map((review: any) => (
-                                        <Box
-                                            key={review.id}
-                                            bg="white" p="md"
-                                            style={{ borderRadius: 12, cursor: 'pointer' }}
-                                            onClick={() => router.push(`/facility/${review.facilityId}`)}
-                                        >
-                                            <Group justify="space-between" mb={4}>
-                                                <Group gap={4}>
-                                                    {[1, 2, 3, 4, 5].map(s => (
-                                                        <span key={s} style={{ color: s <= review.rating ? '#fcc419' : '#dee2e6', fontSize: 14 }}>★</span>
-                                                    ))}
+                        ) : (
+                            <Stack gap="sm">
+                                {facilityDetails.map((fac: any) => (
+                                    <Box
+                                        key={fac.id}
+                                        bg="white"
+                                        p="md"
+                                        style={{
+                                            borderRadius: 14,
+                                            cursor: 'pointer',
+                                            transition: 'all 0.2s',
+                                            border: '1px solid #E5E8EB',
+                                        }}
+                                        onClick={() => router.push(`/facility/${fac.id}`)}
+                                    >
+                                        <Group justify="space-between" wrap="nowrap" gap="sm">
+                                            <Box style={{ flex: 1, minWidth: 0 }}>
+                                                <Text size="sm" fw={700} c="#191F28" truncate>{fac.name}</Text>
+                                                <Group gap={4} mt={4}>
+                                                    <MapPin size={12} color="#8B95A1" />
+                                                    <Text size="xs" c="#6B7684" truncate>{fac.address}</Text>
                                                 </Group>
-                                                <Group gap={8}>
-                                                    <Text size="xs" c="dimmed">
-                                                        {new Date(review.createdAt).toLocaleDateString('ko-KR', { month: 'short', day: 'numeric' })}
+                                                {fac.priceRange?.min > 0 && (
+                                                    <Text size="xs" fw={700} mt={4} style={{ color: '#2563EB' }}>
+                                                        {Math.round(fac.priceRange.min >= 10000 ? fac.priceRange.min / 10000 : fac.priceRange.min).toLocaleString()}만원~
                                                     </Text>
-                                                    <Box
-                                                        onClick={(e: any) => { e.stopPropagation(); setDeleteReviewId(review.id); }}
-                                                        style={{ cursor: 'pointer', padding: 4 }}
-                                                    >
-                                                        <Trash2 size={16} color="#adb5bd" />
-                                                    </Box>
-                                                </Group>
+                                                )}
+                                            </Box>
+                                            <Group gap={4} wrap="nowrap" align="center">
+                                                <ActionIcon
+                                                    variant="subtle"
+                                                    color="yellow"
+                                                    size={38}
+                                                    radius="md"
+                                                    aria-label="관심 시설 해제"
+                                                    onClick={(e) => {
+                                                        e.stopPropagation();
+                                                        toggleFavorite(String(fac.id));
+                                                        setFacilityDetails(prev => prev.filter(f => String(f.id) !== String(fac.id)));
+                                                    }}
+                                                >
+                                                    <Star size={20} color="#fcc419" fill="#fcc419" />
+                                                </ActionIcon>
+                                                <ChevronRight size={16} color="#adb5bd" />
                                             </Group>
-                                            <Text size="sm" lineClamp={2}>{review.content}</Text>
-                                            <Text size="xs" c="dimmed" mt={4}>{review.facilityId}</Text>
-                                        </Box>
-                                    ))
-                                )}
+                                        </Group>
+                                    </Box>
+                                ))}
                             </Stack>
                         )}
                     </Box>
+                ) : (
+                    <>
+                        {/* 프로필 카드 */}
+                        <Box p="md">
+                            <Box p="xl" bg="white" style={{ borderRadius: 16, textAlign: 'center', border: '1px solid rgba(15, 23, 42, 0.05)' }}>
+                                {avatarUrl ? (
+                                    <img
+                                        src={avatarUrl}
+                                        alt={displayName}
+                                        width={72}
+                                        height={72}
+                                        style={{ borderRadius: '50%', objectFit: 'cover', margin: '0 auto 12px', display: 'block' }}
+                                    />
+                                ) : (
+                                    <Box
+                                        style={{
+                                            width: 72, height: 72, borderRadius: '50%',
+                                            backgroundColor: '#2563EB',
+                                            display: 'flex', alignItems: 'center', justifyContent: 'center',
+                                            margin: '0 auto 12px',
+                                        }}
+                                    >
+                                        <Text c="white" fw={700} size="xl">{displayName.charAt(0)}</Text>
+                                    </Box>
+                                )}
+                                <Text size="lg" fw={700} c="#191F28" mb={2}>{displayName}</Text>
+                                <Text size="sm" c="#6B7684">{provider} 로그인</Text>
+                            </Box>
+                        </Box>
 
-                    {/* 약관 동의 정보 */}
-                    <Box px="md" pb="md">
-                        <Text size="xs" c="dimmed" mb={8} fw={600} px={4}>약관 동의 현황</Text>
-                        <Stack gap={0} bg="white" style={{ borderRadius: 12, overflow: 'hidden' }}>
-                            <InfoRow label="이용약관" value={profile?.agreed_terms ? '✅ 동의' : '미동의'} />
-                            <InfoRow label="개인정보 수집·이용" value={profile?.agreed_privacy ? '✅ 동의' : '미동의'} />
-                            <InfoRow label="마케팅 수신" value={profile?.agreed_marketing ? '✅ 동의' : '미동의'} last />
-                        </Stack>
-                    </Box>
+                        {/* 계정 정보 */}
+                        <Box px="md" pb="md">
+                            <Text size="xs" c="#8B95A1" mb={8} fw={700} px={4}>계정 정보</Text>
+                            <Stack gap={0} bg="white" style={{ borderRadius: 14, overflow: 'hidden', border: '1px solid rgba(15, 23, 42, 0.05)' }}>
+                                <InfoRow label="닉네임" value={displayName} />
+                                {phone && <InfoRow label="전화번호" value={formatPhone(phone)} />}
+                                <InfoRow label="로그인 방식" value={provider} />
+                                <InfoRow label="가입일" value={createdAt} last />
+                            </Stack>
+                        </Box>
 
-                    {/* 액션 */}
-                    <Box px="md" pb="xl">
-                        <Stack gap={8}>
-                            <button
-                                onClick={() => setShowLogoutConfirm(true)}
-                                style={{
-                                    display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8,
-                                    width: '100%', padding: '14px', borderRadius: 12,
-                                    backgroundColor: 'white', border: '1px solid #e9ecef',
-                                    fontSize: 14, fontWeight: 600, color: '#495057', cursor: 'pointer',
-                                }}
-                            >
-                                <LogOut size={16} />
-                                로그아웃
-                            </button>
-                            <button
-                                onClick={handleDeleteAccount}
-                                style={{
-                                    display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8,
-                                    width: '100%', padding: '14px', borderRadius: 12,
-                                    backgroundColor: 'transparent', border: 'none',
-                                    fontSize: 13, color: '#adb5bd', cursor: 'pointer',
-                                }}
-                            >
-                                <Trash2 size={14} />
-                                회원 탈퇴
-                            </button>
-                        </Stack>
-                    </Box>
-                </>
-            )
-            }
+                        {/* 관심 시설 & 내 이야기 */}
+                        <Box px="md" pb="md">
+                            <Stack gap={0} bg="white" style={{ borderRadius: 14, overflow: 'hidden', border: '1px solid rgba(15, 23, 42, 0.05)' }}>
+                                <Box
+                                    px="md"
+                                    py={14}
+                                    style={{
+                                        cursor: 'pointer',
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        justifyContent: 'space-between',
+                                        borderBottom: '1px solid #F2F4F6',
+                                    }}
+                                    onClick={() => setShowFavorites(true)}
+                                >
+                                    <Group gap={8}>
+                                        <Star size={16} color={favorites.length > 0 ? '#fcc419' : '#8B95A1'} fill={favorites.length > 0 ? '#fcc419' : 'none'} />
+                                        <Text size="sm" fw={600} c="#191F28">관심 시설</Text>
+                                    </Group>
+                                    <Group gap={4}>
+                                        <Text size="sm" fw={700} style={{ color: '#2563EB' }}>{favorites.length}개</Text>
+                                        <ChevronRight size={16} color="#8B95A1" />
+                                    </Group>
+                                </Box>
 
-            {/* 로그아웃 확인 모달 */}
-            {
-                showLogoutConfirm && (
+                                <Box
+                                    px="md" py={14}
+                                    style={{
+                                        cursor: 'pointer',
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        justifyContent: 'space-between',
+                                    }}
+                                    onClick={() => setShowMyReviews(!showMyReviews)}
+                                >
+                                    <Group gap={8}>
+                                        <MessageSquare size={18} color="#2563EB" />
+                                        <Text size="sm" fw={600} c="#191F28">내 이야기</Text>
+                                    </Group>
+                                    <Group gap={4}>
+                                        <Text size="sm" fw={700} style={{ color: '#2563EB' }}>{myReviews.length}개</Text>
+                                        <ChevronRight size={16} color="#8B95A1" style={{ transition: 'transform 0.2s', transform: showMyReviews ? 'rotate(90deg)' : 'none' }} />
+                                    </Group>
+                                </Box>
+                            </Stack>
+                            {showMyReviews && (
+                                <Stack gap="xs" mt="xs">
+                                    {myReviews.length === 0 ? (
+                                        <Box py={20} style={{ textAlign: 'center' }}>
+                                            <Text size="sm" c="#8B95A1">아직 작성한 이야기가 없어요</Text>
+                                        </Box>
+                                    ) : (
+                                        myReviews.map((review: any) => {
+                                            const resolvedFacilityName =
+                                                review.facilityName ||
+                                                facilityNameMap[String(review.facilityId)] ||
+                                                '시설 상세 보기';
+                                            return (
+                                                <Box
+                                                    key={review.id}
+                                                    bg="white" p="md"
+                                                    style={{ borderRadius: 14, cursor: 'pointer', border: '1px solid #E5E8EB' }}
+                                                    onClick={() => router.push(`/facility/${review.facilityId}`)}
+                                                >
+                                                    <Group justify="space-between" mb={6}>
+                                                        <Group gap={3}>
+                                                            {[1, 2, 3, 4, 5].map(s => (
+                                                                <Star
+                                                                    key={s}
+                                                                    size={13}
+                                                                    color={s <= review.rating ? '#F59E0B' : '#E5E8EB'}
+                                                                    fill={s <= review.rating ? '#F59E0B' : '#E5E8EB'}
+                                                                />
+                                                            ))}
+                                                        </Group>
+                                                        <Group gap={8}>
+                                                            <Text size="xs" c="#8B95A1">
+                                                                {new Date(review.createdAt).toLocaleDateString('ko-KR', { month: 'short', day: 'numeric' })}
+                                                            </Text>
+                                                            <Box
+                                                                onClick={(e: any) => { e.stopPropagation(); setDeleteReviewId(review.id); }}
+                                                                style={{ cursor: 'pointer', padding: 4 }}
+                                                            >
+                                                                <Trash2 size={15} color="#8B95A1" />
+                                                            </Box>
+                                                        </Group>
+                                                    </Group>
+                                                    <Text size="sm" c="#191F28" lineClamp={2}>{review.content}</Text>
+                                                    <Group gap={4} mt={6} align="center">
+                                                        <MapPin size={12} color="#2563EB" />
+                                                        <Text size="xs" fw={600} style={{ color: '#2563EB' }}>
+                                                            {resolvedFacilityName}
+                                                        </Text>
+                                                    </Group>
+                                                </Box>
+                                            );
+                                        })
+                                    )}
+                                </Stack>
+                            )}
+                        </Box>
+
+                        {/* 약관 동의 정보 */}
+                        <Box px="md" pb="md">
+                            <Text size="xs" c="#8B95A1" mb={8} fw={700} px={4}>약관 동의 현황</Text>
+                            <Stack gap={0} bg="white" style={{ borderRadius: 14, overflow: 'hidden', border: '1px solid rgba(15, 23, 42, 0.05)' }}>
+                                <InfoRow label="이용약관" value={profile?.agreed_terms ? '동의' : '미동의'} agreed={!!profile?.agreed_terms} />
+                                <InfoRow label="개인정보 수집·이용" value={profile?.agreed_privacy ? '동의' : '미동의'} agreed={!!profile?.agreed_privacy} />
+                                <InfoRow label="마케팅 수신" value={profile?.agreed_marketing ? '동의' : '미동의'} agreed={!!profile?.agreed_marketing} last />
+                            </Stack>
+                        </Box>
+
+                        {/* 액션 */}
+                        <Box px="md" pb="xl">
+                            <Stack gap={8}>
+                                <button
+                                    onClick={() => setShowLogoutConfirm(true)}
+                                    style={{
+                                        display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8,
+                                        width: '100%', padding: '14px', borderRadius: 12,
+                                        backgroundColor: 'white', border: '1px solid #E5E8EB',
+                                        fontSize: 14, fontWeight: 600, color: '#191F28', cursor: 'pointer',
+                                    }}
+                                >
+                                    <LogOut size={16} />
+                                    로그아웃
+                                </button>
+                                <button
+                                    onClick={handleDeleteAccount}
+                                    style={{
+                                        display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8,
+                                        width: '100%', padding: '14px', borderRadius: 12,
+                                        backgroundColor: 'transparent', border: 'none',
+                                        fontSize: 13, color: '#8B95A1', cursor: 'pointer',
+                                    }}
+                                >
+                                    <Trash2 size={14} />
+                                    회원 탈퇴
+                                </button>
+                            </Stack>
+                        </Box>
+                    </>
+                )}
+
+                {/* 로그아웃 확인 모달 */}
+                {showLogoutConfirm && (
                     <Box style={{
                         position: 'fixed', inset: 0, zIndex: 9999,
                         display: 'flex', alignItems: 'center', justifyContent: 'center',
@@ -437,15 +495,15 @@ export default function MyInfoPage() {
                             }}
                             onClick={(e: any) => e.stopPropagation()}
                         >
-                            <Text size="md" fw={700} mb={4}>로그아웃</Text>
-                            <Text size="sm" c="dimmed" mb={20}>로그아웃 하시겠습니까?</Text>
+                            <Text size="md" fw={700} c="#191F28" mb={4}>로그아웃</Text>
+                            <Text size="sm" c="#6B7684" mb={20}>로그아웃 하시겠습니까?</Text>
                             <Group justify="center" gap={8}>
                                 <button
                                     onClick={() => setShowLogoutConfirm(false)}
                                     style={{
                                         padding: '10px 28px', borderRadius: 10, flex: 1,
-                                        backgroundColor: '#f1f3f5', border: 'none',
-                                        fontSize: 14, fontWeight: 600, color: '#495057', cursor: 'pointer',
+                                        backgroundColor: '#F2F4F6', border: 'none',
+                                        fontSize: 14, fontWeight: 600, color: '#4E5968', cursor: 'pointer',
                                     }}
                                 >
                                     아니오
@@ -454,7 +512,7 @@ export default function MyInfoPage() {
                                     onClick={() => { setShowLogoutConfirm(false); signOut(); }}
                                     style={{
                                         padding: '10px 28px', borderRadius: 10, flex: 1,
-                                        backgroundColor: '#302E92', border: 'none',
+                                        backgroundColor: '#2563EB', border: 'none',
                                         fontSize: 14, fontWeight: 600, color: 'white', cursor: 'pointer',
                                     }}
                                 >
@@ -464,12 +522,10 @@ export default function MyInfoPage() {
                         </Box>
                         <style>{`@keyframes scaleIn { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }`}</style>
                     </Box>
-                )
-            }
+                )}
 
-            {/* 이야기 삭제 확인 모달 */}
-            {
-                deleteReviewId && (
+                {/* 이야기 삭제 확인 모달 */}
+                {deleteReviewId && (
                     <Box style={{
                         position: 'fixed', inset: 0, zIndex: 9999,
                         display: 'flex', alignItems: 'center', justifyContent: 'center',
@@ -480,12 +536,12 @@ export default function MyInfoPage() {
                             style={{ borderRadius: 16, width: 280, textAlign: 'center', animation: 'scaleIn 0.2s ease-out' }}
                             onClick={(e: any) => e.stopPropagation()}
                         >
-                            <Text size="md" fw={700} mb={4}>이야기 삭제</Text>
-                            <Text size="sm" c="dimmed" mb={20}>이 이야기를 삭제하시겠습니까?</Text>
+                            <Text size="md" fw={700} c="#191F28" mb={4}>이야기 삭제</Text>
+                            <Text size="sm" c="#6B7684" mb={20}>이 이야기를 삭제하시겠습니까?</Text>
                             <Group justify="center" gap={8}>
                                 <button
                                     onClick={() => setDeleteReviewId(null)}
-                                    style={{ padding: '10px 28px', borderRadius: 10, flex: 1, backgroundColor: '#f1f3f5', border: 'none', fontSize: 14, fontWeight: 600, color: '#495057', cursor: 'pointer' }}
+                                    style={{ padding: '10px 28px', borderRadius: 10, flex: 1, backgroundColor: '#F2F4F6', border: 'none', fontSize: 14, fontWeight: 600, color: '#4E5968', cursor: 'pointer' }}
                                 >아니오</button>
                                 <button
                                     onClick={handleDeleteReview}
@@ -496,40 +552,23 @@ export default function MyInfoPage() {
                         </Box>
                         <style>{`@keyframes scaleIn { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }`}</style>
                     </Box>
-                )
-            }
-            {isMobile && <BottomNav />}
-        </Box >
+                )}
+
+                {isMobile && <BottomNav />}
+            </Box>
+        </Box>
     );
-
-    if (!isMobile) {
-        // PC: 왼쪽 고정 패널 + 오른쪽 클릭하면 닫기
-        return (
-            <>
-                {/* 배경 오버레이 */}
-                <Box
-                    style={{
-                        position: 'fixed',
-                        inset: 0,
-                        backgroundColor: 'rgba(0,0,0,0.3)',
-                        zIndex: 999,
-                    }}
-                    onClick={() => router.back()}
-                />
-                {pageContent}
-            </>
-        );
-    }
-
-    return pageContent;
 }
 
-function InfoRow({ label, value, last }: { label: string; value: string; last?: boolean }) {
+function InfoRow({ label, value, agreed, last }: { label: string; value: string; agreed?: boolean; last?: boolean }) {
     return (
-        <Box px="md" py={14} style={{ borderBottom: last ? 'none' : '1px solid #f1f3f5' }}>
+        <Box px="md" py={14} style={{ borderBottom: last ? 'none' : '1px solid #F2F4F6' }}>
             <Group justify="space-between">
-                <Text size="sm" c="dimmed">{label}</Text>
-                <Text size="sm" fw={500}>{value}</Text>
+                <Text size="sm" c="#6B7684">{label}</Text>
+                <Group gap={4} align="center">
+                    {agreed && <Check size={14} color="#2563EB" strokeWidth={2.5} />}
+                    <Text size="sm" fw={600} c={agreed ? '#2563EB' : '#191F28'}>{value}</Text>
+                </Group>
             </Group>
         </Box>
     );

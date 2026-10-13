@@ -88,16 +88,8 @@ function PriceInfoSection({ priceInfo, hasPrice, facilityName, websiteUrl }: { p
 
     // 서브타입 설명 토글 상태 (Rules of Hooks: 조건문 바깥 최상단 호출)
     const [openDescSubType, setOpenDescSubType] = useState<string | null>(null);
-    // 아코디언 열림 상태 (controlled) - 초기값은 각 서비스타입의 첫 번째 서브타입 자동 열기
-    const [openAccItems, setOpenAccItems] = useState<string[]>(() => {
-        if (!standardizedPrices) return [];
-        const byService: Record<string, string[]> = {};
-        standardizedPrices.forEach(g => {
-            if (!byService[g.serviceType]) byService[g.serviceType] = [];
-            byService[g.serviceType].push(g.subType);
-        });
-        return Object.values(byService).map(subs => subs[0]);
-    });
+    // 아코디언 열림 상태 (controlled) - 기본 접힘 상태 유지
+    const [openAccItems, setOpenAccItems] = useState<string[]>([]);
 
     if (!priceInfo) return null;
 
@@ -244,18 +236,18 @@ function PriceInfoSection({ priceInfo, hasPrice, facilityName, websiteUrl }: { p
             const renderRow = (row: typeof usageRows[0], idx: number, prefix: string) => (
                 <Box key={`${prefix}-${idx}`}
                     style={{
-                        borderBottom: '1px solid #f1f3f5',
-                        padding: '10px 0',
+                        borderBottom: '1px solid #EEF1F5',
+                        padding: '11px 0',
                     }}
                 >
                     <Group justify="space-between" align="center" wrap="nowrap" gap={8}>
                         <Group gap={6} wrap="nowrap" style={{ flex: 1, minWidth: 0 }}>
-                            <Text fw={600} size="13px" c="dark.9" style={{ whiteSpace: 'nowrap' }}>
+                            <Text fw={600} size="13.5px" c="#191F28" style={{ whiteSpace: 'nowrap', letterSpacing: '-0.02em' }}>
                                 {formatName(row.name)}
                             </Text>
                             {row.residency && row.residency !== 'ALL' && (
                                 <Badge size="xs" variant="light"
-                                    color={row.residency === 'LOCAL' || row.residency === 'RESIDENT' ? 'blue' : row.residency === 'VETERAN' ? 'grape' : 'orange'}
+                                    color={row.residency === 'LOCAL' || row.residency === 'RESIDENT' ? 'blue' : row.residency === 'VETERAN' ? 'teal' : 'gray'}
                                 >
                                     {row.residency === 'LOCAL' || row.residency === 'RESIDENT' ? '관내' : row.residency === 'NON_LOCAL' || row.residency === 'NON_RESIDENT' ? '관외' : '유공자'}
                                 </Badge>
@@ -266,18 +258,18 @@ function PriceInfoSection({ priceInfo, hasPrice, facilityName, websiteUrl }: { p
                                 </Badge>
                             )}
                         </Group>
-                        <Text fw={700} size="13px" c="black" style={{ flexShrink: 0, whiteSpace: 'nowrap' }}>
+                        <Text fw={800} size="14.5px" c="#2563EB" style={{ flexShrink: 0, whiteSpace: 'nowrap', letterSpacing: '-0.03em' }}>
                             {formatKoreanCurrency(row.price)}
-                            {row.taxIncluded === false && <Text span size="9px" c="dimmed"> +VAT</Text>}
+                            {row.taxIncluded === false && <Text span size="10px" fw={500} c="#8B95A1"> +VAT</Text>}
                         </Text>
                     </Group>
                     {row.grade && row.grade !== '-' && (
-                        <Text size="13px" c="gray.6" mt={4} style={{ lineHeight: 1.4, fontWeight: 500 }}>
+                        <Text size="12.5px" c="#4E5968" mt={4} style={{ lineHeight: 1.4, fontWeight: 500 }}>
                             {row.grade}
                         </Text>
                     )}
                     {row.note && (
-                        <Text size="12px" c="gray.6" mt={2} style={{ lineHeight: 1.4, fontWeight: 500 }}>
+                        <Text size="12px" c="#6B7684" mt={2} style={{ lineHeight: 1.4, fontWeight: 500 }}>
                             {row.note}
                         </Text>
                     )}
@@ -499,9 +491,9 @@ function PriceInfoSection({ priceInfo, hasPrice, facilityName, websiteUrl }: { p
                                     value={openAccItems}
                                     onChange={setOpenAccItems}
                                     styles={{
-                                        item: { backgroundColor: '#f8f9fa', border: 'none' },
+                                        item: { backgroundColor: '#F8FAFC', border: '1px solid #EEF1F5', borderRadius: 12 },
                                         control: { padding: '12px 16px' },
-                                        content: { padding: '0 24px 16px 24px' },
+                                        content: { padding: '0 20px 16px 20px' },
                                     }}
                                 >
                                     {groups.map(group => renderSubTypeAccordionItem(group))}
@@ -658,7 +650,7 @@ function PriceInfoSection({ priceInfo, hasPrice, facilityName, websiteUrl }: { p
 
                                     <Group gap="xs">
                                         {hasMinPrice ? (
-                                            <Text fw={800} c="#1D0098" size="lg">
+                                            <Text fw={800} c="#2563EB" size="lg">
                                                 {formatKoreanCurrency(minPrice)}부터
                                             </Text>
                                         ) : (
@@ -2419,13 +2411,59 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                             }
                             const displayItems = menuItems.length > 0 ? menuItems : subRepItems;
 
+                            // 지역 평균 대비 가격 인사이트 계산
+                            const regionalInsight = (() => {
+                                const minWon = displayItems.length > 0
+                                    ? Math.min(...displayItems.map(d => d.price).filter(p => p > 0))
+                                    : (displayPriceNum > 0 ? displayPriceNum * 10000 : 0);
+                                if (!minWon || minWon <= 0 || !allFacilities || allFacilities.length === 0) return null;
+                                const regionWord = facility.address?.split(' ')[0] || '';
+                                const peers = allFacilities.filter(f => {
+                                    const p = f.representativePrice || f.priceRange?.min || 0;
+                                    const normP = p > 0 && p < 10000 ? p * 10000 : p;
+                                    return f.category === facility.category && normP > 0 && (!regionWord || f.address?.startsWith(regionWord));
+                                });
+                                if (peers.length < 3) return null;
+                                const avgWon = peers.reduce((acc, cur) => {
+                                    const p = cur.representativePrice || cur.priceRange?.min || 0;
+                                    return acc + (p > 0 && p < 10000 ? p * 10000 : p);
+                                }, 0) / peers.length;
+                                if (!avgWon) return null;
+                                const diffPct = Math.round(((minWon - avgWon) / avgWon) * 100);
+                                if (diffPct <= -5) {
+                                    return { label: `${regionWord || '지역'} 평균 대비 ${Math.abs(diffPct)}% 저렴`, bg: '#ECFDF5', color: '#059669', border: '#A7F3D0' };
+                                }
+                                if (diffPct >= 10) {
+                                    return { label: `${regionWord || '지역'} 평균 대비 +${diffPct}%`, bg: '#F1F5F9', color: '#475569', border: '#E2E8F0' };
+                                }
+                                return { label: `${regionWord || '지역'} 평균 가격대`, bg: '#EFF6FF', color: '#2563EB', border: '#BFDBFE' };
+                            })();
+
                             if (displayItems.length > 0) {
                                 return (
                                     <Box px={16} py={16} bg="white" style={{ marginBottom: 8, borderBottom: '1px solid #F2F4F6' }}>
                                         <Group justify="space-between" align="center" mb={10}>
-                                            <Text fw={700} style={{ fontSize: '14px', color: '#191F28', letterSpacing: '-0.3px' }}>
-                                                예상 분양·안치 비용
-                                            </Text>
+                                            <Group gap={8} align="center">
+                                                <Text fw={700} style={{ fontSize: '14px', color: '#191F28', letterSpacing: '-0.3px' }}>
+                                                    예상 분양·안치 비용
+                                                </Text>
+                                                {regionalInsight && (
+                                                    <span
+                                                        style={{
+                                                            fontSize: '11px',
+                                                            fontWeight: 700,
+                                                            padding: '2px 8px',
+                                                            borderRadius: '999px',
+                                                            backgroundColor: regionalInsight.bg,
+                                                            color: regionalInsight.color,
+                                                            border: `1px solid ${regionalInsight.border}`,
+                                                            letterSpacing: '-0.2px',
+                                                        }}
+                                                    >
+                                                        {regionalInsight.label}
+                                                    </span>
+                                                )}
+                                            </Group>
                                             <Text size="xs" c="#8B95A1" style={{ fontSize: '11px' }}>
                                                 대표 최저가 기준
                                             </Text>
@@ -2475,7 +2513,30 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
 
                                 return (
                                     <Box px={16} py={16} bg="white" style={{ marginBottom: 8, borderBottom: '1px solid #F2F4F6' }}>
-                                        <Text fw={700} mb={10} style={{ fontSize: '14px', color: '#191F28' }}>예상 분양·안치 비용</Text>
+                                        <Group justify="space-between" align="center" mb={10}>
+                                            <Group gap={8} align="center">
+                                                <Text fw={700} style={{ fontSize: '14px', color: '#191F28' }}>예상 분양·안치 비용</Text>
+                                                {regionalInsight && (
+                                                    <span
+                                                        style={{
+                                                            fontSize: '11px',
+                                                            fontWeight: 700,
+                                                            padding: '2px 8px',
+                                                            borderRadius: '999px',
+                                                            backgroundColor: regionalInsight.bg,
+                                                            color: regionalInsight.color,
+                                                            border: `1px solid ${regionalInsight.border}`,
+                                                            letterSpacing: '-0.2px',
+                                                        }}
+                                                    >
+                                                        {regionalInsight.label}
+                                                    </span>
+                                                )}
+                                            </Group>
+                                            <Text size="xs" c="#8B95A1" style={{ fontSize: '11px' }}>
+                                                대표 최저가 기준
+                                            </Text>
+                                        </Group>
                                         <Box
                                             style={{
                                                 backgroundColor: '#F8FAFC',
@@ -2588,7 +2649,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                         {/* 8. 가격 정보 (상세) */}
                         <PriceInfoSection priceInfo={facility.priceInfo} hasPrice={hasPrice} facilityName={facility.name} websiteUrl={facility.websiteUrl} />
 
-                        {/* 9. 위치 및 교통 */}
+                        {/* 9. 위치 및 교통 + 원탭 길찾기 */}
                         <Box bg="white" px={16} py={16} style={{ marginBottom: 8, borderBottom: '1px solid #F2F4F6' }}>
                             <Group justify="space-between" align="center" mb={8}>
                                 <Text size="sm" fw={700} c="#191F28">위치 안내</Text>
@@ -2622,76 +2683,131 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                 )}
                             </Group>
                             <Text size="sm" c="#4E5968" style={{ fontSize: '13.5px', lineHeight: 1.5 }}>{facility.address}</Text>
+
+                            {/* 원탭 길찾기 버튼 (네이버 지도 / 카카오맵) */}
+                            {facility.address && (
+                                <Group gap={8} mt={12} grow>
+                                    <a
+                                        href={`https://map.naver.com/p/search/${encodeURIComponent(facility.name || facility.address)}`}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        style={{
+                                            display: 'inline-flex',
+                                            alignItems: 'center',
+                                            justifyContent: 'center',
+                                            gap: 6,
+                                            height: 38,
+                                            borderRadius: 10,
+                                            backgroundColor: '#F8FAFC',
+                                            border: '1px solid #E2E8F0',
+                                            color: '#191F28',
+                                            fontSize: 12.5,
+                                            fontWeight: 700,
+                                            textDecoration: 'none',
+                                        }}
+                                    >
+                                        <span style={{ width: 7, height: 7, borderRadius: '50%', backgroundColor: '#03C75A', display: 'inline-block' }} />
+                                        <span>네이버 지도 길찾기</span>
+                                    </a>
+                                    <a
+                                        href={
+                                            facility.coordinates?.lat && facility.coordinates?.lng
+                                                ? `https://map.kakao.com/link/to/${encodeURIComponent(facility.name)},${facility.coordinates.lat},${facility.coordinates.lng}`
+                                                : `https://map.kakao.com/link/search/${encodeURIComponent(facility.address)}`
+                                        }
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        style={{
+                                            display: 'inline-flex',
+                                            alignItems: 'center',
+                                            justifyContent: 'center',
+                                            gap: 6,
+                                            height: 38,
+                                            borderRadius: 10,
+                                            backgroundColor: '#F8FAFC',
+                                            border: '1px solid #E2E8F0',
+                                            color: '#191F28',
+                                            fontSize: 12.5,
+                                            fontWeight: 700,
+                                            textDecoration: 'none',
+                                        }}
+                                    >
+                                        <span style={{ width: 7, height: 7, borderRadius: '50%', backgroundColor: '#F59E0B', display: 'inline-block' }} />
+                                        <span>카카오맵 길찾기</span>
+                                    </a>
+                                </Group>
+                            )}
                         </Box>
 
                         {/* 시설 정보 */}
-                        <Box bg="white" p="md" style={{ borderBottom: '8px solid #f8f9fa', boxShadow: 'inset 0 -1px 0 #e9ecef' }}>
-                            <Text size="sm" fw={700} mb="md">시설 정보</Text>
-                            <Stack gap="sm">
-                                <Group justify="space-between">
-                                    <Text size="sm" c="gray.6">운영형태</Text>
-                                    <Text size="sm" fw={500} c="dark.9">
-                                        {facility.isPublic ? '공설' : '사설'}
-                                    </Text>
-                                </Group>
-                                <Group justify="space-between">
-                                    <Text size="sm" c="gray.6">시설종류</Text>
-                                    <Text size="sm" fw={500} c="dark.9">
-                                        {facility.category ? FACILITY_CATEGORY_LABELS[facility.category] || facility.category : '정보 없음'}
-                                    </Text>
-                                </Group>
-
-                                {/* 대표 문의 전화번호 */}
-                                {facility.phone && (
+                        <Box bg="white" px={16} py={16} style={{ marginBottom: 8, borderBottom: '1px solid #F2F4F6' }}>
+                            <Text size="sm" fw={700} c="#191F28" mb={12}>시설 정보</Text>
+                            <Box
+                                style={{
+                                    backgroundColor: '#F8FAFC',
+                                    borderRadius: 12,
+                                    border: '1px solid #EEF1F5',
+                                    padding: '12px 14px',
+                                }}
+                            >
+                                <Stack gap={10}>
                                     <Group justify="space-between">
-                                        <Text size="sm" c="gray.6">문의전화</Text>
-                                        <Text
-                                            component="a"
-                                            href={`tel:${facility.phone.replace(/[^0-9]/g, '')}`}
-                                            size="sm"
-                                            fw={600}
-                                            c="brand.7"
-                                            style={{ textDecoration: 'none' }}
-                                            onClick={() => {
-                                                fetch('/api/analytics/conversion', {
-                                                    method: 'POST',
-                                                    headers: { 'Content-Type': 'application/json' },
-                                                    body: JSON.stringify({ type: 'call_click', facilityId: facility.id, facilityName: facility.name }),
-                                                }).catch(() => {});
-                                            }}
-                                        >
-                                            {facility.phone}
+                                        <Text size="xs" fw={600} c="#6B7684">운영형태</Text>
+                                        <Text size="xs" fw={700} c="#191F28">
+                                            {facility.isPublic ? '공설' : '사설'}
                                         </Text>
                                     </Group>
-                                )}
-
-                                {/* 총매장능력 (값이 0보다 클 때만 노출) */}
-                                {Number(facility.capacity) > 0 && (
                                     <Group justify="space-between">
-                                        <Text size="sm" c="gray.6">총매장능력</Text>
-                                        <Text size="sm" fw={500} c="dark.9">
-                                            {Number(facility.capacity).toLocaleString()}기
+                                        <Text size="xs" fw={600} c="#6B7684">시설종류</Text>
+                                        <Text size="xs" fw={700} c="#191F28">
+                                            {facility.category ? FACILITY_CATEGORY_LABELS[facility.category] || facility.category : '정보 없음'}
                                         </Text>
                                     </Group>
-                                )}
 
-                                {/* 업데이트 날짜 - 숨김 처리
-                    <Group justify="space-between">
-                        <Text size="sm" c="gray.6">업데이트</Text>
-                        <Text size="sm" fw={500} c="dark.9">
-                            {formatRelativeTime(facility.lastUpdated)}
-                        </Text>
-                    </Group>
-                    */}
-                            </Stack>
+                                    {/* 대표 문의 전화번호 */}
+                                    {facility.phone && (
+                                        <Group justify="space-between">
+                                            <Text size="xs" fw={600} c="#6B7684">문의전화</Text>
+                                            <Text
+                                                component="a"
+                                                href={`tel:${facility.phone.replace(/[^0-9]/g, '')}`}
+                                                size="xs"
+                                                fw={700}
+                                                c="#2563EB"
+                                                style={{ textDecoration: 'none' }}
+                                                onClick={() => {
+                                                    fetch('/api/analytics/conversion', {
+                                                        method: 'POST',
+                                                        headers: { 'Content-Type': 'application/json' },
+                                                        body: JSON.stringify({ type: 'call_click', facilityId: facility.id, facilityName: facility.name }),
+                                                    }).catch(() => {});
+                                                }}
+                                            >
+                                                {facility.phone}
+                                            </Text>
+                                        </Group>
+                                    )}
+
+                                    {/* 총매장능력 (값이 0보다 클 때만 노출) */}
+                                    {Number(facility.capacity) > 0 && (
+                                        <Group justify="space-between">
+                                            <Text size="xs" fw={600} c="#6B7684">총매장능력</Text>
+                                            <Text size="xs" fw={700} c="#191F28">
+                                                {Number(facility.capacity).toLocaleString()}기
+                                            </Text>
+                                        </Group>
+                                    )}
+                                </Stack>
+                            </Box>
 
                             {/* 상세 상담 받기 버튼 */}
                             <Box
-                                mt="lg"
-                                py={12}
+                                mt={12}
+                                py={11}
                                 style={{
-                                    backgroundColor: '#f8f9fa',
-                                    borderRadius: 8,
+                                    backgroundColor: '#EFF6FF',
+                                    border: '1px solid #DBEAFE',
+                                    borderRadius: 10,
                                     cursor: 'pointer',
                                     textAlign: 'center',
                                 }}
@@ -2710,27 +2826,27 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                     }).catch(() => {});
                                 }}
                             >
-                                <Text style={{ fontSize: 15 }} fw={600} c="brand.6">이 시설에 대해 더 자세히 알아보기</Text>
+                                <Text style={{ fontSize: 13.5 }} fw={700} c="#2563EB">이 시설에 대해 1:1 상담 신청하기</Text>
                             </Box>
                         </Box>
 
                         {/* 이야기 (리뷰) */}
-                        <Box id="reviews-section" bg="white" p="md" style={{ borderBottom: '8px solid #f8f9fa', boxShadow: 'inset 0 -1px 0 #e9ecef' }}>
-                            <Text size="lg" fw={700} mb="md">이야기</Text>
+                        <Box id="reviews-section" bg="white" px={16} py={16} style={{ marginBottom: 8, borderBottom: '1px solid #F2F4F6' }}>
+                            <Text size="sm" fw={700} c="#191F28" mb="md">방문 이야기 및 문의</Text>
 
                             {/* 후기 작성 입력 */}
                             <Paper
                                 withBorder radius="md" p="md" mb="lg"
                                 onClick={() => { if (reviewModalOpened) { closeReviewModal(); } else { closeAllPanels(); openReviewModal(); } }}
-                                style={{ cursor: 'pointer', borderColor: '#e9ecef', backgroundColor: '#f8f9fa' }}
+                                style={{ cursor: 'pointer', borderColor: '#E2E8F0', backgroundColor: '#F8FAFC', borderRadius: 12 }}
                             >
                                 <Group justify="space-between">
-                                    <Text c="gray.5" size="sm">
-                                        솔직한 후기를 남겨주세요.
+                                    <Text c="#6B7684" size="xs" fw={600}>
+                                        방문 경험이나 후기를 남겨주세요.
                                     </Text>
-                                    <Group gap={12}>
-                                        <Camera size={20} color="#1D0098" />
-                                        <Pencil size={20} color="#1D0098" />
+                                    <Group gap={10}>
+                                        <Camera size={18} color="#2563EB" />
+                                        <Pencil size={18} color="#2563EB" />
                                     </Group>
                                 </Group>
                             </Paper>
@@ -2814,8 +2930,6 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                                 </Group>
                                             </Group>
 
-
-
                                             {/* Reply List - 3개까지만 표시 + 더보기 */}
                                             {review.replies && review.replies.length > 0 && (
                                                 <Box mt="md" bg="gray.0" p="sm" style={{ borderRadius: 'var(--mantine-radius-md)' }}>
@@ -2830,7 +2944,6 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                                                 </ActionIcon>
                                                             </Group>
                                                             <Text size="sm" c="dark.7" ml={26}>{reply.content}</Text>
-                                                            {/* 대댓글 이미지 - 클릭 시 확대 */}
                                                             {reply.photos && reply.photos.length > 0 && (
                                                                 <Group gap={6} mt="xs" ml={26}>
                                                                     {reply.photos.map((photo: string, idx: number) => (
@@ -2842,7 +2955,6 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                                             )}
                                                         </Box>
                                                     ))}
-                                                    {/* 3개 이상이면 더보기/접기 */}
                                                     {review.replies.length > 3 && (
                                                         <Box ta="center" pt="xs">
                                                             <Button
@@ -2874,21 +2986,22 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                         </Box>
                                     ))
                                 ) : (
-                                    <Box ta="center" py="xl">
-                                        <Text size="sm" c="dimmed">
+                                    <Box ta="center" py="lg">
+                                        <Text size="xs" c="#8B95A1" style={{ lineHeight: 1.6 }}>
                                             최근 {viewCount}명이 조회했어요.<br />
-                                            방문 경험을 나눠주시면 많은 분들께 도움이 됩니다!
+                                            방문 경험을 나눠주시면 많은 분들께 도움이 됩니다.
                                         </Text>
                                     </Box>
                                 )}
                                 {/* 리뷰 3개 이상이면 더보기/접기 */}
                                 {reviews.length > 3 && (
                                     <Box
-                                        mt="md"
-                                        py={12}
+                                        mt="sm"
+                                        py={11}
                                         style={{
-                                            backgroundColor: '#f8f9fa',
-                                            borderRadius: 8,
+                                            backgroundColor: '#F8FAFC',
+                                            border: '1px solid #E2E8F0',
+                                            borderRadius: 10,
                                             cursor: 'pointer',
                                             textAlign: 'center',
                                         }}
@@ -2900,8 +3013,8 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                             }
                                         }}
                                     >
-                                        <Text style={{ fontSize: 15 }} fw={500} c="dimmed">
-                                            총 {reviews.length - 3}개의 이야기가 더있습니다
+                                        <Text style={{ fontSize: 13.5 }} fw={700} c="#334155">
+                                            이야기 {reviews.length - 3}개 더보기
                                         </Text>
                                     </Box>
                                 )}
@@ -2909,11 +3022,12 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
 
                             {/* 문의하기 버튼 */}
                             <Box
-                                mt="lg"
-                                py={12}
+                                mt={10}
+                                py={11}
                                 style={{
-                                    backgroundColor: '#f8f9fa',
-                                    borderRadius: 8,
+                                    backgroundColor: '#FFFFFF',
+                                    border: '1px solid #E2E8F0',
+                                    borderRadius: 10,
                                     cursor: 'pointer',
                                     textAlign: 'center',
                                 }}
@@ -2927,8 +3041,8 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                     }
                                 }}
                             >
-                                <Text style={{ fontSize: 15 }} fw={500} c="dimmed">
-                                    {totalInquiryCount > 0 ? `총 ${totalInquiryCount}번의 문의를 했어요` : '문의하기'}
+                                <Text style={{ fontSize: 13.5 }} fw={700} c="#191F28">
+                                    {totalInquiryCount > 0 ? `시설 문의하기 (${totalInquiryCount}건)` : '시설 문의하기'}
                                 </Text>
                             </Box>
                         </Box>
@@ -3065,12 +3179,15 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                         const url = `https://daedaesonson.com/facility/${facility.id}`;
                                         if (typeof navigator !== 'undefined' && navigator.clipboard) {
                                             navigator.clipboard.writeText(url).then(() => {
-                                                alert('링크가 복사되었습니다!');
+                                                setShareToast('링크가 복사되었습니다');
+                                                setTimeout(() => setShareToast(null), 1800);
                                             }).catch(() => {
-                                                alert('링크 복사에 실패했습니다.');
+                                                setShareToast('링크 복사에 실패했습니다');
+                                                setTimeout(() => setShareToast(null), 1800);
                                             });
                                         } else {
-                                            alert('링크가 복사되었습니다!');
+                                            setShareToast('링크가 복사되었습니다');
+                                            setTimeout(() => setShareToast(null), 1800);
                                         }
                                     }}
                                 >
@@ -3359,8 +3476,8 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                                         justifyContent: 'space-between',
                                                     }}
                                                 >
-                                                    <Text size="xs" fw={700} c="brand.8">
-                                                        💬 {profile?.nickname || (user.user_metadata?.name as string) || '회원'}님 정보가 자동 입력되었습니다
+                                                    <Text size="xs" fw={700} c="#2563EB">
+                                                        {profile?.nickname || (user.user_metadata?.name as string) || '회원'}님 정보가 자동 입력되었습니다
                                                     </Text>
                                                 </Box>
                                             )}
@@ -3892,8 +4009,8 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                                         justifyContent: 'space-between',
                                                     }}
                                                 >
-                                                    <Text size="xs" fw={700} c="brand.8">
-                                                        💬 {profile?.nickname || (user.user_metadata?.name as string) || '회원'}님 정보가 자동 입력되었습니다
+                                                    <Text size="xs" fw={700} c="#2563EB">
+                                                        {profile?.nickname || (user.user_metadata?.name as string) || '회원'}님 정보가 자동 입력되었습니다
                                                     </Text>
                                                 </Box>
                                             )}
@@ -4960,10 +5077,10 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
 
                                                 {/* 답변 */}
                                                 {selectedInquiry.replies && selectedInquiry.replies.length > 0 && (
-                                                    <Box p="md" style={{ backgroundColor: '#f0f4ff', borderRadius: 12, borderLeft: '4px solid #1D0098' }}>
+                                                    <Box p="md" style={{ backgroundColor: '#EFF6FF', borderRadius: 12, borderLeft: '4px solid #2563EB' }}>
                                                         <Group gap={6} mb={6}>
-                                                            <Headphones size={16} color="#1D0098" />
-                                                            <Text size="xs" fw={600} c="brand">관리자 답변</Text>
+                                                            <Headphones size={16} color="#2563EB" />
+                                                            <Text size="xs" fw={600} c="#2563EB">관리자 답변</Text>
                                                         </Group>
                                                         <Text size="sm" c="dark">{selectedInquiry.replies[0].content}</Text>
                                                     </Box>
@@ -5390,7 +5507,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                             <Button
                                                 size="sm"
                                                 variant="filled"
-                                                color="#1D0098"
+                                                color="#2563EB"
                                                 radius="xl"
                                                 px="xl"
                                                 onClick={() => handleSubmitReply(replyingTo)}
@@ -5668,83 +5785,102 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
             {shareModalOpen && (
                 <div style={{
                     position: 'fixed', top: 0, left: 0, right: 0, bottom: 0,
-                    zIndex: 10050, display: 'flex', alignItems: 'flex-end', justifyContent: 'center',
+                    zIndex: 10050, display: 'flex', alignItems: isMobile ? 'flex-end' : 'center', justifyContent: 'center',
+                    padding: isMobile ? 0 : 16,
                 }}>
                     {/* 오버레이 */}
                     <div
-                        style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, background: 'rgba(0,0,0,0.4)' }}
+                        style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, background: 'rgba(15, 23, 42, 0.45)', backdropFilter: 'blur(2px)' }}
                         onClick={() => setShareModalOpen(false)}
                     />
-                    {/* 바텀시트 */}
+                    {/* 바텀시트 / 모달 */}
                     <div style={{
-                        position: 'relative', width: '100%', maxWidth: isMobile ? '100%' : 400,
-                        background: '#fff', borderRadius: '20px 20px 0 0',
-                        padding: '0 0 40px 0',
-                        animation: 'shareSlideUp 0.25s ease-out',
+                        position: 'relative', width: '100%', maxWidth: isMobile ? '100%' : 380,
+                        background: '#fff', borderRadius: isMobile ? '24px 24px 0 0' : '20px',
+                        padding: '20px 20px calc(28px + env(safe-area-inset-bottom, 0px))',
+                        boxShadow: '0 20px 40px rgba(15, 23, 42, 0.18)',
+                        animation: 'shareSlideUp 0.22s cubic-bezier(0.16, 1, 0.3, 1)',
                     }}>
                         {/* 헤더 */}
                         <div style={{
                             display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-                            padding: '20px 16px', borderBottom: '1px solid #f0f0f0',
+                            marginBottom: 20,
                         }}>
-                            <span style={{ fontSize: 16, fontWeight: 600, color: '#111' }}>공유하기</span>
+                            <span style={{ fontSize: 17, fontWeight: 800, color: '#191F28', letterSpacing: '-0.3px' }}>시설 공유하기</span>
                             <button
                                 onClick={() => setShareModalOpen(false)}
                                 aria-label="닫기"
                                 style={{
-                                    width: 44, height: 44, background: 'transparent', border: 'none',
-                                    fontSize: 18, color: '#999', cursor: 'pointer',
+                                    width: 32, height: 32, background: '#F2F4F6', border: 'none', borderRadius: '50%',
+                                    color: '#64748B', cursor: 'pointer',
                                     display: 'flex', alignItems: 'center', justifyContent: 'center',
                                     padding: 0,
                                 }}
-                            >✕</button>
+                            >
+                                <X size={16} />
+                            </button>
                         </div>
 
-                        {/* 카카오톡 */}
-                        <button onClick={shareViaKakao} style={{
-                            display: 'flex', alignItems: 'center', gap: 16, width: '100%',
-                            padding: '16px', background: 'transparent', border: 'none',
-                            borderBottom: '1px solid #f5f5f5', cursor: 'pointer',
-                            fontFamily: "'Pretendard', sans-serif", fontSize: 14, fontWeight: 500, color: '#333', textAlign: 'left' as const,
+                        {/* 4열 아이콘 그리드 */}
+                        <div style={{
+                            display: 'grid',
+                            gridTemplateColumns: 'repeat(4, 1fr)',
+                            gap: 12,
+                            marginBottom: 18,
                         }}>
-                            <img src="/images/icon-kakao.png" alt="카카오톡" width={32} height={32} style={{ borderRadius: 8 }} />
-                            <span>카카오톡으로 보내기</span>
-                        </button>
+                            <button onClick={shareViaKakao} style={{
+                                display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 8,
+                                padding: '12px 4px', background: '#F8FAFC', border: '1px solid #F1F5F9', borderRadius: 14,
+                                cursor: 'pointer', fontFamily: "'Pretendard', sans-serif",
+                            }}>
+                                <img src="/images/icon-kakao.png" alt="카카오톡" width={40} height={40} style={{ borderRadius: 12 }} />
+                                <span style={{ fontSize: 12, fontWeight: 600, color: '#333D4B' }}>카카오톡</span>
+                            </button>
 
-                        {/* 문자 */}
-                        <button onClick={shareViaSMS} style={{
-                            display: 'flex', alignItems: 'center', gap: 16, width: '100%',
-                            padding: '16px', background: 'transparent', border: 'none',
-                            borderBottom: '1px solid #f5f5f5', cursor: 'pointer',
-                            fontFamily: "'Pretendard', sans-serif", fontSize: 14, fontWeight: 500, color: '#333', textAlign: 'left' as const,
-                        }}>
-                            <img src="/images/icon-message.png" alt="메세지" width={32} height={32} style={{ borderRadius: 8 }} />
-                            <span>문자로 보내기</span>
-                        </button>
+                            <button onClick={shareViaSMS} style={{
+                                display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 8,
+                                padding: '12px 4px', background: '#F8FAFC', border: '1px solid #F1F5F9', borderRadius: 14,
+                                cursor: 'pointer', fontFamily: "'Pretendard', sans-serif",
+                            }}>
+                                <img src="/images/icon-message.png" alt="문자" width={40} height={40} style={{ borderRadius: 12 }} />
+                                <span style={{ fontSize: 12, fontWeight: 600, color: '#333D4B' }}>문자</span>
+                            </button>
 
-                        {/* 밴드 */}
-                        <button onClick={shareViaBand} style={{
-                            display: 'flex', alignItems: 'center', gap: 16, width: '100%',
-                            padding: '16px', background: 'transparent', border: 'none',
-                            borderBottom: '1px solid #f5f5f5', cursor: 'pointer',
-                            fontFamily: "'Pretendard', sans-serif", fontSize: 14, fontWeight: 500, color: '#333', textAlign: 'left' as const,
-                        }}>
-                            <img src="/images/icon-band.png" alt="밴드" width={32} height={32} style={{ borderRadius: 8 }} />
-                            <span>밴드로 보내기</span>
-                        </button>
+                            <button onClick={shareViaBand} style={{
+                                display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 8,
+                                padding: '12px 4px', background: '#F8FAFC', border: '1px solid #F1F5F9', borderRadius: 14,
+                                cursor: 'pointer', fontFamily: "'Pretendard', sans-serif",
+                            }}>
+                                <img src="/images/icon-band.png" alt="밴드" width={40} height={40} style={{ borderRadius: 12 }} />
+                                <span style={{ fontSize: 12, fontWeight: 600, color: '#333D4B' }}>밴드</span>
+                            </button>
 
-                        {/* 링크 복사 */}
-                        <button onClick={shareViaLink} style={{
-                            display: 'flex', alignItems: 'center', gap: 16, width: '100%',
-                            padding: '16px', background: 'transparent', border: 'none',
-                            cursor: 'pointer',
-                            fontFamily: "'Pretendard', sans-serif", fontSize: 14, fontWeight: 500, color: '#333', textAlign: 'left' as const,
-                        }}>
-                            <img src="/images/icon-link.png" alt="링크" width={32} height={32} style={{ borderRadius: 8 }} />
-                            <span>링크 복사하기</span>
-                        </button>
+                            <button onClick={shareViaLink} style={{
+                                display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 8,
+                                padding: '12px 4px', background: '#F8FAFC', border: '1px solid #F1F5F9', borderRadius: 14,
+                                cursor: 'pointer', fontFamily: "'Pretendard', sans-serif",
+                            }}>
+                                <img src="/images/icon-link.png" alt="링크 복사" width={40} height={40} style={{ borderRadius: 12 }} />
+                                <span style={{ fontSize: 12, fontWeight: 600, color: '#333D4B' }}>링크복사</span>
+                            </button>
+                        </div>
+
+                        {/* 하단 URL 프리뷰 박스 */}
+                        <div
+                            onClick={shareViaLink}
+                            style={{
+                                display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 10,
+                                padding: '10px 14px', background: '#F8FAFC', border: '1px solid #E2E8F0',
+                                borderRadius: 10, cursor: 'pointer',
+                            }}
+                        >
+                            <span style={{ fontSize: 12, color: '#64748B', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                                https://daedaesonson.com/facility/{facility.id}
+                            </span>
+                            <span style={{ fontSize: 12, fontWeight: 700, color: '#2563EB', flexShrink: 0 }}>복사</span>
+                        </div>
                     </div>
-                    <style>{`@keyframes shareSlideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }`}</style>
+                    <style>{`@keyframes shareSlideUp { from { transform: translateY(30px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }`}</style>
                 </div>
             )}
 

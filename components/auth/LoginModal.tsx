@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { X, ArrowLeft } from 'lucide-react';
 import { useAuth } from './AuthProvider';
 
 type LoginStep = 'main' | 'phone-input' | 'phone-verify';
@@ -87,7 +88,7 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
                     left: 0,
                     right: 0,
                     bottom: 0,
-                    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+                    backgroundColor: 'rgba(25, 31, 40, 0.5)',
                     zIndex: 9998,
                 }}
             />
@@ -99,15 +100,15 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
                     top: '50%',
                     left: '50%',
                     transform: 'translate(-50%, -50%)',
-                    backgroundColor: 'white',
-                    borderRadius: 16,
+                    backgroundColor: '#FFFFFF',
+                    borderRadius: 20,
                     padding: '32px 24px',
                     width: 'calc(100% - 32px)',
                     maxWidth: 400,
                     maxHeight: '90vh',
                     overflowY: 'auto',
                     zIndex: 9999,
-                    boxShadow: '0 20px 60px rgba(0, 0, 0, 0.3)',
+                    boxShadow: '0 20px 60px rgba(25, 31, 40, 0.24)',
                 }}
             >
                 {/* 닫기 버튼 */}
@@ -116,21 +117,21 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
                     aria-label="닫기"
                     style={{
                         position: 'absolute',
-                        top: 12,
-                        right: 12,
+                        top: 14,
+                        right: 14,
                         background: 'none',
                         border: 'none',
-                        fontSize: 22,
                         cursor: 'pointer',
-                        color: '#868e96',
-                        padding: 10,
+                        color: '#8B95A1',
+                        padding: 8,
                         lineHeight: 1,
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
+                        borderRadius: 8,
                     }}
                 >
-                    ✕
+                    <X size={20} />
                 </button>
 
                 {/* 메인 로그인 화면 */}
@@ -140,14 +141,16 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
                             margin: '0 0 8px 0',
                             fontSize: 22,
                             fontWeight: 700,
-                            color: '#212529',
+                            color: '#191F28',
+                            letterSpacing: '-0.3px',
                         }}>
                             로그인
                         </h2>
                         <p style={{
                             margin: '0 0 28px 0',
                             fontSize: 14,
-                            color: '#868e96',
+                            color: '#6B7684',
+                            lineHeight: 1.5,
                         }}>
                             관심 시설 저장, 가격 알림 등<br />편리한 서비스를 이용하세요.
                         </p>
@@ -168,7 +171,7 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
                                 alignItems: 'center',
                                 justifyContent: 'center',
                                 gap: 8,
-                                color: '#191919',
+                                color: '#191F28',
                                 marginBottom: 12,
                                 transition: 'transform 0.1s, box-shadow 0.2s',
                             }}
@@ -179,7 +182,7 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
                             <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
                                 <path
                                     d="M9 1C4.58 1 1 3.79 1 7.21c0 2.17 1.45 4.08 3.63 5.18l-.93 3.44c-.08.29.25.52.5.35l4.1-2.71c.23.02.46.03.7.03 4.42 0 8-2.79 8-6.21S13.42 1 9 1z"
-                                    fill="#191919"
+                                    fill="#191F28"
                                 />
                             </svg>
                             카카오 계정으로 로그인
@@ -192,9 +195,9 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
                             margin: '20px 0',
                             gap: 12,
                         }}>
-                            <div style={{ flex: 1, height: 1, backgroundColor: '#e9ecef' }} />
-                            <span style={{ fontSize: 13, color: '#adb5bd' }}>또는</span>
-                            <div style={{ flex: 1, height: 1, backgroundColor: '#e9ecef' }} />
+                            <div style={{ flex: 1, height: 1, backgroundColor: '#E5E8EB' }} />
+                            <span style={{ fontSize: 13, color: '#8B95A1' }}>또는</span>
+                            <div style={{ flex: 1, height: 1, backgroundColor: '#E5E8EB' }} />
                         </div>
 
                         {/* 휴대전화 로그인 버튼 */}
@@ -203,23 +206,23 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
                             style={{
                                 width: '100%',
                                 height: 52,
-                                backgroundColor: '#f8f9fa',
-                                border: '1px solid #dee2e6',
+                                backgroundColor: '#F8FAFC',
+                                border: '1px solid #E2E8F0',
                                 borderRadius: 12,
                                 fontSize: 16,
-                                fontWeight: 500,
+                                fontWeight: 600,
                                 cursor: 'pointer',
                                 display: 'flex',
                                 alignItems: 'center',
                                 justifyContent: 'center',
                                 gap: 8,
-                                color: '#495057',
-                                transition: 'background-color 0.2s',
+                                color: '#191F28',
+                                transition: 'background-color 0.2s, border-color 0.2s',
                             }}
-                            onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = '#e9ecef')}
-                            onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = '#f8f9fa')}
+                            onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = '#F1F5F9')}
+                            onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = '#F8FAFC')}
                         >
-                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#495057" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#191F28" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                                 <rect x="5" y="2" width="14" height="20" rx="2" ry="2" />
                                 <line x1="12" y1="18" x2="12.01" y2="18" />
                             </svg>
@@ -237,31 +240,36 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
                                 background: 'none',
                                 border: 'none',
                                 fontSize: 14,
-                                color: '#868e96',
+                                fontWeight: 500,
+                                color: '#6B7684',
                                 cursor: 'pointer',
                                 padding: '6px 10px',
                                 marginLeft: -10,
                                 marginBottom: 12,
                                 display: 'inline-flex',
                                 alignItems: 'center',
+                                gap: 4,
                                 minHeight: 38,
                             }}
                         >
-                            ← 뒤로
+                            <ArrowLeft size={16} />
+                            <span>뒤로</span>
                         </button>
 
                         <h2 style={{
                             margin: '0 0 8px 0',
                             fontSize: 22,
                             fontWeight: 700,
-                            color: '#212529',
+                            color: '#191F28',
+                            letterSpacing: '-0.3px',
                         }}>
                             휴대전화 인증
                         </h2>
                         <p style={{
                             margin: '0 0 24px 0',
                             fontSize: 14,
-                            color: '#868e96',
+                            color: '#6B7684',
+                            lineHeight: 1.5,
                         }}>
                             휴대전화번호를 입력하면<br />인증번호를 보내드립니다.
                         </p>
@@ -275,26 +283,36 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
                             style={{
                                 width: '100%',
                                 height: 52,
-                                border: `2px solid ${error ? '#fa5252' : '#dee2e6'}`,
+                                border: `1.5px solid ${error ? '#EF4444' : '#E2E8F0'}`,
                                 borderRadius: 12,
                                 padding: '0 16px',
                                 fontSize: 18,
+                                color: '#191F28',
+                                backgroundColor: '#F8FAFC',
                                 outline: 'none',
                                 boxSizing: 'border-box',
                                 letterSpacing: 1,
-                                transition: 'border-color 0.2s',
+                                transition: 'border-color 0.2s, box-shadow 0.2s, background-color 0.2s',
                             }}
                             onFocus={(e) => {
-                                if (!error) e.currentTarget.style.borderColor = '#5c3fbf';
+                                if (!error) {
+                                    e.currentTarget.style.borderColor = '#2563EB';
+                                    e.currentTarget.style.boxShadow = '0 0 0 3px rgba(37, 99, 235, 0.12)';
+                                    e.currentTarget.style.backgroundColor = '#FFFFFF';
+                                }
                             }}
                             onBlur={(e) => {
-                                if (!error) e.currentTarget.style.borderColor = '#dee2e6';
+                                if (!error) {
+                                    e.currentTarget.style.borderColor = '#E2E8F0';
+                                    e.currentTarget.style.boxShadow = 'none';
+                                    e.currentTarget.style.backgroundColor = '#F8FAFC';
+                                }
                             }}
                             autoFocus
                         />
 
                         {error && (
-                            <p style={{ color: '#fa5252', fontSize: 13, margin: '8px 0 0' }}>
+                            <p style={{ color: '#EF4444', fontSize: 13, margin: '8px 0 0', fontWeight: 500 }}>
                                 {error}
                             </p>
                         )}
@@ -305,15 +323,15 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
                             style={{
                                 width: '100%',
                                 height: 52,
-                                backgroundColor: phone.replace(/-/g, '').length >= 10 ? '#5c3fbf' : '#e9ecef',
-                                color: phone.replace(/-/g, '').length >= 10 ? 'white' : '#adb5bd',
+                                backgroundColor: phone.replace(/-/g, '').length >= 10 ? '#2563EB' : '#E5E8EB',
+                                color: phone.replace(/-/g, '').length >= 10 ? '#FFFFFF' : '#8B95A1',
                                 border: 'none',
                                 borderRadius: 12,
                                 fontSize: 16,
                                 fontWeight: 600,
                                 cursor: phone.replace(/-/g, '').length >= 10 ? 'pointer' : 'default',
                                 marginTop: 16,
-                                transition: 'background-color 0.2s',
+                                transition: 'background-color 0.2s, transform 0.1s',
                             }}
                         >
                             {loading ? '전송 중...' : '인증번호 받기'}
@@ -330,31 +348,36 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
                                 background: 'none',
                                 border: 'none',
                                 fontSize: 14,
-                                color: '#868e96',
+                                fontWeight: 500,
+                                color: '#6B7684',
                                 cursor: 'pointer',
                                 padding: '6px 10px',
                                 marginLeft: -10,
                                 marginBottom: 12,
                                 display: 'inline-flex',
                                 alignItems: 'center',
+                                gap: 4,
                                 minHeight: 38,
                             }}
                         >
-                            ← 뒤로
+                            <ArrowLeft size={16} />
+                            <span>뒤로</span>
                         </button>
 
                         <h2 style={{
                             margin: '0 0 8px 0',
                             fontSize: 22,
                             fontWeight: 700,
-                            color: '#212529',
+                            color: '#191F28',
+                            letterSpacing: '-0.3px',
                         }}>
                             인증번호 입력
                         </h2>
                         <p style={{
                             margin: '0 0 24px 0',
                             fontSize: 14,
-                            color: '#868e96',
+                            color: '#6B7684',
+                            lineHeight: 1.5,
                         }}>
                             {phone}으로 전송된<br />인증번호 6자리를 입력하세요.
                         </p>
@@ -369,28 +392,38 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
                             style={{
                                 width: '100%',
                                 height: 52,
-                                border: `2px solid ${error ? '#fa5252' : '#dee2e6'}`,
+                                border: `1.5px solid ${error ? '#EF4444' : '#E2E8F0'}`,
                                 borderRadius: 12,
                                 padding: '0 16px',
                                 fontSize: 24,
                                 fontWeight: 600,
+                                color: '#191F28',
+                                backgroundColor: '#F8FAFC',
                                 textAlign: 'center',
                                 letterSpacing: 8,
                                 outline: 'none',
                                 boxSizing: 'border-box',
-                                transition: 'border-color 0.2s',
+                                transition: 'border-color 0.2s, box-shadow 0.2s, background-color 0.2s',
                             }}
                             onFocus={(e) => {
-                                if (!error) e.currentTarget.style.borderColor = '#5c3fbf';
+                                if (!error) {
+                                    e.currentTarget.style.borderColor = '#2563EB';
+                                    e.currentTarget.style.boxShadow = '0 0 0 3px rgba(37, 99, 235, 0.12)';
+                                    e.currentTarget.style.backgroundColor = '#FFFFFF';
+                                }
                             }}
                             onBlur={(e) => {
-                                if (!error) e.currentTarget.style.borderColor = '#dee2e6';
+                                if (!error) {
+                                    e.currentTarget.style.borderColor = '#E2E8F0';
+                                    e.currentTarget.style.boxShadow = 'none';
+                                    e.currentTarget.style.backgroundColor = '#F8FAFC';
+                                }
                             }}
                             autoFocus
                         />
 
                         {error && (
-                            <p style={{ color: '#fa5252', fontSize: 13, margin: '8px 0 0' }}>
+                            <p style={{ color: '#EF4444', fontSize: 13, margin: '8px 0 0', fontWeight: 500 }}>
                                 {error}
                             </p>
                         )}
@@ -401,15 +434,15 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
                             style={{
                                 width: '100%',
                                 height: 52,
-                                backgroundColor: otp.length >= 6 ? '#5c3fbf' : '#e9ecef',
-                                color: otp.length >= 6 ? 'white' : '#adb5bd',
+                                backgroundColor: otp.length >= 6 ? '#2563EB' : '#E5E8EB',
+                                color: otp.length >= 6 ? '#FFFFFF' : '#8B95A1',
                                 border: 'none',
                                 borderRadius: 12,
                                 fontSize: 16,
                                 fontWeight: 600,
                                 cursor: otp.length >= 6 ? 'pointer' : 'default',
                                 marginTop: 16,
-                                transition: 'background-color 0.2s',
+                                transition: 'background-color 0.2s, transform 0.1s',
                             }}
                         >
                             {loading ? '확인 중...' : '확인'}
@@ -421,8 +454,9 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
                                 width: '100%',
                                 background: 'none',
                                 border: 'none',
-                                color: '#868e96',
+                                color: '#6B7684',
                                 fontSize: 14,
+                                fontWeight: 500,
                                 cursor: 'pointer',
                                 marginTop: 12,
                                 textDecoration: 'underline',

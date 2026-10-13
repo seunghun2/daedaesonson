@@ -1663,8 +1663,8 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
                     </div>
                 )}
 
-                {/* 하단 주소 버튼 (호갱노노 스타일 다크 플로팅 필) - 가운데 */}
-                {isMapLoaded && centerAddress && (
+                {/* 하단 주소 버튼 (호갱노노 스타일 다크 플로팅 필) - PC 전용 (모바일은 3단 드래그 바텀시트 사용) */}
+                {!isMobile && isMapLoaded && centerAddress && (
                     <div style={{
                         position: 'absolute',
                         bottom: isMobile ? '72px' : '24px',

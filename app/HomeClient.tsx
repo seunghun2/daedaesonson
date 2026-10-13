@@ -3,8 +3,9 @@
 import { useState, useMemo, useEffect, useRef, useTransition, useCallback, Suspense } from 'react';
 import { Box, Flex, useMantineTheme, TextInput, Group, Text, ThemeIcon, ActionIcon, ScrollArea, Stack, Loader, Center, Button, Popover, Checkbox, Drawer, SegmentedControl } from '@mantine/core';
 import { useMediaQuery } from '@mantine/hooks';
-import { Search, MapPin, Building, MessageCircle, Clock, Info, User, ChevronLeft, ChevronDown, ChevronRight, Heart, MessageSquare, Trash2, ArrowLeft, LogOut, Star } from 'lucide-react';
+import { Search, MapPin, Building, MessageCircle, Clock, Info, User, ChevronLeft, ChevronDown, ChevronRight, Heart, MessageSquare, Trash2, ArrowLeft, LogOut, Star, X, SlidersHorizontal } from 'lucide-react';
 import LoginModal from '@/components/auth/LoginModal';
+import CompareModal, { CompareFloatingTray } from '@/components/compare/CompareModal';
 import { useAuth } from '@/components/auth/AuthProvider';
 import { getSupabaseClient } from '@/lib/supabase';
 import Link from 'next/link';
@@ -50,7 +51,7 @@ function HighlightText({ text, highlight }: { text: string, highlight: string })
     <Text span size="sm">
       {parts.map((part, i) =>
         part.toLowerCase() === highlight.toLowerCase() ? (
-          <Text span key={i} c="#1D0098" fw={700}>{part}</Text>
+          <Text span key={i} c="#2563EB" fw={700}>{part}</Text>
         ) : (
           <Text span key={i}>{part}</Text>
         )
@@ -171,6 +172,28 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
   // 🔍 최근 검색어 상태
   const [recentSearches, setRecentSearches] = useState<string[]>([]);
 
+  // ⚖️ 시설 1:1 비교함 상태 (최대 3개)
+  const [compareList, setCompareList] = useState<Facility[]>([]);
+  const [compareModalOpen, setCompareModalOpen] = useState(false);
+  const compareIds = useMemo(() => compareList.map(f => f.id), [compareList]);
+
+  const handleToggleCompare = useCallback((facility: Facility, e: React.MouseEvent) => {
+    e.stopPropagation();
+    setCompareList(prev => {
+      const exists = prev.some(f => f.id === facility.id);
+      if (exists) return prev.filter(f => f.id !== facility.id);
+      if (prev.length >= 3) {
+        return [...prev.slice(1), facility];
+      }
+      return [...prev, facility];
+    });
+  }, []);
+
+  // 📱 모바일 3단계 스냅 바텀시트 ('peek' | 'half' | 'full')
+  const [mobileSheetSnap, setMobileSheetSnap] = useState<'peek' | 'half' | 'full'>('peek');
+  const sheetDragStartYRef = useRef<number | null>(null);
+  const [sheetDragOffsetY, setSheetDragOffsetY] = useState<number>(0);
+
   // localStorage에서 최근 검색어 불러오기
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -184,10 +207,27 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
   // 최근 검색어 저장 함수
   const saveRecentSearch = (query: string) => {
     if (!query.trim()) return;
-    const updated = [query, ...recentSearches.filter(s => s !== query)].slice(0, 5);
+    const updated = [query, ...recentSearches.filter(s => s !== query)].slice(0, 6);
     setRecentSearches(updated);
     try {
       localStorage.setItem('recentSearches', JSON.stringify(updated));
+    } catch { }
+  };
+
+  const removeRecentSearch = (query: string, e: React.MouseEvent) => {
+    e.stopPropagation();
+    const updated = recentSearches.filter(s => s !== query);
+    setRecentSearches(updated);
+    try {
+      localStorage.setItem('recentSearches', JSON.stringify(updated));
+    } catch { }
+  };
+
+  const clearRecentSearches = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setRecentSearches([]);
+    try {
+      localStorage.removeItem('recentSearches');
     } catch { }
   };
 
@@ -901,8 +941,8 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
                 </Box>
               )}
 
-              {/* 🔍 최근 검색어 (검색어 없고 포커스 상태일 때) */}
-              {searchFocused && !searchQuery.trim() && recentSearches.length > 0 && (
+              {/* 🔍 추천 검색어 & 최근 검색어 (검색어 없고 포커스 상태일 때) */}
+              {searchFocused && !searchQuery.trim() && (
                 <Box
                   pos="absolute"
                   top="calc(100% + 8px)"
@@ -911,32 +951,109 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
                   bg="white"
                   style={{
                     zIndex: 2100,
-                    borderRadius: 12,
-                    boxShadow: '0 8px 30px rgba(0,0,0,0.12), 0 4px 10px rgba(0,0,0,0.05)',
-                    border: '1px solid #f1f3f5',
+                    borderRadius: 14,
+                    boxShadow: '0 10px 32px rgba(15, 23, 42, 0.14), 0 2px 8px rgba(15, 23, 42, 0.06)',
+                    border: '1px solid #E5E8EB',
                     overflow: 'hidden'
                   }}
+                  onMouseDown={(e) => e.preventDefault()}
                 >
-                  <Box px="md" py="xs" bg="gray.0">
-                    <Text size="xs" c="dimmed" fw={500}>최근 검색</Text>
+                  {/* 추천 검색어 칩 */}
+                  <Box px={14} pt={14} pb={12} style={{ borderBottom: recentSearches.length > 0 ? '1px solid #F2F4F6' : 'none' }}>
+                    <Text size="xs" c="#64748B" fw={700} mb={8}>추천 검색어</Text>
+                    <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
+                      {['용인 봉안당', '분당 수목장', '서울 근교 공원묘지', '일산 봉안당', '양평 수목장', '인천가족공원'].map((keyword) => (
+                        <button
+                          key={keyword}
+                          type="button"
+                          onClick={() => {
+                            setSearchQuery(keyword);
+                            setSubmittedQuery(keyword);
+                            saveRecentSearch(keyword);
+                            setSearchFocused(false);
+                          }}
+                          style={{
+                            padding: '5px 10px',
+                            borderRadius: 999,
+                            backgroundColor: '#F8FAFC',
+                            border: '1px solid #E2E8F0',
+                            fontSize: 12,
+                            fontWeight: 600,
+                            color: '#333D4B',
+                            cursor: 'pointer',
+                          }}
+                        >
+                          {keyword}
+                        </button>
+                      ))}
+                    </div>
                   </Box>
-                  {recentSearches.map((query, i) => (
-                    <Box
-                      key={`recent-${i}`}
-                      px="md"
-                      py={12}
-                      style={{ cursor: 'pointer', borderBottom: i === recentSearches.length - 1 ? 'none' : '1px solid #f8f9fa' }}
-                      className="hover:bg-gray-50"
-                      onClick={() => {
-                        setSearchQuery(query);
-                        setSubmittedQuery(query);
-                        setSearchFocused(false);
-                      }}
-                      onMouseDown={(e) => e.preventDefault()}
-                    >
-                      <Text size="sm" c="dark.7" truncate>{query}</Text>
-                    </Box>
-                  ))}
+
+                  {/* 최근 검색어 목록 */}
+                  {recentSearches.length > 0 && (
+                    <>
+                      <Box px={14} py={8} bg="#F8FAFC" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                        <Text size="xs" c="#64748B" fw={700}>최근 검색</Text>
+                        <button
+                          type="button"
+                          onClick={clearRecentSearches}
+                          style={{
+                            border: 'none',
+                            background: 'transparent',
+                            fontSize: 11,
+                            fontWeight: 600,
+                            color: '#94A3B8',
+                            cursor: 'pointer',
+                            padding: '2px 4px',
+                          }}
+                        >
+                          전체삭제
+                        </button>
+                      </Box>
+                      {recentSearches.map((query, i) => (
+                        <Box
+                          key={`recent-${i}`}
+                          px={14}
+                          py={10}
+                          style={{
+                            cursor: 'pointer',
+                            borderBottom: i === recentSearches.length - 1 ? 'none' : '1px solid #F8FAFC',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'space-between',
+                            gap: 8,
+                          }}
+                          className="hover:bg-gray-50"
+                          onClick={() => {
+                            setSearchQuery(query);
+                            setSubmittedQuery(query);
+                            setSearchFocused(false);
+                          }}
+                        >
+                          <Group gap={8} wrap="nowrap" style={{ minWidth: 0, flex: 1 }}>
+                            <Clock size={13} color="#94A3B8" style={{ flexShrink: 0 }} />
+                            <Text size="sm" c="#333D4B" truncate>{query}</Text>
+                          </Group>
+                          <button
+                            type="button"
+                            onClick={(e) => removeRecentSearch(query, e)}
+                            aria-label="검색어 삭제"
+                            style={{
+                              border: 'none',
+                              background: 'transparent',
+                              color: '#94A3B8',
+                              cursor: 'pointer',
+                              padding: 4,
+                              display: 'flex',
+                              alignItems: 'center',
+                            }}
+                          >
+                            <X size={13} />
+                          </button>
+                        </Box>
+                      ))}
+                    </>
+                  )}
                 </Box>
               )}
             </Box>
@@ -1052,7 +1169,7 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
               user={user}
               profile={profile}
               favorites={favorites}
-              allFacilities={finalFacilities}
+              allFacilities={dbFacilities}
               onClose={() => setShowMyInfo(false)}
               onSignOut={() => { signOut(); setShowMyInfo(false); }}
               onFacilityClick={(fac) => { setShowMyInfo(false); handleMarkerClick(fac); }}
@@ -1063,11 +1180,11 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
             <FacilityDetail
               facility={selectedFacility}
               onClose={handleCloseDetail}
-              allFacilities={finalFacilities}
+              allFacilities={dbFacilities}
               isDesktop={true}
               isDetailLoading={isDetailLoading}
               onSelectFacility={(id) => {
-                const fac = finalFacilities.find(f => f.id === id);
+                const fac = dbFacilities.find(f => f.id === id);
                 if (fac) handleMarkerClick(fac);
               }}
               onMapView={(lat, lng) => {
@@ -1085,6 +1202,8 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
                 selectedId={selectedFacility?.id}
                 hideInquiry={hideInquiry}
                 setHideInquiry={setHideInquiry}
+                compareIds={compareIds}
+                onToggleCompare={handleToggleCompare}
               />
             </Flex>
           )}
@@ -1483,7 +1602,7 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
           isMobile={isMobile}
           onViewList={(region, lat, lng) => {
             if (isMobile) {
-              router.push(`/list?region=${encodeURIComponent(region)}&lat=${lat}&lng=${lng}`);
+              setMobileSheetSnap('half');
             } else {
               setNearbyList({ region, lat, lng });
               setNearbyCategory(['all']);
@@ -1701,7 +1820,7 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
                     setNearbyHideInquiry(tempNearbyHideInquiry);
                     setNearbyDrawerOpen(false);
                   }}
-                  style={{ flex: 1, height: 48, backgroundColor: '#1D0098', color: 'white', border: 'none', borderRadius: 12, fontSize: 15, fontWeight: 700, cursor: 'pointer' }}
+                  style={{ flex: 1, height: 48, backgroundColor: '#191F28', color: 'white', border: 'none', borderRadius: 12, fontSize: 15, fontWeight: 700, cursor: 'pointer' }}
                 >
                   적용하기
                 </button>
@@ -1741,7 +1860,12 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
                         onClick={handleOpenNearby}
                         style={{ cursor: 'pointer', borderRadius: '8px', transition: 'all 0.2s ease' }}
                       >
-                        <FacilityCard facility={facility} onClick={handleOpenNearby} />
+                        <FacilityCard
+                          facility={facility}
+                          onClick={handleOpenNearby}
+                          isCompared={compareIds.includes(facility.id)}
+                          onToggleCompare={handleToggleCompare}
+                        />
                       </Box>
                     );
                   })}
@@ -1815,6 +1939,7 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
               <Box style={{ flex: 1, overflow: 'hidden' }}>
                 <FacilityDetail
                   facility={selectedFacility}
+                  allFacilities={dbFacilities}
                   onClose={() => {
                     // 🚀 슬라이드아웃 먼저 실행 → 애니메이션 끝나면 상태 정리
                     setIsDetailClosing(true);
@@ -1838,7 +1963,159 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
           </>
         )
       }
-      {/* 모바일 하단 지도/목록 전환은 "주변 시설 보기" 버튼이 대체 */}
+
+      {/* 📱 모바일 3단계 드래그 스냅 바텀시트 (peek / half / full) */}
+      {isMobile && mobileView === 'map' && !selectedFacility && (
+        <div
+          style={{
+            position: 'fixed',
+            left: 0,
+            right: 0,
+            bottom: 'calc(58px + env(safe-area-inset-bottom, 0px))',
+            height:
+              mobileSheetSnap === 'full'
+                ? 'calc(100dvh - 150px - env(safe-area-inset-bottom, 0px))'
+                : mobileSheetSnap === 'half'
+                  ? '52dvh'
+                  : '56px',
+            transform: uiHidden
+              ? 'translateY(150%)'
+              : sheetDragOffsetY !== 0
+                ? `translateY(${Math.max(-240, Math.min(240, sheetDragOffsetY))}px)`
+                : 'translateY(0)',
+            transition: sheetDragStartYRef.current !== null
+              ? 'none'
+              : 'height 0.28s cubic-bezier(0.22, 1, 0.36, 1), transform 0.28s cubic-bezier(0.22, 1, 0.36, 1)',
+            backgroundColor: '#FFFFFF',
+            borderRadius: '20px 20px 0 0',
+            boxShadow: '0 -6px 24px rgba(15, 23, 42, 0.12)',
+            borderTop: '1px solid #E5E8EB',
+            zIndex: 950,
+            display: 'flex',
+            flexDirection: 'column',
+            overflow: 'hidden',
+          }}
+        >
+          {/* 드래그 핸들 & 요약 바 */}
+          <div
+            onTouchStart={(e) => {
+              sheetDragStartYRef.current = e.touches[0].clientY;
+            }}
+            onTouchMove={(e) => {
+              if (sheetDragStartYRef.current === null) return;
+              const delta = e.touches[0].clientY - sheetDragStartYRef.current;
+              setSheetDragOffsetY(delta);
+            }}
+            onTouchEnd={() => {
+              if (sheetDragStartYRef.current === null) return;
+              const delta = sheetDragOffsetY;
+              sheetDragStartYRef.current = null;
+              setSheetDragOffsetY(0);
+
+              if (delta < -40) {
+                setMobileSheetSnap(prev => (prev === 'peek' ? 'half' : 'full'));
+              } else if (delta > 40) {
+                setMobileSheetSnap(prev => (prev === 'full' ? 'half' : 'peek'));
+              }
+            }}
+            onClick={() => {
+              setMobileSheetSnap(prev => (prev === 'peek' ? 'half' : prev === 'half' ? 'full' : 'peek'));
+            }}
+            style={{
+              padding: '8px 16px 10px',
+              cursor: 'pointer',
+              flexShrink: 0,
+              userSelect: 'none',
+              touchAction: 'none',
+              backgroundColor: '#FFFFFF',
+              borderBottom: mobileSheetSnap === 'peek' ? 'none' : '1px solid #F2F4F6',
+            }}
+          >
+            {/* 상단 그립 바 */}
+            <div style={{
+              width: 36,
+              height: 4,
+              borderRadius: 999,
+              backgroundColor: '#CBD5E1',
+              margin: '0 auto 8px',
+            }} />
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 6, minWidth: 0 }}>
+                <MapPin size={14} color="#2563EB" style={{ flexShrink: 0 }} />
+                <span style={{ fontSize: 13.5, fontWeight: 700, color: '#191F28', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                  {currentRegionName ? `${currentRegionName} 주변 시설` : '현재 지도 영역 시설'}
+                </span>
+                <span style={{ fontSize: 13.5, fontWeight: 800, color: '#2563EB', flexShrink: 0 }}>
+                  {finalFacilities.length}
+                </span>
+              </div>
+              <span style={{
+                fontSize: 11.5,
+                fontWeight: 700,
+                color: mobileSheetSnap === 'peek' ? '#2563EB' : '#64748B',
+                backgroundColor: mobileSheetSnap === 'peek' ? '#EFF6FF' : '#F2F4F6',
+                padding: '4px 10px',
+                borderRadius: 999,
+                flexShrink: 0,
+              }}>
+                {mobileSheetSnap === 'peek' ? '목록 펼치기' : mobileSheetSnap === 'half' ? '전체 펼치기' : '지도 보기'}
+              </span>
+            </div>
+          </div>
+
+          {/* 시트 내부 시설 리스트 (half / full 상태일 때 표시) */}
+          {mobileSheetSnap !== 'peek' && (
+            <div style={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
+              <FilterBar
+                sortBy={sortBy}
+                setSortBy={setSortBy}
+                totalCount={finalFacilities.length}
+                institutionFilter={institutionFilter}
+                setInstitutionFilter={setInstitutionFilter}
+                regionName={currentRegionName}
+                hideInquiry={hideInquiry}
+                setHideInquiry={setHideInquiry}
+              />
+              <FacilityList
+                facilities={finalFacilities}
+                onFacilityClick={handleMarkerClick}
+                selectedId={undefined}
+                hideInquiry={hideInquiry}
+                setHideInquiry={setHideInquiry}
+                compareIds={compareIds}
+                onToggleCompare={handleToggleCompare}
+              />
+            </div>
+          )}
+        </div>
+      )}
+
+      {/* ⚖️ 시설 비교 플로팅 트레이 & 1:1 비교 모달 */}
+      <CompareFloatingTray
+        items={compareList}
+        onRemove={(id) => setCompareList(prev => prev.filter(f => f.id !== id))}
+        onClear={() => setCompareList([])}
+        onOpenModal={() => setCompareModalOpen(true)}
+        isMobile={isMobile}
+        hasSelectedDetail={!!selectedFacility}
+      />
+      <CompareModal
+        opened={compareModalOpen}
+        items={compareList}
+        allFacilities={dbFacilities}
+        onClose={() => setCompareModalOpen(false)}
+        onRemove={(id) => {
+          setCompareList(prev => {
+            const next = prev.filter(f => f.id !== id);
+            if (next.length === 0) setCompareModalOpen(false);
+            return next;
+          });
+        }}
+        onSelectFacility={(fac) => {
+          setCompareModalOpen(false);
+          handleMarkerClick(fac);
+        }}
+      />
 
       {/* 모바일 하단 탭바 */}
       {isMobile && !selectedFacility && <BottomNav hidden={uiHidden} />}
@@ -1959,21 +2236,21 @@ function MyInfoPanel({
   };
 
   return (
-    <Box style={{ height: '100%', overflowY: 'auto', backgroundColor: '#f8f9fa' }}>
-      {/* 헤더 */}
-      <Box px="md" py={12} style={{ backgroundColor: '#302E92', position: 'sticky', top: 0, zIndex: 10 }}>
-        <Group gap="md" align="center">
+    <Box style={{ height: '100%', overflowY: 'auto', backgroundColor: '#F8FAFC' }}>
+      {/* 헤더 (클린 화이트 헤더) */}
+      <Box px="md" py={14} style={{ backgroundColor: '#FFFFFF', borderBottom: '1px solid #E5E8EB', position: 'sticky', top: 0, zIndex: 10 }}>
+        <Group gap="sm" align="center">
           <Box
-            style={{ cursor: 'pointer', display: 'flex', alignItems: 'center' }}
+            style={{ cursor: 'pointer', display: 'flex', alignItems: 'center', padding: 4, marginLeft: -4 }}
             onClick={() => {
               if (showFavList) setShowFavList(false);
               else if (showMyReviews) setShowMyReviews(false);
               else onClose();
             }}
           >
-            <ChevronLeft size={20} color="white" />
+            <ChevronLeft size={20} color="#191F28" />
           </Box>
-          <Text size="md" fw={700} c="white">{showFavList ? '관심 시설' : showMyReviews ? '내 이야기' : '내 정보'}</Text>
+          <Text size="md" fw={800} c="#191F28">{showFavList ? '관심 시설' : showMyReviews ? '내 이야기' : '내 정보'}</Text>
         </Group>
       </Box>
 
@@ -1982,9 +2259,9 @@ function MyInfoPanel({
         <Box p="md">
           {favFacilities.length === 0 ? (
             <Box py={60} style={{ textAlign: 'center' }}>
-              <Star size={48} color="#FFD43B" fill="#FFD43B" style={{ margin: '0 auto', display: 'block' }} />
-              <Text c="dimmed" size="sm" mt={12}>관심 시설이 없습니다</Text>
-              <Text c="dimmed" size="xs" mt={4}>시설 상세 페이지에서 ★를 눌러 추가하세요</Text>
+              <Star size={44} color="#CBD5E1" style={{ margin: '0 auto', display: 'block' }} />
+              <Text c="#64748B" size="sm" fw={600} mt={12}>관심 시설이 없습니다</Text>
+              <Text c="#94A3B8" size="xs" mt={4}>시설 상세 페이지에서 별 아이콘을 눌러 추가하세요</Text>
             </Box>
           ) : (
             <Stack gap="sm">
@@ -1994,21 +2271,21 @@ function MyInfoPanel({
                   bg="white"
                   p="md"
                   style={{
-                    borderRadius: 12,
+                    borderRadius: 14,
                     cursor: 'pointer',
                     transition: 'transform 0.15s, box-shadow 0.15s',
-                    border: '1px solid #f1f3f5',
+                    border: '1px solid #E5E8EB',
                   }}
                   onClick={() => onFacilityClick(fac)}
-                  onMouseEnter={(e: any) => { e.currentTarget.style.transform = 'translateY(-1px)'; e.currentTarget.style.boxShadow = '0 2px 8px rgba(0,0,0,0.08)'; }}
+                  onMouseEnter={(e: any) => { e.currentTarget.style.transform = 'translateY(-1px)'; e.currentTarget.style.boxShadow = '0 4px 12px rgba(15,23,42,0.06)'; }}
                   onMouseLeave={(e: any) => { e.currentTarget.style.transform = ''; e.currentTarget.style.boxShadow = ''; }}
                 >
                   <Group justify="space-between" wrap="nowrap" gap="sm">
                     <Box style={{ flex: 1, minWidth: 0 }}>
-                      <Text size="sm" fw={600} truncate>{fac.name}</Text>
+                      <Text size="sm" fw={700} c="#191F28" truncate>{fac.name}</Text>
                       <Group gap={4} mt={4}>
-                        <MapPin size={14} color="#868e96" />
-                        <Text size="xs" c="dimmed" truncate>{fac.address}</Text>
+                        <MapPin size={13} color="#94A3B8" />
+                        <Text size="xs" c="#64748B" truncate>{fac.address}</Text>
                       </Group>
                     </Box>
                     <Group gap={4} wrap="nowrap" align="center">
@@ -2024,10 +2301,10 @@ function MyInfoPanel({
                             toggleFavorite(String(fac.id));
                           }}
                         >
-                          <Star size={20} color="#fcc419" fill="#fcc419" />
+                          <Star size={19} color="#F59E0B" fill="#F59E0B" />
                         </ActionIcon>
                       )}
-                      <ChevronRight size={16} color="#adb5bd" />
+                      <ChevronRight size={16} color="#94A3B8" />
                     </Group>
                   </Group>
                 </Box>
@@ -2040,52 +2317,54 @@ function MyInfoPanel({
         <Box p="md">
           {myReviews.length === 0 ? (
             <Box py={60} style={{ textAlign: 'center' }}>
-              <MessageSquare size={48} color="#dee2e6" style={{ margin: '0 auto', display: 'block' }} />
-              <Text c="dimmed" mt="sm">아직 작성한 이야기가 없어요</Text>
+              <MessageSquare size={44} color="#CBD5E1" style={{ margin: '0 auto', display: 'block' }} />
+              <Text c="#64748B" size="sm" fw={600} mt="sm">아직 작성한 이야기가 없어요</Text>
             </Box>
           ) : (
             <Stack gap="xs">
-              {myReviews.map((review: any) => (
-                <Box
-                  key={review.id}
-                  bg="white" p="md"
-                  style={{ borderRadius: 12, cursor: 'pointer' }}
-                  onClick={() => {
-                    setShowMyReviews(false);
-                    onClose();
-                    const fullFacility = allFacilities.find(f => String(f.id) === String(review.facilityId));
-                    if (fullFacility) {
-                      onFacilityClick(fullFacility);
-                    } else {
-                      // 시설 데이터에 없으면 상세 페이지로 직접 이동
-                      router.push(`/facility/${review.facilityId}`);
-                    }
-                  }}
-                >
-                  <Group justify="space-between" mb={4}>
-                    <Group gap={4}>
-                      {[1, 2, 3, 4, 5].map(s => (
-                        <span key={s} style={{ color: s <= review.rating ? '#fcc419' : '#dee2e6', fontSize: 14 }}>★</span>
-                      ))}
+              {myReviews.map((review: any) => {
+                const matchedFacility = allFacilities.find(f => String(f.id) === String(review.facilityId));
+                const facilityTitle = matchedFacility?.name || review.facilityName || review.facility?.name || '추모시설';
+                return (
+                  <Box
+                    key={review.id}
+                    bg="white" p="md"
+                    style={{ borderRadius: 14, border: '1px solid #E5E8EB', cursor: 'pointer' }}
+                    onClick={() => {
+                      setShowMyReviews(false);
+                      onClose();
+                      if (matchedFacility) {
+                        onFacilityClick(matchedFacility);
+                      } else {
+                        router.push(`/facility/${review.facilityId}`);
+                      }
+                    }}
+                  >
+                    <Group justify="space-between" mb={6}>
+                      <Group gap={2}>
+                        {[1, 2, 3, 4, 5].map(s => (
+                          <Star key={s} size={13} color={s <= review.rating ? '#F59E0B' : '#E2E8F0'} fill={s <= review.rating ? '#F59E0B' : '#E2E8F0'} />
+                        ))}
+                      </Group>
+                      <Group gap={8}>
+                        <Text size="xs" c="#94A3B8">
+                          {new Date(review.createdAt).toLocaleDateString('ko-KR', { month: 'short', day: 'numeric' })}
+                        </Text>
+                        <Box
+                          onClick={(e: any) => { e.stopPropagation(); setDeleteReviewId(review.id); }}
+                          style={{ cursor: 'pointer', padding: 6, borderRadius: 6, display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+                          onMouseEnter={(e: any) => { e.currentTarget.style.backgroundColor = '#FEF2F2'; }}
+                          onMouseLeave={(e: any) => { e.currentTarget.style.backgroundColor = 'transparent'; }}
+                        >
+                          <Trash2 size={15} color="#94A3B8" />
+                        </Box>
+                      </Group>
                     </Group>
-                    <Group gap={8}>
-                      <Text size="xs" c="dimmed">
-                        {new Date(review.createdAt).toLocaleDateString('ko-KR', { month: 'short', day: 'numeric' })}
-                      </Text>
-                      <Box
-                        onClick={(e: any) => { e.stopPropagation(); setDeleteReviewId(review.id); }}
-                        style={{ cursor: 'pointer', padding: 10, borderRadius: 6, display: 'flex', alignItems: 'center', justifyContent: 'center', minWidth: 44, minHeight: 44 }}
-                        onMouseEnter={(e: any) => { e.currentTarget.style.backgroundColor = '#fff5f5'; }}
-                        onMouseLeave={(e: any) => { e.currentTarget.style.backgroundColor = 'transparent'; }}
-                      >
-                        <Trash2 size={16} color="#adb5bd" />
-                      </Box>
-                    </Group>
-                  </Group>
-                  <Text size="sm" lineClamp={2}>{review.content}</Text>
-                  <Text size="xs" c="dimmed" mt={4}>{review.facilityId}</Text>
-                </Box>
-              ))}
+                    <Text size="sm" c="#191F28" lineClamp={2}>{review.content}</Text>
+                    <Text size="xs" c="#2563EB" fw={600} mt={6}>{facilityTitle}</Text>
+                  </Box>
+                );
+              })}
             </Stack>
           )}
 
@@ -2094,24 +2373,24 @@ function MyInfoPanel({
             <Box style={{
               position: 'fixed', inset: 0, zIndex: 9999,
               display: 'flex', alignItems: 'center', justifyContent: 'center',
-              backgroundColor: 'rgba(0,0,0,0.4)',
+              backgroundColor: 'rgba(15, 23, 42, 0.45)',
             }} onClick={() => setDeleteReviewId(null)}>
               <Box
                 bg="white" p="xl"
                 style={{ borderRadius: 16, width: 280, textAlign: 'center', animation: 'scaleIn 0.2s ease-out' }}
                 onClick={(e: any) => e.stopPropagation()}
               >
-                <Text size="md" fw={700} mb={4}>이야기 삭제</Text>
-                <Text size="sm" c="dimmed" mb={20}>이 이야기를 삭제하시겠습니까?</Text>
+                <Text size="md" fw={800} c="#191F28" mb={4}>이야기 삭제</Text>
+                <Text size="sm" c="#64748B" mb={20}>이 이야기를 삭제하시겠습니까?</Text>
                 <Group justify="center" gap={8}>
                   <button
                     onClick={() => setDeleteReviewId(null)}
-                    style={{ padding: '10px 28px', borderRadius: 10, flex: 1, backgroundColor: '#f1f3f5', border: 'none', fontSize: 14, fontWeight: 600, color: '#495057', cursor: 'pointer' }}
+                    style={{ padding: '10px 28px', borderRadius: 10, flex: 1, backgroundColor: '#F2F4F6', border: 'none', fontSize: 14, fontWeight: 600, color: '#4E5968', cursor: 'pointer' }}
                   >아니오</button>
                   <button
                     onClick={handleDeleteReview}
                     disabled={deletingReview}
-                    style={{ padding: '10px 28px', borderRadius: 10, flex: 1, backgroundColor: '#e03131', border: 'none', fontSize: 14, fontWeight: 600, color: 'white', cursor: deletingReview ? 'not-allowed' : 'pointer' }}
+                    style={{ padding: '10px 28px', borderRadius: 10, flex: 1, backgroundColor: '#DC2626', border: 'none', fontSize: 14, fontWeight: 600, color: 'white', cursor: deletingReview ? 'not-allowed' : 'pointer' }}
                   >{deletingReview ? '삭제 중...' : '예'}</button>
                 </Group>
               </Box>
@@ -2123,23 +2402,23 @@ function MyInfoPanel({
         <>
           {/* 프로필 카드 */}
           <Box p="md">
-            <Box p="lg" bg="white" style={{ borderRadius: 16, textAlign: 'center' }}>
+            <Box p="lg" bg="white" style={{ borderRadius: 16, border: '1px solid #E5E8EB', textAlign: 'center' }}>
               {avatarUrl ? (
                 <img src={avatarUrl} alt={displayName} width={64} height={64} style={{ borderRadius: '50%', objectFit: 'cover', margin: '0 auto 10px', display: 'block' }} />
               ) : (
-                <Box style={{ width: 64, height: 64, borderRadius: '50%', backgroundColor: '#302E92', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 10px' }}>
-                  <Text c="white" fw={700} size="lg">{displayName.charAt(0)}</Text>
+                <Box style={{ width: 64, height: 64, borderRadius: '50%', backgroundColor: '#EFF6FF', border: '1px solid #DBEAFE', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 10px' }}>
+                  <Text c="#2563EB" fw={800} size="lg">{displayName.charAt(0)}</Text>
                 </Box>
               )}
-              <Text size="md" fw={700} mb={2}>{displayName}</Text>
-              <Text size="xs" c="dimmed">{provider} 로그인</Text>
+              <Text size="md" fw={800} c="#191F28" mb={2}>{displayName}</Text>
+              <Text size="xs" c="#64748B">{provider} 로그인</Text>
             </Box>
           </Box>
 
           {/* 계정 정보 */}
           <Box px="md" pb="sm">
-            <Text size="xs" c="dimmed" mb={6} fw={600} px={4}>계정 정보</Text>
-            <Stack gap={0} bg="white" style={{ borderRadius: 12, overflow: 'hidden' }}>
+            <Text size="xs" c="#64748B" mb={6} fw={700} px={4}>계정 정보</Text>
+            <Stack gap={0} bg="white" style={{ borderRadius: 14, border: '1px solid #E5E8EB', overflow: 'hidden' }}>
               <MiniInfoRow label="닉네임" value={displayName} />
               <MiniInfoRow label="로그인 방식" value={provider} />
               <MiniInfoRow label="가입일" value={createdAt} last />
@@ -2150,18 +2429,18 @@ function MyInfoPanel({
           <Box px="md" pb="sm">
             <Box
               bg="white" px="md" py={14}
-              style={{ borderRadius: 12, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'space-between', transition: 'background-color 0.15s' }}
+              style={{ borderRadius: 14, border: '1px solid #E5E8EB', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'space-between', transition: 'background-color 0.15s' }}
               onClick={() => setShowFavList(true)}
-              onMouseEnter={(e: any) => { e.currentTarget.style.backgroundColor = '#f8f9fa'; }}
+              onMouseEnter={(e: any) => { e.currentTarget.style.backgroundColor = '#F8FAFC'; }}
               onMouseLeave={(e: any) => { e.currentTarget.style.backgroundColor = 'white'; }}
             >
               <Group gap={8}>
-                <Star size={18} color="#fcc419" fill="#fcc419" />
-                <Text size="sm" fw={500}>관심 시설</Text>
+                <Star size={18} color="#F59E0B" fill="#F59E0B" />
+                <Text size="sm" fw={600} c="#191F28">관심 시설</Text>
               </Group>
               <Group gap={4}>
-                <Text size="sm" fw={700} style={{ color: 'var(--mantine-color-brand-7)' }}>{favorites.length}개</Text>
-                <ChevronRight size={16} color="#adb5bd" />
+                <Text size="sm" fw={800} c="#2563EB">{favorites.length}개</Text>
+                <ChevronRight size={16} color="#94A3B8" />
               </Group>
             </Box>
           </Box>
@@ -2170,29 +2449,29 @@ function MyInfoPanel({
           <Box px="md" pb="sm">
             <Box
               bg="white" px="md" py={14}
-              style={{ borderRadius: 12, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'space-between', transition: 'background-color 0.15s' }}
+              style={{ borderRadius: 14, border: '1px solid #E5E8EB', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'space-between', transition: 'background-color 0.15s' }}
               onClick={() => setShowMyReviews(true)}
-              onMouseEnter={(e: any) => { e.currentTarget.style.backgroundColor = '#f8f9fa'; }}
+              onMouseEnter={(e: any) => { e.currentTarget.style.backgroundColor = '#F8FAFC'; }}
               onMouseLeave={(e: any) => { e.currentTarget.style.backgroundColor = 'white'; }}
             >
               <Group gap={8}>
-                <MessageSquare size={18} color="#302E92" />
-                <Text size="sm" fw={500}>내 이야기</Text>
+                <MessageSquare size={18} color="#2563EB" />
+                <Text size="sm" fw={600} c="#191F28">내 이야기</Text>
               </Group>
               <Group gap={4}>
-                <Text size="sm" fw={700} style={{ color: 'var(--mantine-color-brand-7)' }}>{myReviews.length}개</Text>
-                <ChevronRight size={16} color="#adb5bd" />
+                <Text size="sm" fw={800} c="#2563EB">{myReviews.length}개</Text>
+                <ChevronRight size={16} color="#94A3B8" />
               </Group>
             </Box>
           </Box>
 
           {/* 약관 동의 */}
           <Box px="md" pb="sm">
-            <Text size="xs" c="dimmed" mb={6} fw={600} px={4}>약관 동의 현황</Text>
-            <Stack gap={0} bg="white" style={{ borderRadius: 12, overflow: 'hidden' }}>
-              <MiniInfoRow label="이용약관" value={profile?.agreed_terms ? '✅ 동의' : '미동의'} />
-              <MiniInfoRow label="개인정보" value={profile?.agreed_privacy ? '✅ 동의' : '미동의'} />
-              <MiniInfoRow label="마케팅 수신" value={profile?.agreed_marketing ? '✅ 동의' : '미동의'} last />
+            <Text size="xs" c="#64748B" mb={6} fw={700} px={4}>약관 동의 현황</Text>
+            <Stack gap={0} bg="white" style={{ borderRadius: 14, border: '1px solid #E5E8EB', overflow: 'hidden' }}>
+              <MiniInfoRow label="이용약관" value={profile?.agreed_terms ? '동의 완료' : '미동의'} />
+              <MiniInfoRow label="개인정보" value={profile?.agreed_privacy ? '동의 완료' : '미동의'} />
+              <MiniInfoRow label="마케팅 수신" value={profile?.agreed_marketing ? '동의 완료' : '미동의'} last />
             </Stack>
           </Box>
 
@@ -2204,8 +2483,8 @@ function MyInfoPanel({
                 style={{
                   display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8,
                   width: '100%', padding: '12px', borderRadius: 12,
-                  backgroundColor: 'white', border: '1px solid #e9ecef',
-                  fontSize: 14, fontWeight: 600, color: '#495057', cursor: 'pointer',
+                  backgroundColor: 'white', border: '1px solid #E5E8EB',
+                  fontSize: 14, fontWeight: 600, color: '#4E5968', cursor: 'pointer',
                 }}
               >
                 <LogOut size={16} />
@@ -2217,7 +2496,7 @@ function MyInfoPanel({
                   display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8,
                   width: '100%', padding: '12px', borderRadius: 12,
                   backgroundColor: 'transparent', border: 'none',
-                  fontSize: 13, color: '#adb5bd', cursor: 'pointer',
+                  fontSize: 13, color: '#94A3B8', cursor: 'pointer',
                 }}
               >
                 <Trash2 size={14} />
@@ -2233,7 +2512,7 @@ function MyInfoPanel({
         <Box style={{
           position: 'fixed', inset: 0, zIndex: 9999,
           display: 'flex', alignItems: 'center', justifyContent: 'center',
-          backgroundColor: 'rgba(0,0,0,0.4)',
+          backgroundColor: 'rgba(15, 23, 42, 0.45)',
         }} onClick={() => setShowLogoutConfirm(false)}>
           <Box
             bg="white" p="xl"
@@ -2243,15 +2522,15 @@ function MyInfoPanel({
             }}
             onClick={(e: any) => e.stopPropagation()}
           >
-            <Text size="md" fw={700} mb={4}>로그아웃</Text>
-            <Text size="sm" c="dimmed" mb={20}>로그아웃 하시겠습니까?</Text>
+            <Text size="md" fw={800} c="#191F28" mb={4}>로그아웃</Text>
+            <Text size="sm" c="#64748B" mb={20}>로그아웃 하시겠습니까?</Text>
             <Group justify="center" gap={8}>
               <button
                 onClick={() => setShowLogoutConfirm(false)}
                 style={{
                   padding: '10px 28px', borderRadius: 10, flex: 1,
-                  backgroundColor: '#f1f3f5', border: 'none',
-                  fontSize: 14, fontWeight: 600, color: '#495057', cursor: 'pointer',
+                  backgroundColor: '#F2F4F6', border: 'none',
+                  fontSize: 14, fontWeight: 600, color: '#4E5968', cursor: 'pointer',
                 }}
               >
                 아니오
@@ -2260,7 +2539,7 @@ function MyInfoPanel({
                 onClick={() => { setShowLogoutConfirm(false); onSignOut(); }}
                 style={{
                   padding: '10px 28px', borderRadius: 10, flex: 1,
-                  backgroundColor: '#302E92', border: 'none',
+                  backgroundColor: '#191F28', border: 'none',
                   fontSize: 14, fontWeight: 600, color: 'white', cursor: 'pointer',
                 }}
               >
@@ -2277,10 +2556,10 @@ function MyInfoPanel({
 
 function MiniInfoRow({ label, value, last }: { label: string; value: string; last?: boolean }) {
   return (
-    <Box px="md" py={12} style={{ borderBottom: last ? 'none' : '1px solid #f1f3f5' }}>
+    <Box px="md" py={12} style={{ borderBottom: last ? 'none' : '1px solid #F2F4F6' }}>
       <Group justify="space-between">
-        <Text size="xs" c="dimmed">{label}</Text>
-        <Text size="sm" fw={500}>{value}</Text>
+        <Text size="xs" c="#64748B">{label}</Text>
+        <Text size="sm" fw={600} c="#191F28">{value}</Text>
       </Group>
     </Box>
   );

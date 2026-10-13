@@ -14,15 +14,25 @@ interface FacilityListProps {
     selectedId?: string | null;
     hideInquiry?: boolean;
     setHideInquiry?: (val: boolean) => void;
+    compareIds?: string[];
+    onToggleCompare?: (facility: Facility, e: React.MouseEvent) => void;
 }
 
 interface FacilityListItemProps {
     facility: Facility;
     isSelected: boolean;
     onSelect: (f: Facility) => void;
+    isCompared?: boolean;
+    onToggleCompare?: (facility: Facility, e: React.MouseEvent) => void;
 }
 
-const FacilityListItem = memo(function FacilityListItem({ facility, isSelected, onSelect }: FacilityListItemProps) {
+const FacilityListItem = memo(function FacilityListItem({
+    facility,
+    isSelected,
+    onSelect,
+    isCompared = false,
+    onToggleCompare,
+}: FacilityListItemProps) {
     const handleClick = useCallback(() => {
         onSelect(facility);
     }, [facility, onSelect]);
@@ -41,14 +51,29 @@ const FacilityListItem = memo(function FacilityListItem({ facility, isSelected, 
                 contain: 'content',
             }}
         >
-            <FacilityCard facility={facility} onClick={handleClick} />
+            <FacilityCard
+                facility={facility}
+                onClick={handleClick}
+                isCompared={isCompared}
+                onToggleCompare={onToggleCompare}
+            />
         </Box>
     );
 });
 
-export default function FacilityList({ facilities, loading, onFacilityClick, selectedId, hideInquiry, setHideInquiry }: FacilityListProps) {
+export default function FacilityList({
+    facilities,
+    loading,
+    onFacilityClick,
+    selectedId,
+    hideInquiry,
+    setHideInquiry,
+    compareIds = [],
+    onToggleCompare,
+}: FacilityListProps) {
     const [visibleCount, setVisibleCount] = useState(20);
     const viewportRef = useRef<HTMLDivElement>(null);
+    const sentinelRef = useRef<HTMLDivElement>(null);
     const [scrollPosition, setScrollPosition] = useState({ y: 0 });
 
     const scrollToTop = () => {
@@ -61,9 +86,25 @@ export default function FacilityList({ facilities, loading, onFacilityClick, sel
         setVisibleCount(20);
     }, [facilities]);
 
-    const handleLoadMore = () => {
-        setVisibleCount((prev) => prev + 20);
-    };
+    const handleLoadMore = useCallback(() => {
+        setVisibleCount((prev) => Math.min(prev + 20, facilities.length));
+    }, [facilities.length]);
+
+    // 무한 스크롤 IntersectionObserver
+    useEffect(() => {
+        const el = sentinelRef.current;
+        if (!el || visibleCount >= facilities.length) return;
+        const observer = new IntersectionObserver(
+            (entries) => {
+                if (entries[0]?.isIntersecting) {
+                    handleLoadMore();
+                }
+            },
+            { root: viewportRef.current, rootMargin: '240px' }
+        );
+        observer.observe(el);
+        return () => observer.disconnect();
+    }, [visibleCount, facilities.length, handleLoadMore]);
 
     if (loading) {
         return (
@@ -127,12 +168,14 @@ export default function FacilityList({ facilities, loading, onFacilityClick, sel
                             facility={fac}
                             isSelected={selectedId === fac.id}
                             onSelect={onFacilityClick}
+                            isCompared={compareIds.includes(fac.id)}
+                            onToggleCompare={onToggleCompare}
                         />
                     ))}
 
-                    {/* 더 보기 버튼 */}
+                    {/* 무한 스크롤 센티널 + 보조 더보기 버튼 */}
                     {visibleCount < facilities.length && (
-                        <Box px={16} pt={14}>
+                        <Box ref={sentinelRef} px={16} pt={14}>
                             <Button
                                 variant="light"
                                 color="gray"
