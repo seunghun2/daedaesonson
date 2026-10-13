@@ -13,34 +13,6 @@ interface PageProps {
     params: Promise<{ city: string; category: string }>;
 }
 
-// 동적 메타데이터
-export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
-    const { city, category } = await params;
-    const decodedCity = decodeURIComponent(city);
-    const decodedCategory = decodeURIComponent(category);
-    const categoryInfo = CATEGORY_MAP[decodedCategory];
-
-    if (!categoryInfo) {
-        return { title: '대대손손' };
-    }
-
-    const title = `${decodedCity} ${categoryInfo.label} 가격비교 | 대대손손`;
-    const description = `${decodedCity} 지역 ${categoryInfo.label} 시설 가격을 비교해보세요. 최저가부터 시설 정보까지 한눈에 확인!`;
-
-    return {
-        title,
-        description,
-        alternates: {
-            canonical: `/search/${city}/${category}`,
-        },
-        openGraph: {
-            title,
-            description,
-            url: `https://daedaesonson.com/search/${decodedCity}/${decodedCategory}`,
-        },
-    };
-}
-
 const HOMONYMOUS_DISTRICTS = new Set(['중구', '남구', '동구', '서구', '북구', '강서구', '고성군']);
 const SHORT_PROVINCE_MAP: Record<string, string> = {
     '서울특별시': '서울', '부산광역시': '부산', '대구광역시': '대구', '인천광역시': '인천',
@@ -61,6 +33,48 @@ function getCityKeyFromAddress(address: string): string | null {
         return `${shortProv} ${city}`;
     }
     return city;
+}
+
+// 동적 메타데이터
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+    const { city, category } = await params;
+    const decodedCity = decodeURIComponent(city);
+    const decodedCategory = decodeURIComponent(category);
+    const categoryInfo = CATEGORY_MAP[decodedCategory];
+
+    if (!categoryInfo) {
+        notFound();
+    }
+
+    const allFacilities = loadFacilities();
+    const hasMatch = allFacilities.some((f: any) => {
+        if (!f.address || f.isActive === false) return false;
+        const tokens = f.address.trim().split(/\s+/);
+        const cityKey = getCityKeyFromAddress(f.address);
+        return (cityKey === decodedCity || tokens[1] === decodedCity) &&
+            f.category === categoryInfo.code &&
+            f.priceRange?.min > 0;
+    });
+
+    if (!hasMatch) {
+        notFound();
+    }
+
+    const title = `${decodedCity} ${categoryInfo.label} 가격비교 | 대대손손`;
+    const description = `${decodedCity} 지역 ${categoryInfo.label} 시설 가격을 비교해보세요. 최저가부터 시설 정보까지 한눈에 확인!`;
+
+    return {
+        title,
+        description,
+        alternates: {
+            canonical: `/search/${city}/${category}`,
+        },
+        openGraph: {
+            title,
+            description,
+            url: `https://daedaesonson.com/search/${decodedCity}/${decodedCategory}`,
+        },
+    };
 }
 
 // 정적 경로 생성

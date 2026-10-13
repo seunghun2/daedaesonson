@@ -22,8 +22,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     const [region, category] = decodedSlug.split('-');
 
     const categoryInfo = CATEGORIES.find(c => c.slug === category);
-    if (!region || !categoryInfo) {
-        return { title: '대대손손' };
+    if (!region || !REGIONS.includes(region) || !categoryInfo) {
+        notFound();
     }
 
     const title = `${region} ${categoryInfo.label} 가격비교 | 대대손손`;
@@ -97,6 +97,7 @@ export default async function RegionPage({ params }: PageProps) {
 
     // 해당 지역 + 카테고리 필터링
     const facilities = allFacilities.filter((f: any) => {
+        if (f.isActive === false || f.category === 'FUNERAL_HOME') return false;
         const facRegion = extractRegion(f.address);
         return facRegion === region &&
             f.category === categoryInfo.code &&
