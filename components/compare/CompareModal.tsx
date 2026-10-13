@@ -180,30 +180,40 @@ export default function CompareModal({
     onRemove,
     onSelectFacility,
 }: CompareModalProps) {
-    // 지역 평균 계산 헬퍼
+    // 지역 평균 계산 헬퍼 (공설/사설 동일 유형 및 이상치 제외)
     const getRegionalInsight = (fac: Facility) => {
-        const minPrice = fac.representativePrice || fac.priceRange?.min || 0;
+        const rawMin = fac.representativePrice || fac.priceRange?.min || 0;
+        const minPrice = rawMin > 0 && rawMin < 10000 ? rawMin * 10000 : rawMin;
         if (!minPrice || minPrice <= 0) return null;
         const regionPrefix = fac.address?.split(' ')[0] || '';
-        const peers = allFacilities.filter(
-            (f) =>
+        const minThreshold = fac.isPublic ? 50000 : 500000;
+        const peers = allFacilities.filter((f) => {
+            const p = f.representativePrice || f.priceRange?.min || 0;
+            const normP = p > 0 && p < 10000 ? p * 10000 : p;
+            return (
                 f.category === fac.category &&
-                (f.representativePrice || f.priceRange?.min || 0) > 0 &&
+                Boolean(f.isPublic) === Boolean(fac.isPublic) &&
+                normP >= minThreshold &&
+                normP <= 50000000 &&
                 (!regionPrefix || f.address?.startsWith(regionPrefix))
-        );
+            );
+        });
         if (peers.length < 3) return null;
         const avg =
-            peers.reduce((acc, cur) => acc + (cur.representativePrice || cur.priceRange?.min || 0), 0) /
-            peers.length;
+            peers.reduce((acc, cur) => {
+                const p = cur.representativePrice || cur.priceRange?.min || 0;
+                return acc + (p > 0 && p < 10000 ? p * 10000 : p);
+            }, 0) / peers.length;
         if (!avg) return null;
         const diffPct = Math.round(((minPrice - avg) / avg) * 100);
         if (diffPct <= -5) {
             return { text: `지역 평균 대비 ${Math.abs(diffPct)}% 저렴`, color: '#059669', bg: '#ECFDF5' };
         }
-        if (diffPct >= 10) {
-            return { text: `지역 평균 대비 +${diffPct}%`, color: '#64748B', bg: '#F1F5F9' };
+        if (diffPct <= 15) {
+            return { text: '지역 평균 수준', color: '#2563EB', bg: '#EFF6FF' };
         }
-        return { text: '지역 평균 수준', color: '#2563EB', bg: '#EFF6FF' };
+        const roundedAvgMan = Math.round(avg / 100000) * 10;
+        return { text: `지역 평균 ${roundedAvgMan.toLocaleString()}만원`, color: '#475569', bg: '#F8FAFC' };
     };
 
     const lowestPriceId = React.useMemo(() => {

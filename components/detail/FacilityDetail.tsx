@@ -2412,17 +2412,34 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                             }
                             const displayItems = menuItems.length > 0 ? menuItems : subRepItems;
 
-                            // 지역 평균 대비 가격 인사이트 계산
+                            const minWon = displayItems.length > 0
+                                ? Math.min(...displayItems.map(d => d.price).filter(p => p > 0))
+                                : (displayPriceNum > 0 ? displayPriceNum * 10000 : 0);
+
+                            // 지역 평균 대비 가격 인사이트 계산 (공설/사설 동일 유형 및 이상치 제외)
                             const regionalInsight = (() => {
-                                const minWon = displayItems.length > 0
-                                    ? Math.min(...displayItems.map(d => d.price).filter(p => p > 0))
-                                    : (displayPriceNum > 0 ? displayPriceNum * 10000 : 0);
                                 if (!minWon || minWon <= 0 || !allFacilities || allFacilities.length === 0) return null;
-                                const regionWord = facility.address?.split(' ')[0] || '';
+                                const rawRegion = facility.address?.split(' ')[0] || '';
+                                const shortRegionMap: Record<string, string> = {
+                                    '서울특별시': '서울', '부산광역시': '부산', '대구광역시': '대구', '인천광역시': '인천',
+                                    '광주광역시': '광주', '대전광역시': '대전', '울산광역시': '울산', '세종특별자치시': '세종',
+                                    '경기도': '경기', '강원도': '강원', '강원특별자치도': '강원',
+                                    '충청북도': '충북', '충청남도': '충남',
+                                    '전라북도': '전북', '전북특별자치도': '전북', '전라남도': '전남',
+                                    '경상북도': '경북', '경상남도': '경남', '제주특별자치도': '제주',
+                                };
+                                const shortRegion = shortRegionMap[rawRegion] || rawRegion || '지역';
                                 const peers = allFacilities.filter(f => {
                                     const p = f.representativePrice || f.priceRange?.min || 0;
                                     const normP = p > 0 && p < 10000 ? p * 10000 : p;
-                                    return f.category === facility.category && normP > 0 && (!regionWord || f.address?.startsWith(regionWord));
+                                    const minThreshold = facility.isPublic ? 50000 : 500000;
+                                    return (
+                                        f.category === facility.category &&
+                                        Boolean(f.isPublic) === Boolean(facility.isPublic) &&
+                                        normP >= minThreshold &&
+                                        normP <= 50000000 &&
+                                        (!rawRegion || f.address?.startsWith(rawRegion))
+                                    );
                                 });
                                 if (peers.length < 3) return null;
                                 const avgWon = peers.reduce((acc, cur) => {
@@ -2432,149 +2449,127 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                 if (!avgWon) return null;
                                 const diffPct = Math.round(((minWon - avgWon) / avgWon) * 100);
                                 if (diffPct <= -5) {
-                                    return { label: `${regionWord || '지역'} 평균 대비 ${Math.abs(diffPct)}% 저렴`, bg: '#ECFDF5', color: '#059669', border: '#A7F3D0' };
+                                    return { label: `${shortRegion} 평균 대비 ${Math.abs(diffPct)}% 저렴`, bg: '#ECFDF5', color: '#059669', border: '#A7F3D0' };
                                 }
-                                if (diffPct >= 10) {
-                                    return { label: `${regionWord || '지역'} 평균 대비 +${diffPct}%`, bg: '#F1F5F9', color: '#475569', border: '#E2E8F0' };
+                                if (diffPct <= 15) {
+                                    return { label: `${shortRegion} 평균 가격대`, bg: '#EFF6FF', color: '#2563EB', border: '#BFDBFE' };
                                 }
-                                return { label: `${regionWord || '지역'} 평균 가격대`, bg: '#EFF6FF', color: '#2563EB', border: '#BFDBFE' };
+                                const roundedAvgMan = Math.round(avgWon / 100000) * 10;
+                                return { label: `${shortRegion} 평균 ${roundedAvgMan.toLocaleString()}만원`, bg: '#F8FAFC', color: '#475569', border: '#E2E8F0' };
                             })();
 
-                            const derivedInsights = extractFacilityInsights(facility);
-                            const hasDerivedBlock = Boolean(
-                                derivedInsights.managementFeeText ||
-                                derivedInsights.estimated10YearTotal ||
-                                derivedInsights.localDiscountPercent ||
-                                derivedInsights.primaryDuration ||
-                                derivedInsights.tierComparison ||
-                                derivedInsights.capacityTypes.length > 0 ||
-                                derivedInsights.religionTags.length > 0
-                            );
+                            const derivedInsights = extractFacilityInsights(facility, minWon);
+                            const summaryCells: { label: string; value: string; accent?: 'blue' | 'green' }[] = [];
+
+                            if (derivedInsights.primaryDuration) {
+                                summaryCells.push({
+                                    label: '계약·사용기간',
+                                    value: derivedInsights.primaryDuration,
+                                    accent: 'green',
+                                });
+                            }
+                            if (derivedInsights.capacityTypes.length > 0) {
+                                const compactTypes = derivedInsights.capacityTypes.map(t => t.replace('형', '')).join(' · ') + '형';
+                                summaryCells.push({
+                                    label: '가능 안치형태',
+                                    value: compactTypes,
+                                });
+                            }
+                            if (derivedInsights.managementFeeText) {
+                                summaryCells.push({
+                                    label: '연간 관리비',
+                                    value: derivedInsights.managementFeeText,
+                                });
+                            }
+                            if (derivedInsights.estimated10YearTotal) {
+                                summaryCells.push({
+                                    label: '10년 실부담(분양+관리비)',
+                                    value: `${formatKoreanPrice(derivedInsights.estimated10YearTotal)}~`,
+                                    accent: 'blue',
+                                });
+                            }
+                            if (derivedInsights.tierComparison) {
+                                summaryCells.push({
+                                    label: '알뜰단(1·2·8·9단) 최저',
+                                    value: `${formatKoreanPrice(derivedInsights.tierComparison.economyMin)}~`,
+                                });
+                                summaryCells.push({
+                                    label: '눈높이 로얄단(3~6단)',
+                                    value: `${formatKoreanPrice(derivedInsights.tierComparison.royalMin)}~`,
+                                    accent: 'blue',
+                                });
+                            }
+                            if (derivedInsights.localMinPrice && derivedInsights.nonLocalMinPrice) {
+                                summaryCells.push({
+                                    label: derivedInsights.localDiscountPercent ? `관내 주민(${derivedInsights.localDiscountPercent}% 감면)` : '관내 주민 최저',
+                                    value: `${formatKoreanPrice(derivedInsights.localMinPrice)}~`,
+                                    accent: 'green',
+                                });
+                                summaryCells.push({
+                                    label: '관외 주민 최저',
+                                    value: `${formatKoreanPrice(derivedInsights.nonLocalMinPrice)}~`,
+                                });
+                            }
 
                             const renderDerivedSummary = () => {
-                                if (!hasDerivedBlock) return null;
+                                if (summaryCells.length === 0) return null;
                                 return (
                                     <Box
                                         mt={10}
                                         style={{
                                             backgroundColor: '#FFFFFF',
-                                            border: '1px solid #EEF1F5',
-                                            borderRadius: '12px',
-                                            padding: '10px 14px',
+                                            border: '1px solid #E5E8EB',
+                                            borderRadius: '14px',
+                                            padding: '12px 16px',
                                         }}
                                     >
-                                        <Group gap={6} mb={8} wrap="wrap">
-                                            {derivedInsights.primaryDuration && (
-                                                <span
+                                        <div
+                                            style={{
+                                                display: 'grid',
+                                                gridTemplateColumns: 'repeat(2, minmax(0, 1fr))',
+                                                columnGap: '16px',
+                                                rowGap: '12px',
+                                            }}
+                                        >
+                                            {summaryCells.map((cell, idx) => (
+                                                <div
+                                                    key={cell.label}
                                                     style={{
-                                                        fontSize: '11px',
-                                                        fontWeight: 700,
-                                                        padding: '2px 8px',
-                                                        borderRadius: '6px',
-                                                        backgroundColor: '#F0FDF4',
-                                                        color: '#15803D',
+                                                        display: 'flex',
+                                                        flexDirection: 'column',
+                                                        gap: '3px',
+                                                        minWidth: 0,
+                                                        paddingTop: idx >= 2 ? '10px' : 0,
+                                                        borderTop: idx >= 2 ? '1px solid #F2F4F6' : 'none',
                                                     }}
                                                 >
-                                                    계약기간: {derivedInsights.primaryDuration}
-                                                </span>
-                                            )}
-                                            {derivedInsights.localDiscountPercent && (
-                                                <span
-                                                    style={{
-                                                        fontSize: '11px',
-                                                        fontWeight: 700,
-                                                        padding: '2px 8px',
-                                                        borderRadius: '6px',
-                                                        backgroundColor: '#EFF6FF',
-                                                        color: '#1D4ED8',
-                                                    }}
-                                                >
-                                                    관내 주민 최대 {derivedInsights.localDiscountPercent}% 감면
-                                                </span>
-                                            )}
-                                            {derivedInsights.capacityTypes.map((ct) => (
-                                                <span
-                                                    key={ct}
-                                                    style={{
-                                                        fontSize: '11px',
-                                                        fontWeight: 600,
-                                                        padding: '2px 8px',
-                                                        borderRadius: '6px',
-                                                        backgroundColor: '#F8FAFC',
-                                                        color: '#475569',
-                                                        border: '1px solid #E2E8F0',
-                                                    }}
-                                                >
-                                                    {ct} 가능
-                                                </span>
-                                            ))}
-                                            {derivedInsights.religionTags.map((rt) => (
-                                                <span
-                                                    key={rt}
-                                                    style={{
-                                                        fontSize: '11px',
-                                                        fontWeight: 600,
-                                                        padding: '2px 8px',
-                                                        borderRadius: '6px',
-                                                        backgroundColor: '#F8FAFC',
-                                                        color: '#475569',
-                                                        border: '1px solid #E2E8F0',
-                                                    }}
-                                                >
-                                                    {rt}
-                                                </span>
-                                            ))}
-                                        </Group>
-
-                                        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px' }}>
-                                            {derivedInsights.managementFeeText && (
-                                                <div style={{ display: 'flex', flexDirection: 'column', gap: '2px' }}>
-                                                    <span style={{ fontSize: '11px', color: '#8B95A1', fontWeight: 600 }}>연간 관리비</span>
-                                                    <span style={{ fontSize: '13px', color: '#191F28', fontWeight: 700 }}>
-                                                        {derivedInsights.managementFeeText}
+                                                    <span
+                                                        style={{
+                                                            fontSize: '11.5px',
+                                                            color: '#8B95A1',
+                                                            fontWeight: 600,
+                                                            whiteSpace: 'nowrap',
+                                                            overflow: 'hidden',
+                                                            textOverflow: 'ellipsis',
+                                                        }}
+                                                    >
+                                                        {cell.label}
+                                                    </span>
+                                                    <span
+                                                        style={{
+                                                            fontSize: '13.5px',
+                                                            color: cell.accent === 'blue' ? '#2563EB' : cell.accent === 'green' ? '#059669' : '#191F28',
+                                                            fontWeight: 700,
+                                                            letterSpacing: '-0.3px',
+                                                            whiteSpace: 'nowrap',
+                                                            overflow: 'hidden',
+                                                            textOverflow: 'ellipsis',
+                                                        }}
+                                                    >
+                                                        {cell.value}
                                                     </span>
                                                 </div>
-                                            )}
-                                            {derivedInsights.estimated10YearTotal && (
-                                                <div style={{ display: 'flex', flexDirection: 'column', gap: '2px' }}>
-                                                    <span style={{ fontSize: '11px', color: '#8B95A1', fontWeight: 600 }}>10년 실부담 예상(분양+관리비)</span>
-                                                    <span style={{ fontSize: '13px', color: '#2563EB', fontWeight: 800 }}>
-                                                        {formatKoreanPrice(derivedInsights.estimated10YearTotal)}~
-                                                    </span>
-                                                </div>
-                                            )}
-                                            {derivedInsights.tierComparison && (
-                                                <>
-                                                    <div style={{ display: 'flex', flexDirection: 'column', gap: '2px' }}>
-                                                        <span style={{ fontSize: '11px', color: '#8B95A1', fontWeight: 600 }}>알뜰단(1·2·8·9단) 최저</span>
-                                                        <span style={{ fontSize: '13px', color: '#191F28', fontWeight: 700 }}>
-                                                            {formatKoreanPrice(derivedInsights.tierComparison.economyMin)}~
-                                                        </span>
-                                                    </div>
-                                                    <div style={{ display: 'flex', flexDirection: 'column', gap: '2px' }}>
-                                                        <span style={{ fontSize: '11px', color: '#8B95A1', fontWeight: 600 }}>눈높이 로얄단(3~6단) 최저</span>
-                                                        <span style={{ fontSize: '13px', color: '#2563EB', fontWeight: 700 }}>
-                                                            {formatKoreanPrice(derivedInsights.tierComparison.royalMin)}~
-                                                        </span>
-                                                    </div>
-                                                </>
-                                            )}
-                                            {derivedInsights.localMinPrice && derivedInsights.nonLocalMinPrice && (
-                                                <>
-                                                    <div style={{ display: 'flex', flexDirection: 'column', gap: '2px' }}>
-                                                        <span style={{ fontSize: '11px', color: '#8B95A1', fontWeight: 600 }}>관내 주민 최저</span>
-                                                        <span style={{ fontSize: '13px', color: '#059669', fontWeight: 700 }}>
-                                                            {formatKoreanPrice(derivedInsights.localMinPrice)}~
-                                                        </span>
-                                                    </div>
-                                                    <div style={{ display: 'flex', flexDirection: 'column', gap: '2px' }}>
-                                                        <span style={{ fontSize: '11px', color: '#8B95A1', fontWeight: 600 }}>관외 주민 최저</span>
-                                                        <span style={{ fontSize: '13px', color: '#475569', fontWeight: 700 }}>
-                                                            {formatKoreanPrice(derivedInsights.nonLocalMinPrice)}~
-                                                        </span>
-                                                    </div>
-                                                </>
-                                            )}
+                                            ))}
                                         </div>
                                     </Box>
                                 );

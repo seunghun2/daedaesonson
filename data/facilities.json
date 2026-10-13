@@ -19389,8 +19389,8 @@
     },
     "category": "FAMILY_GRAVE",
     "priceRange": {
-      "min": 222122,
-      "max": 64000000
+      "min": 440,
+      "max": 6400
     },
     "hasParking": true,
     "hasRestaurant": true,
@@ -19461,7 +19461,7 @@
     },
     "lat": 36.8283303,
     "lng": 127.3082362,
-    "minPrice": 222122,
+    "minPrice": 4398000,
     "maxPrice": 64000000,
     "description": "",
     "rating": 0,
@@ -19798,7 +19798,7 @@
     "fax": "",
     "websiteUrl": "https://www.pungsanpark.co.kr/",
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0030/photo_1.jpg",
-    "representativePrice": 222122,
+    "representativePrice": 4398000,
     "favoriteCount": 0
   },
   {
@@ -19811,8 +19811,8 @@
     },
     "category": "FAMILY_GRAVE",
     "priceRange": {
-      "min": 100000,
-      "max": 15000000
+      "min": 1500,
+      "max": 1500
     },
     "hasParking": true,
     "hasRestaurant": false,
@@ -19843,7 +19843,7 @@
     },
     "lat": 37.8145666,
     "lng": 126.7440353,
-    "minPrice": 100000,
+    "minPrice": 15000000,
     "maxPrice": 15000000,
     "description": "",
     "rating": 0,
@@ -20153,7 +20153,7 @@
     "websiteUrl": "http://www.cpdsd.or.kr",
     "viewCount": 273,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0031/photo_1.PNG",
-    "representativePrice": 100000,
+    "representativePrice": 15000000,
     "favoriteCount": 0
   },
   {
@@ -21974,8 +21974,8 @@
     },
     "category": "FAMILY_GRAVE",
     "priceRange": {
-      "min": 330000,
-      "max": 4260000
+      "min": 253,
+      "max": 426
     },
     "hasParking": false,
     "hasRestaurant": true,
@@ -22010,7 +22010,7 @@
     },
     "lat": 34.8685955,
     "lng": 126.441041,
-    "minPrice": 330000,
+    "minPrice": 2525000,
     "maxPrice": 4260000,
     "description": "",
     "rating": 0,
@@ -22288,7 +22288,7 @@
     "websiteUrl": "",
     "viewCount": 324,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0036/photo_1.PNG",
-    "representativePrice": 330000,
+    "representativePrice": 2525000,
     "favoriteCount": 0
   },
   {
@@ -34851,8 +34851,8 @@
     },
     "category": "FAMILY_GRAVE",
     "priceRange": {
-      "min": 516000,
-      "max": 550000
+      "min": 20,
+      "max": 55
     },
     "hasParking": true,
     "hasRestaurant": false,
@@ -34881,7 +34881,7 @@
     },
     "lat": 36.2838894,
     "lng": 127.3394657,
-    "minPrice": 516000,
+    "minPrice": 200000,
     "maxPrice": 550000,
     "description": "",
     "rating": 0,
@@ -35123,7 +35123,7 @@
     "websiteUrl": "",
     "viewCount": 332,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0083/photo_1.jpg",
-    "representativePrice": 516000,
+    "representativePrice": 200000,
     "favoriteCount": 0
   },
   {
@@ -36858,8 +36858,8 @@
     },
     "category": "FAMILY_GRAVE",
     "priceRange": {
-      "min": 10000,
-      "max": 3500000
+      "min": 350,
+      "max": 350
     },
     "hasParking": true,
     "hasRestaurant": false,
@@ -36888,7 +36888,7 @@
     },
     "lat": 37.8123253,
     "lng": 127.0303153,
-    "minPrice": 10000,
+    "minPrice": 3500000,
     "maxPrice": 3500000,
     "description": "",
     "rating": 0,
@@ -37021,7 +37021,7 @@
     "websiteUrl": "https://laurentius.modoo.at/",
     "viewCount": 385,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0093/photo_1.PNG",
-    "representativePrice": 10000,
+    "representativePrice": 3500000,
     "favoriteCount": 0
   },
   {
@@ -39113,8 +39113,8 @@
     },
     "category": "FAMILY_GRAVE",
     "priceRange": {
-      "min": 250000,
-      "max": 250000
+      "min": 20,
+      "max": 25
     },
     "hasParking": false,
     "hasRestaurant": true,
@@ -39143,7 +39143,7 @@
     },
     "lat": 37.32444,
     "lng": 127.48628,
-    "minPrice": 250000,
+    "minPrice": 200000,
     "maxPrice": 250000,
     "description": "",
     "rating": 0,
@@ -39316,7 +39316,7 @@
     "websiteUrl": "",
     "viewCount": 229,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0104/photo_1.PNG",
-    "representativePrice": 250000,
+    "representativePrice": 200000,
     "favoriteCount": 0
   },
   {
@@ -43638,8 +43638,8 @@
     },
     "category": "FAMILY_GRAVE",
     "priceRange": {
-      "min": 199000,
-      "max": 676000
+      "min": 45,
+      "max": 68
     },
     "hasParking": true,
     "hasRestaurant": false,
@@ -43670,7 +43670,7 @@
     },
     "lat": 37.0718488,
     "lng": 126.9687339,
-    "minPrice": 199000,
+    "minPrice": 451000,
     "maxPrice": 676000,
     "description": "",
     "rating": 0,
@@ -43846,7 +43846,7 @@
     "websiteUrl": "",
     "viewCount": 312,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0127/photo_1.PNG",
-    "representativePrice": 199000,
+    "representativePrice": 451000,
     "favoriteCount": 0
   },
   {
@@ -52676,8 +52676,8 @@
     },
     "category": "FAMILY_GRAVE",
     "priceRange": {
-      "min": 9260,
-      "max": 9260
+      "min": 74,
+      "max": 74
     },
     "hasParking": true,
     "hasRestaurant": false,
@@ -52720,8 +52720,8 @@
     },
     "lat": 37.8039536,
     "lng": 127.149641,
-    "minPrice": 9260,
-    "maxPrice": 9260,
+    "minPrice": 736860,
+    "maxPrice": 736860,
     "description": "",
     "rating": 0,
     "reviewCount": 0,
@@ -52839,7 +52839,7 @@
     "websiteUrl": "",
     "viewCount": 421,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0178/photo_1.PNG",
-    "representativePrice": 9260,
+    "representativePrice": 736860,
     "favoriteCount": 0
   },
   {
@@ -54585,8 +54585,8 @@
     },
     "category": "FAMILY_GRAVE",
     "priceRange": {
-      "min": 30000,
-      "max": 90000
+      "min": 9,
+      "max": 9
     },
     "hasParking": true,
     "hasRestaurant": false,
@@ -54615,7 +54615,7 @@
     },
     "lat": 35.4750861,
     "lng": 126.7353662,
-    "minPrice": 30000,
+    "minPrice": 90000,
     "maxPrice": 90000,
     "description": "",
     "rating": 0,
@@ -54751,7 +54751,7 @@
     "websiteUrl": "https://www.gochang.go.kr",
     "viewCount": 454,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0189/photo_1.PNG",
-    "representativePrice": 30000,
+    "representativePrice": 90000,
     "favoriteCount": 0
   },
   {
@@ -63556,8 +63556,8 @@
     },
     "category": "FAMILY_GRAVE",
     "priceRange": {
-      "min": 10000,
-      "max": 1500000
+      "min": 150,
+      "max": 150
     },
     "hasParking": true,
     "hasRestaurant": false,
@@ -63602,7 +63602,7 @@
     },
     "lat": 37.7672065,
     "lng": 126.8553906,
-    "minPrice": 10000,
+    "minPrice": 1500000,
     "maxPrice": 1500000,
     "description": "",
     "rating": 0,
@@ -63719,7 +63719,7 @@
     "websiteUrl": "http://www.jongnocc.or.kr/16",
     "viewCount": 289,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0242/photo_1.jpg",
-    "representativePrice": 10000,
+    "representativePrice": 1500000,
     "favoriteCount": 0
   },
   {
@@ -86079,7 +86079,7 @@
     "hasDetailedPrices": true,
     "lat": 37.793526,
     "lng": 127.4637697,
-    "minPrice": 80000,
+    "minPrice": 125000,
     "maxPrice": 125000,
     "description": "",
     "rating": 0,
@@ -86207,8 +86207,8 @@
       "representativeCount": 2
     },
     "priceRange": {
-      "min": 80000,
-      "max": 125000
+      "min": 13,
+      "max": 13
     },
     "amenities": {},
     "operatorType": null,
@@ -86217,7 +86217,7 @@
     "websiteUrl": "",
     "viewCount": 468,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0379/photo_1.PNG",
-    "representativePrice": 80000,
+    "representativePrice": 125000,
     "favoriteCount": 0
   },
   {
@@ -93325,8 +93325,8 @@
     },
     "category": "FAMILY_GRAVE",
     "priceRange": {
-      "min": 80000,
-      "max": 125000
+      "min": 13,
+      "max": 13
     },
     "hasParking": false,
     "hasRestaurant": true,
@@ -93350,7 +93350,7 @@
     },
     "lat": 37.7991295,
     "lng": 127.3416834,
-    "minPrice": 80000,
+    "minPrice": 125000,
     "maxPrice": 125000,
     "description": "",
     "rating": 0,
@@ -93485,7 +93485,7 @@
     "websiteUrl": "",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0426/photo_1.PNG",
-    "representativePrice": 80000,
+    "representativePrice": 125000,
     "favoriteCount": 0
   },
   {
@@ -102135,8 +102135,8 @@
     },
     "category": "FAMILY_GRAVE",
     "priceRange": {
-      "min": 10000,
-      "max": 3500000
+      "min": 350,
+      "max": 350
     },
     "hasParking": true,
     "hasRestaurant": true,
@@ -102164,7 +102164,7 @@
     },
     "lat": 37.7632581,
     "lng": 126.8708422,
-    "minPrice": 10000,
+    "minPrice": 3500000,
     "maxPrice": 3500000,
     "description": "",
     "rating": 0,
@@ -102265,7 +102265,7 @@
     "websiteUrl": "",
     "viewCount": 392,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0482/photo_1.PNG",
-    "representativePrice": 10000,
+    "representativePrice": 3500000,
     "favoriteCount": 0
   },
   {
@@ -163368,7 +163368,7 @@
     },
     "lat": 38.1216671,
     "lng": 127.9983149,
-    "minPrice": 105000,
+    "minPrice": 547840,
     "maxPrice": 1374110,
     "description": "",
     "rating": 0,
@@ -163748,8 +163748,8 @@
       "representativeCount": 2
     },
     "priceRange": {
-      "min": 105000,
-      "max": 1374110
+      "min": 55,
+      "max": 137
     },
     "amenities": {
       "parkingSpaces": 30,
@@ -163761,7 +163761,7 @@
     "websiteUrl": "",
     "viewCount": 362,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0615/photo_1.PNG",
-    "representativePrice": 105000,
+    "representativePrice": 547840,
     "favoriteCount": 0
   },
   {
@@ -166595,8 +166595,8 @@
     },
     "category": "CHARNEL_HOUSE",
     "priceRange": {
-      "min": 100000,
-      "max": 9000000
+      "min": 300,
+      "max": 900
     },
     "hasParking": true,
     "hasRestaurant": false,
@@ -166647,7 +166647,7 @@
     },
     "lat": 36.2177375,
     "lng": 127.5266225,
-    "minPrice": 100000,
+    "minPrice": 3000000,
     "maxPrice": 9000000,
     "description": "",
     "rating": 0,
@@ -166984,7 +166984,7 @@
     "websiteUrl": "http://www.xn--ob0bp8i99gpugnpa27ylkm.com",
     "viewCount": 344,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0623/photo_1.JPG",
-    "representativePrice": 100000,
+    "representativePrice": 3000000,
     "favoriteCount": 0
   },
   {
@@ -192098,8 +192098,8 @@
     },
     "category": "CHARNEL_HOUSE",
     "priceRange": {
-      "min": 2500000,
-      "max": 4600000
+      "min": 460,
+      "max": 460
     },
     "hasParking": true,
     "hasRestaurant": false,
@@ -192140,7 +192140,7 @@
     },
     "lat": 37.6842054,
     "lng": 127.3591241,
-    "minPrice": 2500000,
+    "minPrice": 4600000,
     "maxPrice": 4600000,
     "description": "",
     "rating": 0,
@@ -192262,7 +192262,7 @@
     "websiteUrl": "",
     "viewCount": 133,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0698/photo_1.PNG",
-    "representativePrice": 2500000,
+    "representativePrice": 4600000,
     "favoriteCount": 0
   },
   {
@@ -195820,7 +195820,7 @@
       "lng": 128.3132371
     },
     "category": "CHARNEL_HOUSE",
-    "phone": "",
+    "phone": "054-481-0572",
     "website": "",
     "images": [
       "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0717/photo_1.jpg",
@@ -198949,7 +198949,7 @@
       "lng": 127.475454
     },
     "category": "CHARNEL_HOUSE",
-    "phone": "",
+    "phone": "031-637-7501",
     "website": "",
     "images": [
       "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0733/photo_1.jpg",
@@ -199623,7 +199623,7 @@
       "lng": 127.5893747
     },
     "category": "CHARNEL_HOUSE",
-    "phone": "",
+    "phone": "043-881-4700",
     "website": "",
     "images": [
       "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0737/photo_1.jpg",
@@ -200289,7 +200289,7 @@
       "lng": 128.5478544
     },
     "category": "CHARNEL_HOUSE",
-    "phone": "",
+    "phone": "033-635-7023",
     "website": "",
     "images": [
       "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0740/photo_1.PNG",
@@ -200580,8 +200580,8 @@
     },
     "category": "CHARNEL_HOUSE",
     "priceRange": {
-      "min": 50000,
-      "max": 170000
+      "min": 12,
+      "max": 17
     },
     "hasParking": true,
     "hasRestaurant": false,
@@ -200614,7 +200614,7 @@
     },
     "lat": 35.1059547,
     "lng": 128.7333997,
-    "minPrice": 50000,
+    "minPrice": 120000,
     "maxPrice": 170000,
     "description": "",
     "rating": 0,
@@ -200704,7 +200704,7 @@
     "websiteUrl": "",
     "viewCount": 369,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0742/photo_1.PNG",
-    "representativePrice": 50000,
+    "representativePrice": 120000,
     "favoriteCount": 0
   },
   {
@@ -202898,7 +202898,7 @@
       "lng": 126.4115754
     },
     "category": "CHARNEL_HOUSE",
-    "phone": "",
+    "phone": "041-660-2719",
     "website": "",
     "images": [
       "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0755/photo_1.jpg",
@@ -203576,7 +203576,7 @@
       "lng": 127.8696982
     },
     "category": "CHARNEL_HOUSE",
-    "phone": "",
+    "phone": "055-860-3681",
     "website": "",
     "images": [
       "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0760/photo_1.PNG",
@@ -205508,7 +205508,7 @@
       "lng": 128.0001121
     },
     "category": "CHARNEL_HOUSE",
-    "phone": "",
+    "phone": "054-541-6753",
     "website": "",
     "images": [
       "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0769/photo_1.PNG",
@@ -206700,7 +206700,7 @@
       "lng": 126.721681
     },
     "category": "CHARNEL_HOUSE",
-    "phone": "",
+    "phone": "041-940-2086",
     "website": "",
     "images": [
       "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0777/photo_1.jpg",
@@ -209096,7 +209096,7 @@
       "lng": 127.3722685
     },
     "category": "CHARNEL_HOUSE",
-    "phone": "",
+    "phone": "031-584-0657",
     "website": "",
     "images": [
       "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0792/photo_1.PNG"
@@ -209744,7 +209744,7 @@
       "lng": 126.9549804
     },
     "category": "CHARNEL_HOUSE",
-    "phone": "",
+    "phone": "031-354-2325",
     "website": "",
     "images": [
       "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0797/photo_1.PNG",
@@ -221392,7 +221392,7 @@
       "lng": 126.9549804
     },
     "category": "CHARNEL_HOUSE",
-    "phone": "",
+    "phone": "031-354-2325",
     "website": "",
     "images": [
       "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0873/photo_1.PNG",
@@ -221490,7 +221490,7 @@
       "lng": 126.9549804
     },
     "category": "CHARNEL_HOUSE",
-    "phone": "",
+    "phone": "031-354-2325",
     "website": "",
     "images": [
       "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0874/photo_1.PNG"
@@ -221605,7 +221605,7 @@
       "lng": 126.9549804
     },
     "category": "CHARNEL_HOUSE",
-    "phone": "",
+    "phone": "031-354-2325",
     "website": "",
     "images": [
       "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0875/photo_1.jpg",
@@ -221853,7 +221853,7 @@
       "lng": 128.5286111
     },
     "category": "CHARNEL_HOUSE",
-    "phone": "",
+    "phone": "053-312-0348",
     "website": "",
     "images": [
       "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0877/photo_1.PNG",
@@ -222380,7 +222380,7 @@
       "lng": 127.0171861
     },
     "category": "CHARNEL_HOUSE",
-    "phone": "",
+    "phone": "063-859-3840",
     "website": "",
     "images": [
       "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0879/photo_1.png",
@@ -222953,7 +222953,7 @@
       "lng": 128.5286111
     },
     "category": "CHARNEL_HOUSE",
-    "phone": "",
+    "phone": "053-312-0348",
     "website": "",
     "images": [
       "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0882/photo_1.PNG"
@@ -224773,7 +224773,7 @@
       "lng": 126.5789045
     },
     "category": "CHARNEL_HOUSE",
-    "phone": "",
+    "phone": "064-710-6622",
     "website": "",
     "images": [
       "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0891/photo_1.PNG",
@@ -228797,7 +228797,7 @@
       "lng": 126.7247019
     },
     "category": "CHARNEL_HOUSE",
-    "phone": "",
+    "phone": "032-456-2320",
     "website": "",
     "images": [
       "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0910/photo_1.JPG",
@@ -230153,7 +230153,7 @@
       "lng": 126.559877
     },
     "category": "CHARNEL_HOUSE",
-    "phone": "",
+    "phone": "064-751-0145",
     "website": "",
     "images": [
       "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0919/photo_1.PNG",
@@ -237589,7 +237589,7 @@
       "lng": 127.316492
     },
     "category": "CHARNEL_HOUSE",
-    "phone": "",
+    "phone": "031-533-8815",
     "website": "",
     "images": [
       "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0962/photo_1.PNG",
@@ -239747,7 +239747,7 @@
       "lng": 127.1963944
     },
     "category": "CHARNEL_HOUSE",
-    "phone": "",
+    "phone": "041-734-0545",
     "website": "",
     "images": [
       "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0974/photo_1.PNG",
@@ -240070,7 +240070,7 @@
       "lng": 127.5865606
     },
     "category": "CHARNEL_HOUSE",
-    "phone": "",
+    "phone": "063-320-4000",
     "website": "",
     "images": [
       "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0976/photo_1.PNG"
@@ -240822,7 +240822,7 @@
       "lng": 127.1129359
     },
     "category": "CHARNEL_HOUSE",
-    "phone": "",
+    "phone": "031-834-2140",
     "website": "",
     "images": [
       "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0980/photo_1.PNG"
@@ -242118,7 +242118,7 @@
       "lng": 127.4887344
     },
     "category": "CHARNEL_HOUSE",
-    "phone": "",
+    "phone": "043-536-4617",
     "website": "",
     "images": [
       "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0987/photo_1.PNG"
@@ -243911,7 +243911,7 @@
       "lng": 127.9189836
     },
     "category": "CHARNEL_HOUSE",
-    "phone": "",
+    "phone": "043-851-4114",
     "website": "",
     "images": [
       "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0999/photo_1.PNG"
@@ -246652,7 +246652,7 @@
       "lng": 126.7247019
     },
     "category": "CHARNEL_HOUSE",
-    "phone": "",
+    "phone": "032-456-2320",
     "website": "",
     "images": [
       "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-1013/photo_1.PNG",
@@ -246802,7 +246802,7 @@
       "lng": 127.2435771
     },
     "category": "CHARNEL_HOUSE",
-    "phone": "",
+    "phone": "044-850-1340",
     "website": "",
     "images": [
       "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-1014/photo_1.PNG"
@@ -247004,7 +247004,7 @@
       "lng": 127.08417
     },
     "category": "CHARNEL_HOUSE",
-    "phone": "",
+    "phone": "031-228-2409",
     "website": "",
     "images": [
       "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-1015/photo_1.PNG",
@@ -272614,7 +272614,7 @@
       "lng": 126.8816981
     },
     "category": "CHARNEL_HOUSE",
-    "phone": "",
+    "phone": "031-356-9272",
     "website": "",
     "images": [
       "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-1155/photo_1.png"
@@ -273730,7 +273730,7 @@
       "lng": 126.7247019
     },
     "category": "CHARNEL_HOUSE",
-    "phone": "",
+    "phone": "032-456-2320",
     "website": "",
     "images": [
       "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-1162/photo_1.png"
@@ -274453,7 +274453,7 @@
       "lng": 126.6903766
     },
     "category": "CHARNEL_HOUSE",
-    "phone": "",
+    "phone": "032-765-7251",
     "website": "",
     "images": [
       "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-1165/photo_1.png"
@@ -278540,7 +278540,7 @@
       "lng": 127.0843512
     },
     "category": "NATURAL_BURIAL",
-    "phone": "",
+    "phone": "063-228-6811",
     "website": "",
     "images": [
       "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-1180/photo_1.PNG",
@@ -279495,7 +279495,7 @@
       "lng": 127.8696982
     },
     "category": "NATURAL_BURIAL",
-    "phone": "",
+    "phone": "055-860-3681",
     "website": "",
     "images": [
       "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-1184/photo_1.jpg",
@@ -279854,7 +279854,7 @@
       "lng": 127.3970101
     },
     "category": "NATURAL_BURIAL",
-    "phone": "",
+    "phone": "031-323-1207",
     "website": "",
     "images": [
       "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-1185/photo_1.jpg",
@@ -280625,7 +280625,7 @@
       "lng": 127.4605107
     },
     "category": "NATURAL_BURIAL",
-    "phone": "",
+    "phone": "031-673-7904",
     "website": "",
     "images": [
       "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-1186/photo_1.JPG",
@@ -282732,7 +282732,7 @@
       "lng": 127.6544793
     },
     "category": "NATURAL_BURIAL",
-    "phone": "",
+    "phone": "033-435-8941",
     "website": "",
     "images": [
       "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-1192/photo_1.jpg",
@@ -288061,7 +288061,7 @@
       "lng": 127.0231085
     },
     "category": "NATURAL_BURIAL",
-    "phone": "",
+    "phone": "031-821-4242",
     "website": "",
     "images": [
       "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-1210/photo_1.PNG",
@@ -289003,7 +289003,7 @@
       "lng": 127.0342155
     },
     "category": "NATURAL_BURIAL",
-    "phone": "",
+    "phone": "061-852-7811",
     "website": "",
     "images": [
       "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-1212/photo_1.png"
@@ -289689,7 +289689,7 @@
       "lng": 126.9783892
     },
     "category": "NATURAL_BURIAL",
-    "phone": "",
+    "phone": "063-539-6725",
     "website": "",
     "images": [
       "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-1215/photo_1.PNG",
@@ -289901,7 +289901,7 @@
       "lng": 126.2811766
     },
     "category": "NATURAL_BURIAL",
-    "phone": "",
+    "phone": "061-544-6101",
     "website": "",
     "images": [
       "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-1216/photo_1.jpg",
@@ -290318,7 +290318,7 @@
       "lng": 127.511628
     },
     "category": "NATURAL_BURIAL",
-    "phone": "",
+    "phone": "031-886-4060",
     "website": "",
     "images": [
       "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/uploads/1772973717027_hsq9y5.jpg",
@@ -290496,7 +290496,7 @@
       "lng": 128.8016754
     },
     "category": "NATURAL_BURIAL",
-    "phone": "",
+    "phone": "055-351-4440",
     "website": "",
     "images": [
       "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-1219/photo_1.PNG",
@@ -290846,7 +290846,7 @@
       "lng": 126.4665292
     },
     "category": "NATURAL_BURIAL",
-    "phone": "",
+    "phone": "061-351-9870",
     "website": "",
     "images": [
       "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-1221/photo_1.jpg",
@@ -292844,7 +292844,7 @@
       "lng": 127.5737999
     },
     "category": "NATURAL_BURIAL",
-    "phone": "",
+    "phone": "031-880-4061",
     "website": "",
     "images": [
       "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-1225/photo_1.jpg",
@@ -304025,7 +304025,7 @@
       "lng": 129.1145233
     },
     "category": "NATURAL_BURIAL",
-    "phone": "",
+    "phone": "033-530-2796",
     "website": "",
     "images": [
       "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-1288/photo_1.jpg",
@@ -305312,7 +305312,7 @@
       "lng": 126.9163576
     },
     "category": "NATURAL_BURIAL",
-    "phone": "",
+    "phone": "062-572-4384",
     "website": "",
     "images": [
       "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-1297/photo_1.jpg",
@@ -306119,7 +306119,7 @@
       "lng": 127.2252482
     },
     "category": "NATURAL_BURIAL",
-    "phone": "",
+    "phone": "031-764-9617",
     "website": "",
     "images": [
       "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-1302/photo_1.jpg",
@@ -307955,7 +307955,7 @@
       "lng": 128.8929548
     },
     "category": "NATURAL_BURIAL",
-    "phone": "",
+    "phone": "055-724-4755",
     "website": "",
     "images": [
       "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-1315/photo_1.PNG",
@@ -311400,7 +311400,7 @@
       "lng": 128.0806856
     },
     "category": "NATURAL_BURIAL",
-    "phone": "",
+    "phone": "033-340-2904",
     "website": "",
     "images": [
       "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-1332/photo_1.PNG",
@@ -311665,7 +311665,7 @@
       "lng": 126.9581696
     },
     "category": "NATURAL_BURIAL",
-    "phone": "",
+    "phone": "061-860-5864",
     "website": "",
     "images": [
       "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-1334/photo_1.PNG",
@@ -315721,7 +315721,7 @@
       "lng": 126.5194406
     },
     "category": "NATURAL_BURIAL",
-    "phone": "",
+    "phone": "061-530-5141",
     "website": "",
     "images": [
       "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-1361/photo_1.PNG",
@@ -317340,7 +317340,7 @@
       "lng": 129.4626281
     },
     "category": "NATURAL_BURIAL",
-    "phone": "",
+    "phone": "054-274-9443",
     "website": "",
     "images": [
       "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-1371/photo_1.jpg"
@@ -317751,7 +317751,7 @@
       "lng": 128.2151103
     },
     "category": "NATURAL_BURIAL",
-    "phone": "",
+    "phone": "033-742-2170",
     "website": "",
     "images": [
       "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-1374/photo_1.PNG",
@@ -318055,7 +318055,7 @@
       "lng": 127.1129359
     },
     "category": "NATURAL_BURIAL",
-    "phone": "",
+    "phone": "031-834-2140",
     "website": "",
     "images": [
       "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-1376/photo_1.jpg"
@@ -318245,7 +318245,7 @@
       "lng": 126.9361723
     },
     "category": "NATURAL_BURIAL",
-    "phone": "",
+    "phone": "031-855-5501",
     "website": "",
     "images": [
       "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-1377/photo_1.PNG",
@@ -318695,7 +318695,7 @@
       "lng": 127.512838
     },
     "category": "NATURAL_BURIAL",
-    "phone": "",
+    "phone": "031-774-7374",
     "website": "",
     "images": [
       "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-1380/photo_1.jpg",
@@ -323040,7 +323040,7 @@
       "lng": 129.0973541
     },
     "category": "NATURAL_BURIAL",
-    "phone": "",
+    "phone": "054-753-5678",
     "website": "",
     "images": [
       "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-1385/photo_1.jpg",
@@ -323986,7 +323986,7 @@
       "lng": 127.5151978
     },
     "category": "NATURAL_BURIAL",
-    "phone": "",
+    "phone": "02-2676-7171",
     "website": "",
     "images": [
       "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-1391/photo_1.jpg",
@@ -324907,7 +324907,7 @@
       "lng": 126.9893739
     },
     "category": "NATURAL_BURIAL",
-    "phone": "",
+    "phone": "041-538-1940",
     "website": "",
     "images": [
       "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-1397/photo_1.PNG",
@@ -325484,7 +325484,7 @@
       "lng": 126.9592921
     },
     "category": "NATURAL_BURIAL",
-    "phone": "",
+    "phone": "031-834-1262",
     "website": "",
     "images": [
       "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-1401/photo_1.PNG"
@@ -325790,7 +325790,7 @@
       "lng": 129.4779729
     },
     "category": "NATURAL_BURIAL",
-    "phone": "",
+    "phone": "054-753-8228",
     "website": "",
     "images": [
       "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-1403/photo_1.PNG"
@@ -326120,7 +326120,7 @@
       "lng": 127.5501343
     },
     "category": "NATURAL_BURIAL",
-    "phone": "",
+    "phone": "043-730-3323",
     "website": "",
     "images": [
       "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-1405/photo_1.PNG",
@@ -326454,7 +326454,7 @@
       "lng": 127.7451416
     },
     "category": "NATURAL_BURIAL",
-    "phone": "",
+    "phone": "033-263-9446",
     "website": "",
     "images": [
       "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-1407/photo_1.PNG",
@@ -326606,7 +326606,7 @@
       "lng": 127.6167069
     },
     "category": "NATURAL_BURIAL",
-    "phone": "",
+    "phone": "043-883-4449",
     "website": "",
     "images": [
       "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-1408/photo_1.PNG"
@@ -327676,7 +327676,7 @@
       "lng": 127.2577997
     },
     "category": "NATURAL_BURIAL",
-    "phone": "",
+    "phone": "061-362-1199",
     "website": "",
     "images": [
       "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-1415/photo_1.PNG"
@@ -327967,7 +327967,7 @@
       "lng": 128.15553
     },
     "category": "NATURAL_BURIAL",
-    "phone": "",
+    "phone": "054-433-3880",
     "website": "",
     "images": [
       "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-1417/photo_1.PNG",
@@ -328483,7 +328483,7 @@
       "lng": 126.2811766
     },
     "category": "NATURAL_BURIAL",
-    "phone": "",
+    "phone": "061-544-6101",
     "website": "",
     "images": [
       "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/uploads/1773638868476_p95c84.jpg"
@@ -331164,8 +331164,8 @@
     },
     "category": "CREMATORIUM",
     "priceRange": {
-      "min": 20000,
-      "max": 400000
+      "min": 5,
+      "max": 40
     },
     "hasParking": true,
     "hasRestaurant": true,
@@ -331195,7 +331195,7 @@
     },
     "lat": 36.057204,
     "lng": 129.3524004,
-    "minPrice": 20000,
+    "minPrice": 50000,
     "maxPrice": 400000,
     "description": "",
     "rating": 0,
@@ -332083,7 +332083,7 @@
     "websiteUrl": "",
     "viewCount": 404,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-1437/photo_1.jpg",
-    "representativePrice": 20000,
+    "representativePrice": 50000,
     "favoriteCount": 0
   },
   {
@@ -332096,8 +332096,8 @@
     },
     "category": "CREMATORIUM",
     "priceRange": {
-      "min": 26000,
-      "max": 500000
+      "min": 6,
+      "max": 50
     },
     "hasParking": true,
     "hasRestaurant": false,
@@ -332135,7 +332135,7 @@
     },
     "lat": 35.9731243,
     "lng": 127.0174476,
-    "minPrice": 26000,
+    "minPrice": 60000,
     "maxPrice": 500000,
     "description": "",
     "rating": 0,
@@ -332893,7 +332893,7 @@
     "websiteUrl": "",
     "viewCount": 417,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-1438/photo_1.jpg",
-    "representativePrice": 26000,
+    "representativePrice": 60000,
     "favoriteCount": 0
   },
   {
@@ -333600,8 +333600,8 @@
     },
     "category": "CREMATORIUM",
     "priceRange": {
-      "min": 10000,
-      "max": 320000
+      "min": 4,
+      "max": 32
     },
     "hasParking": true,
     "hasRestaurant": true,
@@ -333633,7 +333633,7 @@
     },
     "lat": 35.9927159,
     "lng": 129.5465788,
-    "minPrice": 10000,
+    "minPrice": 40000,
     "maxPrice": 320000,
     "description": "",
     "rating": 0,
@@ -334232,7 +334232,7 @@
     "websiteUrl": "",
     "viewCount": 305,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-1440/photo_1.jpg",
-    "representativePrice": 10000,
+    "representativePrice": 40000,
     "favoriteCount": 0
   },
   {
@@ -334245,7 +334245,7 @@
       "lng": 126.7247019
     },
     "category": "CREMATORIUM",
-    "phone": "",
+    "phone": "032-456-2320",
     "website": "",
     "images": [
       "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-1441/photo_1.jpg",
@@ -334413,8 +334413,8 @@
     },
     "category": "CREMATORIUM",
     "priceRange": {
-      "min": 60000,
-      "max": 900000
+      "min": 9,
+      "max": 90
     },
     "hasParking": true,
     "hasRestaurant": false,
@@ -334452,7 +334452,7 @@
     },
     "lat": 35.2309385,
     "lng": 126.9163576,
-    "minPrice": 60000,
+    "minPrice": 90000,
     "maxPrice": 900000,
     "description": "",
     "rating": 0,
@@ -335072,7 +335072,7 @@
     "websiteUrl": "",
     "viewCount": 328,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0781/photo_1.jpg",
-    "representativePrice": 60000,
+    "representativePrice": 90000,
     "favoriteCount": 0
   },
   {
@@ -335319,7 +335319,7 @@
         "nonResident": 150000
       }
     },
-    "phone": "",
+    "phone": "054-639-4878",
     "capacity": null,
     "lastUpdated": "2026-04-21T09:09:38.738Z",
     "originalName": null,
@@ -335965,8 +335965,8 @@
     },
     "category": "CREMATORIUM",
     "priceRange": {
-      "min": 50000,
-      "max": 500000
+      "min": 10,
+      "max": 50
     },
     "hasParking": true,
     "hasRestaurant": true,
@@ -336000,7 +336000,7 @@
     },
     "lat": 36.4334174,
     "lng": 128.2353538,
-    "minPrice": 50000,
+    "minPrice": 100000,
     "maxPrice": 500000,
     "description": "",
     "rating": 0,
@@ -336595,7 +336595,7 @@
     "websiteUrl": "",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-1445/photo_1.jpg",
-    "representativePrice": 50000,
+    "representativePrice": 100000,
     "favoriteCount": 0
   },
   {
@@ -336608,8 +336608,8 @@
     },
     "category": "CREMATORIUM",
     "priceRange": {
-      "min": 20000,
-      "max": 500000
+      "min": 7,
+      "max": 50
     },
     "hasParking": true,
     "hasRestaurant": true,
@@ -336655,7 +336655,7 @@
     },
     "lat": 35.6888607,
     "lng": 126.9783892,
-    "minPrice": 20000,
+    "minPrice": 70000,
     "maxPrice": 500000,
     "description": "",
     "rating": 0,
@@ -337246,7 +337246,7 @@
     "websiteUrl": "",
     "viewCount": 396,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0536/photo_1.PNG",
-    "representativePrice": 20000,
+    "representativePrice": 70000,
     "favoriteCount": 0
   },
   {
@@ -337259,8 +337259,8 @@
     },
     "category": "CREMATORIUM",
     "priceRange": {
-      "min": 20000,
-      "max": 1000000
+      "min": 5,
+      "max": 100
     },
     "hasParking": true,
     "hasRestaurant": false,
@@ -337298,7 +337298,7 @@
     },
     "lat": 37.4187308,
     "lng": 127.1835153,
-    "minPrice": 20000,
+    "minPrice": 50000,
     "maxPrice": 1000000,
     "description": "",
     "rating": 0,
@@ -337900,7 +337900,7 @@
     "websiteUrl": "",
     "viewCount": 413,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-1447/photo_1.JPG",
-    "representativePrice": 20000,
+    "representativePrice": 50000,
     "favoriteCount": 0
   },
   {
@@ -337951,7 +337951,7 @@
     },
     "lat": 35.8243987,
     "lng": 127.0889933,
-    "minPrice": 50000,
+    "minPrice": 140000,
     "maxPrice": 1000000,
     "description": "",
     "rating": 0,
@@ -338546,8 +338546,8 @@
       "representativeCount": 2
     },
     "priceRange": {
-      "min": 50000,
-      "max": 1000000
+      "min": 14,
+      "max": 100
     },
     "amenities": {
       "parkingSpaces": 50,
@@ -338559,7 +338559,7 @@
     "websiteUrl": "",
     "viewCount": 430,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-1448/photo_1.JPG",
-    "representativePrice": 50000,
+    "representativePrice": 140000,
     "favoriteCount": 0
   },
   {
@@ -338572,8 +338572,8 @@
     },
     "category": "CREMATORIUM",
     "priceRange": {
-      "min": 40000,
-      "max": 570000
+      "min": 9,
+      "max": 57
     },
     "hasParking": true,
     "hasRestaurant": false,
@@ -338607,7 +338607,7 @@
     },
     "lat": 36.3149662,
     "lng": 127.3601332,
-    "minPrice": 40000,
+    "minPrice": 90000,
     "maxPrice": 570000,
     "description": "",
     "rating": 0,
@@ -339186,7 +339186,7 @@
     "websiteUrl": "",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-1449/photo_1.JPG",
-    "representativePrice": 40000,
+    "representativePrice": 90000,
     "favoriteCount": 0
   },
   {
@@ -339199,8 +339199,8 @@
     },
     "category": "CREMATORIUM",
     "priceRange": {
-      "min": 24000,
-      "max": 800000
+      "min": 3,
+      "max": 80
     },
     "hasParking": true,
     "hasRestaurant": true,
@@ -339250,7 +339250,7 @@
     },
     "lat": 35.471392,
     "lng": 129.1323562,
-    "minPrice": 24000,
+    "minPrice": 28000,
     "maxPrice": 800000,
     "description": "",
     "rating": 0,
@@ -339761,7 +339761,7 @@
     "websiteUrl": "",
     "viewCount": 310,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-1450/photo_1.jpg",
-    "representativePrice": 24000,
+    "representativePrice": 28000,
     "favoriteCount": 0
   },
   {
@@ -339774,8 +339774,8 @@
     },
     "category": "CREMATORIUM",
     "priceRange": {
-      "min": 40000,
-      "max": 900000
+      "min": 10,
+      "max": 90
     },
     "hasParking": true,
     "hasRestaurant": false,
@@ -339813,7 +339813,7 @@
     },
     "lat": 37.3342486,
     "lng": 127.8722971,
-    "minPrice": 40000,
+    "minPrice": 100000,
     "maxPrice": 900000,
     "description": "",
     "rating": 0,
@@ -340311,7 +340311,7 @@
     "websiteUrl": "",
     "viewCount": 328,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-1451/photo_1.jpg",
-    "representativePrice": 40000,
+    "representativePrice": 100000,
     "favoriteCount": 0
   },
   {
@@ -340324,8 +340324,8 @@
     },
     "category": "CREMATORIUM",
     "priceRange": {
-      "min": 40000,
-      "max": 800000
+      "min": 10,
+      "max": 80
     },
     "hasParking": true,
     "hasRestaurant": false,
@@ -340357,7 +340357,7 @@
     },
     "lat": 34.852465,
     "lng": 128.4398363,
-    "minPrice": 40000,
+    "minPrice": 100000,
     "maxPrice": 800000,
     "description": "",
     "rating": 0,
@@ -340842,7 +340842,7 @@
     "websiteUrl": "",
     "viewCount": 344,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-1452/photo_1.jpg",
-    "representativePrice": 40000,
+    "representativePrice": 100000,
     "favoriteCount": 0
   },
   {
@@ -340855,8 +340855,8 @@
     },
     "category": "CREMATORIUM",
     "priceRange": {
-      "min": 90000,
-      "max": 1000000
+      "min": 18,
+      "max": 100
     },
     "hasParking": true,
     "hasRestaurant": true,
@@ -340892,7 +340892,7 @@
     },
     "lat": 35.8578117,
     "lng": 128.6592408,
-    "minPrice": 90000,
+    "minPrice": 180000,
     "maxPrice": 1000000,
     "description": "",
     "rating": 0,
@@ -341405,7 +341405,7 @@
     "websiteUrl": "",
     "viewCount": 366,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-1453/photo_1.png",
-    "representativePrice": 90000,
+    "representativePrice": 180000,
     "favoriteCount": 0
   },
   {
@@ -342053,8 +342053,8 @@
     },
     "category": "CREMATORIUM",
     "priceRange": {
-      "min": 30000,
-      "max": 500000
+      "min": 8,
+      "max": 50
     },
     "hasParking": true,
     "hasRestaurant": true,
@@ -342094,7 +342094,7 @@
     },
     "lat": 35.2771311,
     "lng": 128.367637,
-    "minPrice": 30000,
+    "minPrice": 80000,
     "maxPrice": 500000,
     "description": "",
     "rating": 0,
@@ -342583,7 +342583,7 @@
     "websiteUrl": "",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-1455/photo_1.jpg",
-    "representativePrice": 30000,
+    "representativePrice": 80000,
     "favoriteCount": 0
   },
   {
@@ -342652,7 +342652,7 @@
     },
     "lat": 36.5348289,
     "lng": 127.2435771,
-    "minPrice": 50000,
+    "minPrice": 160000,
     "maxPrice": 1000000,
     "description": "",
     "rating": 0,
@@ -343156,8 +343156,8 @@
       "representativeCount": 2
     },
     "priceRange": {
-      "min": 50000,
-      "max": 1000000
+      "min": 16,
+      "max": 100
     },
     "amenities": {
       "parkingSpaces": 224,
@@ -343169,7 +343169,7 @@
     "websiteUrl": "",
     "viewCount": 415,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-1456/photo_1.JPG",
-    "representativePrice": 50000,
+    "representativePrice": 160000,
     "favoriteCount": 0
   },
   {
@@ -343921,8 +343921,8 @@
     },
     "category": "CREMATORIUM",
     "priceRange": {
-      "min": 15000,
-      "max": 1000000
+      "min": 5,
+      "max": 100
     },
     "hasParking": true,
     "hasRestaurant": true,
@@ -343962,7 +343962,7 @@
     },
     "lat": 37.1916122,
     "lng": 128.2298233,
-    "minPrice": 15000,
+    "minPrice": 50000,
     "maxPrice": 1000000,
     "description": "",
     "rating": 0,
@@ -344476,7 +344476,7 @@
     "websiteUrl": "",
     "viewCount": 459,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-0674/photo_1.jpg",
-    "representativePrice": 15000,
+    "representativePrice": 50000,
     "favoriteCount": 0
   },
   {
@@ -345327,8 +345327,8 @@
     },
     "category": "CREMATORIUM",
     "priceRange": {
-      "min": 50000,
-      "max": 700000
+      "min": 10,
+      "max": 70
     },
     "hasParking": true,
     "hasRestaurant": false,
@@ -345362,7 +345362,7 @@
     },
     "lat": 38.2025888,
     "lng": 128.5482513,
-    "minPrice": 50000,
+    "minPrice": 100000,
     "maxPrice": 700000,
     "description": "",
     "rating": 0,
@@ -345795,7 +345795,7 @@
     "websiteUrl": "https://www.sokcho.go.kr/sc/fields/welfare/senior/funeral",
     "viewCount": 352,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-1461/photo_1.jpg",
-    "representativePrice": 50000,
+    "representativePrice": 100000,
     "favoriteCount": 0
   },
   {
@@ -345840,7 +345840,7 @@
     },
     "lat": 36.3708689,
     "lng": 128.7274471,
-    "minPrice": 40000,
+    "minPrice": 100000,
     "maxPrice": 900000,
     "description": "",
     "rating": 0,
@@ -346306,8 +346306,8 @@
       "representativeCount": 2
     },
     "priceRange": {
-      "min": 40000,
-      "max": 900000
+      "min": 10,
+      "max": 90
     },
     "amenities": {
       "parkingSpaces": 10,
@@ -346319,7 +346319,7 @@
     "websiteUrl": "",
     "viewCount": 363,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-1462/photo_1.jpg",
-    "representativePrice": 40000,
+    "representativePrice": 100000,
     "favoriteCount": 0
   },
   {
@@ -346332,8 +346332,8 @@
     },
     "category": "CREMATORIUM",
     "priceRange": {
-      "min": 30000,
-      "max": 1000000
+      "min": 10,
+      "max": 100
     },
     "hasParking": true,
     "hasRestaurant": false,
@@ -346369,7 +346369,7 @@
     },
     "lat": 36.6428099,
     "lng": 127.5453191,
-    "minPrice": 30000,
+    "minPrice": 100000,
     "maxPrice": 1000000,
     "description": "",
     "rating": 0,
@@ -346817,7 +346817,7 @@
     "websiteUrl": "",
     "viewCount": 394,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-1463/photo_1.jpg",
-    "representativePrice": 30000,
+    "representativePrice": 100000,
     "favoriteCount": 0
   },
   {
@@ -346862,7 +346862,7 @@
     },
     "lat": 37.4599207,
     "lng": 129.1145233,
-    "minPrice": 50000,
+    "minPrice": 100000,
     "maxPrice": 600000,
     "description": "",
     "rating": 0,
@@ -347273,8 +347273,8 @@
       "representativeCount": 2
     },
     "priceRange": {
-      "min": 50000,
-      "max": 600000
+      "min": 10,
+      "max": 60
     },
     "amenities": {
       "parkingSpaces": 10,
@@ -347286,7 +347286,7 @@
     "websiteUrl": "",
     "viewCount": 400,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-1464/photo_1.png",
-    "representativePrice": 50000,
+    "representativePrice": 100000,
     "favoriteCount": 0
   },
   {
@@ -347299,8 +347299,8 @@
     },
     "category": "CREMATORIUM",
     "priceRange": {
-      "min": 30000,
-      "max": 700000
+      "min": 4,
+      "max": 70
     },
     "hasParking": false,
     "hasRestaurant": true,
@@ -347326,7 +347326,7 @@
     },
     "lat": 38.0013943,
     "lng": 128.1624356,
-    "minPrice": 30000,
+    "minPrice": 35000,
     "maxPrice": 700000,
     "description": "",
     "rating": 0,
@@ -347730,7 +347730,7 @@
     "websiteUrl": "",
     "viewCount": 414,
     "thumbnail": "",
-    "representativePrice": 30000,
+    "representativePrice": 35000,
     "favoriteCount": 0
   },
   {
@@ -347743,8 +347743,8 @@
     },
     "category": "CREMATORIUM",
     "priceRange": {
-      "min": 50000,
-      "max": 700000
+      "min": 10,
+      "max": 70
     },
     "hasParking": true,
     "hasRestaurant": false,
@@ -347778,7 +347778,7 @@
     },
     "lat": 37.2357802,
     "lng": 128.9894371,
-    "minPrice": 50000,
+    "minPrice": 100000,
     "maxPrice": 700000,
     "description": "",
     "rating": 0,
@@ -348185,7 +348185,7 @@
     "websiteUrl": "",
     "viewCount": 430,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-1466/photo_1.png",
-    "representativePrice": 50000,
+    "representativePrice": 100000,
     "favoriteCount": 0
   },
   {
@@ -349715,7 +349715,7 @@
     },
     "lat": 35.2702439,
     "lng": 128.8093506,
-    "minPrice": 50000,
+    "minPrice": 100000,
     "maxPrice": 500000,
     "description": "",
     "rating": 5,
@@ -350087,8 +350087,8 @@
       "representativeCount": 2
     },
     "priceRange": {
-      "min": 50000,
-      "max": 500000
+      "min": 10,
+      "max": 50
     },
     "amenities": {
       "parkingSpaces": 10,
@@ -350100,7 +350100,7 @@
     "websiteUrl": "https://www.gimhaememorialpark.or.kr/www",
     "viewCount": 382,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-1472/photo_1.jpg",
-    "representativePrice": 50000,
+    "representativePrice": 100000,
     "favoriteCount": 0
   },
   {
@@ -350113,8 +350113,8 @@
     },
     "category": "CREMATORIUM",
     "priceRange": {
-      "min": 35000,
-      "max": 520000
+      "min": 8,
+      "max": 52
     },
     "hasParking": true,
     "hasRestaurant": false,
@@ -350150,7 +350150,7 @@
     },
     "lat": 35.4993227,
     "lng": 128.7593468,
-    "minPrice": 35000,
+    "minPrice": 80000,
     "maxPrice": 520000,
     "description": "",
     "rating": 0,
@@ -350531,7 +350531,7 @@
     "websiteUrl": "",
     "viewCount": 400,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-1473/photo_1.JPG",
-    "representativePrice": 35000,
+    "representativePrice": 80000,
     "favoriteCount": 0
   },
   {
@@ -350799,7 +350799,7 @@
     },
     "lat": 36.9633922,
     "lng": 127.9961951,
-    "minPrice": 35000,
+    "minPrice": 100000,
     "maxPrice": 1000000,
     "description": "",
     "rating": 0,
@@ -351165,8 +351165,8 @@
       "representativeCount": 2
     },
     "priceRange": {
-      "min": 35000,
-      "max": 1000000
+      "min": 10,
+      "max": 100
     },
     "amenities": {
       "parkingSpaces": 10,
@@ -351178,7 +351178,7 @@
     "websiteUrl": "",
     "viewCount": 435,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-1475/photo_1.jpg",
-    "representativePrice": 35000,
+    "representativePrice": 100000,
     "favoriteCount": 0
   },
   {
@@ -351191,8 +351191,8 @@
     },
     "category": "CREMATORIUM",
     "priceRange": {
-      "min": 50000,
-      "max": 700000
+      "min": 8,
+      "max": 70
     },
     "hasParking": true,
     "hasRestaurant": true,
@@ -351234,7 +351234,7 @@
     },
     "lat": 37.8287765,
     "lng": 128.8164425,
-    "minPrice": 50000,
+    "minPrice": 75000,
     "maxPrice": 700000,
     "description": "",
     "rating": 0,
@@ -351603,7 +351603,7 @@
     "websiteUrl": "",
     "viewCount": 456,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-1476/photo_1.jpg",
-    "representativePrice": 50000,
+    "representativePrice": 75000,
     "favoriteCount": 0
   },
   {
@@ -351790,8 +351790,8 @@
     },
     "category": "CREMATORIUM",
     "priceRange": {
-      "min": 25000,
-      "max": 500000
+      "min": 7,
+      "max": 50
     },
     "hasParking": false,
     "hasRestaurant": false,
@@ -351821,7 +351821,7 @@
     },
     "lat": 35.1392925,
     "lng": 128.5312504,
-    "minPrice": 25000,
+    "minPrice": 70000,
     "maxPrice": 500000,
     "description": "",
     "rating": 0,
@@ -352173,7 +352173,7 @@
     "websiteUrl": "",
     "viewCount": 490,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-1478/photo_1.jpg",
-    "representativePrice": 25000,
+    "representativePrice": 70000,
     "favoriteCount": 0
   },
   {
@@ -352732,7 +352732,7 @@
     },
     "lat": 35.968643,
     "lng": 126.8454788,
-    "minPrice": 15000,
+    "minPrice": 60000,
     "maxPrice": 500000,
     "description": "",
     "rating": 0,
@@ -353078,8 +353078,8 @@
       "representativeCount": 2
     },
     "priceRange": {
-      "min": 15000,
-      "max": 500000
+      "min": 6,
+      "max": 50
     },
     "amenities": {
       "parkingSpaces": 10,
@@ -353091,7 +353091,7 @@
     "websiteUrl": "",
     "viewCount": 361,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-1480/photo_1.jpg",
-    "representativePrice": 15000,
+    "representativePrice": 60000,
     "favoriteCount": 0
   },
   {
@@ -353104,8 +353104,8 @@
     },
     "category": "CREMATORIUM",
     "priceRange": {
-      "min": 20000,
-      "max": 600000
+      "min": 6,
+      "max": 60
     },
     "hasParking": true,
     "hasRestaurant": false,
@@ -353145,7 +353145,7 @@
     },
     "lat": 35.4425643,
     "lng": 127.3699957,
-    "minPrice": 20000,
+    "minPrice": 60000,
     "maxPrice": 600000,
     "description": "",
     "rating": 0,
@@ -353519,7 +353519,7 @@
     "websiteUrl": "",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-1481/photo_1.jpg",
-    "representativePrice": 20000,
+    "representativePrice": 60000,
     "favoriteCount": 0
   },
   {
@@ -353743,8 +353743,8 @@
     },
     "category": "CREMATORIUM",
     "priceRange": {
-      "min": 18000,
-      "max": 400000
+      "min": 5,
+      "max": 40
     },
     "hasParking": true,
     "hasRestaurant": true,
@@ -353774,7 +353774,7 @@
     },
     "lat": 34.974503,
     "lng": 128.2392026,
-    "minPrice": 18000,
+    "minPrice": 50000,
     "maxPrice": 400000,
     "description": "",
     "rating": 0,
@@ -354145,7 +354145,7 @@
     "websiteUrl": "",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-1483/photo_1.jpg",
-    "representativePrice": 18000,
+    "representativePrice": 50000,
     "favoriteCount": 0
   },
   {
@@ -354366,8 +354366,8 @@
     },
     "category": "CREMATORIUM",
     "priceRange": {
-      "min": 30000,
-      "max": 700000
+      "min": 7,
+      "max": 70
     },
     "hasParking": true,
     "hasRestaurant": true,
@@ -354405,7 +354405,7 @@
     },
     "lat": 37.76078,
     "lng": 127.7393295,
-    "minPrice": 30000,
+    "minPrice": 70000,
     "maxPrice": 700000,
     "description": "",
     "rating": 0,
@@ -354747,7 +354747,7 @@
     "websiteUrl": "",
     "viewCount": 0,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-1485/photo_1.jpg",
-    "representativePrice": 30000,
+    "representativePrice": 70000,
     "favoriteCount": 0
   },
   {
@@ -354760,8 +354760,8 @@
     },
     "category": "CREMATORIUM",
     "priceRange": {
-      "min": 50000,
-      "max": 900000
+      "min": 15,
+      "max": 90
     },
     "hasParking": true,
     "hasRestaurant": true,
@@ -354793,7 +354793,7 @@
     },
     "lat": 36.5614945,
     "lng": 128.4711602,
-    "minPrice": 50000,
+    "minPrice": 150000,
     "maxPrice": 900000,
     "description": "",
     "rating": 0,
@@ -355152,7 +355152,7 @@
     "websiteUrl": "",
     "viewCount": 463,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-1486/photo_1.JPG",
-    "representativePrice": 50000,
+    "representativePrice": 150000,
     "favoriteCount": 0
   },
   {
@@ -355165,8 +355165,8 @@
     },
     "category": "CREMATORIUM",
     "priceRange": {
-      "min": 21000,
-      "max": 600000
+      "min": 6,
+      "max": 60
     },
     "hasParking": true,
     "hasRestaurant": true,
@@ -355200,7 +355200,7 @@
     },
     "lat": 34.8316712,
     "lng": 127.5805465,
-    "minPrice": 21000,
+    "minPrice": 60000,
     "maxPrice": 600000,
     "description": "",
     "rating": 0,
@@ -355554,7 +355554,7 @@
     "websiteUrl": "",
     "viewCount": 481,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-1487/photo_2.jpg",
-    "representativePrice": 21000,
+    "representativePrice": 60000,
     "favoriteCount": 0
   },
   {
@@ -356079,8 +356079,8 @@
     },
     "category": "CREMATORIUM",
     "priceRange": {
-      "min": 20000,
-      "max": 600000
+      "min": 5,
+      "max": 60
     },
     "hasParking": true,
     "hasRestaurant": false,
@@ -356116,7 +356116,7 @@
     },
     "lat": 36.6250063,
     "lng": 128.1457572,
-    "minPrice": 20000,
+    "minPrice": 50000,
     "maxPrice": 600000,
     "description": "",
     "rating": 0,
@@ -356445,7 +356445,7 @@
     "websiteUrl": "",
     "viewCount": 380,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-1490/photo_1.jpg",
-    "representativePrice": 20000,
+    "representativePrice": 50000,
     "favoriteCount": 0
   },
   {
@@ -356526,7 +356526,7 @@
     },
     "lat": 34.9931101,
     "lng": 127.6430595,
-    "minPrice": 30000,
+    "minPrice": 100000,
     "maxPrice": 530000,
     "description": "",
     "rating": 0,
@@ -356846,8 +356846,8 @@
       "representativeCount": 2
     },
     "priceRange": {
-      "min": 30000,
-      "max": 530000
+      "min": 10,
+      "max": 53
     },
     "amenities": {
       "parkingSpaces": 10,
@@ -356859,7 +356859,7 @@
     "websiteUrl": "http://cemetery.gwangyang.go.kr",
     "viewCount": 398,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-1491/photo_1.jpg",
-    "representativePrice": 30000,
+    "representativePrice": 100000,
     "favoriteCount": 0
   },
   {
@@ -359097,8 +359097,8 @@
     },
     "category": "CREMATORIUM",
     "priceRange": {
-      "min": 40000,
-      "max": 600000
+      "min": 5,
+      "max": 60
     },
     "hasParking": true,
     "hasRestaurant": false,
@@ -359140,7 +359140,7 @@
     },
     "lat": 36.3181889,
     "lng": 128.26845,
-    "minPrice": 40000,
+    "minPrice": 50000,
     "maxPrice": 600000,
     "description": "",
     "rating": 0,
@@ -359463,7 +359463,7 @@
     "websiteUrl": "",
     "viewCount": 437,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-1493/photo_1.JPG",
-    "representativePrice": 40000,
+    "representativePrice": 50000,
     "favoriteCount": 0
   },
   {
@@ -359796,7 +359796,7 @@
     },
     "lat": 35.16,
     "lng": 128.08,
-    "minPrice": 38000,
+    "minPrice": 70000,
     "maxPrice": 352000,
     "description": "",
     "rating": 0,
@@ -360064,8 +360064,8 @@
       "representativeCount": 3
     },
     "priceRange": {
-      "min": 38000,
-      "max": 352000
+      "min": 7,
+      "max": 35
     },
     "operatorType": null,
     "location": {
@@ -360081,7 +360081,7 @@
     "websiteUrl": "",
     "viewCount": 466,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-1495/photo_1.jpg",
-    "representativePrice": 38000,
+    "representativePrice": 70000,
     "favoriteCount": 0
   },
   {
@@ -360094,8 +360094,8 @@
     },
     "category": "CREMATORIUM",
     "priceRange": {
-      "min": 50000,
-      "max": 1000000
+      "min": 16,
+      "max": 100
     },
     "hasParking": true,
     "hasRestaurant": true,
@@ -360137,7 +360137,7 @@
     },
     "lat": 37.2705839,
     "lng": 126.9100819,
-    "minPrice": 50000,
+    "minPrice": 160000,
     "maxPrice": 1000000,
     "description": "",
     "rating": 0,
@@ -360414,7 +360414,7 @@
     "websiteUrl": "",
     "viewCount": 483,
     "thumbnail": "https://jbydmhfuqnpukfutvrgs.supabase.co/storage/v1/object/public/facilities/facilities/park-1496/photo_1.jpg",
-    "representativePrice": 50000,
+    "representativePrice": 160000,
     "favoriteCount": 0
   },
   {

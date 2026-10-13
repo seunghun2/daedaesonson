@@ -130,7 +130,7 @@ export function formatKoreanPrice(won: number): string {
     return `${won.toLocaleString()}원`;
 }
 
-export function extractFacilityInsights(facility: Facility): DerivedFacilityInsights {
+export function extractFacilityInsights(facility: Facility, overrideBasePrice?: number): DerivedFacilityInsights {
     const rows = collectAllPriceRows(facility);
     const positiveRows = rows.filter((r) => (r.price || 0) > 0);
 
@@ -140,7 +140,7 @@ export function extractFacilityInsights(facility: Facility): DerivedFacilityInsi
 
     const mgmtRows = positiveRows.filter((r) => {
         const text = `${r.name || ''} ${r.grade || ''} ${r.groupType || ''}`;
-        return r.feeType === 'MANAGEMENT' || /관리비/.test(text);
+        return r.feeType === 'MANAGEMENT' || r.feeType === 'MAINTENANCE' || /관리비/.test(text);
     });
 
     if (mgmtRows.length > 0) {
@@ -155,10 +155,10 @@ export function extractFacilityInsights(facility: Facility): DerivedFacilityInsi
 
         if (/5년/.test(text) && p >= 50000) {
             annualManagementFee = Math.round(p / 5);
-            managementFeeText = `연 ${formatKoreanPrice(annualManagementFee)} (5년 ${formatKoreanPrice(p)})`;
+            managementFeeText = `연 ${formatKoreanPrice(annualManagementFee)} (5년분 납부)`;
         } else if (/10년/.test(text) && p >= 100000) {
             annualManagementFee = Math.round(p / 10);
-            managementFeeText = `연 ${formatKoreanPrice(annualManagementFee)} (10년 ${formatKoreanPrice(p)})`;
+            managementFeeText = `연 ${formatKoreanPrice(annualManagementFee)} (10년분 납부)`;
         } else if (p <= 250000) {
             annualManagementFee = p;
             managementFeeText = `연 ${formatKoreanPrice(p)}`;
@@ -170,12 +170,15 @@ export function extractFacilityInsights(facility: Facility): DerivedFacilityInsi
     // 기본 분양/안치 항목 (관리비/옵션/수수료 제외)
     const usageRows = positiveRows.filter((r) => {
         const text = `${r.name || ''} ${r.grade || ''} ${r.groupType || ''}`;
-        if (r.feeType === 'MANAGEMENT' || r.feeType === 'INSTALL' || r.feeType === 'OPTION') return false;
+        if (r.feeType === 'MANAGEMENT' || r.feeType === 'MAINTENANCE' || r.feeType === 'INSTALL' || r.feeType === 'OPTION') return false;
         if (/관리비|수수료|각자비|석물|비석|상석|둘레석|화병|향로/.test(text)) return false;
         return (r.price || 0) >= 10000;
     });
 
-    const basePrice = facility.representativePrice || facility.minPrice || 0;
+    const rawBase = overrideBasePrice && overrideBasePrice > 0
+        ? overrideBasePrice
+        : (facility.representativePrice || facility.minPrice || 0);
+    const basePrice = rawBase > 0 && rawBase < 10000 ? rawBase * 10000 : rawBase;
     const estimated10YearTotal =
         basePrice >= 100000 && annualManagementFee && annualManagementFee > 0
             ? basePrice + annualManagementFee * 10
@@ -184,7 +187,8 @@ export function extractFacilityInsights(facility: Facility): DerivedFacilityInsi
     // 2. 관내 vs 관외 요금 비교
     let localMinPrice: number | null = null;
     let nonLocalMinPrice: number | null = null;
-    let localDiscountPercent: number | null = null;
+    let localDiscountPercent: number | null;
+    localDiscountPercent = null;
 
     const localRows = usageRows.filter((r) => {
         const text = `${r.name || ''} ${r.grade || ''} ${r.residency || ''}`;
@@ -219,7 +223,7 @@ export function extractFacilityInsights(facility: Facility): DerivedFacilityInsi
     if (/30년/.test(allText)) durationSet.add('30년 사용');
     if (/15년/.test(allText)) durationSet.add('15년 사용');
     const durations = Array.from(durationSet);
-    const primaryDuration = durations[0] || (facility.isPublic === false ? '영구안치(기본)' : null);
+    const primaryDuration = durations[0] || (facility.isPublic === false ? '영구안치' : null);
 
     // 4. 봉안당 단수(층수)별 가격 비교 (알뜰단 vs 눈높이 로얄단)
     let tierComparison: { economyMin: number; royalMin: number } | null = null;
