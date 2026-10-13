@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Script from 'next/script';
+import { MapPin, Play } from 'lucide-react';
 
 export default function AutoGeocodePage() {
     const [facilities, setFacilities] = useState<any[]>([]);
@@ -11,7 +12,7 @@ export default function AutoGeocodePage() {
     const [isRunning, setIsRunning] = useState(false);
     const [mapLoaded, setMapLoaded] = useState(false);
 
-    const CLIENT_ID = '9ynkl22koz'; // 직접 입력
+    const CLIENT_ID = process.env.NEXT_PUBLIC_NAVER_MAP_CLIENT_ID || '';
 
     const addLog = (msg: string) => {
         setLogs(prev => [`[${new Date().toLocaleTimeString()}] ${msg}`, ...prev].slice(0, 200));
@@ -36,19 +37,19 @@ export default function AutoGeocodePage() {
     const runGeocode = async () => {
         // 네이버 객체 확인
         if (typeof window === 'undefined' || !window.naver || !window.naver.maps) {
-            addLog('❌ Error: window.naver.maps is undefined. 지도가 로드되지 않았습니다.');
+            addLog('[ERROR] window.naver.maps is undefined. 지도가 로드되지 않았습니다.');
             alert('네이버 지도가 로드되지 않았습니다. 새로고침 해주세요.');
             return;
         }
 
         if (!window.naver.maps.Service) {
-            addLog('❌ Error: Geocoder submodule not loaded. (Service 객체 없음)');
+            addLog('[ERROR] Geocoder submodule not loaded. (Service 객체 없음)');
             // 서브모듈 로드 시도
             return;
         }
 
         setIsRunning(true);
-        addLog('🚀 Starting geocoding... (v2.1 fixed)');
+        addLog('[START] Starting geocoding... (v2.1 fixed)');
 
         let updatedCount = 0;
         let successCount = 0;
@@ -57,15 +58,10 @@ export default function AutoGeocodePage() {
         const newFacilities = JSON.parse(JSON.stringify(facilities));
 
         for (let i = 0; i < newFacilities.length; i++) {
-            // if (!isRunning) break; // <--- This was the bug! Removed.
-
             const f = newFacilities[i];
             setProgress({ current: i + 1, total: newFacilities.length, success: successCount, fail: failCount });
 
-            // 좌표가 이미 있고(랜덤X), 주소 기반으로 확인된 건 스킵 (여기선 단순 확인)
-            // 하지만 지금 대부분이 랜덤이므로 일단 다 돌림 (단, protected 제외)
             if (f.name.includes('청계공원') || f.name.includes('동산공원묘원') || f.name.includes('서울공원묘원') || f.name.includes('영종공설')) {
-                // addLog(`Pass (Protected): ${f.name}`);
                 continue;
             }
 
@@ -88,10 +84,10 @@ export default function AutoGeocodePage() {
                             newFacilities[i].coordinates = { lat, lng };
                             newFacilities[i].location = { lat, lng };
 
-                            addLog(`✅ [${i + 1}] Fixed (Naver): ${f.name}`);
+                            addLog(`[OK] [${i + 1}] Fixed (Naver): ${f.name}`);
                             updatedCount++;
                             successCount++;
-                            resolve(); // 성공 시 resolve
+                            resolve();
                         } else {
                             // 네이버 결과 없음 -> OSM 시도
                             tryOSM(f, i, newFacilities).then((success) => {
@@ -131,7 +127,7 @@ export default function AutoGeocodePage() {
         if (updatedCount > 0) await saveToServer(newFacilities);
 
         setIsRunning(false);
-        addLog(`🏁 Done! Updated ${updatedCount} items using Hybrid (Naver + OSM).`);
+        addLog(`[DONE] Updated ${updatedCount} items using Hybrid (Naver + OSM).`);
         alert('완료되었습니다! 메인 페이지를 확인해보세요.');
     };
 
@@ -143,12 +139,9 @@ export default function AutoGeocodePage() {
             // Retry 전략: 실패하면 점점 범위를 넓혀서 검색
             if (retryLevel === 1) {
                 // 레벨 1: '산' 또는 번지수 제거하고 '동/읍/면' 까지만 검색
-                // 예: "경기도 용인시 처인구 모현읍 능원리 산 12-3" -> "경기도 용인시 처인구 모현읍 능원리"
-                // 정규식: 숫자 나 '산' 이후의 문자열 제거
                 query = query.replace(/산?\s*\d+([-]\d+)?.*$/, '').trim();
             } else if (retryLevel === 2) {
                 // 레벨 2: 시/군/구 까지만 검색
-                // 공백으로 잘라서 앞 3어절만 사용 (보통 '도 시 구' or '시 구 동')
                 const parts = query.split(' ');
                 if (parts.length > 3) {
                     query = parts.slice(0, 3).join(' ');
@@ -168,23 +161,22 @@ export default function AutoGeocodePage() {
                 facilitiesArray[index].location = { lat, lng };
 
                 const method = retryLevel === 0 ? 'Exact' : (retryLevel === 1 ? 'Dong' : 'City');
-                addLog(`✅ [${index + 1}] Fixed (OSM-${method}): ${f.name}`);
+                addLog(`[OK] [${index + 1}] Fixed (OSM-${method}): ${f.name}`);
                 return true;
             } else {
                 // 실패 시 다음 레벨 시도 (최대 레벨 2까지)
                 if (retryLevel < 2) {
-                    // 0.5초 대기 후 재시도
                     await new Promise(r => setTimeout(r, 500));
                     return tryOSM(f, index, facilitiesArray, retryLevel + 1);
                 }
             }
         } catch (e) {
-            addLog(`⚠️ OSM Error: ${e}`);
+            addLog(`[WARN] OSM Error: ${e}`);
         }
 
         // 마지막까지 실패했을 때만 로그 출력
         if (retryLevel === 2) {
-            addLog(`❌ Failed (All): ${f.name}`);
+            addLog(`[FAIL] Failed (All): ${f.name}`);
         }
         return false;
     };
@@ -196,9 +188,9 @@ export default function AutoGeocodePage() {
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(data)
             });
-            addLog('💾 Helper: Saved batch to server.');
+            addLog('[SAVE] Saved batch to server.');
         } catch (e) {
-            addLog(`💾 Save failed: ${e}`);
+            addLog(`[SAVE ERROR] Save failed: ${e}`);
         }
     };
 
@@ -212,14 +204,17 @@ export default function AutoGeocodePage() {
                     setStatus('지도 로드 완료. 준비됨.');
                     addLog('System: Naver Map Script Loaded.');
                 }}
-                onError={(e) => {
+                onError={() => {
                     setStatus('지도 로드 실패!');
-                    addLog(`System: Script Load Error`);
+                    addLog('System: Script Load Error');
                 }}
             />
 
-            <h1>📍 좌표 자동 보정 v2</h1>
-            <p>ID: {CLIENT_ID} (Hardcoded)</p>
+            <h1 style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                <MapPin size={26} color="#2563EB" />
+                좌표 자동 보정 v2
+            </h1>
+            <p>Naver Map Client ID: {CLIENT_ID ? '환경변수 설정됨' : '미설정 (NEXT_PUBLIC_NAVER_MAP_CLIENT_ID)'}</p>
             <h3>상태: {status}</h3>
 
             <div style={{ margin: '20px 0', padding: 20, background: '#f1f3f5', borderRadius: 8 }}>
@@ -234,25 +229,29 @@ export default function AutoGeocodePage() {
                     onClick={runGeocode}
                     disabled={isRunning || !mapLoaded}
                     style={{
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        gap: 8,
                         padding: '12px 24px',
                         fontSize: 18,
                         fontWeight: 'bold',
-                        background: isRunning ? '#adb5bd' : (mapLoaded ? '#228be6' : '#868e96'),
+                        background: isRunning ? '#adb5bd' : (mapLoaded ? '#2563EB' : '#868e96'),
                         color: 'white',
                         border: 'none',
                         borderRadius: 8,
                         cursor: isRunning || !mapLoaded ? 'not-allowed' : 'pointer'
                     }}
                 >
-                    {isRunning ? '진행 중...' : (mapLoaded ? '🚀 좌표 변환 시작' : '로딩 중...')}
+                    <Play size={18} />
+                    {isRunning ? '진행 중...' : (mapLoaded ? '좌표 변환 시작' : '로딩 중...')}
                 </button>
             </div>
 
             <div style={{
                 height: 500,
                 overflowY: 'auto',
-                background: '#212529',
-                color: '#e9ecef',
+                background: '#0F172A',
+                color: '#E2E8F0',
                 padding: 15,
                 borderRadius: 8,
                 fontSize: 14,
@@ -265,3 +264,4 @@ export default function AutoGeocodePage() {
         </div>
     );
 }
+

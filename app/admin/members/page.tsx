@@ -3,8 +3,8 @@
 import { useState, useEffect } from 'react';
 import {
     Paper, Text, Table, Badge, Group, TextInput,
-    Card, SimpleGrid, LoadingOverlay, Select, ActionIcon, Tooltip, Avatar,
-    Modal, Button, Divider,
+    Card, SimpleGrid, LoadingOverlay, Select, Tooltip, Avatar,
+    Modal, Button, Divider, ScrollArea, Pagination,
 } from '@mantine/core';
 import { notifications } from '@mantine/notifications';
 import { Search, Users, UserCheck, UserPlus, Shield } from 'lucide-react';
@@ -36,12 +36,15 @@ interface Member {
     };
 }
 
+const PAGE_SIZE = 20;
+
 export default function AdminMembersPage() {
     const [members, setMembers] = useState<Member[]>([]);
     const [loading, setLoading] = useState(true);
     const [search, setSearch] = useState('');
     const [providerFilter, setProviderFilter] = useState<string | null>(null);
     const [selectedMember, setSelectedMember] = useState<Member | null>(null);
+    const [page, setPage] = useState(1);
 
     useEffect(() => {
         fetchMembers();
@@ -61,21 +64,27 @@ export default function AdminMembersPage() {
         }
     };
 
-    // 필터링
+    // 필터링 (이름/이메일/전화번호)
     const filtered = members.filter((m) => {
-        const name = m.profile?.nickname || m.user_metadata?.full_name || m.email;
+        const name = m.profile?.nickname || m.user_metadata?.full_name || m.email || '';
         const phone = m.profile?.phone || m.user_metadata?.phone || '';
+        const cleanPhone = phone.replace(/\D/g, '');
+        const cleanSearch = search.replace(/\D/g, '');
         const provider = m.profile?.provider || '';
 
         const matchesSearch = !search ||
             name.toLowerCase().includes(search.toLowerCase()) ||
             phone.includes(search) ||
-            m.email.includes(search.toLowerCase());
+            (cleanSearch.length > 0 && cleanPhone.includes(cleanSearch)) ||
+            (m.email || '').toLowerCase().includes(search.toLowerCase());
 
         const matchesProvider = !providerFilter || provider === providerFilter;
 
         return matchesSearch && matchesProvider;
     });
+
+    const totalPages = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE));
+    const paginated = filtered.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE);
 
     // 통계
     const totalMembers = members.length;
@@ -104,7 +113,7 @@ export default function AdminMembersPage() {
 
             {/* 통계 카드 */}
             <SimpleGrid cols={{ base: 2, md: 4 }} mb="lg">
-                <StatCard icon={Users} label="전체 회원" value={totalMembers} color="#5c3fbf" />
+                <StatCard icon={Users} label="전체 회원" value={totalMembers} color="#2563EB" />
                 <StatCard icon={UserCheck} label="카카오 가입" value={kakaoMembers} color="#FEE500" textColor="#191919" />
                 <StatCard icon={UserPlus} label="휴대전화 가입" value={phoneMembers} color="#339af0" />
                 <StatCard icon={Shield} label="마케팅 동의" value={agreedMarketing} color="#51cf66" />
@@ -117,7 +126,10 @@ export default function AdminMembersPage() {
                         placeholder="이름, 전화번호, 이메일 검색"
                         leftSection={<Search size={16} />}
                         value={search}
-                        onChange={(e) => setSearch(e.target.value)}
+                        onChange={(e) => {
+                            setSearch(e.target.value);
+                            setPage(1);
+                        }}
                         style={{ flex: 1 }}
                     />
                     <Select
@@ -127,7 +139,10 @@ export default function AdminMembersPage() {
                             { value: 'phone', label: '휴대전화' },
                         ]}
                         value={providerFilter}
-                        onChange={setProviderFilter}
+                        onChange={(val) => {
+                            setProviderFilter(val);
+                            setPage(1);
+                        }}
                         clearable
                         w={140}
                     />
@@ -136,101 +151,114 @@ export default function AdminMembersPage() {
 
             {/* 회원 목록 */}
             <Card withBorder radius="md" p={0}>
-                <Table striped highlightOnHover>
-                    <Table.Thead>
-                        <Table.Tr>
-                            <Table.Th>회원</Table.Th>
-                            <Table.Th>로그인 방식</Table.Th>
-                            <Table.Th>전화번호</Table.Th>
-                            <Table.Th>약관 동의</Table.Th>
-                            <Table.Th>관심 시설</Table.Th>
-                            <Table.Th>가입일</Table.Th>
-                            <Table.Th>마지막 접속</Table.Th>
-                        </Table.Tr>
-                    </Table.Thead>
-                    <Table.Tbody>
-                        {filtered.length === 0 ? (
+                <ScrollArea>
+                    <Table striped highlightOnHover miw={720}>
+                        <Table.Thead>
                             <Table.Tr>
-                                <Table.Td colSpan={7} style={{ textAlign: 'center', padding: 40, color: '#868e96' }}>
-                                    {search ? '검색 결과가 없습니다' : '등록된 회원이 없습니다'}
-                                </Table.Td>
+                                <Table.Th>회원</Table.Th>
+                                <Table.Th>로그인 방식</Table.Th>
+                                <Table.Th>전화번호</Table.Th>
+                                <Table.Th>약관 동의</Table.Th>
+                                <Table.Th>관심 시설</Table.Th>
+                                <Table.Th>가입일</Table.Th>
+                                <Table.Th>마지막 접속</Table.Th>
                             </Table.Tr>
-                        ) : (
-                            filtered.map((member) => {
-                                const name = member.profile?.nickname || member.user_metadata?.full_name || '사용자';
-                                const avatar = member.profile?.avatar_url || member.user_metadata?.avatar_url;
-                                const provider = member.profile?.provider;
-                                const phone = member.profile?.phone || member.user_metadata?.phone;
+                        </Table.Thead>
+                        <Table.Tbody>
+                            {paginated.length === 0 ? (
+                                <Table.Tr>
+                                    <Table.Td colSpan={7} style={{ textAlign: 'center', padding: 40, color: '#868e96' }}>
+                                        {search ? '검색 결과가 없습니다' : '등록된 회원이 없습니다'}
+                                    </Table.Td>
+                                </Table.Tr>
+                            ) : (
+                                paginated.map((member) => {
+                                    const name = member.profile?.nickname || member.user_metadata?.full_name || '사용자';
+                                    const avatar = member.profile?.avatar_url || member.user_metadata?.avatar_url;
+                                    const provider = member.profile?.provider;
+                                    const phone = member.profile?.phone || member.user_metadata?.phone;
 
-                                return (
-                                    <Table.Tr
-                                        key={member.id}
-                                        style={{ cursor: 'pointer' }}
-                                        onClick={() => setSelectedMember(member)}
-                                    >
-                                        <Table.Td>
-                                            <Group gap="sm">
-                                                <Avatar
-                                                    src={avatar}
-                                                    size={32}
-                                                    radius="xl"
-                                                    color="grape"
+                                    return (
+                                        <Table.Tr
+                                            key={member.id}
+                                            style={{ cursor: 'pointer' }}
+                                            onClick={() => setSelectedMember(member)}
+                                        >
+                                            <Table.Td>
+                                                <Group gap="sm" wrap="nowrap">
+                                                    <Avatar
+                                                        src={avatar}
+                                                        size={32}
+                                                        radius="xl"
+                                                        color="blue"
+                                                    >
+                                                        {name.charAt(0)}
+                                                    </Avatar>
+                                                    <div>
+                                                        <Text size="sm" fw={600}>{name}</Text>
+                                                        <Text size="xs" c="dimmed">{member.email}</Text>
+                                                    </div>
+                                                </Group>
+                                            </Table.Td>
+                                            <Table.Td>
+                                                <Badge
+                                                    size="sm"
+                                                    variant="light"
+                                                    color={provider === 'kakao' ? 'yellow' : (provider === 'phone' || phone ? 'blue' : 'gray')}
                                                 >
-                                                    {name.charAt(0)}
-                                                </Avatar>
-                                                <div>
-                                                    <Text size="sm" fw={600}>{name}</Text>
-                                                    <Text size="xs" c="dimmed">{member.email}</Text>
-                                                </div>
-                                            </Group>
-                                        </Table.Td>
-                                        <Table.Td>
-                                            <Badge
-                                                size="sm"
-                                                variant="light"
-                                                color={provider === 'kakao' ? 'yellow' : (provider === 'phone' || phone ? 'blue' : 'gray')}
-                                            >
-                                                {provider === 'kakao' ? '카카오' : (provider === 'phone' || phone ? '휴대전화' : (member.email ? '이메일' : '-'))}
-                                            </Badge>
-                                        </Table.Td>
+                                                    {provider === 'kakao' ? '카카오' : (provider === 'phone' || phone ? '휴대전화' : (member.email ? '이메일' : '-'))}
+                                                </Badge>
+                                            </Table.Td>
 
-                                        <Table.Td>
-                                            <Text size="sm">{phone ? formatPhoneDisplay(phone) : '-'}</Text>
-                                        </Table.Td>
-                                        <Table.Td>
-                                            <Group gap={4}>
-                                                <Tooltip label="이용약관">
-                                                    <Badge size="xs" color={member.profile?.agreed_terms ? 'green' : 'gray'} variant="dot">
-                                                        약관
-                                                    </Badge>
-                                                </Tooltip>
-                                                <Tooltip label="마케팅 동의">
-                                                    <Badge size="xs" color={member.profile?.agreed_marketing ? 'green' : 'gray'} variant="dot">
-                                                        마케팅
-                                                    </Badge>
-                                                </Tooltip>
-                                            </Group>
-                                        </Table.Td>
-                                        <Table.Td>
-                                            <Text size="sm">{member.profile?.favorite_facilities?.length || 0}개</Text>
-                                        </Table.Td>
-                                        <Table.Td>
-                                            <Text size="sm">{formatDate(member.created_at)}</Text>
-                                        </Table.Td>
-                                        <Table.Td>
-                                            <Text size="sm">{formatDate(member.last_sign_in_at)}</Text>
-                                        </Table.Td>
-                                    </Table.Tr>
-                                );
-                            })
-                        )}
-                    </Table.Tbody>
-                </Table>
+                                            <Table.Td>
+                                                <Text size="sm">{phone ? formatPhoneDisplay(phone) : '-'}</Text>
+                                            </Table.Td>
+                                            <Table.Td>
+                                                <Group gap={4} wrap="nowrap">
+                                                    <Tooltip label="이용약관">
+                                                        <Badge size="xs" color={member.profile?.agreed_terms ? 'green' : 'gray'} variant="dot">
+                                                            약관
+                                                        </Badge>
+                                                    </Tooltip>
+                                                    <Tooltip label="마케팅 동의">
+                                                        <Badge size="xs" color={member.profile?.agreed_marketing ? 'green' : 'gray'} variant="dot">
+                                                            마케팅
+                                                        </Badge>
+                                                    </Tooltip>
+                                                </Group>
+                                            </Table.Td>
+                                            <Table.Td>
+                                                <Text size="sm">{member.profile?.favorite_facilities?.length || 0}개</Text>
+                                            </Table.Td>
+                                            <Table.Td>
+                                                <Text size="sm">{formatDate(member.created_at)}</Text>
+                                            </Table.Td>
+                                            <Table.Td>
+                                                <Text size="sm">{formatDate(member.last_sign_in_at)}</Text>
+                                            </Table.Td>
+                                        </Table.Tr>
+                                    );
+                                })
+                            )}
+                        </Table.Tbody>
+                    </Table>
+                </ScrollArea>
             </Card>
 
-            <Text size="sm" c="dimmed" mt="md" ta="right">
-                총 {filtered.length}명 {search && `(전체 ${totalMembers}명 중)`}
-            </Text>
+            <Group justify="space-between" align="center" mt="md">
+                <Text size="sm" c="dimmed">
+                    총 {filtered.length}명 {search && `(전체 ${totalMembers}명 중)`}
+                </Text>
+                {totalPages > 1 && (
+                    <Pagination
+                        total={totalPages}
+                        value={page}
+                        onChange={setPage}
+                        color="blue"
+                        size="sm"
+                    />
+                )}
+            </Group>
 
             {/* 회원 상세 모달 */}
             {selectedMember && (
@@ -238,7 +266,7 @@ export default function AdminMembersPage() {
                     member={selectedMember}
                     onClose={() => setSelectedMember(null)}
                     formatDateTime={formatDateTime}
-                    onDelete={async (id) => {
+                    onDelete={async () => {
                         await fetchMembers();
                         setSelectedMember(null);
                     }}
@@ -329,7 +357,7 @@ function MemberDetailModal({ member, onClose, formatDateTime, onDelete }: {
             size="md"
         >
             <Group mb="md">
-                <Avatar src={avatar} size={48} radius="xl" color="grape">
+                <Avatar src={avatar} size={48} radius="xl" color="blue">
                     {name.charAt(0)}
                 </Avatar>
                 <div>
@@ -343,8 +371,22 @@ function MemberDetailModal({ member, onClose, formatDateTime, onDelete }: {
                 <InfoItem label="전화번호" value={phone ? formatPhoneDisplay(phone) : '-'} />
                 <InfoItem label="가입일" value={formatDateTime(member.created_at)} />
                 <InfoItem label="마지막 접속" value={formatDateTime(member.last_sign_in_at)} />
-                <InfoItem label="약관 동의" value={member.profile?.agreed_terms ? '✅ 완료' : '❌ 미동의'} />
-                <InfoItem label="마케팅 동의" value={member.profile?.agreed_marketing ? '✅ 동의' : '❌ 미동의'} />
+                <InfoItem
+                    label="약관 동의"
+                    value={
+                        member.profile?.agreed_terms
+                            ? <Badge color="teal" variant="light">동의</Badge>
+                            : <Badge color="gray" variant="light">미동의</Badge>
+                    }
+                />
+                <InfoItem
+                    label="마케팅 동의"
+                    value={
+                        member.profile?.agreed_marketing
+                            ? <Badge color="teal" variant="light">동의</Badge>
+                            : <Badge color="gray" variant="light">미동의</Badge>
+                    }
+                />
                 <InfoItem label="동의 일시" value={formatDateTime(member.profile?.agreed_at || null)} />
                 <InfoItem label="관심 시설" value={`${member.profile?.favorite_facilities?.length || 0}개`} />
             </SimpleGrid>
@@ -376,11 +418,15 @@ function MemberDetailModal({ member, onClose, formatDateTime, onDelete }: {
     );
 }
 
-function InfoItem({ label, value }: { label: string; value: string }) {
+function InfoItem({ label, value }: { label: string; value: React.ReactNode }) {
     return (
         <div style={{ padding: '8px 0' }}>
             <Text size="xs" c="dimmed">{label}</Text>
-            <Text size="sm" fw={500}>{value}</Text>
+            {typeof value === 'string' ? (
+                <Text size="sm" fw={500}>{value}</Text>
+            ) : (
+                <div style={{ marginTop: 4 }}>{value}</div>
+            )}
         </div>
     );
 }

@@ -12,14 +12,31 @@ export async function GET() {
             process.env.SUPABASE_SERVICE_KEY!
         );
 
-        // auth.users 가져오기
-        const { data: authData } = await supabaseAdmin.auth.admin.listUsers();
-        const users = authData?.users || [];
+        // auth.users 전체 페이지네이션 조회 (기본 50명 제한 우회)
+        const users: any[] = [];
+        let page = 1;
+        const perPage = 1000;
+        while (true) {
+            const { data: authData, error: listError } = await supabaseAdmin.auth.admin.listUsers({
+                page,
+                perPage,
+            });
+            if (listError) {
+                throw listError;
+            }
+            const batch = authData?.users || [];
+            users.push(...batch);
+            if (batch.length < perPage) {
+                break;
+            }
+            page += 1;
+        }
 
         // profiles 가져오기
         const { data: profiles } = await supabaseAdmin
             .from('profiles')
-            .select('*');
+            .select('*')
+            .limit(10000);
 
         // 합치기
         const members = users.map((user) => {

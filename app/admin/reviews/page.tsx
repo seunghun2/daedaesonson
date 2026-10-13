@@ -1,10 +1,10 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
-import { Title, Table, Badge, ActionIcon, Paper, Text, Group, TextInput, Modal, Button, Stack, LoadingOverlay, Card, Image as MantineImage, Box, Textarea, Divider } from '@mantine/core';
+import { Title, Table, Badge, ActionIcon, Paper, Text, Group, TextInput, Modal, Button, Stack, LoadingOverlay, Card, Image as MantineImage, Box, Textarea, Divider, ScrollArea, Pagination } from '@mantine/core';
 import { notifications } from '@mantine/notifications';
 import { useDisclosure, useMediaQuery } from '@mantine/hooks';
-import { Search, Trash, Eye, Star, Image as ImageIcon, MessageCircle, X, Send } from 'lucide-react';
+import { Search, Trash, Eye, Star, Image as ImageIcon, MessageCircle, X, Send, Heart } from 'lucide-react';
 import { compressImageFile } from '@/lib/clientImageCompress';
 
 
@@ -30,10 +30,13 @@ interface Review {
     replies: Reply[];
 }
 
+const PAGE_SIZE = 20;
+
 export default function ReviewsAdminPage() {
     const [reviews, setReviews] = useState<Review[]>([]);
     const [loading, setLoading] = useState(true);
     const [search, setSearch] = useState('');
+    const [page, setPage] = useState(1);
     const [selectedReview, setSelectedReview] = useState<Review | null>(null);
     const [detailOpened, { open: openDetail, close: closeDetail }] = useDisclosure(false);
     const isMobile = useMediaQuery('(max-width: 768px)', undefined, { getInitialValueInEffect: true });
@@ -69,6 +72,9 @@ export default function ReviewsAdminPage() {
         r.facilityId.toLowerCase().includes(search.toLowerCase()) ||
         r.facilityName.toLowerCase().includes(search.toLowerCase())
     );
+
+    const totalPages = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE));
+    const paginated = filtered.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE);
 
     const handleDelete = async (id: string) => {
         if (!confirm('정말 이 후기를 삭제하시겠습니까?')) return;
@@ -245,7 +251,10 @@ export default function ReviewsAdminPage() {
                     placeholder="닉네임, 내용, 시설명 검색..."
                     leftSection={<Search size={16} />}
                     value={search}
-                    onChange={(e) => setSearch(e.currentTarget.value)}
+                    onChange={(e) => {
+                        setSearch(e.currentTarget.value);
+                        setPage(1);
+                    }}
                     styles={{ input: { fontSize: '16px' } }}
                 />
             </Paper>
@@ -254,8 +263,8 @@ export default function ReviewsAdminPage() {
             {isMobile ? (
                 <Stack gap="sm" pos="relative">
                     <LoadingOverlay visible={loading} />
-                    {filtered.length > 0 ? (
-                        filtered.map((review) => (
+                    {paginated.length > 0 ? (
+                        paginated.map((review) => (
                             <Card key={review.id} p="sm" radius="md" withBorder onClick={() => handleView(review)} style={{ cursor: 'pointer' }}>
                                 <Group justify="space-between" mb={4}>
                                     <Group gap={6}>
@@ -293,76 +302,95 @@ export default function ReviewsAdminPage() {
                 /* PC: 테이블 뷰 */
                 <Paper radius="md" withBorder style={{ overflow: 'hidden', position: 'relative' }}>
                     <LoadingOverlay visible={loading} />
-                    <Table verticalSpacing="sm" striped highlightOnHover>
-                        <Table.Thead bg="gray.1">
-                            <Table.Tr>
-                                <Table.Th>시설명</Table.Th>
-                                <Table.Th>닉네임</Table.Th>
-                                <Table.Th>별점</Table.Th>
-                                <Table.Th>내용</Table.Th>
-                                <Table.Th>답글</Table.Th>
-                                <Table.Th>좋아요</Table.Th>
-                                <Table.Th>날짜</Table.Th>
-                                <Table.Th style={{ textAlign: 'right' }}>관리</Table.Th>
-                            </Table.Tr>
-                        </Table.Thead>
-                        <Table.Tbody>
-                            {filtered.length > 0 ? (
-                                filtered.map((review) => (
-                                    <Table.Tr key={review.id}>
-                                        <Table.Td>
-                                            <Text size="sm" fw={500}>{review.facilityName}</Text>
-                                            <Text size="xs" c="dimmed">{review.facilityId}</Text>
-                                        </Table.Td>
-                                        <Table.Td>
-                                            <Text size="sm" fw={500}>{review.author}</Text>
-                                        </Table.Td>
-                                        <Table.Td>
-                                            {renderStars(review.rating)}
-                                        </Table.Td>
-                                        <Table.Td style={{ maxWidth: 300 }}>
-                                            <Text size="sm" lineClamp={2}>{review.content}</Text>
-                                        </Table.Td>
-                                        <Table.Td>
-                                            {review.replies?.length > 0 ? (
-                                                <Badge variant="light" color="teal" size="sm" leftSection={<MessageCircle size={10} />}>
-                                                    {review.replies.length}
+                    <ScrollArea>
+                        <Table verticalSpacing="sm" striped highlightOnHover miw={750}>
+                            <Table.Thead bg="gray.1">
+                                <Table.Tr>
+                                    <Table.Th>시설명</Table.Th>
+                                    <Table.Th>닉네임</Table.Th>
+                                    <Table.Th>별점</Table.Th>
+                                    <Table.Th>내용</Table.Th>
+                                    <Table.Th>답글</Table.Th>
+                                    <Table.Th>좋아요</Table.Th>
+                                    <Table.Th>날짜</Table.Th>
+                                    <Table.Th style={{ textAlign: 'right' }}>관리</Table.Th>
+                                </Table.Tr>
+                            </Table.Thead>
+                            <Table.Tbody>
+                                {paginated.length > 0 ? (
+                                    paginated.map((review) => (
+                                        <Table.Tr key={review.id}>
+                                            <Table.Td>
+                                                <Text size="sm" fw={500}>{review.facilityName}</Text>
+                                                <Text size="xs" c="dimmed">{review.facilityId}</Text>
+                                            </Table.Td>
+                                            <Table.Td>
+                                                <Text size="sm" fw={500}>{review.author}</Text>
+                                            </Table.Td>
+                                            <Table.Td>
+                                                {renderStars(review.rating)}
+                                            </Table.Td>
+                                            <Table.Td style={{ maxWidth: 300 }}>
+                                                <Text size="sm" lineClamp={2}>{review.content}</Text>
+                                            </Table.Td>
+                                            <Table.Td>
+                                                {review.replies?.length > 0 ? (
+                                                    <Badge variant="light" color="teal" size="sm" leftSection={<MessageCircle size={10} />}>
+                                                        {review.replies.length}
+                                                    </Badge>
+                                                ) : (
+                                                    <Text size="xs" c="dimmed">—</Text>
+                                                )}
+                                            </Table.Td>
+                                            <Table.Td>
+                                                <Badge variant="light" color="pink" size="sm" leftSection={<Heart size={12} />}>
+                                                    {review.likes}
                                                 </Badge>
-                                            ) : (
-                                                <Text size="xs" c="dimmed">—</Text>
-                                            )}
-                                        </Table.Td>
-                                        <Table.Td>
-                                            <Badge variant="light" color="pink" size="sm">♥ {review.likes}</Badge>
-                                        </Table.Td>
-                                        <Table.Td>
-                                            <Text size="xs" c="dimmed">
-                                                {new Date(review.createdAt).toLocaleDateString('ko-KR')}
-                                            </Text>
-                                        </Table.Td>
-                                        <Table.Td align="right">
-                                            <Group gap="xs" justify="flex-end">
-                                                <ActionIcon variant="subtle" color="blue" onClick={() => handleView(review)}>
-                                                    <Eye size={16} />
-                                                </ActionIcon>
-                                                <ActionIcon variant="subtle" color="red" onClick={() => handleDelete(review.id)}>
-                                                    <Trash size={16} />
-                                                </ActionIcon>
-                                            </Group>
+                                            </Table.Td>
+                                            <Table.Td>
+                                                <Text size="xs" c="dimmed">
+                                                    {new Date(review.createdAt).toLocaleDateString('ko-KR')}
+                                                </Text>
+                                            </Table.Td>
+                                            <Table.Td align="right">
+                                                <Group gap="xs" justify="flex-end" wrap="nowrap">
+                                                    <ActionIcon variant="subtle" color="blue" onClick={() => handleView(review)}>
+                                                        <Eye size={16} />
+                                                    </ActionIcon>
+                                                    <ActionIcon variant="subtle" color="red" onClick={() => handleDelete(review.id)}>
+                                                        <Trash size={16} />
+                                                    </ActionIcon>
+                                                </Group>
+                                            </Table.Td>
+                                        </Table.Tr>
+                                    ))
+                                ) : (
+                                    <Table.Tr>
+                                        <Table.Td colSpan={8} align="center" py="xl">
+                                            {!loading && <Text c="dimmed">등록된 후기가 없습니다.</Text>}
                                         </Table.Td>
                                     </Table.Tr>
-                                ))
-                            ) : (
-                                <Table.Tr>
-                                    <Table.Td colSpan={8} align="center" py="xl">
-                                        {!loading && <Text c="dimmed">등록된 후기가 없습니다.</Text>}
-                                    </Table.Td>
-                                </Table.Tr>
-                            )}
-                        </Table.Tbody>
-                    </Table>
+                                )}
+                            </Table.Tbody>
+                        </Table>
+                    </ScrollArea>
                 </Paper>
             )}
+
+            <Group justify="space-between" align="center" mt="md">
+                <Text size="sm" c="dimmed">
+                    총 {filtered.length}건 {search && `(전체 ${reviews.length}건 중)`}
+                </Text>
+                {totalPages > 1 && (
+                    <Pagination
+                        total={totalPages}
+                        value={page}
+                        onChange={setPage}
+                        color="blue"
+                        size="sm"
+                    />
+                )}
+            </Group>
 
             {/* 상세 모달 */}
             <Modal
@@ -379,7 +407,9 @@ export default function ReviewsAdminPage() {
                                 <Text size="lg" fw={700}>{selectedReview.author}</Text>
                                 {renderStars(selectedReview.rating)}
                             </Group>
-                            <Badge variant="light" color="pink">♥ {selectedReview.likes}</Badge>
+                            <Badge variant="light" color="pink" leftSection={<Heart size={13} />}>
+                                {selectedReview.likes}
+                            </Badge>
                         </Group>
 
                         <Group gap="xs">

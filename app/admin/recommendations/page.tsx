@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Title, Table, Badge, ActionIcon, Paper, Text, Group, TextInput, Modal, Button, Stack, LoadingOverlay, Card, Box } from '@mantine/core';
+import { Title, Table, Badge, ActionIcon, Paper, Text, Group, TextInput, Modal, Button, Stack, LoadingOverlay, Card, Box, ScrollArea, Pagination } from '@mantine/core';
 import { notifications } from '@mantine/notifications';
 import { useDisclosure, useMediaQuery } from '@mantine/hooks';
 import { Search, Trash, Eye, Phone, MapPin, Wallet, MessageSquare } from 'lucide-react';
@@ -23,10 +23,13 @@ const STATUS_LABELS: Record<string, { label: string; color: string }> = {
     'completed': { label: '추천완료', color: 'green' },
 };
 
+const PAGE_SIZE = 20;
+
 export default function RecommendationsPage() {
     const [requests, setRequests] = useState<RecommendationRequest[]>([]);
     const [loading, setLoading] = useState(true);
     const [search, setSearch] = useState('');
+    const [page, setPage] = useState(1);
     const [selected, setSelected] = useState<RecommendationRequest | null>(null);
     const [detailOpened, { open: openDetail, close: closeDetail }] = useDisclosure(false);
     const isMobile = useMediaQuery('(max-width: 768px)', undefined, { getInitialValueInEffect: true });
@@ -53,6 +56,9 @@ export default function RecommendationsPage() {
         r.region.includes(search) ||
         r.facility_type.includes(search)
     );
+
+    const totalPages = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE));
+    const paginated = filtered.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE);
 
     const handleUpdateStatus = async (id: number, status: string) => {
         try {
@@ -106,7 +112,7 @@ export default function RecommendationsPage() {
         <div>
             <Group justify="space-between" mb="lg" wrap="wrap">
                 <Title order={isMobile ? 3 : 2}>맞춤 추천 관리</Title>
-                <Badge size="lg" variant="light" color="brand">
+                <Badge size="lg" variant="light" color="blue">
                     총 {requests.length}건
                 </Badge>
             </Group>
@@ -116,7 +122,10 @@ export default function RecommendationsPage() {
                     placeholder="연락처, 지역, 시설유형 검색..."
                     leftSection={<Search size={16} />}
                     value={search}
-                    onChange={(e) => setSearch(e.currentTarget.value)}
+                    onChange={(e) => {
+                        setSearch(e.currentTarget.value);
+                        setPage(1);
+                    }}
                     styles={{ input: { fontSize: '16px' } }}
                 />
             </Paper>
@@ -125,8 +134,8 @@ export default function RecommendationsPage() {
             {isMobile ? (
                 <Stack gap="sm" pos="relative">
                     <LoadingOverlay visible={loading} />
-                    {filtered.length > 0 ? (
-                        filtered.map((r) => (
+                    {paginated.length > 0 ? (
+                        paginated.map((r) => (
                             <Card key={r.id} p="sm" radius="md" withBorder onClick={() => handleView(r)} style={{ cursor: 'pointer' }}>
                                 <Group justify="space-between" mb={4}>
                                     <Text size="sm" fw={600}>{formatPhone(r.phone)}</Text>
@@ -151,67 +160,84 @@ export default function RecommendationsPage() {
                 /* PC: 테이블 뷰 */
                 <Paper radius="md" withBorder style={{ overflow: 'hidden', position: 'relative' }}>
                     <LoadingOverlay visible={loading} />
-                    <Table verticalSpacing="sm" striped highlightOnHover>
-                        <Table.Thead bg="gray.1">
-                            <Table.Tr>
-                                <Table.Th>연락처</Table.Th>
-                                <Table.Th>지역</Table.Th>
-                                <Table.Th>시설 유형</Table.Th>
-                                <Table.Th>예산</Table.Th>
-                                <Table.Th>신청일</Table.Th>
-                                <Table.Th>상태</Table.Th>
-                                <Table.Th style={{ textAlign: 'right' }}>관리</Table.Th>
-                            </Table.Tr>
-                        </Table.Thead>
-                        <Table.Tbody>
-                            {filtered.length > 0 ? (
-                                filtered.map((r) => (
-                                    <Table.Tr key={r.id}>
-                                        <Table.Td>
-                                            <Text size="sm" fw={500}>{formatPhone(r.phone)}</Text>
-                                        </Table.Td>
-                                        <Table.Td>
-                                            <Text size="sm">{r.region}</Text>
-                                        </Table.Td>
-                                        <Table.Td>
-                                            <Badge size="xs" variant="light" color="brand">{r.facility_type}</Badge>
-                                        </Table.Td>
-                                        <Table.Td>
-                                            <Text size="sm" c={r.budget ? undefined : 'dimmed'}>{r.budget || '-'}</Text>
-                                        </Table.Td>
-                                        <Table.Td>
-                                            <Text size="xs" c="dimmed">
-                                                {new Date(r.created_at).toLocaleDateString('ko-KR')}
-                                            </Text>
-                                        </Table.Td>
-                                        <Table.Td>
-                                            <Badge color={STATUS_LABELS[r.status]?.color || 'gray'} variant="light" size="sm">
-                                                {STATUS_LABELS[r.status]?.label || r.status}
-                                            </Badge>
-                                        </Table.Td>
-                                        <Table.Td align="right">
-                                            <Group gap="xs" justify="flex-end">
-                                                <ActionIcon variant="subtle" color="blue" onClick={() => handleView(r)}>
-                                                    <Eye size={16} />
-                                                </ActionIcon>
-                                                <ActionIcon variant="subtle" color="red" onClick={() => handleDelete(r.id)}>
-                                                    <Trash size={16} />
-                                                </ActionIcon>
-                                            </Group>
+                    <ScrollArea>
+                        <Table verticalSpacing="sm" striped highlightOnHover miw={700}>
+                            <Table.Thead bg="gray.1">
+                                <Table.Tr>
+                                    <Table.Th>연락처</Table.Th>
+                                    <Table.Th>지역</Table.Th>
+                                    <Table.Th>시설 유형</Table.Th>
+                                    <Table.Th>예산</Table.Th>
+                                    <Table.Th>신청일</Table.Th>
+                                    <Table.Th>상태</Table.Th>
+                                    <Table.Th style={{ textAlign: 'right' }}>관리</Table.Th>
+                                </Table.Tr>
+                            </Table.Thead>
+                            <Table.Tbody>
+                                {paginated.length > 0 ? (
+                                    paginated.map((r) => (
+                                        <Table.Tr key={r.id}>
+                                            <Table.Td>
+                                                <Text size="sm" fw={500}>{formatPhone(r.phone)}</Text>
+                                            </Table.Td>
+                                            <Table.Td>
+                                                <Text size="sm">{r.region}</Text>
+                                            </Table.Td>
+                                            <Table.Td>
+                                                <Badge size="xs" variant="light" color="blue">{r.facility_type}</Badge>
+                                            </Table.Td>
+                                            <Table.Td>
+                                                <Text size="sm" c={r.budget ? undefined : 'dimmed'}>{r.budget || '-'}</Text>
+                                            </Table.Td>
+                                            <Table.Td>
+                                                <Text size="xs" c="dimmed">
+                                                    {new Date(r.created_at).toLocaleDateString('ko-KR')}
+                                                </Text>
+                                            </Table.Td>
+                                            <Table.Td>
+                                                <Badge color={STATUS_LABELS[r.status]?.color || 'gray'} variant="light" size="sm">
+                                                    {STATUS_LABELS[r.status]?.label || r.status}
+                                                </Badge>
+                                            </Table.Td>
+                                            <Table.Td align="right">
+                                                <Group gap="xs" justify="flex-end" wrap="nowrap">
+                                                    <ActionIcon variant="subtle" color="blue" onClick={() => handleView(r)}>
+                                                        <Eye size={16} />
+                                                    </ActionIcon>
+                                                    <ActionIcon variant="subtle" color="red" onClick={() => handleDelete(r.id)}>
+                                                        <Trash size={16} />
+                                                    </ActionIcon>
+                                                </Group>
+                                            </Table.Td>
+                                        </Table.Tr>
+                                    ))
+                                ) : (
+                                    <Table.Tr>
+                                        <Table.Td colSpan={7} align="center" py="xl">
+                                            {!loading && <Text c="dimmed">등록된 추천 요청이 없습니다.</Text>}
                                         </Table.Td>
                                     </Table.Tr>
-                                ))
-                            ) : (
-                                <Table.Tr>
-                                    <Table.Td colSpan={7} align="center" py="xl">
-                                        {!loading && <Text c="dimmed">등록된 추천 요청이 없습니다.</Text>}
-                                    </Table.Td>
-                                </Table.Tr>
-                            )}
-                        </Table.Tbody>
-                    </Table>
+                                )}
+                            </Table.Tbody>
+                        </Table>
+                    </ScrollArea>
                 </Paper>
             )}
+
+            <Group justify="space-between" align="center" mt="md">
+                <Text size="sm" c="dimmed">
+                    총 {filtered.length}건 {search && `(전체 ${requests.length}건 중)`}
+                </Text>
+                {totalPages > 1 && (
+                    <Pagination
+                        total={totalPages}
+                        value={page}
+                        onChange={setPage}
+                        color="blue"
+                        size="sm"
+                    />
+                )}
+            </Group>
 
             {/* Detail Modal */}
             <Modal
@@ -235,7 +261,7 @@ export default function RecommendationsPage() {
                                 </Group>
                                 <Group justify="space-between">
                                     <Text size="sm" c="dimmed">시설 유형</Text>
-                                    <Badge variant="light" color="brand">{selected.facility_type}</Badge>
+                                    <Badge variant="light" color="blue">{selected.facility_type}</Badge>
                                 </Group>
                                 <Group justify="space-between">
                                     <Group gap={4}><Wallet size={14} /><Text size="sm" c="dimmed">예산 범위</Text></Group>

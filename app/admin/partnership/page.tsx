@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Box, Title, Table, Badge, Text, Group, Paper, Select, LoadingOverlay, Button, Modal, Stack, Textarea } from '@mantine/core';
+import { Box, Title, Table, Badge, Text, Group, Paper, Select, LoadingOverlay, Button, Modal, Stack, Textarea, ScrollArea, Pagination } from '@mantine/core';
 import { notifications } from '@mantine/notifications';
 import { useMediaQuery } from '@mantine/hooks';
 
@@ -18,9 +18,12 @@ interface PartnershipInquiry {
     admin_note?: string;
 }
 
+const PAGE_SIZE = 20;
+
 export default function AdminPartnershipPage() {
     const [inquiries, setInquiries] = useState<PartnershipInquiry[]>([]);
     const [isLoading, setIsLoading] = useState(true);
+    const [page, setPage] = useState(1);
     const [selectedInquiry, setSelectedInquiry] = useState<PartnershipInquiry | null>(null);
     const [editStatus, setEditStatus] = useState<string>('');
     const [editNote, setEditNote] = useState<string>('');
@@ -117,7 +120,7 @@ export default function AdminPartnershipPage() {
             case 'facility':
                 return <Badge color="teal" variant="light">시설등록</Badge>;
             case 'partnership':
-                return <Badge color="violet" variant="light">광고/제휴</Badge>;
+                return <Badge color="blue" variant="light">광고/제휴</Badge>;
             default:
                 return <Badge color="gray" variant="light">{type}</Badge>;
         }
@@ -134,6 +137,9 @@ export default function AdminPartnershipPage() {
         });
     };
 
+    const totalPages = Math.max(1, Math.ceil(inquiries.length / PAGE_SIZE));
+    const paginated = inquiries.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE);
+
     return (
         <Box p={isMobile ? 'xs' : 'md'}>
             <LoadingOverlay visible={isLoading} />
@@ -146,46 +152,63 @@ export default function AdminPartnershipPage() {
             </Group>
 
             {inquiries.length === 0 && !isLoading ? (
-                <Paper p="xl" ta="center">
+                <Paper p="xl" ta="center" withBorder radius="md">
                     <Text c="dimmed">아직 제휴 문의가 없습니다.</Text>
                 </Paper>
             ) : (
-                <Paper shadow="xs" withBorder style={{ overflow: 'auto' }}>
-                    <Table striped highlightOnHover>
-                        <Table.Thead>
-                            <Table.Tr>
-                                <Table.Th>유형</Table.Th>
-                                <Table.Th>업체명</Table.Th>
-                                <Table.Th>담당자</Table.Th>
-                                <Table.Th>연락처</Table.Th>
-                                <Table.Th>신청일</Table.Th>
-                                <Table.Th>상태</Table.Th>
-                                <Table.Th></Table.Th>
-                            </Table.Tr>
-                        </Table.Thead>
-                        <Table.Tbody>
-                            {inquiries.map((inquiry) => (
-                                <Table.Tr key={inquiry.id}>
-                                    <Table.Td>{getTypeBadge(inquiry.type)}</Table.Td>
-                                    <Table.Td fw={600}>{inquiry.company_name}</Table.Td>
-                                    <Table.Td>{inquiry.contact_name}</Table.Td>
-                                    <Table.Td>{inquiry.phone}</Table.Td>
-                                    <Table.Td>{formatDate(inquiry.created_at)}</Table.Td>
-                                    <Table.Td>{getStatusBadge(inquiry.status)}</Table.Td>
-                                    <Table.Td>
-                                        <Button
-                                            size="xs"
-                                            variant="light"
-                                            onClick={() => setSelectedInquiry(inquiry)}
-                                        >
-                                            상세
-                                        </Button>
-                                    </Table.Td>
-                                </Table.Tr>
-                            ))}
-                        </Table.Tbody>
-                    </Table>
-                </Paper>
+                <>
+                    <Paper shadow="xs" radius="md" withBorder style={{ overflow: 'hidden' }}>
+                        <ScrollArea>
+                            <Table striped highlightOnHover miw={700}>
+                                <Table.Thead>
+                                    <Table.Tr>
+                                        <Table.Th>유형</Table.Th>
+                                        <Table.Th>업체명</Table.Th>
+                                        <Table.Th>담당자</Table.Th>
+                                        <Table.Th>연락처</Table.Th>
+                                        <Table.Th>신청일</Table.Th>
+                                        <Table.Th>상태</Table.Th>
+                                        <Table.Th></Table.Th>
+                                    </Table.Tr>
+                                </Table.Thead>
+                                <Table.Tbody>
+                                    {paginated.map((inquiry) => (
+                                        <Table.Tr key={inquiry.id}>
+                                            <Table.Td>{getTypeBadge(inquiry.type)}</Table.Td>
+                                            <Table.Td fw={600}>{inquiry.company_name}</Table.Td>
+                                            <Table.Td>{inquiry.contact_name}</Table.Td>
+                                            <Table.Td>{inquiry.phone}</Table.Td>
+                                            <Table.Td>{formatDate(inquiry.created_at)}</Table.Td>
+                                            <Table.Td>{getStatusBadge(inquiry.status)}</Table.Td>
+                                            <Table.Td>
+                                                <Button
+                                                    size="xs"
+                                                    variant="light"
+                                                    color="blue"
+                                                    onClick={() => setSelectedInquiry(inquiry)}
+                                                >
+                                                    상세
+                                                </Button>
+                                            </Table.Td>
+                                        </Table.Tr>
+                                    ))}
+                                </Table.Tbody>
+                            </Table>
+                        </ScrollArea>
+                    </Paper>
+
+                    {totalPages > 1 && (
+                        <Group justify="flex-end" mt="md">
+                            <Pagination
+                                total={totalPages}
+                                value={page}
+                                onChange={setPage}
+                                color="blue"
+                                size="sm"
+                            />
+                        </Group>
+                    )}
+                </>
             )}
 
             {/* 상세 보기 모달 */}
@@ -263,7 +286,7 @@ export default function AdminPartnershipPage() {
                                 <Button variant="light" color="gray" onClick={() => setSelectedInquiry(null)}>
                                     닫기
                                 </Button>
-                                <Button color="brand" onClick={handleUpdate} loading={isSaving}>
+                                <Button color="blue" onClick={handleUpdate} loading={isSaving}>
                                     저장
                                 </Button>
                             </Group>

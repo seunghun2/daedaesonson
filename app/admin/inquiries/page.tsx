@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Title, Table, Badge, ActionIcon, Paper, Text, Group, TextInput, Modal, Textarea, Button, Stack, LoadingOverlay, Box, Card } from '@mantine/core';
+import { Title, Table, Badge, ActionIcon, Paper, Text, Group, TextInput, Modal, Textarea, Button, Stack, LoadingOverlay, Card, ScrollArea, Pagination, Select } from '@mantine/core';
 import { notifications } from '@mantine/notifications';
 import { useDisclosure, useMediaQuery } from '@mantine/hooks';
 import { Search, Trash, Eye, MessageCircle, Phone, Lock } from 'lucide-react';
@@ -28,10 +28,14 @@ const TYPE_LABELS: Record<string, string> = {
     'other': '기타',
 };
 
+const PAGE_SIZE = 20;
+
 export default function InquiriesPage() {
     const [inquiries, setInquiries] = useState<Inquiry[]>([]);
     const [loading, setLoading] = useState(true);
     const [search, setSearch] = useState('');
+    const [statusFilter, setStatusFilter] = useState<string>('all');
+    const [page, setPage] = useState(1);
     const [selectedInquiry, setSelectedInquiry] = useState<Inquiry | null>(null);
     const [detailOpened, { open: openDetail, close: closeDetail }] = useDisclosure(false);
     const [replyContent, setReplyContent] = useState('');
@@ -59,12 +63,23 @@ export default function InquiriesPage() {
     }, []);
 
     // Filter inquiries
-    const filtered = inquiries.filter(inq =>
-        inq.title.toLowerCase().includes(search.toLowerCase()) ||
-        inq.content.toLowerCase().includes(search.toLowerCase()) ||
-        (inq.facilityName || '').toLowerCase().includes(search.toLowerCase()) ||
-        (inq.facilityId === 'general' ? '일반' : inq.facilityId).toLowerCase().includes(search.toLowerCase())
-    );
+    const filtered = inquiries.filter(inq => {
+        const matchesSearch = !search ||
+            inq.title.toLowerCase().includes(search.toLowerCase()) ||
+            inq.content.toLowerCase().includes(search.toLowerCase()) ||
+            (inq.facilityName || '').toLowerCase().includes(search.toLowerCase()) ||
+            (inq.facilityId === 'general' ? '일반' : inq.facilityId).toLowerCase().includes(search.toLowerCase());
+
+        const isAnswered = (inq.replies?.length || 0) > 0;
+        const matchesStatus = statusFilter === 'all' ||
+            (statusFilter === 'unanswered' && !isAnswered) ||
+            (statusFilter === 'answered' && isAnswered);
+
+        return matchesSearch && matchesStatus;
+    });
+
+    const totalPages = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE));
+    const paginated = filtered.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE);
 
     // Delete inquiry
     const handleDelete = async (id: string) => {
@@ -143,28 +158,47 @@ export default function InquiriesPage() {
             </Group>
 
             <Paper p="sm" radius="md" withBorder mb="md">
-                <TextInput
-                    placeholder="시설ID, 제목, 내용 검색..."
-                    leftSection={<Search size={16} />}
-                    value={search}
-                    onChange={(e) => setSearch(e.currentTarget.value)}
-                    styles={{ input: { fontSize: '16px' } }}
-                />
+                <Group gap="sm">
+                    <Select
+                        value={statusFilter}
+                        onChange={(v) => {
+                            setStatusFilter(v || 'all');
+                            setPage(1);
+                        }}
+                        data={[
+                            { value: 'all', label: '전체 상태' },
+                            { value: 'unanswered', label: '미답변 (대기중)' },
+                            { value: 'answered', label: '답변완료' },
+                        ]}
+                        w={160}
+                    />
+                    <TextInput
+                        placeholder="시설ID, 제목, 내용 검색..."
+                        leftSection={<Search size={16} />}
+                        value={search}
+                        onChange={(e) => {
+                            setSearch(e.currentTarget.value);
+                            setPage(1);
+                        }}
+                        style={{ flex: 1 }}
+                        styles={{ input: { fontSize: '16px' } }}
+                    />
+                </Group>
             </Paper>
 
             {/* 모바일: 카드 뷰 */}
             {isMobile ? (
                 <Stack gap="sm" pos="relative">
                     <LoadingOverlay visible={loading} />
-                    {filtered.length > 0 ? (
-                        filtered.map((inq) => (
+                    {paginated.length > 0 ? (
+                        paginated.map((inq) => (
                             <Card key={inq.id} p="sm" radius="md" withBorder onClick={() => handleView(inq)} style={{ cursor: 'pointer' }}>
                                 <Group justify="space-between" mb={4}>
                                     <Group gap={4}>
                                         <Badge size="xs" variant="outline" color="gray">
                                             {inq.facilityName || (inq.facilityId === 'general' ? '일반' : inq.facilityId)}
                                         </Badge>
-                                        <Badge size="xs" variant="light" color="brand">
+                                        <Badge size="xs" variant="light" color="blue">
                                             {TYPE_LABELS[inq.type] || '기타'}
                                         </Badge>
                                         {inq.isPrivate && <Lock size={12} color="#868e96" />}
@@ -193,68 +227,85 @@ export default function InquiriesPage() {
                 /* PC: 테이블 뷰 */
                 <Paper radius="md" withBorder style={{ overflow: 'hidden', position: 'relative' }}>
                     <LoadingOverlay visible={loading} />
-                    <Table verticalSpacing="sm" striped highlightOnHover>
-                        <Table.Thead bg="gray.1">
-                            <Table.Tr>
-                                <Table.Th>시설</Table.Th>
-                                <Table.Th>제목</Table.Th>
-                                <Table.Th>연락처</Table.Th>
-                                <Table.Th>날짜</Table.Th>
-                                <Table.Th>상태</Table.Th>
-                                <Table.Th style={{ textAlign: 'right' }}>관리</Table.Th>
-                            </Table.Tr>
-                        </Table.Thead>
-                        <Table.Tbody>
-                            {filtered.length > 0 ? (
-                                filtered.map((inq) => (
-                                    <Table.Tr key={inq.id}>
-                                        <Table.Td>
-                                            <Text size="xs" c="dimmed">{inq.facilityName || (inq.facilityId === 'general' ? '일반' : inq.facilityId)}</Text>
-                                        </Table.Td>
-                                        <Table.Td>
-                                            <Group gap={4}>
-                                                {inq.isPrivate && <Badge size="xs" variant="light" color="gray">비공개</Badge>}
-                                                <Text size="sm" fw={500}>{inq.title}</Text>
-                                            </Group>
-                                        </Table.Td>
-                                        <Table.Td>
-                                            <Text size="sm">{inq.phone}</Text>
-                                        </Table.Td>
-                                        <Table.Td>
-                                            <Text size="xs" c="dimmed">
-                                                {new Date(inq.createdAt).toLocaleDateString('ko-KR')}
-                                            </Text>
-                                        </Table.Td>
-                                        <Table.Td>
-                                            {inq.replies.length > 0 ? (
-                                                <Badge color="green" variant="light" size="sm">답변완료</Badge>
-                                            ) : (
-                                                <Badge color="orange" variant="light" size="sm">대기중</Badge>
-                                            )}
-                                        </Table.Td>
-                                        <Table.Td align="right">
-                                            <Group gap="xs" justify="flex-end">
-                                                <ActionIcon variant="subtle" color="blue" onClick={() => handleView(inq)}>
-                                                    <Eye size={16} />
-                                                </ActionIcon>
-                                                <ActionIcon variant="subtle" color="red" onClick={() => handleDelete(inq.id)}>
-                                                    <Trash size={16} />
-                                                </ActionIcon>
-                                            </Group>
+                    <ScrollArea>
+                        <Table verticalSpacing="sm" striped highlightOnHover miw={700}>
+                            <Table.Thead bg="gray.1">
+                                <Table.Tr>
+                                    <Table.Th>시설</Table.Th>
+                                    <Table.Th>제목</Table.Th>
+                                    <Table.Th>연락처</Table.Th>
+                                    <Table.Th>날짜</Table.Th>
+                                    <Table.Th>상태</Table.Th>
+                                    <Table.Th style={{ textAlign: 'right' }}>관리</Table.Th>
+                                </Table.Tr>
+                            </Table.Thead>
+                            <Table.Tbody>
+                                {paginated.length > 0 ? (
+                                    paginated.map((inq) => (
+                                        <Table.Tr key={inq.id}>
+                                            <Table.Td>
+                                                <Text size="xs" c="dimmed">{inq.facilityName || (inq.facilityId === 'general' ? '일반' : inq.facilityId)}</Text>
+                                            </Table.Td>
+                                            <Table.Td>
+                                                <Group gap={4} wrap="nowrap">
+                                                    {inq.isPrivate && <Badge size="xs" variant="light" color="gray">비공개</Badge>}
+                                                    <Text size="sm" fw={500}>{inq.title}</Text>
+                                                </Group>
+                                            </Table.Td>
+                                            <Table.Td>
+                                                <Text size="sm">{inq.phone}</Text>
+                                            </Table.Td>
+                                            <Table.Td>
+                                                <Text size="xs" c="dimmed">
+                                                    {new Date(inq.createdAt).toLocaleDateString('ko-KR')}
+                                                </Text>
+                                            </Table.Td>
+                                            <Table.Td>
+                                                {inq.replies.length > 0 ? (
+                                                    <Badge color="green" variant="light" size="sm">답변완료</Badge>
+                                                ) : (
+                                                    <Badge color="orange" variant="light" size="sm">대기중</Badge>
+                                                )}
+                                            </Table.Td>
+                                            <Table.Td align="right">
+                                                <Group gap="xs" justify="flex-end" wrap="nowrap">
+                                                    <ActionIcon variant="subtle" color="blue" onClick={() => handleView(inq)}>
+                                                        <Eye size={16} />
+                                                    </ActionIcon>
+                                                    <ActionIcon variant="subtle" color="red" onClick={() => handleDelete(inq.id)}>
+                                                        <Trash size={16} />
+                                                    </ActionIcon>
+                                                </Group>
+                                            </Table.Td>
+                                        </Table.Tr>
+                                    ))
+                                ) : (
+                                    <Table.Tr>
+                                        <Table.Td colSpan={6} align="center" py="xl">
+                                            {!loading && <Text c="dimmed">등록된 문의가 없습니다.</Text>}
                                         </Table.Td>
                                     </Table.Tr>
-                                ))
-                            ) : (
-                                <Table.Tr>
-                                    <Table.Td colSpan={6} align="center" py="xl">
-                                        {!loading && <Text c="dimmed">등록된 문의가 없습니다.</Text>}
-                                    </Table.Td>
-                                </Table.Tr>
-                            )}
-                        </Table.Tbody>
-                    </Table>
+                                )}
+                            </Table.Tbody>
+                        </Table>
+                    </ScrollArea>
                 </Paper>
             )}
+
+            <Group justify="space-between" align="center" mt="md">
+                <Text size="sm" c="dimmed">
+                    총 {filtered.length}건 {(search || statusFilter !== 'all') && `(전체 ${inquiries.length}건 중)`}
+                </Text>
+                {totalPages > 1 && (
+                    <Pagination
+                        total={totalPages}
+                        value={page}
+                        onChange={setPage}
+                        color="blue"
+                        size="sm"
+                    />
+                )}
+            </Group>
 
             {/* Detail Modal */}
             <Modal
@@ -269,7 +320,7 @@ export default function InquiriesPage() {
                         <Group justify="space-between" wrap="wrap">
                             <Text size="lg" fw={700}>{selectedInquiry.title}</Text>
                             <Group gap={4}>
-                                <Badge color="brand" size="sm">{TYPE_LABELS[selectedInquiry.type] || '기타'}</Badge>
+                                <Badge color="blue" size="sm">{TYPE_LABELS[selectedInquiry.type] || '기타'}</Badge>
                                 {selectedInquiry.isPrivate && <Badge color="gray">비공개</Badge>}
                             </Group>
                         </Group>

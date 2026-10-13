@@ -4,17 +4,16 @@ import { useState, useEffect, memo } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import {
     Title, Text, Group, Button, Paper, TextInput, ActionIcon,
-    Badge, NumberInput, Stack, Tabs, SimpleGrid, Card, Image, FileButton,
-    Box, ThemeIcon, Switch, LoadingOverlay, Breadcrumbs, Anchor
+    Badge, NumberInput, Stack, Tabs, SimpleGrid,
+    Box, Breadcrumbs, Anchor
 } from '@mantine/core';
 import {
-    Save, ArrowLeft, Trash, Plus, Star, FileText, Wand2, Scissors,
-    CloudDownload
+    Save, ArrowLeft, Trash, Plus, Info
 } from 'lucide-react';
 import { Facility, FACILITY_CATEGORY_LABELS } from '@/types';
 import { PRICE_TAB_CATEGORIES, OTHER_TAB_CATEGORY } from '@/lib/constants';
 
-// 🚀 GroupEditor - 로컬 상태로 최적화
+// GroupEditor - 로컬 상태로 최적화
 const GroupEditor = memo(({ groupName, groupData, onRename, onUpdateRows, onDeleteGroup }: {
     groupName: string;
     groupData: any;
@@ -170,7 +169,7 @@ export default function FacilityEditPage() {
             });
 
             if (res.ok) {
-                alert('저장되었습니다! ✅');
+                alert('저장되었습니다.');
                 // 캐시 업데이트
                 const cached = localStorage.getItem('admin_facilities_cache');
                 if (cached) {
@@ -341,7 +340,10 @@ export default function FacilityEditPage() {
                 {/* 설치비/관리비 */}
                 {installationGroups.length > 0 && (
                     <Box mt="lg" p="sm" bg="gray.0" style={{ borderRadius: 8 }}>
-                        <Text size="sm" fw={700} mb="sm">➕ 별도 시설 설치비용</Text>
+                        <Group gap={6} mb="sm">
+                            <Plus size={15} />
+                            <Text size="sm" fw={700}>별도 시설 설치비용</Text>
+                        </Group>
                         {installationGroups.map((g, idx) => (
                             <GroupEditor key={idx} groupName={g.groupName} groupData={g.groupData}
                                 onRename={handleRename} onUpdateRows={handleUpdateRows} onDeleteGroup={handleDeleteGroup} />
@@ -351,7 +353,10 @@ export default function FacilityEditPage() {
 
                 {managementGroups.length > 0 && (
                     <Box mt="md" p="sm" bg="blue.0" style={{ borderRadius: 8 }}>
-                        <Text size="sm" fw={700} mb="sm" c="blue.9">ℹ️ 관리비 및 안내사항</Text>
+                        <Group gap={6} mb="sm">
+                            <Info size={15} color="#1864ab" />
+                            <Text size="sm" fw={700} c="blue.9">관리비 및 안내사항</Text>
+                        </Group>
                         {managementGroups.map((g, idx) => (
                             <GroupEditor key={idx} groupName={g.groupName} groupData={g.groupData}
                                 onRename={handleRename} onUpdateRows={handleUpdateRows} onDeleteGroup={handleDeleteGroup} />
@@ -362,3 +367,4 @@ export default function FacilityEditPage() {
         </Box>
     );
 }
+

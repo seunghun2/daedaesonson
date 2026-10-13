@@ -7,6 +7,7 @@ import NextImage from 'next/image';
 import { Facility, FACILITY_CATEGORY_LABELS } from '@/types';
 import { formatKoreanCurrency } from '@/lib/format';
 import { getFacilityImageUrl } from '@/lib/supabaseImage';
+import { extractFacilityInsights, formatKoreanPrice } from '@/lib/derivedFacilityInsights';
 
 interface CompareTrayProps {
     items: Facility[];
@@ -313,6 +314,7 @@ export default function CompareModal({
                                 const minPrice = fac.representativePrice || fac.priceRange?.min || 0;
                                 const isLowest = lowestPriceId === fac.id;
                                 const insight = getRegionalInsight(fac);
+                                const derived = extractFacilityInsights(fac);
                                 const cp = facAny.categoryPrices;
 
                                 return (
@@ -436,6 +438,20 @@ export default function CompareModal({
                                                     >
                                                         {FACILITY_CATEGORY_LABELS[fac.category] || '추모시설'}
                                                     </span>
+                                                    {derived.primaryDuration && (
+                                                        <span
+                                                            style={{
+                                                                fontSize: 10.5,
+                                                                fontWeight: 700,
+                                                                padding: '2px 6px',
+                                                                borderRadius: 5,
+                                                                backgroundColor: '#F0FDF4',
+                                                                color: '#15803D',
+                                                            }}
+                                                        >
+                                                            {derived.primaryDuration}
+                                                        </span>
+                                                    )}
                                                 </Group>
                                                 <Text
                                                     style={{
@@ -479,22 +495,65 @@ export default function CompareModal({
                                                 >
                                                     {minPrice > 0 ? `${formatKoreanCurrency(minPrice)}~` : '가격문의'}
                                                 </Text>
-                                                {insight && (
-                                                    <Box
-                                                        mt={6}
-                                                        style={{
-                                                            display: 'inline-block',
-                                                            fontSize: 11,
-                                                            fontWeight: 700,
-                                                            padding: '2px 7px',
-                                                            borderRadius: 5,
-                                                            backgroundColor: insight.bg,
-                                                            color: insight.color,
-                                                        }}
-                                                    >
-                                                        {insight.text}
-                                                    </Box>
-                                                )}
+                                                <Group gap={4} mt={6}>
+                                                    {insight && (
+                                                        <Box
+                                                            style={{
+                                                                display: 'inline-block',
+                                                                fontSize: 11,
+                                                                fontWeight: 700,
+                                                                padding: '2px 7px',
+                                                                borderRadius: 5,
+                                                                backgroundColor: insight.bg,
+                                                                color: insight.color,
+                                                            }}
+                                                        >
+                                                            {insight.text}
+                                                        </Box>
+                                                    )}
+                                                    {derived.localDiscountPercent && (
+                                                        <Box
+                                                            style={{
+                                                                display: 'inline-block',
+                                                                fontSize: 11,
+                                                                fontWeight: 700,
+                                                                padding: '2px 7px',
+                                                                borderRadius: 5,
+                                                                backgroundColor: '#EFF6FF',
+                                                                color: '#1D4ED8',
+                                                            }}
+                                                        >
+                                                            관내 {derived.localDiscountPercent}% 감면
+                                                        </Box>
+                                                    )}
+                                                </Group>
+                                            </Box>
+
+                                            {/* 실부담 비용 & 관리비 분석 (파생 지표) */}
+                                            <Box style={{ borderTop: '1px solid #F1F5F9', paddingTop: 10 }}>
+                                                <Text style={{ fontSize: 11.5, fontWeight: 700, color: '#4E5968', marginBottom: 6 }}>
+                                                    유지비 및 계약 조건
+                                                </Text>
+                                                <Box style={{ display: 'flex', flexDirection: 'column', gap: 5 }}>
+                                                    <Group justify="space-between">
+                                                        <Text style={{ fontSize: 12, color: '#6B7684' }}>연간 관리비</Text>
+                                                        <Text style={{ fontSize: 12, fontWeight: 700, color: derived.managementFeeText ? '#191F28' : '#CBD5E1' }}>
+                                                            {derived.managementFeeText || '시설 문의'}
+                                                        </Text>
+                                                    </Group>
+                                                    <Group justify="space-between">
+                                                        <Text style={{ fontSize: 12, color: '#6B7684' }}>10년 예상 총액</Text>
+                                                        <Text style={{ fontSize: 12, fontWeight: 700, color: derived.estimated10YearTotal ? '#2563EB' : '#CBD5E1' }}>
+                                                            {derived.estimated10YearTotal ? formatKoreanPrice(derived.estimated10YearTotal) : '-'}
+                                                        </Text>
+                                                    </Group>
+                                                    <Group justify="space-between">
+                                                        <Text style={{ fontSize: 12, color: '#6B7684' }}>정보 공개도</Text>
+                                                        <Text style={{ fontSize: 12, fontWeight: 700, color: derived.completenessScore >= 75 ? '#059669' : '#4E5968' }}>
+                                                            {derived.completenessScore}점 / 100
+                                                        </Text>
+                                                    </Group>
+                                                </Box>
                                             </Box>
 
                                             {/* 세부 안치 유형별 가격 */}

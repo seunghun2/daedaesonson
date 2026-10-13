@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Title, Table, Badge, ActionIcon, Paper, Text, Group, TextInput, Modal, Button, Stack, LoadingOverlay, Card, Box, Textarea } from '@mantine/core';
+import { Title, Table, Badge, ActionIcon, Paper, Text, Group, TextInput, Modal, Button, Stack, LoadingOverlay, Card, Box, Textarea, ScrollArea, Pagination, Select } from '@mantine/core';
 import { notifications } from '@mantine/notifications';
 import { useDisclosure, useMediaQuery } from '@mantine/hooks';
 import { Search, Trash, Eye, Phone, Clock, MessageSquare, Building, Lock, Save } from 'lucide-react';
@@ -40,10 +40,14 @@ const METHOD_LABELS: Record<string, string> = {
     'field': '방문 상담',
 };
 
+const PAGE_SIZE = 20;
+
 export default function ConsultsPage() {
     const [consults, setConsults] = useState<Consult[]>([]);
     const [loading, setLoading] = useState(true);
     const [search, setSearch] = useState('');
+    const [statusFilter, setStatusFilter] = useState<string>('all');
+    const [page, setPage] = useState(1);
     const [selectedConsult, setSelectedConsult] = useState<Consult | null>(null);
     const [detailOpened, { open: openDetail, close: closeDetail }] = useDisclosure(false);
     const [adminNote, setAdminNote] = useState('');
@@ -71,12 +75,20 @@ export default function ConsultsPage() {
     }, []);
 
     // Filter consults
-    const filtered = consults.filter(c =>
-        c.name.toLowerCase().includes(search.toLowerCase()) ||
-        c.phone.includes(search) ||
-        c.facilityName?.toLowerCase().includes(search.toLowerCase()) ||
-        c.facilityId.toLowerCase().includes(search.toLowerCase())
-    );
+    const filtered = consults.filter(c => {
+        const matchesSearch = !search ||
+            c.name.toLowerCase().includes(search.toLowerCase()) ||
+            c.phone.includes(search) ||
+            c.facilityName?.toLowerCase().includes(search.toLowerCase()) ||
+            c.facilityId.toLowerCase().includes(search.toLowerCase());
+
+        const matchesStatus = statusFilter === 'all' || c.status === statusFilter;
+
+        return matchesSearch && matchesStatus;
+    });
+
+    const totalPages = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE));
+    const paginated = filtered.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE);
 
     // Update status
     const handleUpdateStatus = async (id: string, status: string) => {
@@ -153,27 +165,47 @@ export default function ConsultsPage() {
         <div>
             <Group justify="space-between" mb="lg" wrap="wrap">
                 <Title order={isMobile ? 3 : 2}>상담 신청 관리</Title>
-                <Badge size="lg" variant="light" color="brand">
+                <Badge size="lg" variant="light" color="blue">
                     총 {consults.length}건
                 </Badge>
             </Group>
 
             <Paper p="sm" radius="md" withBorder mb="md">
-                <TextInput
-                    placeholder="이름, 연락처, 시설명 검색..."
-                    leftSection={<Search size={16} />}
-                    value={search}
-                    onChange={(e) => setSearch(e.currentTarget.value)}
-                    styles={{ input: { fontSize: '16px' } }}
-                />
+                <Group gap="sm">
+                    <Select
+                        value={statusFilter}
+                        onChange={(v) => {
+                            setStatusFilter(v || 'all');
+                            setPage(1);
+                        }}
+                        data={[
+                            { value: 'all', label: '전체 상태' },
+                            { value: 'pending', label: '대기중' },
+                            { value: 'contacted', label: '연락완료' },
+                            { value: 'completed', label: '상담완료' },
+                        ]}
+                        w={150}
+                    />
+                    <TextInput
+                        placeholder="이름, 연락처, 시설명 검색..."
+                        leftSection={<Search size={16} />}
+                        value={search}
+                        onChange={(e) => {
+                            setSearch(e.currentTarget.value);
+                            setPage(1);
+                        }}
+                        style={{ flex: 1 }}
+                        styles={{ input: { fontSize: '16px' } }}
+                    />
+                </Group>
             </Paper>
 
             {/* 모바일: 카드 뷰 */}
             {isMobile ? (
                 <Stack gap="sm" pos="relative">
                     <LoadingOverlay visible={loading} />
-                    {filtered.length > 0 ? (
-                        filtered.map((c) => (
+                    {paginated.length > 0 ? (
+                        paginated.map((c) => (
                             <Card key={c.id} p="sm" radius="md" withBorder onClick={() => handleView(c)} style={{ cursor: 'pointer' }}>
                                 <Group justify="space-between" mb={4}>
                                     <Text size="sm" fw={600}>{c.name}</Text>
@@ -198,69 +230,86 @@ export default function ConsultsPage() {
                 /* PC: 테이블 뷰 */
                 <Paper radius="md" withBorder style={{ overflow: 'hidden', position: 'relative' }}>
                     <LoadingOverlay visible={loading} />
-                    <Table verticalSpacing="sm" striped highlightOnHover>
-                        <Table.Thead bg="gray.1">
-                            <Table.Tr>
-                                <Table.Th>시설명</Table.Th>
-                                <Table.Th>신청자</Table.Th>
-                                <Table.Th>연락처</Table.Th>
-                                <Table.Th>궁금한 점</Table.Th>
-                                <Table.Th>신청일</Table.Th>
-                                <Table.Th>상태</Table.Th>
-                                <Table.Th style={{ textAlign: 'right' }}>관리</Table.Th>
-                            </Table.Tr>
-                        </Table.Thead>
-                        <Table.Tbody>
-                            {filtered.length > 0 ? (
-                                filtered.map((c) => (
-                                    <Table.Tr key={c.id}>
-                                        <Table.Td>
-                                            <Text size="sm" lineClamp={1}>{c.facilityName || c.facilityId}</Text>
-                                        </Table.Td>
-                                        <Table.Td>
-                                            <Text size="sm" fw={500}>{c.name}</Text>
-                                        </Table.Td>
-                                        <Table.Td>
-                                            <Text size="sm">{c.phone}</Text>
-                                        </Table.Td>
-                                        <Table.Td>
-                                            <Badge size="xs" variant="light" color="brand">
-                                                {QUESTION_LABELS[c.question] || c.question || '기타'}
-                                            </Badge>
-                                        </Table.Td>
-                                        <Table.Td>
-                                            <Text size="xs" c="dimmed">
-                                                {new Date(c.createdAt).toLocaleDateString('ko-KR')}
-                                            </Text>
-                                        </Table.Td>
-                                        <Table.Td>
-                                            <Badge color={STATUS_LABELS[c.status]?.color || 'gray'} variant="light" size="sm">
-                                                {STATUS_LABELS[c.status]?.label || c.status}
-                                            </Badge>
-                                        </Table.Td>
-                                        <Table.Td align="right">
-                                            <Group gap="xs" justify="flex-end">
-                                                <ActionIcon variant="subtle" color="blue" onClick={() => handleView(c)}>
-                                                    <Eye size={16} />
-                                                </ActionIcon>
-                                                <ActionIcon variant="subtle" color="red" onClick={() => handleDelete(c.id)}>
-                                                    <Trash size={16} />
-                                                </ActionIcon>
-                                            </Group>
+                    <ScrollArea>
+                        <Table verticalSpacing="sm" striped highlightOnHover miw={720}>
+                            <Table.Thead bg="gray.1">
+                                <Table.Tr>
+                                    <Table.Th>시설명</Table.Th>
+                                    <Table.Th>신청자</Table.Th>
+                                    <Table.Th>연락처</Table.Th>
+                                    <Table.Th>궁금한 점</Table.Th>
+                                    <Table.Th>신청일</Table.Th>
+                                    <Table.Th>상태</Table.Th>
+                                    <Table.Th style={{ textAlign: 'right' }}>관리</Table.Th>
+                                </Table.Tr>
+                            </Table.Thead>
+                            <Table.Tbody>
+                                {paginated.length > 0 ? (
+                                    paginated.map((c) => (
+                                        <Table.Tr key={c.id}>
+                                            <Table.Td>
+                                                <Text size="sm" lineClamp={1}>{c.facilityName || c.facilityId}</Text>
+                                            </Table.Td>
+                                            <Table.Td>
+                                                <Text size="sm" fw={500}>{c.name}</Text>
+                                            </Table.Td>
+                                            <Table.Td>
+                                                <Text size="sm">{c.phone}</Text>
+                                            </Table.Td>
+                                            <Table.Td>
+                                                <Badge size="xs" variant="light" color="blue">
+                                                    {QUESTION_LABELS[c.question] || c.question || '기타'}
+                                                </Badge>
+                                            </Table.Td>
+                                            <Table.Td>
+                                                <Text size="xs" c="dimmed">
+                                                    {new Date(c.createdAt).toLocaleDateString('ko-KR')}
+                                                </Text>
+                                            </Table.Td>
+                                            <Table.Td>
+                                                <Badge color={STATUS_LABELS[c.status]?.color || 'gray'} variant="light" size="sm">
+                                                    {STATUS_LABELS[c.status]?.label || c.status}
+                                                </Badge>
+                                            </Table.Td>
+                                            <Table.Td align="right">
+                                                <Group gap="xs" justify="flex-end" wrap="nowrap">
+                                                    <ActionIcon variant="subtle" color="blue" onClick={() => handleView(c)}>
+                                                        <Eye size={16} />
+                                                    </ActionIcon>
+                                                    <ActionIcon variant="subtle" color="red" onClick={() => handleDelete(c.id)}>
+                                                        <Trash size={16} />
+                                                    </ActionIcon>
+                                                </Group>
+                                            </Table.Td>
+                                        </Table.Tr>
+                                    ))
+                                ) : (
+                                    <Table.Tr>
+                                        <Table.Td colSpan={7} align="center" py="xl">
+                                            {!loading && <Text c="dimmed">등록된 상담 신청이 없습니다.</Text>}
                                         </Table.Td>
                                     </Table.Tr>
-                                ))
-                            ) : (
-                                <Table.Tr>
-                                    <Table.Td colSpan={7} align="center" py="xl">
-                                        {!loading && <Text c="dimmed">등록된 상담 신청이 없습니다.</Text>}
-                                    </Table.Td>
-                                </Table.Tr>
-                            )}
-                        </Table.Tbody>
-                    </Table>
+                                )}
+                            </Table.Tbody>
+                        </Table>
+                    </ScrollArea>
                 </Paper>
             )}
+
+            <Group justify="space-between" align="center" mt="md">
+                <Text size="sm" c="dimmed">
+                    총 {filtered.length}건 {(search || statusFilter !== 'all') && `(전체 ${consults.length}건 중)`}
+                </Text>
+                {totalPages > 1 && (
+                    <Pagination
+                        total={totalPages}
+                        value={page}
+                        onChange={setPage}
+                        color="blue"
+                        size="sm"
+                    />
+                )}
+            </Group>
 
             {/* Detail Modal */}
             <Modal
@@ -305,7 +354,7 @@ export default function ConsultsPage() {
                                 </Group>
                                 <Group justify="space-between">
                                     <Text size="sm" c="dimmed">궁금한 점</Text>
-                                    <Badge variant="light" color="brand">
+                                    <Badge variant="light" color="blue">
                                         {QUESTION_LABELS[selectedConsult.question] || selectedConsult.question || '기타'}
                                     </Badge>
                                 </Group>

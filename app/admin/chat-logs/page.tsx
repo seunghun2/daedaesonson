@@ -5,8 +5,9 @@ import { useRouter } from 'next/navigation';
 import { notifications } from '@mantine/notifications';
 import {
     MessageCircle, Phone, User, Calendar, ArrowLeft,
-    Search, Check, CheckCheck, Clock, ExternalLink, ChevronDown,
-    Tag, StickyNote, Users, BarChart3, X, Plus, Save, Globe
+    Search, Check, CheckCheck, Clock, ExternalLink,
+    Tag, StickyNote, Users, BarChart3, X, Plus, Save, Globe,
+    Bot, MessageSquare, AlertCircle, CheckCircle2, FileText, Building2
 } from 'lucide-react';
 
 interface ChatSession {
@@ -40,7 +41,7 @@ const STATUS_CONFIG: Record<string, { label: string; color: string; bg: string; 
 };
 
 const PRESET_TAGS = ['급함', 'VIP', '재상담', '가격문의', '봉안당', '수목장', '매장묘', '화장시설'];
-const NAVY = '#302E92';
+const PRIMARY_BLUE = '#2563EB';
 
 export default function AdminChatLogs() {
     const [sessions, setSessions] = useState<ChatSession[]>([]);
@@ -218,8 +219,8 @@ export default function AdminChatLogs() {
                     <ArrowLeft size={20} />
                 </button>
                 <div style={{ flex: 1 }}>
-                    <h1 style={{ fontSize: 22, fontWeight: 700, color: '#1a1a2e', margin: 0 }}>
-                        🤖 AI 상담 관리
+                    <h1 style={{ fontSize: 22, fontWeight: 700, color: '#191F28', margin: 0, display: 'flex', alignItems: 'center', gap: 8 }}>
+                        <Bot size={22} color={PRIMARY_BLUE} /> AI 상담 관리
                     </h1>
                     <p style={{ fontSize: 13, color: '#888', margin: 0 }}>
                         총 {sessions.length}건 · 새 상담 {sessions.filter(s => s.status === 'new').length}건
@@ -240,8 +241,8 @@ export default function AdminChatLogs() {
                         style={{
                             display: 'flex', alignItems: 'center', gap: 6,
                             padding: '10px 20px', fontSize: 14, fontWeight: activeTab === tab.key ? 700 : 500,
-                            border: 'none', borderBottom: activeTab === tab.key ? `3px solid ${NAVY}` : '3px solid transparent',
-                            background: 'none', color: activeTab === tab.key ? NAVY : '#888',
+                            border: 'none', borderBottom: activeTab === tab.key ? `3px solid ${PRIMARY_BLUE}` : '3px solid transparent',
+                            background: 'none', color: activeTab === tab.key ? PRIMARY_BLUE : '#888',
                             cursor: 'pointer', marginBottom: -2, transition: 'all 0.2s',
                         }}
                     >
@@ -268,22 +269,25 @@ export default function AdminChatLogs() {
                             {['all', 'new', 'reviewed', 'contacted'].map(status => (
                                 <button key={status} onClick={() => setFilterStatus(status)} style={{
                                     padding: '6px 12px', borderRadius: 6, fontSize: 12, fontWeight: 500,
-                                    border: filterStatus === status ? `1px solid ${NAVY}` : '1px solid #e0e0e0',
-                                    background: filterStatus === status ? `${NAVY}10` : '#fff',
-                                    color: filterStatus === status ? NAVY : '#666', cursor: 'pointer',
+                                    border: filterStatus === status ? `1px solid ${PRIMARY_BLUE}` : '1px solid #e0e0e0',
+                                    background: filterStatus === status ? `${PRIMARY_BLUE}10` : '#fff',
+                                    color: filterStatus === status ? PRIMARY_BLUE : '#666', cursor: 'pointer',
                                 }}>
                                     {status === 'all' ? '전체' : STATUS_CONFIG[status]?.label}
                                 </button>
                             ))}
                         </div>
                         {/* 태그 필터 */}
-                        <select
-                            value={filterTag} onChange={e => setFilterTag(e.target.value)}
-                            style={{ padding: '6px 12px', borderRadius: 6, fontSize: 12, border: '1px solid #e0e0e0', cursor: 'pointer', background: '#fff' }}
-                        >
-                            <option value="all">🏷️ 태그 전체</option>
-                            {PRESET_TAGS.map(t => <option key={t} value={t}>{t}</option>)}
-                        </select>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: 6, padding: '0 10px', borderRadius: 6, border: '1px solid #e0e0e0', background: '#fff' }}>
+                            <Tag size={13} color="#666" />
+                            <select
+                                value={filterTag} onChange={e => setFilterTag(e.target.value)}
+                                style={{ padding: '6px 4px', fontSize: 12, border: 'none', outline: 'none', cursor: 'pointer', background: 'transparent' }}
+                            >
+                                <option value="all">태그 전체</option>
+                                {PRESET_TAGS.map(t => <option key={t} value={t}>{t}</option>)}
+                            </select>
+                        </div>
                     </div>
 
                     {/* 리스트 + 상세 */}
@@ -299,15 +303,15 @@ export default function AdminChatLogs() {
                                     return (
                                         <div key={session.id} onClick={() => setSelectedSession(session)} style={{
                                             padding: '14px 16px', borderRadius: 12,
-                                            border: selectedSession?.id === session.id ? `2px solid ${NAVY}` : '1px solid #eee',
-                                            background: selectedSession?.id === session.id ? '#f8f8ff' : '#fff',
+                                            border: selectedSession?.id === session.id ? `2px solid ${PRIMARY_BLUE}` : '1px solid #eee',
+                                            background: selectedSession?.id === session.id ? '#EFF6FF' : '#fff',
                                             marginBottom: 8, cursor: 'pointer', transition: 'all 0.2s',
                                         }}>
                                             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 6 }}>
                                                 <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
                                                     {session.customer_name ? (
                                                         <div style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
-                                                            <User size={14} color={NAVY} />
+                                                            <User size={14} color={PRIMARY_BLUE} />
                                                             <span style={{ fontSize: 14, fontWeight: 600, color: '#333' }}>{session.customer_name}</span>
                                                         </div>
                                                     ) : (
@@ -335,7 +339,7 @@ export default function AdminChatLogs() {
                                             {session.tags && session.tags.length > 0 && (
                                                 <div style={{ display: 'flex', gap: 4, marginBottom: 6, flexWrap: 'wrap' }}>
                                                     {session.tags.map(t => (
-                                                        <span key={t} style={{ fontSize: 10, padding: '1px 6px', borderRadius: 6, background: '#EEEDFA', color: NAVY, fontWeight: 600 }}>{t}</span>
+                                                        <span key={t} style={{ fontSize: 10, padding: '1px 6px', borderRadius: 6, background: '#EFF6FF', color: PRIMARY_BLUE, fontWeight: 600 }}>{t}</span>
                                                     ))}
                                                 </div>
                                             )}
@@ -359,14 +363,16 @@ export default function AdminChatLogs() {
                         {selectedSession && (
                             <div style={{ width: '65%', borderRadius: 16, border: '1px solid #eee', background: '#fff', display: 'flex', flexDirection: 'column', overflow: 'hidden', maxHeight: 'calc(100vh - 260px)' }}>
                                 {/* 상세 헤더 */}
-                                <div style={{ padding: '16px 20px', borderBottom: '1px solid #eee', background: '#fafafe', flexShrink: 0 }}>
+                                <div style={{ padding: '16px 20px', borderBottom: '1px solid #eee', background: '#F8FAFC', flexShrink: 0 }}>
                                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
                                         <div>
-                                            <div style={{ fontSize: 16, fontWeight: 700, color: '#1a1a2e' }}>
+                                            <div style={{ fontSize: 16, fontWeight: 700, color: '#191F28' }}>
                                                 {selectedSession.customer_name || '익명 사용자'}
                                             </div>
                                             {selectedSession.customer_phone && (
-                                                <div style={{ fontSize: 13, color: '#666', marginTop: 2 }}>📞 {selectedSession.customer_phone}</div>
+                                                <div style={{ fontSize: 13, color: '#666', marginTop: 2, display: 'flex', alignItems: 'center', gap: 4 }}>
+                                                    <Phone size={13} color="#666" /> {selectedSession.customer_phone}
+                                                </div>
                                             )}
                                             {selectedSession.ip_address && (
                                                 <div style={{ fontSize: 12, color: '#999', marginTop: 2, display: 'flex', alignItems: 'center', gap: 4 }}>
@@ -374,7 +380,7 @@ export default function AdminChatLogs() {
                                                 </div>
                                             )}
                                             {selectedSession.facility_id && (
-                                                <button onClick={() => router.push(`/facility/${selectedSession.facility_id}`)} style={{ fontSize: 12, color: NAVY, background: 'none', border: 'none', cursor: 'pointer', marginTop: 4, display: 'flex', alignItems: 'center', gap: 4 }}>
+                                                <button onClick={() => router.push(`/facility/${selectedSession.facility_id}`)} style={{ fontSize: 12, color: PRIMARY_BLUE, background: 'none', border: 'none', cursor: 'pointer', marginTop: 4, display: 'flex', alignItems: 'center', gap: 4 }}>
                                                     <ExternalLink size={12} /> 시설 페이지 보기
                                                 </button>
                                             )}
@@ -406,7 +412,7 @@ export default function AdminChatLogs() {
                                         <Tag size={14} color="#888" />
                                         {(selectedSession.tags || []).map(t => (
                                             <span key={t} onClick={() => toggleTag(selectedSession.id, t)} style={{
-                                                fontSize: 11, padding: '2px 8px', borderRadius: 8, background: NAVY, color: '#fff',
+                                                fontSize: 11, padding: '2px 8px', borderRadius: 8, background: PRIMARY_BLUE, color: '#fff',
                                                 fontWeight: 600, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 3,
                                             }}>
                                                 {t} <X size={10} />
@@ -440,7 +446,7 @@ export default function AdminChatLogs() {
                                             <div style={{
                                                 maxWidth: '70%', padding: '10px 14px',
                                                 borderRadius: msg.role === 'user' ? '16px 16px 4px 16px' : '16px 16px 16px 4px',
-                                                background: msg.role === 'user' ? NAVY : '#f5f5f5',
+                                                background: msg.role === 'user' ? PRIMARY_BLUE : '#f5f5f5',
                                                 color: msg.role === 'user' ? '#fff' : '#333',
                                                 fontSize: 13, lineHeight: 1.5, whiteSpace: 'pre-wrap',
                                             }}>
@@ -470,7 +476,7 @@ export default function AdminChatLogs() {
                                         <button onClick={saveMemo} disabled={memoSaving || memo === (selectedSession.admin_memo || '')} style={{
                                             display: 'flex', alignItems: 'center', gap: 4,
                                             padding: '6px 16px', borderRadius: 6, fontSize: 12, fontWeight: 600,
-                                            border: 'none', background: memo !== (selectedSession.admin_memo || '') ? NAVY : '#ddd',
+                                            border: 'none', background: memo !== (selectedSession.admin_memo || '') ? PRIMARY_BLUE : '#ddd',
                                             color: memo !== (selectedSession.admin_memo || '') ? '#fff' : '#999',
                                             cursor: memo !== (selectedSession.admin_memo || '') ? 'pointer' : 'default',
                                         }}>
@@ -500,20 +506,25 @@ export default function AdminChatLogs() {
                                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 6 }}>
                                         <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
                                             <div style={{
-                                                width: 36, height: 36, borderRadius: '50%', background: `${NAVY}15`,
+                                                width: 36, height: 36, borderRadius: '50%', background: `${PRIMARY_BLUE}15`,
                                                 display: 'flex', alignItems: 'center', justifyContent: 'center',
                                             }}>
-                                                <User size={18} color={NAVY} />
+                                                <User size={18} color={PRIMARY_BLUE} />
                                             </div>
                                             <div>
                                                 <div style={{ fontSize: 14, fontWeight: 600, color: '#333' }}>{cp.name}</div>
-                                                <div style={{ fontSize: 12, color: '#888' }}>
-                                                    {!cp.phone.includes('미등록') ? `📞 ${cp.phone}` : '연락처 미등록'}
+                                                <div style={{ fontSize: 12, color: '#888', display: 'flex', alignItems: 'center', gap: 4 }}>
+                                                    {!cp.phone.includes('미등록') ? (
+                                                        <>
+                                                            <Phone size={11} color="#888" />
+                                                            <span>{cp.phone}</span>
+                                                        </>
+                                                    ) : '연락처 미등록'}
                                                 </div>
                                             </div>
                                         </div>
                                         <div style={{
-                                            fontSize: 12, fontWeight: 700, color: NAVY, background: '#EEEDFA',
+                                            fontSize: 12, fontWeight: 700, color: PRIMARY_BLUE, background: '#EFF6FF',
                                             padding: '4px 10px', borderRadius: 10,
                                         }}>
                                             {cp.sessionCount}회 상담
@@ -526,7 +537,7 @@ export default function AdminChatLogs() {
                                     {cp.tags.length > 0 && (
                                         <div style={{ display: 'flex', gap: 4, marginTop: 6, flexWrap: 'wrap' }}>
                                             {cp.tags.map(t => (
-                                                <span key={t} style={{ fontSize: 10, padding: '1px 6px', borderRadius: 6, background: '#EEEDFA', color: NAVY, fontWeight: 600 }}>{t}</span>
+                                                <span key={t} style={{ fontSize: 10, padding: '1px 6px', borderRadius: 6, background: '#EFF6FF', color: PRIMARY_BLUE, fontWeight: 600 }}>{t}</span>
                                             ))}
                                         </div>
                                     )}
@@ -538,8 +549,8 @@ export default function AdminChatLogs() {
                     {/* 선택된 고객의 대화 상세 */}
                     {selectedSession && (
                         <div style={{ width: '65%', borderRadius: 16, border: '1px solid #eee', background: '#fff', display: 'flex', flexDirection: 'column', overflow: 'hidden', maxHeight: 'calc(100vh - 260px)' }}>
-                            <div style={{ padding: '16px 20px', borderBottom: '1px solid #eee', background: '#fafafe' }}>
-                                <div style={{ fontSize: 16, fontWeight: 700, color: '#1a1a2e' }}>
+                            <div style={{ padding: '16px 20px', borderBottom: '1px solid #eee', background: '#F8FAFC' }}>
+                                <div style={{ fontSize: 16, fontWeight: 700, color: '#191F28' }}>
                                     {selectedSession.customer_name || '익명'} — 대화 상세
                                 </div>
                                 <div style={{ fontSize: 12, color: '#888', marginTop: 2 }}>
@@ -552,7 +563,7 @@ export default function AdminChatLogs() {
                                         <div style={{
                                             maxWidth: '70%', padding: '10px 14px',
                                             borderRadius: msg.role === 'user' ? '16px 16px 4px 16px' : '16px 16px 16px 4px',
-                                            background: msg.role === 'user' ? NAVY : '#f5f5f5',
+                                            background: msg.role === 'user' ? PRIMARY_BLUE : '#f5f5f5',
                                             color: msg.role === 'user' ? '#fff' : '#333',
                                             fontSize: 13, lineHeight: 1.5, whiteSpace: 'pre-wrap',
                                         }}>
@@ -572,26 +583,33 @@ export default function AdminChatLogs() {
                     {/* 요약 카드 */}
                     <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(160px, 1fr))', gap: 12, marginBottom: 24 }}>
                         {[
-                            { label: '총 상담', value: stats.statusCounts.total, color: NAVY, icon: '💬' },
-                            { label: '새 상담', value: stats.statusCounts.new, color: '#e53e3e', icon: '🔴' },
-                            { label: '연락 완료', value: stats.statusCounts.contacted, color: '#38a169', icon: '✅' },
-                            { label: '고유 고객', value: stats.uniqueCustomers, color: '#6366f1', icon: '👤' },
-                            { label: '평균 메시지', value: `${stats.avgMessages}개`, color: '#dd6b20', icon: '📝' },
-                        ].map(card => (
-                            <div key={card.label} style={{
-                                padding: '16px 20px', borderRadius: 12, background: '#fff',
-                                border: '1px solid #eee', textAlign: 'center',
-                            }}>
-                                <div style={{ fontSize: 24, marginBottom: 4 }}>{card.icon}</div>
-                                <div style={{ fontSize: 24, fontWeight: 800, color: card.color }}>{card.value}</div>
-                                <div style={{ fontSize: 13, color: '#888', marginTop: 2 }}>{card.label}</div>
-                            </div>
-                        ))}
+                            { label: '총 상담', value: stats.statusCounts.total, color: PRIMARY_BLUE, icon: MessageSquare },
+                            { label: '새 상담', value: stats.statusCounts.new, color: '#e53e3e', icon: AlertCircle },
+                            { label: '연락 완료', value: stats.statusCounts.contacted, color: '#38a169', icon: CheckCircle2 },
+                            { label: '고유 고객', value: stats.uniqueCustomers, color: PRIMARY_BLUE, icon: User },
+                            { label: '평균 메시지', value: `${stats.avgMessages}개`, color: '#dd6b20', icon: FileText },
+                        ].map(card => {
+                            const CardIcon = card.icon;
+                            return (
+                                <div key={card.label} style={{
+                                    padding: '16px 20px', borderRadius: 12, background: '#fff',
+                                    border: '1px solid #eee', textAlign: 'center',
+                                }}>
+                                    <div style={{ display: 'flex', justifyContent: 'center', marginBottom: 6 }}>
+                                        <CardIcon size={24} color={card.color} />
+                                    </div>
+                                    <div style={{ fontSize: 24, fontWeight: 800, color: card.color }}>{card.value}</div>
+                                    <div style={{ fontSize: 13, color: '#888', marginTop: 2 }}>{card.label}</div>
+                                </div>
+                            );
+                        })}
                     </div>
 
                     {/* 일별 상담 차트 */}
                     <div style={{ background: '#fff', borderRadius: 12, border: '1px solid #eee', padding: 20, marginBottom: 24 }}>
-                        <h3 style={{ fontSize: 16, fontWeight: 700, color: '#1a1a2e', margin: '0 0 16px 0' }}>📊 최근 14일 상담 추이</h3>
+                        <h3 style={{ fontSize: 16, fontWeight: 700, color: '#191F28', margin: '0 0 16px 0', display: 'flex', alignItems: 'center', gap: 6 }}>
+                            <BarChart3 size={18} color={PRIMARY_BLUE} /> 최근 14일 상담 추이
+                        </h3>
                         <div style={{ display: 'flex', alignItems: 'flex-end', gap: 4, height: 120 }}>
                             {Object.entries(stats.dailyCounts).map(([date, count]) => {
                                 const maxCount = Math.max(...Object.values(stats.dailyCounts), 1);
@@ -601,7 +619,7 @@ export default function AdminChatLogs() {
                                         <span style={{ fontSize: 10, color: '#888', fontWeight: 600 }}>{count || ''}</span>
                                         <div style={{
                                             width: '100%', height: `${Math.max(height, 2)}%`, minHeight: 2,
-                                            background: count > 0 ? `linear-gradient(180deg, ${NAVY}, ${NAVY}99)` : '#eee',
+                                            background: count > 0 ? `linear-gradient(180deg, ${PRIMARY_BLUE}, ${PRIMARY_BLUE}99)` : '#eee',
                                             borderRadius: '4px 4px 0 0', transition: 'height 0.3s',
                                         }} />
                                         <span style={{ fontSize: 9, color: '#bbb', transform: 'rotate(-45deg)', transformOrigin: 'center', whiteSpace: 'nowrap' }}>
@@ -616,15 +634,17 @@ export default function AdminChatLogs() {
                     <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
                         {/* 인기 시설 */}
                         <div style={{ background: '#fff', borderRadius: 12, border: '1px solid #eee', padding: 20 }}>
-                            <h3 style={{ fontSize: 16, fontWeight: 700, color: '#1a1a2e', margin: '0 0 12px 0' }}>🏢 인기 시설 TOP 10</h3>
+                            <h3 style={{ fontSize: 16, fontWeight: 700, color: '#191F28', margin: '0 0 12px 0', display: 'flex', alignItems: 'center', gap: 6 }}>
+                                <Building2 size={18} color={PRIMARY_BLUE} /> 인기 시설 TOP 10
+                            </h3>
                             {stats.topFacilities.length === 0 ? (
                                 <div style={{ color: '#aaa', fontSize: 13, padding: 20, textAlign: 'center' }}>데이터 없음</div>
                             ) : (
                                 stats.topFacilities.map((f, i) => (
                                     <div key={f.id} style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '6px 0', borderBottom: '1px solid #f5f5f5' }}>
-                                        <span style={{ fontSize: 12, fontWeight: 700, color: i < 3 ? NAVY : '#999', width: 20 }}>{i + 1}</span>
+                                        <span style={{ fontSize: 12, fontWeight: 700, color: i < 3 ? PRIMARY_BLUE : '#999', width: 20 }}>{i + 1}</span>
                                         <span style={{ fontSize: 13, color: '#333', flex: 1 }}>{f.id}</span>
-                                        <span style={{ fontSize: 12, fontWeight: 600, color: NAVY }}>{f.count}건</span>
+                                        <span style={{ fontSize: 12, fontWeight: 600, color: PRIMARY_BLUE }}>{f.count}건</span>
                                     </div>
                                 ))
                             )}
@@ -632,7 +652,9 @@ export default function AdminChatLogs() {
 
                         {/* 태그별 통계 */}
                         <div style={{ background: '#fff', borderRadius: 12, border: '1px solid #eee', padding: 20 }}>
-                            <h3 style={{ fontSize: 16, fontWeight: 700, color: '#1a1a2e', margin: '0 0 12px 0' }}>🏷️ 태그별 분포</h3>
+                            <h3 style={{ fontSize: 16, fontWeight: 700, color: '#191F28', margin: '0 0 12px 0', display: 'flex', alignItems: 'center', gap: 6 }}>
+                                <Tag size={18} color={PRIMARY_BLUE} /> 태그별 분포
+                            </h3>
                             {Object.keys(stats.tagCounts).length === 0 ? (
                                 <div style={{ color: '#aaa', fontSize: 13, padding: 20, textAlign: 'center' }}>태그 데이터 없음</div>
                             ) : (
@@ -640,9 +662,9 @@ export default function AdminChatLogs() {
                                     const maxTag = Math.max(...Object.values(stats.tagCounts));
                                     return (
                                         <div key={tag} style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '6px 0' }}>
-                                            <span style={{ fontSize: 12, fontWeight: 600, color: NAVY, minWidth: 60 }}>{tag}</span>
+                                            <span style={{ fontSize: 12, fontWeight: 600, color: PRIMARY_BLUE, minWidth: 60 }}>{tag}</span>
                                             <div style={{ flex: 1, height: 8, background: '#f0f0f0', borderRadius: 4, overflow: 'hidden' }}>
-                                                <div style={{ width: `${(count / maxTag) * 100}%`, height: '100%', background: NAVY, borderRadius: 4, transition: 'width 0.3s' }} />
+                                                <div style={{ width: `${(count / maxTag) * 100}%`, height: '100%', background: PRIMARY_BLUE, borderRadius: 4, transition: 'width 0.3s' }} />
                                             </div>
                                             <span style={{ fontSize: 12, color: '#666', minWidth: 30, textAlign: 'right' }}>{count}</span>
                                         </div>

@@ -75,7 +75,7 @@ function FacilityEditModal({ facilityToEdit, opened, onClose, onSaved, onNavigat
                     let merged = { ...parsed };
                     if (detailRes.ok) {
                         const latest = await detailRes.json();
-                        // 🔑 기본 필드는 리스트에서 이미 최신 → 덮어쓰지 않음 (ISR 캐시 stale 데이터 방지)
+                        // 기본 필드는 리스트에서 이미 최신 -> 덮어쓰지 않음 (ISR 캐시 stale 데이터 방지)
                         const { name: _n, address: _a, phone: _p, description: _d, category: _c,
                             isPublic: _ip, isActive: _ia, operatorType: _ot, capacity: _cap,
                             websiteUrl: _wu, lastUpdated: _lu, fax: _fx,
@@ -88,7 +88,7 @@ function FacilityEditModal({ facilityToEdit, opened, onClose, onSaved, onNavigat
                             (merged as any)._detailedSource = 'prisma';
                         }
                     }
-                    // 🔑 유저가 이미 수정했으면 이미지를 덮어쓰지 않음
+                    // 유저가 이미 수정했으면 이미지를 덮어쓰지 않음
                     setEditForm(prev => {
                         if ((prev as any)?.id !== fetchId) return prev;
                         if (userModified.current) {
@@ -606,10 +606,10 @@ function FacilityEditModal({ facilityToEdit, opened, onClose, onSaved, onNavigat
                     <Badge color="blue" variant="light" size="sm">{currentIndex + 1} / {totalCount}</Badge>
                 )}
                 {editForm.priceInfo?.priceVerified && (
-                    <Badge color="green" variant="filled" size="sm">✅ 검토완료</Badge>
+                    <Badge color="teal" variant="filled" size="sm">검토완료</Badge>
                 )}
                 {editForm.isFull && (
-                    <Badge color="dark" variant="filled" size="sm">⛔ 만장</Badge>
+                    <Badge color="dark" variant="filled" size="sm">만장</Badge>
                 )}
             </Group>
         } size="xl" scrollAreaComponent={ScrollArea.Autosize}>
@@ -655,7 +655,7 @@ function FacilityEditModal({ facilityToEdit, opened, onClose, onSaved, onNavigat
                             <Group justify="space-between">
                                 <div>
                                     <Group gap="xs">
-                                        <Text fw={600} size="sm">⛔ 만장</Text>
+                                        <Text fw={600} size="sm">만장 여부</Text>
                                         {editForm.isFull && <Badge color="dark" size="xs">만장</Badge>}
                                     </Group>
                                     <Text size="xs" c="dimmed">신규 안치/매장 불가 시설 (마커가 검은색으로 표시됩니다)</Text>
@@ -671,7 +671,7 @@ function FacilityEditModal({ facilityToEdit, opened, onClose, onSaved, onNavigat
                         </Box>
                         <Box><Text size="sm" fw={500} mb={3}>운영 형태</Text>
                             <SegmentedControl fullWidth size="xs" value={editForm.isPublic ? 'public' : 'private'} onChange={(val) => setEditForm(prev => ({ ...prev, isPublic: val === 'public' }))}
-                                data={[{ label: '🏢 사설', value: 'private' }, { label: '🏛️ 공설', value: 'public' }]} color={editForm.isPublic ? 'blue' : 'green'} />
+                                data={[{ label: '사설 시설', value: 'private' }, { label: '공설 시설', value: 'public' }]} color={editForm.isPublic ? 'blue' : 'green'} />
                         </Box>
                         <Select label="주 카테고리" data={Object.entries(FACILITY_CATEGORY_LABELS).map(([k, v]) => ({ value: k, label: v }))} value={editForm.category} onChange={(val) => setEditForm(prev => ({ ...prev, category: val as any }))} />
                         <MultiSelect
@@ -695,7 +695,7 @@ function FacilityEditModal({ facilityToEdit, opened, onClose, onSaved, onNavigat
                         <NumberInput label="총매장능력 (단위: 기)" value={editForm.capacity} onChange={(val) => setEditForm(prev => ({ ...prev, capacity: typeof val === 'number' ? val : undefined }))} thousandSeparator="," min={0} />
                         <Group align="flex-end" grow>
                             <TextInput label="주소" value={editForm.address} onChange={(e) => setEditForm(prev => ({ ...prev, address: e.target.value }))} style={{ flex: 1 }} />
-                            <Button variant="light" onClick={async () => {
+                            <Button variant="light" leftSection={<MapPin size={14} />} onClick={async () => {
                                 if (!editForm.address) { notifications.show({ color: 'orange', title: '입력 필요', message: '주소를 먼저 입력해주세요.' }); return; }
                                 try {
                                     const r = await fetch(`/api/geocode?address=${encodeURIComponent(editForm.address)}`);
@@ -706,7 +706,7 @@ function FacilityEditModal({ facilityToEdit, opened, onClose, onSaved, onNavigat
                                         notifications.show({ color: 'green', title: '좌표 변환 완료', message: `위도 ${y}, 경도 ${x}` });
                                     } else { notifications.show({ color: 'red', title: '좌표 오류', message: '주소를 찾을 수 없습니다.' }); }
                                 } catch { notifications.show({ color: 'red', title: '좌표 오류', message: '좌표 변환 중 오류가 발생했습니다.' }); }
-                            }}>📍 좌표 찾기</Button>
+                            }}>좌표 찾기</Button>
                         </Group>
                         <Paper withBorder p="sm" radius="md" bg="gray.0">
                             <Group gap="xs" mb={4}>
@@ -751,7 +751,7 @@ function FacilityEditModal({ facilityToEdit, opened, onClose, onSaved, onNavigat
                         <Accordion.Item value="legacy">
                             <Accordion.Control icon={<List size={16} />}>
                                 <Group gap="xs">
-                                    <Text size="sm" fw={600}>📋 기존 가격 데이터 (참고/편집)</Text>
+                                    <Text size="sm" fw={600}>기존 가격 데이터 (참고/편집)</Text>
                                     <Badge size="xs" color="gray" variant="light">레거시</Badge>
                                 </Group>
                             </Accordion.Control>
@@ -837,11 +837,11 @@ function FacilityEditModal({ facilityToEdit, opened, onClose, onSaved, onNavigat
                 <Button variant="default" onClick={onClose}>취소</Button>
                 {onNavigate && (
                     <Button
-                        color="green"
+                        color="teal"
                         leftSection={<CheckCircle2 size={16} />}
                         onClick={handleMarkReviewed}
                     >
-                        검토완료 ✅ → 다음
+                        검토완료 후 다음
                     </Button>
                 )}
                 <Button onClick={handleSave} leftSection={<Save size={16} />}>저장</Button>
@@ -851,3 +851,4 @@ function FacilityEditModal({ facilityToEdit, opened, onClose, onSaved, onNavigat
 }
 
 export default memo(FacilityEditModal);
+

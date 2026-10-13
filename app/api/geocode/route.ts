@@ -1,7 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { rateLimit } from '@/lib/rateLimit';
+import { requireAdmin } from '@/lib/adminAuth';
 
 export async function GET(request: NextRequest) {
+    const authError = await requireAdmin();
+    if (authError) return authError;
+
     const ip = request.headers.get('x-forwarded-for') || 'unknown';
     const { success } = rateLimit({ key: `geo:${ip}`, limit: 30, windowMs: 60 * 1000 });
     if (!success) {

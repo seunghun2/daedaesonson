@@ -1,9 +1,8 @@
 'use client';
 
-import { Box, Text, Group, Stack, TextInput, Textarea, Button, ActionIcon, Modal, Table, Badge, Tabs, Switch, Loader } from '@mantine/core';
+import { Box, Text, Title, Paper, Group, Stack, TextInput, Textarea, Button, ActionIcon, Modal, Badge, Tabs, Loader } from '@mantine/core';
 import { notifications } from '@mantine/notifications';
-import { ArrowLeft, Plus, Trash2, Edit, FileText, HelpCircle, Save, Mail } from 'lucide-react';
-import Link from 'next/link';
+import { Plus, Trash2, Edit, FileText, HelpCircle, Save, Mail } from 'lucide-react';
 import { useState, useEffect } from 'react';
 
 interface FAQ {
@@ -175,29 +174,20 @@ export default function AdminSettingsPage() {
     };
 
     if (loading) {
-
         return (
-            <Box style={{ minHeight: '100dvh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                <Loader color="violet" />
-            </Box>
+            <Group justify="center" py={80}>
+                <Loader color="blue" />
+            </Group>
         );
     }
 
     return (
-        <Box style={{ minHeight: '100dvh', backgroundColor: '#f8f9fa', paddingBottom: 100 }}>
-            {/* 헤더 */}
-            <Box px="md" py="md" bg="white" style={{ borderBottom: '1px solid #e9ecef', position: 'sticky', top: 0, zIndex: 100 }}>
-                <Group justify="space-between">
-                    <Group gap="sm">
-                        <Link href="/admin"><ArrowLeft size={20} color="#495057" /></Link>
-                        <Text size="lg" fw={700}>사이트 설정</Text>
-                    </Group>
-                </Group>
-            </Box>
+        <Box>
+            <Title order={2} mb="lg">사이트 설정</Title>
 
             {/* 탭 */}
-            <Tabs value={activeTab} onChange={setActiveTab}>
-                <Tabs.List grow px="md" bg="white">
+            <Tabs value={activeTab} onChange={setActiveTab} color="blue">
+                <Tabs.List mb="md">
                     <Tabs.Tab value="faq" leftSection={<HelpCircle size={16} />}>FAQ</Tabs.Tab>
                     <Tabs.Tab value="terms" leftSection={<FileText size={16} />}>약관</Tabs.Tab>
                     <Tabs.Tab value="contact" leftSection={<Mail size={16} />}>
@@ -206,10 +196,10 @@ export default function AdminSettingsPage() {
                 </Tabs.List>
 
                 {/* FAQ 탭 */}
-                <Tabs.Panel value="faq" p="md">
+                <Tabs.Panel value="faq">
                     <Group justify="space-between" mb="md">
                         <Text size="sm" c="dimmed">총 {faqs.length}개</Text>
-                        <Button size="xs" leftSection={<Plus size={14} />} color="violet" onClick={() => {
+                        <Button size="xs" leftSection={<Plus size={14} />} color="blue" onClick={() => {
                             setEditingFaq(null);
                             setFaqForm({ question: '', answer: '', category: '일반' });
                             setFaqModalOpen(true);
@@ -220,11 +210,11 @@ export default function AdminSettingsPage() {
 
                     <Stack gap="sm">
                         {faqs.map((faq) => (
-                            <Box key={faq.id} bg="white" p="md" style={{ borderRadius: 12 }}>
+                            <Paper key={faq.id} withBorder p="md" radius="md">
                                 <Group justify="space-between" mb="xs">
-                                    <Badge size="sm" color="gray">{faq.category}</Badge>
+                                    <Badge size="sm" color="gray" variant="light">{faq.category}</Badge>
                                     <Group gap={4}>
-                                        <ActionIcon size="sm" variant="subtle" onClick={() => {
+                                        <ActionIcon size="sm" variant="subtle" color="blue" onClick={() => {
                                             setEditingFaq(faq);
                                             setFaqForm({ question: faq.question, answer: faq.answer, category: faq.category });
                                             setFaqModalOpen(true);
@@ -238,28 +228,30 @@ export default function AdminSettingsPage() {
                                 </Group>
                                 <Text size="sm" fw={600} mb={4}>{faq.question}</Text>
                                 <Text size="xs" c="dimmed" lineClamp={2}>{faq.answer}</Text>
-                            </Box>
+                            </Paper>
                         ))}
                         {faqs.length === 0 && (
-                            <Text size="sm" c="dimmed" ta="center" py="xl">FAQ가 없습니다</Text>
+                            <Paper withBorder p="xl" radius="md">
+                                <Text size="sm" c="dimmed" ta="center">FAQ가 없습니다</Text>
+                            </Paper>
                         )}
                     </Stack>
                 </Tabs.Panel>
 
                 {/* 약관 탭 */}
-                <Tabs.Panel value="terms" p="md">
+                <Tabs.Panel value="terms">
                     <Stack gap="md">
                         {/* 이용약관 */}
-                        <Box bg="white" p="md" style={{ borderRadius: 12 }}>
+                        <Paper withBorder p="md" radius="md">
                             <Group justify="space-between" mb="md">
                                 <Text fw={600}>이용약관</Text>
                                 {editingTerms ? (
                                     <Group gap={4}>
-                                        <Button size="xs" variant="subtle" onClick={() => setEditingTerms(false)}>취소</Button>
-                                        <Button size="xs" color="violet" leftSection={<Save size={14} />} onClick={() => savePolicy('terms')}>저장</Button>
+                                        <Button size="xs" variant="subtle" color="gray" onClick={() => setEditingTerms(false)}>취소</Button>
+                                        <Button size="xs" color="blue" leftSection={<Save size={14} />} onClick={() => savePolicy('terms')}>저장</Button>
                                     </Group>
                                 ) : (
-                                    <Button size="xs" variant="subtle" leftSection={<Edit size={14} />} onClick={() => setEditingTerms(true)}>수정</Button>
+                                    <Button size="xs" variant="subtle" color="blue" leftSection={<Edit size={14} />} onClick={() => setEditingTerms(true)}>수정</Button>
                                 )}
                             </Group>
                             {editingTerms ? (
@@ -269,19 +261,19 @@ export default function AdminSettingsPage() {
                                     {termsPolicy?.content || '이용약관이 없습니다.'}
                                 </Text>
                             )}
-                        </Box>
+                        </Paper>
 
                         {/* 개인정보처리방침 */}
-                        <Box bg="white" p="md" style={{ borderRadius: 12 }}>
+                        <Paper withBorder p="md" radius="md">
                             <Group justify="space-between" mb="md">
                                 <Text fw={600}>개인정보 처리방침</Text>
                                 {editingPrivacy ? (
                                     <Group gap={4}>
-                                        <Button size="xs" variant="subtle" onClick={() => setEditingPrivacy(false)}>취소</Button>
-                                        <Button size="xs" color="violet" leftSection={<Save size={14} />} onClick={() => savePolicy('privacy')}>저장</Button>
+                                        <Button size="xs" variant="subtle" color="gray" onClick={() => setEditingPrivacy(false)}>취소</Button>
+                                        <Button size="xs" color="blue" leftSection={<Save size={14} />} onClick={() => savePolicy('privacy')}>저장</Button>
                                     </Group>
                                 ) : (
-                                    <Button size="xs" variant="subtle" leftSection={<Edit size={14} />} onClick={() => setEditingPrivacy(true)}>수정</Button>
+                                    <Button size="xs" variant="subtle" color="blue" leftSection={<Edit size={14} />} onClick={() => setEditingPrivacy(true)}>수정</Button>
                                 )}
                             </Group>
                             {editingPrivacy ? (
@@ -291,19 +283,19 @@ export default function AdminSettingsPage() {
                                     {privacyPolicy?.content || '개인정보 처리방침이 없습니다.'}
                                 </Text>
                             )}
-                        </Box>
+                        </Paper>
                     </Stack>
                 </Tabs.Panel>
 
                 {/* 1:1 문의 탭 */}
-                <Tabs.Panel value="contact" p="md">
+                <Tabs.Panel value="contact">
                     <Stack gap="sm">
                         {contactInquiries.map((inq) => (
-                            <Box key={inq.id} bg="white" p="md" style={{ borderRadius: 12 }}>
+                            <Paper key={inq.id} withBorder p="md" radius="md">
                                 <Group justify="space-between" mb="xs">
                                     <Group gap="xs">
-                                        <Badge size="sm" color="gray">{inq.inquiry_type}</Badge>
-                                        <Badge size="sm" color={inq.status === 'answered' ? 'green' : 'orange'}>
+                                        <Badge size="sm" color="gray" variant="light">{inq.inquiry_type}</Badge>
+                                        <Badge size="sm" color={inq.status === 'answered' ? 'green' : 'orange'} variant="light">
                                             {inq.status === 'answered' ? '답변완료' : '대기중'}
                                         </Badge>
                                     </Group>
@@ -321,10 +313,12 @@ export default function AdminSettingsPage() {
                                         {inq.admin_reply ? '답변 보기' : '답변하기'}
                                     </Button>
                                 </Group>
-                            </Box>
+                            </Paper>
                         ))}
                         {contactInquiries.length === 0 && (
-                            <Text size="sm" c="dimmed" ta="center" py="xl">1:1 문의가 없습니다</Text>
+                            <Paper withBorder p="xl" radius="md">
+                                <Text size="sm" c="dimmed" ta="center">1:1 문의가 없습니다</Text>
+                            </Paper>
                         )}
                     </Stack>
                 </Tabs.Panel>
@@ -336,7 +330,7 @@ export default function AdminSettingsPage() {
                     <TextInput label="질문" value={faqForm.question} onChange={(e) => setFaqForm({ ...faqForm, question: e.target.value })} />
                     <Textarea label="답변" value={faqForm.answer} onChange={(e) => setFaqForm({ ...faqForm, answer: e.target.value })} minRows={4} />
                     <TextInput label="카테고리" value={faqForm.category} onChange={(e) => setFaqForm({ ...faqForm, category: e.target.value })} />
-                    <Button color="violet" onClick={saveFaq}>저장</Button>
+                    <Button color="blue" onClick={saveFaq}>저장</Button>
                 </Stack>
             </Modal>
 

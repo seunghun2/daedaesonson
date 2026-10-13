@@ -17,7 +17,7 @@ export async function GET() {
                 replies:InquiryReply(*)
             `)
             .order('createdAt', { ascending: false })
-            .limit(50);
+            .limit(1000);
 
         if (error) {
             console.error('Fetch inquiries error:', error);

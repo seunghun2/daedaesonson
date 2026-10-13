@@ -82,7 +82,7 @@ export async function POST(request: NextRequest) {
         if (userId) {
             try {
                 const authHeader = request.headers.get('authorization');
-                const token = authHeader?.startsWith('Bearer ') ? authHeader.slice(7) : null;
+                const token = authHeader?.startsWith('Bearer ') ? authHeader.slice(7).trim() : null;
                 if (token) {
                     const { data: authData } = await supabase.auth.getUser(token);
                     if (authData?.user?.id === userId) {
@@ -127,7 +127,8 @@ export async function GET() {
         const { data: consults, error } = await supabase
             .from('Consult')
             .select('*')
-            .order('createdAt', { ascending: false });
+            .order('createdAt', { ascending: false })
+            .limit(1000);
 
         if (error) {
             return NextResponse.json({ error: '조회 실패' }, { status: 500 });

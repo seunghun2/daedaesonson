@@ -496,17 +496,22 @@ function StandardPriceEditor({ priceInfo, onChange }: StandardPriceEditorProps) 
     return (
         <Box>
             {/* 헤더 */}
-            <Paper withBorder p="sm" radius="md" mb="md" bg={priceVerified ? 'green.0' : 'orange.0'}>
+            <Paper withBorder p="sm" radius="md" mb="md" bg={priceVerified ? 'teal.0' : 'orange.0'}>
                 <Group justify="space-between">
                     <Group gap="xs">
                         {priceVerified
-                            ? <Check size={18} color="green" />
-                            : <AlertTriangle size={18} color="orange" />
+                            ? <Check size={18} color="#0D9488" />
+                            : <AlertTriangle size={18} color="#EA580C" />
                         }
                         <div>
-                            <Text fw={600} size="sm">
-                                {priceVerified ? '✅ 가격 검토 완료' : '⚠️ 가격 검토 필요'}
-                            </Text>
+                            <Group gap="xs">
+                                <Text fw={700} size="sm" c="#0F172A">
+                                    {priceVerified ? '가격 검토 완료' : '가격 검토 필요'}
+                                </Text>
+                                <Badge size="xs" color={priceVerified ? 'teal' : 'orange'} variant="light">
+                                    {priceVerified ? 'VERIFIED' : 'PENDING'}
+                                </Badge>
+                            </Group>
                             <Text size="xs" c="dimmed">
                                 {standardizedPrices.length}개 서비스, {totalItems}개 항목
                                 {priceInfo.lastVerifiedAt && ` · 마지막 검토: ${new Date(priceInfo.lastVerifiedAt).toLocaleDateString('ko-KR')}`}
@@ -524,7 +529,7 @@ function StandardPriceEditor({ priceInfo, onChange }: StandardPriceEditorProps) 
                             onChange={toggleVerified}
                             onLabel="검토완료"
                             offLabel="미검토"
-                            color={priceVerified ? 'green' : 'orange'}
+                            color={priceVerified ? 'teal' : 'orange'}
                         />
                     </Group>
                 </Group>
@@ -546,16 +551,16 @@ function StandardPriceEditor({ priceInfo, onChange }: StandardPriceEditorProps) 
                     });
                 });
 
-                if (zeroPriceCount > 0) issues.push(`💰 가격 0원 항목 ${zeroPriceCount}개`);
-                if (residencyIssues > 0) issues.push(`🏠 거주구분 미세팅 ${residencyIssues}개 (관내/관외 텍스트 감지됨)`);
-                if (capacityIssues > 0) issues.push(`👥 인원구분 미세팅 ${capacityIssues}개 (단장/합장 텍스트 감지됨)`);
+                if (zeroPriceCount > 0) issues.push(`가격 0원 항목 ${zeroPriceCount}개`);
+                if (residencyIssues > 0) issues.push(`거주구분 미세팅 ${residencyIssues}개 (관내/관외 텍스트 감지됨)`);
+                if (capacityIssues > 0) issues.push(`인원구분 미세팅 ${capacityIssues}개 (단장/합장 텍스트 감지됨)`);
 
                 return issues.length > 0 ? (
-                    <Alert color="red" variant="light" mb="md" title={`⚠️ ${issues.length}가지 이슈 감지됨`}>
+                    <Alert color="red" variant="light" mb="md" icon={<AlertTriangle size={16} />} title={`${issues.length}가지 이슈 감지됨`}>
                         {issues.map((issue, i) => <Text key={i} size="sm">{issue}</Text>)}
                     </Alert>
                 ) : standardizedPrices.length > 0 ? (
-                    <Alert color="green" variant="light" mb="md" title="✅ 감지된 이슈 없음">
+                    <Alert color="teal" variant="light" mb="md" icon={<Check size={16} />} title="감지된 이슈 없음">
                         <Text size="sm">모든 데이터가 정상입니다.</Text>
                     </Alert>
                 ) : null;
@@ -588,9 +593,10 @@ function StandardPriceEditor({ priceInfo, onChange }: StandardPriceEditorProps) 
                             color={exists ? 'gray' : activeTab === 'BONGSAN' ? 'blue' : activeTab === 'NATURAL' ? 'green' : 'orange'}
                             radius="xl"
                             disabled={exists}
+                            leftSection={exists ? <Check size={12} /> : <Plus size={12} />}
                             onClick={() => addServiceGroup(activeTab as ServiceType, subType)}
                         >
-                            {exists ? `✓ ${subType}` : `+ ${subType}`}
+                            {subType}
                         </Button>
                     );
                 })}

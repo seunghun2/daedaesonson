@@ -28,6 +28,11 @@ export const config = {
         '/api/analyze-pdf',
         '/api/save-pricing',
         '/api/analyze-pricing-image',
+        '/api/bulk-insert-pricing',
+        '/api/pricing-export',
+        '/api/geocode',
+        '/api/facilities-v2',
+        '/api/tool/:path*',
     ],
 };
 

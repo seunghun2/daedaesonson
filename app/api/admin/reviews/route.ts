@@ -14,7 +14,7 @@ export async function GET() {
             .from('Review')
             .select('*, replies:Reply(*)')
             .order('createdAt', { ascending: false })
-            .limit(100);
+            .limit(1000);
 
         if (error) {
             console.error('Fetch reviews error:', error);

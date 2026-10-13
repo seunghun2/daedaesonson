@@ -13,7 +13,7 @@ export async function GET() {
         .from('ChatSession')
         .select('*')
         .order('created_at', { ascending: false })
-        .limit(200);
+        .limit(500);
 
     if (error) {
         console.error('Chat logs GET error:', error);

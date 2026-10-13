@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Box, Text, Group, Stack, Badge, Paper, Table, Select, Button, TextInput, Textarea, ActionIcon, Tooltip, Modal, Loader, Image } from '@mantine/core';
+import { Box, Text, Group, Stack, Badge, Paper, Table, Select, Button, TextInput, Textarea, ActionIcon, Tooltip, Modal, Loader, Image, ScrollArea, Pagination } from '@mantine/core';
 import { Search, RefreshCw, Eye, CheckCircle, XCircle, Clock } from 'lucide-react';
 
 interface Correction {
@@ -35,6 +35,8 @@ const STATUS_LABELS: Record<string, { label: string; color: string }> = {
     rejected: { label: '반려', color: 'red' },
 };
 
+const PAGE_SIZE = 20;
+
 export default function AdminCorrectionsPage() {
     const [corrections, setCorrections] = useState<Correction[]>([]);
     const [loading, setLoading] = useState(true);
@@ -44,6 +46,7 @@ export default function AdminCorrectionsPage() {
     const [selectedCorrection, setSelectedCorrection] = useState<Correction | null>(null);
     const [adminNote, setAdminNote] = useState('');
     const [detailOpen, setDetailOpen] = useState(false);
+    const [page, setPage] = useState(1);
 
     const fetchCorrections = async () => {
         setLoading(true);
@@ -63,6 +66,7 @@ export default function AdminCorrectionsPage() {
 
 
     useEffect(() => {
+        setPage(1);
         fetchCorrections();
     }, [statusFilter]);
 
@@ -89,6 +93,9 @@ export default function AdminCorrectionsPage() {
         (c.name || '').toLowerCase().includes(searchText.toLowerCase())
     );
 
+    const totalPages = Math.max(1, Math.ceil(filteredCorrections.length / PAGE_SIZE));
+    const paginatedCorrections = filteredCorrections.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE);
+
     const formatDate = (dateStr: string) => {
         const d = new Date(dateStr);
         return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')} ${String(d.getHours()).padStart(2, '0')}:${String(d.getMinutes()).padStart(2, '0')}`;
@@ -98,7 +105,7 @@ export default function AdminCorrectionsPage() {
         <Box>
             <Group justify="space-between" mb="lg">
                 <Text size="xl" fw={700}>정보 수정 요청 관리</Text>
-                <Button leftSection={<RefreshCw size={16} />} variant="light" onClick={fetchCorrections} loading={loading}>
+                <Button leftSection={<RefreshCw size={16} />} variant="light" color="blue" onClick={fetchCorrections} loading={loading}>
                     새로고침
                 </Button>
             </Group>
@@ -123,7 +130,10 @@ export default function AdminCorrectionsPage() {
                         placeholder="시설명, 내용, 성함 검색"
                         leftSection={<Search size={16} />}
                         value={searchText}
-                        onChange={(e) => setSearchText(e.currentTarget.value)}
+                        onChange={(e) => {
+                            setSearchText(e.currentTarget.value);
+                            setPage(1);
+                        }}
                         style={{ flex: 1 }}
                     />
                 </Group>
@@ -144,13 +154,13 @@ export default function AdminCorrectionsPage() {
                             style={{
                                 flex: 1,
                                 cursor: 'pointer',
-                                borderColor: isSelected ? '#7950f2' : undefined,
-                                backgroundColor: isSelected ? '#f8f0fc' : undefined,
+                                borderColor: isSelected ? '#2563EB' : undefined,
+                                backgroundColor: isSelected ? '#EFF6FF' : undefined,
                             }}
                             onClick={() => setStatusFilter(isSelected ? 'all' : status)}
                         >
-                            <Text size="xs" c={isSelected ? 'violet' : 'dimmed'} fw={isSelected ? 600 : 400}>{info.label}</Text>
-                            <Text size="xl" fw={700} c={isSelected ? 'violet' : undefined}>{count}</Text>
+                            <Text size="xs" c={isSelected ? 'blue' : 'dimmed'} fw={isSelected ? 600 : 400}>{info.label}</Text>
+                            <Text size="xl" fw={700} c={isSelected ? 'blue' : undefined}>{count}</Text>
                         </Paper>
                     );
                 })}
@@ -160,78 +170,95 @@ export default function AdminCorrectionsPage() {
             {/* 목록 */}
             {loading ? (
                 <Group justify="center" py={60}>
-                    <Loader />
+                    <Loader color="blue" />
                 </Group>
             ) : filteredCorrections.length === 0 ? (
                 <Paper p={60} withBorder radius="md">
                     <Text ta="center" c="dimmed">수정 요청이 없습니다.</Text>
                 </Paper>
             ) : (
-                <Paper withBorder radius="md" style={{ overflow: 'hidden' }}>
-                    <Table.ScrollContainer minWidth={700}>
-                        <Table striped highlightOnHover>
-                            <Table.Thead>
-                                <Table.Tr>
-                                    <Table.Th>상태</Table.Th>
-                                    <Table.Th>유형</Table.Th>
-                                    <Table.Th>시설명</Table.Th>
-                                    <Table.Th>성함</Table.Th>
-                                    <Table.Th>내용</Table.Th>
-                                    <Table.Th>연락처</Table.Th>
-                                    <Table.Th>사진</Table.Th>
-                                    <Table.Th>접수일시</Table.Th>
-                                    <Table.Th>관리</Table.Th>
-                                </Table.Tr>
-                            </Table.Thead>
-                            <Table.Tbody>
-                                {filteredCorrections.map(c => {
-                                    const statusInfo = STATUS_LABELS[c.status] || STATUS_LABELS.pending;
-                                    return (
-                                        <Table.Tr key={c.id}>
-                                            <Table.Td>
-                                                <Badge color={statusInfo.color} variant="light" size="sm">{statusInfo.label}</Badge>
-                                            </Table.Td>
-                                            <Table.Td>
-                                                <Text size="sm">{TYPE_LABELS[c.correction_type] || c.correction_type}</Text>
-                                            </Table.Td>
-                                            <Table.Td>
-                                                <Text size="sm" fw={500} style={{ maxWidth: 130, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
-                                                    {c.facility_name}
-                                                </Text>
-                                            </Table.Td>
-                                            <Table.Td>
-                                                <Text size="sm">{c.name || '-'}</Text>
-                                            </Table.Td>
-                                            <Table.Td>
-                                                <Text size="sm" lineClamp={2} style={{ maxWidth: 200 }}>{c.content}</Text>
-                                            </Table.Td>
-                                            <Table.Td>
-                                                <Text size="xs" c="dimmed">{c.contact || '-'}</Text>
-                                            </Table.Td>
-                                            <Table.Td>
-                                                <Text size="xs" c="dimmed">{c.photos && c.photos.length > 0 ? `${c.photos.length}장` : '-'}</Text>
-                                            </Table.Td>
-                                            <Table.Td>
-                                                <Text size="xs" c="dimmed">{formatDate(c.created_at)}</Text>
-                                            </Table.Td>
-                                            <Table.Td>
-                                                <Tooltip label="상세보기">
-                                                    <ActionIcon variant="light" onClick={() => {
-                                                        setSelectedCorrection(c);
-                                                        setAdminNote(c.admin_note || '');
-                                                        setDetailOpen(true);
-                                                    }}>
-                                                        <Eye size={16} />
-                                                    </ActionIcon>
-                                                </Tooltip>
-                                            </Table.Td>
-                                        </Table.Tr>
-                                    );
-                                })}
-                            </Table.Tbody>
-                        </Table>
-                    </Table.ScrollContainer>
-                </Paper>
+                <>
+                    <Paper withBorder radius="md" style={{ overflow: 'hidden' }}>
+                        <ScrollArea>
+                            <Table striped highlightOnHover miw={720}>
+                                <Table.Thead>
+                                    <Table.Tr>
+                                        <Table.Th>상태</Table.Th>
+                                        <Table.Th>유형</Table.Th>
+                                        <Table.Th>시설명</Table.Th>
+                                        <Table.Th>성함</Table.Th>
+                                        <Table.Th>내용</Table.Th>
+                                        <Table.Th>연락처</Table.Th>
+                                        <Table.Th>사진</Table.Th>
+                                        <Table.Th>접수일시</Table.Th>
+                                        <Table.Th>관리</Table.Th>
+                                    </Table.Tr>
+                                </Table.Thead>
+                                <Table.Tbody>
+                                    {paginatedCorrections.map(c => {
+                                        const statusInfo = STATUS_LABELS[c.status] || STATUS_LABELS.pending;
+                                        return (
+                                            <Table.Tr key={c.id}>
+                                                <Table.Td>
+                                                    <Badge color={statusInfo.color} variant="light" size="sm">{statusInfo.label}</Badge>
+                                                </Table.Td>
+                                                <Table.Td>
+                                                    <Text size="sm">{TYPE_LABELS[c.correction_type] || c.correction_type}</Text>
+                                                </Table.Td>
+                                                <Table.Td>
+                                                    <Text size="sm" fw={500} style={{ maxWidth: 130, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                                                        {c.facility_name}
+                                                    </Text>
+                                                </Table.Td>
+                                                <Table.Td>
+                                                    <Text size="sm">{c.name || '-'}</Text>
+                                                </Table.Td>
+                                                <Table.Td>
+                                                    <Text size="sm" lineClamp={2} style={{ maxWidth: 200 }}>{c.content}</Text>
+                                                </Table.Td>
+                                                <Table.Td>
+                                                    <Text size="xs" c="dimmed">{c.contact || '-'}</Text>
+                                                </Table.Td>
+                                                <Table.Td>
+                                                    <Text size="xs" c="dimmed">{c.photos && c.photos.length > 0 ? `${c.photos.length}장` : '-'}</Text>
+                                                </Table.Td>
+                                                <Table.Td>
+                                                    <Text size="xs" c="dimmed">{formatDate(c.created_at)}</Text>
+                                                </Table.Td>
+                                                <Table.Td>
+                                                    <Tooltip label="상세보기">
+                                                        <ActionIcon variant="light" color="blue" onClick={() => {
+                                                            setSelectedCorrection(c);
+                                                            setAdminNote(c.admin_note || '');
+                                                            setDetailOpen(true);
+                                                        }}>
+                                                            <Eye size={16} />
+                                                        </ActionIcon>
+                                                    </Tooltip>
+                                                </Table.Td>
+                                            </Table.Tr>
+                                        );
+                                    })}
+                                </Table.Tbody>
+                            </Table>
+                        </ScrollArea>
+                    </Paper>
+
+                    <Group justify="space-between" align="center" mt="md">
+                        <Text size="sm" c="dimmed">
+                            총 {filteredCorrections.length}건
+                        </Text>
+                        {totalPages > 1 && (
+                            <Pagination
+                                total={totalPages}
+                                value={page}
+                                onChange={setPage}
+                                color="blue"
+                                size="sm"
+                            />
+                        )}
+                    </Group>
+                </>
             )}
 
             {/* 상세 모달 */}

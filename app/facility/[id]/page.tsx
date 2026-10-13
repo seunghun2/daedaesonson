@@ -4,7 +4,7 @@ import { FacilityCategory, FACILITY_CATEGORY_LABELS } from '@/types';
 import FacilityPageClient from './FacilityPageClient';
 import { getCachedFacility, getCachedAllFacilities } from '@/lib/facilityDataLoader';
 
-// 🚀 ISR: 60초마다 갱신
+// ISR: 60초마다 갱신
 export const revalidate = 60;
 
 interface PageProps {
@@ -39,7 +39,7 @@ function shortenProvince(region: string): string {
     return SHORT_PROVINCE_MAP[region] || region.replace(/특별자치(시|도)|특별시|광역시|도$/g, '') || region;
 }
 
-// 🔥 SSR 메타데이터 생성 (SEO + Open Graph)
+// SSR 메타데이터 생성 (SEO + Open Graph)
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
     const { id } = await params;
     const data = getCachedFacility(id);
@@ -84,7 +84,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     }
     const serviceText = serviceTypes.length > 0 ? serviceTypes.join('·') : categoryLabel;
 
-    // 🔥 SEO 최적화 타이틀 (예: "서울공원묘원 | 공원묘지 가격 50만원~ | 경기 용인시 | 대대손손")
+    // SEO 최적화 타이틀 (예: "서울공원묘원 | 공원묘지 가격 50만원~ | 경기 용인시 | 대대손손")
     const titleParts = [data.name];
     if (categoryLabel) titleParts.push(categoryLabel);
     if (priceText) titleParts.push(`가격 ${priceText}`);
@@ -92,14 +92,14 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     titleParts.push('대대손손');
     const title = titleParts.join(' | ');
 
-    // 🔥 SEO 최적화 설명 (풍부한 정보 포함)
+    // SEO 최적화 설명 (풍부한 정보 포함)
     const descParts: string[] = [];
     descParts.push(`${data.name} ${categoryLabel} 위치, 가격, 정보 상세보기.`);
     descParts.push(`${isPublic}.`);
     if (serviceText) descParts.push(`${serviceText} 가격표 제공.`);
     if (priceText) descParts.push(`${priceText}.`);
     if (data.address) descParts.push(`${data.address}.`);
-    if (data.phone) descParts.push(`☎ ${data.phone}.`);
+    if (data.phone) descParts.push(`전화 ${data.phone}.`);
     descParts.push('대대손손에서 전국 장묘시설 가격을 비교하세요.');
     const description = descParts.join(' ');
 
@@ -139,7 +139,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     };
 }
 
-// 🚀 서버 컴포넌트: 로컬 JSON에서 즉시 로드 (Supabase 호출 제거)
+// 서버 컴포넌트: 로컬 JSON에서 즉시 로드 (Supabase 호출 제거)
 export default async function FacilityPage({ params }: PageProps) {
     const { id } = await params;
     const data = getCachedFacility(id);

@@ -1,10 +1,17 @@
 'use client';
 
 import { useState, useEffect, useCallback } from 'react';
-import { Title, TextInput, Group, Button, Table, Badge, ActionIcon, Paper, Pagination, Text, LoadingOverlay } from '@mantine/core';
-import { Search, Edit, Trash, Plus } from 'lucide-react';
+import {
+    Title, TextInput, Group, Button, Table, Badge, ActionIcon,
+    Paper, Pagination, Text, LoadingOverlay, ScrollArea, Tooltip
+} from '@mantine/core';
+import { Search, Edit, Trash, Plus, ExternalLink } from 'lucide-react';
 import { FACILITY_CATEGORY_LABELS, Facility } from '@/types';
-import { useDebouncedCallback } from '@mantine/hooks';
+import { useDebouncedCallback, useDisclosure } from '@mantine/hooks';
+import { useRouter } from 'next/navigation';
+import dynamic from 'next/dynamic';
+
+const FacilityEditModal = dynamic(() => import('../upload/FacilityEditModal'), { ssr: false });
 
 interface PaginationInfo {
     page: number;
@@ -14,6 +21,7 @@ interface PaginationInfo {
 }
 
 export default function FacilitiesPage() {
+    const router = useRouter();
     const [search, setSearch] = useState('');
     const [searchTarget, setSearchTarget] = useState<string>('all');
     const [page, setPage] = useState(1);
@@ -27,7 +35,12 @@ export default function FacilitiesPage() {
     const [sortOrder, setSortOrder] = useState<string>('asc');
     const [filterCategory, setFilterCategory] = useState<string>('all');
 
-    // 🚀 서버 사이드 데이터 불러오기
+    // 모달 상태 (시설 추가 / 수정)
+    const [opened, { open, close }] = useDisclosure(false);
+    const [facilityToEdit, setFacilityToEdit] = useState<Facility | null>(null);
+    const [editIndex, setEditIndex] = useState<number>(-1);
+
+    // 서버 사이드 데이터 불러오기
     const fetchFacilities = useCallback(async (searchTerm?: string) => {
         setLoading(true);
         try {
@@ -63,13 +76,46 @@ export default function FacilitiesPage() {
     // 필터/정렬/페이지 변경 시 데이터 로드
     useEffect(() => {
         fetchFacilities();
-    }, [page, filterCategory, sortBy, sortOrder]);
+    }, [page, filterCategory, sortBy, sortOrder, fetchFacilities]);
 
     // 검색어 변경 시
     const handleSearchChange = (value: string) => {
         setSearch(value);
         debouncedSearch(value);
     };
+
+    // 시설 추가 모달 열기
+    const handleCreate = useCallback(() => {
+        setEditIndex(-1);
+        setFacilityToEdit(null);
+        open();
+    }, [open]);
+
+    // 시설 수정 모달 열기
+    const handleEdit = useCallback((facility: Facility, idx: number) => {
+        setEditIndex(idx);
+        setFacilityToEdit(facility);
+        open();
+    }, [open]);
+
+    // 모달 저장 완료 콜백
+    const handleModalSaved = useCallback((savedFacility: Facility, isNew: boolean) => {
+        if (isNew) {
+            setData(prev => [savedFacility, ...prev]);
+            setPagination(prev => ({ ...prev, total: prev.total + 1 }));
+        } else {
+            setData(prev => prev.map(item => item.id === savedFacility.id ? { ...item, ...savedFacility } : item));
+        }
+    }, []);
+
+    // 모달 이전/다음 시설 네비게이션
+    const handleNavigate = useCallback((direction: 'prev' | 'next') => {
+        const nextIdx = direction === 'next' ? editIndex + 1 : editIndex - 1;
+        if (nextIdx >= 0 && nextIdx < data.length) {
+            setEditIndex(nextIdx);
+            setFacilityToEdit(data[nextIdx]);
+        }
+    }, [editIndex, data]);
 
     // 시설 삭제 핸들러
     const handleDelete = async (id: string) => {
@@ -81,7 +127,7 @@ export default function FacilitiesPage() {
                 alert('삭제되었습니다.');
                 // UI에서 즉시 제거
                 setData(prev => prev.filter(item => item.id !== id));
-                setPagination(prev => ({ ...prev, total: prev.total - 1 }));
+                setPagination(prev => ({ ...prev, total: Math.max(0, prev.total - 1) }));
             } else {
                 alert('삭제 실패');
             }
@@ -94,13 +140,30 @@ export default function FacilitiesPage() {
     return (
         <div>
             <Group justify="space-between" mb="lg">
-                <Title order={2}>시설 데이터 관리</Title>
-                <Button leftSection={<Plus size={16} />} color="blue" onClick={() => alert('업로드 페이지나 추가 모달을 이용해주세요!')}>
-                    시설 추가
-                </Button>
+                <div>
+                    <Title order={2} c="#0F172A">시설 빠른 목록</Title>
+                    <Text size="sm" c="dimmed">빠른 조회 및 시설 정보 즉시 수정</Text>
+                </div>
+                <Group gap="xs">
+                    <Button
+                        variant="light"
+                        color="gray"
+                        leftSection={<ExternalLink size={16} />}
+                        onClick={() => router.push('/admin/upload')}
+                    >
+                        통합관리 뷰 열기
+                    </Button>
+                    <Button
+                        leftSection={<Plus size={16} />}
+                        style={{ backgroundColor: '#2563EB' }}
+                        onClick={handleCreate}
+                    >
+                        시설 추가
+                    </Button>
+                </Group>
             </Group>
 
-            <Paper p="md" radius="md" withBorder mb="lg">
+            <Paper p="md" radius="md" withBorder mb="lg" bg="white">
                 <Group align="flex-end" mb="md">
                     {/* 검색 영역 */}
                     <div style={{ flex: 1 }}>
@@ -189,75 +252,83 @@ export default function FacilitiesPage() {
                 </Group>
             </Paper>
 
-            <Paper radius="md" withBorder style={{ overflow: 'hidden', position: 'relative' }}>
+            <Paper radius="md" withBorder bg="white" style={{ overflow: 'hidden', position: 'relative' }}>
                 <LoadingOverlay visible={loading} zIndex={1000} overlayProps={{ radius: "sm", blur: 2 }} />
-                <Table verticalSpacing="sm" striped highlightOnHover>
-                    <Table.Thead bg="gray.1">
-                        <Table.Tr>
-                            <Table.Th>ID</Table.Th>
-                            <Table.Th>시설명</Table.Th>
-                            <Table.Th>카테고리</Table.Th>
-                            <Table.Th>구분</Table.Th>
-                            <Table.Th>총매장능력</Table.Th>
-                            <Table.Th>주소</Table.Th>
-                            <Table.Th style={{ textAlign: 'right' }}>관리</Table.Th>
-                        </Table.Tr>
-                    </Table.Thead>
-                    <Table.Tbody>
-                        {data.length > 0 ? (
-                            data.map((item, index) => (
-                                <Table.Tr key={`${item.id}-${index}`}>
-                                    <Table.Td>
-                                        <Text size="xs" c="dimmed">#{item.id}</Text>
-                                    </Table.Td>
-                                    <Table.Td fw={500}>{item.name}</Table.Td>
-                                    <Table.Td>
-                                        <Badge variant="light" color="blue">
-                                            {FACILITY_CATEGORY_LABELS[item.category] || item.category}
-                                        </Badge>
-                                    </Table.Td>
-                                    <Table.Td>
-                                        <Badge
-                                            variant="dot"
-                                            color={item.isPublic ? 'teal' : 'gray'}
-                                            size="sm"
-                                        >
-                                            {item.isPublic ? '공설' : '사설'}
-                                        </Badge>
-                                    </Table.Td>
-                                    <Table.Td>
-                                        {item.capacity ? (
-                                            <Text size="sm">{item.capacity.toLocaleString()}구</Text>
-                                        ) : (
-                                            <Badge color="red" variant="light" size="xs">미기입</Badge>
-                                        )}
-                                    </Table.Td>
-                                    <Table.Td>
-                                        <Text size="sm" lineClamp={1} w={200}>
-                                            {item.address}
-                                        </Text>
-                                    </Table.Td>
-                                    <Table.Td align="right">
-                                        <Group gap="xs" justify="flex-end">
-                                            <ActionIcon variant="subtle" color="blue" onClick={() => alert('상세/수정 기능 준비 중')}>
-                                                <Edit size={16} />
-                                            </ActionIcon>
-                                            <ActionIcon variant="subtle" color="red" onClick={() => handleDelete(item.id)}>
-                                                <Trash size={16} />
-                                            </ActionIcon>
-                                        </Group>
+                <ScrollArea>
+                    <Table verticalSpacing="sm" striped highlightOnHover style={{ minWidth: 800 }}>
+                        <Table.Thead bg="#F8FAFC">
+                            <Table.Tr>
+                                <Table.Th style={{ width: 90 }}>ID</Table.Th>
+                                <Table.Th>시설명</Table.Th>
+                                <Table.Th style={{ width: 120 }}>카테고리</Table.Th>
+                                <Table.Th style={{ width: 80 }}>구분</Table.Th>
+                                <Table.Th style={{ width: 120 }}>총매장능력</Table.Th>
+                                <Table.Th>주소</Table.Th>
+                                <Table.Th style={{ width: 110, textAlign: 'right' }}>관리</Table.Th>
+                            </Table.Tr>
+                        </Table.Thead>
+                        <Table.Tbody>
+                            {data.length > 0 ? (
+                                data.map((item, index) => (
+                                    <Table.Tr key={`${item.id}-${index}`}>
+                                        <Table.Td>
+                                            <Text size="xs" c="dimmed" ff="monospace">#{item.id}</Text>
+                                        </Table.Td>
+                                        <Table.Td fw={600} style={{ cursor: 'pointer' }} onClick={() => handleEdit(item, index)}>
+                                            {item.name}
+                                        </Table.Td>
+                                        <Table.Td>
+                                            <Badge variant="light" color="blue">
+                                                {FACILITY_CATEGORY_LABELS[item.category] || item.category}
+                                            </Badge>
+                                        </Table.Td>
+                                        <Table.Td>
+                                            <Badge
+                                                variant="dot"
+                                                color={item.isPublic ? 'teal' : 'gray'}
+                                                size="sm"
+                                            >
+                                                {item.isPublic ? '공설' : '사설'}
+                                            </Badge>
+                                        </Table.Td>
+                                        <Table.Td>
+                                            {item.capacity ? (
+                                                <Text size="sm">{item.capacity.toLocaleString()}구</Text>
+                                            ) : (
+                                                <Badge color="red" variant="light" size="xs">미기입</Badge>
+                                            )}
+                                        </Table.Td>
+                                        <Table.Td>
+                                            <Text size="sm" lineClamp={1} maw={260}>
+                                                {item.address}
+                                            </Text>
+                                        </Table.Td>
+                                        <Table.Td align="right">
+                                            <Group gap="xs" justify="flex-end" wrap="nowrap">
+                                                <Tooltip label="상세 정보 및 가격표 수정">
+                                                    <ActionIcon variant="light" color="blue" onClick={() => handleEdit(item, index)}>
+                                                        <Edit size={16} />
+                                                    </ActionIcon>
+                                                </Tooltip>
+                                                <Tooltip label="시설 삭제">
+                                                    <ActionIcon variant="light" color="red" onClick={() => handleDelete(item.id)}>
+                                                        <Trash size={16} />
+                                                    </ActionIcon>
+                                                </Tooltip>
+                                            </Group>
+                                        </Table.Td>
+                                    </Table.Tr>
+                                ))
+                            ) : (
+                                <Table.Tr>
+                                    <Table.Td colSpan={7} align="center" py="xl">
+                                        {!loading && <Text c="dimmed">데이터가 없습니다.</Text>}
                                     </Table.Td>
                                 </Table.Tr>
-                            ))
-                        ) : (
-                            <Table.Tr>
-                                <Table.Td colSpan={7} align="center" py="xl">
-                                    {!loading && <Text c="dimmed">데이터가 없습니다.</Text>}
-                                </Table.Td>
-                            </Table.Tr>
-                        )}
-                    </Table.Tbody>
-                </Table>
+                            )}
+                        </Table.Tbody>
+                    </Table>
+                </ScrollArea>
 
                 {/* 페이지네이션 */}
                 {pagination.totalPages > 1 && (
@@ -270,6 +341,17 @@ export default function FacilitiesPage() {
                     </Group>
                 )}
             </Paper>
+
+            <FacilityEditModal
+                facilityToEdit={facilityToEdit}
+                opened={opened}
+                onClose={close}
+                onSaved={handleModalSaved}
+                onNavigate={handleNavigate}
+                currentIndex={editIndex >= 0 ? (page - 1) * itemsPerPage + editIndex : undefined}
+                totalCount={pagination.total}
+            />
         </div>
     );
 }
+
