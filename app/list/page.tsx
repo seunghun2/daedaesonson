@@ -101,7 +101,15 @@ function ListPageContent() {
         fetchData();
     }, []);
 
-    // URL에서 시설 ID 읽기 (PC만 오버레이 사용)
+    // PC 화면(768px 초과)인 경우 메인 지도+사이드바 화면(/)으로 바로 전환
+    useEffect(() => {
+        if (isMobile === false) {
+            const params = searchParams.toString();
+            router.replace(params ? `/?${params}` : '/');
+        }
+    }, [isMobile, router, searchParams]);
+
+    // URL에서 시설 ID 읽기 (오버레이 사용)
     useEffect(() => {
         if (isMobile) return;
         const facilityId = searchParams.get('id');
@@ -204,6 +212,10 @@ function ListPageContent() {
             h="100dvh"
             bg="white"
             style={{
+                maxWidth: 640,
+                margin: '0 auto',
+                borderLeft: !isMobile ? '1px solid #e9ecef' : 'none',
+                borderRight: !isMobile ? '1px solid #e9ecef' : 'none',
                 transform: mounted ? 'translateX(0)' : 'translateX(100%)',
                 transition: 'transform 0.35s cubic-bezier(0.4, 0, 0.2, 1)',
             }}

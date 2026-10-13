@@ -130,6 +130,7 @@ export async function DELETE(
     context: { params: Promise<{ id: string }> }
 ) {
     const { id: facilityId } = await context.params;
+    const ip = request.headers.get('x-forwarded-for')?.split(',')[0].trim() || 'unknown';
 
     try {
         const body = await request.json();
@@ -137,9 +138,15 @@ export async function DELETE(
         const cookieStore = await cookies();
         const isAdmin = await verifyAdminToken(cookieStore.get('admin_session')?.value);
 
-
         if (!inquiryId) {
             return NextResponse.json({ error: '문의 ID가 필요합니다.' }, { status: 400 });
+        }
+
+        if (!isAdmin) {
+            const rateCheck = rateLimit({ key: `inquiry-delete:${ip}:${inquiryId}`, limit: 5, windowMs: 15 * 60 * 1000 });
+            if (!rateCheck.success) {
+                return NextResponse.json({ error: '비밀번호 시도 횟수를 초과했습니다. 15분 후 다시 시도해주세요.' }, { status: 429 });
+            }
         }
 
         // Get inquiry
@@ -147,6 +154,7 @@ export async function DELETE(
             .from('Inquiry')
             .select('*')
             .eq('id', inquiryId)
+            .eq('facilityId', facilityId)
             .single();
 
         if (fetchError || !inquiry) {
@@ -155,7 +163,7 @@ export async function DELETE(
 
         // Verify permission
         if (!isAdmin) {
-            if (!pin || !timingSafeCompare(pin, inquiry.passwordLast4 || '')) {
+            if (!pin || !timingSafeCompare(String(pin), inquiry.passwordLast4 || '')) {
                 return NextResponse.json({ error: '비밀번호가 일치하지 않습니다.' }, { status: 403 });
             }
         }

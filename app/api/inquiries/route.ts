@@ -1,20 +1,38 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getSupabaseServer } from '@/lib/supabaseServer';
 import { sendSlack, escapeSlack } from '@/lib/slack';
+import { rateLimit } from '@/lib/rateLimit';
 
 const supabase = getSupabaseServer();
 
 export async function POST(request: NextRequest) {
+    const ip = request.headers.get('x-forwarded-for')?.split(',')[0].trim() || 'unknown';
+    const rateCheck = rateLimit({ key: `inquiries-post:${ip}`, limit: 5, windowMs: 60000 });
+    if (!rateCheck.success) {
+        return NextResponse.json({ error: '너무 많은 문의를 등록했습니다. 1분 후 다시 시도해주세요.' }, { status: 429 });
+    }
+
     try {
         const body = await request.json();
         const { facilityId, type, title, content, phone, isPrivate } = body;
 
-        if (!title || !content || !phone) {
-            return NextResponse.json({ error: '필수 항목 누락' }, { status: 400 });
+        if (!title?.trim() || !content?.trim() || !phone?.trim()) {
+            return NextResponse.json({ error: '필수 항목을 모두 입력해주세요.' }, { status: 400 });
         }
 
+        if (String(title).trim().length < 2 || String(title).length > 100) {
+            return NextResponse.json({ error: '제목은 2자 이상 100자 이하로 입력해주세요.' }, { status: 400 });
+        }
 
-        const passwordLast4 = phone.replace(/\D/g, '').slice(-4);
+        if (String(content).trim().length < 5 || String(content).length > 2000) {
+            return NextResponse.json({ error: '내용은 5자 이상 2,000자 이하로 입력해주세요.' }, { status: 400 });
+        }
+
+        const phoneDigits = String(phone).replace(/\D/g, '');
+        if (!/^01[016789]\d{7,8}$/.test(phoneDigits)) {
+            return NextResponse.json({ error: '올바른 휴대폰 번호를 입력해주세요.' }, { status: 400 });
+        }
+        const passwordLast4 = phoneDigits.slice(-4);
 
         const { data, error } = await supabase
             .from('Inquiry')

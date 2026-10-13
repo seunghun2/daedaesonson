@@ -19,44 +19,9 @@ const DATA_DIR = path.join(process.cwd(), 'data');
 let _pricingCache: { data: Map<string, RepresentativePricing>; timestamp: number } | null = null;
 const PRICING_CACHE_TTL = 5 * 60 * 1000; // 5분
 
-// 🚀 가격 카테고리 카운트 메모리 캐싱 (5분)
-let _categoryCountCache: { data: Map<string, number>; timestamp: number } | null = null;
-const CATEGORY_COUNT_TTL = 5 * 60 * 1000;
-
-async function loadCategoryCountMap(): Promise<Map<string, number>> {
-    if (_categoryCountCache && (Date.now() - _categoryCountCache.timestamp) < CATEGORY_COUNT_TTL) {
-        return _categoryCountCache.data;
-    }
-
-    const categoryCountMap = new Map<string, number>();
-    const PAGE_SIZE = 1000;
-    let page = 0;
-
-    while (true) {
-        const { data: categories, error } = await supabase
-            .from('PriceCategory')
-            .select('facilityId')
-            .range(page * PAGE_SIZE, (page + 1) * PAGE_SIZE - 1);
-
-        if (error) {
-            console.error('Error fetching PriceCategory batch:', error);
-            break;
-        }
-
-        if (categories && categories.length > 0) {
-            for (const c of categories) {
-                categoryCountMap.set(c.facilityId, (categoryCountMap.get(c.facilityId) || 0) + 1);
-            }
-            if (categories.length < PAGE_SIZE) break;
-            page++;
-        } else {
-            break;
-        }
-    }
-
-    _categoryCountCache = { data: categoryCountMap, timestamp: Date.now() };
-    return categoryCountMap;
-}
+// 🚀 시설 목록 메모리 캐싱 (30초)
+let _facilitiesListCache: { data: any[]; timestamp: number } | null = null;
+const FACILITIES_LIST_TTL = 30 * 1000;
 
 // Helper: Load and parse pricing CSVs
 async function loadPricingData(): Promise<Map<string, RepresentativePricing>> {
@@ -78,13 +43,13 @@ async function loadPricingData(): Promise<Map<string, RepresentativePricing>> {
                 if (!map.has(id)) map.set(id, {} as any);
                 const entry = map.get(id)! as any;
                 entry.cremation = {
-                    minAdult15kg: parseInt(r.MinAdult15kg) || 0,
+                    minAdult15kg: parseInt(r.MinAdult15kg || r.ResidentFee) || 0,
                     minChild: parseInt(r.MinChild) || 0,
                 };
             });
         }
 
-        const charnelPath = path.join(analyzedDir, 'analyzed_pricing_charnel.csv');
+        const charnelPath = path.join(analyzedDir, 'analyzed_pricing_enshrinement.csv');
         if (existsSync(charnelPath)) {
             const content = readFileSync(charnelPath, 'utf-8');
             const rows = parse(content, { columns: true, skip_empty_lines: true });
@@ -93,7 +58,7 @@ async function loadPricingData(): Promise<Map<string, RepresentativePricing>> {
                 if (!map.has(id)) map.set(id, {} as any);
                 const entry = map.get(id)! as any;
                 entry.charnel = {
-                    minSingle: parseInt(r.MinSingle) || 0,
+                    minSingle: parseInt(r.MinSingle || r.MinPrice) || 0,
                     minCouple: parseInt(r.MinCouple) || 0,
                     minFamily: parseInt(r.MinFamily) || 0
                 };
@@ -113,41 +78,47 @@ async function loadPricingData(): Promise<Map<string, RepresentativePricing>> {
 // ==========================================
 export async function GET() {
     try {
-        // 🚀 필요 컬럼만 선택 (pricing, images 등 무거운 JSONB 제외)
+        if (_facilitiesListCache && (Date.now() - _facilitiesListCache.timestamp) < FACILITIES_LIST_TTL) {
+            return NextResponse.json(_facilitiesListCache.data, {
+                headers: {
+                    'Cache-Control': 'public, s-maxage=60, stale-while-revalidate=300',
+                },
+            });
+        }
+
+        // 🚀 필요 컬럼만 선택 (pricing, images 등 무거운 JSONB 제외) + 2페이지 병렬 조회
         const FACILITY_COLUMNS = 'id,name,address,lat,lng,category,minPrice,maxPrice,representativePrice,operatorType,hasParking,hasRestaurant,hasStore,hasAccessibility,isPublic,isActive,isFull,reviewCount,rating,phone,fax,capacity,lastUpdated,websiteUrl,viewCount,favoriteCount,description,originalName,updatedAt,thumbnail';
 
-        let facilitiesFromDb: any[] = [];
-        let from = 0;
-        const PAGE_SIZE = 1000;
-
-        while (true) {
-            const { data, error } = await supabase
+        const [page0, page1, pricingMap] = await Promise.all([
+            supabase
                 .from('Facility')
                 .select(FACILITY_COLUMNS)
                 .order('id', { ascending: true })
-                .range(from, from + PAGE_SIZE - 1);
+                .range(0, 999),
+            supabase
+                .from('Facility')
+                .select(FACILITY_COLUMNS)
+                .order('id', { ascending: true })
+                .range(1000, 1999),
+            loadPricingData(),
+        ]);
 
-            if (error) {
-                console.error('Supabase Fetch Error:', error);
-                throw new Error(`Supabase Fetch Error: ${error.message || JSON.stringify(error)}`);
-            }
-
-            if (data) facilitiesFromDb.push(...data);
-            if (!data || data.length < PAGE_SIZE) break;
-            from += PAGE_SIZE;
+        if (page0.error) {
+            console.error('Supabase Fetch Error (page0):', page0.error);
+            throw new Error(`Supabase Fetch Error: ${page0.error.message || JSON.stringify(page0.error)}`);
+        }
+        if (page1.error) {
+            console.error('Supabase Fetch Error (page1):', page1.error);
+            throw new Error(`Supabase Fetch Error: ${page1.error.message || JSON.stringify(page1.error)}`);
         }
 
-        // 2. 가격 카테고리 개수 (hasDetailedPrices 용 - 5분 메모리 캐시)
-        const categoryCountMap = await loadCategoryCountMap();
-
-        // 3. 대표 가격 로드 (CSV)
-        const pricingMap = await loadPricingData();
+        const facilitiesFromDb = [...(page0.data || []), ...(page1.data || [])];
 
         // 4. 데이터 변환 (DB 필드 → 프론트엔드 형식)
-        // 🚀 가격 정규화 함수 (루프 바깥에서 1회 정의)
         const normalizePrice = (p: number): number => {
-            if (!p || p <= 0) return 0;
-            return p < 10000 ? p * 10000 : p;
+            const num = Number(p);
+            if (!Number.isFinite(num) || num <= 0) return 0;
+            return num;
         };
 
         const liteData = facilitiesFromDb.map(f => {
@@ -173,7 +144,7 @@ export async function GET() {
                 isPublic: f.isPublic ?? false,
                 isActive: f.isActive ?? true,
                 isFull: f.isFull ?? false,
-                hasDetailedPrices: (categoryCountMap.get(f.id) || 0) > 0,
+                hasDetailedPrices: effectiveMin > 0 || maxP > 0,
                 representativePricing: pricingMap.get(f.id),
                 reviewCount: f.reviewCount || 0,
                 rating: f.rating || 0,
@@ -191,7 +162,13 @@ export async function GET() {
             };
         });
 
-        return NextResponse.json(liteData);
+        _facilitiesListCache = { data: liteData, timestamp: Date.now() };
+
+        return NextResponse.json(liteData, {
+            headers: {
+                'Cache-Control': 'public, s-maxage=60, stale-while-revalidate=300',
+            },
+        });
 
     } catch (e) {
         console.error('API Error:', e);
@@ -226,11 +203,13 @@ export async function POST(req: Request) {
                 imageStr = JSON.stringify(Array.isArray(imgSource) ? imgSource : []);
             }
 
+            _facilitiesListCache = null;
+
             // 🔥 priceTable에서 대표가격 계산
-            // 가격 단위 통일: 10000 미만이면 만원 단위로 가정 → 원 단위로 변환
             const normalizePriceForSave = (p: number): number => {
-                if (!p || p <= 0) return 0;
-                return p < 10000 ? p * 10000 : p;
+                const num = Number(p);
+                if (!Number.isFinite(num) || num <= 0) return 0;
+                return num;
             };
 
             let minPrice = normalizePriceForSave(f.priceRange?.min || 0);

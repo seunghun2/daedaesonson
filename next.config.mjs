@@ -1,6 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
     // reactCompiler: true,
+    poweredByHeader: false,
     devIndicators: false,
     typescript: {
         ignoreBuildErrors: false,
@@ -35,9 +36,18 @@ const nextConfig = {
     experimental: {
         optimizePackageImports: ['@mantine/core', '@mantine/hooks', '@turf/helpers', '@turf/union', '@turf/center-of-mass', 'lucide-react'],
     },
-    // 🛡️ 보안 HTTP 헤더
+    // 🛡️ 보안 HTTP 헤더 및 정적 데이터 캐싱
     async headers() {
         return [
+            {
+                source: '/data/:path*',
+                headers: [
+                    {
+                        key: 'Cache-Control',
+                        value: 'public, max-age=86400, stale-while-revalidate=604800',
+                    },
+                ],
+            },
             {
                 source: '/(.*)',
                 headers: [

@@ -999,6 +999,9 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
     useEffect(() => {
         setReviews(facility.reviews || []);
         setInquiries(facility.inquiries || []);
+        if (Array.isArray(facility.inquiries)) {
+            setTotalInquiryCount(facility.inquiries.length);
+        }
         setReviewCount(facility.reviews?.length || 0);
         setShowAllInquiries(false);
     }, [facility]);
@@ -1011,16 +1014,18 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
             .then(data => data?.viewCount && setViewCount(data.viewCount))
             .catch(() => { }); // 실패해도 무시
 
-        // 문의 개수 가져오기 (공개 API)
-        fetch(`/api/facilities/${facility.id}/inquiries`)
-            .then(res => res.ok ? res.json() : null)
-            .then(data => {
-                if (data?.inquiries) {
-                    setInquiries(data.inquiries);
-                    setTotalInquiryCount(data.inquiries.length);
-                }
-            })
-            .catch(() => { });
+        // 문의 데이터가 아직 없는 경우에만 별도 호출
+        if (!Array.isArray(facility.inquiries)) {
+            fetch(`/api/facilities/${facility.id}/inquiries`)
+                .then(res => res.ok ? res.json() : null)
+                .then(data => {
+                    if (data?.inquiries) {
+                        setInquiries(data.inquiries);
+                        setTotalInquiryCount(data.inquiries.length);
+                    }
+                })
+                .catch(() => { });
+        }
     }, [facility.id]);
 
     const theme = useMantineTheme();
@@ -1870,7 +1875,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                 <Script
                     id="facility-jsonld"
                     type="application/ld+json"
-                    dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+                    dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, '\\u003c') }}
                 />
                 {/* 1. 헤더 + 액션바 고정 컨테이너 */}
                 <div style={{ position: 'sticky', top: 0, zIndex: 1000 }}>
@@ -2637,7 +2642,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                                 }).catch(() => {});
                                             }}
                                         >
-                                            📞 {facility.phone}
+                                            {facility.phone}
                                         </Text>
                                     </Group>
                                 )}

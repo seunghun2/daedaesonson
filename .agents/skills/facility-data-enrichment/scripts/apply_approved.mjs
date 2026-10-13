@@ -36,6 +36,23 @@ const bucket = (id) => { if (!byFac.has(id)) byFac.set(id, { prices: [], images:
 priceRows.forEach((r) => bucket(r.facility_id).prices.push(r));
 imageRows.forEach((r) => bucket(r.facility_id).images.push(r));
 
+// 로컬 staged_images 매핑 (불필요한 외부 네트워크 재요청 방지)
+const stagedMap = new Map();
+const candDir = path.join(DIR, 'candidates');
+if (fs.existsSync(candDir)) {
+    for (const f of fs.readdirSync(candDir).filter((f) => f.endsWith('.jsonl'))) {
+        for (const l of fs.readFileSync(path.join(candDir, f), 'utf8').split('\n')) {
+            if (!l.trim()) continue;
+            try {
+                const obj = JSON.parse(l);
+                for (const img of (obj.images || [])) {
+                    if (img.url && img.local_path) stagedMap.set(img.url, path.join(DIR, img.local_path));
+                }
+            } catch {}
+        }
+    }
+}
+
 console.log(`${APPLY ? '🔴 실제 반영' : '🟢 미리보기(dry-run)'} | RUN=${RUN} | 시설 ${byFac.size}곳 | 가격 ${priceRows.length}행 | 이미지 ${imageRows.length}장`);
 if (!byFac.size) process.exit(0);
 
@@ -80,9 +97,15 @@ for (const [fid, { prices, images }] of byFac) {
             if (!licOk && !a['allow-unlicensed']) { log.push(`⛔ ${im.update_id} 저작권 불명(${im.license}) → 건너뜀 (--allow-unlicensed 로 강제 가능, 권장하지 않음)`); nSkip++; continue; }
             try {
                 if (!APPLY) { log.push(`  ${fac.name} 이미지 추가 예정: ${im.image_url}`); n++; nImg++; continue; }
-                const res = await fetch(im.image_url, { headers: { 'User-Agent': 'Mozilla/5.0 daedaesonson-enrich' } });
-                if (!res.ok) throw new Error(`HTTP ${res.status}`);
-                const buf = Buffer.from(await res.arrayBuffer());
+                let buf;
+                const staged = stagedMap.get(im.image_url);
+                if (staged && fs.existsSync(staged)) {
+                    buf = fs.readFileSync(staged);
+                } else {
+                    const res = await fetch(im.image_url, { headers: { 'User-Agent': 'Mozilla/5.0 daedaesonson-enrich' } });
+                    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+                    buf = Buffer.from(await res.arrayBuffer());
+                }
                 const out = await sharp(buf).rotate().resize({ width: 1600, withoutEnlargement: true }).jpeg({ quality: 82 }).toBuffer();
                 const meta = await sharp(out).metadata();
                 if ((meta.width || 0) < cfg.image.min_width || (meta.height || 0) < cfg.image.min_height) throw new Error(`해상도 부족 ${meta.width}x${meta.height}`);

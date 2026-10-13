@@ -78,14 +78,21 @@ export async function POST(request: NextRequest) {
             return NextResponse.json({ error: '상담 신청 실패' }, { status: 500 });
         }
 
-        // 회원 ID가 전달되었고, 프로필에 연락처가 비어있다면 자동 연동/업데이트
+        // 회원 ID가 전달되었고, 인증된 본인 토큰이 확인되면 프로필 연락처 자동 연동
         if (userId) {
             try {
-                await supabase
-                    .from('profiles')
-                    .update({ phone: cleanPhone })
-                    .eq('id', userId)
-                    .is('phone', null);
+                const authHeader = request.headers.get('authorization');
+                const token = authHeader?.startsWith('Bearer ') ? authHeader.slice(7) : null;
+                if (token) {
+                    const { data: authData } = await supabase.auth.getUser(token);
+                    if (authData?.user?.id === userId) {
+                        await supabase
+                            .from('profiles')
+                            .update({ phone: cleanPhone })
+                            .eq('id', userId)
+                            .is('phone', null);
+                    }
+                }
             } catch (pErr) {
                 console.warn('Failed to backfill phone to profile:', pErr);
             }

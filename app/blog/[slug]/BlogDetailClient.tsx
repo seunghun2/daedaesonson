@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Box, Text, Badge, Group, ActionIcon } from '@mantine/core';
 import { useMediaQuery } from '@mantine/hooks';
 import { ChevronLeft, Share2, Eye } from 'lucide-react';
@@ -47,10 +47,18 @@ interface Props {
 export default function BlogDetailClient({ post, relatedPosts }: Props) {
     const router = useRouter();
     const isMobile = useMediaQuery('(max-width: 768px)');
+    const [viewCount, setViewCount] = useState(post.view_count || 0);
 
     // 조회수 증가 (클라이언트 사이드, SSR 블로킹 없음)
     useEffect(() => {
-        fetch(`/api/blog/${post.slug}`).catch(() => {});
+        fetch(`/api/blog/${post.slug}`)
+            .then(res => res.json())
+            .then(data => {
+                if (typeof data?.view_count === 'number') {
+                    setViewCount(data.view_count);
+                }
+            })
+            .catch(() => {});
     }, [post.slug]);
 
     const formatDate = (dateStr: string) => {
@@ -187,7 +195,7 @@ export default function BlogDetailClient({ post, relatedPosts }: Props) {
                         <span>|</span>
                         <span style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
                             <Eye size={14} />
-                            {(post.view_count || 0).toLocaleString()}
+                            {viewCount.toLocaleString()}
                         </span>
                     </div>
                 </Box>

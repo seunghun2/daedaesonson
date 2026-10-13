@@ -93,17 +93,30 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     // 시/군 단위 랜딩페이지 (세분화 SEO)
     const cityPages: MetadataRoute.Sitemap = [];
     const allFacilities = loadFacilitiesJson();
+    const HOMONYMOUS_DISTRICTS = new Set(['중구', '남구', '동구', '서구', '북구', '강서구', '고성군']);
+    const SHORT_PROVINCE_MAP: Record<string, string> = {
+        '서울특별시': '서울', '부산광역시': '부산', '대구광역시': '대구', '인천광역시': '인천',
+        '광주광역시': '광주', '대전광역시': '대전', '울산광역시': '울산', '세종특별자치시': '세종',
+        '경기도': '경기', '강원특별자치도': '강원', '강원도': '강원',
+        '충청북도': '충북', '충청남도': '충남',
+        '전북특별자치도': '전북', '전라북도': '전북', '전라남도': '전남',
+        '경상북도': '경북', '경상남도': '경남', '제주특별자치도': '제주',
+    };
 
     try {
         const combos = new Map<string, number>();
         allFacilities.forEach((f: any) => {
             if (!f.address || !f.category) return;
-            if (f.category === 'FUNERAL_HOME') return;
+            if (f.category === 'FUNERAL_HOME' || f.isActive === false) return;
             if (!f.priceRange?.min || f.priceRange.min <= 0) return;
 
-            const tokens = f.address.split(' ');
-            const city = tokens[1];
-            if (!city) return;
+            const tokens = f.address.trim().split(/\s+/);
+            const prov = tokens[0];
+            const rawCity = tokens[1];
+            if (!prov || !rawCity) return;
+            const city = HOMONYMOUS_DISTRICTS.has(rawCity)
+                ? `${SHORT_PROVINCE_MAP[prov] || prov.slice(0, 2)} ${rawCity}`
+                : rawCity;
 
             let catSlug = '';
             if (f.category === 'CHARNEL_HOUSE') catSlug = '봉안당';
@@ -135,11 +148,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
     try {
         facilityPages = allFacilities
-            .filter((f: any) => f.category !== 'FUNERAL_HOME')
+            .filter((f: any) => f.category !== 'FUNERAL_HOME' && f.isActive !== false)
             .map((f: any) => {
                 let lastMod = new Date();
-                if (f.lastUpdated && /^\d{4}-\d{2}-\d{2}/.test(f.lastUpdated)) {
-                    const parsed = new Date(f.lastUpdated);
+                const dateStr = f.updatedAt || f.lastUpdated;
+                if (dateStr && /^\d{4}-\d{2}-\d{2}/.test(dateStr)) {
+                    const parsed = new Date(dateStr);
                     if (!isNaN(parsed.getTime()) && parsed.getFullYear() >= 2020 && parsed.getFullYear() <= 2030) {
                         lastMod = parsed;
                     }

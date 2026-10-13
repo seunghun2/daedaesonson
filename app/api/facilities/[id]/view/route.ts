@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { getSupabaseServer } from '@/lib/supabaseServer';
+import { rateLimit } from '@/lib/rateLimit';
 
 const supabase = getSupabaseServer();
 
@@ -10,6 +11,12 @@ export async function POST(
 ) {
     try {
         const { id } = await params;
+        const ip = request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || 'unknown';
+        const { success: allowed } = rateLimit({
+            key: `facility-view:${ip}:${id}`,
+            limit: 2,
+            windowMs: 10 * 60 * 1000, // 동일 IP+시설당 10분 내 최대 2회 증가 허용
+        });
 
         // 현재 조회수 가져오기
         const { data: facility, error: fetchError } = await supabase
@@ -28,6 +35,14 @@ export async function POST(
             const hash = id.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
             currentCount = 50 + (hash * 17) % 450;
         }
+
+        if (!allowed) {
+            return NextResponse.json({
+                viewCount: currentCount,
+                success: true
+            });
+        }
+
         const newCount = currentCount + 1;
 
         // Supabase에 업데이트

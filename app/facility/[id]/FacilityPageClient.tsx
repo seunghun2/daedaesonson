@@ -55,14 +55,15 @@ const FacilityDetail = dynamic(() => import('@/components/detail/FacilityDetail'
 
 interface FacilityPageClientProps {
     facilityBasic: any;
+    initialNearbyFacilities?: any[];
 }
 
-export default function FacilityPageClient({ facilityBasic }: FacilityPageClientProps) {
+export default function FacilityPageClient({ facilityBasic, initialNearbyFacilities = [] }: FacilityPageClientProps) {
     const router = useRouter();
     const theme = useMantineTheme();
     const isMobile = useMediaQuery(`(max-width: ${theme.breakpoints.sm})`);
     const [facility, setFacility] = useState<any>(facilityBasic);
-    const [allFacilities, setAllFacilities] = useState<any[]>([]);
+    const [allFacilities, setAllFacilities] = useState<any[]>(initialNearbyFacilities);
     const [mounted, setMounted] = useState(false);
     const enriched = useRef(false);
     const redirected = useRef(false);
@@ -94,9 +95,9 @@ export default function FacilityPageClient({ facilityBasic }: FacilityPageClient
             requestAnimationFrame(() => setMounted(true));
         }
 
-        // 🚀 SSR 기본 데이터 위에 상세 데이터 보강 (pricing, reviews 등)
+        // 🚀 SSR 기본 데이터 위에 상세 데이터 보강 (reviews, inquiries 등)
         const fetchFacilityData = () => {
-            fetch(`/api/facilities/${facilityBasic.id}`, { cache: 'no-store' })
+            fetch(`/api/facilities/${facilityBasic.id}`)
                 .then(res => res.ok ? res.json() : null)
                 .then(data => {
                     if (data) {
@@ -122,13 +123,14 @@ export default function FacilityPageClient({ facilityBasic }: FacilityPageClient
         if (!enriched.current) {
             enriched.current = true;
             fetchFacilityData();
-            // 📱 모바일: 주변 시설 추천용 목록은 화면 전환 애니메이션 완료 후 지연 로드 (초기 60FPS 보장)
-            const recTimer = setTimeout(() => {
-                fetch('/api/facilities')
-                    .then(res => res.ok ? res.json() : [])
-                    .then(data => { if (Array.isArray(data)) setAllFacilities(data); })
-                    .catch(() => {});
-            }, 600);
+            if (initialNearbyFacilities.length === 0) {
+                setTimeout(() => {
+                    fetch('/api/facilities')
+                        .then(res => res.ok ? res.json() : [])
+                        .then(data => { if (Array.isArray(data)) setAllFacilities(data); })
+                        .catch(() => {});
+                }, 600);
+            }
         }
 
         // 뒤로가기 등으로 페이지가 다시 보일 때 데이터 새로고침

@@ -2,7 +2,7 @@ import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { FacilityCategory, FACILITY_CATEGORY_LABELS } from '@/types';
 import FacilityPageClient from './FacilityPageClient';
-import { getCachedFacility } from '@/lib/facilityDataLoader';
+import { getCachedFacility, getCachedAllFacilities } from '@/lib/facilityDataLoader';
 
 // 🚀 ISR: 60초마다 갱신
 export const revalidate = 60;
@@ -11,13 +11,41 @@ interface PageProps {
     params: Promise<{ id: string }>;
 }
 
+const SHORT_PROVINCE_MAP: Record<string, string> = {
+    '서울특별시': '서울',
+    '부산광역시': '부산',
+    '대구광역시': '대구',
+    '인천광역시': '인천',
+    '광주광역시': '광주',
+    '대전광역시': '대전',
+    '울산광역시': '울산',
+    '세종특별자치시': '세종',
+    '경기도': '경기',
+    '강원도': '강원',
+    '강원특별자치도': '강원',
+    '충청북도': '충북',
+    '충청남도': '충남',
+    '전라북도': '전북',
+    '전북특별자치도': '전북',
+    '전라남도': '전남',
+    '경상북도': '경북',
+    '경상남도': '경남',
+    '제주특별자치도': '제주',
+    '제주도': '제주',
+};
+
+function shortenProvince(region: string): string {
+    if (!region) return '';
+    return SHORT_PROVINCE_MAP[region] || region.replace(/특별자치(시|도)|특별시|광역시|도$/g, '') || region;
+}
+
 // 🔥 SSR 메타데이터 생성 (SEO + Open Graph)
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
     const { id } = await params;
     const data = getCachedFacility(id);
 
-    if (!data) {
-        return { title: '시설을 찾을 수 없습니다 | 대대손손' };
+    if (!data || data.isActive === false) {
+        notFound();
     }
 
     const categoryLabel = FACILITY_CATEGORY_LABELS[data.category as FacilityCategory] || '';
@@ -27,7 +55,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     const addrTokens = (data.address || '').split(' ');
     const region = addrTokens[0] || ''; // 경기도, 서울특별시 등
     const city = addrTokens[1] || '';   // 용인시, 강남구 등
-    const shortRegion = region.replace(/특별자치(시|도)|특별시|광역시|도$/g, '') || region;
+    const shortRegion = shortenProvince(region);
     const locationText = city ? `${shortRegion} ${city}` : shortRegion;
 
     // 가격 텍스트 생성
@@ -50,8 +78,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     if (stdPrices?.length) {
         const types = new Set(stdPrices.map((p: any) => p.serviceType));
         if (types.has('BURIAL') || types.has('FAMILY_GRAVE')) serviceTypes.push('매장');
-        if (types.has('BONGSAN') || types.has('CHARNEL')) serviceTypes.push('봉안');
-        if (types.has('NATURAL_BURIAL')) serviceTypes.push('수목장');
+        if (types.has('BONGSAN') || types.has('CHARNEL') || types.has('CHARNEL_HOUSE')) serviceTypes.push('봉안');
+        if (types.has('NATURAL') || types.has('NATURAL_BURIAL')) serviceTypes.push('수목장');
         if (types.has('CREMATION')) serviceTypes.push('화장');
     }
     const serviceText = serviceTypes.length > 0 ? serviceTypes.join('·') : categoryLabel;
@@ -116,7 +144,7 @@ export default async function FacilityPage({ params }: PageProps) {
     const { id } = await params;
     const data = getCachedFacility(id);
 
-    if (!data) {
+    if (!data || data.isActive === false) {
         notFound();
     }
 
@@ -138,26 +166,70 @@ export default async function FacilityPage({ params }: PageProps) {
         parsedImages = [data.thumbnail];
     }
 
+    const coords = data.coordinates || { lat: data.lat || 0, lng: data.lng || 0 };
+
     const facilityBasic = {
         id: data.id,
         name: data.name,
         address: data.address || '',
-        coordinates: data.coordinates || { lat: data.lat || 0, lng: data.lng || 0 },
+        coordinates: coords,
         category: data.category,
         priceRange: data.priceRange || { min: data.minPrice || 0, max: data.maxPrice || 0 },
+        representativePrice: data.representativePrice || data.minPrice || 0,
+        priceInfo: data.priceInfo || data.pricing || null,
         operatorType: data.operatorType,
         isPublic: data.isPublic ?? false,
+        isFull: data.isFull ?? false,
+        hasParking: data.hasParking ?? false,
+        hasRestaurant: data.hasRestaurant ?? false,
+        hasStore: data.hasStore ?? false,
+        hasAccessibility: data.hasAccessibility ?? false,
         thumbnail: data.thumbnail || parsedImages[0] || '',
         images: parsedImages,
         imageGallery: parsedImages,
         rating: data.rating || 0,
         reviewCount: data.reviewCount || 0,
+        favoriteCount: data.favoriteCount || 0,
+        viewCount: data.viewCount || 0,
         description: data.description || '',
         phone: data.phone || '',
+        fax: data.fax || '',
+        websiteUrl: data.websiteUrl || '',
+        capacity: data.capacity,
+        lastUpdated: data.lastUpdated,
+        updatedAt: data.updatedAt,
     };
+
+    // 서버에서 주변 시설 12개 사전 계산 (클라이언트에서 1.13MB /api/facilities 전체 호출 제거)
+    const allFacilities = getCachedAllFacilities();
+    const nearbyFacilities = (coords.lat && coords.lng)
+        ? allFacilities
+            .filter((f: any) => f.id !== data.id && f.isActive !== false && f.category !== 'FUNERAL_HOME')
+            .map((f: any) => {
+                const fc = f.coordinates || { lat: f.lat || 0, lng: f.lng || 0 };
+                const dLat = (fc.lat || 0) - coords.lat;
+                const dLng = (fc.lng || 0) - coords.lng;
+                return { f, distSq: dLat * dLat + dLng * dLng };
+            })
+            .sort((a: any, b: any) => a.distSq - b.distSq)
+            .slice(0, 12)
+            .map(({ f }: any) => ({
+                id: f.id,
+                name: f.name,
+                address: f.address || '',
+                coordinates: f.coordinates || { lat: f.lat || 0, lng: f.lng || 0 },
+                category: f.category,
+                priceRange: f.priceRange || { min: f.minPrice || 0, max: f.maxPrice || 0 },
+                representativePrice: f.representativePrice || f.minPrice || 0,
+                isPublic: f.isPublic ?? false,
+                thumbnail: f.thumbnail || (Array.isArray(f.images) ? f.images[0] : '') || '',
+                rating: f.rating || 0,
+                reviewCount: f.reviewCount || 0,
+            }))
+        : [];
+
     // JSON-LD 구조화 데이터 (검색 엔진 리치 스니펫)
     const categoryLabel = FACILITY_CATEGORY_LABELS[data.category as FacilityCategory] || '';
-    const coords = data.coordinates || { lat: data.lat || 0, lng: data.lng || 0 };
     const jsonLd = {
         '@context': 'https://schema.org',
         '@type': 'LocalBusiness',
@@ -180,13 +252,25 @@ export default async function FacilityPage({ params }: PageProps) {
         url: `https://daedaesonson.com/facility/${id}`,
     };
 
+    const minPrice = data.minPrice || data.priceRange?.min || 0;
+    const maxPrice = data.maxPrice || data.priceRange?.max || 0;
+
     return (
         <>
             <script
                 type="application/ld+json"
-                dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, '\\u003c') }}
             />
-            <FacilityPageClient facilityBasic={facilityBasic} />
+            {/* 검색엔진 크롤러용 SSR 시맨틱 마크업 */}
+            <article style={{ position: 'absolute', width: 1, height: 1, padding: 0, margin: -1, overflow: 'hidden', clip: 'rect(0,0,0,0)', whiteSpace: 'nowrap', border: 0 }}>
+                <h1>{data.name} - {categoryLabel} 가격 및 시설 정보</h1>
+                <p>구분: {data.isPublic ? '공설' : '사설'} {categoryLabel}</p>
+                {data.address && <p>주소: {data.address}</p>}
+                {data.phone && <p>전화번호: {data.phone}</p>}
+                {minPrice > 0 && <p>예상 이용 가격: {minPrice.toLocaleString()}원 ~ {maxPrice > minPrice ? `${maxPrice.toLocaleString()}원` : ''}</p>}
+                {data.description && <p>{data.description}</p>}
+            </article>
+            <FacilityPageClient facilityBasic={facilityBasic} initialNearbyFacilities={nearbyFacilities} />
         </>
     );
 }

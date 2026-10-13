@@ -69,11 +69,33 @@ export async function POST(request: NextRequest) {
                 return NextResponse.json({ success: true, likes: newLikes });
             }
         } else if (action === 'REPLY') {
-            if (!content) {
+            const ip = request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || 'unknown-ip';
+            const { success: allowed } = rateLimit({
+                key: `review-reply:${ip}`,
+                limit: 5,
+                windowMs: 60 * 1000,
+            });
+            if (!allowed) {
+                return NextResponse.json(
+                    { error: '댓글 작성 요청이 너무 많습니다. 잠시 후 다시 시도해주세요.' },
+                    { status: 429 }
+                );
+            }
+
+            if (!content || typeof content !== 'string' || !content.trim()) {
                 return NextResponse.json({ error: 'Reply content required' }, { status: 400 });
             }
-            if (!author) {
+            if (content.length > 1000) {
+                return NextResponse.json({ error: '댓글은 1000자 이내로 작성해주세요.' }, { status: 400 });
+            }
+            if (!author || typeof author !== 'string' || !author.trim()) {
                 return NextResponse.json({ error: '닉네임을 입력해주세요.' }, { status: 400 });
+            }
+            if (author.length > 30) {
+                return NextResponse.json({ error: '닉네임은 30자 이내로 입력해주세요.' }, { status: 400 });
+            }
+            if (!isAdmin && /관리자|대대손손|admin|운영자/i.test(author)) {
+                return NextResponse.json({ error: '사용할 수 없는 닉네임입니다.' }, { status: 400 });
             }
             if (!password && !isAdmin) {
                 return NextResponse.json({ error: '비밀번호를 입력해주세요.' }, { status: 400 });
@@ -81,8 +103,8 @@ export async function POST(request: NextRequest) {
 
             // Hash password
             let hashedPassword = null;
-            if (password) {
-                hashedPassword = await bcrypt.hash(password, 10);
+            if (password && typeof password === 'string') {
+                hashedPassword = await bcrypt.hash(password.slice(0, 64), 10);
             }
 
             // Insert reply to Reply table
@@ -90,9 +112,9 @@ export async function POST(request: NextRequest) {
                 .from('Reply')
                 .insert({
                     reviewId: reviewId,
-                    author: author,
-                    content: content,
-                    photos: photos || [],
+                    author: author.trim(),
+                    content: content.trim(),
+                    photos: Array.isArray(photos) ? photos.slice(0, 5) : [],
                     password: hashedPassword,
                     createdAt: new Date().toISOString()
                 })

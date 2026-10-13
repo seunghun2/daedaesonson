@@ -18,24 +18,18 @@ async function getFacilities(): Promise<Facility[]> {
     const supabase = getSupabaseServer();
     const COLUMNS = 'id,name,address,lat,lng,category,minPrice,maxPrice,representativePrice,operatorType,isPublic,isActive,isFull,thumbnail';
 
-    let all: any[] = [];
-    let from = 0;
-    const PAGE_SIZE = 1000;
-    while (true) {
-      const { data, error } = await supabase
-        .from('Facility')
-        .select(COLUMNS)
-        .order('id', { ascending: true })
-        .range(from, from + PAGE_SIZE - 1);
-      if (error) { console.error('SSR Supabase Error:', error); break; }
-      if (data) all.push(...data);
-      if (!data || data.length < PAGE_SIZE) break;
-      from += PAGE_SIZE;
-    }
+    const [page0, page1] = await Promise.all([
+      supabase.from('Facility').select(COLUMNS).order('id', { ascending: true }).range(0, 999),
+      supabase.from('Facility').select(COLUMNS).order('id', { ascending: true }).range(1000, 1999),
+    ]);
+    if (page0.error) console.error('SSR Supabase Error (page0):', page0.error);
+    if (page1.error) console.error('SSR Supabase Error (page1):', page1.error);
+    const all: any[] = [...(page0.data || []), ...(page1.data || [])];
 
     const normalizePrice = (p: number): number => {
-      if (!p || p <= 0) return 0;
-      return p < 10000 ? p * 10000 : p;
+      const num = Number(p);
+      if (!Number.isFinite(num) || num <= 0) return 0;
+      return num;
     };
 
     return all

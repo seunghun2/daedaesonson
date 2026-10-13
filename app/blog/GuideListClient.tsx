@@ -44,16 +44,17 @@ export default function GuideListClient({ initialPosts, initialTotalPages }: Gui
     const isFirstRender = useRef(true);
 
     useEffect(() => {
-        // 첫 렌더는 서버 데이터 사용 (fetch 안 함)
+        // 첫 렌더 시 서버 데이터로 즉시 노출하고, 백그라운드에서 최신 조회수/글 목록 무점멸(silent) 갱신
         if (isFirstRender.current) {
             isFirstRender.current = false;
+            fetchPosts(true);
             return;
         }
-        fetchPosts();
+        fetchPosts(false);
     }, [activeCategory, activeTag, page]);
 
-    const fetchPosts = async () => {
-        setLoading(true);
+    const fetchPosts = async (silent = false) => {
+        if (!silent) setLoading(true);
         try {
             const params = new URLSearchParams({ page: String(page), limit: '10' });
             if (activeCategory !== '전체') {
@@ -64,12 +65,14 @@ export default function GuideListClient({ initialPosts, initialTotalPages }: Gui
             }
             const res = await fetch(`/api/blog?${params}`);
             const data = await res.json();
-            setPosts(data.posts || []);
-            setTotalPages(data.totalPages || 1);
+            if (data.posts) {
+                setPosts(data.posts);
+                setTotalPages(data.totalPages || 1);
+            }
         } catch (error) {
             console.error('Failed to fetch blog posts:', error);
         } finally {
-            setLoading(false);
+            if (!silent) setLoading(false);
         }
     };
 

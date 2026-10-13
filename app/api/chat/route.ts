@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import { getSupabaseServer } from '@/lib/supabaseServer';
-import { sendSlack } from '@/lib/slack';
+import { sendSlack, escapeSlack } from '@/lib/slack';
 import { rateLimit } from '@/lib/rateLimit';
 import fs from 'fs';
 import path from 'path';
@@ -316,45 +316,68 @@ export async function POST(request: NextRequest) {
 
     try {
         const body = await request.json();
-        const { message, history = [], sessionId, facilityContext, customerInfo } = body;
+        const { message: rawMessage, history: rawHistory = [], sessionId, facilityContext, customerInfo } = body;
 
-        if (!message && !customerInfo) {
+        if (!rawMessage && !customerInfo) {
             return NextResponse.json({ error: '메시지를 입력해주세요.' }, { status: 400 });
         }
 
+        const message = typeof rawMessage === 'string' ? rawMessage.trim() : '';
+        if (message.length > 1000) {
+            return NextResponse.json({ error: '메시지는 1,000자 이내로 입력해주세요.' }, { status: 400 });
+        }
+
+        const history: ChatMessage[] = Array.isArray(rawHistory)
+            ? rawHistory.slice(-20).map((m: any) => ({
+                role: m?.role === 'assistant' ? 'assistant' : 'user',
+                content: typeof m?.content === 'string' ? m.content.slice(0, 2000) : '',
+                timestamp: m?.timestamp,
+            }))
+            : [];
+
         // 고객 정보 저장 요청 (리드 수집 & 대표님 실시간 슬랙 알림)
         if (customerInfo) {
-            const sid = sessionId || `session_${Date.now()}`;
+            const safeName = String(customerInfo.name || '').trim().slice(0, 30);
+            const safePhone = String(customerInfo.phone || '').trim().slice(0, 20);
+            if (!safeName || !safePhone) {
+                return NextResponse.json({ error: '성함과 연락처를 입력해주세요.' }, { status: 400 });
+            }
+            const sid = String(sessionId || `session_${Date.now()}`).slice(0, 64);
             if (sessionId) {
                 const { error } = await supabase
                     .from('ChatSession')
                     .update({
-                        customer_name: customerInfo.name,
-                        customer_phone: customerInfo.phone,
+                        customer_name: safeName,
+                        customer_phone: safePhone,
                         status: 'new',
                         updated_at: new Date().toISOString(),
                     })
-                    .eq('id', sessionId);
+                    .eq('id', sid);
 
                 if (error) console.error('ChatSession update error:', error);
             }
 
             const methodText = customerInfo.contactMethod === 'kakao' ? '💬 카카오톡/문자 선(先)자료 희망' : '📞 전화 통화 희망';
-            const timeText = customerInfo.preferredTime ? `• 희망 연락 시간: *${customerInfo.preferredTime}*\n` : '• 희망 연락 시간: *카톡/문자로 먼저 받기*\n';
-            const facilityText = customerInfo.facilityName ? `• 관심 시설: *${customerInfo.facilityName}*\n` : '';
-            const summaryText = customerInfo.recentSummary ? `• 최근 대화 요약: ${customerInfo.recentSummary}\n` : '';
-            const noteText = customerInfo.note ? `• 문의 유형: ${customerInfo.note}\n` : '';
+            const safePrefTime = customerInfo.preferredTime ? escapeSlack(String(customerInfo.preferredTime).slice(0, 50)) : '';
+            const safeFacName = customerInfo.facilityName ? escapeSlack(String(customerInfo.facilityName).slice(0, 100)) : '';
+            const safeSummary = customerInfo.recentSummary ? escapeSlack(String(customerInfo.recentSummary).slice(0, 300)) : '';
+            const safeNote = customerInfo.note ? escapeSlack(String(customerInfo.note).slice(0, 200)) : '';
+
+            const timeText = safePrefTime ? `• 희망 연락 시간: *${safePrefTime}*\n` : '• 희망 연락 시간: *카톡/문자로 먼저 받기*\n';
+            const facilityText = safeFacName ? `• 관심 시설: *${safeFacName}*\n` : '';
+            const summaryText = safeSummary ? `• 최근 대화 요약: ${safeSummary}\n` : '';
+            const noteText = safeNote ? `• 문의 유형: ${safeNote}\n` : '';
 
             // 1. 기존 Consult 테이블에도 안전하게 연동 (어드민 통합 관리)
             try {
                 await supabase.from('Consult').insert({
-                    facilityId: customerInfo.facilityName || '대손이챗봇상담',
-                    facilityName: customerInfo.facilityName || '대손이 추천 시설',
-                    name: customerInfo.name,
-                    phone: customerInfo.phone,
-                    preferredTime: customerInfo.preferredTime || '카톡/문자 먼저',
+                    facilityId: String(customerInfo.facilityName || '대손이챗봇상담').slice(0, 100),
+                    facilityName: String(customerInfo.facilityName || '대손이 추천 시설').slice(0, 100),
+                    name: safeName,
+                    phone: safePhone,
+                    preferredTime: String(customerInfo.preferredTime || '카톡/문자 먼저').slice(0, 50),
                     question: 'price',
-                    message: `[대손이 리드] 선호: ${methodText} | 최근대화: ${customerInfo.recentSummary || '없음'}`,
+                    message: `[대손이 리드] 선호: ${methodText} | 최근대화: ${String(customerInfo.recentSummary || '없음').slice(0, 300)}`,
                     consultMethod: customerInfo.contactMethod === 'call' ? 'phone' : 'kakao',
                     status: 'pending',
                     createdAt: new Date().toISOString()
@@ -364,10 +387,10 @@ export async function POST(request: NextRequest) {
             }
 
             // 2. Slack 실시간 VIP 알림 전송 (대표님 채널)
-            await sendSlack('chatbot', `🚨 *[대손이 챗봇 1:1 맞춤 견적 신청 접수!]*\n• 고객명: *${customerInfo.name}*\n• 연락처: \`${customerInfo.phone}\`\n• 희망 방식: *${methodText}*\n${timeText}${facilityText}${noteText}${summaryText}• 세션 ID: \`${sid}\`\n• 접수 시각: ${new Date().toLocaleString('ko-KR', { timeZone: 'Asia/Seoul' })}\n👉 *안내: 불쑥 전화하지 마시고, 고객이 선택한 [${customerInfo.preferredTime || '카톡/문자'}]에 맞춰 맞춤 자료를 먼저 발송해 주세요!*`);
+            await sendSlack('chatbot', `🚨 *[대손이 챗봇 1:1 맞춤 견적 신청 접수!]*\n• 고객명: *${escapeSlack(safeName)}*\n• 연락처: \`${escapeSlack(safePhone)}\`\n• 희망 방식: *${methodText}*\n${timeText}${facilityText}${noteText}${summaryText}• 세션 ID: \`${escapeSlack(sid)}\`\n• 접수 시각: ${new Date().toLocaleString('ko-KR', { timeZone: 'Asia/Seoul' })}\n👉 *안내: 불쑥 전화하지 마시고, 고객이 선택한 [${safePrefTime || '카톡/문자'}]에 맞춰 맞춤 자료를 먼저 발송해 주세요!*`);
 
             return NextResponse.json({
-                response: `✨ **${customerInfo.name}님, 맞춤 상담 신청이 정상 접수되었습니다.**\n\n불쑥 전화를 드리지 않으니 안심하세요! 대대손손 수석 상담사(대표)가 선택해주신 **[${customerInfo.preferredTime || '카톡/문자로 먼저 받기'}]**에 맞춰, 남겨주신 연락처(${customerInfo.phone})로 **${customerInfo.contactMethod === 'kakao' ? '카카오톡/문자' : '전화'} 맞춤 비교자료 및 비공개 견적**을 먼저 정성껏 보내드리겠습니다.\n\n그동안 대손이에게 궁금하신 점이 있으시면 편하게 계속 물어보세요! 😊`,
+                response: `✨ **${safeName}님, 맞춤 상담 신청이 정상 접수되었습니다.**\n\n불쑥 전화를 드리지 않으니 안심하세요! 대대손손 수석 상담사(대표)가 선택해주신 **[${customerInfo.preferredTime || '카톡/문자로 먼저 받기'}]**에 맞춰, 남겨주신 연락처(${safePhone})로 **${customerInfo.contactMethod === 'kakao' ? '카카오톡/문자' : '전화'} 맞춤 비교자료 및 비공개 견적**을 먼저 정성껏 보내드리겠습니다.\n\n그동안 대손이에게 궁금하신 점이 있으시면 편하게 계속 물어보세요! 😊`,
                 sessionId: sid,
             });
         }
