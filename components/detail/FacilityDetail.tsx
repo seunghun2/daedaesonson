@@ -1860,7 +1860,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
         <>
             <Box
                 ref={containerRef}
-                className={`facility-detail-container ${isMobile ? 'facility-detail-pb-safe' : ''}`}
+                className="facility-detail-container facility-detail-pb-safe"
                 style={{ backgroundColor: '#F8FAFC', height: '100%', position: 'relative', overflowY: 'auto', touchAction: 'pan-y', overscrollBehavior: 'contain', WebkitOverflowScrolling: 'touch' } as React.CSSProperties}
                 onTouchStart={(e) => e.stopPropagation()} // 🚀 지도 터치 간섭 방지 (재적용)
             >
@@ -3289,7 +3289,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
 
 
                         {/* ── 하단 공유 & 정보수정 섹션 (클린 슬레이트 디자인) ── */}
-                        <Box px="md" pt={20} pb={32} style={{
+                        <Box px="md" pt={20} pb={44} style={{
                             background: '#F8FAFC',
                             textAlign: 'center',
                             borderTop: '1px solid #EEF1F5',
@@ -3338,22 +3338,38 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                 </Box>
                             </Box>
 
-                            <Group justify="center" gap={12} py="sm">
+                            <Group justify="center" gap={8} py="sm" wrap="wrap">
                                 <button
                                     type="button"
                                     onClick={() => { closeAllPanels(); setCorrectionOpen(true); }}
                                     style={{
-                                        padding: '7px 14px',
+                                        padding: '7px 12px',
                                         borderRadius: 8,
-                                        border: '1px solid #E2E8F0',
+                                        border: '1px solid #CBD5E1',
                                         backgroundColor: '#FFFFFF',
-                                        fontSize: 12.5,
+                                        fontSize: 12,
                                         fontWeight: 600,
                                         color: '#475569',
                                         cursor: 'pointer',
                                     }}
                                 >
                                     정보 수정 요청하기
+                                </button>
+                                <button
+                                    type="button"
+                                    onClick={() => router.push('/partnership')}
+                                    style={{
+                                        padding: '7px 12px',
+                                        borderRadius: 8,
+                                        border: '1px solid #CBD5E1',
+                                        backgroundColor: '#FFFFFF',
+                                        fontSize: 12,
+                                        fontWeight: 600,
+                                        color: '#2563EB',
+                                        cursor: 'pointer',
+                                    }}
+                                >
+                                    광고/제휴 문의
                                 </button>
                                 <button
                                     type="button"
@@ -3366,17 +3382,17 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                         display: 'inline-flex',
                                         alignItems: 'center',
                                         gap: 4,
-                                        padding: '7px 14px',
+                                        padding: '7px 12px',
                                         borderRadius: 8,
-                                        border: '1px solid #E2E8F0',
+                                        border: '1px solid #CBD5E1',
                                         backgroundColor: '#FFFFFF',
-                                        fontSize: 12.5,
+                                        fontSize: 12,
                                         fontWeight: 600,
                                         color: '#475569',
                                         cursor: 'pointer',
                                     }}
                                 >
-                                    <ChevronUp size={15} color="#64748B" />
+                                    <ChevronUp size={14} color="#64748B" />
                                     맨 위로
                                 </button>
                             </Group>
@@ -3644,8 +3660,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                                             <TextInput
                                                                 ref={nameInputRef}
                                                                 placeholder="이름을 입력해 주세요."
-                                                                variant="unstyled"
-                                                                size="lg"
+                                                                size="md"
                                                                 value={consultForm.name}
                                                                 onChange={(e) => setConsultForm({ ...consultForm, name: e.currentTarget.value })}
                                                                 onKeyDown={(e) => {
@@ -3654,7 +3669,16 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                                                         setConsultStep(2);
                                                                     }
                                                                 }}
-                                                                styles={{ input: { borderBottom: '1px solid #dee2e6', borderRadius: 0, paddingBottom: 8 } }}
+                                                                styles={{
+                                                                    input: {
+                                                                        height: 46,
+                                                                        borderRadius: 10,
+                                                                        backgroundColor: '#FFFFFF',
+                                                                        border: '1px solid #CBD5E1',
+                                                                        fontSize: 15,
+                                                                        color: '#191F28',
+                                                                    }
+                                                                }}
                                                                 onClick={(e) => e.stopPropagation()}
                                                             />
                                                         </Box>
@@ -3683,8 +3707,8 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                                         <Box mt="md">
                                                             <TextInput
                                                                 placeholder="010-0000-0000"
-                                                                variant="unstyled"
-                                                                size="lg"
+                                                                inputMode="numeric"
+                                                                size="md"
                                                                 value={consultForm.phone}
                                                                 onChange={(e) => setConsultForm({ ...consultForm, phone: formatPhoneNumber(e.currentTarget.value) })}
                                                                 onKeyDown={(e) => {
@@ -3694,7 +3718,16 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                                                         setConsultStep(3);
                                                                     }
                                                                 }}
-                                                                styles={{ input: { borderBottom: '1px solid #dee2e6', borderRadius: 0, paddingBottom: 8 } }}
+                                                                styles={{
+                                                                    input: {
+                                                                        height: 46,
+                                                                        borderRadius: 10,
+                                                                        backgroundColor: '#FFFFFF',
+                                                                        border: '1px solid #CBD5E1',
+                                                                        fontSize: 15,
+                                                                        color: '#191F28',
+                                                                    }
+                                                                }}
                                                                 onClick={(e) => e.stopPropagation()}
                                                             />
                                                             {consultForm.phone.length > 0 && !/^01[016789]\d{7,8}$/.test(consultForm.phone.replace(/[^0-9]/g, '')) ? (
@@ -4177,7 +4210,6 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                                             <TextInput
                                                                 ref={nameInputRef}
                                                                 placeholder="이름을 입력해 주세요."
-                                                                variant="unstyled"
                                                                 size="md"
                                                                 value={consultForm.name}
                                                                 onChange={(e) => setConsultForm({ ...consultForm, name: e.currentTarget.value })}
@@ -4187,7 +4219,16 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                                                         setConsultStep(2);
                                                                     }
                                                                 }}
-                                                                styles={{ input: { borderBottom: '1px solid #dee2e6', borderRadius: 0, paddingBottom: 8 } }}
+                                                                styles={{
+                                                                    input: {
+                                                                        height: 46,
+                                                                        borderRadius: 10,
+                                                                        backgroundColor: '#FFFFFF',
+                                                                        border: '1px solid #CBD5E1',
+                                                                        fontSize: 15,
+                                                                        color: '#191F28',
+                                                                    }
+                                                                }}
                                                                 onClick={(e) => e.stopPropagation()}
                                                             />
                                                         </Box>
@@ -4216,7 +4257,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                                         <Box mt="md">
                                                             <TextInput
                                                                 placeholder="010-0000-0000"
-                                                                variant="unstyled"
+                                                                inputMode="numeric"
                                                                 size="md"
                                                                 value={consultForm.phone}
                                                                 onChange={(e) => setConsultForm({ ...consultForm, phone: formatPhoneNumber(e.currentTarget.value) })}
@@ -4227,7 +4268,16 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                                                         setConsultStep(3);
                                                                     }
                                                                 }}
-                                                                styles={{ input: { borderBottom: '1px solid #dee2e6', borderRadius: 0, paddingBottom: 8 } }}
+                                                                styles={{
+                                                                    input: {
+                                                                        height: 46,
+                                                                        borderRadius: 10,
+                                                                        backgroundColor: '#FFFFFF',
+                                                                        border: '1px solid #CBD5E1',
+                                                                        fontSize: 15,
+                                                                        color: '#191F28',
+                                                                    }
+                                                                }}
                                                                 onClick={(e) => e.stopPropagation()}
                                                             />
                                                             {consultForm.phone.length > 0 && !/^01[016789]\d{7,8}$/.test(consultForm.phone.replace(/[^0-9]/g, '')) ? (
@@ -4916,18 +4966,21 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                         <Box px="md" py={14} style={{ borderBottom: '1px solid #f1f3f5', minHeight: 160 }}>
                                             <Textarea
                                                 placeholder="방문 경험을 자유롭게 작성해주세요.&#10;&#10;예: 시설이 깨끗하고 주차장이 넓어요. 직원분도 친절했습니다."
-                                                variant="unstyled"
                                                 size="md"
                                                 autosize
-                                                minRows={6}
+                                                minRows={5}
                                                 value={reviewForm.content}
                                                 onChange={(e) => setReviewForm({ ...reviewForm, content: e.target.value })}
                                                 styles={{
                                                     input: {
-                                                        padding: 0,
-                                                        fontSize: '16px',
+                                                        padding: '12px',
+                                                        borderRadius: 10,
+                                                        backgroundColor: '#FFFFFF',
+                                                        border: '1px solid #CBD5E1',
+                                                        fontSize: '15px',
                                                         lineHeight: 1.6,
-                                                        '&::placeholder': { color: '#adb5bd' }
+                                                        color: '#191F28',
+                                                        '&::placeholder': { color: '#94A3B8' }
                                                     }
                                                 }}
                                             />
@@ -4990,14 +5043,17 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                                 placeholder="닉네임을 입력하세요"
                                                 value={reviewForm.nickname}
                                                 onChange={(e) => setReviewForm({ ...reviewForm, nickname: e.currentTarget.value })}
-                                                variant="unstyled"
                                                 size="sm"
                                                 styles={{
-                                                    label: { fontSize: 14, fontWeight: 500, marginBottom: 4 },
+                                                    label: { fontSize: 14, fontWeight: 600, marginBottom: 6, color: '#334155' },
                                                     input: {
-                                                        padding: 0,
-                                                        fontSize: '16px',
-                                                        '&::placeholder': { color: '#adb5bd' }
+                                                        height: 44,
+                                                        borderRadius: 10,
+                                                        backgroundColor: '#FFFFFF',
+                                                        border: '1px solid #CBD5E1',
+                                                        fontSize: '15px',
+                                                        color: '#191F28',
+                                                        '&::placeholder': { color: '#94A3B8' }
                                                     }
                                                 }}
                                             />
@@ -5499,8 +5555,8 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                 <Box
                                     pos="fixed"
                                     bottom={0}
-                                    left={0}
-                                    w="100%"
+                                    left={isMobile ? 0 : 400}
+                                    w={isMobile ? '100%' : 400}
                                     style={{
                                         zIndex: 10021,
                                         backgroundColor: 'white',
@@ -5524,7 +5580,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                     <Box p="md" pt={4}>
                                         {/* 제목 */}
                                         <Group justify="space-between" mb="md">
-                                            <Text fw={600} size="md">댓글 작성</Text>
+                                            <Text fw={700} size="md" c="#191F28">댓글 작성</Text>
                                             <ActionIcon
                                                 variant="transparent"
                                                 color="gray"
@@ -5552,8 +5608,9 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                                     input: {
                                                         fontSize: '14px',
                                                         borderRadius: '10px',
-                                                        backgroundColor: '#f8f9fa',
-                                                        border: '1px solid #e9ecef',
+                                                        backgroundColor: '#FFFFFF',
+                                                        border: '1px solid #CBD5E1',
+                                                        height: 42,
                                                     }
                                                 }}
                                             />
@@ -5569,8 +5626,9 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                                         input: {
                                                             fontSize: '14px',
                                                             borderRadius: '10px',
-                                                            backgroundColor: '#f8f9fa',
-                                                            border: '1px solid #e9ecef',
+                                                            backgroundColor: '#FFFFFF',
+                                                            border: '1px solid #CBD5E1',
+                                                            height: 42,
                                                         }
                                                     }}
                                                 />
@@ -5590,8 +5648,9 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                                 input: {
                                                     fontSize: '14px',
                                                     borderRadius: '10px',
-                                                    backgroundColor: '#f8f9fa',
-                                                    border: '1px solid #e9ecef',
+                                                    backgroundColor: '#FFFFFF',
+                                                    border: '1px solid #CBD5E1',
+                                                    padding: '10px 12px',
                                                 }
                                             }}
                                         />

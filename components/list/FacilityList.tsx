@@ -108,7 +108,7 @@ export default function FacilityList({
 
     if (loading) {
         return (
-            <Center h="100%">
+            <Center h="100%" style={{ flex: 1, minHeight: 0 }}>
                 <Loader size="md" color="blue" />
             </Center>
         );
@@ -116,7 +116,7 @@ export default function FacilityList({
 
     if (facilities.length === 0) {
         return (
-            <Center h="100%" px="md">
+            <Center h="100%" px="md" style={{ flex: 1, minHeight: 0 }}>
                 <Box ta="center">
                     <Text c="#4E5968" fw={700} size="sm" mb={4}>
                         조건에 맞는 시설이 없습니다
@@ -132,7 +132,7 @@ export default function FacilityList({
     const visibleFacilities = facilities.slice(0, visibleCount);
 
     return (
-        <Box pos="relative" h="100%" bg="#FFFFFF">
+        <Box pos="relative" h="100%" bg="#FFFFFF" style={{ flex: 1, minHeight: 0 }}>
             <ScrollArea h="100%" viewportRef={viewportRef} onScrollPositionChange={setScrollPosition} scrollbarSize={6} offsetScrollbars={false}>
                 <Stack p={0} gap={0}>
                     <div
@@ -197,8 +197,69 @@ export default function FacilityList({
                         </Box>
                     )}
 
-                    {/* 하단 여백 */}
-                    <Box h={96} />
+                    {/* 하단 빠른 링크 & 제휴문의 푸터 */}
+                    <Box px={16} pt={20} pb={32}>
+                        <Box
+                            p={14}
+                            style={{
+                                backgroundColor: '#F8FAFC',
+                                borderRadius: 12,
+                                border: '1px solid #EEF1F5',
+                                textAlign: 'center',
+                            }}
+                        >
+                            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', flexWrap: 'wrap', gap: '8px', marginBottom: 8 }}>
+                                <a
+                                    href="/partnership"
+                                    style={{
+                                        padding: '6px 12px',
+                                        borderRadius: 8,
+                                        backgroundColor: '#FFFFFF',
+                                        border: '1px solid #DBEAFE',
+                                        color: '#2563EB',
+                                        fontSize: 12,
+                                        fontWeight: 700,
+                                        textDecoration: 'none',
+                                    }}
+                                >
+                                    광고/제휴 문의
+                                </a>
+                                <a
+                                    href="/contact"
+                                    style={{
+                                        padding: '6px 12px',
+                                        borderRadius: 8,
+                                        backgroundColor: '#FFFFFF',
+                                        border: '1px solid #E2E8F0',
+                                        color: '#475569',
+                                        fontSize: 12,
+                                        fontWeight: 600,
+                                        textDecoration: 'none',
+                                    }}
+                                >
+                                    1:1 문의하기
+                                </a>
+                                <a
+                                    href="/about"
+                                    style={{
+                                        padding: '6px 12px',
+                                        borderRadius: 8,
+                                        backgroundColor: '#FFFFFF',
+                                        border: '1px solid #E2E8F0',
+                                        color: '#475569',
+                                        fontSize: 12,
+                                        fontWeight: 600,
+                                        textDecoration: 'none',
+                                    }}
+                                >
+                                    서비스 소개
+                                </a>
+                            </div>
+                            <Text size="11px" c="#94A3B8" fw={500}>
+                                대대손손 · 전국 추모시설 가격비교 플랫폼
+                            </Text>
+                        </Box>
+                    </Box>
                 </Stack>
             </ScrollArea>
 

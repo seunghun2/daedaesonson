@@ -334,7 +334,7 @@ export default function ReviewsListPage() {
                     <Button
                         size="xs"
                         variant="filled"
-                        color="#1D0098"
+                        color="#2563EB"
                         radius="xl"
                         onClick={() => setWriteModalOpened(true)}
                         styles={{ root: { fontWeight: 600 } }}
@@ -501,7 +501,7 @@ export default function ReviewsListPage() {
                         <Button
                             size="sm"
                             variant="light"
-                            color="#1D0098"
+                            color="#2563EB"
                             radius="xl"
                             onClick={() => setWriteModalOpened(true)}
                             styles={{ root: { fontWeight: 600 } }}
@@ -512,7 +512,7 @@ export default function ReviewsListPage() {
                 )}
             </Box>
 
-            {/* 💬 댓글 입력 바텀시트 모달 */}
+            {/* 댓글 입력 바텀시트 모달 */}
             {replyingTo && (
                 <>
                     <Box
@@ -524,7 +524,7 @@ export default function ReviewsListPage() {
                         }}
                     />
                     <Box
-                        pos="fixed" bottom={0} left={0} w="100%"
+                        pos="fixed" bottom={0} left={0} right={0} maw={600} mx="auto" w="100%"
                         style={{
                             zIndex: 9999, backgroundColor: 'white',
                             borderRadius: '16px 16px 0 0',
@@ -538,7 +538,7 @@ export default function ReviewsListPage() {
                         </Box>
                         <Box p="md" pt={4}>
                             <Group justify="space-between" mb="md">
-                                <Text fw={600} size="md">댓글 작성</Text>
+                                <Text fw={700} size="md" c="#191F28">댓글 작성</Text>
                                 <ActionIcon variant="subtle" color="gray" size={38} radius="md" aria-label="댓글 닫기" onClick={() => {
                                     setReplyingTo(null); setReplyContent(''); setReplyPhotos([]);
                                     setReplyNickname(''); setReplyPassword('');
@@ -552,20 +552,20 @@ export default function ReviewsListPage() {
                                     placeholder="닉네임" size="sm" value={replyNickname}
                                     onChange={(e) => setReplyNickname(e.currentTarget.value)}
                                     style={{ flex: 1 }}
-                                    styles={{ input: { fontSize: '14px', borderRadius: '10px', backgroundColor: '#f8f9fa', border: '1px solid #e9ecef' } }}
+                                    styles={{ input: { fontSize: '14px', borderRadius: '10px', backgroundColor: '#FFFFFF', border: '1px solid #CBD5E1', height: 42 } }}
                                 />
                                 <TextInput
                                     placeholder="비밀번호" size="sm" type="password" value={replyPassword}
                                     onChange={(e) => setReplyPassword(e.currentTarget.value)}
                                     style={{ flex: 1 }}
-                                    styles={{ input: { fontSize: '14px', borderRadius: '10px', backgroundColor: '#f8f9fa', border: '1px solid #e9ecef' } }}
+                                    styles={{ input: { fontSize: '14px', borderRadius: '10px', backgroundColor: '#FFFFFF', border: '1px solid #CBD5E1', height: 42 } }}
                                 />
                             </Group>
 
                             <Textarea
                                 placeholder="댓글을 입력하세요" size="sm" minRows={3} maxRows={5} autosize
                                 value={replyContent} onChange={(e) => setReplyContent(e.currentTarget.value)}
-                                styles={{ input: { fontSize: '14px', borderRadius: '10px', backgroundColor: '#f8f9fa', border: '1px solid #e9ecef' } }}
+                                styles={{ input: { fontSize: '14px', borderRadius: '10px', backgroundColor: '#FFFFFF', border: '1px solid #CBD5E1', padding: '10px 12px' } }}
                             />
 
                             {replyPhotos.length > 0 && (
@@ -592,7 +592,7 @@ export default function ReviewsListPage() {
                                     </ActionIcon>
                                     <Text size="xs" c="dimmed">{replyPhotos.length}/3</Text>
                                 </Group>
-                                <Button size="sm" variant="filled" color="#1D0098" radius="xl" px="xl"
+                                <Button size="sm" variant="filled" color="#2563EB" radius="xl" px="xl"
                                     onClick={() => handleSubmitReply(replyingTo)}
                                     disabled={!replyContent.trim() || !replyNickname.trim() || !replyPassword.trim()}
                                     styles={{ root: { fontWeight: 600 } }}>
@@ -665,7 +665,7 @@ export default function ReviewsListPage() {
                 </Box>
             )}
 
-            {/* 🔒 리뷰(이야기) 삭제 바텀시트 */}
+            {/* 리뷰(이야기) 삭제 바텀시트 */}
             {deleteReviewModal && (
                 <>
                     <Box
@@ -674,7 +674,7 @@ export default function ReviewsListPage() {
                         onClick={() => setDeleteReviewModal(null)}
                     />
                     <Box
-                        pos="fixed" bottom={0} left={0} w="100%"
+                        pos="fixed" bottom={0} left={0} right={0} maw={600} mx="auto" w="100%"
                         p="lg" pb={40}
                         style={{
                             zIndex: 9999, backgroundColor: 'white',
@@ -685,7 +685,7 @@ export default function ReviewsListPage() {
                     >
                         <Box mx="auto" mb="md" w={36} h={4} style={{ borderRadius: 2, backgroundColor: '#dee2e6' }} />
                         <Group justify="space-between" mb="md">
-                            <Text fw={600} size="lg">이야기 삭제</Text>
+                            <Text fw={700} size="lg" c="#191F28">이야기 삭제</Text>
                             <ActionIcon variant="subtle" color="gray" onClick={() => setDeleteReviewModal(null)}>
                                 <X size={20} />
                             </ActionIcon>
@@ -698,7 +698,7 @@ export default function ReviewsListPage() {
                             error={deleteReviewError}
                             onKeyDown={(e) => e.key === 'Enter' && handleDeleteReview()}
                             mb="md"
-                            styles={{ input: { borderRadius: 12, height: 44 } }}
+                            styles={{ input: { borderRadius: 10, height: 44, backgroundColor: '#FFFFFF', border: '1px solid #CBD5E1' } }}
                         />
                         <Group grow gap="sm">
                             <Button variant="light" color="gray" size="md" radius="xl" onClick={() => setDeleteReviewModal(null)}>취소</Button>
@@ -709,7 +709,7 @@ export default function ReviewsListPage() {
                 </>
             )}
 
-            {/* 🔒 댓글 삭제 바텀시트 */}
+            {/* 댓글 삭제 바텀시트 */}
             {deleteReplyModal && (
                 <>
                     <Box
@@ -718,7 +718,7 @@ export default function ReviewsListPage() {
                         onClick={() => setDeleteReplyModal(null)}
                     />
                     <Box
-                        pos="fixed" bottom={0} left={0} w="100%"
+                        pos="fixed" bottom={0} left={0} right={0} maw={600} mx="auto" w="100%"
                         p="lg" pb={40}
                         style={{
                             zIndex: 9999, backgroundColor: 'white',
@@ -729,7 +729,7 @@ export default function ReviewsListPage() {
                     >
                         <Box mx="auto" mb="md" w={36} h={4} style={{ borderRadius: 2, backgroundColor: '#dee2e6' }} />
                         <Group justify="space-between" mb="md">
-                            <Text fw={600} size="lg">댓글 삭제</Text>
+                            <Text fw={700} size="lg" c="#191F28">댓글 삭제</Text>
                             <ActionIcon variant="subtle" color="gray" onClick={() => setDeleteReplyModal(null)}>
                                 <X size={20} />
                             </ActionIcon>
@@ -742,7 +742,7 @@ export default function ReviewsListPage() {
                             error={deleteReplyError}
                             onKeyDown={(e) => e.key === 'Enter' && handleDeleteReply()}
                             mb="md"
-                            styles={{ input: { borderRadius: 12, height: 44 } }}
+                            styles={{ input: { borderRadius: 10, height: 44, backgroundColor: '#FFFFFF', border: '1px solid #CBD5E1' } }}
                         />
                         <Group grow gap="sm">
                             <Button variant="light" color="gray" size="md" radius="xl" onClick={() => setDeleteReplyModal(null)}>취소</Button>
@@ -753,7 +753,7 @@ export default function ReviewsListPage() {
                 </>
             )}
 
-            {/* ✍️ 이야기(후기) 작성 바텀시트 모달 */}
+            {/* 이야기(후기) 작성 바텀시트 모달 */}
             {writeModalOpened && (
                 <>
                     <Box
@@ -762,7 +762,7 @@ export default function ReviewsListPage() {
                         onClick={() => setWriteModalOpened(false)}
                     />
                     <Box
-                        pos="fixed" bottom={0} left={0} w="100%"
+                        pos="fixed" bottom={0} left={0} right={0} maw={600} mx="auto" w="100%"
                         style={{
                             zIndex: 9999, backgroundColor: 'white',
                             borderRadius: '16px 16px 0 0',
@@ -776,7 +776,7 @@ export default function ReviewsListPage() {
                         </Box>
                         <Box p="md" pt={4} maw={600} mx="auto">
                             <Group justify="space-between" mb="md">
-                                <Text fw={700} size="lg">이야기 남기기</Text>
+                                <Text fw={700} size="lg" c="#191F28">이야기 남기기</Text>
                                 <ActionIcon variant="subtle" color="gray" size={38} radius="md" aria-label="이야기 닫기" onClick={() => setWriteModalOpened(false)}>
                                     <X size={20} />
                                 </ActionIcon>
@@ -813,7 +813,7 @@ export default function ReviewsListPage() {
                                     value={writeAuthor}
                                     onChange={(e) => setWriteAuthor(e.currentTarget.value)}
                                     style={{ flex: 1 }}
-                                    styles={{ input: { borderRadius: 10, backgroundColor: '#f8f9fa', border: '1px solid #e9ecef' } }}
+                                    styles={{ input: { borderRadius: 10, backgroundColor: '#FFFFFF', border: '1px solid #CBD5E1', height: 42 } }}
                                 />
                                 <TextInput
                                     placeholder="비밀번호 4자리 이상"
@@ -822,7 +822,7 @@ export default function ReviewsListPage() {
                                     value={writePassword}
                                     onChange={(e) => setWritePassword(e.currentTarget.value)}
                                     style={{ flex: 1 }}
-                                    styles={{ input: { borderRadius: 10, backgroundColor: '#f8f9fa', border: '1px solid #e9ecef' } }}
+                                    styles={{ input: { borderRadius: 10, backgroundColor: '#FFFFFF', border: '1px solid #CBD5E1', height: 42 } }}
                                 />
                             </Group>
 
@@ -834,7 +834,7 @@ export default function ReviewsListPage() {
                                 autosize
                                 value={writeContent}
                                 onChange={(e) => setWriteContent(e.currentTarget.value)}
-                                styles={{ input: { borderRadius: 10, backgroundColor: '#f8f9fa', border: '1px solid #e9ecef', fontSize: '14px' } }}
+                                styles={{ input: { borderRadius: 10, backgroundColor: '#FFFFFF', border: '1px solid #CBD5E1', fontSize: '14px', padding: '10px 12px' } }}
                             />
 
                             {/* 사진 미리보기 */}
@@ -878,7 +878,7 @@ export default function ReviewsListPage() {
                                 <Button
                                     size="sm"
                                     variant="filled"
-                                    color="#1D0098"
+                                    color="#2563EB"
                                     radius="xl"
                                     px="xl"
                                     onClick={handleSubmitNewReview}

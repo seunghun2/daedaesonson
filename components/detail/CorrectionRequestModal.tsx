@@ -181,27 +181,27 @@ export default function CorrectionRequestModal({ facilityId, facilityName, isOpe
                             <Stack gap="lg">
                                 {/* 유형 선택 */}
                                 <Box>
-                                    <Text size="sm" fw={600} mb={6} c="dark.7">
-                                        유형 선택 <Text span c="red.5" size="xs">*</Text>
+                                    <Text size="xs" fw={700} mb={6} c="#334155">
+                                        유형 선택 <Text span c="#EF4444">*</Text>
                                     </Text>
                                     <Select
                                         placeholder="수정이 필요한 유형을 선택해주세요"
                                         data={CORRECTION_TYPES}
                                         value={correctionType}
                                         onChange={setCorrectionType}
-                                        rightSection={<ChevronDown size={16} color="#868e96" />}
+                                        rightSection={<ChevronDown size={16} color="#64748B" />}
                                         comboboxProps={{ zIndex: 10020, position: 'bottom' }}
                                         styles={{
-                                            input: { borderRadius: 8, border: '1px solid #dee2e6', height: 44, fontSize: 14 },
-                                            dropdown: { borderRadius: 8, border: '1px solid #dee2e6' },
+                                            input: { borderRadius: 10, backgroundColor: '#FFFFFF', border: '1px solid #CBD5E1', height: 44, fontSize: 14, color: '#191F28' },
+                                            dropdown: { borderRadius: 10, border: '1px solid #CBD5E1' },
                                         }}
                                     />
                                 </Box>
 
                                 {/* 수정 내용 */}
                                 <Box>
-                                    <Text size="sm" fw={600} mb={6} c="dark.7">
-                                        수정 내용 <Text span c="red.5" size="xs">*</Text>
+                                    <Text size="xs" fw={700} mb={6} c="#334155">
+                                        수정 내용 <Text span c="#EF4444">*</Text>
                                     </Text>
                                     <Textarea
                                         placeholder="어떤 정보가 잘못되었는지 자세히 알려주세요"
@@ -211,29 +211,29 @@ export default function CorrectionRequestModal({ facilityId, facilityName, isOpe
                                         maxRows={8}
                                         autosize
                                         styles={{
-                                            input: { borderRadius: 8, border: '1px solid #dee2e6', fontSize: 14, lineHeight: 1.6 },
+                                            input: { borderRadius: 10, backgroundColor: '#FFFFFF', border: '1px solid #CBD5E1', fontSize: 14, lineHeight: 1.6, color: '#191F28', padding: '10px 12px' },
                                         }}
                                     />
                                 </Box>
 
                                 {/* 사진 첨부 */}
                                 <Box>
-                                    <Text size="sm" fw={600} mb={6} c="dark.7">
-                                        사진 첨부 <Text span c="gray.5" size="xs">(선택, 최대 10장)</Text>
+                                    <Text size="xs" fw={700} mb={6} c="#334155">
+                                        사진 첨부 <Text span c="#64748B" size="xs" fw={500}>(선택, 최대 10장)</Text>
                                     </Text>
                                     <input type="file" multiple accept="image/*" ref={fileInputRef} style={{ display: 'none' }} onChange={handlePhotoUpload} />
                                     <Group gap="xs" align="flex-start" style={{ flexWrap: 'wrap' }}>
                                         <Box
                                             w={72} h={72}
-                                            style={{ border: '1px solid #dee2e6', borderRadius: 8, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', flexShrink: 0 }}
+                                            style={{ border: '1px solid #CBD5E1', backgroundColor: '#F8FAFC', borderRadius: 10, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', flexShrink: 0 }}
                                             onClick={() => fileInputRef.current?.click()}
                                         >
-                                            <Camera size={22} color="#868e96" strokeWidth={1.5} />
-                                            <Text size="xs" c="dimmed" mt={2}>{photos.length}/10</Text>
+                                            <Camera size={22} color="#64748B" strokeWidth={1.5} />
+                                            <Text size="xs" c="#64748B" mt={2}>{photos.length}/10</Text>
                                         </Box>
                                         {photos.map((photo, idx) => (
                                             <Box key={idx} pos="relative" w={72} h={72}>
-                                                <Image src={photo} w={72} h={72} radius="md" style={{ objectFit: 'cover', border: '1px solid #dee2e6' }} />
+                                                <Image src={photo} w={72} h={72} radius="md" style={{ objectFit: 'cover', border: '1px solid #CBD5E1' }} />
                                                 <ActionIcon size={18} radius="xl" color="dark" variant="filled" style={{ position: 'absolute', top: -6, right: -6 }} onClick={() => removePhoto(idx)}>
                                                     <X size={10} />
                                                 </ActionIcon>
@@ -243,34 +243,34 @@ export default function CorrectionRequestModal({ facilityId, facilityName, isOpe
                                 </Box>
 
                                 {/* 구분선 */}
-                                <Box style={{ height: 1, backgroundColor: '#f1f3f5' }} />
+                                <Box style={{ height: 1, backgroundColor: '#F1F5F9' }} />
 
                                 {/* 성함 (필수) */}
                                 <Box>
-                                    <Text size="sm" fw={600} mb={6} c="dark.7">
-                                        성함 <Text span c="red.5" size="xs">*</Text>
+                                    <Text size="xs" fw={700} mb={6} c="#334155">
+                                        성함 <Text span c="#EF4444">*</Text>
                                     </Text>
                                     <TextInput
                                         placeholder="성함을 입력해주세요"
                                         value={name}
                                         onChange={(e) => setName(e.currentTarget.value)}
                                         styles={{
-                                            input: { borderRadius: 8, border: '1px solid #dee2e6', height: 44, fontSize: 14 },
+                                            input: { borderRadius: 10, backgroundColor: '#FFFFFF', border: '1px solid #CBD5E1', height: 44, fontSize: 14, color: '#191F28' },
                                         }}
                                     />
                                 </Box>
 
                                 {/* 연락처 (필수) */}
                                 <Box>
-                                    <Text size="sm" fw={600} mb={6} c="dark.7">
-                                        연락처 <Text span c="red.5" size="xs">*</Text>
+                                    <Text size="xs" fw={700} mb={6} c="#334155">
+                                        연락처 <Text span c="#EF4444">*</Text>
                                     </Text>
                                     <TextInput
                                         placeholder="답변 받으실 이메일 또는 전화번호"
                                         value={contact}
                                         onChange={(e) => setContact(e.currentTarget.value)}
                                         styles={{
-                                            input: { borderRadius: 8, border: '1px solid #dee2e6', height: 44, fontSize: 14 },
+                                            input: { borderRadius: 10, backgroundColor: '#FFFFFF', border: '1px solid #CBD5E1', height: 44, fontSize: 14, color: '#191F28' },
                                         }}
                                     />
                                 </Box>
@@ -278,19 +278,51 @@ export default function CorrectionRequestModal({ facilityId, facilityName, isOpe
                                 {/* 에러 메시지 */}
                                 {error && (
                                     <Group gap={6}>
-                                        <AlertCircle size={14} color="#fa5252" />
-                                        <Text size="xs" c="red.6">{error}</Text>
+                                        <AlertCircle size={14} color="#DC2626" />
+                                        <Text size="xs" c="#DC2626" fw={600}>{error}</Text>
                                     </Group>
                                 )}
 
                                 {/* 안내 */}
-                                <Text size="xs" c="gray.5" lh={1.6}>
+                                <Text size="xs" c="#64748B" lh={1.6}>
                                     참고가 될 만한 사진이나 정보를 상세히 작성해주시면 더 정확한 확인이 가능합니다.
                                 </Text>
                             </Stack>
                         )}
                     </Box>
                 </ScrollArea>
+
+                {!submitted && (
+                    <Box
+                        p="md"
+                        style={{
+                            borderTop: '1px solid #E5E8EB',
+                            backgroundColor: '#FFFFFF',
+                            paddingBottom: 'calc(14px + env(safe-area-inset-bottom, 0px))',
+                            flexShrink: 0,
+                        }}
+                    >
+                        <Button
+                            fullWidth
+                            size="md"
+                            radius="md"
+                            onClick={handleSubmit}
+                            loading={loading}
+                            disabled={!isFormValid}
+                            styles={{
+                                root: {
+                                    height: 48,
+                                    backgroundColor: isFormValid ? '#2563EB' : '#E2E8F0',
+                                    color: isFormValid ? '#FFFFFF' : '#94A3B8',
+                                    fontWeight: 700,
+                                    fontSize: 15,
+                                }
+                            }}
+                        >
+                            정보 수정 요청 등록하기
+                        </Button>
+                    </Box>
+                )}
             </Stack>
         </Drawer>
     );

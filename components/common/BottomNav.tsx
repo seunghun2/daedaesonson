@@ -8,6 +8,7 @@ import ChatFloatingButton from '@/components/chatbot/ChatFloatingButton';
 interface BottomNavProps {
     historyCount?: number;
     hidden?: boolean;
+    inline?: boolean;
 }
 
 // 호갱노노/네이버부동산 스타일 아이콘: 비활성=#9CA3AF, 활성=#2563EB
@@ -57,7 +58,7 @@ const iconMap: Record<string, React.FC<{ active: boolean }>> = {
     menu: MenuIcon,
 };
 
-export default function BottomNav({ historyCount = 0, hidden = false }: BottomNavProps) {
+export default function BottomNav({ historyCount = 0, hidden = false, inline = false }: BottomNavProps) {
     const pathname = usePathname();
 
     const tabs = [
@@ -67,29 +68,41 @@ export default function BottomNav({ historyCount = 0, hidden = false }: BottomNa
         { id: 'menu', label: '전체', path: '/menu' },
     ];
 
-    const hideChatFab = hidden || ['/inquiries', '/history', '/menu', '/list'].includes(pathname) || pathname.startsWith('/facility') || pathname.startsWith('/partnership');
+    const hideChatFab = inline || hidden || ['/inquiries', '/history', '/menu', '/list', '/contact'].includes(pathname) || pathname.startsWith('/facility') || pathname.startsWith('/partnership');
 
     return (
         <>
-            <ChatFloatingButton hidden={hideChatFab} />
+            {!inline && <ChatFloatingButton hidden={hideChatFab} />}
             <Box
-                style={{
-                    position: 'fixed',
-                    bottom: 0,
-                    left: 0,
-                    right: 0,
-                    height: 56,
-                    backgroundColor: 'rgba(255, 255, 255, 0.98)',
-                    backdropFilter: 'blur(12px)',
-                    WebkitBackdropFilter: 'blur(12px)',
-                    borderTop: '1px solid #EEF1F5',
-                    zIndex: 2000,
-                    paddingBottom: 'env(safe-area-inset-bottom)',
-                    transform: hidden ? 'translateY(100%)' : 'translateY(0)',
-                    transition: 'transform 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-                }}
+                style={
+                    inline
+                        ? {
+                              position: 'relative',
+                              width: '100%',
+                              height: 56,
+                              flexShrink: 0,
+                              backgroundColor: '#FFFFFF',
+                              borderTop: '1px solid #E5E8EB',
+                              zIndex: 20,
+                          }
+                        : {
+                              position: 'fixed',
+                              bottom: 0,
+                              left: 0,
+                              right: 0,
+                              height: 56,
+                              backgroundColor: 'rgba(255, 255, 255, 0.98)',
+                              backdropFilter: 'blur(12px)',
+                              WebkitBackdropFilter: 'blur(12px)',
+                              borderTop: '1px solid #EEF1F5',
+                              zIndex: 2000,
+                              paddingBottom: 'env(safe-area-inset-bottom)',
+                              transform: hidden ? 'translateY(100%)' : 'translateY(0)',
+                              transition: 'transform 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                          }
+                }
             >
-                <Group h={56} justify="space-around" align="center" px={0}>
+                <Group h={56} maw={inline ? '100%' : 640} mx="auto" justify="space-around" align="center" px={0}>
                     {tabs.map((tab) => {
                         const isActive = pathname === tab.path || (tab.path === '/' && pathname === '/');
                         const IconComponent = iconMap[tab.id];

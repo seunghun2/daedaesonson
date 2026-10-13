@@ -1205,6 +1205,7 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
                 compareIds={compareIds}
                 onToggleCompare={handleToggleCompare}
               />
+              {!isMobile && <BottomNav inline />}
             </Flex>
           )}
         </Box>
