@@ -116,89 +116,167 @@ function FacilityCardComponent({ facility, onClick }: FacilityCardProps) {
         return getFacilityImageUrl(rawImg);
     }, [facility.thumbnail, facility.imageUrl, facility.images, facility.imageGallery]);
 
+    const categoryBadgePalette: Record<string, { bg: string; text: string }> = {
+        CHARNEL_HOUSE: { bg: '#EFF6FF', text: '#1D4ED8' },
+        NATURAL_BURIAL: { bg: '#ECFDF5', text: '#047857' },
+        FAMILY_GRAVE: { bg: '#F5F3FF', text: '#6D28D9' },
+        CREMATORIUM: { bg: '#FFFBEB', text: '#B45309' },
+        FUNERAL_HOME: { bg: '#F1F5F9', text: '#334155' },
+        OTHER: { bg: '#F2F4F6', text: '#4E5968' },
+    };
+    const catColors = categoryBadgePalette[facility.category] || categoryBadgePalette.OTHER;
+
     return (
         <Card
-            padding={0} // 패딩을 0으로 하고 내부 flex에서 제어
+            padding={0}
             radius="md"
-            withBorder={false} // 호갱노노처럼 리스트 구분선은 상위에서, 카드 자체 테두리는 제거
+            withBorder={false}
             data-testid="facility-card"
             data-facility-id={facility.id}
             style={{
                 cursor: 'pointer',
-                backgroundColor: 'white',
+                backgroundColor: 'transparent',
             }}
             onClick={onClick}
         >
-            <Flex h="100%">
-                {/* 1. 좌측 썸네일 (고정 너비) */}
+            <Flex align="stretch" gap={14}>
+                {/* 1. 좌측 썸네일 (4면 라운드 12px + 미세 테두리) */}
                 <Box
-                    w={100}
-                    h={100}
-                    style={{ flexShrink: 0, position: 'relative', overflow: 'hidden', borderRadius: '8px 0 0 8px' }}
+                    w={104}
+                    h={104}
+                    style={{
+                        flexShrink: 0,
+                        position: 'relative',
+                        overflow: 'hidden',
+                        borderRadius: '12px',
+                        border: '1px solid rgba(15, 23, 42, 0.07)',
+                        backgroundColor: '#F8FAFC',
+                    }}
                 >
                     {validThumbnailUrl ? (
                         <NextImage
                             src={validThumbnailUrl}
-                            width={200}
-                            height={200}
+                            width={208}
+                            height={208}
                             alt={facility.name}
                             style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                             loading="lazy"
-                            sizes="100px"
+                            sizes="104px"
                         />
                     ) : (
-                        <Box h="100%" bg="#f1f3f5" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                        <Box h="100%" bg="#F2F4F6" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                             <img
                                 src="/logo-horizontal.svg"
                                 alt="대대손손"
-                                style={{ width: 60, height: 24, opacity: 0.25, filter: 'grayscale(100%)' }}
+                                style={{ width: 58, height: 22, opacity: 0.25, filter: 'grayscale(100%)' }}
                             />
                         </Box>
                     )}
 
-                    {/* 사진 위에 카테고리 뱃지 */}
-                    <Badge
+                    {/* 공설/사설 마이크로 뱃지 */}
+                    <Box
                         pos="absolute"
-                        top={4}
-                        left={4}
-                        size="xs"
-                        variant="filled"
-                        color="dark"
-                        bg="rgba(0,0,0,0.6)"
-                        style={{ backdropFilter: 'blur(4px)' }}
+                        top={6}
+                        left={6}
+                        style={{
+                            backgroundColor: facility.isPublic ? 'rgba(37, 99, 235, 0.92)' : 'rgba(25, 31, 40, 0.78)',
+                            backdropFilter: 'blur(4px)',
+                            color: '#FFFFFF',
+                            fontSize: '10px',
+                            fontWeight: 700,
+                            padding: '2px 6px',
+                            borderRadius: '5px',
+                            lineHeight: 1.3,
+                            letterSpacing: '-0.2px',
+                        }}
                     >
-                        {FACILITY_CATEGORY_LABELS[facility.category]}
-                    </Badge>
+                        {facility.isPublic ? '공설' : '사설'}
+                    </Box>
                 </Box>
 
-                {/* 2. 우측 정보 영역 */}
-                <Box p={12} style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
-
-                    {/* 상단: 이름 및 상태 */}
+                {/* 2. 우측 정보 영역 (호갱노노 스타일 3단 위계) */}
+                <Box style={{ flex: 1, minWidth: 0, display: 'flex', flexDirection: 'column', justifyContent: 'space-between', paddingTop: 2, paddingBottom: 2 }}>
                     <div>
-                        <Group justify="space-between" align="start" wrap="nowrap" mb={2}>
-                            <Text fw={700} size="md" lineClamp={1} c="dark.9">
-                                {facility.name}
-                            </Text>
+                        {/* 상단: 카테고리 태그 + 관심/리뷰 */}
+                        <Group justify="space-between" align="center" wrap="nowrap" mb={4}>
+                            <span
+                                style={{
+                                    display: 'inline-block',
+                                    backgroundColor: catColors.bg,
+                                    color: catColors.text,
+                                    fontSize: '11px',
+                                    fontWeight: 700,
+                                    padding: '2px 7px',
+                                    borderRadius: '5px',
+                                    lineHeight: 1.35,
+                                    letterSpacing: '-0.2px',
+                                }}
+                            >
+                                {FACILITY_CATEGORY_LABELS[facility.category]}
+                            </span>
+
+                            {(facility.favoriteCount ?? 0) > 0 && (
+                                <Group gap={3} align="center">
+                                    <Star size={12} color="#F59E0B" fill="#F59E0B" />
+                                    <Text size="xs" c="#6B7684" fw={700} style={{ fontSize: '11.5px' }}>
+                                        {facility.favoriteCount}
+                                    </Text>
+                                </Group>
+                            )}
                         </Group>
-                        <Text size="xs" c="dimmed" lineClamp={1}>
-                            {facility.address.split(' ').slice(0, 2).join(' ')} · {facility.isPublic ? '공설' : '사설'}
+
+                        {/* 중단: 시설명 & 지역 주소 */}
+                        <Text
+                            fw={700}
+                            lineClamp={1}
+                            style={{
+                                fontSize: '15.5px',
+                                color: '#191F28',
+                                letterSpacing: '-0.35px',
+                                lineHeight: 1.3,
+                            }}
+                        >
+                            {facility.name}
+                        </Text>
+                        <Text
+                            lineClamp={1}
+                            mt={2}
+                            style={{
+                                fontSize: '12.5px',
+                                color: '#6B7684',
+                                letterSpacing: '-0.2px',
+                            }}
+                        >
+                            {facility.address ? facility.address.split(' ').slice(0, 3).join(' ') : ''}
                         </Text>
                     </div>
 
-                    {/* 관심(별표) 숫자 노출 */}
-                    {(facility.favoriteCount ?? 0) > 0 && (
-                        <Group gap={4} mt={4}>
-                            <Star size={13} color="#fcc419" fill="#fcc419" />
-                            <Text size="xs" c="dimmed" fw={600}>{facility.favoriteCount}</Text>
-                        </Group>
-                    )}
-
-                    {/* 하단: 가격 강조 */}
-                    <Group justify="space-between" align="flex-end">
-                        <Group gap={2} align="flex-end">
-                            {priceLabel && <Text size="xs" c="gray.6" mb={3} fw={600} mr={2}>{priceLabel}</Text>}
-                            <Text fw={700} size="md" c="#1D0098" style={{ lineHeight: 1 }}>
+                    {/* 하단: 대표 가격 강조 */}
+                    <Group justify="space-between" align="baseline" mt={6}>
+                        <Group gap={5} align="baseline">
+                            {displayPrice !== '가격문의' && (
+                                <Text
+                                    component="span"
+                                    style={{
+                                        fontSize: '11px',
+                                        fontWeight: 600,
+                                        color: '#8B95A1',
+                                        letterSpacing: '-0.2px',
+                                    }}
+                                >
+                                    {priceLabel || '대표가격'}
+                                </Text>
+                            )}
+                            <Text
+                                component="span"
+                                fw={800}
+                                style={{
+                                    fontSize: displayPrice === '가격문의' ? '14.5px' : '17.5px',
+                                    color: displayPrice === '가격문의' ? '#8B95A1' : '#2563EB',
+                                    letterSpacing: '-0.5px',
+                                    lineHeight: 1.1,
+                                }}
+                            >
                                 {displayPrice}{showTilde ? '~' : ''}
                             </Text>
                         </Group>
@@ -211,3 +289,4 @@ function FacilityCardComponent({ facility, onClick }: FacilityCardProps) {
 
 const FacilityCard = memo(FacilityCardComponent);
 export default FacilityCard;
+

@@ -726,16 +726,13 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
           })
         }}
       >
-        {/* 검색창 및 카테고리 필터 */}
-        <Box p="md" style={{
-          borderBottom: (!isMobile && selectedFacility) ? '1px solid rgba(255,255,255,0.12)' : '1px solid #e9ecef',
+        {/* 검색창 및 카테고리 필터 (네이버부동산 / 호갱노노 스타일 클린 화이트 헤더) */}
+        <Box px={16} pt={14} pb={(!isMobile && selectedFacility) ? 14 : 12} style={{
+          borderBottom: '1px solid #E5E8EB',
           flexShrink: 0,
-          backgroundColor: (!isMobile && selectedFacility) ? '#302E92' : undefined,
-          transition: 'background-color 0.2s ease',
+          backgroundColor: '#FFFFFF',
         }}>
-
-
-          <Group wrap="nowrap" align="center" mb={(!isMobile && selectedFacility) ? 0 : 'sm'}>
+          <Group wrap="nowrap" align="center" gap={10} mb={(!isMobile && selectedFacility) ? 0 : 10}>
             {/* 모바일 목록뷰: 뒤로가기 버튼, PC/지도뷰: 로고 */}
             {isMobile && mobileView === 'list' ? (
               <button
@@ -751,15 +748,15 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
                   marginLeft: '-8px'
                 }}
               >
-                <ArrowLeft size={24} color="#495057" />
+                <ArrowLeft size={22} color="#191F28" />
               </button>
             ) : (
-              <Link href="/" style={{ display: 'flex', alignItems: 'center', marginRight: 8 }} onClick={(e) => { if (!isMobile && selectedFacility) { e.preventDefault(); handleCloseDetail(); } }}>
+              <Link href="/" style={{ display: 'flex', alignItems: 'center', marginRight: 2 }} onClick={(e) => { if (!isMobile && selectedFacility) { e.preventDefault(); handleCloseDetail(); } }}>
                 <Image
-                  src={(!isMobile && selectedFacility) ? '/logo-horizontal-white.svg' : '/logo-horizontal.svg?v=4'}
+                  src="/logo-horizontal.svg?v=4"
                   alt="대대손손"
-                  width={90}
-                  height={26}
+                  width={86}
+                  height={24}
                   style={{ objectFit: 'contain' }}
                   priority
                 />
@@ -784,7 +781,7 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
                 rightSection={
                   <ActionIcon
                     variant="transparent"
-                    c={(!isMobile && selectedFacility) ? 'white' : (searchQuery ? 'brand.6' : 'gray.5')}
+                    c={searchQuery ? '#2563EB' : '#8B95A1'}
                     onClick={() => {
                       if (searchQuery) {
                         setSubmittedQuery(searchQuery);
@@ -799,15 +796,19 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
                       }
                     }}
                   >
-                    <Search size={18} />
+                    <Search size={17} />
                   </ActionIcon>
                 }
                 styles={{
                   input: {
-                    backgroundColor: (!isMobile && selectedFacility) ? 'rgba(255,255,255,0.15)' : '#f8f9fa',
-                    border: (!isMobile && selectedFacility) ? '1px solid rgba(255,255,255,0.3)' : '1px solid #e9ecef',
-                    fontSize: '16px', // iOS 자동 확대 방지
-                    color: (!isMobile && selectedFacility) ? 'white' : undefined,
+                    backgroundColor: '#F2F4F6',
+                    border: '1px solid transparent',
+                    borderRadius: '10px',
+                    height: '38px',
+                    minHeight: '38px',
+                    fontSize: '15px',
+                    fontWeight: 500,
+                    color: '#191F28',
                   }
                 }}
                 onFocus={() => { setSearchFocused(true); loadRegionDataOnce(); }}
@@ -942,10 +943,78 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
 
           </Group>
 
-          {/* PC 필터 버튼 (다중 선택) - PC 상세보기 시 숨김 */}
-          <div style={{ display: (!isMobile && selectedFacility) ? 'none' : 'flex', gap: 8, marginTop: 8, alignItems: 'center' }}>
-            {/* 카테고리 필터 버튼 → Drawer 오픈 */}
+          {/* 원탭 카테고리 칩 + 상세필터 버튼 (호갱노노 / 네이버부동산 스타일) */}
+          <div
+            className="no-scrollbar"
+            style={{
+              display: (!isMobile && selectedFacility) ? 'none' : 'flex',
+              gap: 6,
+              alignItems: 'center',
+              overflowX: 'auto',
+            }}
+          >
+            {[
+              { key: 'all', label: '전체', dot: null },
+              { key: 'charnel', label: '봉안당', dot: '#2563EB' },
+              { key: 'natural', label: '수목장', dot: '#059669' },
+              { key: 'park', label: '공원묘지', dot: '#6D28D9' },
+              { key: 'crematorium', label: '화장장', dot: '#D97706' },
+            ].map((chip) => {
+              const isSelected = chip.key === 'all'
+                ? activeCategory.includes('all')
+                : (!activeCategory.includes('all') && activeCategory.length === 1 && activeCategory[0] === chip.key);
+              return (
+                <button
+                  key={chip.key}
+                  type="button"
+                  onClick={() => {
+                    startTransition(() => {
+                      if (chip.key === 'all') {
+                        setActiveCategory(['all']);
+                      } else if (isSelected) {
+                        setActiveCategory(['all']);
+                      } else {
+                        setActiveCategory([chip.key]);
+                      }
+                    });
+                  }}
+                  style={{
+                    height: '32px',
+                    fontSize: '13px',
+                    fontWeight: isSelected ? 700 : 600,
+                    backgroundColor: isSelected ? '#191F28' : '#FFFFFF',
+                    color: isSelected ? '#FFFFFF' : '#4E5968',
+                    border: isSelected ? '1px solid #191F28' : '1px solid #E5E8EB',
+                    borderRadius: '999px',
+                    cursor: 'pointer',
+                    transition: 'all 0.15s ease',
+                    padding: '0 12px',
+                    flexShrink: 0,
+                    whiteSpace: 'nowrap',
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: '5px',
+                    letterSpacing: '-0.2px',
+                  }}
+                >
+                  {chip.dot && (
+                    <span
+                      style={{
+                        width: '6px',
+                        height: '6px',
+                        borderRadius: '50%',
+                        backgroundColor: isSelected ? '#60A5FA' : chip.dot,
+                      }}
+                    />
+                  )}
+                  {chip.label}
+                </button>
+              );
+            })}
+
+            {/* 상세 필터 Drawer 오픈 버튼 */}
             <button
+              type="button"
               onClick={() => {
                 setTempCategory([...activeCategory]);
                 setTempHideInquiry(hideInquiry);
@@ -953,56 +1022,26 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
                 setDrawerFilterOpen(true);
               }}
               style={{
-                height: '34px',
-                fontSize: '14px',
+                height: '32px',
+                fontSize: '12.5px',
                 fontWeight: 600,
-                backgroundColor: activeCategory.includes('all') ? 'white' : '#f1f3f5',
-                color: activeCategory.includes('all') ? '#495057' : '#343a40',
-                border: activeCategory.includes('all') ? '1px solid #dee2e6' : '1.5px solid #868e96',
-                borderRadius: '20px',
+                backgroundColor: '#F2F4F6',
+                color: '#4E5968',
+                border: '1px solid transparent',
+                borderRadius: '999px',
                 cursor: 'pointer',
-                transition: 'all 0.2s',
-                paddingLeft: '16px',
-                paddingRight: '12px',
+                padding: '0 11px',
                 flexShrink: 0,
                 whiteSpace: 'nowrap',
-                display: 'flex',
+                display: 'inline-flex',
                 alignItems: 'center',
                 gap: '4px',
               }}
+              title="다중 선택 및 상세 필터"
             >
-              {activeCategory.includes('all') ? '전체 시설' :
-                activeCategory.length === 1 ?
-                  ({ charnel: '봉안당', natural: '수목장', park: '공원묘지', crematorium: '화장장' }[activeCategory[0]] || '전체 시설') :
-                  `${({ charnel: '봉안당', natural: '수목장', park: '공원묘지', crematorium: '화장장' }[activeCategory[0]] || '')} 외 ${activeCategory.length - 1}`
-              }
-              <ChevronDown size={16} style={{ opacity: 0.6 }} />
+              <span>상세필터</span>
+              <ChevronDown size={13} style={{ opacity: 0.7 }} />
             </button>
-
-            {/* 문의제외 필터 (모바일에서만 표시 - PC는 검색결과 옆 체크박스) */}
-            {isMobile && (
-              <button
-                onClick={() => setHideInquiry(!hideInquiry)}
-                style={{
-                  height: '34px',
-                  fontSize: '14px',
-                  fontWeight: hideInquiry ? 700 : 500,
-                  backgroundColor: hideInquiry ? '#EDE9FF' : 'white',
-                  color: hideInquiry ? '#1D0098' : '#495057',
-                  border: hideInquiry ? '1.5px solid #1D0098' : '1px solid #dee2e6',
-                  borderRadius: '20px',
-                  cursor: 'pointer',
-                  transition: 'all 0.2s',
-                  paddingLeft: '16px',
-                  paddingRight: '16px',
-                  flexShrink: 0,
-                  whiteSpace: 'nowrap'
-                }}
-              >
-                문의제외
-              </button>
-            )}
-
           </div>
         </Box>
 
@@ -1064,7 +1103,7 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
         {/* 모바일 지도 모드 상단 헤더 오버레이 (UI 숨김 시 슬라이드 아웃) */}
         {isMobile && mobileView === 'map' && (
           <>
-            {/* 상단 헤더 (UI 숨김 시 위로 슬라이드 아웃) */}
+            {/* 상단 헤더 (클린 화이트 글래스 헤더 - UI 숨김 시 위로 슬라이드 아웃) */}
             <Box
               pos="absolute"
               top={0}
@@ -1072,22 +1111,23 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
               w="100%"
               style={{
                 zIndex: 1000,
-                backgroundColor: '#1D0098', // 브랜드 컬러
-                padding: '12px 16px',
+                backgroundColor: 'rgba(255, 255, 255, 0.97)',
+                backdropFilter: 'blur(12px)',
+                padding: '10px 14px',
+                borderBottom: '1px solid #F2F4F6',
                 transform: uiHidden ? 'translateY(-100%)' : 'translateY(0)',
                 transition: 'transform 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
               }}
             >
-              <Group wrap="nowrap" align="center" gap="sm">
-                <Link href="/" style={{ display: 'flex', alignItems: 'center' }}>
+              <Group wrap="nowrap" align="center" gap={10}>
+                <Link href="/" style={{ display: 'flex', alignItems: 'center', flexShrink: 0 }}>
                   <Image
                     src="/logo-horizontal.svg?v=4"
                     alt="대대손손"
-                    width={80}
+                    width={78}
                     height={22}
                     style={{
                       objectFit: 'contain',
-                      filter: 'brightness(0) invert(1)'
                     }}
                     priority
                   />
@@ -1100,16 +1140,17 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
                     flex: 1,
                     display: 'flex',
                     alignItems: 'center',
-                    gap: '8px',
-                    backgroundColor: 'rgba(255,255,255,0.15)',
-                    borderRadius: '8px',
+                    gap: '7px',
+                    backgroundColor: '#F2F4F6',
+                    borderRadius: '10px',
                     padding: '8px 12px',
                     cursor: 'pointer',
+                    minWidth: 0,
                   }}
                 >
-                  <Search size={16} color="rgba(255,255,255,0.7)" style={{ flexShrink: 0 }} />
-                  <Text size="sm" c="rgba(255,255,255,0.6)" style={{ flex: 1, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
-                    {searchQuery || '시설명, 지역 검색'}
+                  <Search size={15} color="#8B95A1" style={{ flexShrink: 0 }} />
+                  <Text size="sm" c={searchQuery ? '#191F28' : '#8B95A1'} fw={500} style={{ flex: 1, fontSize: '13.5px', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                    {searchQuery || '시설명, 지역, 추모공원 검색'}
                   </Text>
                 </Box>
 
@@ -1126,11 +1167,11 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
                     display: 'flex',
                     alignItems: 'center',
                     gap: 4,
-                    backgroundColor: 'rgba(255,255,255,0.2)',
-                    border: '1px solid rgba(255,255,255,0.35)',
-                    borderRadius: 8,
-                    padding: '8px 10px',
-                    color: '#ffffff',
+                    backgroundColor: '#F2F4F6',
+                    border: '1px solid #E5E8EB',
+                    borderRadius: 9,
+                    padding: '7px 10px',
+                    color: '#191F28',
                     fontSize: 12,
                     fontWeight: 700,
                     cursor: 'pointer',
@@ -1138,31 +1179,114 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
                     whiteSpace: 'nowrap',
                   }}
                 >
-                  <User size={14} />
+                  <User size={13} color="#4E5968" />
                   <span>{user ? (user.user_metadata?.full_name || '마이') : '로그인'}</span>
                 </button>
 
               </Group>
             </Box>
 
-            {/* 필터 버튼 영역 - 흰색 배경 (UI 숨김 시 위로 슬라이드 아웃) */}
+            {/* 필터 버튼 영역 - 원탭 카테고리 칩 스트립 (UI 숨김 시 위로 슬라이드 아웃) */}
             <Box
               pos="absolute"
-              top="58px"
+              top="55px"
               left={0}
               w="100%"
               style={{
                 zIndex: 900,
-                backgroundColor: 'white',
-                padding: '8px 16px',
-                borderBottom: '1px solid #e9ecef',
-                transform: uiHidden ? 'translateY(-200%)' : 'translateY(0)',
+                backgroundColor: 'rgba(255, 255, 255, 0.97)',
+                backdropFilter: 'blur(12px)',
+                padding: '7px 14px 9px',
+                borderBottom: '1px solid rgba(229, 232, 235, 0.85)',
+                boxShadow: '0 2px 8px rgba(15, 23, 42, 0.05)',
+                transform: uiHidden ? 'translateY(-220%)' : 'translateY(0)',
                 transition: 'transform 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
               }}
             >
-              <div style={{ display: 'flex', gap: 6, alignItems: 'center' }}>
-                {/* 카테고리 필터 버튼 (모바일에서 드로우 오픈) */}
+              <div className="no-scrollbar" style={{ display: 'flex', gap: 6, alignItems: 'center', overflowX: 'auto' }}>
+                {[
+                  { key: 'all', label: '전체', dot: null },
+                  { key: 'charnel', label: '봉안당', dot: '#2563EB' },
+                  { key: 'natural', label: '수목장', dot: '#059669' },
+                  { key: 'park', label: '공원묘지', dot: '#6D28D9' },
+                  { key: 'crematorium', label: '화장장', dot: '#D97706' },
+                ].map((chip) => {
+                  const isSelected = chip.key === 'all'
+                    ? activeCategory.includes('all')
+                    : (!activeCategory.includes('all') && activeCategory.length === 1 && activeCategory[0] === chip.key);
+                  return (
+                    <button
+                      key={chip.key}
+                      type="button"
+                      onClick={() => {
+                        startTransition(() => {
+                          if (chip.key === 'all') {
+                            setActiveCategory(['all']);
+                          } else if (isSelected) {
+                            setActiveCategory(['all']);
+                          } else {
+                            setActiveCategory([chip.key]);
+                          }
+                        });
+                      }}
+                      style={{
+                        height: '30px',
+                        fontSize: '12.5px',
+                        fontWeight: isSelected ? 700 : 600,
+                        backgroundColor: isSelected ? '#191F28' : '#FFFFFF',
+                        color: isSelected ? '#FFFFFF' : '#4E5968',
+                        border: isSelected ? '1px solid #191F28' : '1px solid #E5E8EB',
+                        borderRadius: '999px',
+                        cursor: 'pointer',
+                        transition: 'all 0.15s ease',
+                        padding: '0 11px',
+                        whiteSpace: 'nowrap',
+                        flexShrink: 0,
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        gap: '4px',
+                      }}
+                    >
+                      {chip.dot && (
+                        <span
+                          style={{
+                            width: '5.5px',
+                            height: '5.5px',
+                            borderRadius: '50%',
+                            backgroundColor: isSelected ? '#60A5FA' : chip.dot,
+                          }}
+                        />
+                      )}
+                      {chip.label}
+                    </button>
+                  );
+                })}
+
+                {/* 문의제외 필터 */}
                 <button
+                  type="button"
+                  onClick={() => setHideInquiry(!hideInquiry)}
+                  style={{
+                    height: '30px',
+                    fontSize: '12px',
+                    fontWeight: hideInquiry ? 700 : 600,
+                    backgroundColor: hideInquiry ? '#EFF6FF' : '#FFFFFF',
+                    color: hideInquiry ? '#2563EB' : '#4E5968',
+                    border: hideInquiry ? '1px solid #93C5FD' : '1px solid #E5E8EB',
+                    borderRadius: '999px',
+                    cursor: 'pointer',
+                    transition: 'all 0.15s ease',
+                    padding: '0 11px',
+                    whiteSpace: 'nowrap',
+                    flexShrink: 0,
+                  }}
+                >
+                  문의제외
+                </button>
+
+                {/* 상세 필터 버튼 */}
+                <button
+                  type="button"
                   onClick={() => {
                     setTempCategory([...activeCategory]);
                     setTempHideInquiry(hideInquiry);
@@ -1173,52 +1297,23 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
                     height: '30px',
                     fontSize: '12px',
                     fontWeight: 600,
-                    backgroundColor: activeCategory.includes('all') ? 'white' : '#f1f3f5',
-                    color: activeCategory.includes('all') ? '#495057' : '#343a40',
-                    border: activeCategory.includes('all') ? '1px solid #dee2e6' : '1.5px solid #868e96',
-                    borderRadius: '6px',
+                    backgroundColor: '#F2F4F6',
+                    color: '#4E5968',
+                    border: 'none',
+                    borderRadius: '999px',
                     cursor: 'pointer',
-                    transition: 'all 0.2s',
-                    paddingLeft: '12px',
-                    paddingRight: '8px',
+                    padding: '0 10px',
                     whiteSpace: 'nowrap',
                     flexShrink: 0,
-                    display: 'flex',
+                    display: 'inline-flex',
                     alignItems: 'center',
-                    gap: '4px',
+                    gap: '3px',
                   }}
                 >
-                  {activeCategory.includes('all') ? '전체 시설' :
-                    activeCategory.length === 1 ?
-                      ({ charnel: '봉안당', natural: '수목장', park: '공원묘지', crematorium: '화장장' }[activeCategory[0]] || '전체 시설') :
-                      `${({ charnel: '봉안당', natural: '수목장', park: '공원묘지', crematorium: '화장장' }[activeCategory[0]] || '')} 외 ${activeCategory.length - 1}`
-                  }
-                  <ChevronDown size={14} style={{ opacity: 0.6 }} />
-                </button>
-
-                {/* 문의제외 필터 */}
-                <button
-                  onClick={() => setHideInquiry(!hideInquiry)}
-                  style={{
-                    height: '30px',
-                    fontSize: '12px',
-                    fontWeight: hideInquiry ? 700 : 500,
-                    backgroundColor: hideInquiry ? '#EDE9FF' : 'white',
-                    color: hideInquiry ? '#1D0098' : '#495057',
-                    border: hideInquiry ? '1.5px solid #1D0098' : '1px solid #dee2e6',
-                    borderRadius: '6px',
-                    cursor: 'pointer',
-                    transition: 'all 0.2s',
-                    paddingLeft: '14px',
-                    paddingRight: '14px',
-                    whiteSpace: 'nowrap',
-                    flexShrink: 0,
-                  }}
-                >
-                  문의제외
+                  상세필터
+                  <ChevronDown size={12} style={{ opacity: 0.7 }} />
                 </button>
               </div>
-
             </Box>
           </>
         )}
@@ -1358,7 +1453,7 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
               style={{
                 flex: 1,
                 height: 48,
-                backgroundColor: '#1D0098',
+                backgroundColor: '#191F28',
                 color: 'white',
                 border: 'none',
                 borderRadius: 12,
@@ -1375,6 +1470,7 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
         <NaverMap
           ref={mapRef}
           facilities={baseFacilities}
+          selectedId={selectedFacility?.id}
           activeCategory={nearbyList ? nearbyCategory : activeCategory}
           institutionFilter={nearbyList ? nearbyInstitutionFilter : institutionFilter}
           hideInquiry={nearbyList ? nearbyHideInquiry : hideInquiry}

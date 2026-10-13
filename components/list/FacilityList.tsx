@@ -29,13 +29,16 @@ const FacilityListItem = memo(function FacilityListItem({ facility, isSelected, 
 
     return (
         <Box
+            className="facility-card-item"
             onClick={handleClick}
             style={{
                 cursor: 'pointer',
-                border: isSelected ? '2px solid #228be6' : '2px solid transparent',
-                borderRadius: '8px',
-                transition: 'border-color 0.15s ease',
-                contain: 'content'
+                padding: '14px 16px',
+                backgroundColor: isSelected ? '#F0F6FF' : '#FFFFFF',
+                borderBottom: '1px solid #F2F4F6',
+                borderLeft: isSelected ? '3px solid #2563EB' : '3px solid transparent',
+                transition: 'background-color 0.15s ease, border-color 0.15s ease',
+                contain: 'content',
             }}
         >
             <FacilityCard facility={facility} onClick={handleClick} />
@@ -65,7 +68,7 @@ export default function FacilityList({ facilities, loading, onFacilityClick, sel
     if (loading) {
         return (
             <Center h="100%">
-                <Loader size="lg" />
+                <Loader size="md" color="blue" />
             </Center>
         );
     }
@@ -73,9 +76,14 @@ export default function FacilityList({ facilities, loading, onFacilityClick, sel
     if (facilities.length === 0) {
         return (
             <Center h="100%" px="md">
-                <Text c="dimmed" ta="center">
-                    현재 지도 범위 내에<br />시설이 없습니다.
-                </Text>
+                <Box ta="center">
+                    <Text c="#4E5968" fw={700} size="sm" mb={4}>
+                        조건에 맞는 시설이 없습니다
+                    </Text>
+                    <Text c="#8B95A1" size="xs">
+                        지도를 이동하거나 필터 조건을 변경해 보세요.
+                    </Text>
+                </Box>
             </Center>
         );
     }
@@ -83,19 +91,33 @@ export default function FacilityList({ facilities, loading, onFacilityClick, sel
     const visibleFacilities = facilities.slice(0, visibleCount);
 
     return (
-        <Box pos="relative" h="100%">
-            <ScrollArea h="100%" viewportRef={viewportRef} onScrollPositionChange={setScrollPosition} scrollbarSize={8} offsetScrollbars>
-                <Stack p="md" gap="md">
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                        <Text size="sm" c="dimmed" fw={500}>검색 결과 {facilities.length}개</Text>
+        <Box pos="relative" h="100%" bg="#FFFFFF">
+            <ScrollArea h="100%" viewportRef={viewportRef} onScrollPositionChange={setScrollPosition} scrollbarSize={6} offsetScrollbars={false}>
+                <Stack p={0} gap={0}>
+                    <div
+                        style={{
+                            display: 'flex',
+                            justifyContent: 'space-between',
+                            alignItems: 'center',
+                            padding: '10px 16px',
+                            borderBottom: '1px solid #F2F4F6',
+                            backgroundColor: '#FFFFFF',
+                        }}
+                    >
+                        <Text size="xs" c="#6B7684" fw={600}>
+                            조회된 시설 <span style={{ color: '#2563EB', fontWeight: 700 }}>{facilities.length.toLocaleString()}</span>곳
+                        </Text>
                         {setHideInquiry && (
                             <Checkbox
-                                label="문의시설 제외"
+                                label="가격문의 제외"
                                 checked={hideInquiry ?? false}
                                 onChange={() => setHideInquiry(!hideInquiry)}
                                 size="xs"
-                                color="brand"
-                                styles={{ label: { fontSize: '12px', cursor: 'pointer', color: '#868e96', paddingLeft: 6 }, input: { cursor: 'pointer' } }}
+                                color="blue"
+                                styles={{
+                                    label: { fontSize: '12px', fontWeight: 600, cursor: 'pointer', color: '#4E5968', paddingLeft: 6 },
+                                    input: { cursor: 'pointer', borderRadius: '4px' },
+                                }}
                             />
                         )}
                     </div>
@@ -110,37 +132,56 @@ export default function FacilityList({ facilities, loading, onFacilityClick, sel
 
                     {/* 더 보기 버튼 */}
                     {visibleCount < facilities.length && (
-                        <Button
-                            variant="light"
-                            color="gray"
-                            fullWidth
-                            onClick={handleLoadMore}
-                            mt="md"
-                        >
-                            더 보기 ({Math.min(facilities.length - visibleCount, 20)}개)
-                        </Button>
+                        <Box px={16} pt={14}>
+                            <Button
+                                variant="light"
+                                color="gray"
+                                fullWidth
+                                radius="md"
+                                onClick={handleLoadMore}
+                                styles={{
+                                    root: {
+                                        backgroundColor: '#F2F4F6',
+                                        color: '#4E5968',
+                                        fontWeight: 700,
+                                        fontSize: '13px',
+                                        height: '42px',
+                                    },
+                                }}
+                            >
+                                시설 더보기 ({Math.min(facilities.length - visibleCount, 20)}곳)
+                            </Button>
+                        </Box>
                     )}
 
                     {/* 하단 여백 */}
-                    <Box h={100} />
+                    <Box h={96} />
                 </Stack>
             </ScrollArea>
 
-            <Transition transition="slide-up" mounted={scrollPosition.y > 100}>
+            <Transition transition="slide-up" mounted={scrollPosition.y > 160}>
                 {(transitionStyles) => (
                     <ActionIcon
-                        style={{ ...transitionStyles, position: 'absolute', bottom: 80, right: 20, zIndex: 100 }}
+                        style={{
+                            ...transitionStyles,
+                            position: 'absolute',
+                            bottom: 80,
+                            right: 16,
+                            zIndex: 100,
+                            backgroundColor: '#191F28',
+                            boxShadow: '0 4px 14px rgba(15, 23, 42, 0.22)',
+                        }}
                         variant="filled"
-                        color="brand"
-                        size="xl"
+                        size="lg"
                         radius="xl"
                         onClick={scrollToTop}
                         aria-label="맨 위로"
                     >
-                        <ArrowUp size={20} />
+                        <ArrowUp size={18} color="#FFFFFF" />
                     </ActionIcon>
                 )}
             </Transition>
         </Box>
     );
 }
+

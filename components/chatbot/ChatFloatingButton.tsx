@@ -127,11 +127,12 @@ export default function ChatFloatingButton({ hidden = false }: { hidden?: boolea
                 className="chat-fab-button"
                 style={{
                     position: 'fixed', zIndex: 9991,
-                    width: 56, height: 56, borderRadius: '50%',
-                    background: NAVY, border: 'none',
+                    width: 52, height: 52, borderRadius: '50%',
+                    background: 'linear-gradient(135deg, #2563EB 0%, #1D4ED8 100%)',
+                    border: '1.5px solid rgba(255,255,255,0.28)',
                     cursor: 'pointer', display: 'flex',
                     alignItems: 'center', justifyContent: 'center',
-                    boxShadow: '0 4px 16px rgba(48,46,146,0.35)',
+                    boxShadow: '0 6px 20px rgba(37,99,235,0.34)',
                     transition: 'transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), background 0.2s ease',
                     transform: hidden ? 'translateX(100px)' : 'scale(1)',
                 }}

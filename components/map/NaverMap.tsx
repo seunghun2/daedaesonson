@@ -33,6 +33,7 @@ interface NaverMapProps {
     institutionFilter?: 'all' | 'public' | 'private'; // 공설/사설 필터
     hideInquiry?: boolean; // 문의제외 필터
     onUserClick?: () => void; // 사용자 버튼 클릭 콜백
+    selectedId?: string | null; // 현재 선택된 시설 ID (활성 마커 강조용)
 }
 
 export interface NaverMapRef {
@@ -40,6 +41,42 @@ export interface NaverMapRef {
     getCurrentView: () => { lat: number; lng: number; zoom: number } | null;
     highlightRegion: (lat: number, lng: number, zoom: number, type?: 'gu' | 'dong', regionName?: string) => Promise<boolean>;
     searchRegion: (keyword: string) => { lat: number, lng: number, zoom: number, type: 'gu' | 'dong', name: string } | null;
+}
+
+const CATEGORY_MARKER_PALETTE: Record<string, { bg: string; subText: string }> = {
+    'CHARNEL_HOUSE': { bg: '#2563EB', subText: 'rgba(255,255,255,0.88)' },   // 봉안당: 로얄 블루
+    'NATURAL_BURIAL': { bg: '#059669', subText: 'rgba(255,255,255,0.88)' },  // 수목장: 에메랄드 그린
+    'FAMILY_GRAVE': { bg: '#6D28D9', subText: 'rgba(255,255,255,0.88)' },    // 공원묘지: 인디고 바이올렛
+    'CREMATORIUM': { bg: '#D97706', subText: 'rgba(255,255,255,0.9)' },      // 화장시설: 웜 앰버
+    'FUNERAL_HOME': { bg: '#475569', subText: 'rgba(255,255,255,0.85)' },    // 장례식장: 슬레이트
+    'ETC': { bg: '#57534E', subText: 'rgba(255,255,255,0.85)' },             // 기타
+};
+
+function buildPriceMarkerHtml(categoryLabel: string, priceText: string, category: string, isSelected: boolean): string {
+    const palette = CATEGORY_MARKER_PALETTE[category] || CATEGORY_MARKER_PALETTE['CHARNEL_HOUSE'];
+    const bg = isSelected ? '#111827' : palette.bg;
+    const border = isSelected ? '2px solid #FFFFFF' : '1.5px solid rgba(255, 255, 255, 0.95)';
+    const subColor = isSelected ? '#93C5FD' : palette.subText;
+    const shadow = isSelected
+        ? 'drop-shadow(0 6px 14px rgba(15, 23, 42, 0.42))'
+        : 'drop-shadow(0 3px 7px rgba(15, 23, 42, 0.22))';
+
+    return `
+    <div class="dds-price-marker ${isSelected ? 'is-selected' : ''}" style="display:inline-flex;flex-direction:column;align-items:center;cursor:pointer;filter:${shadow};user-select:none;-webkit-user-select:none;">
+        <div style="background:${bg};border:${border};border-radius:10px;padding:4px 9px 5px;min-width:54px;display:flex;flex-direction:column;align-items:center;justify-content:center;box-sizing:border-box;">
+            <span style="font-size:10px;font-weight:600;color:${subColor};line-height:1.15;letter-spacing:-0.3px;white-space:nowrap;font-family:'Pretendard',-apple-system,BlinkMacSystemFont,sans-serif;">${categoryLabel}</span>
+            <span style="font-size:13px;font-weight:800;color:#FFFFFF;line-height:1.2;letter-spacing:-0.4px;white-space:nowrap;margin-top:1px;font-family:'Pretendard',-apple-system,BlinkMacSystemFont,sans-serif;">${priceText}</span>
+        </div>
+        <div style="width:0;height:0;border-left:5px solid transparent;border-right:5px solid transparent;border-top:6px solid ${bg};margin-top:-1px;"></div>
+    </div>`;
+}
+
+function buildClusterPillHtml(displayName: string, count: number): string {
+    return `
+    <div style="cursor:pointer;min-width:68px;padding:7px 13px;background:rgba(25,31,40,0.92);backdrop-filter:blur(8px);color:#FFFFFF;border-radius:999px;border:1.5px solid rgba(255,255,255,0.88);box-shadow:0 4px 14px rgba(15,23,42,0.26);display:flex;flex-direction:column;align-items:center;justify-content:center;font-family:'Pretendard',-apple-system,sans-serif;user-select:none;">
+        <div style="font-size:11px;font-weight:600;color:rgba(255,255,255,0.8);margin-bottom:2px;line-height:1;white-space:nowrap;letter-spacing:-0.2px;">${displayName}</div>
+        <div style="font-size:13px;font-weight:800;color:#60A5FA;line-height:1.1;white-space:nowrap;letter-spacing:-0.3px;">${count}곳</div>
+    </div>`;
 }
 
 // Ray Casting algorithm for Point in Polygon
@@ -70,7 +107,7 @@ const REGION_MAPPINGS: { [key: string]: string[] } = {
 // 좌표별 시설 ID 등록부 (전역 유지 - 필터링되어도 위치 고정)
 const LAYOUT_REGISTRY = new Map<string, string[]>();
 
-const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerClick, onBoundsChanged, onCenterAddressChange, isMobile, onViewList, onMapTap, onMapDrag, uiHidden, activeCategory = ['all'], institutionFilter = 'all', hideInquiry = true, onUserClick }, ref) => {
+const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerClick, onBoundsChanged, onCenterAddressChange, isMobile, onViewList, onMapTap, onMapDrag, uiHidden, activeCategory = ['all'], institutionFilter = 'all', hideInquiry = true, onUserClick, selectedId = null }, ref) => {
     const mapRef = useRef<HTMLDivElement>(null);
     const [isMapLoaded, setIsMapLoaded] = useState(false);
     const [isMainLoaded, setIsMainLoaded] = useState(false);
@@ -856,18 +893,10 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
             }
 
             const categoryLabel = FACILITY_CATEGORY_LABELS[fac.category as FacilityCategory] || fac.category;
-            const categoryColors: Record<string, string> = {
-                'CHARNEL_HOUSE': '#0097a7',
-                'NATURAL_BURIAL': '#43a047',
-                'FAMILY_GRAVE': '#7e57c2',
-                'CREMATORIUM': '#f57c00',
-                'FUNERAL_HOME': '#78909c',
-                'ETC': '#8d6e63'
-            };
 
             // 만장 여부 체크
             const isFull = !!(fac as any).isFull;
-            const markerColor = categoryColors[fac.category as FacilityCategory] || '#0097a7';
+            const isSelected = selectedId === fac.id;
 
             let svgContent: string;
             let anchorPoint: any;
@@ -878,51 +907,13 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
                 const hitArea = 32;
                 svgContent = `
                 <div style="width:${hitArea}px; height:${hitArea}px; cursor:pointer; display:flex; align-items:center; justify-content:center;">
-                    <div style="width:${dotSize}px; height:${dotSize}px; background:rgba(0,0,0,0.5); border:2.5px solid white; border-radius:50%; box-shadow:0 0 6px rgba(0,0,0,0.25);"></div>
+                    <div style="width:${dotSize}px; height:${dotSize}px; background:rgba(15,23,42,0.55); border:2.5px solid white; border-radius:50%; box-shadow:0 2px 6px rgba(0,0,0,0.28);"></div>
                 </div>
                 `;
                 anchorPoint = new window.naver.maps.Point(hitArea / 2, hitArea / 2);
             } else {
-                // ===== 기존 마커 (아치형 태그) — 나중에 전환 가능 =====
-                // const contentWidth = 56;
-                // const contentHeight = 52;
-                // const tailSize = 10;
-                // const archHeight = 14;
-                // svgContent = `
-                // <svg width="${56}" height="${62}" viewBox="0 0 56 62" xmlns="http://www.w3.org/2000/svg">
-                //     <path d="M 0 14 Q 0 0, 28 0 Q 56 0, 56 14 L 56 44 Q 56 52, 48 52 L 10 52 L 0 62 L 0 14 Z"
-                //         fill="${markerColor}" stroke="rgba(0,0,0,0.2)" stroke-width="1"/>
-                //     <text x="28" y="20" font-family="-apple-system, sans-serif" font-size="10" fill="white" fill-opacity="0.9" text-anchor="middle">${categoryLabel}</text>
-                //     <text x="28" y="38" font-family="-apple-system, sans-serif" font-size="13" font-weight="800" fill="white" text-anchor="middle">${priceText}</text>
-                // </svg>`;
-                // anchorPoint = new window.naver.maps.Point(0, 62);
-
-                // ===== 현재 마커: 한복 깃 리본 (마커아이콘2.svg 기반) =====
-                const categoryColorSet: Record<string, { main: string; dark: string }> = {
-                    'CHARNEL_HOUSE': { main: '#0097a7', dark: '#005f6b' },
-                    'NATURAL_BURIAL': { main: '#43a047', dark: '#2d6e30' },
-                    'FAMILY_GRAVE': { main: '#7e57c2', dark: '#412a6f' },
-                    'CREMATORIUM': { main: '#f57c00', dark: '#c26200' },
-                    'FUNERAL_HOME': { main: '#78909c', dark: '#546e7a' },
-                    'ETC': { main: '#8d6e63', dark: '#5d4037' },
-                };
-                const colors = categoryColorSet[fac.category as FacilityCategory] || categoryColorSet['CHARNEL_HOUSE'];
-
-                svgContent = `
-                <svg xmlns="http://www.w3.org/2000/svg" width="62" height="66" viewBox="0 0 48.387 51.479">
-                  <g transform="translate(0,0)">
-                    <path d="M0,32.211V4A4,4,0,0,1,4,0H38.387a4,4,0,0,1,4,4V32.211a4,4,0,0,1-4,4H8.119L0,44.33Z" transform="translate(3 2.15)" fill="${colors.main}"/>
-                    <text x="24" y="18.8" fill="#efefef" font-size="7" font-family="-apple-system, sans-serif" text-anchor="middle">${categoryLabel}</text>
-                    <g transform="translate(16.814 0)">
-                      <rect width="9.858" height="3.13" transform="translate(2.215 0)" fill="${colors.dark}"/>
-                      <rect width="6.976" height="3.13" transform="translate(2.213 0.001) rotate(45)" fill="#d5d5d5"/>
-                      <rect width="13.234" height="3.13" transform="translate(14.29 2.216) rotate(135)" fill="#d5d5d5"/>
-                    </g>
-                    <text x="24" y="30.8" fill="#efefef" font-size="11" font-weight="700" font-family="-apple-system, sans-serif" text-anchor="middle" opacity="0.95">${priceText}</text>
-                  </g>
-                </svg>
-                `;
-                anchorPoint = new window.naver.maps.Point(4, 60);
+                svgContent = buildPriceMarkerHtml(categoryLabel, priceText, fac.category as string, isSelected);
+                anchorPoint = new window.naver.maps.Point(28, 44);
             }
 
             const marker = new window.naver.maps.Marker({
@@ -930,7 +921,7 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
                 map: map,
                 visible: false,
                 title: isFull ? '' : fac.name,
-                zIndex: isFull ? 50 : 100,
+                zIndex: isFull ? 50 : (isSelected ? 999 : 100),
                 icon: {
                     content: svgContent,
                     anchor: anchorPoint,
@@ -939,6 +930,9 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
 
             (marker as any).__facilityData = fac;
             (marker as any).__facilityId = fac.id;
+            (marker as any).__categoryLabel = categoryLabel;
+            (marker as any).__priceText = priceText;
+            (marker as any).__isFull = isFull;
             (marker as any).__regionKey = (fac.address || '').split(' ')[1] || '기타';
 
             window.naver.maps.Event.addListener(marker, 'click', () => {
@@ -953,24 +947,26 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
                         borderWidth: 0,
                         backgroundColor: 'transparent',
                         disableAnchor: true,
-                        pixelOffset: new window.naver.maps.Point(30, -10),
+                        pixelOffset: new window.naver.maps.Point(0, -8),
                     });
                 }
 
                 const tooltipContent = `
                     <div style="
-                        background: white;
-                        padding: 8px 12px;
-                        border-radius: 8px;
-                        box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-                        font-family: -apple-system, sans-serif;
-                        min-width: 120px;
-                        max-width: 200px;
+                        background: rgba(25, 31, 40, 0.95);
+                        backdrop-filter: blur(8px);
+                        padding: 9px 13px;
+                        border-radius: 10px;
+                        border: 1px solid rgba(255,255,255,0.14);
+                        box-shadow: 0 6px 18px rgba(15, 23, 42, 0.28);
+                        font-family: 'Pretendard', -apple-system, sans-serif;
+                        min-width: 130px;
+                        max-width: 220px;
                     ">
-                        <div style="font-weight: 700; font-size: 13px; color: #333; margin-bottom: 4px;">
-                            ${isFull ? '<span style="display:inline-block;width:10px;height:10px;background:rgba(0,0,0,0.5);border:1.5px solid white;border-radius:50%;margin-right:4px;vertical-align:middle;box-shadow:0 0 3px rgba(0,0,0,0.2);"></span>' : ''}${fac.name}
+                        <div style="font-weight: 700; font-size: 13px; color: #FFFFFF; margin-bottom: 3px; letter-spacing: -0.3px;">
+                            ${isFull ? '<span style="display:inline-block;width:8px;height:8px;background:#94A3B8;border:1.5px solid white;border-radius:50%;margin-right:5px;vertical-align:middle;"></span>' : ''}${fac.name}
                         </div>
-                        <div style="font-size: 11px; color: #666;">
+                        <div style="font-size: 11px; color: rgba(255,255,255,0.72); letter-spacing: -0.2px;">
                             ${fac.address || ''}
                         </div>
                     </div>
@@ -1013,14 +1009,9 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
                 map: map,
                 visible: false,
                 icon: {
-                    content: `
-                        <div style="cursor:pointer; min-width:64px; padding: 6px 10px; background:#1D0098; color:white; border-radius:6px; box-shadow:0 2px 6px rgba(0,0,0,0.15); display:flex; flex-direction:column; align-items:center; justify-content:center; font-family:-apple-system, sans-serif;">
-                            <div style="font-size:11px; opacity:0.8; margin-bottom:2px; line-height:1;">${displayName}</div>
-                            <div style="font-size:14px; font-weight:800; line-height:1;">${group.count} 곳</div>
-                        </div>
-                    `,
-                    size: new window.naver.maps.Size(64, 40),
-                    anchor: new window.naver.maps.Point(32, 20),
+                    content: buildClusterPillHtml(displayName, group.count),
+                    size: new window.naver.maps.Size(68, 42),
+                    anchor: new window.naver.maps.Point(34, 21),
                 },
                 zIndex: 200,
             });
@@ -1046,14 +1037,9 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
                 map: map,
                 visible: false,
                 icon: {
-                    content: `
-                        <div style="cursor:pointer; min-width:64px; padding: 6px 10px; background:#1D0098; color:white; border-radius:6px; box-shadow:0 2px 6px rgba(0,0,0,0.15); display:flex; flex-direction:column; align-items:center; justify-content:center; font-family:-apple-system, sans-serif;">
-                            <div style="font-size:11px; opacity:0.8; margin-bottom:2px; line-height:1;">${displayName}</div>
-                            <div style="font-size:14px; font-weight:800; line-height:1;">${group.count} 곳</div>
-                        </div>
-                    `,
-                    size: new window.naver.maps.Size(64, 40),
-                    anchor: new window.naver.maps.Point(32, 20),
+                    content: buildClusterPillHtml(displayName, group.count),
+                    size: new window.naver.maps.Size(68, 42),
+                    anchor: new window.naver.maps.Point(34, 21),
                 },
                 zIndex: 200,
             });
@@ -1100,7 +1086,32 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
         // 🔒 초기화 완료 플래그
         isMarkersInitializedRef.current = true;
 
-    }, [processedFacilities, regionGroups, provinceGroups, regionGroupCenters, onMarkerClick]);
+    }, [processedFacilities, regionGroups, provinceGroups, regionGroupCenters, onMarkerClick, selectedId]);
+
+    // 🎯 선택된 마커(selectedId) 변경 시 이전/현재 마커 아이콘만 즉시 갱신
+    const prevSelectedIdRef = useRef<string | null>(null);
+    useEffect(() => {
+        if (!window.naver?.maps || markersRef.current.length === 0) return;
+        const prevId = prevSelectedIdRef.current;
+        if (prevId === selectedId) return;
+        prevSelectedIdRef.current = selectedId ?? null;
+
+        for (const marker of markersRef.current) {
+            const fid = (marker as any).__facilityId;
+            if (fid !== prevId && fid !== selectedId) continue;
+            const isFull = (marker as any).__isFull;
+            if (isFull) continue;
+            const fac = (marker as any).__facilityData;
+            const categoryLabel = (marker as any).__categoryLabel || '';
+            const priceText = (marker as any).__priceText || '문의';
+            const isNowSelected = fid === selectedId;
+            marker.setZIndex(isNowSelected ? 999 : 100);
+            marker.setIcon({
+                content: buildPriceMarkerHtml(categoryLabel, priceText, fac?.category || 'CHARNEL_HOUSE', isNowSelected),
+                anchor: new window.naver.maps.Point(28, 44),
+            });
+        }
+    }, [selectedId]);
 
     // 🚀 Effect: 데이터 변경 시 업데이트 (최적화: 즉시 1회만 호출)
     useEffect(() => {
@@ -1187,14 +1198,9 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
                 const displayName = regionKey.endsWith('시') || regionKey.endsWith('군') || regionKey.endsWith('구')
                     ? regionKey.slice(0, -1) : regionKey;
                 regionMarker.setIcon({
-                    content: `
-                        <div style="cursor:pointer; min-width:64px; padding: 6px 10px; background:#1D0098; color:white; border-radius:6px; box-shadow:0 2px 6px rgba(0,0,0,0.15); display:flex; flex-direction:column; align-items:center; justify-content:center; font-family:-apple-system, sans-serif;">
-                            <div style="font-size:11px; opacity:0.8; margin-bottom:2px; line-height:1;">${displayName}</div>
-                            <div style="font-size:14px; font-weight:800; line-height:1;">${count} 곳</div>
-                        </div>
-                    `,
-                    size: new window.naver.maps.Size(64, 40),
-                    anchor: new window.naver.maps.Point(32, 20),
+                    content: buildClusterPillHtml(displayName, count),
+                    size: new window.naver.maps.Size(68, 42),
+                    anchor: new window.naver.maps.Point(34, 21),
                 });
                 const isRegionMode = currentZoom >= 10 && currentZoom <= 11;
                 regionMarker.setVisible(isRegionMode);
@@ -1231,14 +1237,9 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
                 else if (displayName.endsWith('도')) displayName = displayName.slice(0, -1);
 
                 provMarker.setIcon({
-                    content: `
-                        <div style="cursor:pointer; min-width:64px; padding: 6px 10px; background:#1D0098; color:white; border-radius:6px; box-shadow:0 2px 6px rgba(0,0,0,0.15); display:flex; flex-direction:column; align-items:center; justify-content:center; font-family:-apple-system, sans-serif;">
-                            <div style="font-size:11px; opacity:0.8; margin-bottom:2px; line-height:1;">${displayName}</div>
-                            <div style="font-size:14px; font-weight:800; line-height:1;">${count} 곳</div>
-                        </div>
-                    `,
-                    size: new window.naver.maps.Size(64, 40),
-                    anchor: new window.naver.maps.Point(32, 20),
+                    content: buildClusterPillHtml(displayName, count),
+                    size: new window.naver.maps.Size(68, 42),
+                    anchor: new window.naver.maps.Point(34, 21),
                 });
                 const isProvinceMode = currentZoom <= 9;
                 provMarker.setVisible(isProvinceMode);
@@ -1362,7 +1363,7 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
                                             <div class="facility-label-inner">${name}</div>
                                         </div>
                                     `,
-                                    anchor: new window.naver.maps.Point(-30, 96),
+                                    anchor: new window.naver.maps.Point(0, -4),
                                 },
                                 zIndex: 200
                             });
@@ -1552,63 +1553,126 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
             <Box pos="relative" w="100%" h="100%">
                 <div id="map" ref={mapRef} style={{ width: '100%', height: '100%' }} />
 
+                {/* 좌측 상단 빠른 메뉴 (PC only): 우측 하단 챗봇 FAB와 겹치지 않도록 상단 좌측에 깔끔한 글래스 필로 배치 */}
+                {isMapLoaded && !isMobile && (
+                    <div style={{
+                        position: 'absolute',
+                        top: '16px',
+                        left: '16px',
+                        zIndex: 100,
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '8px',
+                        transform: uiHidden ? 'translateY(-80px)' : 'translateY(0)',
+                        transition: 'transform 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                        pointerEvents: uiHidden ? 'none' : 'auto',
+                    }}>
+                        <a
+                            href="/about"
+                            style={{
+                                display: 'flex',
+                                alignItems: 'center',
+                                gap: '6px',
+                                backgroundColor: 'rgba(255, 255, 255, 0.96)',
+                                backdropFilter: 'blur(8px)',
+                                color: '#191F28',
+                                padding: '8px 14px',
+                                borderRadius: '999px',
+                                boxShadow: '0 2px 10px rgba(15, 23, 42, 0.1)',
+                                cursor: 'pointer',
+                                fontSize: '13px',
+                                fontWeight: 700,
+                                whiteSpace: 'nowrap' as const,
+                                textDecoration: 'none',
+                                border: '1px solid rgba(229, 232, 235, 0.9)',
+                            }}
+                        >
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#3B389D" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                            <span>서비스 소개</span>
+                        </a>
+                        <a
+                            href="/blog"
+                            style={{
+                                display: 'flex',
+                                alignItems: 'center',
+                                gap: '6px',
+                                backgroundColor: 'rgba(255, 255, 255, 0.96)',
+                                backdropFilter: 'blur(8px)',
+                                color: '#191F28',
+                                padding: '8px 14px',
+                                borderRadius: '999px',
+                                boxShadow: '0 2px 10px rgba(15, 23, 42, 0.1)',
+                                cursor: 'pointer',
+                                fontSize: '13px',
+                                fontWeight: 700,
+                                whiteSpace: 'nowrap' as const,
+                                textDecoration: 'none',
+                                border: '1px solid rgba(229, 232, 235, 0.9)',
+                            }}
+                        >
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#2563EB" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+                            <span>장례 가이드·블로그</span>
+                        </a>
+                    </div>
+                )}
 
                 {/* 커스텀 컨트롤 버튼 (우측 상단), UI 숨김 시 오른쪽으로 슬라이드 아웃 */}
                 {isMapLoaded && (
                     <div style={{
                         position: 'absolute',
-                        top: isMobile ? '130px' : '20px', // 모바일: 상단 헤더 아래로
-                        right: '16px',
+                        top: isMobile ? '118px' : '16px', // 모바일: 상단 헤더 아래로
+                        right: '14px',
                         zIndex: 100,
                         display: 'flex',
                         flexDirection: 'column',
-                        gap: '10px',
+                        gap: '8px',
                         transform: uiHidden ? 'translateX(100px)' : 'translateX(0)',
                         transition: 'transform 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
                     }}>
                         {/* 0. 내 정보 (PC만) */}
                         {onUserClick && (
                             <CustomControlBtn
-                                icon={<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#495057" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>}
+                                icon={<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#191F28" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>}
                                 onClick={onUserClick}
                             />
                         )}
                         {/* 1. 줌 컨트롤 그룹 */}
                         <div style={{
                             display: 'flex', flexDirection: 'column',
-                            borderRadius: '8px', overflow: 'hidden',
-                            boxShadow: '0 2px 8px rgba(0,0,0,0.15)'
+                            borderRadius: '10px', overflow: 'hidden',
+                            boxShadow: '0 2px 10px rgba(15, 23, 42, 0.12)',
+                            border: '1px solid rgba(229, 232, 235, 0.9)',
                         }}>
                             <CustomControlBtn
-                                icon={<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#495057" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>}
+                                icon={<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#191F28" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>}
                                 onClick={handleZoomIn}
-                                style={{ borderRadius: 0, borderBottom: '1px solid #f1f3f5' }}
+                                style={{ borderRadius: 0, border: 'none', borderBottom: '1px solid #F2F4F6', boxShadow: 'none' }}
                             />
                             <CustomControlBtn
-                                icon={<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#495057" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="5" y1="12" x2="19" y2="12"/></svg>}
+                                icon={<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#191F28" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><line x1="5" y1="12" x2="19" y2="12"/></svg>}
                                 onClick={handleZoomOut}
-                                style={{ borderRadius: 0 }}
+                                style={{ borderRadius: 0, border: 'none', boxShadow: 'none' }}
                             />
                         </div>
 
                         {/* 3. 내 위치 */}
                         <CustomControlBtn
-                            icon={<svg width="24" height="24" viewBox="0 0 24 24" fill="#495057"><path d="M12 8c-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4zm8.94 3A8.994 8.994 0 0 0 13 3.06V1h-2v2.06A8.994 8.994 0 0 0 3.06 11H1v2h2.06A8.994 8.994 0 0 0 11 20.94V23h2v-2.06A8.994 8.994 0 0 0 20.94 13H23v-2h-2.06zM12 19c-3.87 0-7-3.13-7-7s3.13-7 7-7 7 3.13 7 7-3.13 7-7 7z"/></svg>}
+                            icon={<svg width="20" height="20" viewBox="0 0 24 24" fill="#191F28"><path d="M12 8c-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4zm8.94 3A8.994 8.994 0 0 0 13 3.06V1h-2v2.06A8.994 8.994 0 0 0 3.06 11H1v2h2.06A8.994 8.994 0 0 0 11 20.94V23h2v-2.06A8.994 8.994 0 0 0 20.94 13H23v-2h-2.06zM12 19c-3.87 0-7-3.13-7-7s3.13-7 7-7 7 3.13 7 7-3.13 7-7 7z"/></svg>}
                             onClick={handleMyLocation}
                         />
                     </div>
                 )}
 
-                {/* 하단 주소 버튼 (호갱노노 스타일) - 가운데, UI 숨김 시 아래로 슬라이드 아웃 */}
+                {/* 하단 주소 버튼 (호갱노노 스타일 다크 플로팅 필) - 가운데 */}
                 {isMapLoaded && centerAddress && (
                     <div style={{
                         position: 'absolute',
-                        bottom: isMobile ? '70px' : '24px',
-                        left: isMobile ? '16px' : (typeof window !== 'undefined' && window.innerWidth <= 1200 ? '16px' : '50%'),
-                        maxWidth: isMobile ? 'calc(100vw - 88px)' : 'none',
+                        bottom: isMobile ? '72px' : '24px',
+                        left: isMobile ? '16px' : '50%',
+                        maxWidth: isMobile ? 'calc(100vw - 92px)' : 'none',
                         transform: uiHidden
-                            ? ((!isMobile && typeof window !== 'undefined' && window.innerWidth > 1200) ? 'translateX(-50%) translateY(150%)' : 'translateY(150%)')
-                            : ((!isMobile && typeof window !== 'undefined' && window.innerWidth > 1200) ? 'translateX(-50%) translateY(0)' : 'translateY(0)'),
+                            ? (isMobile ? 'translateY(150%)' : 'translateX(-50%) translateY(150%)')
+                            : (isMobile ? 'translateY(0)' : 'translateX(-50%) translateY(0)'),
                         opacity: uiHidden ? 0 : 1,
                         pointerEvents: uiHidden ? 'none' : 'auto',
                         transition: 'transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease',
@@ -1618,6 +1682,7 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
                         gap: '8px',
                     }}>
                         <div
+                            className="touch-press"
                             onClick={() => {
                                 if (onViewList) {
                                     onViewList(centerAddress, centerCoords?.lat ?? 37.5, centerCoords?.lng ?? 127);
@@ -1627,87 +1692,27 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
                                 display: 'flex',
                                 alignItems: 'center',
                                 gap: '8px',
-                                backgroundColor: '#1D0098',
-                                color: 'white',
-                                padding: isMobile ? '12px 18px' : '14px 24px',
-                                borderRadius: '30px',
-                                boxShadow: '0 4px 12px rgba(0,0,0,0.3)',
+                                backgroundColor: 'rgba(25, 31, 40, 0.94)',
+                                backdropFilter: 'blur(10px)',
+                                color: '#FFFFFF',
+                                padding: isMobile ? '10px 16px' : '11px 20px',
+                                borderRadius: '999px',
+                                border: '1px solid rgba(255, 255, 255, 0.16)',
+                                boxShadow: '0 6px 20px rgba(15, 23, 42, 0.26)',
                                 cursor: 'pointer',
-                                fontSize: isMobile ? '14px' : '15px',
-                                fontWeight: 'bold',
+                                fontSize: isMobile ? '13px' : '13.5px',
+                                fontWeight: 700,
+                                letterSpacing: '-0.3px',
                                 whiteSpace: 'nowrap',
                                 textDecoration: 'none',
                                 maxWidth: '100%',
                             }}
                         >
-                            {!isMobile && (
-                                <svg width={20} height={20} viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
-                            )}
+                            <MapPin size={15} color="#60A5FA" style={{ flexShrink: 0 }} />
                             <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
-                                {centerAddress} 주변 시설 보기
+                                {centerAddress} 주변 목록보기
                             </span>
                         </div>
-                    </div>
-                )}
-
-                {/* 서비스 소개 + 블로그 버튼 (PC only) - 오른쪽 하단 */}
-                {isMapLoaded && !isMobile && (
-                    <div style={{
-                        position: 'absolute',
-                        bottom: '24px',
-                        right: '16px',
-                        zIndex: 200,
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: '10px',
-                        transform: uiHidden ? 'translateY(150%)' : 'translateY(0)',
-                        transition: 'transform 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-                        pointerEvents: uiHidden ? 'none' : 'auto',
-                    }}>
-                        <a
-                            href="/about"
-                            style={{
-                                display: 'flex',
-                                alignItems: 'center',
-                                gap: '8px',
-                                backgroundColor: 'white',
-                                color: '#1D0098',
-                                padding: '14px 24px',
-                                borderRadius: '30px',
-                                boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
-                                cursor: 'pointer',
-                                fontSize: '15px',
-                                fontWeight: 'bold',
-                                whiteSpace: 'nowrap' as const,
-                                textDecoration: 'none',
-                                border: '1.5px solid #e9ecef',
-                            }}
-                        >
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
-                            <span>대대손손 소개</span>
-                        </a>
-                        <a
-                            href="/blog"
-                            style={{
-                                display: 'flex',
-                                alignItems: 'center',
-                                gap: '8px',
-                                backgroundColor: 'white',
-                                color: '#1D0098',
-                                padding: '14px 24px',
-                                borderRadius: '30px',
-                                boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
-                                cursor: 'pointer',
-                                fontSize: '15px',
-                                fontWeight: 'bold',
-                                whiteSpace: 'nowrap' as const,
-                                textDecoration: 'none',
-                                border: '1.5px solid #e9ecef',
-                            }}
-                        >
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
-                            <span>블로그</span>
-                        </a>
                     </div>
                 )}
 
@@ -1745,20 +1750,22 @@ function CustomControlBtn({ icon, onClick, style }: any) {
         <div
             onClick={onClick}
             style={{
-                width: '40px',
-                height: '40px',
-                backgroundColor: 'white',
-                borderRadius: '8px',
+                width: '38px',
+                height: '38px',
+                backgroundColor: 'rgba(255, 255, 255, 0.96)',
+                backdropFilter: 'blur(8px)',
+                borderRadius: '10px',
+                border: '1px solid rgba(229, 232, 235, 0.9)',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
                 cursor: 'pointer',
-                boxShadow: '0 2px 8px rgba(0,0,0,0.15)',
-                transition: 'background-color 0.2s',
+                boxShadow: '0 2px 10px rgba(15, 23, 42, 0.12)',
+                transition: 'background-color 0.15s ease',
                 ...style // 덮어쓰기 허용
             }}
-            onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#f8f9fa'}
-            onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'white'}
+            onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#F8FAFC'}
+            onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.96)'}
         >
             {icon}
         </div>

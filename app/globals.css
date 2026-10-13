@@ -3,15 +3,35 @@
 @tailwind utilities;
 
 :root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
+  --foreground-rgb: 25, 31, 40;
+  --background-start-rgb: 248, 250, 252;
   --background-end-rgb: 255, 255, 255;
+  --brand-primary: #3B389D;
+  --brand-accent: #2563EB;
+  --text-primary: #191F28;
+  --text-secondary: #4E5968;
+  --text-muted: #8B95A1;
+  --surface-subtle: #F2F4F6;
+  --border-subtle: #E5E8EB;
 }
 
 body {
-  /* Mantine handles basic body styles, but we keep tailwind base */
+  color: #191F28;
+  background-color: #FFFFFF;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  letter-spacing: -0.015em;
   /* 🚫 더블탭 확대 방지 */
   touch-action: pan-x pan-y;
+}
+
+/* 가로 스크롤바 숨김 유틸리티 */
+.no-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
 }
 
 /* 지도 영역은 핀치줌 허용 및 GPU 하드웨어 가속 */
@@ -26,6 +46,21 @@ body {
 .facility-card-item {
   contain: content;
   transform: translateZ(0);
+  transition: background-color 0.15s ease;
+}
+
+/* 🏷️ 호갱노노/네이버부동산 스타일 지도 가격 마커 */
+.dds-price-marker {
+  transition: transform 0.16s cubic-bezier(0.2, 0.8, 0.2, 1), filter 0.16s ease;
+  will-change: transform;
+}
+.dds-price-marker:hover {
+  transform: translateY(-2px) scale(1.05);
+  z-index: 900 !important;
+}
+.dds-price-marker.is-selected {
+  transform: translateY(-4px) scale(1.1);
+  z-index: 999 !important;
 }
 
 /* 🚀 모바일 터치 피드백 & 0ms 지연 최적화 */
@@ -48,19 +83,17 @@ body {
 
 /* 시설 상세 하단 플로팅 도크 안전 패딩 */
 .facility-detail-pb-safe {
-  padding-bottom: calc(72px + env(safe-area-inset-bottom, 16px)) !important;
+  padding-bottom: calc(80px + env(safe-area-inset-bottom, 16px)) !important;
 }
 
 /* 🎯 마커 통~~통~~통~~ 무한 바운스 애니메이션 */
 @keyframes markerBounce {
-
   0%,
   100% {
     transform: translateY(0);
   }
-
   35% {
-    transform: translateY(-12px);
+    transform: translateY(-10px);
   }
 }
 
@@ -145,16 +178,19 @@ body {
 }
 
 .facility-label-inner {
-  background: white;
-  padding: 5px 10px;
-  border-radius: 6px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  background: rgba(25, 31, 40, 0.94);
+  backdrop-filter: blur(8px);
+  padding: 5px 11px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.24);
   font-size: 12px;
   font-weight: 700;
-  color: #333;
+  color: #ffffff;
   white-space: nowrap;
-  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-  animation: labelSlideUp 0.25s ease-out forwards;
+  letter-spacing: -0.2px;
+  font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+  animation: labelSlideUp 0.2s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
 }
 
 /* 🤖 대손이 FAB & 말풍선 반응형 위치 (모바일: 하단바 위 70px / 데스크톱: 24px) */
