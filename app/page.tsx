@@ -16,7 +16,7 @@ export const revalidate = 60; // 60초마다 재검증 (ISR)
 async function getFacilities(): Promise<Facility[]> {
   try {
     const supabase = getSupabaseServer();
-    const COLUMNS = 'id,name,address,lat,lng,category,minPrice,maxPrice,representativePrice,operatorType,isPublic,isActive,isFull,thumbnail';
+    const COLUMNS = 'id,name,address,lat,lng,category,minPrice,maxPrice,representativePrice,operatorType,hasParking,hasRestaurant,hasStore,hasAccessibility,isPublic,isActive,isFull,reviewCount,rating,phone,websiteUrl,viewCount,favoriteCount,thumbnail';
 
     const [page0, page1] = await Promise.all([
       supabase.from('Facility').select(COLUMNS).order('id', { ascending: true }).range(0, 999),
@@ -51,8 +51,18 @@ async function getFacilities(): Promise<Facility[]> {
           },
           representativePrice: repPrice,
           operatorType: f.operatorType,
+          hasParking: f.hasParking ?? false,
+          hasRestaurant: f.hasRestaurant ?? false,
+          hasStore: f.hasStore ?? false,
+          hasAccessibility: f.hasAccessibility ?? false,
           isPublic: f.isPublic ?? false,
           isFull: f.isFull ?? false,
+          reviewCount: f.reviewCount || 0,
+          rating: f.rating || 0,
+          phone: f.phone || '',
+          websiteUrl: f.websiteUrl || '',
+          viewCount: f.viewCount || 0,
+          favoriteCount: f.favoriteCount || 0,
           thumbnail: f.thumbnail || '',
         };
       });

@@ -21,11 +21,13 @@ export function formatKoreanCurrency(amount: number): string {
         const man = Math.floor(amount / 10000);
         const rest = amount % 10000;
 
-        // 나머지가 없거나 무시할 수준(원 단위 절삭)이면 'X만원'
-        // 보통 장례 비용에서 만원 미만은 잘 안 나오지만, 나올 경우 'X만 X,XXX원' 표기도 가능.
-        // 여기서는 'Option 1' 스타일(2,382만 3,000원)을 위해 천원 단위까지 살린다.
-
         if (rest === 0) return `${man.toLocaleString()}만원`;
+
+        // 평당 환산 등으로 인해 89만 7,239원처럼 천원 단위로 떨어지지 않는 단수는 깔끔하게 만원 단위로 반올림
+        if (amount >= 100000 && rest % 1000 !== 0) {
+            const roundedMan = Math.round(amount / 10000);
+            return `${roundedMan.toLocaleString()}만원`;
+        }
 
         return `${man.toLocaleString()}만 ${rest.toLocaleString()}원`;
     }

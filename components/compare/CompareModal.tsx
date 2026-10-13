@@ -1,9 +1,10 @@
 'use client';
 
-import React from 'react';
-import { Box, Text, Group, Modal, ScrollArea } from '@mantine/core';
-import { Scale, X, Check, Minus, MapPin, Phone, ArrowRight, Trash2 } from 'lucide-react';
+import React, { useEffect, useState } from 'react';
+import { Box, Text, Group, Modal, ScrollArea, Loader } from '@mantine/core';
+import { Scale, X, Check, Minus, MapPin, Phone, ArrowRight, Trash2, Info, Building2, UserCheck } from 'lucide-react';
 import NextImage from 'next/image';
+import Link from 'next/link';
 import { Facility, FACILITY_CATEGORY_LABELS } from '@/types';
 import { formatKoreanCurrency } from '@/lib/format';
 import { getFacilityImageUrl } from '@/lib/supabaseImage';
@@ -170,6 +171,8 @@ interface CompareModalProps {
     allFacilities: Facility[];
     onRemove: (id: string) => void;
     onSelectFacility: (facility: Facility) => void;
+    isLoggedIn?: boolean;
+    onRequestLogin?: () => void;
 }
 
 export default function CompareModal({
@@ -179,14 +182,79 @@ export default function CompareModal({
     allFacilities,
     onRemove,
     onSelectFacility,
+    isLoggedIn = false,
+    onRequestLogin,
 }: CompareModalProps) {
+    // 상세 데이터(priceInfo, 편의시설, 이미지 등) 실시간 보강 캐시
+    const [detailMap, setDetailMap] = useState<Record<string, Facility>>({});
+    const [loadingDetails, setLoadingDetails] = useState(false);
+
+    useEffect(() => {
+        if (items.length === 0) return;
+        const missingIds = items
+            .map((f) => f.id)
+            .filter((id) => !detailMap[id]?.priceInfo);
+
+        if (missingIds.length === 0) return;
+
+        let cancelled = false;
+        setLoadingDetails(true);
+
+        Promise.all(
+            missingIds.map(async (id) => {
+                try {
+                    const res = await fetch(`/api/facilities/${id}`);
+                    if (!res.ok) return null;
+                    const data = await res.json();
+                    return { id, data };
+                } catch {
+                    return null;
+                }
+            })
+        ).then((results) => {
+            if (cancelled) return;
+            setDetailMap((prev) => {
+                const next = { ...prev };
+                results.forEach((r) => {
+                    if (r && r.data) {
+                        next[r.id] = r.data;
+                    }
+                });
+                return next;
+            });
+            setLoadingDetails(false);
+        });
+
+        return () => {
+            cancelled = true;
+        };
+    }, [items, opened, detailMap]);
+
+    // 리스트 아이템과 상세 API 데이터를 병합한 최종 비교 배열
+    const enrichedItems = React.useMemo(() => {
+        return items.map((item) => {
+            const detail = detailMap[item.id];
+            if (!detail) return item;
+            return {
+                ...item,
+                ...detail,
+                priceRange: item.priceRange || {
+                    min: detail.representativePrice || item.representativePrice || 0,
+                    max: (detail as any).maxPrice || 0,
+                },
+                representativePrice: detail.representativePrice || item.representativePrice || 0,
+                thumbnail: item.thumbnail || detail.thumbnail || detail.images?.[0] || '',
+            };
+        });
+    }, [items, detailMap]);
+
     // 지역 평균 계산 헬퍼 (공설/사설 동일 유형 및 이상치 제외)
     const getRegionalInsight = (fac: Facility) => {
         const rawMin = fac.representativePrice || fac.priceRange?.min || 0;
         const minPrice = rawMin > 0 && rawMin < 10000 ? rawMin * 10000 : rawMin;
         if (!minPrice || minPrice <= 0) return null;
         const regionPrefix = fac.address?.split(' ')[0] || '';
-        const minThreshold = fac.isPublic ? 50000 : 500000;
+        const minThreshold = fac.isPublic ? 30000 : 300000;
         const peers = allFacilities.filter((f) => {
             const p = f.representativePrice || f.priceRange?.min || 0;
             const normP = p > 0 && p < 10000 ? p * 10000 : p;
@@ -207,17 +275,17 @@ export default function CompareModal({
         if (!avg) return null;
         const diffPct = Math.round(((minPrice - avg) / avg) * 100);
         if (diffPct <= -5) {
-            return { text: `지역 평균 대비 ${Math.abs(diffPct)}% 저렴`, color: '#059669', bg: '#ECFDF5' };
+            return { text: `지역 동종 평균 대비 ${Math.abs(diffPct)}% 저렴`, color: '#059669', bg: '#ECFDF5' };
         }
         if (diffPct <= 15) {
-            return { text: '지역 평균 수준', color: '#2563EB', bg: '#EFF6FF' };
+            return { text: '지역 동종 평균 수준', color: '#2563EB', bg: '#EFF6FF' };
         }
-        const roundedAvgMan = Math.round(avg / 100000) * 10;
-        return { text: `지역 평균 ${roundedAvgMan.toLocaleString()}만원`, color: '#475569', bg: '#F8FAFC' };
+        const roundedAvgMan = Math.max(1, Math.round(avg / 10000));
+        return { text: `지역 동종 평균 약 ${roundedAvgMan.toLocaleString()}만원`, color: '#475569', bg: '#F8FAFC' };
     };
 
     const lowestPriceId = React.useMemo(() => {
-        const priced = items.filter((f) => (f.representativePrice || f.priceRange?.min || 0) > 0);
+        const priced = enrichedItems.filter((f) => (f.representativePrice || f.priceRange?.min || 0) > 0);
         if (priced.length < 2) return null;
         priced.sort(
             (a, b) =>
@@ -225,7 +293,15 @@ export default function CompareModal({
                 (b.representativePrice || b.priceRange?.min || Infinity)
         );
         return priced[0].id;
-    }, [items]);
+    }, [enrichedItems]);
+
+    // 공설 vs 사설 혼합 비교 여부 감지 (사용자에게 가격 차이 이유를 명확히 안내)
+    const hasMixedPublicPrivate = React.useMemo(() => {
+        if (enrichedItems.length < 2) return false;
+        const hasPub = enrichedItems.some((f) => f.isPublic);
+        const hasPriv = enrichedItems.some((f) => !f.isPublic);
+        return hasPub && hasPriv;
+    }, [enrichedItems]);
 
     return (
         <Modal
@@ -257,26 +333,29 @@ export default function CompareModal({
                     justifyContent: 'space-between',
                 }}
             >
-                <Group gap={8}>
+                <Group gap={10}>
                     <Box
                         style={{
-                            width: 30,
-                            height: 30,
-                            borderRadius: 8,
+                            width: 34,
+                            height: 34,
+                            borderRadius: 10,
                             backgroundColor: '#EFF6FF',
                             display: 'flex',
                             alignItems: 'center',
                             justifyContent: 'center',
                         }}
                     >
-                        <Scale size={16} color="#2563EB" />
+                        <Scale size={18} color="#2563EB" />
                     </Box>
                     <Box>
-                        <Text style={{ fontSize: 16, fontWeight: 800, color: '#191F28', letterSpacing: '-0.02em' }}>
-                            시설 한눈에 비교하기
-                        </Text>
+                        <Group gap={8} align="center">
+                            <Text style={{ fontSize: 16, fontWeight: 800, color: '#191F28', letterSpacing: '-0.02em' }}>
+                                시설 한눈에 비교하기
+                            </Text>
+                            {loadingDetails && <Loader size={14} color="blue" />}
+                        </Group>
                         <Text style={{ fontSize: 12, color: '#6B7684' }}>
-                            선택한 {items.length}곳의 분양가·운영형태·편의시설 비교
+                            선택한 {enrichedItems.length}곳의 실제 분양가 산정 기준·이용자격·관리비·세부 가격표 비교
                         </Text>
                     </Box>
                 </Group>
@@ -295,15 +374,38 @@ export default function CompareModal({
                         justifyContent: 'center',
                         cursor: 'pointer',
                         color: '#4E5968',
+                        outline: 'none',
                     }}
                 >
                     <X size={18} />
                 </button>
             </Box>
 
-            <ScrollArea mah="78vh" type="auto">
+            <ScrollArea mah="80vh" type="auto">
                 <Box p={20} bg="#F8FAFC">
-                    {items.length === 0 ? (
+                    {/* 공설 vs 사설 혼합 비교 시 핵심 가이드 배너 */}
+                    {hasMixedPublicPrivate && (
+                        <Box
+                            mb={14}
+                            px={14}
+                            py={10}
+                            style={{
+                                backgroundColor: '#EFF6FF',
+                                border: '1px solid #BFDBFE',
+                                borderRadius: 12,
+                                display: 'flex',
+                                alignItems: 'flex-start',
+                                gap: 8,
+                            }}
+                        >
+                            <Info size={16} color="#2563EB" style={{ flexShrink: 0, marginTop: 2 }} />
+                            <Text style={{ fontSize: 12, color: '#1E3A8A', lineHeight: 1.5, fontWeight: 500 }}>
+                                <strong>공설 시설과 사설 시설을 함께 비교 중입니다.</strong> 공설은 비용이 저렴한 대신 <strong>해당 시·군 관내 주민 자격</strong>과 기한(15~60년) 제한이 있으며, 사설은 <strong>거주지 제한 없이 누구나 영구안치</strong>가 가능하고 평당 분양가·석물비가 별도 책정됩니다.
+                            </Text>
+                        </Box>
+                    )}
+
+                    {enrichedItems.length === 0 ? (
                         <Box py={48} style={{ textAlign: 'center' }}>
                             <Text size="sm" c="#6B7684">
                                 비교할 시설을 목록에서 선택해 주세요.
@@ -313,19 +415,20 @@ export default function CompareModal({
                         <Box
                             style={{
                                 display: 'grid',
-                                gridTemplateColumns: `repeat(${items.length}, minmax(200px, 1fr))`,
+                                gridTemplateColumns: `repeat(${enrichedItems.length}, minmax(240px, 1fr))`,
                                 gap: 14,
                             }}
                         >
-                            {items.map((fac) => {
+                            {enrichedItems.map((fac) => {
                                 const facAny = fac as any;
-                                const rawImg = facAny.thumbnail || fac.imageGallery?.[0];
+                                const rawImg = facAny.thumbnail || fac.imageGallery?.[0] || fac.images?.[0];
                                 const thumbUrl = rawImg ? getFacilityImageUrl(rawImg) : '';
                                 const minPrice = fac.representativePrice || fac.priceRange?.min || 0;
                                 const isLowest = lowestPriceId === fac.id;
                                 const insight = getRegionalInsight(fac);
-                                const derived = extractFacilityInsights(fac);
-                                const cp = facAny.categoryPrices;
+                                const derived = extractFacilityInsights(fac, minPrice);
+                                const cp = derived.categoryPrices;
+                                const hasOddExactWon = minPrice >= 100000 && minPrice % 1000 !== 0;
 
                                 return (
                                     <Box
@@ -344,7 +447,7 @@ export default function CompareModal({
                                         <Box
                                             style={{
                                                 position: 'relative',
-                                                height: 128,
+                                                height: 124,
                                                 backgroundColor: '#F1F5F9',
                                                 overflow: 'hidden',
                                             }}
@@ -354,7 +457,7 @@ export default function CompareModal({
                                                     src={thumbUrl}
                                                     alt={fac.name}
                                                     fill
-                                                    sizes="280px"
+                                                    sizes="320px"
                                                     style={{ objectFit: 'cover' }}
                                                 />
                                             ) : (
@@ -433,7 +536,7 @@ export default function CompareModal({
                                                             color: fac.isPublic ? '#1D4ED8' : '#475569',
                                                         }}
                                                     >
-                                                        {fac.isPublic ? '공설' : '사설'}
+                                                        {fac.isPublic ? '공설(지자체)' : '사설(법인)'}
                                                     </span>
                                                     <span
                                                         style={{
@@ -482,21 +585,28 @@ export default function CompareModal({
                                                 </Group>
                                             </Box>
 
-                                            {/* 대표 가격 박스 */}
+                                            {/* 대표 가격 박스 + 산정 기준 명시 */}
                                             <Box
-                                                p={10}
+                                                p={11}
                                                 style={{
                                                     backgroundColor: '#F8FAFC',
                                                     borderRadius: 10,
                                                     border: '1px solid #EEF1F5',
                                                 }}
                                             >
-                                                <Text style={{ fontSize: 11, fontWeight: 600, color: '#8B95A1' }}>
-                                                    대표 최저가
-                                                </Text>
+                                                <Group justify="space-between" align="center">
+                                                    <Text style={{ fontSize: 11, fontWeight: 700, color: '#64748B' }}>
+                                                        대표 최저가
+                                                    </Text>
+                                                    {hasOddExactWon && (
+                                                        <Text style={{ fontSize: 10.5, color: '#94A3B8' }}>
+                                                            고시가 {minPrice.toLocaleString()}원
+                                                        </Text>
+                                                    )}
+                                                </Group>
                                                 <Text
                                                     style={{
-                                                        fontSize: 18,
+                                                        fontSize: 19,
                                                         fontWeight: 800,
                                                         color: minPrice > 0 ? '#2563EB' : '#8B95A1',
                                                         letterSpacing: '-0.03em',
@@ -505,6 +615,19 @@ export default function CompareModal({
                                                 >
                                                     {minPrice > 0 ? `${formatKoreanCurrency(minPrice)}~` : '가격문의'}
                                                 </Text>
+                                                {derived.representativePriceLabel && (
+                                                    <Text
+                                                        style={{
+                                                            fontSize: 11.5,
+                                                            fontWeight: 600,
+                                                            color: '#334155',
+                                                            marginTop: 3,
+                                                        }}
+                                                        lineClamp={1}
+                                                    >
+                                                        기준: {derived.representativePriceLabel}
+                                                    </Text>
+                                                )}
                                                 <Group gap={4} mt={6}>
                                                     {insight && (
                                                         <Box
@@ -539,43 +662,65 @@ export default function CompareModal({
                                                 </Group>
                                             </Box>
 
-                                            {/* 실부담 비용 & 관리비 분석 (파생 지표) */}
+                                            {/* 1. 이용 자격 및 계약/관리 조건 */}
                                             <Box style={{ borderTop: '1px solid #F1F5F9', paddingTop: 10 }}>
-                                                <Text style={{ fontSize: 11.5, fontWeight: 700, color: '#4E5968', marginBottom: 6 }}>
-                                                    유지비 및 계약 조건
+                                                <Text style={{ fontSize: 11.5, fontWeight: 700, color: '#334155', marginBottom: 6 }}>
+                                                    이용 자격 및 유지비 조건
                                                 </Text>
                                                 <Box style={{ display: 'flex', flexDirection: 'column', gap: 5 }}>
-                                                    <Group justify="space-between">
-                                                        <Text style={{ fontSize: 12, color: '#6B7684' }}>연간 관리비</Text>
-                                                        <Text style={{ fontSize: 12, fontWeight: 700, color: derived.managementFeeText ? '#191F28' : '#CBD5E1' }}>
-                                                            {derived.managementFeeText || '시설 문의'}
+                                                    <Group justify="space-between" wrap="nowrap">
+                                                        <Text style={{ fontSize: 12, color: '#6B7684', flexShrink: 0 }}>이용 자격</Text>
+                                                        <Text
+                                                            style={{
+                                                                fontSize: 12,
+                                                                fontWeight: 700,
+                                                                color: fac.isPublic ? '#1D4ED8' : '#059669',
+                                                                textAlign: 'right',
+                                                            }}
+                                                            lineClamp={1}
+                                                        >
+                                                            {derived.eligibilityText}
                                                         </Text>
                                                     </Group>
-                                                    <Group justify="space-between">
-                                                        <Text style={{ fontSize: 12, color: '#6B7684' }}>10년 예상 총액</Text>
-                                                        <Text style={{ fontSize: 12, fontWeight: 700, color: derived.estimated10YearTotal ? '#2563EB' : '#CBD5E1' }}>
-                                                            {derived.estimated10YearTotal ? formatKoreanPrice(derived.estimated10YearTotal) : '-'}
+                                                    <Group justify="space-between" wrap="nowrap">
+                                                        <Text style={{ fontSize: 12, color: '#6B7684', flexShrink: 0 }}>계약·사용기간</Text>
+                                                        <Text style={{ fontSize: 12, fontWeight: 700, color: '#191F28' }}>
+                                                            {derived.durations.length > 0 ? derived.durations.join(' · ') : (derived.primaryDuration || '-')}
                                                         </Text>
                                                     </Group>
-                                                    <Group justify="space-between">
-                                                        <Text style={{ fontSize: 12, color: '#6B7684' }}>정보 공개도</Text>
-                                                        <Text style={{ fontSize: 12, fontWeight: 700, color: derived.completenessScore >= 75 ? '#059669' : '#4E5968' }}>
-                                                            {derived.completenessScore}점 / 100
+                                                    <Group justify="space-between" wrap="nowrap">
+                                                        <Text style={{ fontSize: 12, color: '#6B7684', flexShrink: 0 }}>연간 관리비</Text>
+                                                        <Text style={{ fontSize: 12, fontWeight: 700, color: derived.managementFeeText ? '#191F28' : '#94A3B8' }}>
+                                                            {derived.managementFeeText || '별도 문의'}
                                                         </Text>
                                                     </Group>
+                                                    <Group justify="space-between" wrap="nowrap">
+                                                        <Text style={{ fontSize: 12, color: '#6B7684', flexShrink: 0 }}>10년 합산 예상</Text>
+                                                        <Text style={{ fontSize: 12, fontWeight: 700, color: derived.estimated10YearTotal ? '#2563EB' : '#94A3B8' }}>
+                                                            {derived.estimated10YearTotal ? `약 ${formatKoreanPrice(derived.estimated10YearTotal)}` : '관리비 확인 필요'}
+                                                        </Text>
+                                                    </Group>
+                                                    {derived.extraCostText && (
+                                                        <Group justify="space-between" wrap="nowrap">
+                                                            <Text style={{ fontSize: 12, color: '#6B7684', flexShrink: 0 }}>석물·부대비용</Text>
+                                                            <Text style={{ fontSize: 11.5, fontWeight: 600, color: '#475569' }} lineClamp={1}>
+                                                                {derived.extraCostText}
+                                                            </Text>
+                                                        </Group>
+                                                    )}
                                                 </Box>
                                             </Box>
 
-                                            {/* 세부 안치 유형별 가격 */}
+                                            {/* 2. 세부 안치 유형별 시작가 */}
                                             <Box style={{ borderTop: '1px solid #F1F5F9', paddingTop: 10 }}>
-                                                <Text style={{ fontSize: 11.5, fontWeight: 700, color: '#4E5968', marginBottom: 6 }}>
-                                                    유형별 시작가
+                                                <Text style={{ fontSize: 11.5, fontWeight: 700, color: '#334155', marginBottom: 6 }}>
+                                                    안치 유형별 시작가
                                                 </Text>
                                                 <Box style={{ display: 'flex', flexDirection: 'column', gap: 5 }}>
                                                     {[
-                                                        { label: '봉안당', val: cp?.bonGwan },
-                                                        { label: '수목장/자연장', val: cp?.jayeon },
-                                                        { label: '매장묘지', val: cp?.maejang },
+                                                        { label: '봉안당 (납골당)', val: cp.charnel },
+                                                        { label: '수목장 / 자연장', val: cp.natural },
+                                                        { label: '매장묘지 / 봉안묘', val: cp.burial },
                                                     ].map((row) => (
                                                         <Group key={row.label} justify="space-between">
                                                             <Text style={{ fontSize: 12, color: '#6B7684' }}>{row.label}</Text>
@@ -586,24 +731,63 @@ export default function CompareModal({
                                                                     color: row.val && row.val > 0 ? '#191F28' : '#CBD5E1',
                                                                 }}
                                                             >
-                                                                {row.val && row.val > 0 ? `${formatKoreanCurrency(row.val)}~` : '-'}
+                                                                {row.val && row.val > 0 ? `${formatKoreanCurrency(row.val)}~` : '미운영'}
                                                             </Text>
                                                         </Group>
                                                     ))}
                                                 </Box>
                                             </Box>
 
-                                            {/* 편의시설 비교 */}
+                                            {/* 3. 핵심 가격표 요약 (실제 DB 가격 행) */}
+                                            {derived.topPriceItems.length > 0 && (
+                                                <Box style={{ borderTop: '1px solid #F1F5F9', paddingTop: 10 }}>
+                                                    <Text style={{ fontSize: 11.5, fontWeight: 700, color: '#334155', marginBottom: 6 }}>
+                                                        실제 가격표 주요 항목
+                                                    </Text>
+                                                    <Box
+                                                        p={8}
+                                                        style={{
+                                                            backgroundColor: '#F8FAFC',
+                                                            borderRadius: 8,
+                                                            border: '1px solid #F1F5F9',
+                                                            display: 'flex',
+                                                            flexDirection: 'column',
+                                                            gap: 5,
+                                                        }}
+                                                    >
+                                                        {derived.topPriceItems.slice(0, 3).map((item, idx) => (
+                                                            <Box key={idx} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 6 }}>
+                                                                <Box style={{ minWidth: 0, flex: 1 }}>
+                                                                    <Text style={{ fontSize: 11.5, fontWeight: 600, color: '#334155' }} lineClamp={1}>
+                                                                        {item.name}
+                                                                        {item.grade ? ` (${item.grade.slice(0, 14)})` : ''}
+                                                                    </Text>
+                                                                </Box>
+                                                                <Text style={{ fontSize: 11.5, fontWeight: 700, color: '#2563EB', flexShrink: 0 }}>
+                                                                    {formatKoreanCurrency(item.price)}
+                                                                </Text>
+                                                            </Box>
+                                                        ))}
+                                                    </Box>
+                                                </Box>
+                                            )}
+
+                                            {/* 4. 편의시설 비교 */}
                                             <Box style={{ borderTop: '1px solid #F1F5F9', paddingTop: 10 }}>
-                                                <Text style={{ fontSize: 11.5, fontWeight: 700, color: '#4E5968', marginBottom: 6 }}>
-                                                    편의시설 보유
-                                                </Text>
+                                                <Group justify="space-between" mb={6}>
+                                                    <Text style={{ fontSize: 11.5, fontWeight: 700, color: '#334155' }}>
+                                                        편의시설 및 정보 공개도
+                                                    </Text>
+                                                    <Text style={{ fontSize: 11, fontWeight: 700, color: derived.completenessScore >= 70 ? '#059669' : '#64748B' }}>
+                                                        공개도 {derived.completenessScore}점
+                                                    </Text>
+                                                </Group>
                                                 <Box style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 6 }}>
                                                     {[
-                                                        { label: '주차장', has: fac.hasParking },
-                                                        { label: '식당', has: fac.hasRestaurant },
+                                                        { label: '주차장', has: Boolean(fac.hasParking) },
+                                                        { label: '식당', has: Boolean(fac.hasRestaurant) },
                                                         { label: '편의시설', has: Boolean(fac.hasAccessibility || facAny.hasDisabledAccess) },
-                                                        { label: '매점', has: fac.hasStore },
+                                                        { label: '매점', has: Boolean(fac.hasStore) },
                                                     ].map((am) => (
                                                         <Box
                                                             key={am.label}
@@ -614,6 +798,7 @@ export default function CompareModal({
                                                                 padding: '5px 8px',
                                                                 borderRadius: 6,
                                                                 backgroundColor: am.has ? '#EFF6FF' : '#F8FAFC',
+                                                                border: am.has ? '1px solid #DBEAFE' : '1px solid #F1F5F9',
                                                             }}
                                                         >
                                                             <span style={{ fontSize: 11.5, color: am.has ? '#1E40AF' : '#94A3B8', fontWeight: 600 }}>
@@ -649,17 +834,17 @@ export default function CompareModal({
                                                 style={{
                                                     marginTop: 'auto',
                                                     width: '100%',
-                                                    height: 38,
+                                                    height: 40,
                                                     borderRadius: 10,
                                                     border: 'none',
-                                                    backgroundColor: '#191F28',
+                                                    backgroundColor: '#2563EB',
                                                     color: '#FFFFFF',
                                                     fontSize: 13,
                                                     fontWeight: 700,
                                                     cursor: 'pointer',
                                                 }}
                                             >
-                                                상세 정보 보기
+                                                상세 가격표 및 문의 보기
                                             </button>
                                         </Box>
                                     </Box>
@@ -667,6 +852,74 @@ export default function CompareModal({
                             })}
                         </Box>
                     )}
+
+                    {/* 하단 회원 연동 & 시설 제휴 안내 바 */}
+                    <Box
+                        mt={16}
+                        p={14}
+                        style={{
+                            backgroundColor: '#FFFFFF',
+                            borderRadius: 12,
+                            border: '1px solid #E2E8F0',
+                            display: 'flex',
+                            flexWrap: 'wrap',
+                            alignItems: 'center',
+                            justifyContent: 'space-between',
+                            gap: 10,
+                        }}
+                    >
+                        {!isLoggedIn && onRequestLogin ? (
+                            <Group gap={8}>
+                                <UserCheck size={16} color="#2563EB" />
+                                <Text style={{ fontSize: 12.5, color: '#334155', fontWeight: 600 }}>
+                                    로그인하시면 관심 시설 저장 및 문의·상담 시 연락처 자동 입력을 이용하실 수 있습니다.
+                                </Text>
+                                <button
+                                    type="button"
+                                    onClick={() => {
+                                        onClose();
+                                        onRequestLogin();
+                                    }}
+                                    style={{
+                                        padding: '5px 12px',
+                                        borderRadius: 8,
+                                        border: '1px solid #2563EB',
+                                        backgroundColor: '#EFF6FF',
+                                        color: '#2563EB',
+                                        fontSize: 12,
+                                        fontWeight: 700,
+                                        cursor: 'pointer',
+                                    }}
+                                >
+                                    3초 간편 로그인
+                                </button>
+                            </Group>
+                        ) : (
+                            <Group gap={8}>
+                                <Building2 size={16} color="#64748B" />
+                                <Text style={{ fontSize: 12, color: '#64748B', fontWeight: 500 }}>
+                                    실제 안치 단수·석물 옵션에 따라 비용이 달라질 수 있으므로 상세 페이지에서 시설 문의를 남겨보세요.
+                                </Text>
+                            </Group>
+                        )}
+
+                        <Link
+                            href="/partnership"
+                            onClick={onClose}
+                            style={{
+                                fontSize: 12,
+                                fontWeight: 700,
+                                color: '#475569',
+                                textDecoration: 'none',
+                                display: 'inline-flex',
+                                alignItems: 'center',
+                                gap: 4,
+                            }}
+                        >
+                            <span>장지 회사 공식 제휴·정보 수정 신청</span>
+                            <ArrowRight size={12} />
+                        </Link>
+                    </Box>
                 </Box>
             </ScrollArea>
         </Modal>

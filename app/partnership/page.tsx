@@ -1,14 +1,15 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Box, Text, Group, Stack, TextInput, Textarea, Button, Select, Checkbox, SegmentedControl, Collapse, ActionIcon, Paper } from '@mantine/core';
 import { useRouter } from 'next/navigation';
-import { ArrowLeft, ChevronDown, Check, AlertCircle } from 'lucide-react';
+import { ArrowLeft, ChevronDown, Check, AlertCircle, Building2, ShieldCheck, MessageSquare, TrendingUp } from 'lucide-react';
 import BottomNav from '@/components/common/BottomNav';
 
 export default function PartnershipPage() {
     const router = useRouter();
     const [inquiryType, setInquiryType] = useState('facility');
+    const [prefilledFacility, setPrefilledFacility] = useState('');
     const [form, setForm] = useState({
         companyName: '',
         email: '',
@@ -22,6 +23,22 @@ export default function PartnershipPage() {
     const [submitted, setSubmitted] = useState(false);
     const [termsExpanded, setTermsExpanded] = useState(false);
     const [errorMsg, setErrorMsg] = useState('');
+
+    // 상세페이지 또는 비교함에서 ?facility=시설명 으로 진입 시 자동 입력
+    useEffect(() => {
+        if (typeof window === 'undefined') return;
+        const params = new URLSearchParams(window.location.search);
+        const fac = params.get('facility');
+        if (fac && fac.trim()) {
+            const decoded = fac.trim();
+            setPrefilledFacility(decoded);
+            setForm(prev => ({
+                ...prev,
+                companyName: prev.companyName || decoded,
+                content: prev.content || `[${decoded}] 공식 파트너 제휴 및 시설 정보(분양가·실사진·상담 연결) 업데이트를 신청합니다.`,
+            }));
+        }
+    }, []);
 
     const emailDomains = [
         { value: '', label: '직접입력' },
@@ -250,17 +267,124 @@ export default function PartnershipPage() {
                         >
                             <ArrowLeft size={20} color="#191F28" />
                         </ActionIcon>
-                        <Text size="md" fw={700} c="#191F28">광고/제휴 문의</Text>
+                        <Text size="md" fw={700} c="#191F28">장지 시설 공식 제휴 · 등록 신청</Text>
                     </Group>
                 </Group>
             </Box>
 
             {/* 폼 컨테이너 (PC 최대 너비 600px 중앙 정렬) */}
             <Box maw={600} mx="auto" p="md">
+                {/* B2B 파트너 핵심 혜택 3가지 배너 */}
+                <Paper
+                    p="lg"
+                    mb="md"
+                    radius="lg"
+                    style={{
+                        background: 'linear-gradient(135deg, #1E293B 0%, #0F172A 100%)',
+                        border: '1px solid #334155',
+                        color: '#FFFFFF',
+                    }}
+                >
+                    <Group gap={8} mb={8}>
+                        <Box
+                            px={8}
+                            py={3}
+                            style={{
+                                borderRadius: 6,
+                                backgroundColor: 'rgba(37, 99, 235, 0.25)',
+                                border: '1px solid rgba(96, 165, 250, 0.4)',
+                                fontSize: 11,
+                                fontWeight: 800,
+                                color: '#93C5FD',
+                            }}
+                        >
+                            B2B OFFICIAL PARTNER
+                        </Box>
+                        {prefilledFacility && (
+                            <Box
+                                px={8}
+                                py={3}
+                                style={{
+                                    borderRadius: 6,
+                                    backgroundColor: 'rgba(16, 185, 129, 0.2)',
+                                    border: '1px solid rgba(52, 211, 153, 0.4)',
+                                    fontSize: 11,
+                                    fontWeight: 700,
+                                    color: '#6EE7B7',
+                                }}
+                            >
+                                대상 시설: {prefilledFacility}
+                            </Box>
+                        )}
+                    </Group>
+                    <Text size="lg" fw={800} c="white" mb={4} style={{ letterSpacing: '-0.3px' }}>
+                        전국 유족들이 비교하고 선택하는 대대손손 공식 파트너
+                    </Text>
+                    <Text size="xs" c="#94A3B8" mb={16} lh={1.5}>
+                        봉안당·수목장·공원묘지 운영사 및 분양팀과 함께 투명하고 정확한 장지 비교 생태계를 만듭니다.
+                    </Text>
+
+                    <Stack gap={10}>
+                        {[
+                            {
+                                icon: MessageSquare,
+                                title: '실시간 유족 1:1 상담·답사 예약 리드 직결',
+                                desc: '해당 지역·예산 조건에 맞는 실제 유족의 시설 문의와 방문 상담 예약을 담당자에게 즉시 연결합니다.',
+                            },
+                            {
+                                icon: ShieldCheck,
+                                title: '공식 분양가·실사진 인증 배지 및 정보 직접 관리',
+                                desc: '안치단(개인/부부/특별단) 상세 분양가와 고화질 시설 사진, 프로모션 혜택을 공식 인증 마크와 함께 노출합니다.',
+                            },
+                            {
+                                icon: TrendingUp,
+                                title: '지역 검색 및 1:1 비교함 우선 추천 노출',
+                                desc: '지도 검색 및 시설 비교함에서 높은 정보 공개도 점수와 함께 유족에게 신뢰도 높은 시설로 우선 안내됩니다.',
+                            },
+                        ].map((item) => {
+                            const IconComp = item.icon;
+                            return (
+                                <Box
+                                    key={item.title}
+                                    p={12}
+                                    style={{
+                                        borderRadius: 10,
+                                        backgroundColor: 'rgba(255, 255, 255, 0.05)',
+                                        border: '1px solid rgba(255, 255, 255, 0.1)',
+                                        display: 'flex',
+                                        alignItems: 'flex-start',
+                                        gap: 10,
+                                    }}
+                                >
+                                    <Box
+                                        style={{
+                                            width: 30,
+                                            height: 30,
+                                            borderRadius: 8,
+                                            backgroundColor: 'rgba(37, 99, 235, 0.25)',
+                                            display: 'flex',
+                                            alignItems: 'center',
+                                            justifyContent: 'center',
+                                            flexShrink: 0,
+                                            marginTop: 1,
+                                        }}
+                                    >
+                                        <IconComp size={15} color="#60A5FA" />
+                                    </Box>
+                                    <Box style={{ flex: 1 }}>
+                                        <Text size="xs" fw={700} c="white" mb={2}>{item.title}</Text>
+                                        <Text size="11.5px" c="#CBD5E1" lh={1.45}>{item.desc}</Text>
+                                    </Box>
+                                </Box>
+                            );
+                        })}
+                    </Stack>
+                </Paper>
+
                 <Paper p="xl" bg="white" radius="lg" style={{ border: '1px solid #E5E8EB' }}>
-                    <Text size="xl" fw={800} c="#191F28" ta="center" mb={6}>광고 및 시설 제휴 문의</Text>
+                    <Text size="xl" fw={800} c="#191F28" ta="center" mb={6}>공식 파트너 제휴 · 정보 업데이트 신청</Text>
                     <Text size="sm" c="#64748B" ta="center" mb="xl">
-                        상담에 필요한 기본 정보를 남겨주시면 담당자가 빠르게 확인 후 연락드립니다.
+                        상담에 필요한 기본 정보를 남겨주시면 전담 매니저가 영업일 1일 이내 연락드립니다.
                     </Text>
 
                     {errorMsg && (

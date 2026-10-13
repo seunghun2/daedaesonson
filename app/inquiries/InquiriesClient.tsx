@@ -2,10 +2,12 @@
 
 import { Box, Text, Group, Stack, Button, ScrollArea, Modal, TextInput, Drawer, Select, Textarea, Switch, ActionIcon, Checkbox } from '@mantine/core';
 import { useDisclosure, useMediaQuery } from '@mantine/hooks';
-import { ChevronLeft, Lock, Unlock, Pencil, X, ChevronDown, Check, Search, Info, AlertCircle, CheckCircle2 } from 'lucide-react';
+import { ChevronLeft, Lock, Unlock, Pencil, X, ChevronDown, Check, Search, Info, AlertCircle, CheckCircle2, User } from 'lucide-react';
 import { useState, useEffect, useMemo } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import BottomNav from '@/components/common/BottomNav';
+import { useAuth } from '@/components/auth/AuthProvider';
+import LoginModal from '@/components/auth/LoginModal';
 
 // 문의 유형 (작성 폼용)
 const INQUIRY_TYPES = [
@@ -13,6 +15,34 @@ const INQUIRY_TYPES = [
     { value: 'reservation', label: '예약/절차' },
     { value: 'facility', label: '시설문의' },
     { value: 'other', label: '기타' },
+];
+
+// 자주 묻는 질문 1초 선택 칩 (커뮤니티 활성화)
+const QUICK_QUESTION_PRESETS = [
+    {
+        chip: '부부형 총비용 문의',
+        type: 'price',
+        title: '부부단(2위) 분양가와 연간 관리비 총액이 궁금합니다',
+        content: '안녕하세요. 개인단과 부부단(2위) 각각의 분양가 및 연간 관리비, 최초 계약 시 납부해야 하는 총비용을 안내받고 싶습니다.',
+    },
+    {
+        chip: '잔여 안치단·자리 확인',
+        type: 'facility',
+        title: '현재 바로 계약 가능한 잔여 안치단(자리)이 있나요?',
+        content: '안녕하세요. 현재 바로 안치 또는 사전 계약이 가능한 잔여 자리가 있는지, 추천해주실 만한 단수(층수)나 위치가 있는지 궁금합니다.',
+    },
+    {
+        chip: '주말 답사·상담 예약',
+        type: 'reservation',
+        title: '이번 주말 현장 방문 답사 및 상담이 가능한지 문의드립니다',
+        content: '안녕하세요. 가족들과 함께 직접 시설을 둘러보고 상담을 받고 싶습니다. 주말 방문 시 사전 예약이 필요한지, 방문 가능 시간을 알려주세요.',
+    },
+    {
+        chip: '관내·관외 자격 및 서류',
+        type: 'reservation',
+        title: '이용 자격 조건과 안치 시 필요한 구비 서류가 궁금합니다',
+        content: '안녕하세요. 관내/관외 거주자 요금 기준과 안치 계약 시 준비해야 하는 필수 서류 및 절차를 안내 부탁드립니다.',
+    },
 ];
 
 // 상단 필터 칩
@@ -59,6 +89,8 @@ const formatPhoneNumber = (value: string) => {
 export default function InquiriesClient({ initialInquiries, facilities = [] }: InquiriesClientProps) {
     const router = useRouter();
     const searchParams = useSearchParams();
+    const { user, profile } = useAuth();
+    const [loginModalOpen, setLoginModalOpen] = useState(false);
     const [inquiries, setInquiries] = useState<Inquiry[]>(initialInquiries);
 
     // 검색 및 카테고리 필터 상태
@@ -101,6 +133,18 @@ export default function InquiriesClient({ initialInquiries, facilities = [] }: I
         privacyAgreed: true,
     });
     const [isSubmitting, setIsSubmitting] = useState(false);
+
+    // 로그인된 유저의 연락처 자동 입력
+    useEffect(() => {
+        const rawPhone = profile?.phone || user?.phone || user?.user_metadata?.phone || '';
+        if (rawPhone) {
+            const cleaned = String(rawPhone).replace(/^\+82/, '0').replace(/\D/g, '');
+            if (cleaned.length >= 10) {
+                const formatted = formatPhoneNumber(cleaned);
+                setInquiryForm(prev => (prev.phone ? prev : { ...prev, phone: formatted }));
+            }
+        }
+    }, [user, profile, writeOpened]);
 
     // 유효성 검사 (010 등 정상 휴대전화 10~11자리 + 필수 필드 + 개인정보 동의)
     const phoneDigits = inquiryForm.phone.replace(/\D/g, '');
@@ -282,26 +326,55 @@ export default function InquiriesClient({ initialInquiries, facilities = [] }: I
             >
                 {/* 헤더 */}
                 <Box px="md" py={10}>
-                    <Group gap="xs" align="center">
-                        <ActionIcon
-                            variant="subtle"
-                            color="gray"
-                            size={38}
-                            radius="md"
+                    <Group justify="space-between" align="center">
+                        <Group gap="xs" align="center">
+                            <ActionIcon
+                                variant="subtle"
+                                color="gray"
+                                size={38}
+                                radius="md"
+                                onClick={() => {
+                                    if (typeof window !== 'undefined' && window.history.length <= 1) {
+                                        router.push('/menu');
+                                    } else {
+                                        router.back();
+                                    }
+                                }}
+                                aria-label="뒤로가기"
+                            >
+                                <ChevronLeft size={22} color="#191F28" />
+                            </ActionIcon>
+                            <Text fw={700} size="lg" c="#191F28" style={{ letterSpacing: '-0.3px' }}>
+                                문의
+                            </Text>
+                        </Group>
+                        <button
+                            type="button"
                             onClick={() => {
-                                if (typeof window !== 'undefined' && window.history.length <= 1) {
-                                    router.push('/menu');
+                                if (user) {
+                                    router.push('/myinfo');
                                 } else {
-                                    router.back();
+                                    setLoginModalOpen(true);
                                 }
                             }}
-                            aria-label="뒤로가기"
+                            style={{
+                                display: 'inline-flex',
+                                alignItems: 'center',
+                                gap: 5,
+                                height: 34,
+                                padding: '0 11px',
+                                borderRadius: 10,
+                                border: user ? '1px solid #DBEAFE' : '1px solid #E2E8F0',
+                                backgroundColor: user ? '#EFF6FF' : '#F8FAFC',
+                                color: user ? '#2563EB' : '#334155',
+                                fontSize: 12,
+                                fontWeight: 700,
+                                cursor: 'pointer',
+                            }}
                         >
-                            <ChevronLeft size={22} color="#191F28" />
-                        </ActionIcon>
-                        <Text fw={700} size="lg" c="#191F28" style={{ letterSpacing: '-0.3px' }}>
-                            문의
-                        </Text>
+                            <User size={14} color={user ? '#2563EB' : '#64748B'} />
+                            <span>{user ? '내정보' : '간편 로그인'}</span>
+                        </button>
                     </Group>
                 </Box>
 
@@ -386,14 +459,51 @@ export default function InquiriesClient({ initialInquiries, facilities = [] }: I
                 </Box>
             </Box>
 
-            {/* 안내 메시지 (이모지 제거, SVG 아이콘 적용) */}
+            {/* 자주 묻는 질문 1초 문의 칩 바 (커뮤니티 활성화) */}
             <Box px="md" py={10} bg="#F8FAFC" style={{ borderBottom: '1px solid #F2F4F6', flexShrink: 0 }}>
-                <Group gap={8} wrap="nowrap">
-                    <Info size={15} color="#2563EB" style={{ flexShrink: 0 }} />
-                    <Text size="xs" c="#4E5968" lh={1.45} fw={500}>
-                        시설에 대해 궁금한 점을 문의하세요. 비공개 설정 시 제목만 공개됩니다.
+                <Group justify="space-between" align="center" mb={6}>
+                    <Group gap={6} wrap="nowrap">
+                        <Info size={14} color="#2563EB" style={{ flexShrink: 0 }} />
+                        <Text size="xs" c="#191F28" fw={700}>
+                            자주 묻는 질문 1초 만에 문의하기
+                        </Text>
+                    </Group>
+                    <Text size="11px" c="#64748B" fw={500}>
+                        클릭 시 질문이 자동 입력됩니다
                     </Text>
                 </Group>
+                <Box style={{ display: 'flex', gap: 6, overflowX: 'auto', scrollbarWidth: 'none' }}>
+                    {QUICK_QUESTION_PRESETS.map((preset) => (
+                        <button
+                            key={preset.chip}
+                            type="button"
+                            onClick={() => {
+                                setFormError(null);
+                                setInquiryForm(prev => ({
+                                    ...prev,
+                                    type: preset.type,
+                                    title: preset.title,
+                                    content: preset.content,
+                                }));
+                                openWrite();
+                            }}
+                            style={{
+                                padding: '5px 11px',
+                                borderRadius: 999,
+                                fontSize: '11.5px',
+                                fontWeight: 600,
+                                backgroundColor: '#FFFFFF',
+                                color: '#2563EB',
+                                border: '1px solid #BFDBFE',
+                                cursor: 'pointer',
+                                whiteSpace: 'nowrap',
+                                flexShrink: 0,
+                            }}
+                        >
+                            + {preset.chip}
+                        </button>
+                    ))}
+                </Box>
             </Box>
 
             {/* 토스트 알림 배너 */}
@@ -792,6 +902,37 @@ export default function InquiriesClient({ initialInquiries, facilities = [] }: I
                                     )}
                                 </Box>
 
+                                {/* 자주 묻는 질문 1초 선택 (커뮤니티 활성화) */}
+                                <Box>
+                                    <Text size="xs" fw={700} c="#334155" mb={6}>자주 묻는 질문 1초 선택</Text>
+                                    <Group gap={6}>
+                                        {QUICK_QUESTION_PRESETS.map((preset) => (
+                                            <button
+                                                key={preset.chip}
+                                                type="button"
+                                                onClick={() => setInquiryForm(prev => ({
+                                                    ...prev,
+                                                    type: preset.type,
+                                                    title: preset.title,
+                                                    content: preset.content,
+                                                }))}
+                                                style={{
+                                                    padding: '5px 10px',
+                                                    borderRadius: 999,
+                                                    fontSize: '11.5px',
+                                                    fontWeight: 600,
+                                                    backgroundColor: inquiryForm.title === preset.title ? '#EFF6FF' : '#F8FAFC',
+                                                    color: inquiryForm.title === preset.title ? '#2563EB' : '#475569',
+                                                    border: inquiryForm.title === preset.title ? '1px solid #2563EB' : '1px solid #CBD5E1',
+                                                    cursor: 'pointer',
+                                                }}
+                                            >
+                                                + {preset.chip}
+                                            </button>
+                                        ))}
+                                    </Group>
+                                </Box>
+
                                 {/* 제목 */}
                                 <Box>
                                     <Text size="xs" fw={700} c="#334155" mb={6}>제목 <Text span c="#EF4444">*</Text></Text>
@@ -838,7 +979,29 @@ export default function InquiriesClient({ initialInquiries, facilities = [] }: I
 
                                 {/* 연락처 */}
                                 <Box>
-                                    <Text size="xs" fw={700} c="#334155" mb={6}>연락처 (뒷자리 4자리가 비밀번호로 사용됩니다) <Text span c="#EF4444">*</Text></Text>
+                                    <Group justify="space-between" align="center" mb={6}>
+                                        <Text size="xs" fw={700} c="#334155">연락처 (뒷자리 4자리가 비밀번호로 사용됩니다) <Text span c="#EF4444">*</Text></Text>
+                                        {user && inquiryForm.phone ? (
+                                            <Text size="11px" fw={700} c="#2563EB">연락처 자동 입력됨</Text>
+                                        ) : !user ? (
+                                            <button
+                                                type="button"
+                                                onClick={() => setLoginModalOpen(true)}
+                                                style={{
+                                                    border: 'none',
+                                                    background: 'none',
+                                                    padding: 0,
+                                                    fontSize: 11.5,
+                                                    fontWeight: 700,
+                                                    color: '#2563EB',
+                                                    cursor: 'pointer',
+                                                    textDecoration: 'underline',
+                                                }}
+                                            >
+                                                3초 로그인으로 연락처 자동 입력
+                                            </button>
+                                        ) : null}
+                                    </Group>
                                     <TextInput
                                         placeholder="010-0000-0000"
                                         inputMode="numeric"
@@ -943,6 +1106,12 @@ export default function InquiriesClient({ initialInquiries, facilities = [] }: I
                     </Button>
                 </Box>
             </Modal>
+
+            {/* 간편 로그인 모달 */}
+            <LoginModal
+                isOpen={loginModalOpen}
+                onClose={() => setLoginModalOpen(false)}
+            />
 
             {/* 하단 탭바 */}
             <BottomNav />

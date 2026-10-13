@@ -1051,6 +1051,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
     const [replyPassword, setReplyPassword] = useState('');
     const [likedReviews, setLikedReviews] = useState<Set<string>>(new Set());
     const [inquiryOpen, setInquiryOpen] = useState(false);
+    const [inquiryPreset, setInquiryPreset] = useState<{ type: string; title: string; content?: string } | null>(null);
     const [correctionOpen, setCorrectionOpen] = useState(false);
     const [reviewsOpen, setReviewsOpen] = useState(false);
     const [shareModalOpen, setShareModalOpen] = useState(false);
@@ -3158,13 +3159,55 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                 )}
                             </Stack>
 
+                            {/* 빠른 질문 원탭 칩 (커뮤니티 문의 활성화) */}
+                            <Box mt={14} p={12} style={{ backgroundColor: '#F8FAFC', borderRadius: 12, border: '1px solid #EEF1F5' }}>
+                                <Group justify="space-between" align="center" mb={8}>
+                                    <Text size="xs" fw={700} c="#334155">
+                                        자주 묻는 질문 1초 만에 문의하기
+                                    </Text>
+                                    <Text size="11px" c="#2563EB" fw={600}>
+                                        클릭 시 자동 작성
+                                    </Text>
+                                </Group>
+                                <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
+                                    {[
+                                        { label: '잔여 자리·기수 문의', type: 'facility', title: `${facility.name} 현재 안치 가능한 잔여 자리가 있나요?`, content: '안녕하세요. 현재 안치 가능한 개인/부부형 잔여 기수와 위치가 남아있는지 궁금합니다.' },
+                                        { label: '관리비·석물비 문의', type: 'price', title: '연간 관리비와 별도 부대비용(석물·작업비) 안내 부탁드립니다', content: '기본 분양가 외에 연간 관리비 납부 주기와 석물·각자비 등 추가 비용이 얼마나 드는지 알고 싶습니다.' },
+                                        { label: '관내·관외 이용자격', type: 'reservation', title: '거주지 제한(관내·관외) 및 구비서류 문의드립니다', content: '타 지역 거주자도 안치가 가능한지, 필요한 서류와 절차는 어떻게 되는지 안내 부탁드립니다.' },
+                                        { label: '주말 현장답사 예약', type: 'reservation', title: '주말 가족 현장 방문 답사 예약이 가능한가요?', content: '이번 주말에 가족들과 함께 현장을 방문하여 시설을 둘러보고 상담받고 싶습니다.' },
+                                    ].map((q) => (
+                                        <button
+                                            key={q.label}
+                                            type="button"
+                                            onClick={() => {
+                                                closeAllPanels();
+                                                setInquiryPreset({ type: q.type, title: q.title, content: q.content });
+                                                setInquiryOpen(true);
+                                            }}
+                                            style={{
+                                                padding: '6px 10px',
+                                                borderRadius: 999,
+                                                border: '1px solid #DBEAFE',
+                                                backgroundColor: '#FFFFFF',
+                                                color: '#1E40AF',
+                                                fontSize: 12,
+                                                fontWeight: 600,
+                                                cursor: 'pointer',
+                                            }}
+                                        >
+                                            {q.label}
+                                        </button>
+                                    ))}
+                                </div>
+                            </Box>
+
                             {/* 문의하기 버튼 */}
                             <Box
                                 mt={10}
                                 py={11}
                                 style={{
                                     backgroundColor: '#FFFFFF',
-                                    border: '1px solid #E2E8F0',
+                                    border: '1px solid #CBD5E1',
                                     borderRadius: 10,
                                     cursor: 'pointer',
                                     textAlign: 'center',
@@ -3288,12 +3331,56 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                         })()}
 
 
-                        {/* ── 하단 공유 & 정보수정 섹션 (클린 슬레이트 디자인) ── */}
+                        {/* ── 하단 공유 & B2B 시설 제휴 & 정보수정 섹션 ── */}
                         <Box px="md" pt={20} pb={44} style={{
                             background: '#F8FAFC',
                             textAlign: 'center',
                             borderTop: '1px solid #EEF1F5',
                         }}>
+                            {/* 장지 회사·시설 관계자 전용 제휴 유도 카드 */}
+                            <Box
+                                mb={16}
+                                p={14}
+                                style={{
+                                    backgroundColor: '#FFFFFF',
+                                    borderRadius: 12,
+                                    border: '1px solid #DBEAFE',
+                                    textAlign: 'left',
+                                }}
+                            >
+                                <Group justify="space-between" align="center" wrap="nowrap" gap={10}>
+                                    <Box style={{ minWidth: 0, flex: 1 }}>
+                                        <Text size="11px" fw={700} c="#2563EB">
+                                            장지·추모시설 공식 파트너 안내
+                                        </Text>
+                                        <Text size="xs" fw={700} c="#191F28" mt={2} lineClamp={1}>
+                                            {facility.name} 관계자이신가요?
+                                        </Text>
+                                        <Text size="11px" c="#64748B" mt={2}>
+                                            공식 분양가·사진 관리 및 유족 1:1 상담 연결을 신청하세요.
+                                        </Text>
+                                    </Box>
+                                    <button
+                                        type="button"
+                                        onClick={() => router.push(`/partnership?facility=${encodeURIComponent(facility.name)}`)}
+                                        style={{
+                                            padding: '8px 12px',
+                                            borderRadius: 8,
+                                            border: 'none',
+                                            backgroundColor: '#2563EB',
+                                            color: '#FFFFFF',
+                                            fontSize: 12,
+                                            fontWeight: 700,
+                                            cursor: 'pointer',
+                                            flexShrink: 0,
+                                            whiteSpace: 'nowrap',
+                                        }}
+                                    >
+                                        제휴·관리 신청
+                                    </button>
+                                </Group>
+                            </Box>
+
                             {/* 공유 안내 */}
                             <Box pb="md">
                                 <Text size="xs" fw={600} c="#4E5968" mb={10}>
@@ -3357,7 +3444,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                 </button>
                                 <button
                                     type="button"
-                                    onClick={() => router.push('/partnership')}
+                                    onClick={() => router.push(`/partnership?facility=${encodeURIComponent(facility.name)}`)}
                                     style={{
                                         padding: '7px 12px',
                                         borderRadius: 8,
@@ -3400,7 +3487,14 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
 
 
                         {/* Story Panel Overlay */}
-                        <InquiryPanel facility={facility} isOpen={inquiryOpen} onClose={() => { setInquiryOpen(false); document.body.style.overflow = ''; document.body.style.position = ''; document.body.style.touchAction = ''; }} allFacilities={allFacilities} />
+                        <InquiryPanel
+                            facility={facility}
+                            isOpen={inquiryOpen}
+                            onClose={() => { setInquiryOpen(false); document.body.style.overflow = ''; document.body.style.position = ''; document.body.style.touchAction = ''; }}
+                            allFacilities={allFacilities}
+                            initialPreset={inquiryPreset}
+                            onPresetConsumed={() => setInquiryPreset(null)}
+                        />
                         <CorrectionRequestModal facilityId={facility.id} facilityName={facility.name} isOpen={correctionOpen} onClose={() => setCorrectionOpen(false)} />
                         <ReviewsPanel facility={facility} isOpen={reviewsOpen} onClose={() => setReviewsOpen(false)} onOpenWriteReview={() => { closeAllPanels(); openReviewModal(); }} />
 

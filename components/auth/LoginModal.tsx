@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { X, ArrowLeft } from 'lucide-react';
+import { X, ArrowLeft, Check } from 'lucide-react';
 import { useAuth } from './AuthProvider';
 
 type LoginStep = 'main' | 'phone-input' | 'phone-verify';
@@ -137,23 +137,72 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
                 {/* 메인 로그인 화면 */}
                 {step === 'main' && (
                     <>
-                        <h2 style={{
-                            margin: '0 0 8px 0',
-                            fontSize: 22,
+                        <div style={{
+                            display: 'inline-block',
+                            padding: '4px 10px',
+                            borderRadius: 999,
+                            backgroundColor: '#EFF6FF',
+                            color: '#2563EB',
+                            fontSize: 12,
                             fontWeight: 700,
+                            marginBottom: 10,
+                        }}>
+                            3초 간편 회원가입 · 로그인
+                        </div>
+                        <h2 style={{
+                            margin: '0 0 6px 0',
+                            fontSize: 21,
+                            fontWeight: 800,
                             color: '#191F28',
                             letterSpacing: '-0.3px',
                         }}>
-                            로그인
+                            대대손손을 더 편하게 이용하세요
                         </h2>
                         <p style={{
-                            margin: '0 0 28px 0',
-                            fontSize: 14,
+                            margin: '0 0 18px 0',
+                            fontSize: 13.5,
                             color: '#6B7684',
                             lineHeight: 1.5,
                         }}>
-                            관심 시설 저장, 가격 알림 등<br />편리한 서비스를 이용하세요.
+                            로그인 한 번으로 비교했던 장지 정보와 문의 내역을 언제든 이어볼 수 있습니다.
                         </p>
+
+                        {/* 회원 전용 혜택 요약 박스 */}
+                        <div style={{
+                            backgroundColor: '#F8FAFC',
+                            border: '1px solid #E2E8F0',
+                            borderRadius: 12,
+                            padding: '12px 14px',
+                            marginBottom: 20,
+                            display: 'flex',
+                            flexDirection: 'column',
+                            gap: 8,
+                        }}>
+                            {[
+                                '관심 시설 찜하기 및 1:1 비교함 자동 저장',
+                                '시설 문의·상담 신청 시 연락처 자동 입력',
+                                '내가 남긴 시설 질문·방문 이야기 모아보기',
+                            ].map((benefit) => (
+                                <div key={benefit} style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                                    <span style={{
+                                        width: 18,
+                                        height: 18,
+                                        borderRadius: '50%',
+                                        backgroundColor: '#DBEAFE',
+                                        color: '#2563EB',
+                                        display: 'inline-flex',
+                                        alignItems: 'center',
+                                        justifyContent: 'center',
+                                        flexShrink: 0,
+                                    }}>
+                                        <Check size={11} strokeWidth={3} />
+                                    </span>
+                                    <span style={{ fontSize: 12.5, fontWeight: 600, color: '#334155' }}>
+                                        {benefit}
+                                    </span>
+                                </div>
+                            ))}
+                        </div>
 
                         {/* 카카오 로그인 버튼 */}
                         <button
@@ -165,7 +214,7 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
                                 border: 'none',
                                 borderRadius: 12,
                                 fontSize: 16,
-                                fontWeight: 600,
+                                fontWeight: 700,
                                 cursor: 'pointer',
                                 display: 'flex',
                                 alignItems: 'center',
@@ -185,7 +234,7 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
                                     fill="#191F28"
                                 />
                             </svg>
-                            카카오 계정으로 로그인
+                            카카오로 3초 만에 시작하기
                         </button>
 
                         {/* 구분선 */}

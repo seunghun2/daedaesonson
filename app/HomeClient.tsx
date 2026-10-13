@@ -194,15 +194,37 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
   const sheetDragStartYRef = useRef<number | null>(null);
   const [sheetDragOffsetY, setSheetDragOffsetY] = useState<number>(0);
 
-  // localStorage에서 최근 검색어 불러오기
+  // localStorage에서 최근 검색어 및 비교함 불러오기
+  const compareLoadedRef = useRef(false);
   useEffect(() => {
     if (typeof window !== 'undefined') {
       try {
         const saved = localStorage.getItem('recentSearches');
         if (saved) setRecentSearches(JSON.parse(saved));
+        const savedCompareIds = localStorage.getItem('daedaesonson_compare_ids');
+        if (savedCompareIds && initialFacilities.length > 0) {
+          const parsedIds: string[] = JSON.parse(savedCompareIds);
+          const restored = parsedIds
+            .map(cid => initialFacilities.find(f => f.id === cid))
+            .filter(Boolean) as Facility[];
+          if (restored.length > 0) setCompareList(restored.slice(0, 3));
+        }
+      } catch { }
+      setTimeout(() => {
+        compareLoadedRef.current = true;
+      }, 100);
+    }
+  }, [initialFacilities]);
+
+  // 비교함 변경 시 localStorage 동기화
+  useEffect(() => {
+    if (!compareLoadedRef.current) return;
+    if (typeof window !== 'undefined') {
+      try {
+        localStorage.setItem('daedaesonson_compare_ids', JSON.stringify(compareList.map(f => f.id)));
       } catch { }
     }
-  }, []);
+  }, [compareList]);
 
   // 최근 검색어 저장 함수
   const saveRecentSearch = (query: string) => {
@@ -1057,6 +1079,42 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
                 </Box>
               )}
             </Box>
+
+            {/* 상단 헤더 로그인 / 내 정보 버튼 (PC 및 모바일 목록뷰) */}
+            <button
+              type="button"
+              onClick={() => {
+                if (user) {
+                  if (isMobile) {
+                    router.push('/myinfo');
+                  } else {
+                    setShowMyInfo(prev => !prev);
+                  }
+                } else {
+                  setShowLoginFromMap(true);
+                }
+              }}
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: 5,
+                height: 36,
+                padding: '0 11px',
+                borderRadius: 10,
+                backgroundColor: user ? '#EFF6FF' : '#F8FAFC',
+                border: user ? '1px solid #BFDBFE' : '1px solid #E2E8F0',
+                color: user ? '#2563EB' : '#334155',
+                fontSize: 12.5,
+                fontWeight: 700,
+                cursor: 'pointer',
+                flexShrink: 0,
+                whiteSpace: 'nowrap',
+              }}
+              title={user ? '내 정보 및 관심시설' : '간편 로그인'}
+            >
+              <User size={14} color={user ? '#2563EB' : '#64748B'} />
+              <span>{user ? (profile?.nickname || user.user_metadata?.full_name || '내정보').slice(0, 5) : '로그인'}</span>
+            </button>
 
           </Group>
 
@@ -2116,6 +2174,8 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
           setCompareModalOpen(false);
           handleMarkerClick(fac);
         }}
+        isLoggedIn={!!user}
+        onRequestLogin={() => setShowLoginFromMap(true)}
       />
 
       {/* 모바일 하단 탭바 */}

@@ -2,9 +2,11 @@
 
 import { Drawer, Box, Text, Group, Button, Stack, TextInput, Textarea, Switch, Paper, Modal, ActionIcon, Checkbox, ScrollArea } from '@mantine/core';
 import { useDisclosure, useMediaQuery } from '@mantine/hooks';
-import { ArrowLeft, PenLine, Lock, Unlock, X, MessageCircle, Info } from 'lucide-react';
+import { ArrowLeft, PenLine, Lock, Unlock, X, MessageCircle, Info, UserCheck } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { Facility, FACILITY_CATEGORY_LABELS, FacilityCategory } from '@/types';
+import { useAuth } from '@/components/auth/AuthProvider';
+import LoginModal from '@/components/auth/LoginModal';
 
 interface Inquiry {
     id: string;
@@ -26,11 +28,19 @@ interface InquiryReply {
     createdAt: string;
 }
 
+export interface InquiryPreset {
+    type: string;
+    title: string;
+    content?: string;
+}
+
 interface InquiryPanelProps {
     facility: Facility;
     isOpen: boolean;
     onClose: () => void;
     allFacilities?: Facility[];
+    initialPreset?: InquiryPreset | null;
+    onPresetConsumed?: () => void;
 }
 
 const INQUIRY_CATEGORIES = [
@@ -40,10 +50,19 @@ const INQUIRY_CATEGORIES = [
     { value: 'other', label: '기타' },
 ];
 
-export default function InquiryPanel({ facility, isOpen, onClose, allFacilities = [] }: InquiryPanelProps) {
+export default function InquiryPanel({
+    facility,
+    isOpen,
+    onClose,
+    allFacilities = [],
+    initialPreset = null,
+    onPresetConsumed,
+}: InquiryPanelProps) {
     // 모바일 감지 (기본값 true - SSR 대응)
     const isMobileQuery = useMediaQuery('(max-width: 800px)');
     const isMobile = isMobileQuery ?? true;
+    const { user, profile } = useAuth();
+    const [loginModalOpen, setLoginModalOpen] = useState(false);
 
     // 시설 ID → 시설명 매핑
     const facilityNameMap = new Map(allFacilities.map(f => [f.id, f.name]));
@@ -69,6 +88,31 @@ export default function InquiryPanel({ facility, isOpen, onClose, allFacilities 
     const [pinValue, setPinValue] = useState('');
     const [pinError, setPinError] = useState('');
     const [unlockedIds, setUnlockedIds] = useState<Set<string>>(new Set());
+
+    // 로그인된 유저의 연락처 자동 입력
+    useEffect(() => {
+        if (profile?.phone && !phone) {
+            const raw = String(profile.phone).replace(/[^0-9]/g, '');
+            if (raw.length >= 10) {
+                const formatted = raw.length === 11
+                    ? `${raw.slice(0, 3)}-${raw.slice(3, 7)}-${raw.slice(7, 11)}`
+                    : `${raw.slice(0, 3)}-${raw.slice(3, 6)}-${raw.slice(6)}`;
+                setPhone(formatted);
+            }
+        }
+    }, [profile?.phone, phone]);
+
+    // 빠른 질문 칩(initialPreset)으로 열렸을 때 자동으로 작성 폼 오픈 및 프리필
+    useEffect(() => {
+        if (isOpen && initialPreset) {
+            setInquiryType(initialPreset.type || 'price');
+            setTitle(initialPreset.title || '');
+            if (initialPreset.content) setContent(initialPreset.content);
+            setWriteError('');
+            openWrite();
+            onPresetConsumed?.();
+        }
+    }, [isOpen, initialPreset, openWrite, onPresetConsumed]);
 
     // 문의 목록 로드
     useEffect(() => {
@@ -326,6 +370,37 @@ export default function InquiryPanel({ facility, isOpen, onClose, allFacilities 
                                             </Box>
                                         </Group>
                                     </Paper>
+
+                                    {!user && (
+                                        <Paper p="xs" px="sm" radius="md" bg="#FFFFFF" style={{ border: '1px solid #E2E8F0' }}>
+                                            <Group justify="space-between" align="center" wrap="nowrap">
+                                                <Group gap={6} wrap="nowrap" style={{ minWidth: 0 }}>
+                                                    <UserCheck size={14} color="#2563EB" style={{ flexShrink: 0 }} />
+                                                    <Text size="xs" c="#475569" fw={600} truncate>
+                                                        로그인하면 연락처가 자동 입력됩니다
+                                                    </Text>
+                                                </Group>
+                                                <button
+                                                    type="button"
+                                                    onClick={() => setLoginModalOpen(true)}
+                                                    style={{
+                                                        padding: '4px 10px',
+                                                        borderRadius: 6,
+                                                        border: '1px solid #2563EB',
+                                                        backgroundColor: '#EFF6FF',
+                                                        color: '#2563EB',
+                                                        fontSize: 11.5,
+                                                        fontWeight: 700,
+                                                        cursor: 'pointer',
+                                                        flexShrink: 0,
+                                                        whiteSpace: 'nowrap',
+                                                    }}
+                                                >
+                                                    간편 로그인
+                                                </button>
+                                            </Group>
+                                        </Paper>
+                                    )}
 
                                     {writeError && (
                                         <Paper p="xs" radius="md" bg="#FEF2F2" style={{ border: '1px solid #FECACA' }}>
@@ -756,6 +831,7 @@ export default function InquiryPanel({ facility, isOpen, onClose, allFacilities 
                     </Button>
                 </Stack>
             </Modal>
+            <LoginModal isOpen={loginModalOpen} onClose={() => setLoginModalOpen(false)} />
         </>
     );
 }
