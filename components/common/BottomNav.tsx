@@ -90,19 +90,19 @@ export default function BottomNav({ historyCount = 0, hidden = false, inline = f
                               bottom: 0,
                               left: 0,
                               right: 0,
-                              height: 56,
-                              backgroundColor: 'rgba(255, 255, 255, 0.98)',
-                              backdropFilter: 'blur(12px)',
-                              WebkitBackdropFilter: 'blur(12px)',
-                              borderTop: '1px solid #EEF1F5',
+                              minHeight: 56,
+                              height: 'calc(56px + env(safe-area-inset-bottom, 0px))',
+                              backgroundColor: '#FFFFFF',
+                              borderTop: '1px solid #E5E8EB',
                               zIndex: 2000,
-                              paddingBottom: 'env(safe-area-inset-bottom)',
+                              paddingBottom: 'env(safe-area-inset-bottom, 0px)',
+                              boxSizing: 'border-box',
                               transform: hidden ? 'translateY(100%)' : 'translateY(0)',
                               transition: 'transform 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
                           }
                 }
             >
-                <Group h={56} maw={inline ? '100%' : 640} mx="auto" justify="space-around" align="center" px={0}>
+                <Group h={56} maw={inline ? '100%' : 640} mx="auto" justify="space-around" align="center" px={0} gap={0}>
                     {tabs.map((tab) => {
                         const isActive = pathname === tab.path || (tab.path === '/' && pathname === '/');
                         const IconComponent = iconMap[tab.id];
@@ -119,9 +119,9 @@ export default function BottomNav({ historyCount = 0, hidden = false, inline = f
                                     justifyContent: 'center',
                                     textDecoration: 'none',
                                     flex: 1,
-                                    height: '100%',
+                                    height: 56,
                                     WebkitTapHighlightColor: 'transparent',
-                                    gap: 4,
+                                    gap: 3,
                                 }}
                             >
                                 <Box style={{ position: 'relative', lineHeight: 0 }}>

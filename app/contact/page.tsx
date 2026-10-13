@@ -1,10 +1,11 @@
 'use client';
 
-import { Box, Text, Group, TextInput, Textarea, Select, Stack, Button, ActionIcon, Paper } from '@mantine/core';
-import { ArrowLeft, ChevronDown, Send, Check, AlertCircle } from 'lucide-react';
+import { Box, Text, Group, TextInput, Textarea, Stack, Button, ActionIcon, Paper, Checkbox } from '@mantine/core';
+import { ArrowLeft, Send, Check, AlertCircle } from 'lucide-react';
 import { useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import BottomNav from '@/components/common/BottomNav';
+import { useAuth } from '@/components/auth/AuthProvider';
 
 const INQUIRY_TYPES = [
     { value: 'general', label: '일반 문의' },
@@ -12,24 +13,53 @@ const INQUIRY_TYPES = [
     { value: 'facility', label: '시설 정보' },
     { value: 'error', label: '오류 신고' },
     { value: 'partnership', label: '제휴/협력' },
-    { value: 'other', label: '기타' },
+    { value: 'other', label: '기타 문의' },
 ];
+
+const QUICK_SUBJECTS: Record<string, string[]> = {
+    general: ['장지 종류별 차이점이 궁금해요', '지역별 추모시설 추천 문의'],
+    price: ['봉안당·수목장 평균 분양가 문의', '공설/사설 시설 비용 비교 문의'],
+    facility: ['특정 시설 안치 자격·절차 문의', '시설 방문 답사 예약 방법 문의'],
+    error: ['시설 분양가·관리비 정보 수정 제보', '전화번호·주소 오류 제보'],
+    partnership: ['장지 시설 공식 파트너 등록 문의', '분양팀 상담 리드 제휴 문의'],
+    other: ['서비스 이용 불편 사항 제보', '기타 건의사항'],
+};
 
 export default function ContactPage() {
     const router = useRouter();
-    const [inquiryType, setInquiryType] = useState<string | null>('general');
+    const { user, profile } = useAuth();
+    const [inquiryType, setInquiryType] = useState<string>('general');
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
     const [contact, setContact] = useState('');
+    const [agreePrivacy, setAgreePrivacy] = useState(true);
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [submitted, setSubmitted] = useState(false);
     const [errorMsg, setErrorMsg] = useState('');
 
-    const canSubmit = !!(inquiryType && title.trim() && content.trim() && contact.trim());
+    useEffect(() => {
+        if (!contact && (profile?.phone || user?.email)) {
+            setContact(profile?.phone || user?.email || '');
+        }
+    }, [profile, user, contact]);
+
+    const canSubmit = !!(inquiryType && title.trim() && content.trim() && contact.trim() && agreePrivacy);
 
     const handleSubmit = async () => {
-        if (!canSubmit) {
-            setErrorMsg('모든 필수 항목을 입력해주세요.');
+        if (!title.trim()) {
+            setErrorMsg('문의 제목을 입력해주세요.');
+            return;
+        }
+        if (!content.trim()) {
+            setErrorMsg('문의 내용을 입력해주세요.');
+            return;
+        }
+        if (!contact.trim()) {
+            setErrorMsg('답변 받으실 연락처 또는 이메일을 입력해주세요.');
+            return;
+        }
+        if (!agreePrivacy) {
+            setErrorMsg('개인정보 수집 및 이용에 동의해주세요.');
             return;
         }
 
@@ -59,12 +89,25 @@ export default function ContactPage() {
         }
     };
 
+    const inputStyles = {
+        input: {
+            height: 48,
+            borderRadius: 12,
+            backgroundColor: '#FFFFFF',
+            border: '1px solid #CBD5E1',
+            fontSize: 15,
+            color: '#191F28',
+            paddingLeft: 14,
+            paddingRight: 14,
+        },
+    };
+
     return (
-        <Box style={{ minHeight: '100dvh', backgroundColor: '#F8FAFC', paddingBottom: 96 }}>
+        <Box style={{ minHeight: '100dvh', backgroundColor: '#F8FAFC', paddingBottom: 'calc(84px + env(safe-area-inset-bottom, 0px))' }}>
             {/* 헤더 */}
             <Box
                 px="md"
-                py={14}
+                py={12}
                 style={{
                     position: 'sticky',
                     top: 0,
@@ -124,7 +167,7 @@ export default function ContactPage() {
                             size="lg"
                             radius="md"
                             onClick={() => router.push('/menu')}
-                            style={{ backgroundColor: '#2563EB', height: 50, fontWeight: 700 }}
+                            style={{ backgroundColor: '#2563EB', height: 50, borderRadius: 12, fontWeight: 700 }}
                         >
                             전체 메뉴로 돌아가기
                         </Button>
@@ -141,52 +184,79 @@ export default function ContactPage() {
                         )}
 
                         {/* 폼 카드 */}
-                        <Paper bg="white" p="xl" radius="lg" style={{ border: '1px solid #E5E8EB' }}>
+                        <Paper bg="white" p="lg" radius="lg" style={{ border: '1px solid #E5E8EB' }}>
                             <Stack gap={18}>
-                                {/* 문의 종류 */}
+                                {/* 문의 종류 - 모던 3x2 원탭 칩 그리드 */}
                                 <Box>
-                                    <Text size="xs" fw={700} c="#334155" mb={6}>
-                                        문의 종류 <Text component="span" c="#EF4444" inherit>*</Text>
+                                    <Text size="xs" fw={700} c="#334155" mb={8}>
+                                        문의 유형 <Text component="span" c="#EF4444" inherit>*</Text>
                                     </Text>
-                                    <Select
-                                        placeholder="선택해주세요"
-                                        data={INQUIRY_TYPES}
-                                        value={inquiryType}
-                                        onChange={setInquiryType}
-                                        rightSection={<ChevronDown size={16} color="#64748B" />}
-                                        styles={{
-                                            input: {
-                                                height: 46,
-                                                borderRadius: 10,
-                                                backgroundColor: '#FFFFFF',
-                                                border: '1px solid #CBD5E1',
-                                                fontSize: 14,
-                                                color: '#191F28',
-                                            },
-                                        }}
-                                        comboboxProps={{ position: 'bottom', shadow: 'md' }}
-                                    />
+                                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 8 }}>
+                                        {INQUIRY_TYPES.map((type) => {
+                                            const active = inquiryType === type.value;
+                                            return (
+                                                <button
+                                                    key={type.value}
+                                                    type="button"
+                                                    onClick={() => setInquiryType(type.value)}
+                                                    style={{
+                                                        height: 42,
+                                                        borderRadius: 10,
+                                                        border: active ? '1.5px solid #2563EB' : '1px solid #CBD5E1',
+                                                        backgroundColor: active ? '#2563EB' : '#FFFFFF',
+                                                        color: active ? '#FFFFFF' : '#475569',
+                                                        fontSize: 13,
+                                                        fontWeight: active ? 700 : 600,
+                                                        cursor: 'pointer',
+                                                        transition: 'all 0.15s ease',
+                                                    }}
+                                                >
+                                                    {type.label}
+                                                </button>
+                                            );
+                                        })}
+                                    </div>
                                 </Box>
 
-                                {/* 제목 */}
+                                {/* 제목 + 원탭 빠른 제목 */}
                                 <Box>
-                                    <Text size="xs" fw={700} c="#334155" mb={6}>
-                                        제목 <Text component="span" c="#EF4444" inherit>*</Text>
-                                    </Text>
+                                    <Group justify="space-between" align="center" mb={6}>
+                                        <Text size="xs" fw={700} c="#334155">
+                                            제목 <Text component="span" c="#EF4444" inherit>*</Text>
+                                        </Text>
+                                        <Text size="11px" c="#2563EB" fw={600}>클릭 시 자동 입력</Text>
+                                    </Group>
+                                    <Group gap={6} mb={8} style={{ flexWrap: 'wrap' }}>
+                                        {(QUICK_SUBJECTS[inquiryType] || QUICK_SUBJECTS.general).map((preset) => (
+                                            <button
+                                                key={preset}
+                                                type="button"
+                                                onClick={() => {
+                                                    setTitle(preset);
+                                                    if (!content.trim()) {
+                                                        setContent(`${preset} 관련하여 안내 부탁드립니다.`);
+                                                    }
+                                                }}
+                                                style={{
+                                                    padding: '5px 10px',
+                                                    borderRadius: 999,
+                                                    border: title === preset ? '1px solid #2563EB' : '1px solid #DBEAFE',
+                                                    backgroundColor: title === preset ? '#EFF6FF' : '#F8FAFC',
+                                                    color: '#1E40AF',
+                                                    fontSize: 12,
+                                                    fontWeight: 600,
+                                                    cursor: 'pointer',
+                                                }}
+                                            >
+                                                + {preset}
+                                            </button>
+                                        ))}
+                                    </Group>
                                     <TextInput
                                         placeholder="문의 제목을 입력해주세요"
                                         value={title}
                                         onChange={(e) => setTitle(e.target.value)}
-                                        styles={{
-                                            input: {
-                                                height: 46,
-                                                borderRadius: 10,
-                                                backgroundColor: '#FFFFFF',
-                                                border: '1px solid #CBD5E1',
-                                                fontSize: 14,
-                                                color: '#191F28',
-                                            },
-                                        }}
+                                        styles={inputStyles}
                                     />
                                 </Box>
 
@@ -196,20 +266,21 @@ export default function ContactPage() {
                                         문의 내용 <Text component="span" c="#EF4444" inherit>*</Text>
                                     </Text>
                                     <Textarea
-                                        placeholder="궁금한 점을 자세히 적어주세요"
+                                        placeholder="궁금한 점이나 요청하실 내용을 자세히 적어주세요."
                                         value={content}
                                         onChange={(e) => setContent(e.target.value)}
-                                        minRows={6}
+                                        minRows={5}
+                                        maxRows={10}
                                         autosize
                                         styles={{
                                             input: {
-                                                borderRadius: 10,
+                                                borderRadius: 12,
                                                 backgroundColor: '#FFFFFF',
                                                 border: '1px solid #CBD5E1',
                                                 fontSize: 14,
                                                 lineHeight: 1.6,
                                                 color: '#191F28',
-                                                padding: '12px',
+                                                padding: '12px 14px',
                                             },
                                         }}
                                     />
@@ -218,22 +289,36 @@ export default function ContactPage() {
                                 {/* 연락처 */}
                                 <Box>
                                     <Text size="xs" fw={700} c="#334155" mb={6}>
-                                        답변 받을 연락처 <Text component="span" c="#EF4444" inherit>*</Text>
+                                        답변 받을 연락처 / 이메일 <Text component="span" c="#EF4444" inherit>*</Text>
                                     </Text>
                                     <TextInput
-                                        placeholder="휴대폰 번호 또는 이메일 주소"
+                                        placeholder="010-1234-5678 또는 이메일 주소"
                                         value={contact}
                                         onChange={(e) => setContact(e.target.value)}
-                                        styles={{
-                                            input: {
-                                                height: 46,
-                                                borderRadius: 10,
-                                                backgroundColor: '#FFFFFF',
-                                                border: '1px solid #CBD5E1',
-                                                fontSize: 14,
-                                                color: '#191F28',
-                                            },
-                                        }}
+                                        styles={inputStyles}
+                                    />
+                                </Box>
+
+                                {/* 개인정보 동의 */}
+                                <Box
+                                    p="sm"
+                                    style={{
+                                        borderRadius: 10,
+                                        backgroundColor: '#F8FAFC',
+                                        border: '1px solid #E2E8F0',
+                                    }}
+                                >
+                                    <Checkbox
+                                        checked={agreePrivacy}
+                                        onChange={(e) => setAgreePrivacy(e.currentTarget.checked)}
+                                        color="blue"
+                                        size="xs"
+                                        label={
+                                            <Text size="xs" fw={600} c="#334155">
+                                                <Text span c="#2563EB" fw={700}>[필수] </Text>
+                                                문의 답변 안내를 위한 개인정보(연락처) 수집·이용 동의
+                                            </Text>
+                                        }
                                     />
                                 </Box>
 
@@ -246,10 +331,11 @@ export default function ContactPage() {
                                     disabled={!canSubmit || isSubmitting}
                                     leftSection={<Send size={17} />}
                                     onClick={handleSubmit}
-                                    mt="xs"
+                                    mt={4}
                                     styles={{
                                         root: {
                                             height: 52,
+                                            borderRadius: 12,
                                             backgroundColor: canSubmit ? '#2563EB' : '#E2E8F0',
                                             color: canSubmit ? '#FFFFFF' : '#94A3B8',
                                             fontSize: 15.5,
@@ -257,11 +343,11 @@ export default function ContactPage() {
                                         }
                                     }}
                                 >
-                                    문의 등록하기
+                                    1:1 문의 접수하기
                                 </Button>
 
                                 <Text size="xs" c="#64748B" ta="center">
-                                    영업일 기준 1~2일 내에 답변 드립니다
+                                    남겨주신 연락처로 영업일 기준 1~2일 내에 답변 드립니다
                                 </Text>
                             </Stack>
                         </Paper>

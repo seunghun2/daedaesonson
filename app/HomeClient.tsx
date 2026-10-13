@@ -784,7 +784,8 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
           // JS hydration 후 정확한 크기 적용
           ...(isMobile !== undefined && {
             width: isMobile ? '100%' : 400,
-            height: isMobile ? (mobileView === 'list' ? '100%' : '50%') : '100%'
+            height: isMobile ? (mobileView === 'list' ? '100%' : '50%') : '100%',
+            paddingBottom: isMobile && mobileView === 'list' ? 'calc(56px + env(safe-area-inset-bottom, 0px))' : 0,
           })
         }}
       >
@@ -1278,26 +1279,27 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
           display: isMobile && mobileView === 'list' ? 'none' : 'block'
         }}
       >
-        {/* 모바일 지도 모드 상단 헤더 오버레이 (UI 숨김 시 슬라이드 아웃) */}
+        {/* 모바일 지도 모드 상단 통합 헤더 & 카테고리 칩 바 (UI 숨김 시 슬라이드 아웃) */}
         {isMobile && mobileView === 'map' && (
-          <>
-            {/* 상단 헤더 (클린 화이트 글래스 헤더 - UI 숨김 시 위로 슬라이드 아웃) */}
-            <Box
-              pos="absolute"
-              top={0}
-              left={0}
-              w="100%"
-              style={{
-                zIndex: 1000,
-                backgroundColor: 'rgba(255, 255, 255, 0.97)',
-                backdropFilter: 'blur(12px)',
-                padding: '10px 14px',
-                borderBottom: '1px solid #F2F4F6',
-                transform: uiHidden ? 'translateY(-100%)' : 'translateY(0)',
-                transition: 'transform 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-              }}
-            >
-              <Group wrap="nowrap" align="center" gap={10}>
+          <Box
+            pos="absolute"
+            top={0}
+            left={0}
+            w="100%"
+            style={{
+              zIndex: 1000,
+              backgroundColor: 'rgba(255, 255, 255, 0.98)',
+              backdropFilter: 'blur(12px)',
+              WebkitBackdropFilter: 'blur(12px)',
+              borderBottom: '1px solid #E5E8EB',
+              boxShadow: '0 2px 10px rgba(15, 23, 42, 0.05)',
+              transform: uiHidden ? 'translateY(-110%)' : 'translateY(0)',
+              transition: 'transform 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+            }}
+          >
+            {/* 1단: 로고 + 검색바 + 로그인/마이 */}
+            <Box style={{ padding: '10px 14px 8px' }}>
+              <Group wrap="nowrap" align="center" gap={8}>
                 <Link href="/" style={{ display: 'flex', alignItems: 'center', flexShrink: 0 }}>
                   <Image
                     src="/logo-horizontal.svg?v=4"
@@ -1321,7 +1323,8 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
                     gap: '7px',
                     backgroundColor: '#F2F4F6',
                     borderRadius: '10px',
-                    padding: '8px 12px',
+                    height: 36,
+                    padding: '0 12px',
                     cursor: 'pointer',
                     minWidth: 0,
                   }}
@@ -1332,7 +1335,7 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
                   </Text>
                 </Box>
 
-                {/* 👤 모바일 상단 로그인 / 프로필 버튼 */}
+                {/* 모바일 상단 로그인 / 프로필 버튼 */}
                 <button
                   onClick={() => {
                     if (user) {
@@ -1344,11 +1347,13 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
                   style={{
                     display: 'flex',
                     alignItems: 'center',
+                    justifyContent: 'center',
                     gap: 4,
-                    backgroundColor: '#F2F4F6',
-                    border: '1px solid #E5E8EB',
-                    borderRadius: 9,
-                    padding: '7px 10px',
+                    backgroundColor: '#F8FAFC',
+                    border: '1px solid #E2E8F0',
+                    borderRadius: 10,
+                    height: 36,
+                    padding: '0 10px',
                     color: '#191F28',
                     fontSize: 12,
                     fontWeight: 700,
@@ -1360,27 +1365,11 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
                   <User size={13} color="#4E5968" />
                   <span>{user ? (user.user_metadata?.full_name || '마이') : '로그인'}</span>
                 </button>
-
               </Group>
             </Box>
 
-            {/* 필터 버튼 영역 - 원탭 카테고리 칩 스트립 (UI 숨김 시 위로 슬라이드 아웃) */}
-            <Box
-              pos="absolute"
-              top="55px"
-              left={0}
-              w="100%"
-              style={{
-                zIndex: 900,
-                backgroundColor: 'rgba(255, 255, 255, 0.97)',
-                backdropFilter: 'blur(12px)',
-                padding: '7px 14px 9px',
-                borderBottom: '1px solid rgba(229, 232, 235, 0.85)',
-                boxShadow: '0 2px 8px rgba(15, 23, 42, 0.05)',
-                transform: uiHidden ? 'translateY(-220%)' : 'translateY(0)',
-                transition: 'transform 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-              }}
-            >
+            {/* 2단: 원탭 카테고리 칩 스트립 */}
+            <Box style={{ padding: '0 14px 9px' }}>
               <div className="no-scrollbar" style={{ display: 'flex', gap: 6, alignItems: 'center', overflowX: 'auto' }}>
                 {[
                   { key: 'all', label: '전체', dot: null },
@@ -1408,7 +1397,7 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
                         });
                       }}
                       style={{
-                        height: '30px',
+                        height: '31px',
                         fontSize: '12.5px',
                         fontWeight: isSelected ? 700 : 600,
                         backgroundColor: isSelected ? '#191F28' : '#FFFFFF',
@@ -1445,7 +1434,7 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
                   type="button"
                   onClick={() => setHideInquiry(!hideInquiry)}
                   style={{
-                    height: '30px',
+                    height: '31px',
                     fontSize: '12px',
                     fontWeight: hideInquiry ? 700 : 600,
                     backgroundColor: hideInquiry ? '#EFF6FF' : '#FFFFFF',
@@ -1472,12 +1461,12 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
                     setDrawerFilterOpen(true);
                   }}
                   style={{
-                    height: '30px',
+                    height: '31px',
                     fontSize: '12px',
                     fontWeight: 600,
                     backgroundColor: '#F2F4F6',
                     color: '#4E5968',
-                    border: 'none',
+                    border: '1px solid #E5E8EB',
                     borderRadius: '999px',
                     cursor: 'pointer',
                     padding: '0 10px',
@@ -1493,109 +1482,144 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
                 </button>
               </div>
             </Box>
-          </>
+          </Box>
         )}
 
-        {/* 필터 Drawer (PC: 왼쪽 사이드바 크기, 모바일: 풀스크린) */}
+        {/* 필터 Drawer (PC: 왼쪽 사이드바 크기, 모바일: 바텀시트/모달) */}
         <Drawer
           opened={drawerFilterOpen}
           onClose={() => setDrawerFilterOpen(false)}
           position={isMobile ? 'bottom' : 'left'}
-          size={isMobile ? '100%' : 400}
+          size={isMobile ? 'auto' : 400}
           withCloseButton={false}
           zIndex={10000}
           styles={{
-            content: { borderRadius: isMobile ? '16px 16px 0 0' : 0, display: 'flex', flexDirection: 'column' as const },
+            content: { borderRadius: isMobile ? '20px 20px 0 0' : 0, display: 'flex', flexDirection: 'column' as const },
             body: { padding: 0, flex: 1, display: 'flex', flexDirection: 'column' as const },
           }}
         >
           {/* 헤더 */}
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '16px 20px', borderBottom: '1px solid #f1f3f5' }}>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '16px 20px', borderBottom: '1px solid #E5E8EB' }}>
+            <Text fw={800} size="md" c="#191F28">상세 필터</Text>
             <button
               onClick={() => setDrawerFilterOpen(false)}
-              style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 4, display: 'flex', alignItems: 'center', justifyContent: 'center', width: 44, height: 44 }}
+              style={{ background: '#F8FAFC', border: '1px solid #E2E8F0', borderRadius: 8, cursor: 'pointer', padding: 4, display: 'flex', alignItems: 'center', justifyContent: 'center', width: 34, height: 34 }}
             >
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#333" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" /></svg>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#191F28" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" /></svg>
             </button>
-            <Text fw={700} size="md">필터</Text>
-            <div style={{ width: 44 }} />
           </div>
 
           {/* 시설 유형 */}
-          <div style={{ padding: '20px 24px', flex: 1 }}>
-            <Text fw={700} size="sm" mb={16}>시설 유형</Text>
-            <Stack gap={14}>
-              <Checkbox
-                label="전체"
-                checked={tempCategory.includes('all')}
-                onChange={() => setTempCategory(['all'])}
-                size="md"
-                color="brand"
-                styles={{ label: { fontSize: '15px', fontWeight: 500, cursor: 'pointer' }, input: { cursor: 'pointer' } }}
-              />
+          <div style={{ padding: '20px', flex: 1 }}>
+            <Text fw={700} size="xs" c="#334155" mb={10}>시설 유형 (복수 선택 가능)</Text>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 8 }}>
               {[
+                { value: 'all', label: '전체' },
                 { value: 'charnel', label: '봉안당' },
                 { value: 'natural', label: '수목장' },
                 { value: 'park', label: '공원묘지' },
                 { value: 'crematorium', label: '화장장' }
-              ].map(tab => (
-                <Checkbox
-                  key={tab.value}
-                  label={tab.label}
-                  checked={tempCategory.includes('all') || tempCategory.includes(tab.value)}
-                  onChange={() => {
-                    if (tempCategory.includes('all')) {
-                      const others = ['charnel', 'natural', 'park', 'crematorium'].filter(v => v !== tab.value);
-                      setTempCategory(others);
-                    } else if (tempCategory.includes(tab.value)) {
-                      const newCats = tempCategory.filter(c => c !== tab.value);
-                      setTempCategory(newCats.length === 0 ? ['all'] : newCats);
-                    } else {
-                      const newCats = [...tempCategory, tab.value];
-                      setTempCategory(newCats.length === 4 ? ['all'] : newCats);
-                    }
-                  }}
-                  size="md"
-                  color="brand"
-                  styles={{ label: { fontSize: '15px', fontWeight: 500, cursor: 'pointer' }, input: { cursor: 'pointer' } }}
-                />
-              ))}
-            </Stack>
+              ].map(tab => {
+                const isChecked = tab.value === 'all'
+                  ? tempCategory.includes('all')
+                  : (tempCategory.includes('all') || tempCategory.includes(tab.value));
+                return (
+                  <button
+                    key={tab.value}
+                    type="button"
+                    onClick={() => {
+                      if (tab.value === 'all') {
+                        setTempCategory(['all']);
+                      } else if (tempCategory.includes('all')) {
+                        setTempCategory([tab.value]);
+                      } else if (tempCategory.includes(tab.value)) {
+                        const newCats = tempCategory.filter(c => c !== tab.value);
+                        setTempCategory(newCats.length === 0 ? ['all'] : newCats);
+                      } else {
+                        const newCats = [...tempCategory, tab.value];
+                        setTempCategory(newCats.length === 4 ? ['all'] : newCats);
+                      }
+                    }}
+                    style={{
+                      height: 42,
+                      borderRadius: 10,
+                      border: isChecked ? '1.5px solid #2563EB' : '1px solid #CBD5E1',
+                      backgroundColor: isChecked ? '#EFF6FF' : '#FFFFFF',
+                      color: isChecked ? '#2563EB' : '#475569',
+                      fontSize: 13.5,
+                      fontWeight: isChecked ? 700 : 600,
+                      cursor: 'pointer',
+                      transition: 'all 0.15s ease',
+                    }}
+                  >
+                    {tab.label}
+                  </button>
+                );
+              })}
+            </div>
 
             {/* 구분선 */}
-            <div style={{ height: 1, backgroundColor: '#f1f3f5', margin: '20px 0' }} />
+            <div style={{ height: 1, backgroundColor: '#F1F5F9', margin: '20px 0' }} />
 
             {/* 공설/사설 */}
-            <Text fw={700} size="sm" mb={12}>운영 주체</Text>
-            <SegmentedControl
-              fullWidth
-              value={tempInstitutionFilter}
-              onChange={(val) => setTempInstitutionFilter(val as 'all' | 'public' | 'private')}
-              data={[
+            <Text fw={700} size="xs" c="#334155" mb={10}>운영 주체</Text>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 8, marginBottom: 20 }}>
+              {[
                 { label: '전체', value: 'all' },
-                { label: '공설', value: 'public' },
-                { label: '사설', value: 'private' },
-              ]}
-              color="brand"
-              styles={{ root: { marginBottom: 20 } }}
-            />
+                { label: '공설 시설', value: 'public' },
+                { label: '사설 시설', value: 'private' },
+              ].map((opt) => {
+                const active = tempInstitutionFilter === opt.value;
+                return (
+                  <button
+                    key={opt.value}
+                    type="button"
+                    onClick={() => setTempInstitutionFilter(opt.value as 'all' | 'public' | 'private')}
+                    style={{
+                      height: 42,
+                      borderRadius: 10,
+                      border: active ? '1.5px solid #2563EB' : '1px solid #CBD5E1',
+                      backgroundColor: active ? '#2563EB' : '#FFFFFF',
+                      color: active ? '#FFFFFF' : '#475569',
+                      fontSize: 13.5,
+                      fontWeight: active ? 700 : 600,
+                      cursor: 'pointer',
+                      transition: 'all 0.15s ease',
+                    }}
+                  >
+                    {opt.label}
+                  </button>
+                );
+              })}
+            </div>
 
             {/* 구분선 */}
-            <div style={{ height: 1, backgroundColor: '#f1f3f5', margin: '0 0 20px 0' }} />
+            <div style={{ height: 1, backgroundColor: '#F1F5F9', margin: '0 0 18px 0' }} />
 
             {/* 문의제외 */}
-            <Checkbox
-              label="문의 가격 시설 제외"
-              checked={tempHideInquiry}
-              onChange={() => setTempHideInquiry(!tempHideInquiry)}
-              size="md"
-              color="brand"
-              styles={{ label: { fontSize: '15px', fontWeight: 500, cursor: 'pointer' }, input: { cursor: 'pointer' } }}
-            />
+            <Box
+              p="sm"
+              style={{
+                borderRadius: 10,
+                backgroundColor: tempHideInquiry ? '#EFF6FF' : '#F8FAFC',
+                border: tempHideInquiry ? '1px solid #BFDBFE' : '1px solid #E2E8F0',
+                cursor: 'pointer',
+              }}
+              onClick={() => setTempHideInquiry(!tempHideInquiry)}
+            >
+              <Checkbox
+                label="가격 미공개(문의) 시설 제외하고 보기"
+                checked={tempHideInquiry}
+                onChange={() => setTempHideInquiry(!tempHideInquiry)}
+                size="sm"
+                color="blue"
+                styles={{ label: { fontSize: '13.5px', fontWeight: 600, color: '#191F28', cursor: 'pointer' }, input: { cursor: 'pointer' } }}
+              />
+            </Box>
           </div>
 
           {/* 하단 버튼 */}
-          <div style={{ display: 'flex', gap: 12, padding: '16px 20px', borderTop: '1px solid #f1f3f5', paddingBottom: 'calc(16px + env(safe-area-inset-bottom))', marginTop: 'auto' }}>
+          <div style={{ display: 'flex', gap: 10, padding: '14px 20px', borderTop: '1px solid #E5E8EB', paddingBottom: 'calc(16px + env(safe-area-inset-bottom, 0px))', marginTop: 'auto', backgroundColor: '#FFFFFF' }}>
             <button
               onClick={() => {
                 setTempCategory(['all']);
@@ -1605,21 +1629,21 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
               style={{
                 flex: '0 0 auto',
                 height: 48,
-                padding: '0 20px',
-                backgroundColor: 'white',
-                border: '1px solid #dee2e6',
+                padding: '0 18px',
+                backgroundColor: '#FFFFFF',
+                border: '1px solid #CBD5E1',
                 borderRadius: 12,
                 fontSize: 14,
                 fontWeight: 600,
-                color: '#495057',
+                color: '#475569',
                 cursor: 'pointer',
                 display: 'flex',
                 alignItems: 'center',
                 gap: 6,
               }}
             >
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="1 4 1 10 7 10" /><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10" /></svg>
-              선택해제
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="1 4 1 10 7 10" /><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10" /></svg>
+              초기화
             </button>
             <button
               onClick={() => {
@@ -1631,7 +1655,7 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
               style={{
                 flex: 1,
                 height: 48,
-                backgroundColor: '#191F28',
+                backgroundColor: '#2563EB',
                 color: 'white',
                 border: 'none',
                 borderRadius: 12,
@@ -1640,7 +1664,7 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
                 cursor: 'pointer',
               }}
             >
-              적용하기
+              필터 적용하기
             </button>
           </div>
         </Drawer>
@@ -1792,17 +1816,35 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
                   }
                   <ChevronDown size={14} style={{ opacity: 0.6 }} />
                 </button>
-                <SegmentedControl
-                  size="xs"
-                  value={nearbyInstitutionFilter}
-                  onChange={(val) => setNearbyInstitutionFilter(val as 'all' | 'public' | 'private')}
-                  data={[
+                <div style={{ display: 'flex', gap: 4, backgroundColor: '#F1F5F9', padding: 3, borderRadius: 8 }}>
+                  {[
                     { label: '전체', value: 'all' },
                     { label: '공설', value: 'public' },
                     { label: '사설', value: 'private' },
-                  ]}
-                  styles={{ root: { height: 30 } }}
-                />
+                  ].map((opt) => {
+                    const active = nearbyInstitutionFilter === opt.value;
+                    return (
+                      <button
+                        key={opt.value}
+                        type="button"
+                        onClick={() => setNearbyInstitutionFilter(opt.value as 'all' | 'public' | 'private')}
+                        style={{
+                          height: 24,
+                          padding: '0 10px',
+                          borderRadius: 6,
+                          border: 'none',
+                          backgroundColor: active ? '#2563EB' : 'transparent',
+                          color: active ? '#FFFFFF' : '#64748B',
+                          fontSize: 12,
+                          fontWeight: active ? 700 : 600,
+                          cursor: 'pointer',
+                        }}
+                      >
+                        {opt.label}
+                      </button>
+                    );
+                  })}
+                </div>
               </Group>
             </Box>
 
@@ -1879,7 +1921,7 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
                     setNearbyHideInquiry(tempNearbyHideInquiry);
                     setNearbyDrawerOpen(false);
                   }}
-                  style={{ flex: 1, height: 48, backgroundColor: '#191F28', color: 'white', border: 'none', borderRadius: 12, fontSize: 15, fontWeight: 700, cursor: 'pointer' }}
+                  style={{ flex: 1, height: 48, backgroundColor: '#2563EB', color: 'white', border: 'none', borderRadius: 12, fontSize: 15, fontWeight: 700, cursor: 'pointer' }}
                 >
                   적용하기
                 </button>
@@ -2023,14 +2065,14 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
         )
       }
 
-      {/* 📱 모바일 3단계 드래그 스냅 바텀시트 (peek / half / full) */}
+      {/* 모바일 3단계 드래그 스냅 바텀시트 (peek / half / full) */}
       {isMobile && mobileView === 'map' && !selectedFacility && (
         <div
           style={{
             position: 'fixed',
             left: 0,
             right: 0,
-            bottom: 'calc(58px + env(safe-area-inset-bottom, 0px))',
+            bottom: 'calc(56px + env(safe-area-inset-bottom, 0px))',
             height:
               mobileSheetSnap === 'full'
                 ? 'calc(100dvh - 150px - env(safe-area-inset-bottom, 0px))'

@@ -40,30 +40,32 @@ export default function PartnershipPage() {
         }
     }, []);
 
-    const emailDomains = [
-        { value: '', label: '직접입력' },
-        { value: 'naver.com', label: 'naver.com' },
-        { value: 'gmail.com', label: 'gmail.com' },
-        { value: 'daum.net', label: 'daum.net' },
-        { value: 'hanmail.net', label: 'hanmail.net' },
-        { value: 'kakao.com', label: 'kakao.com' },
-    ];
+    const emailDomainChips = ['naver.com', 'gmail.com', 'kakao.com', 'daum.net', 'hanmail.net'];
+
+    const applyEmailDomain = (domain: string) => {
+        const current = form.email.trim();
+        const localPart = current.includes('@') ? current.split('@')[0] : current;
+        setForm({ ...form, email: `${localPart || 'partner'}@${domain}`, emailDomain: '' });
+    };
 
     const handleSubmit = async () => {
         if (!form.companyName.trim()) {
-            setErrorMsg('광고주/업체명을 입력해주세요.');
-            return;
-        }
-        if (!form.email.trim()) {
-            setErrorMsg('이메일을 입력해주세요.');
+            setErrorMsg('시설명 또는 업체명을 입력해주세요.');
             return;
         }
         if (!form.name.trim()) {
-            setErrorMsg('담당자 이름을 입력해주세요.');
+            setErrorMsg('담당자 성함을 입력해주세요.');
             return;
         }
-        if (!form.phone.trim() || form.phone.replace(/\D/g, '').length < 10) {
+        if (!form.phone.trim() || form.phone.replace(/\D/g, '').length < 9) {
             setErrorMsg('올바른 연락처를 입력해주세요.');
+            return;
+        }
+        const fullEmail = form.emailDomain
+            ? `${form.email.trim()}@${form.emailDomain}`
+            : form.email.trim();
+        if (!fullEmail || !fullEmail.includes('@')) {
+            setErrorMsg('올바른 이메일 주소를 입력해주세요.');
             return;
         }
         if (!form.content.trim()) {
@@ -79,20 +81,16 @@ export default function PartnershipPage() {
         setIsSubmitting(true);
 
         try {
-            const fullEmail = form.emailDomain
-                ? `${form.email}@${form.emailDomain}`
-                : form.email;
-
             const res = await fetch('/api/partnership', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
                     type: inquiryType,
-                    companyName: form.companyName,
+                    companyName: form.companyName.trim(),
                     email: fullEmail,
-                    name: form.name,
-                    phone: form.phone,
-                    content: form.content,
+                    name: form.name.trim(),
+                    phone: form.phone.trim(),
+                    content: form.content.trim(),
                 }),
             });
 
@@ -119,12 +117,14 @@ export default function PartnershipPage() {
 
     const inputStyles = {
         input: {
-            height: 46,
-            borderRadius: 10,
+            height: 48,
+            borderRadius: 12,
             backgroundColor: '#FFFFFF',
             border: '1px solid #CBD5E1',
             fontSize: 15,
             color: '#191F28',
+            paddingLeft: 14,
+            paddingRight: 14,
         }
     };
 
@@ -397,25 +397,39 @@ export default function PartnershipPage() {
                     )}
 
                     <Stack gap={18}>
-                        {/* 문의 유형 */}
+                        {/* 문의 유형 - 모던 2-탭 선택기 */}
                         <Box>
                             <Text size="xs" fw={700} c="#334155" mb={8}>문의 유형 <Text span c="#EF4444">*</Text></Text>
-                            <SegmentedControl
-                                fullWidth
-                                value={inquiryType}
-                                onChange={setInquiryType}
-                                radius="md"
-                                size="md"
-                                data={[
-                                    { label: '시설 등록 문의', value: 'facility' },
-                                    { label: '광고/제휴 문의', value: 'partnership' },
-                                ]}
-                                styles={{
-                                    root: { backgroundColor: '#F1F5F9', padding: 4 },
-                                    indicator: { backgroundColor: '#2563EB', boxShadow: '0 1px 3px rgba(37, 99, 235, 0.2)' },
-                                    label: { fontWeight: 600, fontSize: 13.5 },
-                                }}
-                            />
+                            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8 }}>
+                                {[
+                                    { label: '시설 등록 · 정보 수정', value: 'facility' },
+                                    { label: '공식 파트너 · 광고 제휴', value: 'partnership' },
+                                ].map((tab) => {
+                                    const active = inquiryType === tab.value;
+                                    return (
+                                        <button
+                                            key={tab.value}
+                                            type="button"
+                                            onClick={() => setInquiryType(tab.value)}
+                                            style={{
+                                                height: 46,
+                                                borderRadius: 12,
+                                                border: active ? '1.5px solid #2563EB' : '1px solid #CBD5E1',
+                                                backgroundColor: active ? '#2563EB' : '#FFFFFF',
+                                                color: active ? '#FFFFFF' : '#475569',
+                                                fontSize: 13.5,
+                                                fontWeight: active ? 700 : 600,
+                                                whiteSpace: 'nowrap',
+                                                cursor: 'pointer',
+                                                transition: 'all 0.15s ease',
+                                                boxShadow: active ? '0 2px 8px rgba(37, 99, 235, 0.2)' : 'none',
+                                            }}
+                                        >
+                                            {tab.label}
+                                        </button>
+                                    );
+                                })}
+                            </div>
                         </Box>
 
                         {/* 광고주명 */}
@@ -433,7 +447,7 @@ export default function PartnershipPage() {
                         <Box>
                             <Text size="xs" fw={700} c="#334155" mb={6}>담당자 성함 / 직함 <Text span c="#EF4444">*</Text></Text>
                             <TextInput
-                                placeholder="예) 홍길동 팀장"
+                                placeholder="예) 홍길동 분양팀장"
                                 value={form.name}
                                 onChange={(e) => setForm({ ...form, name: e.currentTarget.value })}
                                 styles={inputStyles}
@@ -452,34 +466,82 @@ export default function PartnershipPage() {
                             />
                         </Box>
 
-                        {/* E-mail */}
+                        {/* 이메일 (단일 통합 인풋 + 원탭 도메인 자동완성 칩) */}
                         <Box>
-                            <Text size="xs" fw={700} c="#334155" mb={6}>이메일 <Text span c="#EF4444">*</Text></Text>
-                            <Group gap="xs" wrap="nowrap">
-                                <TextInput
-                                    placeholder="이메일 아이디"
-                                    value={form.email}
-                                    onChange={(e) => setForm({ ...form, email: e.currentTarget.value })}
-                                    style={{ flex: 1 }}
-                                    styles={inputStyles}
-                                />
-                                <Text c="#64748B" fw={600}>@</Text>
-                                <Select
-                                    placeholder="직접입력"
-                                    value={form.emailDomain}
-                                    onChange={(v) => setForm({ ...form, emailDomain: v || '' })}
-                                    data={emailDomains}
-                                    style={{ flex: 1 }}
-                                    styles={inputStyles}
-                                    searchable
-                                    allowDeselect={false}
-                                />
+                            <Text size="xs" fw={700} c="#334155" mb={6}>이메일 주소 <Text span c="#EF4444">*</Text></Text>
+                            <TextInput
+                                placeholder="partner@company.com"
+                                type="email"
+                                value={form.email}
+                                onChange={(e) => setForm({ ...form, email: e.currentTarget.value, emailDomain: '' })}
+                                styles={inputStyles}
+                            />
+                            <Group gap={6} mt={8} style={{ flexWrap: 'wrap' }}>
+                                {emailDomainChips.map((domain) => {
+                                    const isSelected = form.email.endsWith(`@${domain}`);
+                                    return (
+                                        <button
+                                            key={domain}
+                                            type="button"
+                                            onClick={() => applyEmailDomain(domain)}
+                                            style={{
+                                                height: 28,
+                                                padding: '0 10px',
+                                                borderRadius: 999,
+                                                border: isSelected ? '1px solid #2563EB' : '1px solid #E2E8F0',
+                                                backgroundColor: isSelected ? '#EFF6FF' : '#F8FAFC',
+                                                color: isSelected ? '#2563EB' : '#64748B',
+                                                fontSize: 12,
+                                                fontWeight: isSelected ? 700 : 600,
+                                                cursor: 'pointer',
+                                                transition: 'all 0.15s ease',
+                                            }}
+                                        >
+                                            @{domain}
+                                        </button>
+                                    );
+                                })}
                             </Group>
                         </Box>
 
-                        {/* 문의 내용 */}
+                        {/* 문의 내용 + 원탭 빠른 주제 칩 */}
                         <Box>
-                            <Text size="xs" fw={700} c="#334155" mb={6}>문의 내용 <Text span c="#EF4444">*</Text></Text>
+                            <Group justify="space-between" align="center" mb={6}>
+                                <Text size="xs" fw={700} c="#334155">문의 내용 <Text span c="#EF4444">*</Text></Text>
+                                <Text size="11px" c="#2563EB" fw={600}>클릭 시 자동 입력</Text>
+                            </Group>
+                            <Group gap={6} mb={8} style={{ flexWrap: 'wrap' }}>
+                                {[
+                                    '공식 파트너 등록 및 인증 배지 신청',
+                                    '안치단 분양가 · 실사진 업데이트 요청',
+                                    '유족 1:1 상담 · 방문 예약 리드 연결 문의',
+                                    '지역 상단 노출 및 비교함 추천 제휴 문의',
+                                ].map((preset) => (
+                                    <button
+                                        key={preset}
+                                        type="button"
+                                        onClick={() => {
+                                            const prefix = form.companyName ? `[${form.companyName}] ` : '';
+                                            setForm({
+                                                ...form,
+                                                content: `${prefix}${preset} 관련하여 상세 안내 및 상담을 요청드립니다.`,
+                                            });
+                                        }}
+                                        style={{
+                                            padding: '6px 10px',
+                                            borderRadius: 8,
+                                            border: '1px solid #DBEAFE',
+                                            backgroundColor: '#F8FAFC',
+                                            color: '#1E40AF',
+                                            fontSize: 12,
+                                            fontWeight: 600,
+                                            cursor: 'pointer',
+                                        }}
+                                    >
+                                        + {preset}
+                                    </button>
+                                ))}
+                            </Group>
                             <Textarea
                                 placeholder="시설 등록, 정보 업데이트, 광고 제휴 등 궁금하신 내용을 자유롭게 남겨주세요."
                                 value={form.content}
@@ -489,13 +551,13 @@ export default function PartnershipPage() {
                                 autosize
                                 styles={{
                                     input: {
-                                        borderRadius: 10,
+                                        borderRadius: 12,
                                         backgroundColor: '#FFFFFF',
                                         border: '1px solid #CBD5E1',
                                         fontSize: 14,
                                         lineHeight: 1.6,
                                         color: '#191F28',
-                                        padding: '12px',
+                                        padding: '12px 14px',
                                     }
                                 }}
                             />
@@ -505,7 +567,7 @@ export default function PartnershipPage() {
                         </Box>
 
                         {/* 약관 동의 - 드롭다운 */}
-                        <Box style={{ border: '1px solid #CBD5E1', borderRadius: 10, overflow: 'hidden' }}>
+                        <Box style={{ border: '1px solid #CBD5E1', borderRadius: 12, overflow: 'hidden' }}>
                             <Box
                                 p="md"
                                 style={{
@@ -567,6 +629,7 @@ export default function PartnershipPage() {
                             mt="xs"
                             style={{
                                 height: 52,
+                                borderRadius: 12,
                                 backgroundColor: '#2563EB',
                                 fontWeight: 700,
                                 fontSize: 16,

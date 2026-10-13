@@ -195,11 +195,11 @@ body {
 
 /* 🤖 대손이 FAB & 말풍선 반응형 위치 (모바일: 하단바 위 70px / 데스크톱: 24px) */
 .chat-fab-button {
-  bottom: 70px;
+  bottom: calc(132px + env(safe-area-inset-bottom, 0px));
   right: 16px;
 }
 .chat-fab-tooltip {
-  bottom: 138px;
+  bottom: calc(194px + env(safe-area-inset-bottom, 0px));
   right: 8px;
 }
 @media (min-width: 768px) {
