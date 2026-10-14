@@ -14,7 +14,7 @@ interface VerifiedBadgeProps {
  */
 export function VerifiedSealIcon({
     size = 16,
-    color = '#2563EB',
+    color = '#191F28',
     checkColor = '#FFFFFF',
 }: {
     size?: number;
@@ -63,7 +63,7 @@ export default function VerifiedBadge({
                     flexShrink: 0,
                 }}
             >
-                <VerifiedSealIcon size={iconSize} color="#2563EB" />
+                <VerifiedSealIcon size={iconSize} color="#191F28" />
             </span>
         );
     }
@@ -79,17 +79,16 @@ export default function VerifiedBadge({
                     height: isLg ? 28 : 22,
                     padding: isLg ? '0 11px 0 8px' : '0 8px 0 6px',
                     borderRadius: 999,
-                    background: 'linear-gradient(135deg, #1E3A8A 0%, #2563EB 100%)',
+                    backgroundColor: '#191F28',
                     color: '#FFFFFF',
                     fontSize: isLg ? 12.5 : 11,
                     fontWeight: 700,
                     letterSpacing: '-0.2px',
-                    boxShadow: '0 2px 8px rgba(37, 99, 235, 0.25)',
                     whiteSpace: 'nowrap',
                     flexShrink: 0,
                 }}
             >
-                <VerifiedSealIcon size={isLg ? 15 : 13} color="#60A5FA" checkColor="#0F172A" />
+                <VerifiedSealIcon size={isLg ? 15 : 13} color="#FFFFFF" checkColor="#191F28" />
                 <span>{label || '공식 인증 파트너'}</span>
             </span>
         );
@@ -106,9 +105,9 @@ export default function VerifiedBadge({
                 height: isSm ? 20 : 24,
                 padding: isSm ? '0 6.5px 0 5px' : '0 8.5px 0 6.5px',
                 borderRadius: 999,
-                background: 'linear-gradient(135deg, #EFF6FF 0%, #DBEAFE 100%)',
-                border: '1px solid #93C5FD',
-                color: '#1D4ED8',
+                backgroundColor: '#F2F4F6',
+                border: '1px solid #E5E8EB',
+                color: '#333D4B',
                 fontSize: isSm ? 10.5 : 11.5,
                 fontWeight: 700,
                 letterSpacing: '-0.2px',
@@ -116,7 +115,7 @@ export default function VerifiedBadge({
                 flexShrink: 0,
             }}
         >
-            <VerifiedSealIcon size={isSm ? 12 : 14} color="#2563EB" />
+            <VerifiedSealIcon size={isSm ? 12 : 14} color="#191F28" />
             <span>{label || '공식검증'}</span>
         </span>
     );
