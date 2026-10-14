@@ -55,10 +55,15 @@ function ListPageContent() {
 
     // 슬라이드 인 애니메이션
     const [mounted, setMounted] = useState(false);
+    const [animationDone, setAnimationDone] = useState(false);
 
     useEffect(() => {
-        const timer = setTimeout(() => setMounted(true), 50);
-        return () => clearTimeout(timer);
+        const timer = setTimeout(() => setMounted(true), 20);
+        const doneTimer = setTimeout(() => setAnimationDone(true), 380);
+        return () => {
+            clearTimeout(timer);
+            clearTimeout(doneTimer);
+        };
     }, []);
 
     // GA4: 리스트 페이지뷰
@@ -238,8 +243,10 @@ function ListPageContent() {
                 flexDirection: 'column',
                 borderLeft: !isMobile ? '1px solid #e9ecef' : 'none',
                 borderRight: !isMobile ? '1px solid #e9ecef' : 'none',
-                transform: mounted ? 'translateX(0)' : 'translateX(100%)',
-                transition: 'transform 0.35s cubic-bezier(0.4, 0, 0.2, 1)',
+                ...(animationDone ? {} : {
+                    transform: mounted ? 'translateX(0)' : 'translateX(100%)',
+                    transition: 'transform 0.35s cubic-bezier(0.4, 0, 0.2, 1)',
+                }),
             }}
         >
             {/* 상단 헤더 + 필터 바 통합 Sticky 컨테이너 */}

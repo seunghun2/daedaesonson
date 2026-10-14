@@ -68,7 +68,7 @@ export default function BottomNav({ historyCount = 0, hidden = false, inline = f
         { id: 'menu', label: '전체', path: '/menu' },
     ];
 
-    const hideChatFab = inline || hidden || ['/inquiries', '/history', '/menu', '/list', '/contact'].includes(pathname) || pathname.startsWith('/facility') || pathname.startsWith('/partnership');
+    const hideChatFab = inline || hidden || pathname.startsWith('/facility');
 
     return (
         <>

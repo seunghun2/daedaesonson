@@ -195,12 +195,12 @@ body {
 
 /* 🤖 대손이 FAB & 말풍선 반응형 위치 (모바일: 하단바 위 70px / 데스크톱: 24px) */
 .chat-fab-button {
-  bottom: calc(132px + env(safe-area-inset-bottom, 0px));
+  bottom: calc(70px + env(safe-area-inset-bottom, 0px));
   right: 16px;
 }
 .chat-fab-tooltip {
-  bottom: calc(194px + env(safe-area-inset-bottom, 0px));
-  right: 8px;
+  bottom: calc(134px + env(safe-area-inset-bottom, 0px));
+  right: 12px;
 }
 @media (min-width: 768px) {
   .chat-fab-button {
@@ -208,7 +208,42 @@ body {
     right: 24px;
   }
   .chat-fab-tooltip {
-    bottom: 92px;
+    bottom: 88px;
     right: 16px;
+  }
+}
+
+/* 🤖 챗봇 모달 컨테이너 및 애니메이션 */
+@keyframes dotPulse {
+  0%, 80%, 100% { opacity: 0.3; transform: scale(0.8); }
+  40% { opacity: 1; transform: scale(1); }
+}
+@keyframes chatSlideUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes contactFormSlide {
+  from { opacity: 0; transform: translateY(10px); max-height: 0; }
+  to { opacity: 1; transform: translateY(0); max-height: 300px; }
+}
+.chatbot-container {
+  inset: 0;
+  border-radius: 0;
+}
+.chatbot-overlay {
+  display: block;
+}
+@media (min-width: 768px) {
+  .chatbot-container {
+    inset: auto;
+    right: 24px;
+    bottom: 88px;
+    width: 400px;
+    height: 620px;
+    max-height: calc(100dvh - 112px);
+    border-radius: 24px;
+  }
+  .chatbot-overlay {
+    display: none;
   }
 }

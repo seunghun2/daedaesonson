@@ -1,9 +1,8 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
+import { createPortal } from 'react-dom';
 import AIChatbot from './AIChatbot';
-
-const NAVY = '#302E92';
 
 const ROLLING_MESSAGES = [
     { title: '대손AI 상담사', sub: '무엇을 도와드릴까요?' },
@@ -13,6 +12,7 @@ const ROLLING_MESSAGES = [
 ];
 
 export default function ChatFloatingButton({ hidden = false }: { hidden?: boolean }) {
+    const [mounted, setMounted] = useState(false);
     const [isOpen, setIsOpen] = useState(false);
     const [showLabel, setShowLabel] = useState(false);
     const [labelVisible, setLabelVisible] = useState(false);
@@ -22,7 +22,16 @@ export default function ChatFloatingButton({ hidden = false }: { hidden?: boolea
     const rollingRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
     useEffect(() => {
-        if (isOpen) return;
+        setMounted(true);
+    }, []);
+
+    useEffect(() => {
+        if (isOpen || hidden) {
+            if (rollingRef.current) clearInterval(rollingRef.current);
+            setLabelVisible(false);
+            setShowLabel(false);
+            return;
+        }
         const dismissedUntil = typeof window !== 'undefined' ? localStorage.getItem('chat_fab_dismissed_until') : null;
         if (dismissedUntil && Number(dismissedUntil) > Date.now()) return;
         const dismissed = typeof window !== 'undefined' ? sessionStorage.getItem('chat_fab_dismissed') : null;
@@ -61,7 +70,7 @@ export default function ChatFloatingButton({ hidden = false }: { hidden?: boolea
             timerRef.current.forEach(clearTimeout);
             if (rollingRef.current) clearInterval(rollingRef.current);
         };
-    }, [isOpen]);
+    }, [isOpen, hidden]);
 
     // 외부에서 챗봇 열기 이벤트 리스너
     useEffect(() => {
@@ -83,10 +92,12 @@ export default function ChatFloatingButton({ hidden = false }: { hidden?: boolea
 
     const msg = ROLLING_MESSAGES[msgIndex];
 
-    return (
+    if (!mounted || typeof document === 'undefined') return null;
+
+    return createPortal(
         <>
             {/* ── 라벨 말풍선 (롤링) — FAB 위쪽에 표시 ── */}
-            {!isOpen && showLabel && (
+            {!hidden && !isOpen && showLabel && (
                 <div
                     className="chat-fab-tooltip"
                     style={{
@@ -130,11 +141,14 @@ export default function ChatFloatingButton({ hidden = false }: { hidden?: boolea
                     width: 52, height: 52, borderRadius: '50%',
                     background: '#191F28',
                     border: '1.5px solid rgba(255,255,255,0.2)',
-                    cursor: 'pointer', display: 'flex',
+                    cursor: hidden ? 'default' : 'pointer',
+                    display: 'flex',
                     alignItems: 'center', justifyContent: 'center',
                     boxShadow: '0 6px 20px rgba(15, 23, 42, 0.28)',
-                    transition: 'transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), background 0.2s ease',
+                    transition: 'transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.25s ease, background 0.2s ease',
                     transform: hidden ? 'translateX(100px)' : 'scale(1)',
+                    opacity: hidden ? 0 : 1,
+                    pointerEvents: hidden ? 'none' : 'auto',
                 }}
                 onMouseEnter={e => { if (!hidden) e.currentTarget.style.transform = 'scale(1.08)'; }}
                 onMouseLeave={e => { if (!hidden) e.currentTarget.style.transform = 'scale(1)'; }}
@@ -153,6 +167,7 @@ export default function ChatFloatingButton({ hidden = false }: { hidden?: boolea
             </button>
 
             <AIChatbot isOpen={isOpen} onClose={() => setIsOpen(false)} />
-        </>
+        </>,
+        document.body
     );
 }

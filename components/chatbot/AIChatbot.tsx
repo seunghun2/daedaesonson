@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useRef, useEffect, useCallback } from 'react';
+import { createPortal } from 'react-dom';
 import { X, Phone, ChevronRight, Calendar, FileText, MessageSquare, Shield, Zap, Sparkles, MapPin, CheckCircle2 } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/components/auth/AuthProvider';
@@ -66,7 +67,7 @@ interface AIChatbotProps {
     onOpenConsultForm?: () => void;
 }
 
-const NAVY = '#2563EB';
+const NAVY = '#191F28';
 const MAX_TURNS = 10;
 
 export default function AIChatbot({ isOpen, onClose, facilityContext, onOpenConsultForm }: AIChatbotProps) {
@@ -357,7 +358,7 @@ export default function AIChatbot({ isOpen, onClose, facilityContext, onOpenCons
                             onClick={(e) => { e.preventDefault(); router.push(`/facility/${facilityMatch[1]}`); onClose(); }}
                             style={{
                                 display: 'inline-flex', alignItems: 'center', gap: 4,
-                                background: '#EFF6FF', color: NAVY,
+                                background: '#F2F4F6', color: NAVY,
                                 borderRadius: 20, padding: '6px 14px',
                                 fontSize: 13, fontWeight: 600,
                                 textDecoration: 'none', cursor: 'pointer',
@@ -387,7 +388,7 @@ export default function AIChatbot({ isOpen, onClose, facilityContext, onOpenCons
                                 onClick={(e) => { e.preventDefault(); router.push(`/facility/${facilityMatch2[1]}`); onClose(); }}
                                 style={{
                                     display: 'inline-flex', alignItems: 'center', gap: 4,
-                                    background: '#EFF6FF', color: NAVY,
+                                    background: '#F2F4F6', color: NAVY,
                                     borderRadius: 20, padding: '6px 14px',
                                     fontSize: 13, fontWeight: 600,
                                     textDecoration: 'none', cursor: 'pointer',
@@ -415,19 +416,19 @@ export default function AIChatbot({ isOpen, onClose, facilityContext, onOpenCons
         });
     };
 
-    if (!isOpen) return null;
+    if (!isOpen || typeof document === 'undefined') return null;
 
-    return (
+    return createPortal(
         <>
             {/* ── 오버레이 (모바일) ── */}
             <div className="chatbot-overlay" onClick={onClose} style={{
                 position: 'fixed', inset: 0, background: 'rgba(25, 31, 40, 0.45)',
-                zIndex: 9990,
+                zIndex: 100300,
             }} />
 
             {/* ── 채팅 컨테이너 ── */}
             <div className="chatbot-container" style={{
-                position: 'fixed', zIndex: 9991,
+                position: 'fixed', zIndex: 100301,
                 display: 'flex', flexDirection: 'column',
                 background: '#fff',
                 boxShadow: '0 12px 40px rgba(25, 31, 40, 0.16)',
@@ -443,7 +444,7 @@ export default function AIChatbot({ isOpen, onClose, facilityContext, onOpenCons
                 }}>
                     <div style={{
                         width: 40, height: 40, borderRadius: 12,
-                        background: '#EFF6FF',
+                        background: '#F2F4F6',
                         display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0,
                         overflow: 'hidden',
                     }}>
@@ -463,11 +464,11 @@ export default function AIChatbot({ isOpen, onClose, facilityContext, onOpenCons
                     </button>
                 </div>
 
-                {/* ── 상단 실시간 상담 전환 바 (Slim Soft Blue Info Bar) ── */}
+                {/* ── 상단 실시간 상담 전환 바 ── */}
                 <div style={{
-                    background: '#EFF6FF',
-                    borderBottom: '1px solid #DBEAFE',
-                    color: '#1E40AF',
+                    background: '#F8FAFC',
+                    borderBottom: '1px solid #E5E8EB',
+                    color: '#191F28',
                     padding: '8px 16px',
                     display: 'flex',
                     alignItems: 'center',
@@ -476,15 +477,15 @@ export default function AIChatbot({ isOpen, onClose, facilityContext, onOpenCons
                     flexShrink: 0,
                 }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: 6, overflow: 'hidden' }}>
-                        <Sparkles size={14} color="#2563EB" style={{ flexShrink: 0 }} />
-                        <span style={{ fontWeight: 600, color: '#1E40AF', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                        <Sparkles size={14} color="#191F28" style={{ flexShrink: 0 }} />
+                        <span style={{ fontWeight: 600, color: '#191F28', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
                             실시간 공실·비공개 할인 1:1 맞춤 안내
                         </span>
                     </div>
                     <button
                         onClick={() => setShowContactForm(true)}
                         style={{
-                            backgroundColor: '#2563EB',
+                            backgroundColor: '#191F28',
                             color: '#FFFFFF',
                             border: 'none',
                             borderRadius: 12,
@@ -530,7 +531,7 @@ export default function AIChatbot({ isOpen, onClose, facilityContext, onOpenCons
                     <div style={{ textAlign: 'center', marginBottom: 20 }}>
                         <div style={{
                             width: 56, height: 56, borderRadius: 16,
-                            background: '#EFF6FF', margin: '0 auto 10px',
+                            background: '#F2F4F6', margin: '0 auto 10px',
                             display: 'flex', alignItems: 'center', justifyContent: 'center',
                             overflow: 'hidden',
                         }}>
@@ -576,7 +577,7 @@ export default function AIChatbot({ isOpen, onClose, facilityContext, onOpenCons
                                     maxWidth: msg.role === 'user' ? '100%' : '85%',
                                     padding: '12px 16px',
                                     borderRadius: msg.role === 'user' ? '18px 18px 4px 18px' : '18px 18px 18px 4px',
-                                    background: msg.role === 'user' ? '#2563EB' : '#F2F4F6',
+                                    background: msg.role === 'user' ? '#191F28' : '#F2F4F6',
                                     color: msg.role === 'user' ? '#FFFFFF' : '#191F28',
                                     fontSize: 15, lineHeight: 1.55, letterSpacing: '-0.2px',
                                     whiteSpace: 'pre-wrap', wordBreak: 'break-word',
@@ -619,13 +620,13 @@ export default function AIChatbot({ isOpen, onClose, facilityContext, onOpenCons
                                                 <div style={{ display: 'flex', gap: 5, marginBottom: 8, flexWrap: 'wrap' }}>
                                                     <span style={{
                                                         fontSize: 11, fontWeight: 600, padding: '2px 8px', borderRadius: 10,
-                                                        background: '#EFF6FF', color: NAVY,
+                                                        background: '#F2F4F6', color: NAVY,
                                                     }}>{card.category}</span>
                                                     {card.isPublic !== null && (
                                                         <span style={{
                                                             fontSize: 11, fontWeight: 600, padding: '2px 8px', borderRadius: 10,
-                                                            background: card.isPublic ? '#E8F4FD' : '#FFF3E0',
-                                                            color: card.isPublic ? '#1565C0' : '#E65100',
+                                                            background: '#F2F4F6',
+                                                            color: '#4E5968',
                                                         }}>{card.isPublic ? '공립' : '민간'}</span>
                                                     )}
                                                 </div>
@@ -741,7 +742,7 @@ export default function AIChatbot({ isOpen, onClose, facilityContext, onOpenCons
                                                 cursor: 'pointer', transition: 'background 0.15s',
                                                 display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 4,
                                             }}
-                                            onMouseEnter={e => { e.currentTarget.style.background = '#EFF6FF'; }}
+                                            onMouseEnter={e => { e.currentTarget.style.background = '#F2F4F6'; }}
                                             onMouseLeave={e => { e.currentTarget.style.background = '#F8FAFC'; }}
                                         >
                                             <span>시설 상세 보기</span>
@@ -798,17 +799,17 @@ export default function AIChatbot({ isOpen, onClose, facilityContext, onOpenCons
                             <div style={{
                                 marginTop: 12,
                                 marginBottom: 14,
-                                background: 'linear-gradient(135deg, #F8FAFC 0%, #EFF6FF 100%)',
-                                border: '1.5px solid #BFDBFE',
+                                background: '#F8FAFC',
+                                border: '1.5px solid #E5E8EB',
                                 borderRadius: 16,
                                 padding: '14px 16px',
-                                boxShadow: '0 4px 14px rgba(37, 99, 235, 0.08)',
+                                boxShadow: '0 4px 14px rgba(25, 31, 40, 0.06)',
                                 position: 'relative',
                             }}>
                                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 8 }}>
                                     <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
                                         <span style={{
-                                            background: '#2563EB', color: '#fff', fontSize: 10,
+                                            background: '#191F28', color: '#fff', fontSize: 10,
                                             fontWeight: 700, padding: '2px 7px', borderRadius: 6,
                                             display: 'flex', alignItems: 'center', gap: 3
                                         }}>
@@ -834,7 +835,7 @@ export default function AIChatbot({ isOpen, onClose, facilityContext, onOpenCons
                                     onClick={() => setShowContactForm(true)}
                                     style={{
                                         width: '100%',
-                                        background: '#2563EB',
+                                        background: '#191F28',
                                         color: '#fff',
                                         border: 'none',
                                         borderRadius: 10,
@@ -846,7 +847,7 @@ export default function AIChatbot({ isOpen, onClose, facilityContext, onOpenCons
                                         alignItems: 'center',
                                         justifyContent: 'center',
                                         gap: 6,
-                                        boxShadow: '0 2px 6px rgba(37, 99, 235, 0.2)',
+                                        boxShadow: '0 2px 6px rgba(25, 31, 40, 0.15)',
                                     }}
                                 >
                                     <Calendar size={14} />
@@ -872,7 +873,7 @@ export default function AIChatbot({ isOpen, onClose, facilityContext, onOpenCons
                                 whiteSpace: 'pre-wrap', wordBreak: 'break-word',
                             }}>
                                 {renderContent(streamingText)}
-                                <span style={{ display: 'inline-block', width: 2, height: 14, background: '#2563EB', marginLeft: 2, animation: 'cursorBlink 0.8s step-end infinite', verticalAlign: 'text-bottom' }} />
+                                <span style={{ display: 'inline-block', width: 2, height: 14, background: '#191F28', marginLeft: 2, animation: 'cursorBlink 0.8s step-end infinite', verticalAlign: 'text-bottom' }} />
                             </div>
                         </div>
                     )}
@@ -903,14 +904,14 @@ export default function AIChatbot({ isOpen, onClose, facilityContext, onOpenCons
                             padding: '18px',
                             marginTop: 10,
                             marginBottom: 10,
-                            border: '1.5px solid #2563EB',
-                            boxShadow: '0 8px 24px rgba(37, 99, 235, 0.12)',
+                            border: '1.5px solid #191F28',
+                            boxShadow: '0 8px 24px rgba(25, 31, 40, 0.12)',
                             animation: 'contactFormSlide 0.35s ease-out',
                         }}>
                             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 12 }}>
                                 <div>
                                     <div style={{ fontSize: 15, fontWeight: 700, color: '#191F28', display: 'flex', alignItems: 'center', gap: 6 }}>
-                                        <FileText size={16} color="#2563EB" />
+                                        <FileText size={16} color="#191F28" />
                                         <span>수석 상담사(대표) 1:1 맞춤 견적 신청</span>
                                     </div>
                                     <div style={{ fontSize: 12, color: '#4E5968', marginTop: 4, lineHeight: 1.4 }}>
@@ -938,9 +939,9 @@ export default function AIChatbot({ isOpen, onClose, facilityContext, onOpenCons
                                         fontSize: 12,
                                         fontWeight: 600,
                                         cursor: 'pointer',
-                                        border: contactMethod === 'kakao' ? '1.5px solid #FEE500' : '1px solid #E2E8F0',
-                                        background: contactMethod === 'kakao' ? '#FEF9C3' : '#F8FAFC',
-                                        color: contactMethod === 'kakao' ? '#854D0E' : '#6B7684',
+                                        border: contactMethod === 'kakao' ? '1.5px solid #191F28' : '1px solid #E2E8F0',
+                                        background: contactMethod === 'kakao' ? '#191F28' : '#F8FAFC',
+                                        color: contactMethod === 'kakao' ? '#FFFFFF' : '#6B7684',
                                         transition: 'all 0.15s ease',
                                         display: 'flex',
                                         alignItems: 'center',
@@ -961,9 +962,9 @@ export default function AIChatbot({ isOpen, onClose, facilityContext, onOpenCons
                                         fontSize: 12,
                                         fontWeight: 600,
                                         cursor: 'pointer',
-                                        border: contactMethod === 'call' ? '1.5px solid #2563EB' : '1px solid #E2E8F0',
-                                        background: contactMethod === 'call' ? '#EFF6FF' : '#F8FAFC',
-                                        color: contactMethod === 'call' ? '#2563EB' : '#6B7684',
+                                        border: contactMethod === 'call' ? '1.5px solid #191F28' : '1px solid #E2E8F0',
+                                        background: contactMethod === 'call' ? '#191F28' : '#F8FAFC',
+                                        color: contactMethod === 'call' ? '#FFFFFF' : '#6B7684',
                                         transition: 'all 0.15s ease',
                                         display: 'flex',
                                         alignItems: 'center',
@@ -999,8 +1000,8 @@ export default function AIChatbot({ isOpen, onClose, facilityContext, onOpenCons
                                                 fontSize: 11,
                                                 fontWeight: 500,
                                                 cursor: 'pointer',
-                                                border: contactPreferredTime === time ? '1.5px solid #2563EB' : '1px solid #E2E8F0',
-                                                background: contactPreferredTime === time ? '#2563EB' : '#fff',
+                                                border: contactPreferredTime === time ? '1.5px solid #191F28' : '1px solid #E2E8F0',
+                                                background: contactPreferredTime === time ? '#191F28' : '#fff',
                                                 color: contactPreferredTime === time ? '#fff' : '#4E5968',
                                                 transition: 'all 0.15s ease',
                                             }}
@@ -1061,13 +1062,13 @@ export default function AIChatbot({ isOpen, onClose, facilityContext, onOpenCons
                                     width: '100%',
                                     padding: '12px',
                                     borderRadius: 10,
-                                    background: (!contactName.trim() || contactPhone.replace(/\D/g, '').length < 10 || isSubmittingContact) ? '#CBD5E1' : '#2563EB',
+                                    background: (!contactName.trim() || contactPhone.replace(/\D/g, '').length < 10 || isSubmittingContact) ? '#CBD5E1' : '#191F28',
                                     color: '#ffffff',
                                     border: 'none',
                                     fontSize: 14,
                                     fontWeight: 700,
                                     cursor: (!contactName.trim() || contactPhone.replace(/\D/g, '').length < 10 || isSubmittingContact) ? 'not-allowed' : 'pointer',
-                                    boxShadow: '0 2px 8px rgba(37, 99, 235, 0.2)',
+                                    boxShadow: '0 2px 8px rgba(25, 31, 40, 0.15)',
                                     display: 'flex',
                                     alignItems: 'center',
                                     justifyContent: 'center',
@@ -1103,7 +1104,7 @@ export default function AIChatbot({ isOpen, onClose, facilityContext, onOpenCons
                                 color: '#4E5968', fontSize: 13, fontWeight: 500,
                                 cursor: 'pointer', transition: 'all 0.15s',
                             }}
-                            onMouseEnter={e => { e.currentTarget.style.background = '#EFF6FF'; e.currentTarget.style.borderColor = '#BFDBFE'; e.currentTarget.style.color = '#2563EB'; }}
+                            onMouseEnter={e => { e.currentTarget.style.background = '#F2F4F6'; e.currentTarget.style.borderColor = '#191F28'; e.currentTarget.style.color = '#191F28'; }}
                             onMouseLeave={e => { e.currentTarget.style.background = '#fff'; e.currentTarget.style.borderColor = '#E2E8F0'; e.currentTarget.style.color = '#4E5968'; }}
                             >
                                 {q}
@@ -1123,13 +1124,13 @@ export default function AIChatbot({ isOpen, onClose, facilityContext, onOpenCons
                     {contactSubmitted ? (
                         <div style={{
                             padding: '20px 16px', textAlign: 'center',
-                            background: '#F0FDF4', borderTop: '1px solid #DCFCE7',
+                            background: '#F8FAFC', borderTop: '1px solid #E5E8EB',
                         }}>
                             <div style={{
-                                fontSize: 15, fontWeight: 700, color: '#16A34A', marginBottom: 6,
+                                fontSize: 15, fontWeight: 700, color: '#191F28', marginBottom: 6,
                                 display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6,
                             }}>
-                                <CheckCircle2 size={17} color="#16A34A" />
+                                <CheckCircle2 size={17} color="#191F28" />
                                 <span>상담 신청이 완료되었습니다</span>
                             </div>
                             <div style={{ fontSize: 13, color: '#4E5968', marginBottom: 14 }}>
@@ -1266,7 +1267,7 @@ export default function AIChatbot({ isOpen, onClose, facilityContext, onOpenCons
                                 disabled={(!input.trim() && !pendingImage) || isLoading}
                                 style={{
                                     width: 34, height: 34, borderRadius: '50%',
-                                    background: (input.trim() || pendingImage) ? '#2563EB' : '#CBD5E1',
+                                    background: (input.trim() || pendingImage) ? '#191F28' : '#CBD5E1',
                                     border: 'none', cursor: (input.trim() || pendingImage) ? 'pointer' : 'default',
                                     display: 'flex', alignItems: 'center', justifyContent: 'center',
                                     flexShrink: 0, transition: 'background 0.2s',
@@ -1295,35 +1296,9 @@ export default function AIChatbot({ isOpen, onClose, facilityContext, onOpenCons
                 </div>
             </div>
 
-            {/* ── 스타일 ── */}
-            <style jsx global>{`
-                @keyframes dotPulse {
-                    0%, 80%, 100% { opacity: 0.3; transform: scale(0.8); }
-                    40% { opacity: 1; transform: scale(1); }
-                }
-                @keyframes chatSlideUp {
-                    from { opacity: 0; transform: translateY(20px); }
-                    to { opacity: 1; transform: translateY(0); }
-                }
-                @keyframes contactFormSlide {
-                    from { opacity: 0; transform: translateY(10px); max-height: 0; }
-                    to { opacity: 1; transform: translateY(0); max-height: 300px; }
-                }
-                .chatbot-container {
-                    inset: 0; border-radius: 0;
-                }
-                .chatbot-overlay { display: block; }
-                @media (min-width: 768px) {
-                    .chatbot-container {
-                        inset: auto; right: 24px; bottom: 80px;
-                        width: 400px; height: 620px; border-radius: 24px;
-                    }
-                    .chatbot-overlay { display: none; }
-                }
-            `}</style>
-
             {/* 로그인 모달 */}
             <LoginModal isOpen={showLoginModal} onClose={() => setShowLoginModal(false)} />
-        </>
+        </>,
+        document.body
     );
 }
