@@ -5,6 +5,7 @@ import { MapPin, Building, Trees, Cross, User, Star } from 'lucide-react';
 import { Facility, FACILITY_CATEGORY_LABELS, FacilityCategory } from '@/types';
 import { formatKoreanCurrency } from '@/lib/format';
 import { getFacilityImageUrl } from '@/lib/supabaseImage';
+import VerifiedBadge, { VerifiedSealIcon } from '@/components/common/VerifiedBadge';
 
 interface FacilityCardProps {
     facility: Facility;
@@ -127,6 +128,7 @@ function FacilityCardComponent({ facility, onClick, isCompared = false, onToggle
         OTHER: { bg: '#F2F4F6', text: '#4E5968' },
     };
     const catColors = categoryBadgePalette[facility.category] || categoryBadgePalette.OTHER;
+    const isVerified = displayPrice !== '가격문의' || facility.isPublic || Boolean((facility as any).hasDetailedPrices);
 
     return (
         <Card
@@ -199,23 +201,28 @@ function FacilityCardComponent({ facility, onClick, isCompared = false, onToggle
                 {/* 2. 우측 정보 영역 (호갱노노 스타일 3단 위계) */}
                 <Box style={{ flex: 1, minWidth: 0, display: 'flex', flexDirection: 'column', justifyContent: 'space-between', paddingTop: 2, paddingBottom: 2 }}>
                     <div>
-                        {/* 상단: 카테고리 태그 + 관심/비교 */}
+                        {/* 상단: 카테고리 태그 + 공식검증 배지 + 관심/비교 */}
                         <Group justify="space-between" align="center" wrap="nowrap" mb={4}>
-                            <span
-                                style={{
-                                    display: 'inline-block',
-                                    backgroundColor: catColors.bg,
-                                    color: catColors.text,
-                                    fontSize: '11px',
-                                    fontWeight: 700,
-                                    padding: '2px 7px',
-                                    borderRadius: '5px',
-                                    lineHeight: 1.35,
-                                    letterSpacing: '-0.2px',
-                                }}
-                            >
-                                {FACILITY_CATEGORY_LABELS[facility.category]}
-                            </span>
+                            <Group gap={5} align="center" wrap="nowrap">
+                                <span
+                                    style={{
+                                        display: 'inline-block',
+                                        backgroundColor: catColors.bg,
+                                        color: catColors.text,
+                                        fontSize: '11px',
+                                        fontWeight: 700,
+                                        padding: '2px 7px',
+                                        borderRadius: '5px',
+                                        lineHeight: 1.35,
+                                        letterSpacing: '-0.2px',
+                                    }}
+                                >
+                                    {FACILITY_CATEGORY_LABELS[facility.category]}
+                                </span>
+                                {isVerified && (
+                                    <VerifiedBadge variant="pill" size="sm" label="공식검증" />
+                                )}
+                            </Group>
 
                             <Group gap={6} align="center" wrap="nowrap">
                                 {(facility.favoriteCount ?? 0) > 0 && (
@@ -251,19 +258,24 @@ function FacilityCardComponent({ facility, onClick, isCompared = false, onToggle
                             </Group>
                         </Group>
 
-                        {/* 중단: 시설명 & 지역 주소 */}
-                        <Text
-                            fw={700}
-                            lineClamp={1}
-                            style={{
-                                fontSize: '15.5px',
-                                color: '#191F28',
-                                letterSpacing: '-0.35px',
-                                lineHeight: 1.3,
-                            }}
-                        >
-                            {facility.name}
-                        </Text>
+                        {/* 중단: 시설명 & 공식 인증 실 & 지역 주소 */}
+                        <Group gap={4} align="center" wrap="nowrap" style={{ minWidth: 0 }}>
+                            <Text
+                                fw={700}
+                                lineClamp={1}
+                                style={{
+                                    fontSize: '15.5px',
+                                    color: '#191F28',
+                                    letterSpacing: '-0.35px',
+                                    lineHeight: 1.3,
+                                }}
+                            >
+                                {facility.name}
+                            </Text>
+                            {isVerified && (
+                                <VerifiedSealIcon size={15} color="#2563EB" />
+                            )}
+                        </Group>
                         <Text
                             lineClamp={1}
                             mt={2}

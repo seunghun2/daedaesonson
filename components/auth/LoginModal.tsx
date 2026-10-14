@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import { X, ArrowLeft, Check, ShieldCheck, BookmarkCheck, Calculator } from 'lucide-react';
 import { useAuth } from './AuthProvider';
 
@@ -50,7 +51,7 @@ export default function LoginModal({ isOpen, onClose, reason }: LoginModalProps)
         }
     }, [isOpen]);
 
-    if (!isOpen) return null;
+    if (!isOpen || typeof document === 'undefined') return null;
 
     const handleClose = () => {
         setStep('main');
@@ -126,7 +127,7 @@ export default function LoginModal({ isOpen, onClose, reason }: LoginModalProps)
 
     const isPhoneValid = /^01[016789]\d{7,8}$/.test(phone.replace(/-/g, ''));
 
-    return (
+    return createPortal(
         <>
             {/* 오버레이 */}
             <div
@@ -136,7 +137,7 @@ export default function LoginModal({ isOpen, onClose, reason }: LoginModalProps)
                     inset: 0,
                     backgroundColor: 'rgba(15, 23, 42, 0.55)',
                     backdropFilter: 'blur(3px)',
-                    zIndex: 10040,
+                    zIndex: 100500,
                     animation: 'loginFadeIn 0.18s ease-out',
                 }}
             />
@@ -155,8 +156,8 @@ export default function LoginModal({ isOpen, onClose, reason }: LoginModalProps)
                     maxWidth: 416,
                     maxHeight: '92dvh',
                     overflowY: 'auto',
-                    zIndex: 10041,
-                    boxShadow: '0 24px 64px rgba(15, 23, 42, 0.26)',
+                    zIndex: 100501,
+                    boxShadow: '0 24px 64px rgba(15, 23, 42, 0.28)',
                     animation: 'loginSlideUp 0.22s cubic-bezier(0.16, 1, 0.3, 1)',
                 }}
             >
@@ -695,7 +696,9 @@ export default function LoginModal({ isOpen, onClose, reason }: LoginModalProps)
                     }
                 }
             `}</style>
-        </>
+        </>,
+        document.body
     );
 }
+
 

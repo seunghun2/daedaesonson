@@ -831,7 +831,12 @@ export default function InquiryPanel({
                     </Button>
                 </Stack>
             </Modal>
-            <LoginModal isOpen={loginModalOpen} onClose={() => setLoginModalOpen(false)} />
+            <LoginModal
+                isOpen={loginModalOpen}
+                onClose={() => setLoginModalOpen(false)}
+                reason={`로그인하시면 [${facility.name}]에 남기신 1:1 문의 내역과 답변 알림을 내 정보에서 언제든 확인하실 수 있습니다.`}
+            />
         </>
     );
 }
+

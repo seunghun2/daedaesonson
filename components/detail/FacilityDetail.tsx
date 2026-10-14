@@ -18,6 +18,8 @@ import { formatKoreanCurrency, formatRelativeTime } from '@/lib/format';
 import { getSingleFacilityImageUrl } from '@/lib/supabaseImage';
 import { compressImageFile } from '@/lib/clientImageCompress';
 import { extractFacilityInsights, formatKoreanPrice } from '@/lib/derivedFacilityInsights';
+import VerifiedBadge, { VerifiedSealIcon } from '@/components/common/VerifiedBadge';
+
 
 // ... (Existing code) ...
 
@@ -1937,6 +1939,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                     >
                                         {facility.name}
                                     </Text>
+                                    <VerifiedSealIcon size={16} color="#2563EB" />
                                 </Group>
                             </Group>
 
@@ -2137,7 +2140,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                     </Box>
                 )}
 
-                {/* 3. 상단 요약 헤더 (카테고리 뱃지 + 실시간 조회수 + 주소 복사 + 빠른 탭) */}
+                {/* 3. 상단 요약 헤더 (카테고리 뱃지 + 공식 인증 배지 + 실시간 조회수 + 주소 복사) */}
                 <Box bg="white" px={16} pt={14} pb={14} style={{ borderBottom: '1px solid #F2F4F6' }}>
                     <div style={{
                         display: 'flex',
@@ -2180,6 +2183,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                     {FACILITY_CATEGORY_LABELS[cat]}
                                 </span>
                             ))}
+                            <VerifiedBadge variant="pill" size="md" label="공식 데이터 검증" />
                         </div>
 
                         {/* 방문자 통계 필 */}
@@ -3554,133 +3558,84 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                         })()}
 
 
-                        {/* ── 하단 공유 & B2B 시설 제휴 & 정보수정 섹션 ── */}
-                        <Box px="md" pt={20} pb={44} style={{
-                            background: '#F8FAFC',
-                            textAlign: 'center',
-                            borderTop: '1px solid #EEF1F5',
-                        }}>
-                            {/* 장지 회사·시설 관계자 전용 제휴 유도 카드 */}
-                            <Box
-                                mb={16}
-                                p={14}
+                        {/* ── 하단 빠른 유틸리티 & B2B 공식 파트너 인증 안내 섹션 ── */}
+                        <Box
+                            px="md"
+                            pt={20}
+                            pb={48}
+                            style={{
+                                background: '#F8FAFC',
+                                borderTop: '1px solid #EEF1F5',
+                                wordBreak: 'keep-all',
+                            }}
+                        >
+                            {/* 1. 상단 3열 유틸리티 버튼 바 (공유 · 정보수정 · 맨위로 통합) */}
+                            <div
                                 style={{
-                                    backgroundColor: '#FFFFFF',
-                                    borderRadius: 12,
-                                    border: '1px solid #DBEAFE',
-                                    textAlign: 'left',
+                                    display: 'grid',
+                                    gridTemplateColumns: '1fr 1fr auto',
+                                    gap: 8,
+                                    marginBottom: 14,
                                 }}
                             >
-                                <Group justify="space-between" align="center" wrap="nowrap" gap={10}>
-                                    <Box style={{ minWidth: 0, flex: 1 }}>
-                                        <Text size="11px" fw={700} c="#2563EB">
-                                            장지·추모시설 공식 파트너 안내
-                                        </Text>
-                                        <Text size="xs" fw={700} c="#191F28" mt={2} lineClamp={1}>
-                                            {facility.name} 관계자이신가요?
-                                        </Text>
-                                        <Text size="11px" c="#64748B" mt={2}>
-                                            공식 분양가·사진 관리 및 유족 1:1 상담 연결을 신청하세요.
-                                        </Text>
-                                    </Box>
-                                    <button
-                                        type="button"
-                                        onClick={() => router.push(`/partnership?facility=${encodeURIComponent(facility.name)}`)}
-                                        style={{
-                                            padding: '8px 12px',
-                                            borderRadius: 8,
-                                            border: 'none',
-                                            backgroundColor: '#2563EB',
-                                            color: '#FFFFFF',
-                                            fontSize: 12,
-                                            fontWeight: 700,
-                                            cursor: 'pointer',
-                                            flexShrink: 0,
-                                            whiteSpace: 'nowrap',
-                                        }}
-                                    >
-                                        제휴·관리 신청
-                                    </button>
-                                </Group>
-                            </Box>
-
-                            {/* 공유 안내 */}
-                            <Box pb="md">
-                                <Text size="xs" fw={600} c="#4E5968" mb={10}>
-                                    이 시설이 도움이 되셨나요? 가족에게 공유해 보세요
-                                </Text>
-
-                                {/* URL 복사 */}
-                                <Box
-                                    mx="auto"
-                                    px="md"
-                                    py={9}
-                                    style={{
-                                        backgroundColor: '#FFFFFF',
-                                        borderRadius: 10,
-                                        maxWidth: 320,
-                                        cursor: 'pointer',
-                                        border: '1px solid #E2E8F0',
-                                        boxShadow: '0 1px 2px rgba(15,23,42,0.03)',
-                                    }}
+                                <button
+                                    type="button"
                                     onClick={() => {
                                         const url = `https://daedaesonson.com/facility/${facility.id}`;
                                         if (typeof navigator !== 'undefined' && navigator.clipboard) {
                                             navigator.clipboard.writeText(url).then(() => {
-                                                setShareToast('링크가 복사되었습니다');
+                                                setShareToast('시설 링크가 복사되었습니다');
                                                 setTimeout(() => setShareToast(null), 1800);
                                             }).catch(() => {
-                                                setShareToast('링크 복사에 실패했습니다');
-                                                setTimeout(() => setShareToast(null), 1800);
+                                                setShareModalOpen(true);
                                             });
                                         } else {
-                                            setShareToast('링크가 복사되었습니다');
-                                            setTimeout(() => setShareToast(null), 1800);
+                                            setShareModalOpen(true);
                                         }
                                     }}
+                                    style={{
+                                        height: 38,
+                                        padding: '0 12px',
+                                        borderRadius: 10,
+                                        border: '1px solid #E2E8F0',
+                                        backgroundColor: '#FFFFFF',
+                                        fontSize: 12.5,
+                                        fontWeight: 600,
+                                        color: '#334155',
+                                        cursor: 'pointer',
+                                        display: 'inline-flex',
+                                        alignItems: 'center',
+                                        justifyContent: 'center',
+                                        gap: 6,
+                                        whiteSpace: 'nowrap',
+                                    }}
                                 >
-                                    <Group justify="center" gap={6}>
-                                        <Copy size={14} color="#64748B" />
-                                        <Text size="xs" fw={500} c="#334155" lineClamp={1}>
-                                            daedaesonson.com/facility/{facility.id}
-                                        </Text>
-                                    </Group>
-                                </Box>
-                            </Box>
+                                    <Copy size={13} color="#2563EB" />
+                                    <span>가족에게 링크 복사</span>
+                                </button>
 
-                            <Group justify="center" gap={8} py="sm" wrap="wrap">
                                 <button
                                     type="button"
                                     onClick={() => { closeAllPanels(); setCorrectionOpen(true); }}
                                     style={{
-                                        padding: '7px 12px',
-                                        borderRadius: 8,
-                                        border: '1px solid #CBD5E1',
+                                        height: 38,
+                                        padding: '0 12px',
+                                        borderRadius: 10,
+                                        border: '1px solid #E2E8F0',
                                         backgroundColor: '#FFFFFF',
-                                        fontSize: 12,
+                                        fontSize: 12.5,
                                         fontWeight: 600,
                                         color: '#475569',
                                         cursor: 'pointer',
+                                        display: 'inline-flex',
+                                        alignItems: 'center',
+                                        justifyContent: 'center',
+                                        whiteSpace: 'nowrap',
                                     }}
                                 >
-                                    정보 수정 요청하기
+                                    정보 수정 요청
                                 </button>
-                                <button
-                                    type="button"
-                                    onClick={() => router.push(`/partnership?facility=${encodeURIComponent(facility.name)}`)}
-                                    style={{
-                                        padding: '7px 12px',
-                                        borderRadius: 8,
-                                        border: '1px solid #CBD5E1',
-                                        backgroundColor: '#FFFFFF',
-                                        fontSize: 12,
-                                        fontWeight: 600,
-                                        color: '#2563EB',
-                                        cursor: 'pointer',
-                                    }}
-                                >
-                                    광고/제휴 문의
-                                </button>
+
                                 <button
                                     type="button"
                                     onClick={() => {
@@ -3689,23 +3644,95 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                         else window.scrollTo({ top: 0, behavior: 'smooth' });
                                     }}
                                     style={{
-                                        display: 'inline-flex',
-                                        alignItems: 'center',
-                                        gap: 4,
-                                        padding: '7px 12px',
-                                        borderRadius: 8,
-                                        border: '1px solid #CBD5E1',
+                                        height: 38,
+                                        padding: '0 12px',
+                                        borderRadius: 10,
+                                        border: '1px solid #E2E8F0',
                                         backgroundColor: '#FFFFFF',
-                                        fontSize: 12,
+                                        fontSize: 12.5,
                                         fontWeight: 600,
                                         color: '#475569',
                                         cursor: 'pointer',
+                                        display: 'inline-flex',
+                                        alignItems: 'center',
+                                        justifyContent: 'center',
+                                        gap: 4,
+                                        whiteSpace: 'nowrap',
                                     }}
                                 >
                                     <ChevronUp size={14} color="#64748B" />
-                                    맨 위로
+                                    <span>맨 위로</span>
                                 </button>
-                            </Group>
+                            </div>
+
+                            {/* 2. 장지·추모시설 공식 파트너 인증 · 관리 안내 카드 (줄바꿈 깨짐 방지 수직 레이아웃) */}
+                            <Box
+                                p={16}
+                                style={{
+                                    backgroundColor: '#FFFFFF',
+                                    borderRadius: 14,
+                                    border: '1px solid #DBEAFE',
+                                    boxShadow: '0 2px 8px rgba(37, 99, 235, 0.04)',
+                                    textAlign: 'left',
+                                }}
+                            >
+                                <Group justify="space-between" align="center" mb={8} wrap="nowrap">
+                                    <VerifiedBadge variant="partner" size="sm" label="공식 파트너 인증" />
+                                    <Text size="11px" fw={600} c="#64748B">
+                                        시설 관계자 전용
+                                    </Text>
+                                </Group>
+
+                                <Text
+                                    fw={800}
+                                    c="#191F28"
+                                    style={{
+                                        fontSize: 14,
+                                        letterSpacing: '-0.3px',
+                                        lineHeight: 1.4,
+                                        wordBreak: 'keep-all',
+                                    }}
+                                >
+                                    {facility.name} 관계자이신가요?
+                                </Text>
+
+                                <Text
+                                    c="#64748B"
+                                    mt={4}
+                                    mb={12}
+                                    style={{
+                                        fontSize: 12,
+                                        lineHeight: 1.55,
+                                        wordBreak: 'keep-all',
+                                    }}
+                                >
+                                    공식 분양가와 시설 사진을 직접 관리하시면 상단 ‘공식 인증 배지’ 부여 및 유족 1:1 상담을 직통 연결해 드립니다.
+                                </Text>
+
+                                <button
+                                    type="button"
+                                    onClick={() => router.push(`/partnership?facility=${encodeURIComponent(facility.name)}`)}
+                                    style={{
+                                        width: '100%',
+                                        height: 38,
+                                        borderRadius: 9,
+                                        border: '1px solid #BFDBFE',
+                                        backgroundColor: '#EFF6FF',
+                                        color: '#1D4ED8',
+                                        fontSize: 12.5,
+                                        fontWeight: 700,
+                                        cursor: 'pointer',
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        justifyContent: 'center',
+                                        gap: 4,
+                                        transition: 'background-color 0.15s ease',
+                                    }}
+                                >
+                                    <span>공식 인증 배지 · 제휴 관리 신청하기</span>
+                                    <ChevronRight size={14} />
+                                </button>
+                            </Box>
                         </Box>
 
 
