@@ -108,6 +108,78 @@ const REGION_MAPPINGS: { [key: string]: string[] } = {
 // 좌표별 시설 ID 등록부 (전역 유지 - 필터링되어도 위치 고정)
 const LAYOUT_REGISTRY = new Map<string, string[]>();
 
+// 시/도별 대표 마커 고정 좌표 (줌 ≤ 9 광역 모드에서 서울·경기 등 인접 지역 마커 겹침 방지)
+const PROVINCE_DISPLAY_COORDS: Record<string, { lat: number; lng: number }> = {
+    '서울': { lat: 37.5665, lng: 126.9780 },
+    '경기': { lat: 37.2450, lng: 127.1900 },
+    '인천': { lat: 37.4563, lng: 126.6452 },
+    '강원': { lat: 37.7600, lng: 128.3200 },
+    '충북': { lat: 36.7500, lng: 127.7800 },
+    '충남': { lat: 36.6200, lng: 126.7200 },
+    '세종': { lat: 36.5200, lng: 127.2500 },
+    '대전': { lat: 36.3200, lng: 127.4300 },
+    '전북': { lat: 35.7500, lng: 127.1400 },
+    '광주': { lat: 35.1600, lng: 126.8500 },
+    '전남': { lat: 34.8600, lng: 126.9900 },
+    '경북': { lat: 36.4400, lng: 128.8200 },
+    '대구': { lat: 35.8700, lng: 128.6000 },
+    '울산': { lat: 35.5400, lng: 129.3100 },
+    '경남': { lat: 35.3300, lng: 128.2500 },
+    '부산': { lat: 35.1800, lng: 129.0800 },
+    '제주': { lat: 33.3900, lng: 126.5500 },
+};
+
+// 주소 문자열에서 정규화된 시/도(provinceKey)와 시/군/구(regionKey, regionDisplayName)를 추출
+function parseFacilityRegion(address?: string): {
+    provinceKey: string;
+    regionKey: string;
+    regionDisplayName: string;
+} {
+    const tokens = (address || '').trim().split(/\s+/).filter(Boolean);
+    const t0 = tokens[0] || '';
+    const t1 = tokens[1] || '';
+
+    let provinceKey = '기타';
+    if (t0.startsWith('서울')) provinceKey = '서울';
+    else if (t0.startsWith('경기')) provinceKey = '경기';
+    else if (t0.startsWith('인천')) provinceKey = '인천';
+    else if (t0.startsWith('강원')) provinceKey = '강원';
+    else if (t0.startsWith('충청북') || t0.startsWith('충북')) provinceKey = '충북';
+    else if (t0.startsWith('충청남') || t0.startsWith('충남')) provinceKey = '충남';
+    else if (t0.startsWith('세종')) provinceKey = '세종';
+    else if (t0.startsWith('대전')) provinceKey = '대전';
+    else if (t0.startsWith('전라북') || t0.startsWith('전북')) provinceKey = '전북';
+    else if (t0.startsWith('광주')) provinceKey = '광주';
+    else if (t0.startsWith('전라남') || t0.startsWith('전남')) provinceKey = '전남';
+    else if (t0.startsWith('경상북') || t0.startsWith('경북') || t0 === '포항시') provinceKey = '경북';
+    else if (t0.startsWith('대구')) provinceKey = '대구';
+    else if (t0.startsWith('울산')) provinceKey = '울산';
+    else if (t0.startsWith('경상남') || t0.startsWith('경남')) provinceKey = '경남';
+    else if (t0.startsWith('부산')) provinceKey = '부산';
+    else if (t0.startsWith('제주')) provinceKey = '제주';
+
+    if (provinceKey === '세종') {
+        return {
+            provinceKey: '세종',
+            regionKey: '세종 세종시',
+            regionDisplayName: '세종',
+        };
+    }
+
+    const rawCity = (t0 === '포항시' ? '포항시' : t1) || provinceKey;
+    const regionKey = `${provinceKey} ${rawCity}`;
+
+    let regionDisplayName = rawCity;
+    if (rawCity.length <= 2) {
+        // '서구', '북구', '남구', '동구', '중구' 등 2글자 구 이름은 시/도를 붙여 명확히 표시 ('인천 서구' 등)
+        regionDisplayName = `${provinceKey} ${rawCity}`;
+    } else if (rawCity.endsWith('시') || rawCity.endsWith('군') || rawCity.endsWith('구')) {
+        regionDisplayName = rawCity.slice(0, -1);
+    }
+
+    return { provinceKey, regionKey, regionDisplayName };
+}
+
 const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerClick, onBoundsChanged, onCenterAddressChange, isMobile, onViewList, onMapTap, onMapDrag, uiHidden, activeCategory = ['all'], institutionFilter = 'all', hideInquiry = true, onUserClick, userButtonLabel, selectedId = null }, ref) => {
     const mapRef = useRef<HTMLDivElement>(null);
     const [isMapLoaded, setIsMapLoaded] = useState(false);
@@ -185,19 +257,36 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
         panTo: (lat: number, lng: number, zoom?: number, facilityId?: string) => {
             if (mapInstanceRef.current && window.naver) {
                 const newCenter = new window.naver.maps.LatLng(lat, lng);
+                const currentBounds = mapInstanceRef.current.getBounds();
                 if (zoom) {
                     mapInstanceRef.current.morph(newCenter, zoom);
-                } else {
+                } else if (!currentBounds || !currentBounds.hasPoint(newCenter)) {
+                    // 화면 밖의 시설을 선택한 경우에만 이동하고, 현재 화면에 보이는 마커 클릭 시 지도 상태 그대로 유지
                     mapInstanceRef.current.panTo(newCenter);
                 }
 
                 // 🎯 시설 ID로 마커 찾아서 bounce 애니메이션
                 setTimeout(() => {
-                    // 0. 현재 viewport에 있는 마커들 보이게 (morph 후 idle 전에 마커가 숨겨져 있을 수 있음)
+                    // 0. 현재 viewport에 있는 마커들 보이게 (활성 필터 준수)
                     if (prevZoomModeRef.current === 'individual' && mapInstanceRef.current) {
                         const bounds = mapInstanceRef.current.getBounds();
+                        const catMap: Record<string, string> = { 'charnel': 'CHARNEL_HOUSE', 'natural': 'NATURAL_BURIAL', 'park': 'FAMILY_GRAVE', 'crematorium': 'CREMATORIUM' };
+                        const ac = activeCategoryRef.current;
+                        const isAll = ac.includes('all');
+                        const selCats = isAll ? [] : ac.filter(c => catMap[c]).map(c => catMap[c]);
+                        const instF = institutionFilterRef.current;
+                        const hi = hideInquiryRef.current;
+
                         markersRef.current.forEach(m => {
-                            m.setVisible(bounds.hasPoint(m.getPosition()));
+                            const fac = (m as any).__facilityData;
+                            let catOk = isAll || selCats.includes(fac?.category);
+                            if (catOk && instF !== 'all') {
+                                catOk = instF === 'public' ? fac?.isPublic === true : fac?.isPublic === false;
+                            }
+                            if (catOk && hi) {
+                                catOk = (fac?.priceRange?.min ?? 0) > 0;
+                            }
+                            m.setVisible(catOk && bounds.hasPoint(m.getPosition()));
                         });
                     }
 
@@ -237,7 +326,7 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
                         }
                         targetMarker.setZIndex(9999);
                     }
-                }, 400);
+                }, zoom ? 400 : 80);
             }
         },
 
@@ -642,7 +731,11 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
                         const a2 = r.region.area2?.name || '';
                         const a3 = r.region.area3?.name || '';
 
-                        if (currentZoom < 14) {
+                        if (currentZoom <= 9) {
+                            text = '전국';
+                        } else if (currentZoom <= 11) {
+                            text = a1 || '광역';
+                        } else if (currentZoom < 14) {
                             // Wide view: Area1 + Area2 (e.g., 경기도 성남시)
                             text = `${a1} ${a2}`;
                         } else {
@@ -650,6 +743,9 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
                             text = `${a2} ${a3}`;
                         }
                     }
+                } else {
+                    const currentZoom = map.getZoom();
+                    if (currentZoom <= 9) text = '전국';
                 }
                 setCenterAddress(text.trim());
                 onCenterAddressChange?.(text.trim());
@@ -719,26 +815,25 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
         });
     }, [facilities]);
 
-    // 🔒 구/군별 그룹화 (대표 좌표 고정) - 한 번 계산되면 절대 변경 안 함
+    // 🔒 시/군/구별 그룹화 (정규화된 시/도 + 시/군/구 키 사용)
     const regionGroups = useMemo(() => {
         const groups: Record<string, {
             facilities: typeof processedFacilities;
             representative: typeof processedFacilities[0];
+            displayName: string;
             count: number;
         }> = {};
 
         for (const fac of processedFacilities) {
             if (!fac.fixedCoordinates?.lat || !fac.fixedCoordinates?.lng) continue;
 
-            // 주소에서 구/군 추출 (예: "경기도 용인시 처인구" -> "용인시")
-            const addr = fac.address || '';
-            const tokens = addr.split(' ');
-            const regionKey = tokens[1] || tokens[0] || '기타'; // 시/군 레벨
+            const { regionKey, regionDisplayName } = parseFacilityRegion(fac.address);
 
             if (!groups[regionKey]) {
                 groups[regionKey] = {
                     facilities: [],
-                    representative: fac, // 첫 번째 시설 = 대표 좌표 (고정)
+                    representative: fac,
+                    displayName: regionDisplayName,
                     count: 0
                 };
             }
@@ -749,17 +844,23 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
         return groups;
     }, [processedFacilities]);
 
-    // 🔒 시/도별 그룹화 (줌 ≤ 9 용)
+    // 🔒 시/도별 그룹화 (줌 ≤ 9 용 - 정규화된 17개 광역 시/도 기준 통합)
     const provinceGroups = useMemo(() => {
-        const groups: Record<string, { count: number; centerLat: number; centerLng: number }> = {};
+        const groups: Record<string, {
+            facilities: typeof processedFacilities;
+            count: number;
+            centerLat: number;
+            centerLng: number;
+        }> = {};
 
         for (const fac of processedFacilities) {
             if (!fac.fixedCoordinates?.lat || !fac.fixedCoordinates?.lng) continue;
-            const provinceKey = (fac.address || '').split(' ')[0] || '기타';
+            const { provinceKey } = parseFacilityRegion(fac.address);
 
             if (!groups[provinceKey]) {
-                groups[provinceKey] = { count: 0, centerLat: 0, centerLng: 0 };
+                groups[provinceKey] = { facilities: [], count: 0, centerLat: 0, centerLng: 0 };
             }
+            groups[provinceKey].facilities.push(fac);
             groups[provinceKey].count++;
             groups[provinceKey].centerLat += fac.fixedCoordinates.lat;
             groups[provinceKey].centerLng += fac.fixedCoordinates.lng;
@@ -767,8 +868,14 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
 
         for (const key of Object.keys(groups)) {
             const g = groups[key];
-            g.centerLat /= g.count;
-            g.centerLng /= g.count;
+            const preset = PROVINCE_DISPLAY_COORDS[key];
+            if (preset) {
+                g.centerLat = preset.lat;
+                g.centerLng = preset.lng;
+            } else {
+                g.centerLat /= g.count;
+                g.centerLng /= g.count;
+            }
         }
 
         return groups;
@@ -995,22 +1102,38 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
         provinceMarkersArrayRef.current.forEach(m => m.setMap(null));
         provinceMarkersArrayRef.current = [];
 
+        // 현재 활성 필터 기준 계산 헬퍼
+        const catMapInit: Record<string, string> = { 'charnel': 'CHARNEL_HOUSE', 'natural': 'NATURAL_BURIAL', 'park': 'FAMILY_GRAVE', 'crematorium': 'CREMATORIUM' };
+        const acInit = activeCategoryRef.current;
+        const isAllInit = acInit.includes('all');
+        const selCatsInit = isAllInit ? [] : acInit.filter(c => catMapInit[c]).map(c => catMapInit[c]);
+        const instInit = institutionFilterRef.current;
+        const hiInit = hideInquiryRef.current;
+        const matchesInitFilter = (fac: any) => {
+            let ok = isAllInit || selCatsInit.includes(fac?.category);
+            if (ok && instInit !== 'all') {
+                ok = instInit === 'public' ? fac?.isPublic === true : fac?.isPublic === false;
+            }
+            if (ok && hiInit) {
+                ok = (fac?.priceRange?.min ?? 0) > 0;
+            }
+            return ok;
+        };
+
         // 시/군 레벨 고정 마커 생성
         for (const [regionKey, group] of Object.entries(regionGroups)) {
             const center = regionGroupCenters[regionKey];
             if (!center) continue;
 
-            let displayName = regionKey;
-            if (displayName.endsWith('시') || displayName.endsWith('군') || displayName.endsWith('구')) {
-                displayName = displayName.slice(0, -1);
-            }
+            const displayName = group.displayName;
+            const filteredCount = group.facilities.filter(matchesInitFilter).length;
 
             const regionMarker = new window.naver.maps.Marker({
                 position: new window.naver.maps.LatLng(center.lat, center.lng),
                 map: map,
                 visible: false,
                 icon: {
-                    content: buildClusterPillHtml(displayName, group.count),
+                    content: buildClusterPillHtml(displayName, filteredCount),
                     size: new window.naver.maps.Size(68, 42),
                     anchor: new window.naver.maps.Point(34, 21),
                 },
@@ -1023,22 +1146,21 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
             });
 
             (regionMarker as any).__regionKey = regionKey;
+            (regionMarker as any).__hasVisibleCount = filteredCount > 0;
             regionMarkersArrayRef.current.push(regionMarker);
         }
 
         // 시/도 레벨 고정 마커 생성
         for (const [provinceKey, group] of Object.entries(provinceGroups)) {
-            let displayName = provinceKey;
-            if (displayName.includes('특별자치')) displayName = displayName.replace('특별자치', '');
-            else if (displayName.endsWith('특별시') || displayName.endsWith('광역시')) displayName = displayName.substring(0, 2);
-            else if (displayName.endsWith('도')) displayName = displayName.slice(0, -1);
+            const displayName = provinceKey;
+            const filteredCount = group.facilities.filter(matchesInitFilter).length;
 
             const provinceMarker = new window.naver.maps.Marker({
                 position: new window.naver.maps.LatLng(group.centerLat, group.centerLng),
                 map: map,
                 visible: false,
                 icon: {
-                    content: buildClusterPillHtml(displayName, group.count),
+                    content: buildClusterPillHtml(displayName, filteredCount),
                     size: new window.naver.maps.Size(68, 42),
                     anchor: new window.naver.maps.Point(34, 21),
                 },
@@ -1051,6 +1173,7 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
             });
 
             (provinceMarker as any).__provinceKey = provinceKey;
+            (provinceMarker as any).__hasVisibleCount = filteredCount > 0;
             provinceMarkersArrayRef.current.push(provinceMarker);
         }
 
@@ -1060,27 +1183,14 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
         prevZoomModeRef.current = initialMode;
 
         if (initialMode === 'province') {
-            provinceMarkersArrayRef.current.forEach(m => m.setVisible(true));
+            provinceMarkersArrayRef.current.forEach(m => m.setVisible((m as any).__hasVisibleCount !== false));
         } else if (initialMode === 'region') {
-            regionMarkersArrayRef.current.forEach(m => m.setVisible(true));
+            regionMarkersArrayRef.current.forEach(m => m.setVisible((m as any).__hasVisibleCount !== false));
         } else {
             const bounds = map.getBounds();
-            const catMapInit: Record<string, string> = { 'charnel': 'CHARNEL_HOUSE', 'natural': 'NATURAL_BURIAL', 'park': 'FAMILY_GRAVE', 'crematorium': 'CREMATORIUM' };
-            const acInit = activeCategoryRef.current;
-            const isAllInit = acInit.includes('all');
-            const selCatsInit = isAllInit ? [] : acInit.filter(c => catMapInit[c]).map(c => catMapInit[c]);
-            const instInit = institutionFilterRef.current;
-            const hiInit = hideInquiryRef.current;
             createdMarkers.forEach(m => {
                 const fac = (m as any).__facilityData;
-                let catOk = isAllInit || selCatsInit.includes(fac?.category);
-                if (catOk && instInit !== 'all') {
-                    catOk = instInit === 'public' ? fac?.isPublic === true : fac?.isPublic === false;
-                }
-                if (catOk && hiInit) {
-                    catOk = (fac?.priceRange?.min ?? 0) > 0;
-                }
-                m.setVisible(catOk && bounds.hasPoint(m.getPosition()));
+                m.setVisible(matchesInitFilter(fac) && bounds.hasPoint(m.getPosition()));
             });
         }
 
@@ -1192,12 +1302,11 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
                 if (visible) count++;
             }
 
+            (regionMarker as any).__hasVisibleCount = count > 0;
             if (count === 0) {
                 regionMarker.setVisible(false);
             } else {
-                // 카운트 업데이트
-                const displayName = regionKey.endsWith('시') || regionKey.endsWith('군') || regionKey.endsWith('구')
-                    ? regionKey.slice(0, -1) : regionKey;
+                const displayName = regionGroups[regionKey].displayName;
                 regionMarker.setIcon({
                     content: buildClusterPillHtml(displayName, count),
                     size: new window.naver.maps.Size(68, 42),
@@ -1215,9 +1324,7 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
 
             // 해당 도의 필터된 시설 수 계산
             let count = 0;
-            for (const fac of processedFacilities) {
-                const facProv = (fac.address || '').split(' ')[0] || '기타';
-                if (facProv !== provKey) continue;
+            for (const fac of provinceGroups[provKey].facilities) {
                 let visible = isAllCategory || selectedDbCategories.includes(fac.category);
                 if (visible && institutionFilter !== 'all') {
                     if (institutionFilter === 'public') visible = fac.isPublic === true;
@@ -1229,14 +1336,11 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
                 if (visible) count++;
             }
 
+            (provMarker as any).__hasVisibleCount = count > 0;
             if (count === 0) {
                 provMarker.setVisible(false);
             } else {
-                let displayName = provKey;
-                if (displayName.includes('특별자치')) displayName = displayName.replace('특별자치', '');
-                else if (displayName.endsWith('특별시') || displayName.endsWith('광역시')) displayName = displayName.substring(0, 2);
-                else if (displayName.endsWith('도')) displayName = displayName.slice(0, -1);
-
+                const displayName = provKey;
                 provMarker.setIcon({
                     content: buildClusterPillHtml(displayName, count),
                     size: new window.naver.maps.Size(68, 42),
@@ -1400,9 +1504,9 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
 
                     // 새 모드 보이기
                     if (newMode === 'province') {
-                        provinceMarkersArrayRef.current.forEach(m => m.setVisible(true));
+                        provinceMarkersArrayRef.current.forEach(m => m.setVisible((m as any).__hasVisibleCount !== false));
                     } else if (newMode === 'region') {
-                        regionMarkersArrayRef.current.forEach(m => m.setVisible(true));
+                        regionMarkersArrayRef.current.forEach(m => m.setVisible((m as any).__hasVisibleCount !== false));
                     } else {
                         const bounds = map.getBounds();
                         const catMap: Record<string, string> = { 'charnel': 'CHARNEL_HOUSE', 'natural': 'NATURAL_BURIAL', 'park': 'FAMILY_GRAVE', 'crematorium': 'CREMATORIUM' };

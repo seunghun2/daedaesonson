@@ -679,11 +679,15 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
       router.push(`/facility/${facility.id}`);
       setMobileView('map');
     } else {
-      // 🖥️ PC: 왼쪽 패널에 상세 표시 + 지도 이동 + URL 업데이트
+      // 🖥️ PC: 왼쪽 패널에 상세 표시 + 현재 줌 상태 유지 (컬러 마커가 보이는 줌에서는 강제 확대하지 않음)
       setNearbyList(null); // 주변 시설 패널 닫기
       setShowMyInfo(false); // 내 정보 패널 닫기
       if (mapRef.current && facility.coordinates) {
-        mapRef.current.panTo(facility.coordinates.lat, facility.coordinates.lng, 16, facility.id);
+        const currentView = mapRef.current.getCurrentView();
+        // 검은색 클러스터(zoom <= 11) 상태일 때만 컬러 마커가 보이는 줌(12)으로 전환하고,
+        // 이미 컬러 마커가 보이는 상태(zoom >= 12)에서는 확대하지 않고 그 상태 그대로 유지!
+        const targetZoom = currentView && currentView.zoom <= 11 ? 12 : undefined;
+        mapRef.current.panTo(facility.coordinates.lat, facility.coordinates.lng, targetZoom, facility.id);
       }
       const wasAlreadyOpen = !!selectedFacility;
       if (wasAlreadyOpen) {

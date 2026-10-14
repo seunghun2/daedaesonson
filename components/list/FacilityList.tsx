@@ -433,7 +433,7 @@ export default function FacilityList({
                         style={{
                             ...transitionStyles,
                             position: 'absolute',
-                            bottom: 80,
+                            bottom: 18,
                             right: 16,
                             zIndex: 100,
                             backgroundColor: '#191F28',
