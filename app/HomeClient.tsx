@@ -51,7 +51,7 @@ function HighlightText({ text, highlight }: { text: string, highlight: string })
     <Text span size="sm">
       {parts.map((part, i) =>
         part.toLowerCase() === highlight.toLowerCase() ? (
-          <Text span key={i} c="#2563EB" fw={700}>{part}</Text>
+          <Text span key={i} c="#191F28" fw={700}>{part}</Text>
         ) : (
           <Text span key={i}>{part}</Text>
         )
@@ -2065,7 +2065,7 @@ function MyInfoPanel({
                       </Group>
                     </Group>
                     <Text size="sm" c="#191F28" lineClamp={2}>{review.content}</Text>
-                    <Text size="xs" c="#2563EB" fw={600} mt={6}>{facilityTitle}</Text>
+                    <Text size="xs" c="#191F28" fw={600} mt={6}>{facilityTitle}</Text>
                   </Box>
                 );
               })}
@@ -2111,7 +2111,7 @@ function MyInfoPanel({
                 <img src={avatarUrl} alt={displayName} width={64} height={64} style={{ borderRadius: '50%', objectFit: 'cover', margin: '0 auto 10px', display: 'block' }} />
               ) : (
                 <Box style={{ width: 64, height: 64, borderRadius: '50%', backgroundColor: '#EFF6FF', border: '1px solid #DBEAFE', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 10px' }}>
-                  <Text c="#2563EB" fw={800} size="lg">{displayName.charAt(0)}</Text>
+                  <Text c="#191F28" fw={800} size="lg">{displayName.charAt(0)}</Text>
                 </Box>
               )}
               <Text size="md" fw={800} c="#191F28" mb={2}>{displayName}</Text>
@@ -2143,7 +2143,7 @@ function MyInfoPanel({
                 <Text size="sm" fw={600} c="#191F28">관심 시설</Text>
               </Group>
               <Group gap={4}>
-                <Text size="sm" fw={800} c="#2563EB">{favorites.length}개</Text>
+                <Text size="sm" fw={800} c="#191F28">{favorites.length}개</Text>
                 <ChevronRight size={16} color="#94A3B8" />
               </Group>
             </Box>
@@ -2159,11 +2159,11 @@ function MyInfoPanel({
               onMouseLeave={(e: any) => { e.currentTarget.style.backgroundColor = 'white'; }}
             >
               <Group gap={8}>
-                <MessageSquare size={18} color="#2563EB" />
+                <MessageSquare size={18} color="#191F28" />
                 <Text size="sm" fw={600} c="#191F28">내 이야기</Text>
               </Group>
               <Group gap={4}>
-                <Text size="sm" fw={800} c="#2563EB">{myReviews.length}개</Text>
+                <Text size="sm" fw={800} c="#191F28">{myReviews.length}개</Text>
                 <ChevronRight size={16} color="#94A3B8" />
               </Group>
             </Box>

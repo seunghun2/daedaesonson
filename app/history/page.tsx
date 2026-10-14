@@ -23,11 +23,11 @@ interface HistoryItem {
 }
 
 const CATEGORY_BADGE_PALETTE: Record<string, { bg: string; text: string }> = {
-    CHARNEL_HOUSE: { bg: '#EFF6FF', text: '#1D4ED8' },
-    NATURAL_BURIAL: { bg: '#ECFDF5', text: '#047857' },
-    FAMILY_GRAVE: { bg: '#F5F3FF', text: '#6D28D9' },
-    CREMATORIUM: { bg: '#FFFBEB', text: '#B45309' },
-    FUNERAL_HOME: { bg: '#F1F5F9', text: '#334155' },
+    CHARNEL_HOUSE: { bg: '#F2F4F6', text: '#4E5968' },
+    NATURAL_BURIAL: { bg: '#F2F4F6', text: '#4E5968' },
+    FAMILY_GRAVE: { bg: '#F2F4F6', text: '#4E5968' },
+    CREMATORIUM: { bg: '#F2F4F6', text: '#4E5968' },
+    FUNERAL_HOME: { bg: '#F2F4F6', text: '#4E5968' },
     OTHER: { bg: '#F2F4F6', text: '#4E5968' },
 };
 
@@ -40,10 +40,8 @@ const formatPrice = (price: number): { text: string; hasPrice: boolean } => {
 
 export default function HistoryPage() {
     const router = useRouter();
-    const { user, favorites, addFavoritesBatch, queuePendingFavorites } = useAuth();
     const [history, setHistory] = useState<HistoryItem[]>([]);
     const [publicMap, setPublicMap] = useState<Record<string, boolean>>({});
-    const [loginOpen, setLoginOpen] = useState(false);
 
     useEffect(() => {
         const stored = localStorage.getItem('facilityHistory');
@@ -159,67 +157,8 @@ export default function HistoryPage() {
                     </Box>
                 ) : (
                     <Stack gap={10} p="md">
-                        {/* 내 계정에 영구 보관 배너 */}
-                        {(() => {
-                            const allSaved = !!user && history.every(h => favorites.includes(String(h.id)));
-                            return (
-                                <Box
-                                    p={14}
-                                    style={{
-                                        borderRadius: 14,
-                                        backgroundColor: allSaved ? '#ECFDF5' : '#EFF6FF',
-                                        border: allSaved ? '1px solid #A7F3D0' : '1px solid #BFDBFE',
-                                        display: 'flex',
-                                        alignItems: 'center',
-                                        justifyContent: 'space-between',
-                                        gap: 10,
-                                        flexWrap: 'wrap',
-                                    }}
-                                >
-                                    <div style={{ display: 'flex', alignItems: 'center', gap: 8, minWidth: 0, flex: 1 }}>
-                                        <BookmarkCheck size={18} color={allSaved ? '#059669' : '#2563EB'} style={{ flexShrink: 0 }} />
-                                        <span style={{ fontSize: 12.5, fontWeight: 700, color: allSaved ? '#065F46' : '#1E3A8A', lineHeight: 1.4 }}>
-                                            {allSaved
-                                                ? `최근 본 시설 ${history.length}곳이 내 관심장지 보관함에 모두 저장되어 있습니다.`
-                                                : user
-                                                    ? `최근 본 시설 ${history.length}곳을 내 관심장지 보관함에 한 번에 저장하세요.`
-                                                    : `최근 본 시설 ${history.length}곳은 브라우저를 닫으면 사라질 수 있어요. 내 계정에 영구 보관하세요.`}
-                                        </span>
-                                    </div>
-                                    {!allSaved && (
-                                        <button
-                                            type="button"
-                                            onClick={() => {
-                                                const ids = history.map(h => String(h.id));
-                                                if (!user) {
-                                                    queuePendingFavorites(ids);
-                                                    setLoginOpen(true);
-                                                } else {
-                                                    addFavoritesBatch(ids);
-                                                }
-                                            }}
-                                            style={{
-                                                padding: '7px 12px',
-                                                borderRadius: 9,
-                                                border: 'none',
-                                                backgroundColor: '#2563EB',
-                                                color: '#FFFFFF',
-                                                fontSize: 12,
-                                                fontWeight: 800,
-                                                cursor: 'pointer',
-                                                whiteSpace: 'nowrap',
-                                                flexShrink: 0,
-                                            }}
-                                        >
-                                            {user ? '관심장지에 모두 저장' : '3초 로그인하고 영구보관'}
-                                        </button>
-                                    )}
-                                </Box>
-                            );
-                        })()}
-
                         <Text size="xs" fw={700} c="#6B7684" px={2}>
-                            전체 <span style={{ color: '#2563EB' }}>{history.length}</span>개
+                            전체 <span style={{ color: '#191F28' }}>{history.length}</span>개
                         </Text>
                         {history.map((item) => {
                             const thumbUrl = getFacilityImageUrl(item.thumbnail);
@@ -279,7 +218,7 @@ export default function HistoryPage() {
                                                 top={6}
                                                 left={6}
                                                 style={{
-                                                    backgroundColor: isPublic ? 'rgba(37, 99, 235, 0.92)' : 'rgba(25, 31, 40, 0.78)',
+                                                    backgroundColor: 'rgba(25, 31, 40, 0.78)',
                                                     backdropFilter: 'blur(4px)',
                                                     color: '#FFFFFF',
                                                     fontSize: '10px',
@@ -371,7 +310,7 @@ export default function HistoryPage() {
                                                     fw={800}
                                                     style={{
                                                         fontSize: priceInfo.hasPrice ? '16px' : '14px',
-                                                        color: priceInfo.hasPrice ? '#2563EB' : '#8B95A1',
+                                                        color: priceInfo.hasPrice ? '#191F28' : '#8B95A1',
                                                         letterSpacing: '-0.4px',
                                                     }}
                                                 >
@@ -405,11 +344,6 @@ export default function HistoryPage() {
 
             {/* 하단 탭바 */}
             <BottomNav historyCount={history.length} />
-            <LoginModal
-                isOpen={loginOpen}
-                onClose={() => setLoginOpen(false)}
-                reason={`최근 둘러보신 시설 ${history.length}곳을 내 관심장지 보관함에 한 번에 영구 저장합니다.`}
-            />
         </Box>
     );
 }

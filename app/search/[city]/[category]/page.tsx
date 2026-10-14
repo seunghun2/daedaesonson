@@ -5,9 +5,9 @@ import { ChevronLeft, MapPin } from 'lucide-react';
 import { loadFacilitiesJson as loadFacilities } from '@/lib/facilityDataLoader';
 
 const CATEGORY_MAP: Record<string, { code: string; label: string; bg: string; text: string }> = {
-    '봉안당': { code: 'CHARNEL_HOUSE', label: '봉안당', bg: '#EFF6FF', text: '#1D4ED8' },
-    '수목장': { code: 'NATURAL_BURIAL', label: '수목장', bg: '#ECFDF5', text: '#047857' },
-    '공원묘지': { code: 'FAMILY_GRAVE', label: '공원묘지', bg: '#F5F3FF', text: '#6D28D9' },
+    '봉안당': { code: 'CHARNEL_HOUSE', label: '봉안당', bg: '#F2F4F6', text: '#4E5968' },
+    '수목장': { code: 'NATURAL_BURIAL', label: '수목장', bg: '#F2F4F6', text: '#4E5968' },
+    '공원묘지': { code: 'FAMILY_GRAVE', label: '공원묘지', bg: '#F2F4F6', text: '#4E5968' },
 };
 
 interface PageProps {
@@ -202,7 +202,7 @@ export default async function CityPage({ params }: PageProps) {
                     </h1>
                     <p style={{ color: '#6B7684', fontSize: '15px', margin: 0, fontWeight: 500 }}>
                         총 <strong style={{ color: '#191F28', fontWeight: 700 }}>{facilities.length}개</strong> 시설 · 최저{' '}
-                        <strong style={{ color: '#2563EB', fontWeight: 700 }}>{formatManwon(minPrice)}</strong>
+                        <strong style={{ color: '#191F28', fontWeight: 700 }}>{formatManwon(minPrice)}</strong>
                         {maxPrice > 0 ? ` ~ 최고 ${formatManwon(maxPrice)}` : ''}
                     </p>
                 </header>
@@ -247,8 +247,8 @@ export default async function CityPage({ params }: PageProps) {
                                                 fontWeight: 600,
                                                 padding: '3px 8px',
                                                 borderRadius: '6px',
-                                                backgroundColor: f.isPublic ? '#EFF6FF' : '#F2F4F6',
-                                                color: f.isPublic ? '#2563EB' : '#4E5968',
+                                                backgroundColor: '#F2F4F6',
+                                                color: '#4E5968',
                                             }}
                                         >
                                             {f.isPublic ? '공설' : '사설'}
@@ -274,7 +274,7 @@ export default async function CityPage({ params }: PageProps) {
                                     }}
                                 >
                                     <span style={{ fontSize: '12px', fontWeight: 600, color: '#8B95A1' }}>대표가격</span>
-                                    <span style={{ fontSize: '19px', fontWeight: 800, color: '#2563EB', letterSpacing: '-0.4px' }}>
+                                    <span style={{ fontSize: '19px', fontWeight: 800, color: '#191F28', letterSpacing: '-0.4px' }}>
                                         {formatManwon(f.priceRange?.min)}~
                                     </span>
                                 </div>

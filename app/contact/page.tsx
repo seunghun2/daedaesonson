@@ -202,8 +202,8 @@ export default function ContactPage() {
                                                     style={{
                                                         height: 42,
                                                         borderRadius: 10,
-                                                        border: active ? '1.5px solid #2563EB' : '1px solid #CBD5E1',
-                                                        backgroundColor: active ? '#2563EB' : '#FFFFFF',
+                                                        border: active ? '1.5px solid #191F28' : '1px solid #CBD5E1',
+                                                        backgroundColor: active ? '#191F28' : '#FFFFFF',
                                                         color: active ? '#FFFFFF' : '#475569',
                                                         fontSize: 13,
                                                         fontWeight: active ? 700 : 600,
@@ -224,7 +224,7 @@ export default function ContactPage() {
                                         <Text size="xs" fw={700} c="#334155">
                                             제목 <Text component="span" c="#EF4444" inherit>*</Text>
                                         </Text>
-                                        <Text size="11px" c="#2563EB" fw={600}>클릭 시 자동 입력</Text>
+                                        <Text size="11px" c="#191F28" fw={600}>클릭 시 자동 입력</Text>
                                     </Group>
                                     <Group gap={6} mb={8} style={{ flexWrap: 'wrap' }}>
                                         {(QUICK_SUBJECTS[inquiryType] || QUICK_SUBJECTS.general).map((preset) => (
@@ -240,7 +240,7 @@ export default function ContactPage() {
                                                 style={{
                                                     padding: '5px 10px',
                                                     borderRadius: 999,
-                                                    border: title === preset ? '1px solid #2563EB' : '1px solid #DBEAFE',
+                                                    border: title === preset ? '1px solid #191F28' : '1px solid #DBEAFE',
                                                     backgroundColor: title === preset ? '#EFF6FF' : '#F8FAFC',
                                                     color: '#1E40AF',
                                                     fontSize: 12,
@@ -315,7 +315,7 @@ export default function ContactPage() {
                                         size="xs"
                                         label={
                                             <Text size="xs" fw={600} c="#334155">
-                                                <Text span c="#2563EB" fw={700}>[필수] </Text>
+                                                <Text span c="#191F28" fw={700}>[필수] </Text>
                                                 문의 답변 안내를 위한 개인정보(연락처) 수집·이용 동의
                                             </Text>
                                         }
@@ -336,7 +336,7 @@ export default function ContactPage() {
                                         root: {
                                             height: 52,
                                             borderRadius: 12,
-                                            backgroundColor: canSubmit ? '#2563EB' : '#E2E8F0',
+                                            backgroundColor: canSubmit ? '#191F28' : '#E2E8F0',
                                             color: canSubmit ? '#FFFFFF' : '#94A3B8',
                                             fontSize: 15.5,
                                             fontWeight: 700,

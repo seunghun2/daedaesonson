@@ -4355,10 +4355,10 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
 
                                                 {/* 답변 */}
                                                 {selectedInquiry.replies && selectedInquiry.replies.length > 0 && (
-                                                    <Box p="md" style={{ backgroundColor: '#EFF6FF', borderRadius: 12, borderLeft: '4px solid #2563EB' }}>
+                                                    <Box p="md" style={{ backgroundColor: '#EFF6FF', borderRadius: 12, borderLeft: '4px solid #191F28' }}>
                                                         <Group gap={6} mb={6}>
-                                                            <Headphones size={16} color="#2563EB" />
-                                                            <Text size="xs" fw={600} c="#2563EB">관리자 답변</Text>
+                                                            <Headphones size={16} color="#191F28" />
+                                                            <Text size="xs" fw={600} c="#191F28">관리자 답변</Text>
                                                         </Group>
                                                         <Text size="sm" c="dark">{selectedInquiry.replies[0].content}</Text>
                                                     </Box>
@@ -4701,7 +4701,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                             <Button
                                                 size="sm"
                                                 variant="filled"
-                                                color="#2563EB"
+                                                color="#191F28"
                                                 radius="xl"
                                                 px="xl"
                                                 onClick={() => handleSubmitReply(replyingTo)}
@@ -5194,7 +5194,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                             <span style={{ fontSize: 12, color: '#64748B', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
                                 https://daedaesonson.com/facility/{facility.id}
                             </span>
-                            <span style={{ fontSize: 12, fontWeight: 700, color: '#2563EB', flexShrink: 0 }}>복사</span>
+                            <span style={{ fontSize: 12, fontWeight: 700, color: '#191F28', flexShrink: 0 }}>복사</span>
                         </div>
                     </div>
                     <style>{`@keyframes shareSlideUp { from { transform: translateY(30px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }`}</style>

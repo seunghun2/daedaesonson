@@ -267,7 +267,7 @@ export default function MyInfoPage() {
                                                     <Text size="xs" c="#6B7684" truncate>{fac.address}</Text>
                                                 </Group>
                                                 {fac.priceRange?.min > 0 && (
-                                                    <Text size="xs" fw={700} mt={4} style={{ color: '#2563EB' }}>
+                                                    <Text size="xs" fw={700} mt={4} style={{ color: '#191F28' }}>
                                                         {Math.round(fac.priceRange.min >= 10000 ? fac.priceRange.min / 10000 : fac.priceRange.min).toLocaleString()}만원~
                                                     </Text>
                                                 )}
@@ -312,7 +312,7 @@ export default function MyInfoPage() {
                                     <Box
                                         style={{
                                             width: 72, height: 72, borderRadius: '50%',
-                                            backgroundColor: '#2563EB',
+                                            backgroundColor: '#191F28',
                                             display: 'flex', alignItems: 'center', justifyContent: 'center',
                                             margin: '0 auto 12px',
                                         }}
@@ -356,7 +356,7 @@ export default function MyInfoPage() {
                                         <Text size="sm" fw={600} c="#191F28">관심 시설</Text>
                                     </Group>
                                     <Group gap={4}>
-                                        <Text size="sm" fw={700} style={{ color: '#2563EB' }}>{favorites.length}개</Text>
+                                        <Text size="sm" fw={700} style={{ color: '#191F28' }}>{favorites.length}개</Text>
                                         <ChevronRight size={16} color="#8B95A1" />
                                     </Group>
                                 </Box>
@@ -372,11 +372,11 @@ export default function MyInfoPage() {
                                     onClick={() => setShowMyReviews(!showMyReviews)}
                                 >
                                     <Group gap={8}>
-                                        <MessageSquare size={18} color="#2563EB" />
+                                        <MessageSquare size={18} color="#191F28" />
                                         <Text size="sm" fw={600} c="#191F28">내 이야기</Text>
                                     </Group>
                                     <Group gap={4}>
-                                        <Text size="sm" fw={700} style={{ color: '#2563EB' }}>{myReviews.length}개</Text>
+                                        <Text size="sm" fw={700} style={{ color: '#191F28' }}>{myReviews.length}개</Text>
                                         <ChevronRight size={16} color="#8B95A1" style={{ transition: 'transform 0.2s', transform: showMyReviews ? 'rotate(90deg)' : 'none' }} />
                                     </Group>
                                 </Box>
