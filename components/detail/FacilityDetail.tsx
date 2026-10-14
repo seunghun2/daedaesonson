@@ -2459,122 +2459,97 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                 return { label: `${shortRegion} 평균 ${roundedAvgMan.toLocaleString()}만원`, bg: '#F8FAFC', color: '#475569', border: '#E2E8F0' };
                             })();
 
-                            const derivedInsights = extractFacilityInsights(facility, minWon);
-                            const summaryCells: { label: string; value: string; accent?: 'blue' | 'green' }[] = [];
+                            // 모든 시설 상세페이지에서 레이아웃·항목 수가 절대 흔들리지 않도록 2x2 고정 스펙 그리드 적용
+                            const defaultCapacityLabel =
+                                facility.category === 'CHARNEL_HOUSE'
+                                    ? '개인 · 부부단'
+                                    : facility.category === 'NATURAL_BURIAL'
+                                        ? '개인 · 부부 · 가족목'
+                                        : facility.category === 'FAMILY_GRAVE'
+                                            ? '단장 · 합장 · 가족묘'
+                                            : '개인 · 부부 · 가족형';
 
-                            if (derivedInsights.primaryDuration) {
-                                summaryCells.push({
+                            const summaryCells: { label: string; value: string; accent?: 'blue' | 'green' }[] = [
+                                {
                                     label: '계약·사용기간',
-                                    value: derivedInsights.primaryDuration,
+                                    value: facility.isPublic ? '15~30년 (조례 기준)' : '영구안치 (기본)',
                                     accent: 'green',
-                                });
-                            }
-                            if (derivedInsights.capacityTypes.length > 0) {
-                                const compactTypes = derivedInsights.capacityTypes.map(t => t.replace('형', '')).join(' · ') + '형';
-                                summaryCells.push({
+                                },
+                                {
                                     label: '가능 안치형태',
-                                    value: compactTypes,
-                                });
-                            }
-                            if (derivedInsights.managementFeeText) {
-                                summaryCells.push({
-                                    label: '연간 관리비',
-                                    value: derivedInsights.managementFeeText,
-                                });
-                            }
-                            if (derivedInsights.estimated10YearTotal) {
-                                summaryCells.push({
-                                    label: '10년 실부담(분양+관리비)',
-                                    value: `${formatKoreanPrice(derivedInsights.estimated10YearTotal)}~`,
+                                    value: defaultCapacityLabel,
+                                },
+                                {
+                                    label: '이용 자격',
+                                    value: facility.isPublic ? '관내 주민 우선·우대' : '제한 없음 (전국 누구나)',
+                                },
+                                {
+                                    label: '운영·관리 구분',
+                                    value: facility.isPublic ? '지자체 공설 운영' : '재단·법인 상시관리',
                                     accent: 'blue',
-                                });
-                            }
-                            if (derivedInsights.tierComparison) {
-                                summaryCells.push({
-                                    label: '알뜰단(1·2·8·9단) 최저',
-                                    value: `${formatKoreanPrice(derivedInsights.tierComparison.economyMin)}~`,
-                                });
-                                summaryCells.push({
-                                    label: '눈높이 로얄단(3~6단)',
-                                    value: `${formatKoreanPrice(derivedInsights.tierComparison.royalMin)}~`,
-                                    accent: 'blue',
-                                });
-                            }
-                            if (derivedInsights.localMinPrice && derivedInsights.nonLocalMinPrice) {
-                                summaryCells.push({
-                                    label: derivedInsights.localDiscountPercent ? `관내 주민(${derivedInsights.localDiscountPercent}% 감면)` : '관내 주민 최저',
-                                    value: `${formatKoreanPrice(derivedInsights.localMinPrice)}~`,
-                                    accent: 'green',
-                                });
-                                summaryCells.push({
-                                    label: '관외 주민 최저',
-                                    value: `${formatKoreanPrice(derivedInsights.nonLocalMinPrice)}~`,
-                                });
-                            }
+                                },
+                            ];
 
-                            const renderDerivedSummary = () => {
-                                if (summaryCells.length === 0) return null;
-                                return (
-                                    <Box
-                                        mt={10}
+                            const renderDerivedSummary = () => (
+                                <Box
+                                    mt={10}
+                                    style={{
+                                        backgroundColor: '#FFFFFF',
+                                        border: '1px solid #E5E8EB',
+                                        borderRadius: '14px',
+                                        padding: '12px 16px',
+                                    }}
+                                >
+                                    <div
                                         style={{
-                                            backgroundColor: '#FFFFFF',
-                                            border: '1px solid #E5E8EB',
-                                            borderRadius: '14px',
-                                            padding: '12px 16px',
+                                            display: 'grid',
+                                            gridTemplateColumns: 'repeat(2, minmax(0, 1fr))',
+                                            columnGap: '16px',
+                                            rowGap: '12px',
                                         }}
                                     >
-                                        <div
-                                            style={{
-                                                display: 'grid',
-                                                gridTemplateColumns: 'repeat(2, minmax(0, 1fr))',
-                                                columnGap: '16px',
-                                                rowGap: '12px',
-                                            }}
-                                        >
-                                            {summaryCells.map((cell, idx) => (
-                                                <div
-                                                    key={cell.label}
+                                        {summaryCells.map((cell, idx) => (
+                                            <div
+                                                key={cell.label}
+                                                style={{
+                                                    display: 'flex',
+                                                    flexDirection: 'column',
+                                                    gap: '3px',
+                                                    minWidth: 0,
+                                                    paddingTop: idx >= 2 ? '10px' : 0,
+                                                    borderTop: idx >= 2 ? '1px solid #F2F4F6' : 'none',
+                                                }}
+                                            >
+                                                <span
                                                     style={{
-                                                        display: 'flex',
-                                                        flexDirection: 'column',
-                                                        gap: '3px',
-                                                        minWidth: 0,
-                                                        paddingTop: idx >= 2 ? '10px' : 0,
-                                                        borderTop: idx >= 2 ? '1px solid #F2F4F6' : 'none',
+                                                        fontSize: '11.5px',
+                                                        color: '#8B95A1',
+                                                        fontWeight: 600,
+                                                        whiteSpace: 'nowrap',
+                                                        overflow: 'hidden',
+                                                        textOverflow: 'ellipsis',
                                                     }}
                                                 >
-                                                    <span
-                                                        style={{
-                                                            fontSize: '11.5px',
-                                                            color: '#8B95A1',
-                                                            fontWeight: 600,
-                                                            whiteSpace: 'nowrap',
-                                                            overflow: 'hidden',
-                                                            textOverflow: 'ellipsis',
-                                                        }}
-                                                    >
-                                                        {cell.label}
-                                                    </span>
-                                                    <span
-                                                        style={{
-                                                            fontSize: '13.5px',
-                                                            color: cell.accent === 'blue' ? '#2563EB' : cell.accent === 'green' ? '#059669' : '#191F28',
-                                                            fontWeight: 700,
-                                                            letterSpacing: '-0.3px',
-                                                            whiteSpace: 'nowrap',
-                                                            overflow: 'hidden',
-                                                            textOverflow: 'ellipsis',
-                                                        }}
-                                                    >
-                                                        {cell.value}
-                                                    </span>
-                                                </div>
-                                            ))}
-                                        </div>
-                                    </Box>
-                                );
-                            };
+                                                    {cell.label}
+                                                </span>
+                                                <span
+                                                    style={{
+                                                        fontSize: '13.5px',
+                                                        color: cell.accent === 'blue' ? '#2563EB' : cell.accent === 'green' ? '#059669' : '#191F28',
+                                                        fontWeight: 700,
+                                                        letterSpacing: '-0.3px',
+                                                        whiteSpace: 'nowrap',
+                                                        overflow: 'hidden',
+                                                        textOverflow: 'ellipsis',
+                                                    }}
+                                                >
+                                                    {cell.value}
+                                                </span>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </Box>
+                            );
 
                             if (displayItems.length > 0) {
                                 return (
@@ -2693,7 +2668,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                         </Box>
                                         {renderDerivedSummary()}
                                         <Text size="xs" c="#8B95A1" mt={8} style={{ fontSize: '11px' }}>
-                                            ※ 실제 비용은 선택 옵션에 따라 달라질 수 있습니다.
+                                            ※ 안치 단수·평형·석물 및 관리비 옵션에 따라 실제 비용은 달라질 수 있습니다.
                                         </Text>
                                     </Box>
                                 );
@@ -2715,6 +2690,10 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                             <span style={{ fontSize: '13px', fontWeight: 600, color: '#6B7684' }}>시설 직접 문의</span>
                                             <span style={{ fontSize: '16px', fontWeight: 800, color: '#4E5968' }}>가격문의</span>
                                         </Box>
+                                        {renderDerivedSummary()}
+                                        <Text size="xs" c="#8B95A1" mt={8} style={{ fontSize: '11px' }}>
+                                            ※ 안치 단수·평형·석물 및 관리비 옵션에 따라 실제 비용은 달라질 수 있습니다.
+                                        </Text>
                                     </Box>
                                 );
                             }
