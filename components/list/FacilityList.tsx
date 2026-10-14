@@ -1,7 +1,8 @@
 'use client';
 
-import { ActionIcon, Transition, Stack, Text, Box, ScrollArea, Center, Loader, Button, Checkbox } from '@mantine/core';
-import { ArrowUp } from 'lucide-react';
+import { ActionIcon, Affix, Transition, Stack, Text, Box, ScrollArea, Center, Loader, Button, Checkbox } from '@mantine/core';
+import { useWindowScroll, useMediaQuery } from '@mantine/hooks';
+import { ArrowUp, BookmarkCheck, Calculator, ChevronRight, ShieldCheck } from 'lucide-react';
 import { Facility } from '@/types';
 import FacilityCard from './FacilityCard';
 import { useState, useEffect, useRef, memo, useCallback } from 'react';
@@ -25,25 +26,41 @@ interface FacilityListItemProps {
     facility: Facility;
     isSelected: boolean;
     onSelect: (f: Facility) => void;
+    isCompared?: boolean;
+    onToggleCompare?: (facility: Facility, e: React.MouseEvent) => void;
 }
 
-const FacilityListItem = memo(function FacilityListItem({ facility, isSelected, onSelect }: FacilityListItemProps) {
+const FacilityListItem = memo(function FacilityListItem({
+    facility,
+    isSelected,
+    onSelect,
+    isCompared = false,
+    onToggleCompare,
+}: FacilityListItemProps) {
     const handleClick = useCallback(() => {
         onSelect(facility);
     }, [facility, onSelect]);
 
     return (
         <Box
+            className="facility-card-item"
             onClick={handleClick}
             style={{
                 cursor: 'pointer',
-                border: isSelected ? '2px solid #191F28' : '2px solid transparent',
-                borderRadius: '8px',
-                transition: 'border-color 0.15s ease',
+                padding: '14px 16px',
+                backgroundColor: isSelected ? '#F8FAFC' : '#FFFFFF',
+                borderBottom: '1px solid #F2F4F6',
+                borderLeft: isSelected ? '3px solid #191F28' : '3px solid transparent',
+                transition: 'background-color 0.15s ease, border-color 0.15s ease',
                 contain: 'content',
             }}
         >
-            <FacilityCard facility={facility} onClick={handleClick} />
+            <FacilityCard
+                facility={facility}
+                onClick={handleClick}
+                isCompared={isCompared}
+                onToggleCompare={onToggleCompare}
+            />
         </Box>
     );
 });
@@ -55,9 +72,12 @@ export default function FacilityList({
     selectedId,
     hideInquiry,
     setHideInquiry,
+    compareIds = [],
+    onToggleCompare,
 }: FacilityListProps) {
     const [visibleCount, setVisibleCount] = useState(20);
     const viewportRef = useRef<HTMLDivElement>(null);
+    const sentinelRef = useRef<HTMLDivElement>(null);
     const [scrollPosition, setScrollPosition] = useState({ y: 0 });
 
     const scrollToTop = () => {
@@ -70,24 +90,45 @@ export default function FacilityList({
         setVisibleCount(20);
     }, [facilities]);
 
-    const handleLoadMore = () => {
-        setVisibleCount((prev) => prev + 20);
-    };
+    const handleLoadMore = useCallback(() => {
+        setVisibleCount((prev) => Math.min(prev + 20, facilities.length));
+    }, [facilities.length]);
+
+    // 무한 스크롤 IntersectionObserver
+    useEffect(() => {
+        const el = sentinelRef.current;
+        if (!el || visibleCount >= facilities.length) return;
+        const observer = new IntersectionObserver(
+            (entries) => {
+                if (entries[0]?.isIntersecting) {
+                    handleLoadMore();
+                }
+            },
+            { root: viewportRef.current, rootMargin: '240px' }
+        );
+        observer.observe(el);
+        return () => observer.disconnect();
+    }, [visibleCount, facilities.length, handleLoadMore]);
 
     if (loading) {
         return (
-            <Center h="100%">
-                <Loader size="lg" color="dark" />
+            <Center h="100%" style={{ flex: 1, minHeight: 0 }}>
+                <Loader size="md" color="dark" />
             </Center>
         );
     }
 
     if (facilities.length === 0) {
         return (
-            <Center h="100%" px="md">
-                <Text c="dimmed" ta="center">
-                    현재 지도 범위 내에<br />시설이 없습니다.
-                </Text>
+            <Center h="100%" px="md" style={{ flex: 1, minHeight: 0 }}>
+                <Box ta="center">
+                    <Text c="#4E5968" fw={700} size="sm" mb={4}>
+                        조건에 맞는 시설이 없습니다
+                    </Text>
+                    <Text c="#8B95A1" size="xs">
+                        지도를 이동하거나 필터 조건을 변경해 보세요.
+                    </Text>
+                </Box>
             </Center>
         );
     }
@@ -95,50 +136,139 @@ export default function FacilityList({
     const visibleFacilities = facilities.slice(0, visibleCount);
 
     return (
-        <Box pos="relative" h="100%">
-            <ScrollArea h="100%" viewportRef={viewportRef} onScrollPositionChange={setScrollPosition} scrollbarSize={8} offsetScrollbars>
-                <Stack p="md" gap="md">
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                        <Text size="sm" c="dimmed" fw={500}>검색 결과 {facilities.length}개</Text>
+        <Box pos="relative" h="100%" bg="#FFFFFF" style={{ flex: 1, minHeight: 0 }}>
+            <ScrollArea h="100%" viewportRef={viewportRef} onScrollPositionChange={setScrollPosition} scrollbarSize={6} offsetScrollbars={false}>
+                <Stack p={0} gap={0}>
+                    <div
+                        style={{
+                            display: 'flex',
+                            justifyContent: 'space-between',
+                            alignItems: 'center',
+                            padding: '10px 16px',
+                            borderBottom: '1px solid #F2F4F6',
+                            backgroundColor: '#FFFFFF',
+                        }}
+                    >
+                        <Text size="xs" c="#6B7684" fw={600}>
+                            조회된 시설 <span style={{ color: '#191F28', fontWeight: 700 }}>{facilities.length.toLocaleString()}</span>곳
+                        </Text>
                         {setHideInquiry && (
                             <Checkbox
-                                label="문의시설 제외"
+                                label="가격문의 제외"
                                 checked={hideInquiry ?? false}
                                 onChange={() => setHideInquiry(!hideInquiry)}
                                 size="xs"
                                 color="dark"
-                                styles={{ label: { fontSize: '12px', cursor: 'pointer', color: '#868e96', paddingLeft: 6 }, input: { cursor: 'pointer' } }}
+                                styles={{
+                                    label: { fontSize: '12px', fontWeight: 600, cursor: 'pointer', color: '#4E5968', paddingLeft: 6 },
+                                    input: { cursor: 'pointer', borderRadius: '4px' },
+                                }}
                             />
                         )}
                     </div>
+
                     {visibleFacilities.map((fac) => (
                         <FacilityListItem
                             key={fac.id}
                             facility={fac}
                             isSelected={selectedId === fac.id}
                             onSelect={onFacilityClick}
+                            isCompared={compareIds.includes(fac.id)}
+                            onToggleCompare={onToggleCompare}
                         />
                     ))}
 
-                    {/* 더 보기 버튼 */}
+                    {/* 무한 스크롤 센티널 + 보조 더보기 버튼 */}
                     {visibleCount < facilities.length && (
-                        <Button
-                            variant="light"
-                            color="gray"
-                            fullWidth
-                            onClick={handleLoadMore}
-                            mt="md"
-                        >
-                            더 보기 ({Math.min(facilities.length - visibleCount, 20)}개)
-                        </Button>
+                        <Box ref={sentinelRef} px={16} pt={14}>
+                            <Button
+                                variant="light"
+                                color="gray"
+                                fullWidth
+                                radius="md"
+                                onClick={handleLoadMore}
+                                styles={{
+                                    root: {
+                                        backgroundColor: '#F2F4F6',
+                                        color: '#4E5968',
+                                        fontWeight: 700,
+                                        fontSize: '13px',
+                                        height: '42px',
+                                    },
+                                }}
+                            >
+                                시설 더보기 ({Math.min(facilities.length - visibleCount, 20)}곳)
+                            </Button>
+                        </Box>
                     )}
 
-                    {/* 하단 여백 */}
-                    <Box h={100} />
+                    {/* 하단 빠른 링크 & 제휴문의 푸터 */}
+                    <Box px={16} pt={20} pb={32}>
+                        <Box
+                            p={14}
+                            style={{
+                                backgroundColor: '#F8FAFC',
+                                borderRadius: 12,
+                                border: '1px solid #EEF1F5',
+                                textAlign: 'center',
+                            }}
+                        >
+                            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', flexWrap: 'wrap', gap: '8px', marginBottom: 8 }}>
+                                <a
+                                    href="/partnership"
+                                    style={{
+                                        padding: '6px 12px',
+                                        borderRadius: 8,
+                                        backgroundColor: '#FFFFFF',
+                                        border: '1px solid #E2E8F0',
+                                        color: '#191F28',
+                                        fontSize: 12,
+                                        fontWeight: 700,
+                                        textDecoration: 'none',
+                                    }}
+                                >
+                                    광고/제휴 문의
+                                </a>
+                                <a
+                                    href="/contact"
+                                    style={{
+                                        padding: '6px 12px',
+                                        borderRadius: 8,
+                                        backgroundColor: '#FFFFFF',
+                                        border: '1px solid #E2E8F0',
+                                        color: '#475569',
+                                        fontSize: 12,
+                                        fontWeight: 600,
+                                        textDecoration: 'none',
+                                    }}
+                                >
+                                    1:1 문의하기
+                                </a>
+                                <a
+                                    href="/about"
+                                    style={{
+                                        padding: '6px 12px',
+                                        borderRadius: 8,
+                                        backgroundColor: '#FFFFFF',
+                                        border: '1px solid #E2E8F0',
+                                        color: '#475569',
+                                        fontSize: 12,
+                                        fontWeight: 600,
+                                        textDecoration: 'none',
+                                    }}
+                                >
+                                    서비스 소개
+                                </a>
+                            </div>
+                            <Text size="11px" c="#94A3B8" fw={500}>
+                                대대손손 · 전국 추모시설 가격비교 플랫폼
+                            </Text>
+                        </Box>
+                    </Box>
                 </Stack>
             </ScrollArea>
 
-            <Transition transition="slide-up" mounted={scrollPosition.y > 100}>
+            <Transition transition="slide-up" mounted={scrollPosition.y > 160}>
                 {(transitionStyles) => (
                     <ActionIcon
                         style={{
@@ -151,7 +281,6 @@ export default function FacilityList({
                             boxShadow: '0 4px 14px rgba(15, 23, 42, 0.22)',
                         }}
                         variant="filled"
-                        color="dark"
                         size="lg"
                         radius="xl"
                         onClick={scrollToTop}
@@ -164,3 +293,4 @@ export default function FacilityList({
         </Box>
     );
 }
+

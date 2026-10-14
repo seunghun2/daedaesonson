@@ -9,6 +9,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import FacilityCard from '@/components/list/FacilityCard';
 import FacilityDetail from '@/components/detail/FacilityDetail';
 import BottomNav from '@/components/common/BottomNav';
+import ChatFloatingButton from '@/components/chatbot/ChatFloatingButton';
 import { Facility, FacilityCategory } from '@/types';
 
 // 거리 계산 함수 (Haversine formula)
@@ -55,15 +56,10 @@ function ListPageContent() {
 
     // 슬라이드 인 애니메이션
     const [mounted, setMounted] = useState(false);
-    const [animationDone, setAnimationDone] = useState(false);
 
     useEffect(() => {
-        const timer = setTimeout(() => setMounted(true), 20);
-        const doneTimer = setTimeout(() => setAnimationDone(true), 380);
-        return () => {
-            clearTimeout(timer);
-            clearTimeout(doneTimer);
-        };
+        const timer = setTimeout(() => setMounted(true), 50);
+        return () => clearTimeout(timer);
     }, []);
 
     // GA4: 리스트 페이지뷰
@@ -243,10 +239,8 @@ function ListPageContent() {
                 flexDirection: 'column',
                 borderLeft: !isMobile ? '1px solid #e9ecef' : 'none',
                 borderRight: !isMobile ? '1px solid #e9ecef' : 'none',
-                ...(animationDone ? {} : {
-                    transform: mounted ? 'translateX(0)' : 'translateX(100%)',
-                    transition: 'transform 0.35s cubic-bezier(0.4, 0, 0.2, 1)',
-                }),
+                transform: mounted ? 'translateX(0)' : 'translateX(100%)',
+                transition: 'transform 0.35s cubic-bezier(0.4, 0, 0.2, 1)',
             }}
         >
             {/* 상단 헤더 + 필터 바 통합 Sticky 컨테이너 */}
@@ -306,9 +300,9 @@ function ListPageContent() {
                             }}
                             style={{
                                 height: '32px', fontSize: '12.5px', fontWeight: 600,
-                                backgroundColor: activeCategory.includes('all') ? 'white' : '#f1f3f5',
-                                color: activeCategory.includes('all') ? '#495057' : '#191F28',
-                                border: activeCategory.includes('all') ? '1px solid #dee2e6' : '1.5px solid #191F28',
+                                backgroundColor: activeCategory.includes('all') ? 'white' : '#F2F4F6',
+                                color: activeCategory.includes('all') ? '#4E5968' : '#191F28',
+                                border: activeCategory.includes('all') ? '1px solid #E5E8EB' : '1.5px solid #191F28',
                                 borderRadius: '8px', cursor: 'pointer', transition: 'all 0.2s',
                                 paddingLeft: '12px', paddingRight: '8px', whiteSpace: 'nowrap',
                                 display: 'flex', alignItems: 'center', gap: '4px',
@@ -328,9 +322,9 @@ function ListPageContent() {
                             style={{
                                 height: '32px', fontSize: '12.5px',
                                 fontWeight: hideInquiry ? 700 : 500,
-                                backgroundColor: hideInquiry ? '#191F28' : 'white',
-                                color: hideInquiry ? '#ffffff' : '#495057',
-                                border: hideInquiry ? '1.5px solid #191F28' : '1px solid #dee2e6',
+                                backgroundColor: hideInquiry ? '#F2F4F6' : 'white',
+                                color: hideInquiry ? '#191F28' : '#4E5968',
+                                border: hideInquiry ? '1.5px solid #191F28' : '1px solid #E5E8EB',
                                 borderRadius: '8px', cursor: 'pointer', transition: 'all 0.2s',
                                 paddingLeft: '14px', paddingRight: '14px', whiteSpace: 'nowrap', flexShrink: 0,
                             }}
@@ -440,8 +434,8 @@ function ListPageContent() {
                 ) : (
                     <Stack p="md" gap="md">
                         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                            <Text size="sm" c="dimmed" fw={500}>
-                                검색 결과 {finalFacilities.length}개
+                            <Text size="sm" c="#6B7684" fw={600}>
+                                검색 결과 <span style={{ color: '#191F28', fontWeight: 700 }}>{finalFacilities.length}</span>개
                             </Text>
                             <Checkbox
                                 label="문의시설 제외"
@@ -517,6 +511,9 @@ function ListPageContent() {
                     </Box>
                 )
             }
+
+            {/* 플로팅 AI 챗봇 버튼 */}
+            {!selectedFacility && <ChatFloatingButton />}
 
             {/* 모바일 하단 네비게이션 */}
             {isMobile && !selectedFacility && <BottomNav />}
