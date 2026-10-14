@@ -118,27 +118,38 @@ export default function MenuPage() {
                             >
                                 <User size={26} color="#2563EB" strokeWidth={2} />
                             </Box>
-                            <Text size="md" fw={700} c="#191F28" mb={4} style={{ letterSpacing: '-0.3px' }}>
-                                로그인하면 더 많은 기능을 이용할 수 있어요
+                            <Text size="md" fw={800} c="#191F28" mb={4} style={{ letterSpacing: '-0.3px' }}>
+                                아이디·비밀번호 없는 3초 무료 가입
                             </Text>
-                            <Text size="xs" c="#6B7684" mb={18}>
-                                관심 시설 저장과 상담 문의 내역을 간편하게 관리해보세요
+                            <Text size="xs" c="#64748B" mb={16} style={{ lineHeight: 1.5 }}>
+                                카카오톡 또는 휴대폰 번호로 관심 시설을 저장하고<br />
+                                시설별 가격 비교와 상담 내역을 한눈에 관리해보세요
                             </Text>
                             <button
                                 onClick={() => setShowLogin(true)}
                                 style={{
-                                    backgroundColor: '#2563EB',
-                                    color: 'white',
+                                    width: '100%',
+                                    maxWidth: 320,
+                                    backgroundColor: '#FEE500',
+                                    color: '#191919',
                                     border: 'none',
-                                    borderRadius: 10,
-                                    padding: '12px 32px',
-                                    fontSize: 14,
-                                    fontWeight: 700,
+                                    borderRadius: 12,
+                                    padding: '13px 24px',
+                                    fontSize: 14.5,
+                                    fontWeight: 800,
                                     cursor: 'pointer',
-                                    transition: 'opacity 0.2s',
+                                    display: 'inline-flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                    gap: 8,
+                                    transition: 'all 0.2s',
+                                    boxShadow: '0 2px 8px rgba(254, 229, 0, 0.35)',
                                 }}
                             >
-                                로그인 하기
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="#191919">
+                                    <path d="M12 3C6.48 3 2 6.36 2 10.44c0 2.62 1.75 4.93 4.38 6.24l-1.12 4.1c-.1.36.31.65.63.44l4.84-3.22c.42.04.84.06 1.27.06 5.52 0 10-3.36 10-7.62C22 6.36 17.52 3 12 3z" />
+                                </svg>
+                                3초 무료 회원가입 · 로그인
                             </button>
                         </Box>
                     ) : (

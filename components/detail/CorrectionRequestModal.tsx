@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useRef } from 'react';
-import { Modal, Box, Text, Textarea, Button, Group, Stack, ActionIcon, Image, TextInput, ScrollArea } from '@mantine/core';
+import { Drawer, Box, Text, Textarea, Button, Group, Stack, ActionIcon, Image, TextInput, ScrollArea } from '@mantine/core';
 import { useMediaQuery } from '@mantine/hooks';
 import { AlertCircle, CheckCircle, X, Camera } from 'lucide-react';
 import { compressImageFile } from '@/lib/clientImageCompress';
@@ -128,45 +128,42 @@ export default function CorrectionRequestModal({ facilityId, facilityName, isOpe
     };
 
     return (
-        <Modal
+        <Drawer
             opened={isOpen}
             onClose={handleClose}
-            centered={!isMobile}
-            size={isMobile ? '100%' : 460}
+            position={isMobile ? 'bottom' : 'left'}
+            size={isMobile ? '92%' : 400}
             padding={0}
             withCloseButton={false}
             zIndex={10010}
-            transitionProps={{ duration: 150 }}
+            lockScroll={!!isMobile}
+            transitionProps={{ duration: isMobile ? 150 : 0 }}
             styles={{
-                inner: isMobile
-                    ? { padding: 0, alignItems: 'flex-end' }
-                    : { padding: '24px' },
+                overlay: {
+                    backgroundColor: isMobile ? 'rgba(0,0,0,0.5)' : 'transparent',
+                    pointerEvents: isMobile ? 'auto' : 'none',
+                },
                 content: isMobile
                     ? {
-                          width: '100%',
-                          maxWidth: '100%',
-                          margin: 0,
-                          borderRadius: '20px 20px 0 0',
-                          height: '88dvh',
-                          maxHeight: '88dvh',
+                          borderTopLeftRadius: 20,
+                          borderTopRightRadius: 20,
                           display: 'flex',
                           flexDirection: 'column',
                           overflow: 'hidden',
                       }
                     : {
-                          width: '460px',
-                          maxWidth: '94vw',
-                          borderRadius: 20,
-                          maxHeight: '86dvh',
+                          marginLeft: '400px',
+                          boxShadow: '4px 0 20px rgba(15, 23, 42, 0.12)',
+                          borderLeft: '1px solid #E5E8EB',
                           display: 'flex',
                           flexDirection: 'column',
                           overflow: 'hidden',
-                          boxShadow: '0 24px 60px rgba(15, 23, 42, 0.22)',
                       },
+                header: { display: 'none' },
                 body: {
                     padding: 0,
                     backgroundColor: '#FFFFFF',
-                    flex: 1,
+                    height: '100%',
                     display: 'flex',
                     flexDirection: 'column',
                     overflow: 'hidden',
@@ -377,6 +374,6 @@ export default function CorrectionRequestModal({ facilityId, facilityName, isOpe
                     </Box>
                 )}
             </Stack>
-        </Modal>
+        </Drawer>
     );
 }

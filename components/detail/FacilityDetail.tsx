@@ -1063,6 +1063,9 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
         setCorrectionOpen(false);
         setReviewsOpen(false);
         closeReviewModal();
+        if (consultModalOpenState) {
+            setConsultModalOpened(false);
+        }
     };
 
     // 대댓글 삭제 모달 상태
@@ -2802,7 +2805,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                             </Group>
                             <Text size="sm" c="#4E5968" style={{ fontSize: '13.5px', lineHeight: 1.5 }}>{facility.address}</Text>
 
-                            {/* 원탭 길찾기 버튼 (네이버 지도 / 카카오맵) */}
+                            {/* 원탭 길찾기 버튼 (네이버 지도 / 카카오맵 공식 브랜드 로고) */}
                             {facility.address && (
                                 <Group gap={8} mt={12} grow>
                                     <a
@@ -2813,18 +2816,22 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                             display: 'inline-flex',
                                             alignItems: 'center',
                                             justifyContent: 'center',
-                                            gap: 6,
-                                            height: 38,
+                                            gap: 8,
+                                            height: 42,
                                             borderRadius: 10,
-                                            backgroundColor: '#F8FAFC',
-                                            border: '1px solid #E2E8F0',
+                                            backgroundColor: '#FFFFFF',
+                                            border: '1px solid #CBD5E1',
                                             color: '#191F28',
-                                            fontSize: 12.5,
+                                            fontSize: 13,
                                             fontWeight: 700,
                                             textDecoration: 'none',
+                                            boxShadow: '0 1px 2px rgba(15, 23, 42, 0.03)',
                                         }}
                                     >
-                                        <span style={{ width: 7, height: 7, borderRadius: '50%', backgroundColor: '#03C75A', display: 'inline-block' }} />
+                                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" style={{ flexShrink: 0 }}>
+                                            <rect width="20" height="20" rx="5" fill="#03C75A" />
+                                            <path d="M11.35 10.25L8.45 6H6V14H8.65V9.75L11.55 14H14V6H11.35V10.25Z" fill="#FFFFFF" />
+                                        </svg>
                                         <span>네이버 지도 길찾기</span>
                                     </a>
                                     <a
@@ -2839,18 +2846,23 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                             display: 'inline-flex',
                                             alignItems: 'center',
                                             justifyContent: 'center',
-                                            gap: 6,
-                                            height: 38,
+                                            gap: 8,
+                                            height: 42,
                                             borderRadius: 10,
-                                            backgroundColor: '#F8FAFC',
-                                            border: '1px solid #E2E8F0',
+                                            backgroundColor: '#FFFFFF',
+                                            border: '1px solid #CBD5E1',
                                             color: '#191F28',
-                                            fontSize: 12.5,
+                                            fontSize: 13,
                                             fontWeight: 700,
                                             textDecoration: 'none',
+                                            boxShadow: '0 1px 2px rgba(15, 23, 42, 0.03)',
                                         }}
                                     >
-                                        <span style={{ width: 7, height: 7, borderRadius: '50%', backgroundColor: '#F59E0B', display: 'inline-block' }} />
+                                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" style={{ flexShrink: 0 }}>
+                                            <rect width="20" height="20" rx="5" fill="#FEE500" />
+                                            <path d="M10 3.8C7.13 3.8 4.8 6.06 4.8 8.85C4.8 12.45 10 16.5 10 16.5C10 16.5 15.2 12.45 15.2 8.85C15.2 6.06 12.87 3.8 10 3.8Z" fill="#1E6BFF" />
+                                            <circle cx="10" cy="8.7" r="2.2" fill="#FFFFFF" />
+                                        </svg>
                                         <span>카카오맵 길찾기</span>
                                     </a>
                                 </Group>
@@ -2930,7 +2942,12 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                     textAlign: 'center',
                                 }}
                                 onClick={() => {
-                                    setConsultModalOpened(true);
+                                    if (consultModalOpened) {
+                                        setConsultModalOpened(false);
+                                    } else {
+                                        closeAllPanels();
+                                        setConsultModalOpened(true);
+                                    }
                                     if ((window as any).gtag) {
                                         (window as any).gtag('event', '상담_신청_열기', {
                                             시설ID: facility.id,
@@ -3477,47 +3494,44 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                         <CorrectionRequestModal facilityId={facility.id} facilityName={facility.name} isOpen={correctionOpen} onClose={() => setCorrectionOpen(false)} />
                         <ReviewsPanel facility={facility} isOpen={reviewsOpen} onClose={() => setReviewsOpen(false)} onOpenWriteReview={() => { closeAllPanels(); openReviewModal(); }} />
 
-                        {/* 1:1 무료 상담 및 방문 답사 예약 모달 (PC: 중앙 모달 460px, 모바일: 바텀시트) */}
-                        <Modal
+                        {/* 1:1 무료 상담 및 방문 답사 예약 패널 (PC: 400px 우측 나란히 슬라이드, 모바일: 바텀시트) */}
+                        <Drawer
                             opened={consultModalOpened}
                             onClose={() => { setConsultModalOpened(false); setConsultStep(1); }}
-                            centered={!isMobile}
-                            size={isMobile ? '100%' : 460}
+                            position={isMobile ? 'bottom' : 'left'}
+                            size={isMobile ? '92%' : 400}
                             padding={0}
                             withCloseButton={false}
                             withinPortal
                             zIndex={10010}
-                            transitionProps={{ duration: 150 }}
+                            lockScroll={!!isMobile}
+                            transitionProps={{ duration: isMobile ? 150 : 0 }}
                             styles={{
-                                inner: isMobile
-                                    ? { padding: 0, alignItems: 'flex-end' }
-                                    : { padding: '24px' },
+                                overlay: {
+                                    backgroundColor: isMobile ? 'rgba(0,0,0,0.5)' : 'transparent',
+                                    pointerEvents: isMobile ? 'auto' : 'none',
+                                },
                                 content: isMobile
                                     ? {
-                                          width: '100%',
-                                          maxWidth: '100%',
-                                          margin: 0,
-                                          borderRadius: '20px 20px 0 0',
-                                          height: '90dvh',
-                                          maxHeight: '90dvh',
+                                          borderTopLeftRadius: 20,
+                                          borderTopRightRadius: 20,
                                           display: 'flex',
                                           flexDirection: 'column',
                                           overflow: 'hidden',
                                       }
                                     : {
-                                          width: '460px',
-                                          maxWidth: '94vw',
-                                          borderRadius: 20,
-                                          maxHeight: '88dvh',
+                                          marginLeft: '400px',
+                                          boxShadow: '4px 0 20px rgba(15, 23, 42, 0.12)',
+                                          borderLeft: '1px solid #E5E8EB',
                                           display: 'flex',
                                           flexDirection: 'column',
                                           overflow: 'hidden',
-                                          boxShadow: '0 24px 60px rgba(15, 23, 42, 0.22)',
                                       },
+                                header: { display: 'none' },
                                 body: {
                                     padding: 0,
                                     backgroundColor: '#FFFFFF',
-                                    flex: 1,
+                                    height: '100%',
                                     display: 'flex',
                                     flexDirection: 'column',
                                     overflow: 'hidden',
@@ -3931,7 +3945,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                     </>
                                 )}
                             </Stack>
-                        </Modal>
+                        </Drawer>
 
                         {/* Floating Button Removed */}
 
@@ -4285,40 +4299,40 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                 </Box>
                             )
                         }
-                        {/* 후기 작성 모달 (모던 반응형 폼) */}
-                        <Modal
+                        {/* 후기 작성 패널 (PC: 400px 우측 나란히 슬라이드, 모바일: 바텀시트) */}
+                        <Drawer
                             opened={reviewModalOpened}
                             onClose={closeReviewModal}
+                            position={isMobile ? 'bottom' : 'left'}
+                            size={isMobile ? '92%' : 400}
                             withCloseButton={false}
-                            size={isMobile ? '100%' : 460}
-                            centered={!isMobile}
                             zIndex={10010}
                             padding={0}
-                            radius={isMobile ? 0 : 20}
-                            transitionProps={{ transition: isMobile ? 'slide-up' : 'pop', duration: 200 }}
+                            lockScroll={!!isMobile}
+                            transitionProps={{ duration: isMobile ? 150 : 0 }}
                             styles={{
-                                inner: isMobile ? { padding: 0, alignItems: 'flex-end' } : {},
+                                overlay: {
+                                    backgroundColor: isMobile ? 'rgba(0,0,0,0.5)' : 'transparent',
+                                    pointerEvents: isMobile ? 'auto' : 'none',
+                                },
                                 content: isMobile ? {
                                     borderTopLeftRadius: 20,
                                     borderTopRightRadius: 20,
-                                    borderBottomLeftRadius: 0,
-                                    borderBottomRightRadius: 0,
-                                    maxHeight: '92dvh',
-                                    width: '100%',
-                                    margin: 0,
                                     display: 'flex',
                                     flexDirection: 'column',
                                     overflow: 'hidden',
                                 } : {
-                                    borderRadius: 20,
-                                    maxHeight: '88dvh',
+                                    marginLeft: '400px',
+                                    boxShadow: '4px 0 20px rgba(15, 23, 42, 0.12)',
+                                    borderLeft: '1px solid #E5E8EB',
                                     display: 'flex',
                                     flexDirection: 'column',
                                     overflow: 'hidden',
-                                    boxShadow: '0 20px 50px rgba(15, 23, 42, 0.18)',
                                 },
+                                header: { display: 'none' },
                                 body: {
                                     padding: 0,
+                                    height: '100%',
                                     display: 'flex',
                                     flexDirection: 'column',
                                     flex: 1,
@@ -4571,7 +4585,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                     이야기 등록하기
                                 </Button>
                             </Box>
-                        </Modal>
+                        </Drawer>
 
 
                         {/* 연락처 입력 모달 (등록 버튼 클릭 시) */}
@@ -5313,8 +5327,8 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                 )}
             </Box >
 
-            {/* ── 하단 고정 전화 & 상담 예약 도크 (PC: sticky 하단, 모바일: fixed 하단) ── */}
-            {!consultModalOpened && !inquiryOpen && !correctionOpen && !opened && (
+            {/* ── 하단 고정 전화 & 상담 예약 도크 (PC: sticky 하단 상시 고정, 모바일: fixed 하단) ── */}
+            {(!isMobile || (!consultModalOpened && !inquiryOpen && !correctionOpen)) && !opened && (
                 <div
                     className="touch-instant"
                     style={{

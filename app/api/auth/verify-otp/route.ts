@@ -76,16 +76,24 @@ export async function POST(request: NextRequest) {
         let userId: string = '';
 
         try {
-            // 기존 유저 확인 - Supabase JS admin client 사용
-            const { data: listData, error: listError } = await supabaseAdmin.auth.admin.listUsers({
-                perPage: 1000,
-            });
-
-            if (listError) {
-                console.error('[verify-otp] listUsers error:', listError.message);
+            // 기존 유저 확인 - 페이지네이션으로 1,000명 초과 시에도 누락 없이 조회
+            let existingUser: any = null;
+            let page = 1;
+            const perPage = 1000;
+            while (true) {
+                const { data: listData, error: listError } = await supabaseAdmin.auth.admin.listUsers({
+                    page,
+                    perPage,
+                });
+                if (listError) {
+                    console.error('[verify-otp] listUsers error:', listError.message);
+                    break;
+                }
+                const users = listData?.users || [];
+                existingUser = users.find((u: any) => u.email === email);
+                if (existingUser || users.length < perPage) break;
+                page += 1;
             }
-
-            const existingUser = listData?.users?.find((u: any) => u.email === email);
 
             if (existingUser) {
                 userId = existingUser.id;

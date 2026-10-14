@@ -168,10 +168,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         return () => subscription.unsubscribe();
     }, []);
 
-    // 카카오 로그인 — 카카오 직접 호출 (account_email 제외)
+    // 카카오 로그인 — 카카오 직접 호출 (account_email 제외) 및 현재 보던 페이지 복귀 지원
     const signInWithKakao = async () => {
         const state = crypto.randomUUID();
-        document.cookie = `oauth_state=${state}; path=/; max-age=300; SameSite=Lax`;
+        const returnTo = `${window.location.pathname}${window.location.search || ''}`;
+        document.cookie = `oauth_state=${state}; path=/; max-age=600; SameSite=Lax`;
+        document.cookie = `oauth_return_to=${encodeURIComponent(returnTo)}; path=/; max-age=600; SameSite=Lax`;
         const kakaoClientId = '7ab050573fb230302ee849167cc26762';
         const redirectUri = `${window.location.origin}/auth/callback`;
         const authUrl = `https://kauth.kakao.com/oauth/authorize?client_id=${kakaoClientId}&redirect_uri=${encodeURIComponent(redirectUri)}&response_type=code&state=${state}`;

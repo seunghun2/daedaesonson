@@ -8,11 +8,27 @@ export async function GET(request: NextRequest) {
     const origin = requestUrl.origin;
 
     const oauthStateCookie = request.cookies.get('oauth_state')?.value;
+    const rawReturnTo = request.cookies.get('oauth_return_to')?.value;
+    let returnToPath = '/';
+    if (rawReturnTo) {
+        try {
+            const decoded = decodeURIComponent(rawReturnTo);
+            if (decoded.startsWith('/') && !decoded.startsWith('//')) {
+                returnToPath = decoded;
+            }
+        } catch {
+            returnToPath = '/';
+        }
+    }
 
-    if (!oauthStateCookie || !state || state !== oauthStateCookie) {
+    // 쿠키가 존재하는데 state가 다르면 명백한 위조 요청으로 차단하되,
+    // 모바일 카카오톡 인앱/외부앱 전환 시 브라우저가 transient 쿠키를 유실한 경우(!oauthStateCookie && code && state)는
+    // 1회용 authorization code 검증(kauth.kakao.com/oauth/token)으로 안전하게 이어서 처리
+    if (!state || (oauthStateCookie && state !== oauthStateCookie)) {
         console.warn('[kakao] OAuth state mismatch:', { hasState: !!state, hasCookie: !!oauthStateCookie });
         const errorRes = NextResponse.redirect(new URL('/?login_error=csrf', origin));
         errorRes.cookies.delete('oauth_state');
+        errorRes.cookies.delete('oauth_return_to');
         return errorRes;
     }
 
@@ -69,19 +85,27 @@ export async function GET(request: NextRequest) {
                 auth: { autoRefreshToken: false, persistSession: false }
             });
 
-            // 3. 기존 유저 찾기 (Supabase JS admin)
+            // 3. 기존 유저 찾기 (페이지네이션으로 1,000명 초과 시에도 누락 없이 탐색)
             let userId: string = '';
 
             try {
-                const { data: listData, error: listError } = await supabaseAdmin.auth.admin.listUsers({
-                    perPage: 1000,
-                });
-
-                if (listError) {
-                    console.error('[kakao] listUsers error:', listError.message);
+                let existingUser: any = null;
+                let page = 1;
+                const perPage = 1000;
+                while (true) {
+                    const { data: listData, error: listError } = await supabaseAdmin.auth.admin.listUsers({
+                        page,
+                        perPage,
+                    });
+                    if (listError) {
+                        console.error('[kakao] listUsers error:', listError.message);
+                        break;
+                    }
+                    const users = listData?.users || [];
+                    existingUser = users.find((u: any) => u.email === email);
+                    if (existingUser || users.length < perPage) break;
+                    page += 1;
                 }
-
-                const existingUser = listData?.users?.find((u: any) => u.email === email);
 
                 if (existingUser) {
                     userId = existingUser.id;
@@ -154,9 +178,10 @@ export async function GET(request: NextRequest) {
                         refresh_token: signInData.session.refresh_token,
                     });
                     const encoded = Buffer.from(tokenPayload).toString('base64');
-                    const redirectRes = NextResponse.redirect(new URL('/', origin));
-                    // 상태 쿠키 삭제
+                    const redirectRes = NextResponse.redirect(new URL(returnToPath, origin));
+                    // 상태 및 복귀 쿠키 삭제
                     redirectRes.cookies.delete('oauth_state');
+                    redirectRes.cookies.delete('oauth_return_to');
                     redirectRes.cookies.set('kakao_session_transient', encoded, {
                         path: '/',
                         maxAge: 60,
@@ -176,5 +201,5 @@ export async function GET(request: NextRequest) {
         }
     }
 
-    return NextResponse.redirect(new URL('/', origin));
+    return NextResponse.redirect(new URL(returnToPath, origin));
 }

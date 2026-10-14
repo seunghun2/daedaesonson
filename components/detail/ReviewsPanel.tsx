@@ -1,6 +1,6 @@
 'use client';
 
-import { Modal, Box, Text, Group, Stack, ActionIcon, ScrollArea, TextInput, Textarea, Button, LoadingOverlay } from '@mantine/core';
+import { Modal, Drawer, Box, Text, Group, Stack, ActionIcon, ScrollArea, TextInput, Textarea, Button, LoadingOverlay } from '@mantine/core';
 import { useMediaQuery } from '@mantine/hooks';
 import { X, ChevronLeft, ChevronRight, User, MessageSquare, Camera, Star } from 'lucide-react';
 import { useState, useEffect, useRef } from 'react';
@@ -114,41 +114,39 @@ export default function ReviewsPanel({ facility, isOpen, onClose, onOpenWriteRev
 
     return (
         <>
-            <Modal
+            <Drawer
                 opened={isOpen}
                 onClose={onClose}
+                position={isMobile ? 'bottom' : 'left'}
+                size={isMobile ? '92%' : 400}
                 withCloseButton={false}
-                size={isMobile ? '100%' : 480}
-                centered={!isMobile}
                 zIndex={10010}
                 padding={0}
-                radius={isMobile ? 0 : 20}
-                transitionProps={{ transition: isMobile ? 'slide-up' : 'pop', duration: 200 }}
+                lockScroll={!!isMobile}
+                transitionProps={{ duration: isMobile ? 150 : 0 }}
                 styles={{
-                    inner: isMobile ? { padding: 0, alignItems: 'flex-end' } : {},
+                    overlay: {
+                        backgroundColor: isMobile ? 'rgba(0,0,0,0.5)' : 'transparent',
+                        pointerEvents: isMobile ? 'auto' : 'none',
+                    },
                     content: isMobile ? {
                         borderTopLeftRadius: 20,
                         borderTopRightRadius: 20,
-                        borderBottomLeftRadius: 0,
-                        borderBottomRightRadius: 0,
-                        height: '88dvh',
-                        maxHeight: '88dvh',
-                        width: '100%',
-                        margin: 0,
                         display: 'flex',
                         flexDirection: 'column',
                         overflow: 'hidden',
                     } : {
-                        borderRadius: 20,
-                        height: '82dvh',
-                        maxHeight: '82dvh',
+                        marginLeft: '400px',
+                        boxShadow: '4px 0 20px rgba(15, 23, 42, 0.12)',
+                        borderLeft: '1px solid #E5E8EB',
                         display: 'flex',
                         flexDirection: 'column',
                         overflow: 'hidden',
-                        boxShadow: '0 20px 50px rgba(15, 23, 42, 0.18)',
                     },
+                    header: { display: 'none' },
                     body: {
                         padding: 0,
+                        height: '100%',
                         display: 'flex',
                         flexDirection: 'column',
                         flex: 1,
@@ -386,7 +384,7 @@ export default function ReviewsPanel({ facility, isOpen, onClose, onOpenWriteRev
                         </Box>
                     )}
                 </Stack>
-            </Modal>
+            </Drawer>
 
             {/* 리뷰 삭제 모달 */}
             <Modal

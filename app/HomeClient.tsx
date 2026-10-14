@@ -1081,7 +1081,7 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
               )}
             </Box>
 
-            {/* 상단 헤더 로그인 / 내 정보 버튼 (PC 및 모바일 목록뷰) */}
+            {/* 상단 헤더 회원가입·로그인 / 내 정보 버튼 (PC 및 모바일 목록뷰) */}
             <button
               type="button"
               onClick={() => {
@@ -1102,19 +1102,20 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
                 height: 36,
                 padding: '0 11px',
                 borderRadius: 10,
-                backgroundColor: user ? '#EFF6FF' : '#F8FAFC',
-                border: user ? '1px solid #BFDBFE' : '1px solid #E2E8F0',
-                color: user ? '#2563EB' : '#334155',
-                fontSize: 12.5,
-                fontWeight: 700,
+                backgroundColor: '#EFF6FF',
+                border: '1px solid #BFDBFE',
+                color: '#1D4ED8',
+                fontSize: 12,
+                fontWeight: 800,
                 cursor: 'pointer',
                 flexShrink: 0,
                 whiteSpace: 'nowrap',
+                letterSpacing: '-0.2px',
               }}
-              title={user ? '내 정보 및 관심시설' : '간편 로그인'}
+              title={user ? '내 정보 및 관심시설' : '3초 무료 회원가입 · 로그인'}
             >
-              <User size={14} color={user ? '#2563EB' : '#64748B'} />
-              <span>{user ? (profile?.nickname || user.user_metadata?.full_name || '내정보').slice(0, 5) : '로그인'}</span>
+              <User size={13.5} color="#2563EB" />
+              <span>{user ? (profile?.nickname || user.user_metadata?.full_name || '내정보').slice(0, 5) : '회원가입·로그인'}</span>
             </button>
 
           </Group>
@@ -1335,8 +1336,9 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
                   </Text>
                 </Box>
 
-                {/* 모바일 상단 로그인 / 프로필 버튼 */}
+                {/* 모바일 상단 회원가입·로그인 / 프로필 버튼 */}
                 <button
+                  type="button"
                   onClick={() => {
                     if (user) {
                       router.push('/myinfo');
@@ -1349,21 +1351,22 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
                     alignItems: 'center',
                     justifyContent: 'center',
                     gap: 4,
-                    backgroundColor: '#F8FAFC',
-                    border: '1px solid #E2E8F0',
+                    backgroundColor: '#EFF6FF',
+                    border: '1px solid #BFDBFE',
                     borderRadius: 10,
                     height: 36,
                     padding: '0 10px',
-                    color: '#191F28',
-                    fontSize: 12,
-                    fontWeight: 700,
+                    color: '#1D4ED8',
+                    fontSize: 11.5,
+                    fontWeight: 800,
                     cursor: 'pointer',
                     flexShrink: 0,
                     whiteSpace: 'nowrap',
+                    letterSpacing: '-0.2px',
                   }}
                 >
-                  <User size={13} color="#4E5968" />
-                  <span>{user ? (user.user_metadata?.full_name || '마이') : '로그인'}</span>
+                  <User size={13} color="#2563EB" />
+                  <span>{user ? (profile?.nickname || user.user_metadata?.full_name || '마이').slice(0, 4) : '회원가입·로그인'}</span>
                 </button>
               </Group>
             </Box>

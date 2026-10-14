@@ -42,30 +42,31 @@ export default function UserButton({ variant = 'light' }: { variant?: 'light' | 
             <>
                 <button
                     onClick={() => setShowLogin(true)}
-                    aria-label="로그인"
+                    aria-label="회원가입 및 로그인"
+                    title="3초 무료 회원가입 · 로그인"
                     style={{
                         width: isDark ? 32 : 36,
                         height: isDark ? 32 : 36,
                         borderRadius: '50%',
-                        backgroundColor: isDark ? 'transparent' : '#f1f3f5',
-                        border: isDark ? '1.5px solid rgba(255,255,255,0.5)' : 'none',
+                        backgroundColor: isDark ? 'transparent' : '#F8FAFC',
+                        border: isDark ? '1.5px solid rgba(255,255,255,0.5)' : '1px solid #E2E8F0',
                         cursor: 'pointer',
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
-                        transition: 'background-color 0.2s',
+                        transition: 'all 0.2s',
                         flexShrink: 0,
                     }}
-                    onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = isDark ? 'rgba(255,255,255,0.15)' : '#e9ecef')}
-                    onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = isDark ? 'transparent' : '#f1f3f5')}
+                    onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = isDark ? 'rgba(255,255,255,0.15)' : '#EFF6FF')}
+                    onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = isDark ? 'transparent' : '#F8FAFC')}
                 >
                     <svg
-                        width={isDark ? 16 : 20}
-                        height={isDark ? 16 : 20}
+                        width={isDark ? 16 : 19}
+                        height={isDark ? 16 : 19}
                         viewBox="0 0 24 24"
                         fill="none"
-                        stroke={isDark ? 'white' : '#868e96'}
-                        strokeWidth="2"
+                        stroke={isDark ? 'white' : '#475569'}
+                        strokeWidth="2.2"
                         strokeLinecap="round"
                         strokeLinejoin="round"
                     >
@@ -90,13 +91,13 @@ export default function UserButton({ variant = 'light' }: { variant?: 'light' | 
                     width: 36,
                     height: 36,
                     borderRadius: '50%',
-                    border: showMenu ? '2px solid #5c3fbf' : '2px solid transparent',
+                    border: showMenu ? '2px solid #2563EB' : '2px solid transparent',
                     cursor: 'pointer',
                     overflow: 'hidden',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    backgroundColor: avatarUrl ? 'transparent' : '#5c3fbf',
+                    backgroundColor: avatarUrl ? 'transparent' : '#2563EB',
                     padding: 0,
                     transition: 'border-color 0.2s',
                 }}

@@ -40,12 +40,12 @@ export default function AuthCompletePage() {
             </Suspense>
             <div style={{ textAlign: 'center' }}>
                 <div style={{
-                    width: 40, height: 40, border: '3px solid #5c3fbf',
+                    width: 40, height: 40, border: '3px solid #2563EB',
                     borderTopColor: 'transparent', borderRadius: '50%',
                     animation: 'spin 0.8s linear infinite',
                     margin: '0 auto 16px',
                 }} />
-                <p style={{ color: '#495057', fontSize: 15 }}>로그인 처리 중...</p>
+                <p style={{ color: '#334155', fontSize: 15, fontWeight: 700 }}>카카오 로그인 연결 중...</p>
             </div>
             <style jsx global>{`
                 @keyframes spin { to { transform: rotate(360deg); } }
