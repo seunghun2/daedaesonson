@@ -2,13 +2,14 @@
 
 import React, { useEffect, useState } from 'react';
 import { Box, Text, Group, Modal, ScrollArea, Loader } from '@mantine/core';
-import { Scale, X, Check, Minus, MapPin, Phone, ArrowRight, Trash2, Info, Building2, UserCheck } from 'lucide-react';
+import { Scale, X, Check, Minus, MapPin, Phone, ArrowRight, Trash2, Info, Building2, UserCheck, BookmarkCheck } from 'lucide-react';
 import NextImage from 'next/image';
 import Link from 'next/link';
 import { Facility, FACILITY_CATEGORY_LABELS } from '@/types';
 import { formatKoreanCurrency } from '@/lib/format';
 import { getFacilityImageUrl } from '@/lib/supabaseImage';
 import { extractFacilityInsights, formatKoreanPrice } from '@/lib/derivedFacilityInsights';
+import { useAuth } from '@/components/auth/AuthProvider';
 
 interface CompareTrayProps {
     items: Facility[];
@@ -172,7 +173,7 @@ interface CompareModalProps {
     onRemove: (id: string) => void;
     onSelectFacility: (facility: Facility) => void;
     isLoggedIn?: boolean;
-    onRequestLogin?: () => void;
+    onRequestLogin?: (reason?: string) => void;
 }
 
 export default function CompareModal({
@@ -185,6 +186,7 @@ export default function CompareModal({
     isLoggedIn = false,
     onRequestLogin,
 }: CompareModalProps) {
+    const { favorites, addFavoritesBatch, queuePendingFavorites } = useAuth();
     // 상세 데이터(priceInfo, 편의시설, 이미지 등) 실시간 보강 캐시
     const [detailMap, setDetailMap] = useState<Record<string, Facility>>({});
     const [loadingDetails, setLoadingDetails] = useState(false);
@@ -331,6 +333,7 @@ export default function CompareModal({
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'space-between',
+                    gap: 10,
                 }}
             >
                 <Group gap={10}>
@@ -359,26 +362,71 @@ export default function CompareModal({
                         </Text>
                     </Box>
                 </Group>
-                <button
-                    type="button"
-                    onClick={onClose}
-                    aria-label="비교창 닫기"
-                    style={{
-                        width: 34,
-                        height: 34,
-                        borderRadius: 10,
-                        border: 'none',
-                        backgroundColor: '#F2F4F6',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        cursor: 'pointer',
-                        color: '#4E5968',
-                        outline: 'none',
-                    }}
-                >
-                    <X size={18} />
-                </button>
+                <Group gap={8} wrap="nowrap">
+                    {enrichedItems.length > 0 && (() => {
+                        const allSaved = isLoggedIn && enrichedItems.every(f => favorites.includes(String(f.id)));
+                        return (
+                            <button
+                                type="button"
+                                onClick={() => {
+                                    const ids = enrichedItems.map(f => String(f.id));
+                                    if (!isLoggedIn) {
+                                        queuePendingFavorites(ids);
+                                        onClose();
+                                        onRequestLogin?.(`비교 중인 장지 ${ids.length}곳을 내 관심장지 보관함에 한 번에 영구 저장합니다.`);
+                                    } else if (!allSaved) {
+                                        addFavoritesBatch(ids);
+                                    }
+                                }}
+                                style={{
+                                    height: 34,
+                                    padding: '0 12px',
+                                    borderRadius: 10,
+                                    border: allSaved ? '1px solid #A7F3D0' : '1px solid #BFDBFE',
+                                    backgroundColor: allSaved ? '#ECFDF5' : '#EFF6FF',
+                                    color: allSaved ? '#059669' : '#2563EB',
+                                    fontSize: 12,
+                                    fontWeight: 800,
+                                    cursor: allSaved ? 'default' : 'pointer',
+                                    display: 'inline-flex',
+                                    alignItems: 'center',
+                                    gap: 5,
+                                    whiteSpace: 'nowrap',
+                                    letterSpacing: '-0.2px',
+                                }}
+                            >
+                                <BookmarkCheck size={14} />
+                                <span>
+                                    {allSaved
+                                        ? `비교 ${enrichedItems.length}곳 보관됨`
+                                        : isLoggedIn
+                                            ? `비교 ${enrichedItems.length}곳 보관함에 저장`
+                                            : `비교 ${enrichedItems.length}곳 내 계정에 영구보관`}
+                                </span>
+                            </button>
+                        );
+                    })()}
+                    <button
+                        type="button"
+                        onClick={onClose}
+                        aria-label="비교창 닫기"
+                        style={{
+                            width: 34,
+                            height: 34,
+                            borderRadius: 10,
+                            border: 'none',
+                            backgroundColor: '#F2F4F6',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            cursor: 'pointer',
+                            color: '#4E5968',
+                            outline: 'none',
+                        }}
+                    >
+                        <X size={18} />
+                    </button>
+                </Group>
             </Box>
 
             <ScrollArea mah="80vh" type="auto">
@@ -872,26 +920,28 @@ export default function CompareModal({
                             <Group gap={8}>
                                 <UserCheck size={16} color="#2563EB" />
                                 <Text style={{ fontSize: 12.5, color: '#334155', fontWeight: 600 }}>
-                                    로그인하시면 관심 시설 저장 및 문의·상담 시 연락처 자동 입력을 이용하실 수 있습니다.
+                                    창을 닫으면 비교 리스트가 사라집니다. 3초 로그인하고 비교한 시설을 내 계정에 영구 보관하세요.
                                 </Text>
                                 <button
                                     type="button"
                                     onClick={() => {
+                                        const ids = enrichedItems.map(f => String(f.id));
+                                        if (ids.length > 0) queuePendingFavorites(ids);
                                         onClose();
-                                        onRequestLogin();
+                                        onRequestLogin(`비교하신 장지 ${ids.length}곳을 내 관심장지 보관함에 영구 저장합니다.`);
                                     }}
                                     style={{
-                                        padding: '5px 12px',
+                                        padding: '6px 12px',
                                         borderRadius: 8,
-                                        border: '1px solid #2563EB',
-                                        backgroundColor: '#EFF6FF',
-                                        color: '#2563EB',
+                                        border: 'none',
+                                        backgroundColor: '#2563EB',
+                                        color: '#FFFFFF',
                                         fontSize: 12,
                                         fontWeight: 700,
                                         cursor: 'pointer',
                                     }}
                                 >
-                                    3초 간편 로그인
+                                    3초 로그인하고 비교함 영구보관
                                 </button>
                             </Group>
                         ) : (

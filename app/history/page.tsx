@@ -1,13 +1,15 @@
 'use client';
 
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect } from 'react';
 import { Box, Text, Group, Stack, ActionIcon } from '@mantine/core';
 import { useRouter } from 'next/navigation';
-import { Clock, Trash2, ChevronLeft } from 'lucide-react';
+import { Clock, Trash2, ChevronLeft, BookmarkCheck } from 'lucide-react';
 import Image from 'next/image';
 import BottomNav from '@/components/common/BottomNav';
 import { FACILITY_CATEGORY_LABELS } from '@/types';
 import { getFacilityImageUrl } from '@/lib/supabaseImage';
+import { useAuth } from '@/components/auth/AuthProvider';
+import LoginModal from '@/components/auth/LoginModal';
 
 interface HistoryItem {
     id: string;
@@ -38,8 +40,10 @@ const formatPrice = (price: number): { text: string; hasPrice: boolean } => {
 
 export default function HistoryPage() {
     const router = useRouter();
+    const { user, favorites, addFavoritesBatch, queuePendingFavorites } = useAuth();
     const [history, setHistory] = useState<HistoryItem[]>([]);
     const [publicMap, setPublicMap] = useState<Record<string, boolean>>({});
+    const [loginOpen, setLoginOpen] = useState(false);
 
     useEffect(() => {
         const stored = localStorage.getItem('facilityHistory');
@@ -155,6 +159,65 @@ export default function HistoryPage() {
                     </Box>
                 ) : (
                     <Stack gap={10} p="md">
+                        {/* 내 계정에 영구 보관 배너 */}
+                        {(() => {
+                            const allSaved = !!user && history.every(h => favorites.includes(String(h.id)));
+                            return (
+                                <Box
+                                    p={14}
+                                    style={{
+                                        borderRadius: 14,
+                                        backgroundColor: allSaved ? '#ECFDF5' : '#EFF6FF',
+                                        border: allSaved ? '1px solid #A7F3D0' : '1px solid #BFDBFE',
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        justifyContent: 'space-between',
+                                        gap: 10,
+                                        flexWrap: 'wrap',
+                                    }}
+                                >
+                                    <div style={{ display: 'flex', alignItems: 'center', gap: 8, minWidth: 0, flex: 1 }}>
+                                        <BookmarkCheck size={18} color={allSaved ? '#059669' : '#2563EB'} style={{ flexShrink: 0 }} />
+                                        <span style={{ fontSize: 12.5, fontWeight: 700, color: allSaved ? '#065F46' : '#1E3A8A', lineHeight: 1.4 }}>
+                                            {allSaved
+                                                ? `최근 본 시설 ${history.length}곳이 내 관심장지 보관함에 모두 저장되어 있습니다.`
+                                                : user
+                                                    ? `최근 본 시설 ${history.length}곳을 내 관심장지 보관함에 한 번에 저장하세요.`
+                                                    : `최근 본 시설 ${history.length}곳은 브라우저를 닫으면 사라질 수 있어요. 내 계정에 영구 보관하세요.`}
+                                        </span>
+                                    </div>
+                                    {!allSaved && (
+                                        <button
+                                            type="button"
+                                            onClick={() => {
+                                                const ids = history.map(h => String(h.id));
+                                                if (!user) {
+                                                    queuePendingFavorites(ids);
+                                                    setLoginOpen(true);
+                                                } else {
+                                                    addFavoritesBatch(ids);
+                                                }
+                                            }}
+                                            style={{
+                                                padding: '7px 12px',
+                                                borderRadius: 9,
+                                                border: 'none',
+                                                backgroundColor: '#2563EB',
+                                                color: '#FFFFFF',
+                                                fontSize: 12,
+                                                fontWeight: 800,
+                                                cursor: 'pointer',
+                                                whiteSpace: 'nowrap',
+                                                flexShrink: 0,
+                                            }}
+                                        >
+                                            {user ? '관심장지에 모두 저장' : '3초 로그인하고 영구보관'}
+                                        </button>
+                                    )}
+                                </Box>
+                            );
+                        })()}
+
                         <Text size="xs" fw={700} c="#6B7684" px={2}>
                             전체 <span style={{ color: '#2563EB' }}>{history.length}</span>개
                         </Text>
@@ -342,6 +405,11 @@ export default function HistoryPage() {
 
             {/* 하단 탭바 */}
             <BottomNav historyCount={history.length} />
+            <LoginModal
+                isOpen={loginOpen}
+                onClose={() => setLoginOpen(false)}
+                reason={`최근 둘러보신 시설 ${history.length}곳을 내 관심장지 보관함에 한 번에 영구 저장합니다.`}
+            />
         </Box>
     );
 }

@@ -299,6 +299,7 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
   // UI 숨김 상태 (지도 탭 시 토글) - 호갱노노 스타일
   const [uiHidden, setUiHidden] = useState(false);
   const [showLoginFromMap, setShowLoginFromMap] = useState(false);
+  const [loginReason, setLoginReason] = useState<string | undefined>(undefined);
   const [showMyInfo, setShowMyInfo] = useState(false);
   const { user, profile, signOut, favorites, isFavorite, toggleFavorite } = useAuth();
 
@@ -1264,6 +1265,16 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
                 setHideInquiry={setHideInquiry}
                 compareIds={compareIds}
                 onToggleCompare={handleToggleCompare}
+                isLoggedIn={!!user}
+                favoritesCount={favorites.length}
+                onOpenLogin={(reason) => {
+                  setLoginReason(reason);
+                  setShowLoginFromMap(true);
+                }}
+                onOpenMyInfo={() => {
+                  setShowMyInfo(true);
+                  setSelectedFacility(null);
+                }}
               />
               {!isMobile && <BottomNav inline />}
             </Flex>
@@ -1698,17 +1709,26 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
           onMapTap={handleMapTap}
           onMapDrag={() => setSearchFocused(false)}
           uiHidden={uiHidden}
+          userButtonLabel={!isMobile ? (user ? `내 관심장지 ${favorites.length}` : '관심장지 보관함 · 로그인') : undefined}
           onUserClick={!isMobile ? () => {
             if (user) {
               setShowMyInfo(true);
               setSelectedFacility(null);
             } else {
+              setLoginReason('내 관심장지 보관함 및 15·30년 관리비 포함 총비용 리포트를 이용합니다.');
               setShowLoginFromMap(true);
             }
           } : undefined}
         />
         {/* PC: 로그인 모달 */}
-        <LoginModal isOpen={showLoginFromMap} onClose={() => setShowLoginFromMap(false)} />
+        <LoginModal
+          isOpen={showLoginFromMap}
+          onClose={() => {
+            setShowLoginFromMap(false);
+            setLoginReason(undefined);
+          }}
+          reason={loginReason}
+        />
       </Box>
 
       {/* PC: 주변 시설 보기 오버레이 패널 (지도 위 왼쪽) */}
@@ -2188,6 +2208,13 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
                 setHideInquiry={setHideInquiry}
                 compareIds={compareIds}
                 onToggleCompare={handleToggleCompare}
+                isLoggedIn={!!user}
+                favoritesCount={favorites.length}
+                onOpenLogin={(reason) => {
+                  setLoginReason(reason);
+                  setShowLoginFromMap(true);
+                }}
+                onOpenMyInfo={() => router.push('/myinfo')}
               />
             </div>
           )}
@@ -2220,7 +2247,10 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
           handleMarkerClick(fac);
         }}
         isLoggedIn={!!user}
-        onRequestLogin={() => setShowLoginFromMap(true)}
+        onRequestLogin={(reason) => {
+          setLoginReason(reason || `비교하신 시설 ${compareList.length}곳을 내 관심장지 보관함에 영구 저장합니다.`);
+          setShowLoginFromMap(true);
+        }}
       />
 
       {/* 모바일 하단 탭바 */}

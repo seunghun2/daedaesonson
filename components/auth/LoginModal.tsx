@@ -1,7 +1,7 @@
 'use client';
 
-import { useState } from 'react';
-import { X, ArrowLeft, Check, ShieldCheck } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { X, ArrowLeft, Check, ShieldCheck, BookmarkCheck, Calculator } from 'lucide-react';
 import { useAuth } from './AuthProvider';
 
 type LoginStep = 'main' | 'phone-input' | 'phone-verify';
@@ -9,16 +9,46 @@ type LoginStep = 'main' | 'phone-input' | 'phone-verify';
 interface LoginModalProps {
     isOpen: boolean;
     onClose: () => void;
+    reason?: string;
 }
 
-export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
-    const { signInWithKakao, signInWithPhone, verifyOtp } = useAuth();
+export default function LoginModal({ isOpen, onClose, reason }: LoginModalProps) {
+    const { signInWithKakao, signInWithPhone, verifyOtp, queuePendingFavorites } = useAuth();
     const [step, setStep] = useState<LoginStep>('main');
     const [phone, setPhone] = useState('');
     const [otp, setOtp] = useState('');
     const [error, setError] = useState<string | null>(null);
     const [loading, setLoading] = useState(false);
     const [kakaoLoading, setKakaoLoading] = useState(false);
+    const [sessionIds, setSessionIds] = useState<string[]>([]);
+
+    useEffect(() => {
+        if (!isOpen || typeof window === 'undefined') return;
+        try {
+            const ids = new Set<string>();
+            const rawCompare = sessionStorage.getItem('compare_facilities_v1');
+            if (rawCompare) {
+                const parsed = JSON.parse(rawCompare);
+                if (Array.isArray(parsed)) {
+                    parsed.forEach((f: any) => {
+                        if (f?.id) ids.add(String(f.id));
+                    });
+                }
+            }
+            const rawHistory = localStorage.getItem('facilityHistory');
+            if (rawHistory) {
+                const parsed = JSON.parse(rawHistory);
+                if (Array.isArray(parsed)) {
+                    parsed.slice(0, 5).forEach((h: any) => {
+                        if (h?.id) ids.add(String(h.id));
+                    });
+                }
+            }
+            setSessionIds(Array.from(ids));
+        } catch {
+            setSessionIds([]);
+        }
+    }, [isOpen]);
 
     if (!isOpen) return null;
 
@@ -48,6 +78,9 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
 
     const handleKakaoStart = async () => {
         if (kakaoLoading) return;
+        if (sessionIds.length > 0) {
+            queuePendingFavorites(sessionIds);
+        }
         setKakaoLoading(true);
         await signInWithKakao();
     };
@@ -58,6 +91,9 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
         if (!/^01[016789]\d{7,8}$/.test(clean)) {
             setError('010으로 시작하는 올바른 휴대폰 번호를 입력해주세요.');
             return;
+        }
+        if (sessionIds.length > 0) {
+            queuePendingFavorites(sessionIds);
         }
         setLoading(true);
         setError(null);
@@ -116,7 +152,7 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
                     borderRadius: 24,
                     padding: '28px 24px 24px',
                     width: 'calc(100% - 32px)',
-                    maxWidth: 410,
+                    maxWidth: 416,
                     maxHeight: '92dvh',
                     overflowY: 'auto',
                     zIndex: 10041,
@@ -180,7 +216,7 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
                             회원가입 및 로그인
                         </h2>
                         <p style={{
-                            margin: '0 0 16px 0',
+                            margin: '0 0 14px 0',
                             fontSize: 13.5,
                             color: '#64748B',
                             lineHeight: 1.5,
@@ -188,6 +224,43 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
                             처음 오셨어도 별도 가입 절차 없이 아래 버튼 하나로<br />
                             <strong style={{ color: '#191F28', fontWeight: 700 }}>무료 회원가입과 로그인이 동시에 완료</strong>됩니다.
                         </p>
+
+                        {/* 컨텍스트 맞춤형 혜택 / 자동 보관 알림 배너 */}
+                        {(reason || sessionIds.length > 0) && (
+                            <div style={{
+                                backgroundColor: '#EFF6FF',
+                                border: '1px solid #BFDBFE',
+                                borderRadius: 14,
+                                padding: '12px 14px',
+                                marginBottom: 12,
+                                display: 'flex',
+                                alignItems: 'flex-start',
+                                gap: 10,
+                            }}>
+                                <div style={{
+                                    width: 28,
+                                    height: 28,
+                                    borderRadius: 8,
+                                    backgroundColor: '#2563EB',
+                                    color: '#FFFFFF',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                    flexShrink: 0,
+                                    marginTop: 1,
+                                }}>
+                                    {reason?.includes('총비용') ? <Calculator size={15} /> : <BookmarkCheck size={15} />}
+                                </div>
+                                <div style={{ minWidth: 0 }}>
+                                    <div style={{ fontSize: 12, fontWeight: 800, color: '#1D4ED8', marginBottom: 2, letterSpacing: '-0.2px' }}>
+                                        {reason ? '3초 로그인 즉시 적용되는 혜택' : `방금 둘러본 시설 ${sessionIds.length}곳 자동 보관 준비됨`}
+                                    </div>
+                                    <div style={{ fontSize: 12.5, fontWeight: 600, color: '#1E3A8A', lineHeight: 1.45, letterSpacing: '-0.2px' }}>
+                                        {reason || `지금 시작하시면 둘러보신 시설 ${sessionIds.length}곳이 내 관심장지 보관함에 자동으로 영구 저장됩니다.`}
+                                    </div>
+                                </div>
+                            </div>
+                        )}
 
                         {/* 회원 전용 혜택 요약 박스 */}
                         <div style={{
@@ -201,9 +274,9 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
                             gap: 8,
                         }}>
                             {[
-                                '관심 장지 찜하기 · 시설 1:1 가격 비교함 저장',
-                                '시설 문의 · 무료 상담 신청 시 연락처 자동 입력',
-                                '내가 남긴 문의 답변 알림 · 방문 이야기 관리',
+                                '시설별 15년·30년 관리비 포함 실제 총비용 리포트 열람',
+                                '관심 장지 찜 보관함 · 1:1 비교표 기기 간 영구 동기화',
+                                '무료 답사·상담 신청 시 연락처 자동 입력 및 우대 안내',
                             ].map((benefit) => (
                                 <div key={benefit} style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
                                     <span style={{

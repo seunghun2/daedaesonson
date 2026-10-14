@@ -30,6 +30,8 @@ interface AuthContextType {
     signOut: () => Promise<void>;
     refreshProfile: () => Promise<void>;
     toggleFavorite: (facilityId: string) => Promise<void>;
+    addFavoritesBatch: (facilityIds: string[]) => Promise<void>;
+    queuePendingFavorites: (facilityIds: string[]) => void;
     favorites: string[];
     isFavorite: (facilityId: string) => boolean;
     needsTerms: boolean;
@@ -37,6 +39,8 @@ interface AuthContextType {
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
+
+const PENDING_FAVORITES_KEY = 'daedaesonson_pending_favorites';
 
 export function AuthProvider({ children }: { children: ReactNode }) {
     const [user, setUser] = useState<User | null>(null);
@@ -254,6 +258,45 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         }
     };
 
+    // 비로그인 상태에서 찜/비교함 영구보관 클릭 시 로그인 직후 자동 저장될 시설 ID 예약
+    const queuePendingFavorites = (facilityIds: string[]) => {
+        if (typeof window === 'undefined' || !facilityIds || facilityIds.length === 0) return;
+        try {
+            const existingRaw = localStorage.getItem(PENDING_FAVORITES_KEY);
+            const existing: string[] = existingRaw ? JSON.parse(existingRaw) : [];
+            const merged = Array.from(new Set([...existing, ...facilityIds.map(String)])).filter(Boolean);
+            localStorage.setItem(PENDING_FAVORITES_KEY, JSON.stringify(merged));
+        } catch {
+            // ignore storage errors
+        }
+    };
+
+    // 여러 관심 시설 한 번에 추가 (비교함·최근 본 시설 일괄 저장용)
+    const addFavoritesBatch = async (facilityIds: string[]) => {
+        if (!user || !session || !facilityIds || facilityIds.length === 0) return;
+        const cleanIds = Array.from(new Set(facilityIds.map(String))).filter(id => id && !favorites.includes(id));
+        if (cleanIds.length === 0) return;
+        setFavorites(prev => Array.from(new Set([...prev, ...cleanIds])));
+        try {
+            const { data: { session: fresh } } = await supabase.auth.getSession();
+            const token = fresh?.access_token || session.access_token;
+            await Promise.all(
+                cleanIds.map(facilityId =>
+                    fetch('/api/favorites', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${token}`,
+                        },
+                        body: JSON.stringify({ facilityId, action: 'add' }),
+                    })
+                )
+            );
+        } catch (e) {
+            console.error('addFavoritesBatch error:', e);
+        }
+    };
+
     // 관심 시설 토글 (Optimistic Update: 즉시 UI 반영 → 실패 시 롤백)
     const toggleFavorite = async (facilityId: string) => {
         if (!user || !session) return;
@@ -290,15 +333,49 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
     const isFavorite = (facilityId: string) => favorites.includes(String(facilityId));
 
-    // 관심 시설 목록 로드
+    // 관심 시설 목록 로드 + 비로그인 시 예약해둔 관심 시설 자동 동기화
     const loadFavorites = async (accessToken: string) => {
         try {
             const res = await fetch('/api/favorites', {
                 headers: { 'Authorization': `Bearer ${accessToken}` },
             });
             const data = await res.json();
-            if (data.favorites) {
-                setFavorites(Array.from(new Set(data.favorites.map((f: any) => String(f.facility_id)))));
+            const loadedIds: string[] = data.favorites
+                ? Array.from(new Set(data.favorites.map((f: any) => String(f.facility_id))))
+                : [];
+
+            let pendingIds: string[] = [];
+            if (typeof window !== 'undefined') {
+                try {
+                    const rawPending = localStorage.getItem(PENDING_FAVORITES_KEY);
+                    if (rawPending) {
+                        localStorage.removeItem(PENDING_FAVORITES_KEY);
+                        const parsed = JSON.parse(rawPending);
+                        if (Array.isArray(parsed)) {
+                            pendingIds = parsed.map(String).filter(id => id && !loadedIds.includes(id));
+                        }
+                    }
+                } catch {
+                    // ignore
+                }
+            }
+
+            const mergedIds = Array.from(new Set([...loadedIds, ...pendingIds]));
+            setFavorites(mergedIds);
+
+            if (pendingIds.length > 0) {
+                await Promise.all(
+                    pendingIds.map(facilityId =>
+                        fetch('/api/favorites', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Authorization': `Bearer ${accessToken}`,
+                            },
+                            body: JSON.stringify({ facilityId, action: 'add' }),
+                        }).catch(() => null)
+                    )
+                );
             }
         } catch (e) {
             console.error('loadFavorites error:', e);
@@ -349,6 +426,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
                 signOut,
                 refreshProfile,
                 toggleFavorite,
+                addFavoritesBatch,
+                queuePendingFavorites,
                 favorites,
                 isFavorite,
                 needsTerms,

@@ -1116,9 +1116,11 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
         photos: [] as string[],
     });
     const [showLoginForFavorite, setShowLoginForFavorite] = useState(false);
+    const [loginReason, setLoginReason] = useState<string | undefined>(undefined);
+    const [costSimYears, setCostSimYears] = useState<15 | 30>(15);
     const [favoriteToast, setFavoriteToast] = useState<string | null>(null);
     const [toastPanelRect, setToastPanelRect] = useState<{left: number; width: number; bottom: number} | null>(null);
-    const { user, profile, signInWithKakao, toggleFavorite, isFavorite } = useAuth();
+    const { user, profile, signInWithKakao, toggleFavorite, queuePendingFavorites, isFavorite } = useAuth();
     const isFavorited = isFavorite(String(facility.id));
     const [showAllInquiries, setShowAllInquiries] = useState(false);
     const [totalInquiryCount, setTotalInquiryCount] = useState(0);
@@ -1938,15 +1940,17 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                 </Group>
                             </Group>
 
-                            <Group gap={2} wrap="nowrap" style={{ flexShrink: 0 }}>
+                            <Group gap={4} wrap="nowrap" style={{ flexShrink: 0 }}>
                                 {/* 관심(찜) 버튼 */}
                                 <button
                                     type="button"
                                     data-testid="favorite-btn"
-                                    aria-label="관심 장소"
+                                    aria-label="관심장지 저장"
                                     className="touch-instant touch-press"
                                     onClick={() => {
                                         if (!user) {
+                                            queuePendingFavorites([String(facility.id)]);
+                                            setLoginReason(`로그인 즉시 [${facility.name}] 시설이 내 관심장지 보관함에 자동 저장됩니다.`);
                                             setShowLoginForFavorite(true);
                                             return;
                                         }
@@ -1958,7 +1962,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                         } else {
                                             setToastPanelRect(null);
                                         }
-                                        setFavoriteToast(willFavorite ? '관심 장소로 선택되었습니다' : '관심 장소에서 해제되었습니다');
+                                        setFavoriteToast(willFavorite ? '내 관심장지 보관함에 저장되었습니다' : '관심장지 보관함에서 해제되었습니다');
                                         setTimeout(() => setFavoriteToast(null), 2000);
                                         if (window.gtag) {
                                             window.gtag('event', '찜_토글', {
@@ -1972,16 +1976,19 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                         display: 'inline-flex',
                                         alignItems: 'center',
                                         gap: '4px',
-                                        height: '34px',
-                                        padding: '0 9px',
-                                        borderRadius: '8px',
-                                        backgroundColor: isFavorited ? '#FFFBEB' : 'transparent',
-                                        border: 'none',
+                                        height: '32px',
+                                        padding: '0 10px',
+                                        borderRadius: '999px',
+                                        backgroundColor: isFavorited ? '#FFFBEB' : '#EFF6FF',
+                                        border: isFavorited ? '1px solid #FDE68A' : '1px solid #BFDBFE',
                                         cursor: 'pointer',
                                     }}
                                 >
-                                    <Star size={18} fill={isFavorited ? '#F59E0B' : 'none'} color={isFavorited ? '#F59E0B' : '#4E5968'} />
-                                    <span style={{ fontSize: '13px', fontWeight: 700, color: isFavorited ? '#B45309' : '#4E5968' }}>
+                                    <Star size={14} fill={isFavorited ? '#F59E0B' : 'none'} color={isFavorited ? '#F59E0B' : '#2563EB'} />
+                                    <span style={{ fontSize: '12px', fontWeight: 800, color: isFavorited ? '#B45309' : '#1D4ED8', letterSpacing: '-0.2px' }}>
+                                        {isFavorited ? '찜완료' : '찜저장'}
+                                    </span>
+                                    <span style={{ fontSize: '11.5px', fontWeight: 700, color: isFavorited ? '#B45309' : '#2563EB' }}>
                                         {(facility.favoriteCount || 0) + (isFavorited ? 1 : 0)}
                                     </span>
                                 </button>
@@ -2700,6 +2707,226 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                     </Box>
                                 );
                             }
+                        })()}
+
+                        {/* 3-2. 15년 · 30년 누적 관리비 포함 실제 총비용 리포트 & 관심장지 보관 (회원 전용 혜택) */}
+                        {facility.category !== 'CREMATORIUM' && facility.category !== 'FUNERAL_HOME' && (() => {
+                            const rawMin = facility.representativePrice || facility.priceRange?.min || 0;
+                            const baseWon = rawMin > 0 ? (rawMin < 10000 ? rawMin * 10000 : rawMin) : 0;
+                            const derived = extractFacilityInsights(facility, baseWon);
+                            const exactAnnualMgmt = derived.annualManagementFee;
+                            const fallbackAnnualMgmt = facility.isPublic
+                                ? 40000
+                                : facility.category === 'CHARNEL_HOUSE'
+                                    ? 80000
+                                    : facility.category === 'NATURAL_BURIAL'
+                                        ? 100000
+                                        : 120000;
+                            const annualMgmtWon = exactAnnualMgmt && exactAnnualMgmt > 0 ? exactAnnualMgmt : fallbackAnnualMgmt;
+                            const mgmtBasisLabel = exactAnnualMgmt && exactAnnualMgmt > 0 ? '시설 고시 관리비 기준' : '동종 시설 평균 관리비 기준';
+                            const simMgmtTotal = annualMgmtWon * costSimYears;
+                            const simGrandTotal = baseWon > 0 ? baseWon + simMgmtTotal : 0;
+
+                            return (
+                                <Box px={16} py={16} bg="white" style={{ marginBottom: 8, borderBottom: '1px solid #F2F4F6' }}>
+                                    <Group justify="space-between" align="center" mb={10}>
+                                        <Group gap={6} align="center">
+                                            <Text fw={700} style={{ fontSize: '14px', color: '#191F28', letterSpacing: '-0.3px' }}>
+                                                15년 · 30년 관리비 포함 총비용 리포트
+                                            </Text>
+                                            <span
+                                                style={{
+                                                    fontSize: '10.5px',
+                                                    fontWeight: 800,
+                                                    padding: '2px 7px',
+                                                    borderRadius: '999px',
+                                                    backgroundColor: user ? '#ECFDF5' : '#EFF6FF',
+                                                    color: user ? '#059669' : '#2563EB',
+                                                    border: user ? '1px solid #A7F3D0' : '1px solid #BFDBFE',
+                                                    letterSpacing: '-0.2px',
+                                                }}
+                                            >
+                                                {user ? '회원 열람 중' : '회원 무료 혜택'}
+                                            </span>
+                                        </Group>
+                                        {user && (
+                                            <div
+                                                style={{
+                                                    display: 'inline-flex',
+                                                    backgroundColor: '#F1F5F9',
+                                                    borderRadius: 8,
+                                                    padding: 2,
+                                                }}
+                                            >
+                                                {([15, 30] as const).map((yr) => (
+                                                    <button
+                                                        key={yr}
+                                                        type="button"
+                                                        onClick={() => setCostSimYears(yr)}
+                                                        style={{
+                                                            border: 'none',
+                                                            borderRadius: 6,
+                                                            padding: '3px 9px',
+                                                            fontSize: 11.5,
+                                                            fontWeight: 700,
+                                                            cursor: 'pointer',
+                                                            backgroundColor: costSimYears === yr ? '#FFFFFF' : 'transparent',
+                                                            color: costSimYears === yr ? '#2563EB' : '#64748B',
+                                                            boxShadow: costSimYears === yr ? '0 1px 3px rgba(15,23,42,0.1)' : 'none',
+                                                        }}
+                                                    >
+                                                        {yr}년 기준
+                                                    </button>
+                                                ))}
+                                            </div>
+                                        )}
+                                    </Group>
+
+                                    {!user ? (
+                                        <div
+                                            style={{
+                                                borderRadius: 14,
+                                                border: '1px solid #BFDBFE',
+                                                background: 'linear-gradient(180deg, #F8FAFC 0%, #EFF6FF 100%)',
+                                                padding: '14px 15px',
+                                            }}
+                                        >
+                                            <div style={{ display: 'flex', flexDirection: 'column', gap: 8, marginBottom: 12 }}>
+                                                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: 13 }}>
+                                                    <span style={{ color: '#475569', fontWeight: 600 }}>초기 분양·안치 비용</span>
+                                                    <span style={{ color: '#191F28', fontWeight: 800 }}>
+                                                        {baseWon > 0 ? `${formatKoreanCurrency(baseWon)}~` : '시설 문의'}
+                                                    </span>
+                                                </div>
+                                                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: 13 }}>
+                                                    <span style={{ color: '#475569', fontWeight: 600 }}>15년 · 30년 누적 관리비 합산</span>
+                                                    <span style={{
+                                                        display: 'inline-flex',
+                                                        alignItems: 'center',
+                                                        gap: 4,
+                                                        fontSize: 12,
+                                                        fontWeight: 700,
+                                                        color: '#2563EB',
+                                                        backgroundColor: '#FFFFFF',
+                                                        padding: '2px 8px',
+                                                        borderRadius: 6,
+                                                        border: '1px solid #DBEAFE',
+                                                    }}>
+                                                        <Lock size={11} color="#2563EB" />
+                                                        <span>3초 로그인 시 즉시 공개</span>
+                                                    </span>
+                                                </div>
+                                            </div>
+
+                                            <div style={{ fontSize: 12, color: '#334155', lineHeight: 1.45, marginBottom: 12, fontWeight: 500 }}>
+                                                장지는 초기 분양가 외에 <strong style={{ color: '#191F28' }}>15년·30년 누적 관리비</strong>까지 합산해야 정확한 예산을 세울 수 있습니다. 무료 로그인으로 총비용 리포트를 열고 이 시설을 내 관심장지에 보관하세요.
+                                            </div>
+
+                                            <button
+                                                type="button"
+                                                data-testid="unlock-total-cost-btn"
+                                                onClick={() => {
+                                                    queuePendingFavorites([String(facility.id)]);
+                                                    setLoginReason(`[${facility.name}]의 15년·30년 관리비 포함 총비용 리포트를 열고 관심장지 보관함에 자동 저장합니다.`);
+                                                    setShowLoginForFavorite(true);
+                                                }}
+                                                style={{
+                                                    width: '100%',
+                                                    height: 42,
+                                                    borderRadius: 10,
+                                                    border: 'none',
+                                                    backgroundColor: '#2563EB',
+                                                    color: '#FFFFFF',
+                                                    fontSize: 13,
+                                                    fontWeight: 800,
+                                                    cursor: 'pointer',
+                                                    display: 'flex',
+                                                    alignItems: 'center',
+                                                    justifyContent: 'center',
+                                                    gap: 6,
+                                                    letterSpacing: '-0.2px',
+                                                    boxShadow: '0 4px 12px rgba(37, 99, 235, 0.24)',
+                                                }}
+                                            >
+                                                <Unlock size={14} />
+                                                <span>3초 로그인하고 15·30년 총비용 & 관심장지 저장</span>
+                                            </button>
+                                        </div>
+                                    ) : (
+                                        <div
+                                            style={{
+                                                borderRadius: 14,
+                                                border: '1px solid #DBEAFE',
+                                                backgroundColor: '#F8FAFC',
+                                                padding: '14px 16px',
+                                            }}
+                                        >
+                                            <div style={{ display: 'flex', flexDirection: 'column', gap: 9 }}>
+                                                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                                                    <span style={{ fontSize: 13, color: '#475569', fontWeight: 600 }}>초기 분양·안치 비용 (최저가 기준)</span>
+                                                    <span style={{ fontSize: 14, color: '#191F28', fontWeight: 700 }}>
+                                                        {baseWon > 0 ? `${formatKoreanCurrency(baseWon)}~` : '시설 별도 문의'}
+                                                    </span>
+                                                </div>
+                                                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                                                    <span style={{ fontSize: 13, color: '#475569', fontWeight: 600 }}>
+                                                        {costSimYears}년 누적 관리비 <span style={{ fontSize: 11, color: '#64748B', fontWeight: 500 }}>({mgmtBasisLabel})</span>
+                                                    </span>
+                                                    <span style={{ fontSize: 14, color: '#334155', fontWeight: 700 }}>
+                                                        약 {formatKoreanCurrency(simMgmtTotal)} (연 {formatKoreanCurrency(annualMgmtWon)})
+                                                    </span>
+                                                </div>
+                                                <div
+                                                    style={{
+                                                        borderTop: '1px dashed #CBD5E1',
+                                                        paddingTop: 10,
+                                                        marginTop: 2,
+                                                        display: 'flex',
+                                                        justifyContent: 'space-between',
+                                                        alignItems: 'center',
+                                                    }}
+                                                >
+                                                    <span style={{ fontSize: 13.5, color: '#191F28', fontWeight: 800 }}>
+                                                        {costSimYears}년 실납부 예상 총비용
+                                                    </span>
+                                                    <span style={{ fontSize: 17, color: '#2563EB', fontWeight: 800, letterSpacing: '-0.4px' }}>
+                                                        {simGrandTotal > 0 ? `약 ${formatKoreanCurrency(simGrandTotal)}~` : `관리비 약 ${formatKoreanCurrency(simMgmtTotal)} + 분양가`}
+                                                    </span>
+                                                </div>
+                                            </div>
+
+                                            <button
+                                                type="button"
+                                                onClick={() => {
+                                                    const willFavorite = !isFavorited;
+                                                    toggleFavorite(String(facility.id));
+                                                    setFavoriteToast(willFavorite ? '내 관심장지 보관함에 저장되었습니다' : '관심장지 보관함에서 해제되었습니다');
+                                                    setTimeout(() => setFavoriteToast(null), 2000);
+                                                }}
+                                                style={{
+                                                    marginTop: 12,
+                                                    width: '100%',
+                                                    height: 38,
+                                                    borderRadius: 10,
+                                                    border: isFavorited ? '1px solid #FDE68A' : '1px solid #BFDBFE',
+                                                    backgroundColor: isFavorited ? '#FFFBEB' : '#EFF6FF',
+                                                    color: isFavorited ? '#B45309' : '#1D4ED8',
+                                                    fontSize: 12.5,
+                                                    fontWeight: 800,
+                                                    cursor: 'pointer',
+                                                    display: 'flex',
+                                                    alignItems: 'center',
+                                                    justifyContent: 'center',
+                                                    gap: 6,
+                                                }}
+                                            >
+                                                <Star size={14} fill={isFavorited ? '#F59E0B' : 'none'} color={isFavorited ? '#F59E0B' : '#2563EB'} />
+                                                <span>{isFavorited ? '내 관심장지 보관함에 저장됨 (클릭 시 해제)' : '이 시설 내 관심장지 보관함에 저장하기'}</span>
+                                            </button>
+                                        </div>
+                                    )}
+                                </Box>
+                            );
                         })()}
 
                         {/* 4. 핵심 지표 (Highlight) */}
@@ -5422,7 +5649,14 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                 </div>
             )}
 
-            <LoginModal isOpen={showLoginForFavorite} onClose={() => setShowLoginForFavorite(false)} />
+            <LoginModal
+                isOpen={showLoginForFavorite}
+                onClose={() => {
+                    setShowLoginForFavorite(false);
+                    setLoginReason(undefined);
+                }}
+                reason={loginReason}
+            />
             {/* 즐겨찾기 토스트 - PC: 상세 패널 기준 하단 / 모바일: 뷰포트 기준 */}
             {favoriteToast && (
                 <div style={{

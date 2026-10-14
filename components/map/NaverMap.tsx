@@ -33,6 +33,7 @@ interface NaverMapProps {
     institutionFilter?: 'all' | 'public' | 'private'; // 공설/사설 필터
     hideInquiry?: boolean; // 문의제외 필터
     onUserClick?: () => void; // 사용자 버튼 클릭 콜백
+    userButtonLabel?: string; // 우측 상단 사용자 버튼 텍스트 라벨
     selectedId?: string | null; // 현재 선택된 시설 ID (활성 마커 강조용)
 }
 
@@ -107,7 +108,7 @@ const REGION_MAPPINGS: { [key: string]: string[] } = {
 // 좌표별 시설 ID 등록부 (전역 유지 - 필터링되어도 위치 고정)
 const LAYOUT_REGISTRY = new Map<string, string[]>();
 
-const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerClick, onBoundsChanged, onCenterAddressChange, isMobile, onViewList, onMapTap, onMapDrag, uiHidden, activeCategory = ['all'], institutionFilter = 'all', hideInquiry = true, onUserClick, selectedId = null }, ref) => {
+const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerClick, onBoundsChanged, onCenterAddressChange, isMobile, onViewList, onMapTap, onMapDrag, uiHidden, activeCategory = ['all'], institutionFilter = 'all', hideInquiry = true, onUserClick, userButtonLabel, selectedId = null }, ref) => {
     const mapRef = useRef<HTMLDivElement>(null);
     const [isMapLoaded, setIsMapLoaded] = useState(false);
     const [isMainLoaded, setIsMainLoaded] = useState(false);
@@ -1625,16 +1626,40 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
                         zIndex: 100,
                         display: 'flex',
                         flexDirection: 'column',
+                        alignItems: 'flex-end',
                         gap: '8px',
                         transform: uiHidden ? 'translateX(100px)' : 'translateX(0)',
                         transition: 'transform 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
                     }}>
-                        {/* 0. 내 정보 (PC만) */}
+                        {/* 0. 내 정보 / 관심장지 보관함 버튼 (PC만) */}
                         {onUserClick && (
-                            <CustomControlBtn
-                                icon={<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#191F28" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>}
+                            <button
+                                type="button"
                                 onClick={onUserClick}
-                            />
+                                aria-label={userButtonLabel || '내 정보 및 로그인'}
+                                style={{
+                                    height: '38px',
+                                    padding: userButtonLabel ? '0 13px' : '0 9px',
+                                    backgroundColor: 'rgba(255, 255, 255, 0.97)',
+                                    backdropFilter: 'blur(8px)',
+                                    borderRadius: '999px',
+                                    border: '1px solid #BFDBFE',
+                                    display: 'inline-flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                    gap: '6px',
+                                    cursor: 'pointer',
+                                    boxShadow: '0 2px 10px rgba(15, 23, 42, 0.12)',
+                                    color: '#1D4ED8',
+                                    fontSize: '12.5px',
+                                    fontWeight: 800,
+                                    letterSpacing: '-0.2px',
+                                    whiteSpace: 'nowrap',
+                                }}
+                            >
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2563EB" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                                {userButtonLabel && <span>{userButtonLabel}</span>}
+                            </button>
                         )}
                         {/* 1. 줌 컨트롤 그룹 */}
                         <div style={{
