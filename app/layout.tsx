@@ -47,16 +47,16 @@ export const metadata: Metadata = {
 const theme = createTheme({
   colors: {
     brand: [
-      '#EFF6FF',
-      '#DBEAFE',
-      '#BFDBFE',
-      '#93C5FD',
-      '#60A5FA',
-      '#3B82F6',
-      '#2563EB',
-      '#1D4ED8',
-      '#1E40AF',
-      '#1E3A8A'
+      '#f8f9fa',
+      '#f1f3f5',
+      '#e9ecef',
+      '#dee2e6',
+      '#ced4da',
+      '#495057',
+      '#191F28',
+      '#141920',
+      '#10141a',
+      '#0b0e12'
     ],
   },
   primaryColor: 'brand',

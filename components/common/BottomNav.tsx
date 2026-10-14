@@ -11,9 +11,9 @@ interface BottomNavProps {
     inline?: boolean;
 }
 
-// 호갱노노/네이버부동산 스타일 아이콘: 비활성=#9CA3AF, 활성=#2563EB
+// 호갱노노/네이버부동산 스타일 아이콘: 비활성=#9CA3AF, 활성=#191F28
 function HomeIcon({ active }: { active: boolean }) {
-    const color = active ? '#2563EB' : '#9CA3AF';
+    const color = active ? '#191F28' : '#9CA3AF';
     return (
         <svg width="21" height="21" viewBox="0 0 24 24">
             <path d="M12 3L4 9v12h5v-7h6v7h5V9L12 3z" fill={color} />
@@ -22,7 +22,7 @@ function HomeIcon({ active }: { active: boolean }) {
 }
 
 function InquiryIcon({ active }: { active: boolean }) {
-    const color = active ? '#2563EB' : '#9CA3AF';
+    const color = active ? '#191F28' : '#9CA3AF';
     return (
         <svg width="21" height="21" viewBox="0 0 24 24">
             <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" fill={color} />
@@ -31,7 +31,7 @@ function InquiryIcon({ active }: { active: boolean }) {
 }
 
 function HistoryIcon({ active }: { active: boolean }) {
-    const color = active ? '#2563EB' : '#9CA3AF';
+    const color = active ? '#191F28' : '#9CA3AF';
     return (
         <svg width="21" height="21" viewBox="0 0 24 24">
             <circle cx="12" cy="12" r="10" fill={color} />
@@ -41,7 +41,7 @@ function HistoryIcon({ active }: { active: boolean }) {
 }
 
 function MenuIcon({ active }: { active: boolean }) {
-    const color = active ? '#2563EB' : '#9CA3AF';
+    const color = active ? '#191F28' : '#9CA3AF';
     return (
         <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
             <line x1="4" y1="6" x2="20" y2="6" />
@@ -154,7 +154,7 @@ export default function BottomNav({ historyCount = 0, hidden = false, inline = f
                                     style={{
                                         fontSize: 11.5,
                                         fontWeight: isActive ? 700 : 500,
-                                        color: isActive ? '#2563EB' : '#6B7684',
+                                        color: isActive ? '#191F28' : '#6B7684',
                                         lineHeight: 1,
                                         letterSpacing: '-0.02em',
                                     }}
