@@ -120,11 +120,11 @@ function FacilityCardComponent({ facility, onClick, isCompared = false, onToggle
     }, [facility.thumbnail, facility.imageUrl, facility.images, facility.imageGallery]);
 
     const categoryBadgePalette: Record<string, { bg: string; text: string }> = {
-        CHARNEL_HOUSE: { bg: '#EFF6FF', text: '#1D4ED8' },
-        NATURAL_BURIAL: { bg: '#ECFDF5', text: '#047857' },
-        FAMILY_GRAVE: { bg: '#F5F3FF', text: '#6D28D9' },
-        CREMATORIUM: { bg: '#FFFBEB', text: '#B45309' },
-        FUNERAL_HOME: { bg: '#F1F5F9', text: '#334155' },
+        CHARNEL_HOUSE: { bg: '#F2F4F6', text: '#333D4B' },
+        NATURAL_BURIAL: { bg: '#F2F4F6', text: '#333D4B' },
+        FAMILY_GRAVE: { bg: '#F2F4F6', text: '#333D4B' },
+        CREMATORIUM: { bg: '#F2F4F6', text: '#333D4B' },
+        FUNERAL_HOME: { bg: '#F2F4F6', text: '#333D4B' },
         OTHER: { bg: '#F2F4F6', text: '#4E5968' },
     };
     const catColors = categoryBadgePalette[facility.category] || categoryBadgePalette.OTHER;

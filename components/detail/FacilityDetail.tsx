@@ -249,9 +249,7 @@ function PriceInfoSection({ priceInfo, hasPrice, facilityName, websiteUrl }: { p
                                 {formatName(row.name)}
                             </Text>
                             {row.residency && row.residency !== 'ALL' && (
-                                <Badge size="xs" variant="light"
-                                    color={row.residency === 'LOCAL' || row.residency === 'RESIDENT' ? 'blue' : row.residency === 'VETERAN' ? 'teal' : 'gray'}
-                                >
+                                <Badge size="xs" variant="light" color="gray">
                                     {row.residency === 'LOCAL' || row.residency === 'RESIDENT' ? '관내' : row.residency === 'NON_LOCAL' || row.residency === 'NON_RESIDENT' ? '관외' : '유공자'}
                                 </Badge>
                             )}
@@ -2169,8 +2167,8 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                     style={{
                                         display: 'inline-flex',
                                         alignItems: 'center',
-                                        color: '#1D4ED8',
-                                        backgroundColor: '#EFF6FF',
+                                        color: '#333D4B',
+                                        backgroundColor: '#F2F4F6',
                                         fontSize: '12px',
                                         fontWeight: 700,
                                         height: '24px',
@@ -2464,16 +2462,16 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                 if (!avgWon) return null;
                                 const diffPct = Math.round(((minWon - avgWon) / avgWon) * 100);
                                 if (diffPct <= -5) {
-                                    return { label: `${shortRegion} 평균 대비 ${Math.abs(diffPct)}% 저렴`, bg: '#ECFDF5', color: '#059669', border: '#A7F3D0' };
+                                    return { label: `${shortRegion} 평균 대비 ${Math.abs(diffPct)}% 저렴`, bg: '#F2F4F6', color: '#333D4B', border: '#E5E8EB' };
                                 }
                                 if (diffPct <= 15) {
-                                    return { label: `${shortRegion} 평균 가격대`, bg: '#EFF6FF', color: '#2563EB', border: '#BFDBFE' };
+                                    return { label: `${shortRegion} 평균 가격대`, bg: '#F2F4F6', color: '#333D4B', border: '#E5E8EB' };
                                 }
                                 const roundedAvgMan = Math.round(avgWon / 100000) * 10;
-                                return { label: `${shortRegion} 평균 ${roundedAvgMan.toLocaleString()}만원`, bg: '#F8FAFC', color: '#475569', border: '#E2E8F0' };
+                                return { label: `${shortRegion} 평균 ${roundedAvgMan.toLocaleString()}만원`, bg: '#F2F4F6', color: '#4E5968', border: '#E5E8EB' };
                             })();
 
-                            // 모든 시설 상세페이지에서 레이아웃·항목 수가 절대 흔들리지 않도록 2x2 고정 스펙 그리드 적용
+                            // 모든 시설 상세페이지에서 레이아웃·항목 수가 절대 흔들리지 않도록 2x2 고정 스펙 그리드 적용 (컬러 검정 계열 통일)
                             const defaultCapacityLabel =
                                 facility.category === 'CHARNEL_HOUSE'
                                     ? '개인 · 부부단'
@@ -2483,11 +2481,10 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                             ? '단장 · 합장 · 가족묘'
                                             : '개인 · 부부 · 가족형';
 
-                            const summaryCells: { label: string; value: string; accent?: 'blue' | 'green' }[] = [
+                            const summaryCells: { label: string; value: string }[] = [
                                 {
                                     label: '계약·사용기간',
                                     value: facility.isPublic ? '15~30년 (조례 기준)' : '영구안치 (기본)',
-                                    accent: 'green',
                                 },
                                 {
                                     label: '가능 안치형태',
@@ -2500,7 +2497,6 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                 {
                                     label: '운영·관리 구분',
                                     value: facility.isPublic ? '지자체 공설 운영' : '재단·법인 상시관리',
-                                    accent: 'blue',
                                 },
                             ];
 
@@ -2549,7 +2545,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                                 <span
                                                     style={{
                                                         fontSize: '13.5px',
-                                                        color: cell.accent === 'blue' ? '#2563EB' : cell.accent === 'green' ? '#059669' : '#191F28',
+                                                        color: '#191F28',
                                                         fontWeight: 700,
                                                         letterSpacing: '-0.3px',
                                                         whiteSpace: 'nowrap',
