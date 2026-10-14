@@ -1,11 +1,6 @@
 import { MetadataRoute } from 'next';
-import fs from 'fs';
-import path from 'path';
-import { createClient } from '@supabase/supabase-js';
+import { getSupabaseServer } from '@/lib/supabaseServer';
 import { loadFacilitiesJson } from '@/lib/facilityDataLoader';
-
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://jbydmhfuqnpukfutvrgs.supabase.co';
-const supabaseKey = process.env.SUPABASE_SERVICE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || '';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     const baseUrl = 'https://daedaesonson.com';
@@ -31,6 +26,18 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
             priority: 0.8,
         },
         {
+            url: `${baseUrl}/partnership`,
+            lastModified: new Date(),
+            changeFrequency: 'monthly' as const,
+            priority: 0.75,
+        },
+        {
+            url: `${baseUrl}/contact`,
+            lastModified: new Date(),
+            changeFrequency: 'monthly' as const,
+            priority: 0.6,
+        },
+        {
             url: `${baseUrl}/privacy`,
             lastModified: new Date(),
             changeFrequency: 'yearly' as const,
@@ -46,19 +53,19 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
             url: `${baseUrl}/faq`,
             lastModified: new Date(),
             changeFrequency: 'monthly' as const,
-            priority: 0.5,
+            priority: 0.65,
         },
         {
             url: `${baseUrl}/inquiries`,
             lastModified: new Date(),
             changeFrequency: 'daily' as const,
-            priority: 0.7,
+            priority: 0.75,
         },
         {
             url: `${baseUrl}/glossary`,
             lastModified: new Date(),
             changeFrequency: 'weekly' as const,
-            priority: 0.8,
+            priority: 0.85,
         },
     ];
 
@@ -72,7 +79,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         url: `${baseUrl}/glossary/${slug}`,
         lastModified: new Date(),
         changeFrequency: 'monthly' as const,
-        priority: 0.75,
+        priority: 0.8,
     }));
 
     // 지역별 랜딩페이지 (프로그래매틱 SEO)
@@ -180,10 +187,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     ];
 
     try {
-        const supabase = createClient(supabaseUrl, supabaseKey);
+        const supabase = getSupabaseServer();
         const { data: posts } = await supabase
             .from('blog_posts')
-            .select('slug, updated_at')
+            .select('slug, updated_at, created_at')
             .eq('is_published', true)
             .order('created_at', { ascending: false });
 
@@ -191,9 +198,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
             posts.forEach(post => {
                 blogPages.push({
                     url: `${baseUrl}/blog/${encodeURIComponent(post.slug)}`,
-                    lastModified: new Date(post.updated_at),
+                    lastModified: new Date(post.updated_at || post.created_at),
                     changeFrequency: 'weekly' as const,
-                    priority: 0.85,
+                    priority: 0.9,
                 });
             });
         }

@@ -25,8 +25,8 @@ export default async function GuideDetailPage({ params }: PageProps) {
         notFound();
     }
 
-    // 관련 글 가져오기
-    const { data: relatedData } = await supabase
+    // 관련 글 가져오기 (같은 카테고리 우선 + 부족 시 최신 글 보충하여 항상 3개 확보)
+    const { data: sameCategoryData } = await supabase
         .from('blog_posts')
         .select('id, title, slug, category, excerpt, thumbnail_url, author, tags, view_count, created_at')
         .eq('is_published', true)
@@ -34,6 +34,50 @@ export default async function GuideDetailPage({ params }: PageProps) {
         .neq('slug', slug)
         .order('created_at', { ascending: false })
         .limit(3);
+
+    let relatedPosts = sameCategoryData || [];
+    if (relatedPosts.length < 3) {
+        const excludeSlugs = [slug, ...relatedPosts.map((p: any) => p.slug)];
+        const { data: fallbackData } = await supabase
+            .from('blog_posts')
+            .select('id, title, slug, category, excerpt, thumbnail_url, author, tags, view_count, created_at')
+            .eq('is_published', true)
+            .not('slug', 'in', `(${excludeSlugs.map(s => `"${s}"`).join(',')})`)
+            .order('created_at', { ascending: false })
+            .limit(3 - relatedPosts.length);
+        if (fallbackData) {
+            relatedPosts = [...relatedPosts, ...fallbackData];
+        }
+    }
+
+    // 본문 텍스트 길이 및 Q&A 추출 (Google FAQPage 리치 스니펫 & AI Overview 최적화)
+    const plainText = (post.content || '').replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
+    const wordCount = plainText.split(' ').filter(Boolean).length;
+
+    const extractedFaqs: { question: string; answer: string }[] = [];
+    const qaRegex = /<p>\s*<strong>\s*Q\.\s*([\s\S]*?)<\/strong>\s*(?:<br\s*\/?>)?\s*(?:A\.\s*)?([\s\S]*?)<\/p>/gi;
+    let match: RegExpExecArray | null;
+    while ((match = qaRegex.exec(post.content || '')) !== null) {
+        const q = match[1].replace(/<[^>]+>/g, '').trim();
+        const a = match[2].replace(/<[^>]+>/g, '').trim();
+        if (q && a) {
+            extractedFaqs.push({ question: q, answer: a });
+        }
+    }
+
+    // 본문에 명시적 Q&A가 없는 기존 글도 Google FAQ 스니펫 혜택을 받도록 기본 핵심 FAQ 구성
+    if (extractedFaqs.length === 0) {
+        extractedFaqs.push(
+            {
+                question: `${post.title.replace(/\s*—.*$/, '')} 핵심 기준은 무엇인가요?`,
+                answer: post.excerpt || `${post.title}에 대한 공설·사설 비교와 실제 비용, 절차를 대대손손 가이드에서 확인하실 수 있습니다.`,
+            },
+            {
+                question: '전국 봉안당·수목장·공원묘지 실제 가격은 어디서 비교할 수 있나요?',
+                answer: '대대손손(daedaesonson.com) 지도에서 전국 1,495곳 장지 시설의 공설·사설 여부, 안치단 층별 분양가, 연간 관리비를 전화 없이 한눈에 비교하실 수 있습니다.',
+            }
+        );
+    }
 
     // JSON-LD 구조화 데이터
     const baseUrl = 'https://daedaesonson.com';
@@ -48,18 +92,25 @@ export default async function GuideDetailPage({ params }: PageProps) {
         '@type': 'BlogPosting',
         headline: post.title,
         description: post.excerpt || post.title,
-        ...(fullImageUrl ? { image: fullImageUrl } : {}),
+        ...(fullImageUrl ? { image: [fullImageUrl] } : {}),
         datePublished: post.created_at,
         dateModified: post.updated_at || post.created_at,
+        inLanguage: 'ko-KR',
+        articleSection: post.category,
+        wordCount,
         author: {
             '@type': 'Organization',
-            name: '대대손손',
+            name: '대대손손 장지연구소',
             url: baseUrl,
         },
         publisher: {
             '@type': 'Organization',
             name: '대대손손',
             url: baseUrl,
+            logo: {
+                '@type': 'ImageObject',
+                url: `${baseUrl}/logo-horizontal.svg`,
+            },
         },
         mainEntityOfPage: {
             '@type': 'WebPage',
@@ -81,7 +132,7 @@ export default async function GuideDetailPage({ params }: PageProps) {
             {
                 '@type': 'ListItem',
                 position: 2,
-                name: '블로그',
+                name: '장지 가이드 블로그',
                 item: `${baseUrl}/blog`,
             },
             {
@@ -99,6 +150,19 @@ export default async function GuideDetailPage({ params }: PageProps) {
         ],
     };
 
+    const faqJsonLd = {
+        '@context': 'https://schema.org',
+        '@type': 'FAQPage',
+        mainEntity: extractedFaqs.map((item) => ({
+            '@type': 'Question',
+            name: item.question,
+            acceptedAnswer: {
+                '@type': 'Answer',
+                text: item.answer,
+            },
+        })),
+    };
+
     return (
         <>
             <script
@@ -109,9 +173,13 @@ export default async function GuideDetailPage({ params }: PageProps) {
                 type="application/ld+json"
                 dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd).replace(/</g, '\\u003c') }}
             />
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd).replace(/</g, '\\u003c') }}
+            />
             <BlogDetailClient
                 post={post}
-                relatedPosts={relatedData || []}
+                relatedPosts={relatedPosts}
             />
         </>
     );
@@ -124,7 +192,7 @@ export async function generateMetadata({ params }: PageProps) {
 
     const { data: post } = await supabase
         .from('blog_posts')
-        .select('title, excerpt, thumbnail_url, tags')
+        .select('title, excerpt, thumbnail_url, tags, category, created_at, updated_at')
         .eq('slug', slug)
         .eq('is_published', true)
         .single();
@@ -139,9 +207,21 @@ export async function generateMetadata({ params }: PageProps) {
         : undefined;
 
     return {
-        title: `${post.title} | 대대손손 가이드`,
+        title: `${post.title} | 대대손손 장지 가이드`,
         description: post.excerpt || post.title,
         keywords: post.tags || [],
+        authors: [{ name: '대대손손 장지연구소', url: baseUrl }],
+        robots: {
+            index: true,
+            follow: true,
+            googleBot: {
+                index: true,
+                follow: true,
+                'max-video-preview': -1,
+                'max-image-preview': 'large' as const,
+                'max-snippet': -1,
+            },
+        },
         openGraph: {
             title: post.title,
             description: post.excerpt || post.title,
@@ -149,6 +229,10 @@ export async function generateMetadata({ params }: PageProps) {
             siteName: '대대손손',
             locale: 'ko_KR',
             type: 'article',
+            publishedTime: post.created_at,
+            modifiedTime: post.updated_at || post.created_at,
+            section: post.category,
+            tags: post.tags || [],
             ...(ogImage ? { images: [{ url: ogImage, width: 1024, height: 1024, alt: post.title }] } : {}),
         },
         twitter: {

@@ -230,11 +230,17 @@ export default async function FacilityPage({ params }: PageProps) {
 
     // JSON-LD 구조화 데이터 (검색 엔진 리치 스니펫)
     const categoryLabel = FACILITY_CATEGORY_LABELS[data.category as FacilityCategory] || '';
+    const minPrice = data.minPrice || data.priceRange?.min || 0;
+    const maxPrice = data.maxPrice || data.priceRange?.max || 0;
+    const formattedPriceRange = minPrice > 0
+        ? `${minPrice >= 10000 ? `${Math.floor(minPrice / 10000)}만원` : `${minPrice.toLocaleString()}원`}~${maxPrice > minPrice ? (maxPrice >= 10000 ? `${Math.floor(maxPrice / 10000)}만원` : `${maxPrice.toLocaleString()}원`) : ''}`
+        : undefined;
+
     const jsonLd = {
         '@context': 'https://schema.org',
         '@type': 'LocalBusiness',
         name: data.name,
-        description: data.description || `${data.name} ${categoryLabel} 시설 정보`,
+        description: data.description || `${data.name} (${data.isPublic ? '공설' : '사설'} ${categoryLabel}) 위치, 분양가, 관리비 및 상세 가격표 안내`,
         address: {
             '@type': 'PostalAddress',
             streetAddress: data.address || '',
@@ -248,12 +254,35 @@ export default async function FacilityPage({ params }: PageProps) {
             }
         } : {}),
         ...(data.phone ? { telephone: data.phone } : {}),
+        ...(formattedPriceRange ? { priceRange: formattedPriceRange } : {}),
         ...(facilityBasic.thumbnail ? { image: facilityBasic.thumbnail } : {}),
         url: `https://daedaesonson.com/facility/${id}`,
     };
 
-    const minPrice = data.minPrice || data.priceRange?.min || 0;
-    const maxPrice = data.maxPrice || data.priceRange?.max || 0;
+    const breadcrumbJsonLd = {
+        '@context': 'https://schema.org',
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+            {
+                '@type': 'ListItem',
+                position: 1,
+                name: '홈',
+                item: 'https://daedaesonson.com',
+            },
+            {
+                '@type': 'ListItem',
+                position: 2,
+                name: '전국 장지 시설 목록',
+                item: 'https://daedaesonson.com/list',
+            },
+            {
+                '@type': 'ListItem',
+                position: 3,
+                name: `${data.name} (${categoryLabel})`,
+                item: `https://daedaesonson.com/facility/${id}`,
+            },
+        ],
+    };
 
     return (
         <>
@@ -261,7 +290,11 @@ export default async function FacilityPage({ params }: PageProps) {
                 type="application/ld+json"
                 dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, '\\u003c') }}
             />
-            {/* 검색엔진 크롤러용 SSR 시맨틱 마크업 */}
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd).replace(/</g, '\\u003c') }}
+            />
+            {/* 검색엔진 크롤러용 SSR 시맨틱 마크업 및 내부 링크 허브 */}
             <article style={{ position: 'absolute', width: 1, height: 1, padding: 0, margin: -1, overflow: 'hidden', clip: 'rect(0,0,0,0)', whiteSpace: 'nowrap', border: 0 }}>
                 <h1>{data.name} - {categoryLabel} 가격 및 시설 정보</h1>
                 <p>구분: {data.isPublic ? '공설' : '사설'} {categoryLabel}</p>
@@ -269,6 +302,16 @@ export default async function FacilityPage({ params }: PageProps) {
                 {data.phone && <p>전화번호: {data.phone}</p>}
                 {minPrice > 0 && <p>예상 이용 가격: {minPrice.toLocaleString()}원 ~ {maxPrice > minPrice ? `${maxPrice.toLocaleString()}원` : ''}</p>}
                 {data.description && <p>{data.description}</p>}
+                <nav aria-label="관련 장지 가이드 및 인근 시설">
+                    <a href="/blog">장지·봉안당·수목장 실전 가이드</a>
+                    <a href="/blog/memorial-facility-field-visit-checklist-7">봉안당·수목장 현장 답사 체크리스트 7가지</a>
+                    <a href="/blog/public-vs-private-columbarium-eligibility-and-cost">공설 봉안당 vs 사설 봉안당 자격 및 비용 비교</a>
+                    <a href="/blog/grave-relocation-procedure-and-cost-guide">묘지 이장·개장 절차와 비용 총정리</a>
+                    <a href="/blog/columbarium-vs-natural-burial-price">봉안당 vs 수목장 가격 비교</a>
+                    {nearbyFacilities.slice(0, 6).map((nf: any) => (
+                        <a key={nf.id} href={`/facility/${nf.id}`}>{nf.name} 가격 및 위치</a>
+                    ))}
+                </nav>
             </article>
             <FacilityPageClient facilityBasic={facilityBasic} initialNearbyFacilities={nearbyFacilities} />
         </>
