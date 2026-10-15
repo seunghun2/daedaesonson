@@ -158,7 +158,7 @@ export default function HistoryPage() {
                 ) : (
                     <Stack gap={10} p="md">
                         <Text size="xs" fw={700} c="#6B7684" px={2}>
-                            전체 <span style={{ color: '#191F28' }}>{history.length}</span>개
+                            전체 <span style={{ color: '#2563EB' }}>{history.length}</span>개
                         </Text>
                         {history.map((item) => {
                             const thumbUrl = getFacilityImageUrl(item.thumbnail);
@@ -218,7 +218,7 @@ export default function HistoryPage() {
                                                 top={6}
                                                 left={6}
                                                 style={{
-                                                    backgroundColor: 'rgba(25, 31, 40, 0.78)',
+                                                    backgroundColor: isPublic ? 'rgba(37, 99, 235, 0.92)' : 'rgba(25, 31, 40, 0.78)',
                                                     backdropFilter: 'blur(4px)',
                                                     color: '#FFFFFF',
                                                     fontSize: '10px',
@@ -310,7 +310,7 @@ export default function HistoryPage() {
                                                     fw={800}
                                                     style={{
                                                         fontSize: priceInfo.hasPrice ? '16px' : '14px',
-                                                        color: priceInfo.hasPrice ? '#191F28' : '#8B95A1',
+                                                        color: priceInfo.hasPrice ? '#2563EB' : '#8B95A1',
                                                         letterSpacing: '-0.4px',
                                                     }}
                                                 >

@@ -1,9 +1,10 @@
 'use client';
 
 import { useState, useRef } from 'react';
+import Link from 'next/link';
 import { Drawer, Box, Text, Textarea, Button, Group, Stack, ActionIcon, Image, TextInput, ScrollArea } from '@mantine/core';
 import { useMediaQuery } from '@mantine/hooks';
-import { AlertCircle, CheckCircle, X, Camera } from 'lucide-react';
+import { AlertCircle, CheckCircle, X, Camera, ChevronRight, Building2 } from 'lucide-react';
 import { compressImageFile } from '@/lib/clientImageCompress';
 
 interface CorrectionRequestModalProps {
@@ -184,7 +185,7 @@ export default function CorrectionRequestModal({ facilityId, facilityName, isOpe
                             <Text fw={800} size="lg" c="#191F28" style={{ letterSpacing: '-0.3px' }}>
                                 정보 수정 요청
                             </Text>
-                            <Text size="xs" c="#191F28" fw={600} mt={2}>{facilityName}</Text>
+                            <Text size="xs" c="#2563EB" fw={600} mt={2}>{facilityName}</Text>
                         </Box>
                         <ActionIcon variant="subtle" color="gray" size={34} radius="md" onClick={handleClose} aria-label="닫기">
                             <X size={20} color="#475569" />
@@ -197,7 +198,7 @@ export default function CorrectionRequestModal({ facilityId, facilityName, isOpe
                     <Box px="lg" py="md">
                         {submitted ? (
                             <Stack align="center" py={40} gap="md">
-                                <CheckCircle size={48} color="#191F28" strokeWidth={1.8} />
+                                <CheckCircle size={48} color="#2563EB" strokeWidth={1.8} />
                                 <Text size="lg" fw={800} c="#191F28" ta="center">수정 요청이 접수되었습니다</Text>
                                 <Text size="sm" c="#64748B" ta="center" lh={1.6}>
                                     남겨주신 내용을 빠르게 검수하여 반영하겠습니다.<br />소중한 제보 감사합니다.
@@ -221,8 +222,8 @@ export default function CorrectionRequestModal({ facilityId, facilityName, isOpe
                                                     style={{
                                                         height: 40,
                                                         borderRadius: 10,
-                                                        border: active ? '1.5px solid #191F28' : '1px solid #CBD5E1',
-                                                        backgroundColor: active ? '#191F28' : '#FFFFFF',
+                                                        border: active ? '1.5px solid #2563EB' : '1px solid #CBD5E1',
+                                                        backgroundColor: active ? '#2563EB' : '#FFFFFF',
                                                         color: active ? '#FFFFFF' : '#475569',
                                                         fontSize: 12.5,
                                                         fontWeight: active ? 700 : 600,
@@ -333,9 +334,82 @@ export default function CorrectionRequestModal({ facilityId, facilityName, isOpe
                                     </Group>
                                 )}
 
-                                <Text size="xs" c="#64748B" lh={1.5}>
-                                    시설 관계자이신 경우 공식 제휴 신청을 통해 분양가·사진을 직접 관리하실 수도 있습니다.
-                                </Text>
+                                {/* 시설 관계자 전용 가벼운 슬림 배너 */}
+                                <Link
+                                    href={`/partnership?facility=${encodeURIComponent(facilityName)}`}
+                                    style={{
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        justifyContent: 'space-between',
+                                        gap: 12,
+                                        padding: '12px 14px',
+                                        borderRadius: 12,
+                                        backgroundColor: '#F8FAFC',
+                                        border: '1px solid #DBEAFE',
+                                        textDecoration: 'none',
+                                        transition: 'background-color 0.15s ease',
+                                    }}
+                                >
+                                    <div style={{ display: 'flex', alignItems: 'center', gap: 10, minWidth: 0 }}>
+                                        <div
+                                            style={{
+                                                width: 34,
+                                                height: 34,
+                                                borderRadius: 9,
+                                                backgroundColor: '#EFF6FF',
+                                                border: '1px solid #BFDBFE',
+                                                display: 'flex',
+                                                alignItems: 'center',
+                                                justifyContent: 'center',
+                                                flexShrink: 0,
+                                            }}
+                                        >
+                                            <Building2 size={16} color="#2563EB" />
+                                        </div>
+                                        <div style={{ minWidth: 0 }}>
+                                            <div
+                                                style={{
+                                                    fontSize: 12.5,
+                                                    fontWeight: 700,
+                                                    color: '#191F28',
+                                                    letterSpacing: '-0.2px',
+                                                    lineHeight: 1.35,
+                                                    overflow: 'hidden',
+                                                    textOverflow: 'ellipsis',
+                                                    whiteSpace: 'nowrap',
+                                                }}
+                                            >
+                                                {facilityName} 관계자이신가요?
+                                            </div>
+                                            <div
+                                                style={{
+                                                    fontSize: 11.5,
+                                                    fontWeight: 500,
+                                                    color: '#64748B',
+                                                    marginTop: 2,
+                                                    letterSpacing: '-0.2px',
+                                                }}
+                                            >
+                                                공식 제휴 신청으로 분양가·사진 직접 관리하기
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <span
+                                        style={{
+                                            display: 'inline-flex',
+                                            alignItems: 'center',
+                                            gap: 2,
+                                            fontSize: 11.5,
+                                            fontWeight: 700,
+                                            color: '#2563EB',
+                                            whiteSpace: 'nowrap',
+                                            flexShrink: 0,
+                                        }}
+                                    >
+                                        제휴 신청
+                                        <ChevronRight size={14} color="#2563EB" />
+                                    </span>
+                                </Link>
                             </Stack>
                         )}
                     </Box>
@@ -362,7 +436,7 @@ export default function CorrectionRequestModal({ facilityId, facilityName, isOpe
                                 root: {
                                     height: 48,
                                     borderRadius: 12,
-                                    backgroundColor: isFormValid ? '#191F28' : '#E2E8F0',
+                                    backgroundColor: isFormValid ? '#2563EB' : '#E2E8F0',
                                     color: isFormValid ? '#FFFFFF' : '#94A3B8',
                                     fontWeight: 700,
                                     fontSize: 15,

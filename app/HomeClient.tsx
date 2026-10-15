@@ -51,7 +51,7 @@ function HighlightText({ text, highlight }: { text: string, highlight: string })
     <Text span size="sm">
       {parts.map((part, i) =>
         part.toLowerCase() === highlight.toLowerCase() ? (
-          <Text span key={i} c="#191F28" fw={700} td="underline">{part}</Text>
+          <Text span key={i} c="#2563EB" fw={700}>{part}</Text>
         ) : (
           <Text span key={i}>{part}</Text>
         )
@@ -849,7 +849,7 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
                 rightSection={
                   <ActionIcon
                     variant="transparent"
-                    c={searchQuery ? '#191F28' : '#8B95A1'}
+                    c={searchQuery ? '#2563EB' : '#8B95A1'}
                     onClick={() => {
                       if (searchQuery) {
                         setSubmittedQuery(searchQuery);
@@ -1107,9 +1107,9 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
                 height: 36,
                 padding: '0 11px',
                 borderRadius: 10,
-                backgroundColor: '#F2F4F6',
-                border: '1px solid #E5E8EB',
-                color: '#191F28',
+                backgroundColor: '#EFF6FF',
+                border: '1px solid #BFDBFE',
+                color: '#1D4ED8',
                 fontSize: 12,
                 fontWeight: 800,
                 cursor: 'pointer',
@@ -1119,7 +1119,7 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
               }}
               title={user ? '내 정보 및 관심시설' : '3초 무료 회원가입 · 로그인'}
             >
-              <User size={13.5} color="#191F28" />
+              <User size={13.5} color="#2563EB" />
               <span>{user ? (profile?.nickname || user.user_metadata?.full_name || '내정보').slice(0, 5) : '회원가입·로그인'}</span>
             </button>
 
@@ -1136,11 +1136,11 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
             }}
           >
             {[
-              { key: 'all', label: '전체' },
-              { key: 'charnel', label: '봉안당' },
-              { key: 'natural', label: '수목장' },
-              { key: 'park', label: '공원묘지' },
-              { key: 'crematorium', label: '화장장' },
+              { key: 'all', label: '전체', dot: null },
+              { key: 'charnel', label: '봉안당', dot: '#2563EB' },
+              { key: 'natural', label: '수목장', dot: '#059669' },
+              { key: 'park', label: '공원묘지', dot: '#6D28D9' },
+              { key: 'crematorium', label: '화장장', dot: '#D97706' },
             ].map((chip) => {
               const isSelected = chip.key === 'all'
                 ? activeCategory.includes('all')
@@ -1179,6 +1179,16 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
                     letterSpacing: '-0.2px',
                   }}
                 >
+                  {chip.dot && (
+                    <span
+                      style={{
+                        width: '6px',
+                        height: '6px',
+                        borderRadius: '50%',
+                        backgroundColor: isSelected ? '#60A5FA' : chip.dot,
+                      }}
+                    />
+                  )}
                   {chip.label}
                 </button>
               );
@@ -1356,12 +1366,12 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
                     alignItems: 'center',
                     justifyContent: 'center',
                     gap: 4,
-                    backgroundColor: '#F2F4F6',
-                    border: '1px solid #E5E8EB',
+                    backgroundColor: '#EFF6FF',
+                    border: '1px solid #BFDBFE',
                     borderRadius: 10,
                     height: 36,
                     padding: '0 10px',
-                    color: '#191F28',
+                    color: '#1D4ED8',
                     fontSize: 11.5,
                     fontWeight: 800,
                     cursor: 'pointer',
@@ -1370,7 +1380,7 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
                     letterSpacing: '-0.2px',
                   }}
                 >
-                  <User size={13} color="#191F28" />
+                  <User size={13} color="#2563EB" />
                   <span>{user ? (profile?.nickname || user.user_metadata?.full_name || '마이').slice(0, 4) : '회원가입·로그인'}</span>
                 </button>
               </Group>
@@ -1380,11 +1390,11 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
             <Box style={{ padding: '0 14px 9px' }}>
               <div className="no-scrollbar" style={{ display: 'flex', gap: 6, alignItems: 'center', overflowX: 'auto' }}>
                 {[
-                  { key: 'all', label: '전체' },
-                  { key: 'charnel', label: '봉안당' },
-                  { key: 'natural', label: '수목장' },
-                  { key: 'park', label: '공원묘지' },
-                  { key: 'crematorium', label: '화장장' },
+                  { key: 'all', label: '전체', dot: null },
+                  { key: 'charnel', label: '봉안당', dot: '#2563EB' },
+                  { key: 'natural', label: '수목장', dot: '#059669' },
+                  { key: 'park', label: '공원묘지', dot: '#6D28D9' },
+                  { key: 'crematorium', label: '화장장', dot: '#D97706' },
                 ].map((chip) => {
                   const isSelected = chip.key === 'all'
                     ? activeCategory.includes('all')
@@ -1422,6 +1432,16 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
                         gap: '4px',
                       }}
                     >
+                      {chip.dot && (
+                        <span
+                          style={{
+                            width: '5.5px',
+                            height: '5.5px',
+                            borderRadius: '50%',
+                            backgroundColor: isSelected ? '#60A5FA' : chip.dot,
+                          }}
+                        />
+                      )}
                       {chip.label}
                     </button>
                   );
@@ -1435,9 +1455,9 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
                     height: '31px',
                     fontSize: '12px',
                     fontWeight: hideInquiry ? 700 : 600,
-                    backgroundColor: hideInquiry ? '#F2F4F6' : '#FFFFFF',
-                    color: hideInquiry ? '#191F28' : '#4E5968',
-                    border: hideInquiry ? '1px solid #191F28' : '1px solid #E5E8EB',
+                    backgroundColor: hideInquiry ? '#EFF6FF' : '#FFFFFF',
+                    color: hideInquiry ? '#2563EB' : '#4E5968',
+                    border: hideInquiry ? '1px solid #93C5FD' : '1px solid #E5E8EB',
                     borderRadius: '999px',
                     cursor: 'pointer',
                     transition: 'all 0.15s ease',
@@ -1541,9 +1561,9 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
                     style={{
                       height: 42,
                       borderRadius: 10,
-                      border: isChecked ? '1.5px solid #191F28' : '1px solid #CBD5E1',
-                      backgroundColor: isChecked ? '#F2F4F6' : '#FFFFFF',
-                      color: isChecked ? '#191F28' : '#475569',
+                      border: isChecked ? '1.5px solid #2563EB' : '1px solid #CBD5E1',
+                      backgroundColor: isChecked ? '#EFF6FF' : '#FFFFFF',
+                      color: isChecked ? '#2563EB' : '#475569',
                       fontSize: 13.5,
                       fontWeight: isChecked ? 700 : 600,
                       cursor: 'pointer',
@@ -1576,8 +1596,8 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
                     style={{
                       height: 42,
                       borderRadius: 10,
-                      border: active ? '1.5px solid #191F28' : '1px solid #CBD5E1',
-                      backgroundColor: active ? '#191F28' : '#FFFFFF',
+                      border: active ? '1.5px solid #2563EB' : '1px solid #CBD5E1',
+                      backgroundColor: active ? '#2563EB' : '#FFFFFF',
                       color: active ? '#FFFFFF' : '#475569',
                       fontSize: 13.5,
                       fontWeight: active ? 700 : 600,
@@ -1599,8 +1619,8 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
               p="sm"
               style={{
                 borderRadius: 10,
-                backgroundColor: tempHideInquiry ? '#F2F4F6' : '#F8FAFC',
-                border: tempHideInquiry ? '1px solid #CBD5E1' : '1px solid #E2E8F0',
+                backgroundColor: tempHideInquiry ? '#EFF6FF' : '#F8FAFC',
+                border: tempHideInquiry ? '1px solid #BFDBFE' : '1px solid #E2E8F0',
                 cursor: 'pointer',
               }}
               onClick={() => setTempHideInquiry(!tempHideInquiry)}
@@ -1610,7 +1630,7 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
                 checked={tempHideInquiry}
                 onChange={() => setTempHideInquiry(!tempHideInquiry)}
                 size="sm"
-                color="dark"
+                color="blue"
                 styles={{ label: { fontSize: '13.5px', fontWeight: 600, color: '#191F28', cursor: 'pointer' }, input: { cursor: 'pointer' } }}
               />
             </Box>
@@ -1653,7 +1673,7 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
               style={{
                 flex: 1,
                 height: 48,
-                backgroundColor: '#191F28',
+                backgroundColor: '#2563EB',
                 color: 'white',
                 border: 'none',
                 borderRadius: 12,
@@ -1840,7 +1860,7 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
                           padding: '0 10px',
                           borderRadius: 6,
                           border: 'none',
-                          backgroundColor: active ? '#191F28' : 'transparent',
+                          backgroundColor: active ? '#2563EB' : 'transparent',
                           color: active ? '#FFFFFF' : '#64748B',
                           fontSize: 12,
                           fontWeight: active ? 700 : 600,
@@ -1899,7 +1919,7 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
                         }
                       }}
                       size="md"
-                      color="dark"
+                      color="brand"
                       styles={{ label: { fontSize: '15px', fontWeight: 500, cursor: 'pointer' }, input: { cursor: 'pointer' } }}
                     />
                   ))}
@@ -1910,7 +1930,7 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
                   checked={tempNearbyHideInquiry}
                   onChange={() => setTempNearbyHideInquiry(!tempNearbyHideInquiry)}
                   size="md"
-                  color="dark"
+                  color="brand"
                   styles={{ label: { fontSize: '15px', fontWeight: 500, cursor: 'pointer' }, input: { cursor: 'pointer' } }}
                 />
               </div>
@@ -1928,7 +1948,7 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
                     setNearbyHideInquiry(tempNearbyHideInquiry);
                     setNearbyDrawerOpen(false);
                   }}
-                  style={{ flex: 1, height: 48, backgroundColor: '#191F28', color: 'white', border: 'none', borderRadius: 12, fontSize: 15, fontWeight: 700, cursor: 'pointer' }}
+                  style={{ flex: 1, height: 48, backgroundColor: '#2563EB', color: 'white', border: 'none', borderRadius: 12, fontSize: 15, fontWeight: 700, cursor: 'pointer' }}
                 >
                   적용하기
                 </button>
@@ -1950,7 +1970,7 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
                       checked={nearbyHideInquiry}
                       onChange={() => setNearbyHideInquiry(!nearbyHideInquiry)}
                       size="xs"
-                      color="dark"
+                      color="brand"
                       styles={{ label: { fontSize: '12px', cursor: 'pointer', color: '#868e96', paddingLeft: 6 }, input: { cursor: 'pointer' } }}
                     />
                   </div>
@@ -2149,19 +2169,19 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
             }} />
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: 6, minWidth: 0 }}>
-                <MapPin size={14} color="#191F28" style={{ flexShrink: 0 }} />
+                <MapPin size={14} color="#2563EB" style={{ flexShrink: 0 }} />
                 <span style={{ fontSize: 13.5, fontWeight: 700, color: '#191F28', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
                   {currentRegionName ? `${currentRegionName} 주변 시설` : '현재 지도 영역 시설'}
                 </span>
-                <span style={{ fontSize: 13.5, fontWeight: 800, color: '#191F28', flexShrink: 0 }}>
+                <span style={{ fontSize: 13.5, fontWeight: 800, color: '#2563EB', flexShrink: 0 }}>
                   {finalFacilities.length}
                 </span>
               </div>
               <span style={{
                 fontSize: 11.5,
                 fontWeight: 700,
-                color: mobileSheetSnap === 'peek' ? '#191F28' : '#64748B',
-                backgroundColor: '#F2F4F6',
+                color: mobileSheetSnap === 'peek' ? '#2563EB' : '#64748B',
+                backgroundColor: mobileSheetSnap === 'peek' ? '#EFF6FF' : '#F2F4F6',
                 padding: '4px 10px',
                 borderRadius: 999,
                 flexShrink: 0,
@@ -2481,7 +2501,7 @@ function MyInfoPanel({
                       </Group>
                     </Group>
                     <Text size="sm" c="#191F28" lineClamp={2}>{review.content}</Text>
-                    <Text size="xs" c="#4E5968" fw={600} mt={6}>{facilityTitle}</Text>
+                    <Text size="xs" c="#2563EB" fw={600} mt={6}>{facilityTitle}</Text>
                   </Box>
                 );
               })}
@@ -2526,8 +2546,8 @@ function MyInfoPanel({
               {avatarUrl ? (
                 <img src={avatarUrl} alt={displayName} width={64} height={64} style={{ borderRadius: '50%', objectFit: 'cover', margin: '0 auto 10px', display: 'block' }} />
               ) : (
-                <Box style={{ width: 64, height: 64, borderRadius: '50%', backgroundColor: '#F2F4F6', border: '1px solid #E5E8EB', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 10px' }}>
-                  <Text c="#191F28" fw={800} size="lg">{displayName.charAt(0)}</Text>
+                <Box style={{ width: 64, height: 64, borderRadius: '50%', backgroundColor: '#EFF6FF', border: '1px solid #DBEAFE', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 10px' }}>
+                  <Text c="#2563EB" fw={800} size="lg">{displayName.charAt(0)}</Text>
                 </Box>
               )}
               <Text size="md" fw={800} c="#191F28" mb={2}>{displayName}</Text>
@@ -2559,7 +2579,7 @@ function MyInfoPanel({
                 <Text size="sm" fw={600} c="#191F28">관심 시설</Text>
               </Group>
               <Group gap={4}>
-                <Text size="sm" fw={800} c="#191F28">{favorites.length}개</Text>
+                <Text size="sm" fw={800} c="#2563EB">{favorites.length}개</Text>
                 <ChevronRight size={16} color="#94A3B8" />
               </Group>
             </Box>
@@ -2575,11 +2595,11 @@ function MyInfoPanel({
               onMouseLeave={(e: any) => { e.currentTarget.style.backgroundColor = 'white'; }}
             >
               <Group gap={8}>
-                <MessageSquare size={18} color="#191F28" />
+                <MessageSquare size={18} color="#2563EB" />
                 <Text size="sm" fw={600} c="#191F28">내 이야기</Text>
               </Group>
               <Group gap={4}>
-                <Text size="sm" fw={800} c="#191F28">{myReviews.length}개</Text>
+                <Text size="sm" fw={800} c="#2563EB">{myReviews.length}개</Text>
                 <ChevronRight size={16} color="#94A3B8" />
               </Group>
             </Box>

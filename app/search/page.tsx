@@ -11,7 +11,7 @@ import { useDebouncedCallback } from 'use-debounce';
 import { getFacilityImageUrl } from '@/lib/supabaseImage';
 import React from 'react';
 
-const BRAND_COLOR = '#191F28';
+const BRAND_COLOR = '#2563EB';
 
 const RECOMMENDED_KEYWORDS = [
     '용인 봉안당',
@@ -22,11 +22,11 @@ const RECOMMENDED_KEYWORDS = [
 ];
 
 const CATEGORY_BADGE_PALETTE: Record<string, { bg: string; text: string }> = {
-    CHARNEL_HOUSE: { bg: '#F2F4F6', text: '#4E5968' },
-    NATURAL_BURIAL: { bg: '#F2F4F6', text: '#4E5968' },
-    FAMILY_GRAVE: { bg: '#F2F4F6', text: '#4E5968' },
-    CREMATORIUM: { bg: '#F2F4F6', text: '#4E5968' },
-    FUNERAL_HOME: { bg: '#F2F4F6', text: '#4E5968' },
+    CHARNEL_HOUSE: { bg: '#EFF6FF', text: '#1D4ED8' },
+    NATURAL_BURIAL: { bg: '#ECFDF5', text: '#047857' },
+    FAMILY_GRAVE: { bg: '#F5F3FF', text: '#6D28D9' },
+    CREMATORIUM: { bg: '#FFFBEB', text: '#B45309' },
+    FUNERAL_HOME: { bg: '#F1F5F9', text: '#334155' },
     OTHER: { bg: '#F2F4F6', text: '#4E5968' },
 };
 
@@ -428,7 +428,7 @@ function SearchPageContent() {
                                                     size="sm"
                                                     fw={700}
                                                     style={{
-                                                        color: priceInfo.hasPrice ? '#191F28' : '#8B95A1',
+                                                        color: priceInfo.hasPrice ? '#2563EB' : '#8B95A1',
                                                         flexShrink: 0,
                                                         whiteSpace: 'nowrap',
                                                         letterSpacing: '-0.3px',
@@ -625,7 +625,7 @@ function SearchPageContent() {
                                                     size="sm"
                                                     fw={700}
                                                     style={{
-                                                        color: priceInfo.hasPrice ? '#191F28' : '#8B95A1',
+                                                        color: priceInfo.hasPrice ? '#2563EB' : '#8B95A1',
                                                         flexShrink: 0,
                                                         whiteSpace: 'nowrap',
                                                         letterSpacing: '-0.3px',

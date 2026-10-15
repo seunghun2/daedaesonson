@@ -260,7 +260,7 @@ function PriceInfoSection({ priceInfo, hasPrice, facilityName, websiteUrl }: { p
                                 </Badge>
                             )}
                         </Group>
-                        <Text fw={800} size="14.5px" c="#191F28" style={{ flexShrink: 0, whiteSpace: 'nowrap', letterSpacing: '-0.03em' }}>
+                        <Text fw={800} size="14.5px" c="#2563EB" style={{ flexShrink: 0, whiteSpace: 'nowrap', letterSpacing: '-0.03em' }}>
                             {formatKoreanCurrency(row.price)}
                             {row.taxIncluded === false && <Text span size="10px" fw={500} c="#8B95A1"> +VAT</Text>}
                         </Text>
@@ -652,7 +652,7 @@ function PriceInfoSection({ priceInfo, hasPrice, facilityName, websiteUrl }: { p
 
                                     <Group gap="xs">
                                         {hasMinPrice ? (
-                                            <Text fw={800} c="#191F28" size="lg">
+                                            <Text fw={800} c="#2563EB" size="lg">
                                                 {formatKoreanCurrency(minPrice)}부터
                                             </Text>
                                         ) : (
@@ -1907,8 +1907,8 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                         style={{
                                             display: 'inline-flex',
                                             alignItems: 'center',
-                                            color: '#333D4B',
-                                            backgroundColor: '#F2F4F6',
+                                            color: facility.isPublic ? '#1D4ED8' : '#4E5968',
+                                            backgroundColor: facility.isPublic ? '#EFF6FF' : '#F2F4F6',
                                             fontSize: '11px',
                                             fontWeight: 700,
                                             height: '22px',
@@ -1938,7 +1938,9 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                     >
                                         {facility.name}
                                     </Text>
-                                    <VerifiedSealIcon size={16} color="#191F28" />
+                                    {Boolean((facility as any).isVerifiedPartner) && (
+                                        <VerifiedSealIcon size={16} color="#2563EB" />
+                                    )}
                                 </Group>
                             </Group>
 
@@ -1981,16 +1983,16 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                         height: '32px',
                                         padding: '0 10px',
                                         borderRadius: '999px',
-                                        backgroundColor: isFavorited ? '#FFFBEB' : '#F2F4F6',
-                                        border: isFavorited ? '1px solid #FDE68A' : '1px solid #E5E8EB',
+                                        backgroundColor: isFavorited ? '#FFFBEB' : '#EFF6FF',
+                                        border: isFavorited ? '1px solid #FDE68A' : '1px solid #BFDBFE',
                                         cursor: 'pointer',
                                     }}
                                 >
-                                    <Star size={14} fill={isFavorited ? '#F59E0B' : 'none'} color={isFavorited ? '#F59E0B' : '#4E5968'} />
-                                    <span style={{ fontSize: '12px', fontWeight: 700, color: isFavorited ? '#B45309' : '#333D4B', letterSpacing: '-0.2px' }}>
+                                    <Star size={14} fill={isFavorited ? '#F59E0B' : 'none'} color={isFavorited ? '#F59E0B' : '#2563EB'} />
+                                    <span style={{ fontSize: '12px', fontWeight: 800, color: isFavorited ? '#B45309' : '#1D4ED8', letterSpacing: '-0.2px' }}>
                                         {isFavorited ? '찜완료' : '찜저장'}
                                     </span>
-                                    <span style={{ fontSize: '11.5px', fontWeight: 700, color: isFavorited ? '#B45309' : '#191F28' }}>
+                                    <span style={{ fontSize: '11.5px', fontWeight: 700, color: isFavorited ? '#B45309' : '#2563EB' }}>
                                         {(facility.favoriteCount || 0) + (isFavorited ? 1 : 0)}
                                     </span>
                                 </button>
@@ -2182,7 +2184,9 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                     {FACILITY_CATEGORY_LABELS[cat]}
                                 </span>
                             ))}
-                            <VerifiedBadge variant="pill" size="md" label="공식 데이터 검증" />
+                            {Boolean((facility as any).isVerifiedPartner) && (
+                                <VerifiedBadge variant="pill" size="md" label="공식 데이터 검증" />
+                            )}
                         </div>
 
                         {/* 방문자 통계 필 */}
@@ -2203,8 +2207,8 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                 flexShrink: 0,
                             }}
                         >
-                            <span style={{ width: 6, height: 6, borderRadius: '50%', backgroundColor: '#191F28' }} />
-                            최근 <strong style={{ color: '#191F28', fontWeight: 800 }}>{viewCount}명</strong> 조회
+                            <span style={{ width: 6, height: 6, borderRadius: '50%', backgroundColor: '#2563EB' }} />
+                            최근 <strong style={{ color: '#2563EB', fontWeight: 800 }}>{viewCount}명</strong> 조회
                         </span>
                     </div>
 
@@ -2614,7 +2618,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                                         <span style={{ fontSize: '14px', fontWeight: 700, color: '#333D4B', letterSpacing: '-0.3px' }}>
                                                             {item.label}
                                                         </span>
-                                                        <span style={{ fontSize: '17px', fontWeight: 800, color: '#191F28', letterSpacing: '-0.5px' }}>
+                                                        <span style={{ fontSize: '17px', fontWeight: 800, color: '#2563EB', letterSpacing: '-0.5px' }}>
                                                             {formatKoreanCurrency(item.price)}~
                                                         </span>
                                                     </div>
@@ -2673,7 +2677,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                             }}
                                         >
                                             <span style={{ fontSize: '14px', fontWeight: 700, color: '#333D4B' }}>{fallbackLabel}</span>
-                                            <span style={{ fontSize: '18px', fontWeight: 800, color: '#191F28', letterSpacing: '-0.5px' }}>
+                                            <span style={{ fontSize: '18px', fontWeight: 800, color: '#2563EB', letterSpacing: '-0.5px' }}>
                                                 {formatKoreanCurrency(displayPriceNum * 10000)}~
                                             </span>
                                         </Box>
@@ -2714,14 +2718,14 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                         {facility.highlight && (
                             <Box bg="white" px={16} py={16} style={{ marginBottom: 8, borderBottom: '1px solid #F2F4F6' }}>
                                 <Group gap={6} mb={10}>
-                                    <TrendingUp size={16} color="#191F28" />
+                                    <TrendingUp size={16} color="#2563EB" />
                                     <Text size="sm" fw={700} c="#191F28">핵심 지표</Text>
                                 </Group>
                                 <Group gap="md">
                                     {facility.highlight.price && (
                                         <Box>
                                             <Text size="xs" c="dimmed">가격</Text>
-                                            <Text size="sm" fw={700} c="#191F28">{facility.highlight.price}</Text>
+                                            <Text size="sm" fw={700} c="#2563EB">{facility.highlight.price}</Text>
                                         </Box>
                                     )}
                                     {facility.highlight.accessibility && (
@@ -2759,15 +2763,15 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                             justifyContent: 'center',
                                             padding: '11px 6px',
                                             borderRadius: '12px',
-                                            backgroundColor: active ? '#F2F4F6' : '#F8FAFC',
-                                            border: active ? '1px solid #D1D6DB' : '1px solid #F2F4F6',
+                                            backgroundColor: active ? '#EFF6FF' : '#F8FAFC',
+                                            border: active ? '1px solid #BFDBFE' : '1px solid #F2F4F6',
                                         }}
                                     >
-                                        <Icon size={20} color={active ? '#191F28' : '#CBD5E1'} />
+                                        <Icon size={20} color={active ? '#2563EB' : '#CBD5E1'} />
                                         <span style={{ fontSize: '12px', fontWeight: active ? 700 : 500, color: active ? '#191F28' : '#8B95A1', marginTop: '6px' }}>
                                             {label}
                                         </span>
-                                        <span style={{ fontSize: '10px', fontWeight: 600, color: active ? '#4E5968' : '#CBD5E1', marginTop: '1px' }}>
+                                        <span style={{ fontSize: '10px', fontWeight: 600, color: active ? '#2563EB' : '#CBD5E1', marginTop: '1px' }}>
                                             {active ? '보유' : '미보유'}
                                         </span>
                                     </div>
@@ -2911,7 +2915,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                                 href={`tel:${facility.phone.replace(/[^0-9]/g, '')}`}
                                                 size="xs"
                                                 fw={700}
-                                                c="#191F28"
+                                                c="#2563EB"
                                                 style={{ textDecoration: 'none' }}
                                                 onClick={() => {
                                                     fetch('/api/analytics/conversion', {
@@ -2943,8 +2947,8 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                 mt={12}
                                 py={11}
                                 style={{
-                                    backgroundColor: '#F2F4F6',
-                                    border: '1px solid #E5E8EB',
+                                    backgroundColor: '#EFF6FF',
+                                    border: '1px solid #DBEAFE',
                                     borderRadius: 10,
                                     cursor: 'pointer',
                                     textAlign: 'center',
@@ -2969,7 +2973,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                     }).catch(() => {});
                                 }}
                             >
-                                <Text style={{ fontSize: 13.5 }} fw={700} c="#191F28">이 시설에 대해 1:1 상담 신청하기</Text>
+                                <Text style={{ fontSize: 13.5 }} fw={700} c="#2563EB">이 시설에 대해 1:1 상담 신청하기</Text>
                             </Box>
                         </Box>
 
@@ -2988,8 +2992,8 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                         방문 경험이나 후기를 남겨주세요.
                                     </Text>
                                     <Group gap={10}>
-                                        <Camera size={18} color="#191F28" />
-                                        <Pencil size={18} color="#191F28" />
+                                        <Camera size={18} color="#2563EB" />
+                                        <Pencil size={18} color="#2563EB" />
                                     </Group>
                                 </Group>
                             </Paper>
@@ -3166,10 +3170,10 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                             {/* 빠른 질문 원탭 칩 (커뮤니티 문의 활성화) */}
                             <Box mt={14} p={12} style={{ backgroundColor: '#F8FAFC', borderRadius: 12, border: '1px solid #EEF1F5' }}>
                                 <Group justify="space-between" align="center" mb={8}>
-                                    <Text size="xs" fw={700} c="#191F28">
-                                        자주 묻는 질문 빠른 문의
+                                    <Text size="xs" fw={700} c="#334155">
+                                        자주 묻는 질문 1초 만에 문의하기
                                     </Text>
-                                    <Text size="11px" c="#64748B" fw={600}>
+                                    <Text size="11px" c="#2563EB" fw={600}>
                                         클릭 시 자동 작성
                                     </Text>
                                 </Group>
@@ -3191,9 +3195,9 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                             style={{
                                                 padding: '6px 10px',
                                                 borderRadius: 999,
-                                                border: '1px solid #E2E8F0',
+                                                border: '1px solid #DBEAFE',
                                                 backgroundColor: '#FFFFFF',
-                                                color: '#333D4B',
+                                                color: '#1E40AF',
                                                 fontSize: 12,
                                                 fontWeight: 600,
                                                 cursor: 'pointer',
@@ -3321,7 +3325,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                                             <Text size="xs" c="#6B7684">{rec.address?.split(' ').slice(0, 2).join(' ')}</Text>
                                                         </Box>
                                                         {rec.priceRange?.min && rec.priceRange.min > 0 && (
-                                                            <Text size="sm" fw={800} c="#191F28" style={{ flexShrink: 0 }}>
+                                                            <Text size="sm" fw={800} c="#2563EB" style={{ flexShrink: 0 }}>
                                                                 {formatKoreanCurrency(rec.priceRange.min)}~
                                                             </Text>
                                                         )}
@@ -3352,7 +3356,6 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                     display: 'grid',
                                     gridTemplateColumns: '1fr 1fr auto',
                                     gap: 8,
-                                    marginBottom: 14,
                                 }}
                             >
                                 <button
@@ -3387,7 +3390,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                         whiteSpace: 'nowrap',
                                     }}
                                 >
-                                    <Copy size={13} color="#191F28" />
+                                    <Copy size={13} color="#2563EB" />
                                     <span>가족에게 링크 복사</span>
                                 </button>
 
@@ -3441,74 +3444,6 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                     <span>맨 위로</span>
                                 </button>
                             </div>
-
-                            {/* 2. 장지·추모시설 공식 파트너 인증 · 관리 안내 카드 (줄바꿈 깨짐 방지 수직 레이아웃) */}
-                            <Box
-                                p={16}
-                                style={{
-                                    backgroundColor: '#FFFFFF',
-                                    borderRadius: 14,
-                                    border: '1px solid #E2E8F0',
-                                    textAlign: 'left',
-                                }}
-                            >
-                                <Group justify="space-between" align="center" mb={8} wrap="nowrap">
-                                    <VerifiedBadge variant="partner" size="sm" label="공식 파트너 인증" />
-                                    <Text size="11px" fw={600} c="#64748B">
-                                        시설 관계자 전용
-                                    </Text>
-                                </Group>
-
-                                <Text
-                                    fw={800}
-                                    c="#191F28"
-                                    style={{
-                                        fontSize: 14,
-                                        letterSpacing: '-0.3px',
-                                        lineHeight: 1.4,
-                                        wordBreak: 'keep-all',
-                                    }}
-                                >
-                                    {facility.name} 관계자이신가요?
-                                </Text>
-
-                                <Text
-                                    c="#64748B"
-                                    mt={4}
-                                    mb={12}
-                                    style={{
-                                        fontSize: 12,
-                                        lineHeight: 1.55,
-                                        wordBreak: 'keep-all',
-                                    }}
-                                >
-                                    공식 분양가와 시설 사진을 직접 관리하시면 상단 ‘공식 인증 배지’ 부여 및 유족 1:1 상담을 직통 연결해 드립니다.
-                                </Text>
-
-                                <button
-                                    type="button"
-                                    onClick={() => router.push(`/partnership?facility=${encodeURIComponent(facility.name)}`)}
-                                    style={{
-                                        width: '100%',
-                                        height: 38,
-                                        borderRadius: 9,
-                                        border: '1px solid #D1D6DB',
-                                        backgroundColor: '#F2F4F6',
-                                        color: '#191F28',
-                                        fontSize: 12.5,
-                                        fontWeight: 700,
-                                        cursor: 'pointer',
-                                        display: 'flex',
-                                        alignItems: 'center',
-                                        justifyContent: 'center',
-                                        gap: 4,
-                                        transition: 'background-color 0.15s ease',
-                                    }}
-                                >
-                                    <span>공식 인증 배지 · 제휴 관리 신청하기</span>
-                                    <ChevronRight size={14} />
-                                </button>
-                            </Box>
                         </Box>
 
 
@@ -3592,7 +3527,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                         <Text fw={800} size="lg" c="#191F28" style={{ letterSpacing: '-0.3px' }}>
                                             무료 상담 · 방문 답사 신청
                                         </Text>
-                                        <Text size="xs" c="#191F28" fw={600} mt={2}>
+                                        <Text size="xs" c="#2563EB" fw={600} mt={2}>
                                             {facility.name}
                                         </Text>
                                     </Box>
@@ -3618,7 +3553,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                                         width: 64,
                                                         height: 64,
                                                         borderRadius: '50%',
-                                                        background: '#191F28',
+                                                        background: '#2563EB',
                                                         display: 'flex',
                                                         alignItems: 'center',
                                                         justifyContent: 'center',
@@ -3657,7 +3592,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                                     </Group>
                                                     <Group justify="space-between">
                                                         <Text size="xs" c="#64748B">상담 방식 / 희망시간</Text>
-                                                        <Text size="xs" fw={700} c="#191F28">
+                                                        <Text size="xs" fw={700} c="#2563EB">
                                                             {submittedConsultData?.consultMethod || '전화 상담'} · {submittedConsultData?.preferredTime || '시간 무관'}
                                                         </Text>
                                                     </Group>
@@ -3680,7 +3615,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                                 fullWidth
                                                 size="md"
                                                 radius="md"
-                                                styles={{ root: { height: 48, borderRadius: 12, backgroundColor: '#191F28', fontWeight: 700 } }}
+                                                styles={{ root: { height: 48, borderRadius: 12, backgroundColor: '#2563EB', fontWeight: 700 } }}
                                                 onClick={() => {
                                                     setConsultModalOpened(false);
                                                     setTimeout(() => setConsultSuccess(false), 300);
@@ -3700,15 +3635,15 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                                     px="md"
                                                     mb={14}
                                                     style={{
-                                                        backgroundColor: '#F2F4F6',
-                                                        border: '1px solid #D1D6DB',
+                                                        backgroundColor: '#EFF6FF',
+                                                        border: '1px solid #BFDBFE',
                                                         borderRadius: 10,
                                                         display: 'flex',
                                                         alignItems: 'center',
                                                         justifyContent: 'space-between',
                                                     }}
                                                 >
-                                                    <Text size="xs" fw={700} c="#191F28">
+                                                    <Text size="xs" fw={700} c="#2563EB">
                                                         {profile?.nickname || (user.user_metadata?.name as string) || '회원'}님 정보가 자동 입력되었습니다
                                                     </Text>
                                                 </Box>
@@ -3734,8 +3669,8 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                                                     style={{
                                                                         height: 42,
                                                                         borderRadius: 10,
-                                                                        border: active ? '1.5px solid #191F28' : '1px solid #CBD5E1',
-                                                                        backgroundColor: active ? '#191F28' : '#FFFFFF',
+                                                                        border: active ? '1.5px solid #2563EB' : '1px solid #CBD5E1',
+                                                                        backgroundColor: active ? '#2563EB' : '#FFFFFF',
                                                                         color: active ? '#FFFFFF' : '#475569',
                                                                         fontSize: 13,
                                                                         fontWeight: active ? 700 : 600,
@@ -3771,9 +3706,9 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                                                     style={{
                                                                         height: 40,
                                                                         borderRadius: 10,
-                                                                        border: active ? '1.5px solid #191F28' : '1px solid #CBD5E1',
-                                                                        backgroundColor: active ? '#F2F4F6' : '#FFFFFF',
-                                                                        color: active ? '#191F28' : '#475569',
+                                                                        border: active ? '1.5px solid #2563EB' : '1px solid #CBD5E1',
+                                                                        backgroundColor: active ? '#EFF6FF' : '#FFFFFF',
+                                                                        color: active ? '#2563EB' : '#475569',
                                                                         fontSize: 12.5,
                                                                         fontWeight: active ? 700 : 600,
                                                                         cursor: 'pointer',
@@ -3855,8 +3790,8 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                                                         height: 34,
                                                                         padding: '0 12px',
                                                                         borderRadius: 999,
-                                                                        border: active ? '1.5px solid #191F28' : '1px solid #CBD5E1',
-                                                                        backgroundColor: active ? '#191F28' : '#FFFFFF',
+                                                                        border: active ? '1.5px solid #2563EB' : '1px solid #CBD5E1',
+                                                                        backgroundColor: active ? '#2563EB' : '#FFFFFF',
                                                                         color: active ? '#FFFFFF' : '#475569',
                                                                         fontSize: 12.5,
                                                                         fontWeight: active ? 700 : 600,
@@ -3913,7 +3848,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                                     onChange={(e) => setConsultForm({ ...consultForm, privacyAgreed: e.currentTarget.checked })}
                                                     label={
                                                         <Text size="xs" c="#191F28" fw={600}>
-                                                            <Text span c="#191F28" fw={700}>[필수] </Text>
+                                                            <Text span c="#2563EB" fw={700}>[필수] </Text>
                                                             상담 및 방문 예약 안내를 위한 개인정보 수집·이용 동의
                                                         </Text>
                                                     }
@@ -3932,7 +3867,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                                     root: {
                                                         height: 50,
                                                         borderRadius: 12,
-                                                        backgroundColor: (!consultForm.name?.trim() || !/^01[016789]\d{7,8}$/.test(consultForm.phone.replace(/[^0-9]/g, '')) || !consultForm.privacyAgreed) ? '#E2E8F0' : '#191F28',
+                                                        backgroundColor: (!consultForm.name?.trim() || !/^01[016789]\d{7,8}$/.test(consultForm.phone.replace(/[^0-9]/g, '')) || !consultForm.privacyAgreed) ? '#E2E8F0' : '#2563EB',
                                                         color: (!consultForm.name?.trim() || !/^01[016789]\d{7,8}$/.test(consultForm.phone.replace(/[^0-9]/g, '')) || !consultForm.privacyAgreed) ? '#94A3B8' : '#FFFFFF',
                                                         fontWeight: 700,
                                                         fontSize: 15,
@@ -4384,7 +4319,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                 <Group justify="space-between" align="center">
                                     <Box>
                                         <Text fw={800} style={{ fontSize: 18, color: '#191F28', letterSpacing: '-0.3px' }}>방문 이야기 작성</Text>
-                                        <Text size="xs" fw={600} style={{ color: '#191F28', marginTop: 2 }}>{facility.name}</Text>
+                                        <Text size="xs" fw={600} style={{ color: '#2563EB', marginTop: 2 }}>{facility.name}</Text>
                                     </Box>
                                     <ActionIcon variant="subtle" color="gray" radius="xl" size="lg" onClick={closeReviewModal}>
                                         <X size={20} color="#64748B" />
@@ -4450,9 +4385,9 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                                         style={{
                                                             padding: '6px 11px',
                                                             borderRadius: 20,
-                                                            border: included ? '1.5px solid #191F28' : '1px solid #CBD5E1',
-                                                            backgroundColor: included ? '#F2F4F6' : '#FFFFFF',
-                                                            color: included ? '#191F28' : '#475569',
+                                                            border: included ? '1.5px solid #2563EB' : '1px solid #CBD5E1',
+                                                            backgroundColor: included ? '#EFF6FF' : '#FFFFFF',
+                                                            color: included ? '#1D4ED8' : '#475569',
                                                             fontSize: 12,
                                                             fontWeight: included ? 700 : 500,
                                                             cursor: 'pointer',
@@ -4608,7 +4543,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                     style={{
                                         height: 50,
                                         fontSize: 15,
-                                        backgroundColor: (reviewForm.rating === 0 || !reviewForm.content.trim() || (!user && reviewForm.password.length < 4)) ? '#E2E8F0' : '#191F28',
+                                        backgroundColor: (reviewForm.rating === 0 || !reviewForm.content.trim() || (!user && reviewForm.password.length < 4)) ? '#E2E8F0' : '#2563EB',
                                         color: (reviewForm.rating === 0 || !reviewForm.content.trim() || (!user && reviewForm.password.length < 4)) ? '#94A3B8' : '#FFFFFF',
                                     }}
                                 >
@@ -4789,10 +4724,10 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
 
                                                 {/* 답변 */}
                                                 {selectedInquiry.replies && selectedInquiry.replies.length > 0 && (
-                                                    <Box p="md" style={{ backgroundColor: '#F2F4F6', borderRadius: 12, borderLeft: '4px solid #191F28' }}>
+                                                    <Box p="md" style={{ backgroundColor: '#EFF6FF', borderRadius: 12, borderLeft: '4px solid #2563EB' }}>
                                                         <Group gap={6} mb={6}>
-                                                            <Headphones size={16} color="#191F28" />
-                                                            <Text size="xs" fw={600} c="#191F28">관리자 답변</Text>
+                                                            <Headphones size={16} color="#2563EB" />
+                                                            <Text size="xs" fw={600} c="#2563EB">관리자 답변</Text>
                                                         </Group>
                                                         <Text size="sm" c="dark">{selectedInquiry.replies[0].content}</Text>
                                                     </Box>
@@ -4818,11 +4753,11 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                             )}
                         </Modal>
 
-                        {/* 💬 AI 장지 상담사 FAB 버튼 (document.body 포탈로 transform 컨텍스트 탈출 · 모바일/데스크톱 지원) */}
-                        {typeof document !== 'undefined' && !consultModalOpened && !inquiryOpen && !correctionOpen && !reviewsOpen && !opened && createPortal(
+                        {/* AI 장지 상담사 FAB 버튼 (document.body 포탈로 렌더링하여 overflow 클리핑 방지, 모바일/PC 공통) */}
+                        {typeof document !== 'undefined' && createPortal(
                             <Box style={{
                                 position: 'fixed',
-                                bottom: isMobile ? 'calc(76px + env(safe-area-inset-bottom, 0px))' : 24,
+                                bottom: isMobile ? 84 : 24,
                                 right: isMobile ? 16 : 24,
                                 zIndex: 9990,
                             }}>
@@ -4857,9 +4792,9 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                             width: isMobile ? 46 : 52,
                                             height: isMobile ? 46 : 52,
                                             borderRadius: '50%',
-                                            background: '#191F28',
-                                            border: '1.5px solid rgba(255,255,255,0.22)',
-                                            boxShadow: '0 6px 20px rgba(15, 23, 42, 0.28)',
+                                            background: 'linear-gradient(135deg, #2563EB 0%, #1D4ED8 100%)',
+                                            border: '1.5px solid rgba(255,255,255,0.28)',
+                                            boxShadow: '0 6px 20px rgba(37, 99, 235, 0.34)',
                                             display: 'flex', alignItems: 'center', justifyContent: 'center',
                                             cursor: 'pointer',
                                             transition: 'transform 0.2s, box-shadow 0.2s',
@@ -5227,7 +5162,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                             <Button
                                                 size="sm"
                                                 variant="filled"
-                                                color="#191F28"
+                                                color="#2563EB"
                                                 radius="xl"
                                                 px="xl"
                                                 onClick={() => handleSubmitReply(replyingTo)}
@@ -5416,7 +5351,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                                 flexShrink: 0,
                             }}
                         >
-                            <Phone size={16} color="#191F28" />
+                            <Phone size={16} color="#2563EB" />
                             <span>전화상담</span>
                         </a>
                     )}
@@ -5442,11 +5377,12 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                             gap: '8px',
                             height: '46px',
                             borderRadius: '12px',
-                            backgroundColor: '#191F28',
+                            background: 'linear-gradient(135deg, #2563EB 0%, #1D4ED8 100%)',
                             color: '#ffffff',
                             fontWeight: 700,
                             fontSize: '15px',
                             border: 'none',
+                            boxShadow: '0 4px 14px rgba(37, 99, 235, 0.28)',
                             cursor: 'pointer',
                         }}
                     >
@@ -5603,7 +5539,7 @@ export default function FacilityDetail({ facility: initialFacility, onClose, all
                             <span style={{ fontSize: 12, color: '#64748B', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
                                 https://daedaesonson.com/facility/{facility.id}
                             </span>
-                            <span style={{ fontSize: 12, fontWeight: 700, color: '#191F28', flexShrink: 0 }}>복사</span>
+                            <span style={{ fontSize: 12, fontWeight: 700, color: '#2563EB', flexShrink: 0 }}>복사</span>
                         </div>
                     </div>
                     <style>{`@keyframes shareSlideUp { from { transform: translateY(30px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }`}</style>

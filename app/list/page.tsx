@@ -9,7 +9,6 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import FacilityCard from '@/components/list/FacilityCard';
 import FacilityDetail from '@/components/detail/FacilityDetail';
 import BottomNav from '@/components/common/BottomNav';
-import ChatFloatingButton from '@/components/chatbot/ChatFloatingButton';
 import { Facility, FacilityCategory } from '@/types';
 
 // 거리 계산 함수 (Haversine formula)
@@ -300,9 +299,9 @@ function ListPageContent() {
                             }}
                             style={{
                                 height: '32px', fontSize: '12.5px', fontWeight: 600,
-                                backgroundColor: activeCategory.includes('all') ? 'white' : '#F2F4F6',
-                                color: activeCategory.includes('all') ? '#4E5968' : '#191F28',
-                                border: activeCategory.includes('all') ? '1px solid #E5E8EB' : '1.5px solid #191F28',
+                                backgroundColor: activeCategory.includes('all') ? 'white' : '#EFF6FF',
+                                color: activeCategory.includes('all') ? '#4E5968' : '#2563EB',
+                                border: activeCategory.includes('all') ? '1px solid #E5E8EB' : '1.5px solid #2563EB',
                                 borderRadius: '8px', cursor: 'pointer', transition: 'all 0.2s',
                                 paddingLeft: '12px', paddingRight: '8px', whiteSpace: 'nowrap',
                                 display: 'flex', alignItems: 'center', gap: '4px',
@@ -322,9 +321,9 @@ function ListPageContent() {
                             style={{
                                 height: '32px', fontSize: '12.5px',
                                 fontWeight: hideInquiry ? 700 : 500,
-                                backgroundColor: hideInquiry ? '#F2F4F6' : 'white',
-                                color: hideInquiry ? '#191F28' : '#4E5968',
-                                border: hideInquiry ? '1.5px solid #191F28' : '1px solid #E5E8EB',
+                                backgroundColor: hideInquiry ? '#EFF6FF' : 'white',
+                                color: hideInquiry ? '#2563EB' : '#4E5968',
+                                border: hideInquiry ? '1.5px solid #2563EB' : '1px solid #E5E8EB',
                                 borderRadius: '8px', cursor: 'pointer', transition: 'all 0.2s',
                                 paddingLeft: '14px', paddingRight: '14px', whiteSpace: 'nowrap', flexShrink: 0,
                             }}
@@ -381,7 +380,7 @@ function ListPageContent() {
                                             }
                                         }}
                                         size="md"
-                                        color="dark"
+                                        color="blue"
                                         styles={{ label: { fontSize: '15px', fontWeight: 500, cursor: 'pointer' }, input: { cursor: 'pointer' } }}
                                     />
                                 ))}
@@ -394,7 +393,7 @@ function ListPageContent() {
                                 checked={tempHideInquiry}
                                 onChange={() => setTempHideInquiry(!tempHideInquiry)}
                                 size="md"
-                                color="dark"
+                                color="blue"
                                 styles={{ label: { fontSize: '15px', fontWeight: 500, cursor: 'pointer' }, input: { cursor: 'pointer' } }}
                             />
                         </div>
@@ -410,7 +409,7 @@ function ListPageContent() {
                             </button>
                             <button
                                 onClick={() => { setVisibleCount(20); startTransition(() => setActiveCategory(tempCategory)); setHideInquiry(tempHideInquiry); setCategoryFilterOpen(false); }}
-                                style={{ flex: 1, height: 48, backgroundColor: '#191F28', color: 'white', border: 'none', borderRadius: 12, fontSize: 15, fontWeight: 700, cursor: 'pointer' }}
+                                style={{ flex: 1, height: 48, backgroundColor: '#2563EB', color: 'white', border: 'none', borderRadius: 12, fontSize: 15, fontWeight: 700, cursor: 'pointer' }}
                             >
                                 적용하기
                             </button>
@@ -423,7 +422,7 @@ function ListPageContent() {
             <ScrollArea style={{ flex: 1 }}>
                 {loading ? (
                     <Center h="200px">
-                        <Loader size="lg" color="dark" />
+                        <Loader size="lg" color="blue" />
                     </Center>
                 ) : finalFacilities.length === 0 ? (
                     <Center h="200px" px="md">
@@ -435,14 +434,14 @@ function ListPageContent() {
                     <Stack p="md" gap="md">
                         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                             <Text size="sm" c="#6B7684" fw={600}>
-                                검색 결과 <span style={{ color: '#191F28', fontWeight: 700 }}>{finalFacilities.length}</span>개
+                                검색 결과 <span style={{ color: '#2563EB', fontWeight: 700 }}>{finalFacilities.length}</span>개
                             </Text>
                             <Checkbox
                                 label="문의시설 제외"
                                 checked={hideInquiry}
                                 onChange={() => { setVisibleCount(20); setHideInquiry(!hideInquiry); }}
                                 size="xs"
-                                color="dark"
+                                color="blue"
                                 styles={{ label: { fontSize: '12px', color: '#868e96', cursor: 'pointer', paddingLeft: 6 }, input: { cursor: 'pointer' } }}
                             />
                         </div>
@@ -511,9 +510,6 @@ function ListPageContent() {
                     </Box>
                 )
             }
-
-            {/* 플로팅 AI 챗봇 버튼 */}
-            {!selectedFacility && <ChatFloatingButton />}
 
             {/* 모바일 하단 네비게이션 */}
             {isMobile && !selectedFacility && <BottomNav />}

@@ -327,7 +327,7 @@ export default function InquiryPanel({
                             ) : (
                                 <Group gap={6} align="baseline">
                                     <Text fw={700} size="lg" c="#191F28">시설 문의</Text>
-                                    <Text fw={700} size="md" c="#191F28">{inquiries.length}</Text>
+                                    <Text fw={700} size="md" c="#2563EB">{inquiries.length}</Text>
                                 </Group>
                             )}
                             <Group gap={8}>
@@ -357,14 +357,14 @@ export default function InquiryPanel({
                             <ScrollArea style={{ flex: 1, WebkitOverflowScrolling: 'touch', overscrollBehavior: 'contain' }} bg="#F8FAFC" type="scroll">
                                 <Stack gap={16} p="md">
                                     {/* 대상 시설 배너 */}
-                                    <Paper p="sm" radius="md" bg="#F8FAFC" style={{ border: '1px solid #E5E8EB' }}>
+                                    <Paper p="sm" radius="md" bg="#EFF6FF" style={{ border: '1px solid #DBEAFE' }}>
                                         <Group justify="space-between" align="center" wrap="nowrap">
                                             <Box>
-                                                <Text size="11px" c="#6B7684" fw={700}>문의 대상 시설</Text>
+                                                <Text size="11px" c="#2563EB" fw={700}>문의 대상 시설</Text>
                                                 <Text size="sm" c="#191F28" fw={700} mt={2}>{facility.name}</Text>
                                             </Box>
-                                            <Box px={8} py={3} bg="#FFFFFF" style={{ borderRadius: 6, border: '1px solid #E5E8EB' }}>
-                                                <Text size="11px" c="#4E5968" fw={600}>
+                                            <Box px={8} py={3} bg="#FFFFFF" style={{ borderRadius: 6, border: '1px solid #DBEAFE' }}>
+                                                <Text size="11px" c="#1E40AF" fw={600}>
                                                     {FACILITY_CATEGORY_LABELS[facility.category as FacilityCategory] || facility.category}
                                                 </Text>
                                             </Box>
@@ -398,9 +398,9 @@ export default function InquiryPanel({
                                                                     fontSize: 12.5,
                                                                     fontWeight: active ? 700 : 500,
                                                                     cursor: 'pointer',
-                                                                    backgroundColor: active ? '#191F28' : '#F8FAFC',
+                                                                    backgroundColor: active ? '#2563EB' : '#F8FAFC',
                                                                     color: active ? '#FFFFFF' : '#475569',
-                                                                    border: active ? '1px solid #191F28' : '1px solid #CBD5E1',
+                                                                    border: active ? '1px solid #2563EB' : '1px solid #CBD5E1',
                                                                     transition: 'all 0.15s ease',
                                                                 }}
                                                             >
@@ -495,7 +495,7 @@ export default function InquiryPanel({
                                                                 backgroundColor: isPrivate ? '#EFF6FF' : '#F1F5F9',
                                                             }}
                                                         >
-                                                            {isPrivate ? <Lock size={15} color="#191F28" /> : <Unlock size={15} color="#64748B" />}
+                                                            {isPrivate ? <Lock size={15} color="#2563EB" /> : <Unlock size={15} color="#64748B" />}
                                                         </Box>
                                                         <Box>
                                                             <Text size="xs" fw={700} c="#191F28">비공개 문의</Text>
@@ -517,7 +517,7 @@ export default function InquiryPanel({
                                                     onChange={(e) => setPrivacyAgreed(e.currentTarget.checked)}
                                                     label={
                                                         <Text size="xs" c="#191F28" fw={600}>
-                                                            <Text span fw={700} style={{ color: '#191F28' }}>[필수] </Text>
+                                                            <Text span fw={700} style={{ color: '#2563EB' }}>[필수] </Text>
                                                             개인정보 수집 및 이용 동의
                                                         </Text>
                                                     }
@@ -557,7 +557,7 @@ export default function InquiryPanel({
                                     styles={{
                                         root: {
                                             height: 48,
-                                            backgroundColor: isFormValid ? '#191F28' : '#E2E8F0',
+                                            backgroundColor: isFormValid ? '#2563EB' : '#E2E8F0',
                                             color: isFormValid ? '#FFFFFF' : '#94A3B8',
                                             fontWeight: 700,
                                             fontSize: 15,
@@ -576,7 +576,7 @@ export default function InquiryPanel({
                                     {/* 안내 문구 */}
                                     <Paper p="sm" radius="md" bg="#EFF6FF" style={{ border: '1px solid #DBEAFE' }}>
                                         <Group gap={6} wrap="nowrap" align="center">
-                                            <Info size={14} color="#191F28" style={{ flexShrink: 0 }} />
+                                            <Info size={14} color="#2563EB" style={{ flexShrink: 0 }} />
                                             <Text size="xs" c="#1E40AF" fw={500}>
                                                 시설에 대해 궁금한 점을 문의하세요. 비공개 설정 시 작성자만 열람할 수 있습니다.
                                             </Text>
@@ -602,7 +602,7 @@ export default function InquiryPanel({
                                                 color="brand"
                                                 leftSection={<PenLine size={14} />}
                                                 onClick={() => { setWriteError(''); openWrite(); }}
-                                                style={{ backgroundColor: '#191F28' }}
+                                                style={{ backgroundColor: '#2563EB' }}
                                             >
                                                 첫 문의 작성하기
                                             </Button>
@@ -627,7 +627,7 @@ export default function InquiryPanel({
                                                 <Group justify="space-between" mb={6}>
                                                     <Group gap={6}>
                                                         <Text size="xs" c="#64748B">[{inquiry.facilityId === 'general' ? '일반' : (facilityNameMap.get(inquiry.facilityId) || facility.name)}]</Text>
-                                                        <Text size="xs" c="#191F28" fw={600}>
+                                                        <Text size="xs" c="#2563EB" fw={600}>
                                                             {inquiry.type === 'price' ? '가격 문의' :
                                                                 inquiry.type === 'reservation' ? '예약/절차' :
                                                                     inquiry.type === 'facility' ? '시설 문의' : '기타'}
@@ -646,7 +646,7 @@ export default function InquiryPanel({
                                                     <Text fw={600} c="#191F28" style={{ fontSize: 13.5 }}>{inquiry.title}</Text>
                                                     {inquiry.replies && inquiry.replies.length > 0 && (
                                                         <Box px={6} py={2} bg="#EFF6FF" style={{ borderRadius: 4 }}>
-                                                            <Text size="11px" c="#191F28" fw={700}>답변완료</Text>
+                                                            <Text size="11px" c="#2563EB" fw={700}>답변완료</Text>
                                                         </Box>
                                                     )}
                                                 </Group>
@@ -680,10 +680,10 @@ export default function InquiryPanel({
 
                                                 {/* 관리자 답변 */}
                                                 {showContent && inquiry.replies?.map(reply => (
-                                                    <Box key={reply.id} bg="#F8FAFC" p="sm" mt="sm" style={{ borderRadius: 8, borderLeft: '3px solid #191F28' }}>
+                                                    <Box key={reply.id} bg="#F8FAFC" p="sm" mt="sm" style={{ borderRadius: 8, borderLeft: '3px solid #2563EB' }}>
                                                         <Group gap="xs" mb={4}>
-                                                            <MessageCircle size={12} color="#191F28" />
-                                                            <Text size="xs" fw={700} c="#191F28">{reply.author}</Text>
+                                                            <MessageCircle size={12} color="#2563EB" />
+                                                            <Text size="xs" fw={700} c="#2563EB">{reply.author}</Text>
                                                             <Text size="xs" c="dimmed">{new Date(reply.createdAt).toLocaleDateString('ko-KR')}</Text>
                                                         </Group>
                                                         <Text size="xs" c="#191F28" lh={1.5}>{reply.content}</Text>
@@ -713,7 +713,7 @@ export default function InquiryPanel({
                                     onClick={() => { setWriteError(''); openWrite(); }}
                                     style={{
                                         height: 48,
-                                        backgroundColor: '#191F28',
+                                        backgroundColor: '#2563EB',
                                         fontWeight: 700,
                                         fontSize: 15,
                                     }}
@@ -747,7 +747,7 @@ export default function InquiryPanel({
                         bg="#EFF6FF"
                         style={{ borderRadius: '50%' }}
                     >
-                        <Lock size={24} color="#191F28" />
+                        <Lock size={24} color="#2563EB" />
                     </Box>
 
                     <Text size="md" fw={700} c="#191F28">비공개 문의입니다</Text>
@@ -794,7 +794,7 @@ export default function InquiryPanel({
                         color="brand"
                         onClick={handlePinSubmit}
                         disabled={pinValue.length !== 4}
-                        style={{ backgroundColor: pinValue.length === 4 ? '#191F28' : undefined }}
+                        style={{ backgroundColor: pinValue.length === 4 ? '#2563EB' : undefined }}
                     >
                         확인하기
                     </Button>

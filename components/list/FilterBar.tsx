@@ -50,7 +50,7 @@ export default function FilterBar({
                         fw={800}
                         style={{
                             fontSize: '14px',
-                            color: '#191F28',
+                            color: '#2563EB',
                             letterSpacing: '-0.3px',
                             flexShrink: 0,
                         }}
@@ -122,7 +122,7 @@ export default function FilterBar({
                                         width: '5px',
                                         height: '5px',
                                         borderRadius: '50%',
-                                        backgroundColor: isActive ? '#191F28' : 'transparent',
+                                        backgroundColor: isActive ? '#2563EB' : 'transparent',
                                         transition: 'background-color 0.15s ease',
                                     }}
                                 />

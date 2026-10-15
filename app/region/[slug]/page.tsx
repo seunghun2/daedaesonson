@@ -7,9 +7,9 @@ import { loadFacilitiesJson } from '@/lib/facilityDataLoader';
 // 지역-카테고리 조합 정의
 const REGIONS = ['서울', '경기', '인천', '부산', '대구', '광주', '대전', '울산', '세종', '강원', '충북', '충남', '전북', '전남', '경북', '경남', '제주'];
 const CATEGORIES = [
-    { slug: '봉안당', code: 'CHARNEL_HOUSE', label: '봉안당', bg: '#F2F4F6', text: '#4E5968' },
-    { slug: '수목장', code: 'NATURAL_BURIAL', label: '수목장', bg: '#F2F4F6', text: '#4E5968' },
-    { slug: '공원묘지', code: 'FAMILY_GRAVE', label: '공원묘지', bg: '#F2F4F6', text: '#4E5968' },
+    { slug: '봉안당', code: 'CHARNEL_HOUSE', label: '봉안당', bg: '#EFF6FF', text: '#1D4ED8' },
+    { slug: '수목장', code: 'NATURAL_BURIAL', label: '수목장', bg: '#ECFDF5', text: '#047857' },
+    { slug: '공원묘지', code: 'FAMILY_GRAVE', label: '공원묘지', bg: '#F5F3FF', text: '#6D28D9' },
 ];
 
 interface PageProps {
@@ -161,7 +161,7 @@ export default async function RegionPage({ params }: PageProps) {
                         {region} {categoryInfo.label} 가격비교
                     </h1>
                     <p style={{ margin: 0, color: '#6B7684', fontSize: '15px', fontWeight: 500 }}>
-                        총 <strong style={{ color: '#191F28', fontWeight: 700 }}>{facilities.length}개</strong> 시설의 가격 정보를 비교해보세요
+                        총 <strong style={{ color: '#2563EB', fontWeight: 700 }}>{facilities.length}개</strong> 시설의 가격 정보를 비교해보세요
                     </p>
                 </header>
 
@@ -203,8 +203,8 @@ export default async function RegionPage({ params }: PageProps) {
                                             fontWeight: 600,
                                             padding: '3px 8px',
                                             borderRadius: '6px',
-                                            backgroundColor: '#F2F4F6',
-                                            color: '#4E5968',
+                                            backgroundColor: f.isPublic ? '#EFF6FF' : '#F2F4F6',
+                                            color: f.isPublic ? '#2563EB' : '#4E5968',
                                         }}
                                     >
                                         {f.isPublic ? '공설' : '사설'}
@@ -230,7 +230,7 @@ export default async function RegionPage({ params }: PageProps) {
                                 }}
                             >
                                 <span style={{ fontSize: '12px', fontWeight: 600, color: '#8B95A1' }}>대표가격</span>
-                                <span style={{ fontSize: '19px', fontWeight: 800, color: '#191F28', letterSpacing: '-0.4px' }}>
+                                <span style={{ fontSize: '19px', fontWeight: 800, color: '#2563EB', letterSpacing: '-0.4px' }}>
                                     {formatManwon(f.priceRange?.min)}~
                                 </span>
                             </div>

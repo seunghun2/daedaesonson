@@ -185,8 +185,8 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
     const [isMapLoaded, setIsMapLoaded] = useState(false);
     const [isMainLoaded, setIsMainLoaded] = useState(false);
     const [mapError, setMapError] = useState(false);
-    const [centerAddress, setCenterAddress] = useState<string>('서울특별시');
-    const [centerCoords, setCenterCoords] = useState<{ lat: number; lng: number } | null>({ lat: 37.5, lng: 127.0 });
+    const [centerAddress, setCenterAddress] = useState<string>('');
+    const [centerCoords, setCenterCoords] = useState<{ lat: number; lng: number } | null>(null);
 
     const N_CLIENT_ID = process.env.NEXT_PUBLIC_NAVER_MAP_CLIENT_ID || '9ynkl22koz';
 
@@ -1658,6 +1658,69 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
             <Box pos="relative" w="100%" h="100%">
                 <div id="map" ref={mapRef} style={{ width: '100%', height: '100%' }} />
 
+                {/* 좌측 상단 빠른 메뉴 (PC only): 우측 하단 챗봇 FAB와 겹치지 않도록 상단 좌측에 깔끔한 글래스 필로 배치 */}
+                {isMapLoaded && !isMobile && (
+                    <div style={{
+                        position: 'absolute',
+                        top: '16px',
+                        left: '16px',
+                        zIndex: 100,
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '8px',
+                        transform: uiHidden ? 'translateY(-80px)' : 'translateY(0)',
+                        transition: 'transform 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                        pointerEvents: uiHidden ? 'none' : 'auto',
+                    }}>
+                        <a
+                            href="/about"
+                            style={{
+                                display: 'flex',
+                                alignItems: 'center',
+                                gap: '6px',
+                                backgroundColor: 'rgba(255, 255, 255, 0.96)',
+                                backdropFilter: 'blur(8px)',
+                                color: '#191F28',
+                                padding: '8px 14px',
+                                borderRadius: '999px',
+                                boxShadow: '0 2px 10px rgba(15, 23, 42, 0.1)',
+                                cursor: 'pointer',
+                                fontSize: '13px',
+                                fontWeight: 700,
+                                whiteSpace: 'nowrap' as const,
+                                textDecoration: 'none',
+                                border: '1px solid rgba(229, 232, 235, 0.9)',
+                            }}
+                        >
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#3B389D" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                            <span>서비스 소개</span>
+                        </a>
+                        <a
+                            href="/blog"
+                            style={{
+                                display: 'flex',
+                                alignItems: 'center',
+                                gap: '6px',
+                                backgroundColor: 'rgba(255, 255, 255, 0.96)',
+                                backdropFilter: 'blur(8px)',
+                                color: '#191F28',
+                                padding: '8px 14px',
+                                borderRadius: '999px',
+                                boxShadow: '0 2px 10px rgba(15, 23, 42, 0.1)',
+                                cursor: 'pointer',
+                                fontSize: '13px',
+                                fontWeight: 700,
+                                whiteSpace: 'nowrap' as const,
+                                textDecoration: 'none',
+                                border: '1px solid rgba(229, 232, 235, 0.9)',
+                            }}
+                        >
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#2563EB" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+                            <span>장례 가이드·블로그</span>
+                        </a>
+                    </div>
+                )}
+
                 {/* 커스텀 컨트롤 버튼 (우측 상단), UI 숨김 시 오른쪽으로 슬라이드 아웃 */}
                 {isMapLoaded && (
                     <div style={{
@@ -1672,12 +1735,35 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
                         transform: uiHidden ? 'translateX(100px)' : 'translateX(0)',
                         transition: 'transform 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
                     }}>
-                        {/* 0. 내 정보 버튼 (PC만) */}
+                        {/* 0. 내 정보 / 관심장지 보관함 버튼 (PC만) */}
                         {onUserClick && (
-                            <CustomControlBtn
-                                icon={<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#191F28" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>}
+                            <button
+                                type="button"
                                 onClick={onUserClick}
-                            />
+                                aria-label={userButtonLabel || '내 정보 및 로그인'}
+                                style={{
+                                    height: '38px',
+                                    padding: userButtonLabel ? '0 13px' : '0 9px',
+                                    backgroundColor: 'rgba(255, 255, 255, 0.97)',
+                                    backdropFilter: 'blur(8px)',
+                                    borderRadius: '999px',
+                                    border: '1px solid #BFDBFE',
+                                    display: 'inline-flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                    gap: '6px',
+                                    cursor: 'pointer',
+                                    boxShadow: '0 2px 10px rgba(15, 23, 42, 0.12)',
+                                    color: '#1D4ED8',
+                                    fontSize: '12.5px',
+                                    fontWeight: 800,
+                                    letterSpacing: '-0.2px',
+                                    whiteSpace: 'nowrap',
+                                }}
+                            >
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2563EB" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                                {userButtonLabel && <span>{userButtonLabel}</span>}
+                            </button>
                         )}
                         {/* 1. 줌 컨트롤 그룹 */}
                         <div style={{
@@ -1706,16 +1792,16 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
                     </div>
                 )}
 
-                {/* 하단 주소 버튼 - 모바일/PC 공통 */}
-                {isMapLoaded && centerAddress && (
+                {/* 하단 주소 버튼 (호갱노노 스타일 다크 플로팅 필) - PC 전용 (모바일은 3단 드래그 바텀시트 사용) */}
+                {!isMobile && isMapLoaded && centerAddress && (
                     <div style={{
                         position: 'absolute',
                         bottom: isMobile ? '72px' : '24px',
-                        left: '50%',
+                        left: isMobile ? '16px' : '50%',
                         maxWidth: isMobile ? 'calc(100vw - 92px)' : 'none',
                         transform: uiHidden
-                            ? 'translateX(-50%) translateY(150%)'
-                            : 'translateX(-50%) translateY(0)',
+                            ? (isMobile ? 'translateY(150%)' : 'translateX(-50%) translateY(150%)')
+                            : (isMobile ? 'translateY(0)' : 'translateX(-50%) translateY(0)'),
                         opacity: uiHidden ? 0 : 1,
                         pointerEvents: uiHidden ? 'none' : 'auto',
                         transition: 'transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease',
@@ -1751,9 +1837,9 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
                                 maxWidth: '100%',
                             }}
                         >
-                            <MapPin size={15} color="#FFFFFF" style={{ flexShrink: 0 }} />
+                            <MapPin size={15} color="#60A5FA" style={{ flexShrink: 0 }} />
                             <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
-                                {centerAddress} 주변 시설 보기
+                                {centerAddress} 주변 목록보기
                             </span>
                         </div>
                     </div>
@@ -1790,10 +1876,10 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
                                 fontWeight: 700,
                                 whiteSpace: 'nowrap',
                                 textDecoration: 'none',
-                                border: '1px solid #E2E8F0',
+                                border: '1px solid #DBEAFE',
                             }}
                         >
-                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#191F28" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#2563EB" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
                             <span>제휴문의</span>
                         </a>
                         <a
@@ -1816,7 +1902,7 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
                                 border: '1px solid #E2E8F0',
                             }}
                         >
-                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#191F28" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#2563EB" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
                             <span>대대손손 소개</span>
                         </a>
                         <a
@@ -1839,7 +1925,7 @@ const NaverMap = forwardRef<NaverMapRef, NaverMapProps>(({ facilities, onMarkerC
                                 border: '1px solid #E2E8F0',
                             }}
                         >
-                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#191F28" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#2563EB" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
                             <span>블로그</span>
                         </a>
                     </div>

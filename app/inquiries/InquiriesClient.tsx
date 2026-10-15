@@ -516,7 +516,7 @@ export default function InquiriesClient({ initialInquiries, facilities = [] }: I
                                             <Text size="xs" c="#6B7684" fw={600}>
                                                 [{(!inquiry.facilityName || inquiry.facilityName === 'general' || inquiry.facilityId === 'general') ? '일반' : inquiry.facilityName}]
                                             </Text>
-                                            <Text size="xs" fw={700} style={{ color: '#191F28' }}>
+                                            <Text size="xs" fw={700} style={{ color: '#2563EB' }}>
                                                 {getTypeLabel(inquiry.type)}
                                             </Text>
                                         </Group>
@@ -537,7 +537,7 @@ export default function InquiriesClient({ initialInquiries, facilities = [] }: I
                                         </Text>
                                         {inquiry.replies && inquiry.replies.length > 0 && (
                                             <Box px={8} py={2} style={{ borderRadius: 6, backgroundColor: '#EFF6FF', flexShrink: 0 }}>
-                                                <Text size="xs" fw={700} style={{ color: '#191F28', fontSize: '11px' }}>답변완료</Text>
+                                                <Text size="xs" fw={700} style={{ color: '#2563EB', fontSize: '11px' }}>답변완료</Text>
                                             </Box>
                                         )}
                                     </Group>
@@ -565,7 +565,7 @@ export default function InquiriesClient({ initialInquiries, facilities = [] }: I
                                             {inquiry.replies.map((reply) => (
                                                 <Box key={reply.id} mb="xs">
                                                     <Group gap="xs" mb={4}>
-                                                        <Text size="xs" fw={700} style={{ color: '#191F28' }}>
+                                                        <Text size="xs" fw={700} style={{ color: '#2563EB' }}>
                                                             관리자 답변
                                                         </Text>
                                                         <Text size="xs" c="#8B95A1">
@@ -593,7 +593,7 @@ export default function InquiriesClient({ initialInquiries, facilities = [] }: I
                     position: 'fixed',
                     bottom: 80,
                     right: 'max(20px, calc(50% - 300px))',
-                    backgroundColor: '#191F28',
+                    backgroundColor: '#2563EB',
                     color: 'white',
                     padding: '12px 20px',
                     borderRadius: 30,
@@ -625,7 +625,7 @@ export default function InquiriesClient({ initialInquiries, facilities = [] }: I
             >
                 <Stack gap="md" align="center">
                     <Box p="md" bg="#EFF6FF" style={{ borderRadius: '50%' }}>
-                        <Lock size={24} color="#191F28" />
+                        <Lock size={24} color="#2563EB" />
                     </Box>
                     <Text size="md" fw={700} c="#191F28">비공개 문의입니다</Text>
                     <Text size="xs" c="#6B7684" ta="center" lh={1.4}>
@@ -667,7 +667,7 @@ export default function InquiriesClient({ initialInquiries, facilities = [] }: I
                         disabled={pinValue.length !== 4}
                         styles={{
                             root: {
-                                backgroundColor: pinValue.length === 4 ? '#191F28' : '#E5E8EB',
+                                backgroundColor: pinValue.length === 4 ? '#2563EB' : '#E5E8EB',
                                 color: pinValue.length === 4 ? '#FFFFFF' : '#8B95A1',
                             }
                         }}
@@ -751,9 +751,9 @@ export default function InquiriesClient({ initialInquiries, facilities = [] }: I
                                                         fontSize: 13,
                                                         fontWeight: active ? 700 : 500,
                                                         cursor: 'pointer',
-                                                        backgroundColor: active ? '#191F28' : '#F8FAFC',
+                                                        backgroundColor: active ? '#2563EB' : '#F8FAFC',
                                                         color: active ? '#FFFFFF' : '#475569',
-                                                        border: active ? '1px solid #191F28' : '1px solid #CBD5E1',
+                                                        border: active ? '1px solid #2563EB' : '1px solid #CBD5E1',
                                                         transition: 'all 0.15s ease',
                                                     }}
                                                 >
@@ -818,10 +818,10 @@ export default function InquiriesClient({ initialInquiries, facilities = [] }: I
                                                         }}
                                                     >
                                                         <Group justify="space-between">
-                                                            <Text size="xs" fw={!inquiryForm.facilityId ? 700 : 500} c={!inquiryForm.facilityId ? '#191F28' : '#475569'}>
+                                                            <Text size="xs" fw={!inquiryForm.facilityId ? 700 : 500} c={!inquiryForm.facilityId ? '#2563EB' : '#475569'}>
                                                                 선택안함 (일반 문의)
                                                             </Text>
-                                                            {!inquiryForm.facilityId && <Check size={14} color="#191F28" />}
+                                                            {!inquiryForm.facilityId && <Check size={14} color="#2563EB" />}
                                                         </Group>
                                                     </Box>
                                                     {facilities
@@ -842,10 +842,10 @@ export default function InquiriesClient({ initialInquiries, facilities = [] }: I
                                                                 }}
                                                             >
                                                                 <Group justify="space-between">
-                                                                    <Text size="xs" fw={inquiryForm.facilityId === f.id ? 700 : 500} c={inquiryForm.facilityId === f.id ? '#191F28' : '#191F28'}>
+                                                                    <Text size="xs" fw={inquiryForm.facilityId === f.id ? 700 : 500} c={inquiryForm.facilityId === f.id ? '#2563EB' : '#191F28'}>
                                                                         {f.name}
                                                                     </Text>
-                                                                    {inquiryForm.facilityId === f.id && <Check size={14} color="#191F28" />}
+                                                                    {inquiryForm.facilityId === f.id && <Check size={14} color="#2563EB" />}
                                                                 </Group>
                                                             </Box>
                                                         ))}
@@ -875,8 +875,8 @@ export default function InquiriesClient({ initialInquiries, facilities = [] }: I
                                                     fontSize: '11.5px',
                                                     fontWeight: 600,
                                                     backgroundColor: inquiryForm.title === preset.title ? '#EFF6FF' : '#F8FAFC',
-                                                    color: inquiryForm.title === preset.title ? '#191F28' : '#475569',
-                                                    border: inquiryForm.title === preset.title ? '1px solid #191F28' : '1px solid #CBD5E1',
+                                                    color: inquiryForm.title === preset.title ? '#2563EB' : '#475569',
+                                                    border: inquiryForm.title === preset.title ? '1px solid #2563EB' : '1px solid #CBD5E1',
                                                     cursor: 'pointer',
                                                 }}
                                             >
@@ -966,7 +966,7 @@ export default function InquiriesClient({ initialInquiries, facilities = [] }: I
                                                     backgroundColor: inquiryForm.isPrivate ? '#EFF6FF' : '#F2F4F6',
                                                 }}
                                             >
-                                                {inquiryForm.isPrivate ? <Lock size={16} color="#191F28" /> : <Unlock size={16} color="#8B95A1" />}
+                                                {inquiryForm.isPrivate ? <Lock size={16} color="#2563EB" /> : <Unlock size={16} color="#8B95A1" />}
                                             </Box>
                                             <Box>
                                                 <Text size="xs" fw={700} c="#191F28">비공개 문의</Text>
@@ -988,7 +988,7 @@ export default function InquiriesClient({ initialInquiries, facilities = [] }: I
                                         onChange={(e) => setInquiryForm({ ...inquiryForm, privacyAgreed: e.currentTarget.checked })}
                                         label={
                                             <Text size="xs" c="#191F28" fw={600}>
-                                                <Text span fw={700} style={{ color: '#191F28' }}>[필수] </Text>
+                                                <Text span fw={700} style={{ color: '#2563EB' }}>[필수] </Text>
                                                 개인정보 수집 및 이용 동의
                                             </Text>
                                         }
@@ -1028,7 +1028,7 @@ export default function InquiriesClient({ initialInquiries, facilities = [] }: I
                         styles={{
                             root: {
                                 height: 48,
-                                backgroundColor: isFormValid ? '#191F28' : '#E2E8F0',
+                                backgroundColor: isFormValid ? '#2563EB' : '#E2E8F0',
                                 color: isFormValid ? '#FFFFFF' : '#94A3B8',
                                 fontWeight: 700,
                                 fontSize: 15,

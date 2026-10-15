@@ -167,7 +167,7 @@ export default function ReviewsPanel({ facility, isOpen, onClose, onOpenWriteRev
                         <Group justify="space-between" align="center">
                             <Box>
                                 <Text fw={800} style={{ fontSize: 18, color: '#191F28', letterSpacing: '-0.3px' }}>방문 이야기 ({reviews.length})</Text>
-                                <Text size="xs" fw={600} style={{ color: '#191F28', marginTop: 2 }}>{facility.name}</Text>
+                                <Text size="xs" fw={600} style={{ color: '#2563EB', marginTop: 2 }}>{facility.name}</Text>
                             </Box>
                             <ActionIcon variant="subtle" color="gray" radius="xl" size="lg" onClick={onClose}>
                                 <X size={20} color="#64748B" />
@@ -197,7 +197,7 @@ export default function ReviewsPanel({ facility, isOpen, onClose, onOpenWriteRev
                                                             justifyContent: 'center',
                                                         }}
                                                     >
-                                                        <User size={15} color="#191F28" />
+                                                        <User size={15} color="#2563EB" />
                                                     </Box>
                                                     <Text size="sm" fw={700} style={{ color: '#191F28' }}>{review.author}</Text>
                                                     {review.rating > 0 && (
@@ -339,7 +339,7 @@ export default function ReviewsPanel({ facility, isOpen, onClose, onOpenWriteRev
                                                                 onClick={() => handleSubmitReply(review.id)}
                                                                 disabled={!replyContent.trim() || !replyNickname.trim() || !replyPassword.trim()}
                                                                 style={{
-                                                                    backgroundColor: (!replyContent.trim() || !replyNickname.trim() || !replyPassword.trim()) ? '#E2E8F0' : '#191F28',
+                                                                    backgroundColor: (!replyContent.trim() || !replyNickname.trim() || !replyPassword.trim()) ? '#E2E8F0' : '#2563EB',
                                                                     color: (!replyContent.trim() || !replyNickname.trim() || !replyPassword.trim()) ? '#94A3B8' : '#FFFFFF',
                                                                     fontWeight: 700,
                                                                 }}>
@@ -377,7 +377,7 @@ export default function ReviewsPanel({ facility, isOpen, onClose, onOpenWriteRev
                                 size="lg"
                                 radius={12}
                                 onClick={onOpenWriteReview}
-                                style={{ height: 50, backgroundColor: '#191F28', color: '#FFFFFF', fontWeight: 700, fontSize: 15 }}
+                                style={{ height: 50, backgroundColor: '#2563EB', color: '#FFFFFF', fontWeight: 700, fontSize: 15 }}
                             >
                                 방문 이야기 작성하기
                             </Button>

@@ -128,7 +128,7 @@ function FacilityCardComponent({ facility, onClick, isCompared = false, onToggle
         OTHER: { bg: '#F2F4F6', text: '#4E5968' },
     };
     const catColors = categoryBadgePalette[facility.category] || categoryBadgePalette.OTHER;
-    const isVerified = displayPrice !== '가격문의' || facility.isPublic || Boolean((facility as any).hasDetailedPrices);
+    const isVerified = Boolean((facility as any).isVerifiedPartner);
 
     return (
         <Card
@@ -183,7 +183,7 @@ function FacilityCardComponent({ facility, onClick, isCompared = false, onToggle
                         top={6}
                         left={6}
                         style={{
-                            backgroundColor: facility.isPublic ? 'rgba(25, 31, 40, 0.88)' : 'rgba(25, 31, 40, 0.75)',
+                            backgroundColor: facility.isPublic ? 'rgba(37, 99, 235, 0.92)' : 'rgba(25, 31, 40, 0.78)',
                             backdropFilter: 'blur(4px)',
                             color: '#FFFFFF',
                             fontSize: '10px',
@@ -245,9 +245,9 @@ function FacilityCardComponent({ facility, onClick, isCompared = false, onToggle
                                             borderRadius: 5,
                                             fontSize: 10.5,
                                             fontWeight: 700,
-                                            border: isCompared ? '1px solid #191F28' : '1px solid #E2E8F0',
-                                            backgroundColor: isCompared ? '#F2F4F6' : '#FFFFFF',
-                                            color: isCompared ? '#191F28' : '#64748B',
+                                            border: isCompared ? '1px solid #2563EB' : '1px solid #E2E8F0',
+                                            backgroundColor: isCompared ? '#EFF6FF' : '#FFFFFF',
+                                            color: isCompared ? '#2563EB' : '#64748B',
                                             cursor: 'pointer',
                                             lineHeight: 1.3,
                                         }}
@@ -273,7 +273,7 @@ function FacilityCardComponent({ facility, onClick, isCompared = false, onToggle
                                 {facility.name}
                             </Text>
                             {isVerified && (
-                                <VerifiedSealIcon size={15} color="#4E5968" />
+                                <VerifiedSealIcon size={15} color="#2563EB" />
                             )}
                         </Group>
                         <Text
@@ -310,7 +310,7 @@ function FacilityCardComponent({ facility, onClick, isCompared = false, onToggle
                                 fw={800}
                                 style={{
                                     fontSize: displayPrice === '가격문의' ? '14.5px' : '17.5px',
-                                    color: displayPrice === '가격문의' ? '#8B95A1' : '#191F28',
+                                    color: displayPrice === '가격문의' ? '#8B95A1' : '#2563EB',
                                     letterSpacing: '-0.5px',
                                     lineHeight: 1.1,
                                 }}

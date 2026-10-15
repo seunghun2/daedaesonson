@@ -195,14 +195,14 @@ export default function LoginModal({ isOpen, onClose, reason }: LoginModalProps)
                             gap: 5,
                             padding: '5px 11px',
                             borderRadius: 999,
-                            backgroundColor: '#F2F4F6',
-                            border: '1px solid #E5E8EB',
-                            color: '#191F28',
+                            backgroundColor: '#EFF6FF',
+                            border: '1px solid #DBEAFE',
+                            color: '#2563EB',
                             fontSize: 12,
                             fontWeight: 700,
                             marginBottom: 12,
                         }}>
-                            <ShieldCheck size={14} color="#191F28" />
+                            <ShieldCheck size={14} color="#2563EB" />
                             <span>아이디 · 비밀번호 없는 3초 무료 가입</span>
                         </div>
 
@@ -229,8 +229,8 @@ export default function LoginModal({ isOpen, onClose, reason }: LoginModalProps)
                         {/* 컨텍스트 맞춤형 혜택 / 자동 보관 알림 배너 */}
                         {(reason || sessionIds.length > 0) && (
                             <div style={{
-                                backgroundColor: '#F2F4F6',
-                                border: '1px solid #E5E8EB',
+                                backgroundColor: '#EFF6FF',
+                                border: '1px solid #BFDBFE',
                                 borderRadius: 14,
                                 padding: '12px 14px',
                                 marginBottom: 12,
@@ -242,7 +242,7 @@ export default function LoginModal({ isOpen, onClose, reason }: LoginModalProps)
                                     width: 28,
                                     height: 28,
                                     borderRadius: 8,
-                                    backgroundColor: '#191F28',
+                                    backgroundColor: '#2563EB',
                                     color: '#FFFFFF',
                                     display: 'flex',
                                     alignItems: 'center',
@@ -253,10 +253,10 @@ export default function LoginModal({ isOpen, onClose, reason }: LoginModalProps)
                                     {reason?.includes('총비용') ? <Calculator size={15} /> : <BookmarkCheck size={15} />}
                                 </div>
                                 <div style={{ minWidth: 0 }}>
-                                    <div style={{ fontSize: 12, fontWeight: 800, color: '#191F28', marginBottom: 2, letterSpacing: '-0.2px' }}>
+                                    <div style={{ fontSize: 12, fontWeight: 800, color: '#1D4ED8', marginBottom: 2, letterSpacing: '-0.2px' }}>
                                         {reason ? '3초 로그인 즉시 적용되는 혜택' : `방금 둘러본 시설 ${sessionIds.length}곳 자동 보관 준비됨`}
                                     </div>
-                                    <div style={{ fontSize: 12.5, fontWeight: 600, color: '#333D4B', lineHeight: 1.45, letterSpacing: '-0.2px' }}>
+                                    <div style={{ fontSize: 12.5, fontWeight: 600, color: '#1E3A8A', lineHeight: 1.45, letterSpacing: '-0.2px' }}>
                                         {reason || `지금 시작하시면 둘러보신 시설 ${sessionIds.length}곳이 내 관심장지 보관함에 자동으로 영구 저장됩니다.`}
                                     </div>
                                 </div>
@@ -284,8 +284,8 @@ export default function LoginModal({ isOpen, onClose, reason }: LoginModalProps)
                                         width: 18,
                                         height: 18,
                                         borderRadius: '50%',
-                                        backgroundColor: '#E5E8EB',
-                                        color: '#191F28',
+                                        backgroundColor: '#DBEAFE',
+                                        color: '#2563EB',
                                         display: 'inline-flex',
                                         alignItems: 'center',
                                         justifyContent: 'center',
@@ -397,7 +397,7 @@ export default function LoginModal({ isOpen, onClose, reason }: LoginModalProps)
                                 e.currentTarget.style.borderColor = '#CBD5E1';
                             }}
                         >
-                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#191F28" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2563EB" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
                                 <rect x="5" y="2" width="14" height="20" rx="2" ry="2" />
                                 <line x1="12" y1="18" x2="12.01" y2="18" />
                             </svg>
@@ -458,7 +458,7 @@ export default function LoginModal({ isOpen, onClose, reason }: LoginModalProps)
                             lineHeight: 1.5,
                         }}>
                             휴대폰 번호를 입력하시면 문자로 인증번호 6자리를 보내드립니다.<br />
-                            <span style={{ color: '#191F28', fontWeight: 600 }}>처음 이용하시는 분은 인증 즉시 자동 가입됩니다.</span>
+                            <span style={{ color: '#2563EB', fontWeight: 600 }}>처음 이용하시는 분은 인증 즉시 자동 가입됩니다.</span>
                         </p>
 
                         <label style={{ display: 'block', fontSize: 12.5, fontWeight: 700, color: '#334155', marginBottom: 6 }}>
@@ -493,8 +493,8 @@ export default function LoginModal({ isOpen, onClose, reason }: LoginModalProps)
                             }}
                             onFocus={(e) => {
                                 if (!error) {
-                                    e.currentTarget.style.borderColor = '#191F28';
-                                    e.currentTarget.style.boxShadow = '0 0 0 3px rgba(25, 31, 40, 0.1)';
+                                    e.currentTarget.style.borderColor = '#2563EB';
+                                    e.currentTarget.style.boxShadow = '0 0 0 3px rgba(37, 99, 235, 0.12)';
                                 }
                             }}
                             onBlur={(e) => {
@@ -519,7 +519,7 @@ export default function LoginModal({ isOpen, onClose, reason }: LoginModalProps)
                             style={{
                                 width: '100%',
                                 height: 52,
-                                backgroundColor: isPhoneValid ? '#191F28' : '#E2E8F0',
+                                backgroundColor: isPhoneValid ? '#2563EB' : '#E2E8F0',
                                 color: isPhoneValid ? '#FFFFFF' : '#94A3B8',
                                 border: 'none',
                                 borderRadius: 12,
@@ -576,7 +576,7 @@ export default function LoginModal({ isOpen, onClose, reason }: LoginModalProps)
                             color: '#64748B',
                             lineHeight: 1.5,
                         }}>
-                            <strong style={{ color: '#191F28' }}>{phone}</strong> 번호로 발송된<br />
+                            <strong style={{ color: '#2563EB' }}>{phone}</strong> 번호로 발송된<br />
                             인증번호 6자리를 입력하시면 바로 완료됩니다.
                         </p>
 
@@ -618,8 +618,8 @@ export default function LoginModal({ isOpen, onClose, reason }: LoginModalProps)
                             }}
                             onFocus={(e) => {
                                 if (!error) {
-                                    e.currentTarget.style.borderColor = '#191F28';
-                                    e.currentTarget.style.boxShadow = '0 0 0 3px rgba(25, 31, 40, 0.1)';
+                                    e.currentTarget.style.borderColor = '#2563EB';
+                                    e.currentTarget.style.boxShadow = '0 0 0 3px rgba(37, 99, 235, 0.12)';
                                 }
                             }}
                             onBlur={(e) => {
@@ -644,7 +644,7 @@ export default function LoginModal({ isOpen, onClose, reason }: LoginModalProps)
                             style={{
                                 width: '100%',
                                 height: 52,
-                                backgroundColor: otp.length >= 6 ? '#191F28' : '#E2E8F0',
+                                backgroundColor: otp.length >= 6 ? '#2563EB' : '#E2E8F0',
                                 color: otp.length >= 6 ? '#FFFFFF' : '#94A3B8',
                                 border: 'none',
                                 borderRadius: 12,

@@ -158,7 +158,7 @@ export default function FacilityList({
                                 checked={hideInquiry ?? false}
                                 onChange={() => setHideInquiry(!hideInquiry)}
                                 size="xs"
-                                color="dark"
+                                color="brand"
                                 styles={{
                                     label: { fontSize: '12px', fontWeight: 600, cursor: 'pointer', color: '#4E5968', paddingLeft: 6 },
                                     input: { cursor: 'pointer', borderRadius: '4px' },
@@ -220,8 +220,8 @@ export default function FacilityList({
                                         padding: '6px 12px',
                                         borderRadius: 8,
                                         backgroundColor: '#FFFFFF',
-                                        border: '1px solid #E2E8F0',
-                                        color: '#191F28',
+                                        border: '1px solid #DBEAFE',
+                                        color: '#2563EB',
                                         fontSize: 12,
                                         fontWeight: 700,
                                         textDecoration: 'none',

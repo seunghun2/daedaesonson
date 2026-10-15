@@ -21,10 +21,12 @@ import {
     Building2,
     ShieldCheck,
     TrendingUp,
-    Sparkles,
     CheckCircle2,
     PhoneCall,
     Award,
+    ArrowRight,
+    FileCheck2,
+    Users,
 } from 'lucide-react';
 import Link from 'next/link';
 import BottomNav from '@/components/common/BottomNav';
@@ -70,7 +72,7 @@ export default function PartnershipPage() {
                 companyName: prev.companyName || cleanName,
                 content:
                     prev.content ||
-                    `[${cleanName}] 공식 파트너 인증 배지 발급 및 분양가·사진 정보 업데이트, 유족 1:1 상담 연결에 대해 안내받고 싶습니다.`,
+                    `[${cleanName}] 공식 파트너 제휴 및 분양가·사진 정보 직접 관리, 유족 1:1 상담 연결에 대해 안내받고 싶습니다.`,
             }));
         }
     }, []);
@@ -88,6 +90,14 @@ export default function PartnershipPage() {
 
     const getFullEmail = () => {
         return form.email.trim();
+    };
+
+    const scrollToSection = (id: string) => {
+        if (typeof document === 'undefined') return;
+        const el = document.getElementById(id);
+        if (el) {
+            el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
     };
 
     const handleSubmit = async () => {
@@ -149,7 +159,7 @@ export default function PartnershipPage() {
         },
     };
 
-    const previewFacilityName = prefilledFacility || form.companyName.trim() || '광명메모리얼파크';
+    const previewFacilityName = prefilledFacility || form.companyName.trim() || '분당추모공원 휴';
 
     if (submitted) {
         return (
@@ -165,18 +175,18 @@ export default function PartnershipPage() {
                         borderBottom: '1px solid #E5E8EB',
                     }}
                 >
-                    <Box maw={1040} mx="auto" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                    <Box maw={1120} mx="auto" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                         <Group gap="sm">
                             <Link href="/" style={{ display: 'flex', alignItems: 'center', color: '#191F28' }}>
                                 <ArrowLeft size={20} />
                             </Link>
-                            <Text size="md" fw={800} c="#191F28">장지 시설 공식 인증 · 제휴 센터</Text>
+                            <Text size="md" fw={800} c="#191F28">대대손손 공식 파트너 · 제휴 센터</Text>
                         </Group>
                     </Box>
                 </Box>
 
                 <Box maw={540} mx="auto" px="md" pt={64}>
-                    <Paper p="xl" radius="lg" bg="white" style={{ border: '1px solid #E5E8EB', textAlign: 'center', wordBreak: 'keep-all' }}>
+                    <Paper p="xl" radius="lg" bg="white" style={{ border: '1px solid #DBEAFE', textAlign: 'center', wordBreak: 'keep-all', boxShadow: '0 12px 32px rgba(37, 99, 235, 0.08)' }}>
                         <Box
                             mb="lg"
                             mx="auto"
@@ -184,19 +194,19 @@ export default function PartnershipPage() {
                                 width: 64,
                                 height: 64,
                                 borderRadius: '50%',
-                                background: '#F2F4F6',
-                                border: '1px solid #E5E8EB',
+                                background: '#EFF6FF',
+                                border: '1px solid #BFDBFE',
                                 display: 'flex',
                                 alignItems: 'center',
                                 justifyContent: 'center',
                             }}
                         >
-                            <Check size={30} color="#191F28" strokeWidth={2.5} />
+                            <Check size={30} color="#2563EB" strokeWidth={2.5} />
                         </Box>
                         <Group justify="center" mb={10}>
                             <VerifiedBadge variant="partner" size="md" label="공식 파트너 심사 접수" />
                         </Group>
-                        <Text size="xl" fw={800} c="#191F28" mb="xs">제휴 및 인증 신청이 접수되었습니다</Text>
+                        <Text size="xl" fw={800} c="#191F28" mb="xs">제휴 및 정보 관리 신청이 접수되었습니다</Text>
                         <Text size="sm" c="#64748B" mb="xl" lh={1.6}>
                             남겨주신 내용을 바탕으로 대대손손 파트너 전담팀에서<br />
                             영업일 기준 1일 이내 빠르게 연락드리겠습니다.
@@ -207,7 +217,7 @@ export default function PartnershipPage() {
                             size="md"
                             radius="md"
                             fullWidth
-                            style={{ backgroundColor: '#191F28', height: 48, fontWeight: 700 }}
+                            style={{ backgroundColor: '#2563EB', height: 48, fontWeight: 700 }}
                         >
                             대대손손 홈으로 돌아가기
                         </Button>
@@ -222,8 +232,51 @@ export default function PartnershipPage() {
     }
 
     return (
-        <Box style={{ minHeight: '100dvh', backgroundColor: '#F8FAFC', paddingBottom: 64, wordBreak: 'keep-all' }}>
-            {/* 상단 고정 헤더 */}
+        <Box style={{ minHeight: '100dvh', backgroundColor: '#F8FAFC', paddingBottom: 80, wordBreak: 'keep-all' }}>
+            <style>{`
+                .landing-hero-grid {
+                    display: grid;
+                    grid-template-columns: 1fr;
+                    gap: 28px;
+                    align-items: center;
+                }
+                .landing-benefits-grid {
+                    display: grid;
+                    grid-template-columns: 1fr;
+                    gap: 18px;
+                }
+                .landing-steps-grid {
+                    display: grid;
+                    grid-template-columns: 1fr;
+                    gap: 14px;
+                }
+                .landing-form-grid {
+                    display: grid;
+                    grid-template-columns: 1fr;
+                    gap: 28px;
+                    align-items: start;
+                }
+                @media (min-width: 900px) {
+                    .landing-hero-grid {
+                        grid-template-columns: 1.15fr 0.95fr;
+                        gap: 44px;
+                    }
+                    .landing-benefits-grid {
+                        grid-template-columns: repeat(3, 1fr);
+                        gap: 22px;
+                    }
+                    .landing-steps-grid {
+                        grid-template-columns: repeat(4, 1fr);
+                        gap: 16px;
+                    }
+                    .landing-form-grid {
+                        grid-template-columns: 0.85fr 1.15fr;
+                        gap: 36px;
+                    }
+                }
+            `}</style>
+
+            {/* ── 상단 고정 내비게이션 ── */}
             <Box
                 px="md"
                 py={12}
@@ -233,10 +286,12 @@ export default function PartnershipPage() {
                     top: 0,
                     zIndex: 100,
                     borderBottom: '1px solid #E5E8EB',
+                    backgroundColor: 'rgba(255, 255, 255, 0.96)',
+                    backdropFilter: 'blur(8px)',
                 }}
             >
                 <Box
-                    maw={1080}
+                    maw={1120}
                     mx="auto"
                     style={{
                         display: 'flex',
@@ -261,225 +316,321 @@ export default function PartnershipPage() {
                         >
                             <ArrowLeft size={18} />
                         </Link>
-                        <Box>
-                            <Group gap={6} align="center">
-                                <Text size="md" fw={800} c="#191F28" style={{ letterSpacing: '-0.3px' }}>
-                                    장지 시설 공식 인증 · 제휴 센터
-                                </Text>
-                                <VerifiedBadge variant="pill" size="sm" label="B2B 공식" />
-                            </Group>
-                        </Box>
+                        <Group gap={8} align="center">
+                            <Text size="md" fw={800} c="#191F28" style={{ letterSpacing: '-0.3px' }}>
+                                대대손손 공식 파트너 센터
+                            </Text>
+                            <VerifiedBadge variant="pill" size="sm" label="B2B 제휴" />
+                        </Group>
                     </Group>
 
-                    <Link
-                        href="/"
-                        style={{
-                            fontSize: 13,
-                            fontWeight: 700,
-                            color: '#191F28',
-                            textDecoration: 'none',
-                            padding: '6px 12px',
-                            borderRadius: 8,
-                            backgroundColor: '#F2F4F6',
-                        }}
-                    >
-                        지도 홈으로
-                    </Link>
+                    <Group gap={8}>
+                        <button
+                            type="button"
+                            onClick={() => scrollToSection('apply-form')}
+                            style={{
+                                fontSize: 13,
+                                fontWeight: 700,
+                                color: '#FFFFFF',
+                                padding: '7px 14px',
+                                borderRadius: 8,
+                                backgroundColor: '#2563EB',
+                                border: 'none',
+                                cursor: 'pointer',
+                                boxShadow: '0 2px 8px rgba(37, 99, 235, 0.24)',
+                            }}
+                        >
+                            제휴 신청하기
+                        </button>
+                        <Link
+                            href="/"
+                            style={{
+                                fontSize: 13,
+                                fontWeight: 700,
+                                color: '#334155',
+                                textDecoration: 'none',
+                                padding: '7px 12px',
+                                borderRadius: 8,
+                                backgroundColor: '#F1F5F9',
+                            }}
+                        >
+                            지도 홈으로
+                        </Link>
+                    </Group>
                 </Box>
             </Box>
 
-            {/* 메인 컨텐츠 (PC: 좌측 히어로 & 인증배지 쇼케이스 + 우측 신청 폼 2단 구성 / 모바일: 1단 구성) */}
-            <Box maw={1080} mx="auto" px="md" pt={{ base: 20, md: 36 }}>
-                <style>{`
-                    .partnership-grid {
-                        display: grid;
-                        grid-template-columns: 1fr;
-                        gap: 24px;
-                        align-items: start;
-                    }
-                    @media (min-width: 900px) {
-                        .partnership-grid {
-                            grid-template-columns: 1.05fr 1fr;
-                            gap: 32px;
-                        }
-                    }
-                `}</style>
+            {/* ── SECTION 1: 풀와이드 B2B 랜딩 히어로 ── */}
+            <Box
+                style={{
+                    background: 'linear-gradient(135deg, #0F172A 0%, #1E293B 55%, #1E3A8A 100%)',
+                    color: '#FFFFFF',
+                    position: 'relative',
+                    overflow: 'hidden',
+                    borderBottom: '1px solid rgba(255, 255, 255, 0.08)',
+                }}
+            >
+                {/* 은은한 로얄블루 글로우 */}
+                <div
+                    style={{
+                        position: 'absolute',
+                        top: -120,
+                        right: '8%',
+                        width: 420,
+                        height: 420,
+                        borderRadius: '50%',
+                        background: 'radial-gradient(circle, rgba(37, 99, 235, 0.28) 0%, rgba(37, 99, 235, 0) 70%)',
+                        pointerEvents: 'none',
+                    }}
+                />
 
-                <div className="partnership-grid">
-                    {/* 좌측: B2B 가치 제안 + 공식 인증 배지 라이브 프리뷰 */}
-                    <Stack gap={20}>
-                        {/* 1. 메인 히어로 카드 */}
-                        <Paper
-                            p={{ base: 24, sm: 30 }}
-                            radius="lg"
-                            style={{
-                                background: '#191F28',
-                                color: '#FFFFFF',
-                                border: '1px solid rgba(255, 255, 255, 0.08)',
-                                boxShadow: '0 16px 40px rgba(15, 23, 42, 0.14)',
-                                position: 'relative',
-                                overflow: 'hidden',
-                            }}
-                        >
-                            <Group gap={8} mb={14}>
-                                <VerifiedBadge variant="partner" size="lg" label="대대손손 공식 인증 파트너" />
+                <Box maw={1120} mx="auto" px="md" py={{ base: 40, md: 64 }} style={{ position: 'relative', zIndex: 1 }}>
+                    <div className="landing-hero-grid">
+                        {/* 히어로 좌측: 메인 카피 + CTA + 핵심 지표 */}
+                        <Box>
+                            <Group gap={8} mb={16}>
+                                <VerifiedBadge variant="partner" size="lg" label="대대손손 공식 파트너십" />
+                                <span
+                                    style={{
+                                        fontSize: 12,
+                                        fontWeight: 700,
+                                        color: '#93C5FD',
+                                        backgroundColor: 'rgba(37, 99, 235, 0.22)',
+                                        border: '1px solid rgba(147, 197, 253, 0.3)',
+                                        padding: '4px 10px',
+                                        borderRadius: 999,
+                                    }}
+                                >
+                                    전국 봉안당 · 수목장 · 공원묘지 전용
+                                </span>
                             </Group>
 
                             <Text
-                                fw={800}
+                                fw={900}
                                 c="white"
-                                lh={1.38}
+                                lh={1.32}
                                 style={{
-                                    fontSize: '22px',
-                                    letterSpacing: '-0.5px',
+                                    fontSize: 'clamp(24px, 3.2vw, 36px)',
+                                    letterSpacing: '-0.8px',
                                     wordBreak: 'keep-all',
                                 }}
                             >
-                                {prefilledFacility
-                                    ? `${prefilledFacility}에 ‘공식 인증 배지’를 달고 유족 1:1 상담을 직통으로 받아보세요`
-                                    : '우리 추모시설에 ‘공식 인증 배지’를 달고 매월 3만 유족과 직통 연결되세요'}
+                                {prefilledFacility ? (
+                                    <>
+                                        <span style={{ color: '#60A5FA' }}>{prefilledFacility}</span>의 공식 분양가·사진을 직접 관리하고 유족 상담을 직통으로 받으세요
+                                    </>
+                                ) : (
+                                    <>
+                                        우리 추모시설의 <span style={{ color: '#60A5FA' }}>공식 분양가·실사진</span>을 직접 관리하고 유족과 직통 연결되세요
+                                    </>
+                                )}
                             </Text>
 
                             <Text
                                 c="#CBD5E1"
-                                mt={10}
-                                lh={1.6}
+                                mt={16}
+                                lh={1.68}
                                 style={{
-                                    fontSize: '14px',
+                                    fontSize: '15.5px',
+                                    maxWidth: 560,
                                     wordBreak: 'keep-all',
                                 }}
                             >
-                                봉안당·수목장·공원묘지를 찾는 가족들이 가장 신뢰하는 기준은 ‘정확한 분양가’와 ‘공식 인증 마크’입니다. 시설 공식 정보를 직접 관리하고 우선 상담 혜택을 누려보세요.
+                                장지를 알아보는 가족들이 가장 먼저 비교하는 기준은 투명한 분양가표와 실제 시설 사진입니다. 대대손손 공식 파트너로 등록하시면 시설 직원이 검증한 공식 데이터를 우선 노출하고, 1:1 방문 답사·상담 문의를 실시간으로 연결해 드립니다.
                             </Text>
+
+                            {/* 히어로 CTA 버튼 그룹 */}
+                            <Group gap={12} mt={28} wrap="wrap">
+                                <button
+                                    type="button"
+                                    onClick={() => scrollToSection('apply-form')}
+                                    style={{
+                                        height: 50,
+                                        padding: '0 24px',
+                                        borderRadius: 12,
+                                        background: 'linear-gradient(135deg, #2563EB 0%, #1D4ED8 100%)',
+                                        color: '#FFFFFF',
+                                        fontSize: 15,
+                                        fontWeight: 800,
+                                        border: 'none',
+                                        cursor: 'pointer',
+                                        display: 'inline-flex',
+                                        alignItems: 'center',
+                                        gap: 8,
+                                        boxShadow: '0 10px 24px rgba(37, 99, 235, 0.35)',
+                                    }}
+                                >
+                                    <span>공식 파트너 · 정보 관리 신청하기</span>
+                                    <ArrowRight size={17} />
+                                </button>
+                                <button
+                                    type="button"
+                                    onClick={() => scrollToSection('benefits-section')}
+                                    style={{
+                                        height: 50,
+                                        padding: '0 20px',
+                                        borderRadius: 12,
+                                        backgroundColor: 'rgba(255, 255, 255, 0.08)',
+                                        color: '#E2E8F0',
+                                        fontSize: 14,
+                                        fontWeight: 700,
+                                        border: '1px solid rgba(255, 255, 255, 0.16)',
+                                        cursor: 'pointer',
+                                    }}
+                                >
+                                    제휴 혜택 자세히 보기
+                                </button>
+                            </Group>
 
                             {/* 핵심 지표 3열 */}
                             <div
                                 style={{
                                     display: 'grid',
                                     gridTemplateColumns: 'repeat(3, 1fr)',
-                                    gap: 10,
-                                    marginTop: 22,
+                                    gap: 12,
+                                    marginTop: 32,
+                                    maxWidth: 540,
                                 }}
                             >
                                 {[
-                                    { stat: '1,400+', label: '전국 등록 장지' },
-                                    { stat: '3.2배', label: '인증시설 상담 전환율' },
-                                    { stat: '24시간', label: '유족 1:1 직통 연결' },
+                                    { stat: '1,400+', label: '전국 등록 추모시설' },
+                                    { stat: '1:1 비교', label: '권역별 분양가·관리비' },
+                                    { stat: '24시간', label: '유족 답사·상담 직통 연결' },
                                 ].map((item) => (
                                     <Box
                                         key={item.label}
-                                        p={12}
+                                        p={14}
                                         style={{
-                                            borderRadius: 12,
-                                            backgroundColor: 'rgba(255, 255, 255, 0.07)',
+                                            borderRadius: 14,
+                                            backgroundColor: 'rgba(255, 255, 255, 0.06)',
                                             border: '1px solid rgba(255, 255, 255, 0.12)',
-                                            textAlign: 'center',
                                         }}
                                     >
-                                        <Text fw={900} c="#FFFFFF" style={{ fontSize: 19, letterSpacing: '-0.4px' }}>
+                                        <Text fw={900} c="#60A5FA" style={{ fontSize: 20, letterSpacing: '-0.5px' }}>
                                             {item.stat}
                                         </Text>
-                                        <Text size="11.5px" c="#CBD5E1" fw={600} mt={3}>
+                                        <Text size="12px" c="#CBD5E1" fw={600} mt={4}>
                                             {item.label}
                                         </Text>
                                     </Box>
                                 ))}
                             </div>
-                        </Paper>
+                        </Box>
 
-                        {/* 2. 공식 인증 배지 실제 적용 미리보기 (Live Badge Showcase) */}
+                        {/* 히어로 우측: 실제 제휴 적용 시 노출되는 라이브 프리뷰 쇼케이스 카드 */}
                         <Paper
                             p={{ base: 20, sm: 24 }}
                             radius="lg"
                             bg="white"
                             style={{
-                                border: '1px solid #E5E8EB',
-                                boxShadow: '0 8px 24px rgba(15, 23, 42, 0.04)',
+                                color: '#191F28',
+                                border: '1px solid rgba(255, 255, 255, 0.2)',
+                                boxShadow: '0 24px 48px rgba(15, 23, 42, 0.35)',
                             }}
                         >
-                            <Group justify="space-between" align="center" mb={12}>
+                            <Group justify="space-between" align="center" mb={14}>
                                 <Group gap={6}>
-                                    <Award size={17} color="#191F28" />
+                                    <Award size={18} color="#2563EB" />
                                     <Text size="sm" fw={800} c="#191F28" style={{ letterSpacing: '-0.3px' }}>
-                                        제휴 승인 시 부여되는 ‘공식 인증 배지’ 미리보기
+                                        제휴 등록 시 실제 노출 화면 미리보기
                                     </Text>
                                 </Group>
                                 <span
                                     style={{
                                         fontSize: 11,
                                         fontWeight: 700,
-                                        color: '#191F28',
-                                        backgroundColor: '#F2F4F6',
-                                        padding: '3px 8px',
+                                        color: '#2563EB',
+                                        backgroundColor: '#EFF6FF',
+                                        border: '1px solid #DBEAFE',
+                                        padding: '3px 9px',
                                         borderRadius: 999,
                                     }}
                                 >
-                                    실제 화면 예시
+                                    공식 파트너 전용
                                 </span>
                             </Group>
 
-                            {/* 실제 시설 상세/카드 목업 */}
+                            {/* 상세페이지/카드 목업 */}
                             <Box
-                                p={16}
+                                p={18}
                                 style={{
                                     borderRadius: 14,
                                     backgroundColor: '#F8FAFC',
                                     border: '1px solid #E2E8F0',
                                 }}
                             >
-                                {/* 상단 배지 라인 */}
-                                <Group justify="space-between" align="center" mb={8} wrap="wrap" gap={6}>
+                                <Group justify="space-between" align="center" mb={10} wrap="wrap" gap={6}>
                                     <Group gap={6}>
                                         <span
                                             style={{
-                                                backgroundColor: '#F2F4F6',
-                                                color: '#333D4B',
+                                                backgroundColor: '#EFF6FF',
+                                                color: '#2563EB',
                                                 fontSize: 11.5,
                                                 fontWeight: 700,
                                                 padding: '3px 8px',
                                                 borderRadius: 6,
                                             }}
                                         >
-                                            추모시설
+                                            사설 · 추모시설
                                         </span>
                                         <VerifiedBadge variant="partner" size="sm" label="공식 인증 파트너" />
-                                        <VerifiedBadge variant="pill" size="sm" label="공식 데이터 검증" />
                                     </Group>
-                                    <Text size="11px" fw={700} c="#4E5968">
-                                        우선 노출 적용됨
+                                    <Text size="11px" fw={700} c="#2563EB">
+                                        권역 내 우선 추천
                                     </Text>
                                 </Group>
 
-                                {/* 시설명 + 인증 실 */}
                                 <Group gap={6} align="center" mb={6}>
-                                    <Text fw={800} c="#191F28" style={{ fontSize: 17, letterSpacing: '-0.4px' }}>
+                                    <Text fw={800} c="#191F28" style={{ fontSize: 18, letterSpacing: '-0.4px' }}>
                                         {previewFacilityName}
                                     </Text>
-                                    <VerifiedSealIcon size={18} color="#191F28" />
+                                    <VerifiedSealIcon size={18} />
                                 </Group>
 
-                                <Text size="xs" c="#64748B" mb={12}>
-                                    공식 분양가표 · 연간 관리비 안내 · 고화질 실사진 인증 완료
+                                <Text size="xs" c="#64748B" mb={14}>
+                                    시설 관계자 직접 등록 · 분양가표 및 고화질 실사진 업데이트 완료
                                 </Text>
 
-                                {/* 인증 배지 3대 혜택 체크 */}
+                                {/* 샘플 분양가 요약 바 */}
+                                <Box
+                                    p={12}
+                                    mb={12}
+                                    style={{
+                                        borderRadius: 10,
+                                        backgroundColor: '#FFFFFF',
+                                        border: '1px solid #DBEAFE',
+                                        display: 'flex',
+                                        justifyContent: 'space-between',
+                                        alignItems: 'center',
+                                    }}
+                                >
+                                    <Box>
+                                        <Text size="11px" fw={700} c="#64748B">
+                                            공식 대표 분양가 (개인단 · 부부단)
+                                        </Text>
+                                        <Text size="md" fw={900} c="#2563EB" mt={2}>
+                                            350만원~ <span style={{ fontSize: 12, fontWeight: 600, color: '#64748B' }}>/ 관리비 연 5만원~</span>
+                                        </Text>
+                                    </Box>
+                                    <VerifiedBadge variant="pill" size="sm" label="공식 분양가" />
+                                </Box>
+
+                                {/* 3대 제공 기능 칩 */}
                                 <div
                                     style={{
                                         display: 'grid',
                                         gridTemplateColumns: 'repeat(3, 1fr)',
                                         gap: 8,
-                                        paddingTop: 12,
-                                        borderTop: '1px solid #E2E8F0',
                                     }}
                                 >
                                     {[
-                                        { label: '시설명 옆 인증마크', sub: '목록·상세 동시 노출' },
-                                        { label: '공식 분양가 보증', sub: '유족 신뢰도 극대화' },
-                                        { label: '1:1 상담 직통 연결', sub: '실시간 답사 예약' },
+                                        { label: '공식 파트너 마크', sub: '시설명 옆 인증 배지' },
+                                        { label: '분양가·사진 관리', sub: '단수별 요금 직접 반영' },
+                                        { label: '1:1 답사·상담 연결', sub: '유족 문의 즉시 알림' },
                                     ].map((b) => (
                                         <Box
                                             key={b.label}
-                                            p={8}
+                                            p={9}
                                             style={{
                                                 backgroundColor: '#FFFFFF',
                                                 borderRadius: 8,
@@ -487,7 +638,7 @@ export default function PartnershipPage() {
                                             }}
                                         >
                                             <Group gap={4} mb={2} wrap="nowrap">
-                                                <CheckCircle2 size={12} color="#191F28" style={{ flexShrink: 0 }} />
+                                                <CheckCircle2 size={12} color="#2563EB" style={{ flexShrink: 0 }} />
                                                 <Text size="11px" fw={700} c="#191F28" lineClamp={1}>
                                                     {b.label}
                                                 </Text>
@@ -500,95 +651,248 @@ export default function PartnershipPage() {
                                 </div>
                             </Box>
                         </Paper>
+                    </div>
+                </Box>
+            </Box>
 
-                        {/* 3. 파트너 3대 핵심 제공 혜택 */}
-                        <Paper p={{ base: 20, sm: 24 }} radius="lg" bg="white" style={{ border: '1px solid #E5E8EB' }}>
-                            <Text size="sm" fw={800} c="#191F28" mb={14} style={{ letterSpacing: '-0.3px' }}>
-                                대대손손 공식 파트너 제휴 혜택
-                            </Text>
-                            <Stack gap={12}>
-                                {[
-                                    {
-                                        icon: ShieldCheck,
-                                        title: '공식 인증 배지 부여 & 상세 가격표 완벽 반영',
-                                        desc: '개인·부부단 분양가, 단수별 요금, 연간 관리비, 고화질 시설 내·외부 사진을 공식 데이터로 인증하여 표시합니다.',
-                                    },
-                                    {
-                                        icon: PhoneCall,
-                                        title: '진성 유족 1:1 무료 상담 · 방문 답사 예약 직통 연결',
-                                        desc: '해당 시설의 가격표를 확인한 유족이 상담 또는 주말 현장 답사를 신청하면 담당자님께 즉시 알림으로 연결됩니다.',
-                                    },
-                                    {
-                                        icon: TrendingUp,
-                                        title: '인근 권역 비교 추천 & 지도 상단 우선 안내',
-                                        desc: '같은 지역 장지를 비교 중인 가족에게 공식 인증 시설로 우선 추천되어 실제 안치 계약 전환율을 높여드립니다.',
-                                    },
-                                ].map((item) => {
-                                    const IconComp = item.icon;
-                                    return (
+            {/* ── SECTION 2: 핵심 파트너십 혜택 3열 소개 ── */}
+            <Box id="benefits-section" maw={1120} mx="auto" px="md" pt={{ base: 44, md: 64 }}>
+                <Box ta="center" mb={{ base: 28, md: 36 }}>
+                    <Text size="xs" fw={800} c="#2563EB" mb={6} style={{ letterSpacing: '0.5px' }}>
+                        PARTNERSHIP BENEFITS
+                    </Text>
+                    <Text
+                        fw={900}
+                        c="#191F28"
+                        style={{
+                            fontSize: 'clamp(20px, 2.4vw, 28px)',
+                            letterSpacing: '-0.6px',
+                        }}
+                    >
+                        대대손손 공식 파트너에게 제공되는 3가지 핵심 가치
+                    </Text>
+                    <Text size="sm" c="#64748B" mt={8}>
+                        단순 광고 배너가 아닌, 유족이 실제로 신뢰하고 방문 답사를 예약하는 공식 채널을 만들어 드립니다.
+                    </Text>
+                </Box>
+
+                <div className="landing-benefits-grid">
+                    {[
+                        {
+                            icon: ShieldCheck,
+                            badge: '공식 정보 관리',
+                            title: '분양가표 · 관리비 · 고화질 실사진 직접 관리',
+                            desc: '오래된 정보나 부정확한 가격 대신, 시설 관계자가 직접 검수한 단수별·안치단별 분양가와 고화질 내·외부 사진을 공식 데이터로 반영합니다.',
+                        },
+                        {
+                            icon: PhoneCall,
+                            badge: '유족 직통 연결',
+                            title: '1:1 무료 상담 및 주말 현장 답사 예약 실시간 연결',
+                            desc: '우리 시설의 상세 가격표와 위치를 확인한 진성 유족이 상담 또는 방문 답사를 신청하면 담당자님께 즉시 알림으로 직통 연결됩니다.',
+                        },
+                        {
+                            icon: TrendingUp,
+                            badge: '비교함 · 지도 추천',
+                            title: '인근 권역 1:1 비교함 & 지도 탐색 우선 노출',
+                            desc: '같은 지역의 봉안당·수목장·공원묘지를 1:1 비교 중인 가족들에게 공식 파트너 시설로 신뢰도 높게 안내되어 계약 전환율을 높입니다.',
+                        },
+                    ].map((item) => {
+                        const IconComp = item.icon;
+                        return (
+                            <Paper
+                                key={item.title}
+                                p={26}
+                                radius="lg"
+                                bg="white"
+                                style={{
+                                    border: '1px solid #E5E8EB',
+                                    boxShadow: '0 6px 20px rgba(15, 23, 42, 0.04)',
+                                    display: 'flex',
+                                    flexDirection: 'column',
+                                    justifyContent: 'space-between',
+                                }}
+                            >
+                                <Box>
+                                    <Group justify="space-between" align="center" mb={16}>
                                         <Box
-                                            key={item.title}
-                                            p={14}
                                             style={{
+                                                width: 44,
+                                                height: 44,
                                                 borderRadius: 12,
-                                                backgroundColor: '#F8FAFC',
-                                                border: '1px solid #EEF1F5',
+                                                backgroundColor: '#EFF6FF',
+                                                border: '1px solid #DBEAFE',
                                                 display: 'flex',
-                                                alignItems: 'flex-start',
-                                                gap: 12,
+                                                alignItems: 'center',
+                                                justifyContent: 'center',
                                             }}
                                         >
-                                            <Box
-                                                style={{
-                                                    width: 36,
-                                                    height: 36,
-                                                    borderRadius: 10,
-                                                    backgroundColor: '#F2F4F6',
-                                                    border: '1px solid #E5E8EB',
-                                                    display: 'flex',
-                                                    alignItems: 'center',
-                                                    justifyContent: 'center',
-                                                    flexShrink: 0,
-                                                }}
-                                            >
-                                                <IconComp size={18} color="#191F28" />
-                                            </Box>
-                                            <Box style={{ flex: 1 }}>
-                                                <Text size="sm" fw={700} c="#191F28" mb={3} style={{ wordBreak: 'keep-all' }}>
-                                                    {item.title}
-                                                </Text>
-                                                <Text size="xs" c="#64748B" lh={1.55} style={{ wordBreak: 'keep-all' }}>
-                                                    {item.desc}
-                                                </Text>
-                                            </Box>
+                                            <IconComp size={22} color="#2563EB" />
                                         </Box>
-                                    );
-                                })}
+                                        <span
+                                            style={{
+                                                fontSize: 11.5,
+                                                fontWeight: 700,
+                                                color: '#2563EB',
+                                                backgroundColor: '#EFF6FF',
+                                                padding: '4px 10px',
+                                                borderRadius: 999,
+                                            }}
+                                        >
+                                            {item.badge}
+                                        </span>
+                                    </Group>
+
+                                    <Text fw={800} c="#191F28" mb={8} style={{ fontSize: 17, letterSpacing: '-0.3px', lineHeight: 1.4 }}>
+                                        {item.title}
+                                    </Text>
+                                    <Text size="sm" c="#64748B" lh={1.65}>
+                                        {item.desc}
+                                    </Text>
+                                </Box>
+                            </Paper>
+                        );
+                    })}
+                </div>
+            </Box>
+
+            {/* ── SECTION 3: 공식 제휴 및 등록 4단계 프로세스 ── */}
+            <Box maw={1120} mx="auto" px="md" pt={{ base: 40, md: 56 }}>
+                <Paper
+                    p={{ base: 22, md: 32 }}
+                    radius="lg"
+                    bg="white"
+                    style={{
+                        border: '1px solid #E5E8EB',
+                        boxShadow: '0 4px 18px rgba(15, 23, 42, 0.03)',
+                    }}
+                >
+                    <Group justify="space-between" align="flex-end" mb={22} wrap="wrap" gap={8}>
+                        <Box>
+                            <Text size="xs" fw={800} c="#2563EB" mb={4}>
+                                ONBOARDING PROCESS
+                            </Text>
+                            <Text fw={800} c="#191F28" style={{ fontSize: 20, letterSpacing: '-0.4px' }}>
+                                간편 신청부터 공식 파트너 등록까지 빠르게 진행됩니다
+                            </Text>
+                        </Box>
+                        <Text size="xs" fw={600} c="#64748B">
+                            신청 접수 후 영업일 기준 1일 이내 전담 매니저가 안내해 드립니다
+                        </Text>
+                    </Group>
+
+                    <div className="landing-steps-grid">
+                        {[
+                            {
+                                step: 'STEP 01',
+                                title: '제휴 · 정보 관리 신청',
+                                desc: '하단 신청 폼에서 시설명과 담당자 연락처, 원하시는 항목을 남겨주세요.',
+                            },
+                            {
+                                step: 'STEP 02',
+                                title: '전담팀 1:1 확인 및 안내',
+                                desc: '영업일 1일 이내에 시설 관계자 확인 및 제휴·업데이트 절차를 안내드립니다.',
+                            },
+                            {
+                                step: 'STEP 03',
+                                title: '분양가 · 실사진 데이터 반영',
+                                desc: '전달주신 최신 분양가표와 시설 브로셔·사진을 대대손손 표준 규격으로 반영합니다.',
+                            },
+                            {
+                                step: 'STEP 04',
+                                title: '공식 배지 부여 & 상담 연결',
+                                desc: '시설 상세페이지에 공식 파트너 인증을 부여하고 유족 1:1 상담을 직통 연결합니다.',
+                            },
+                        ].map((s) => (
+                            <Box
+                                key={s.step}
+                                p={18}
+                                style={{
+                                    borderRadius: 14,
+                                    backgroundColor: '#F8FAFC',
+                                    border: '1px solid #E2E8F0',
+                                }}
+                            >
+                                <Text size="11px" fw={800} c="#2563EB" mb={6}>
+                                    {s.step}
+                                </Text>
+                                <Text size="sm" fw={800} c="#191F28" mb={6}>
+                                    {s.title}
+                                </Text>
+                                <Text size="xs" c="#64748B" lh={1.55}>
+                                    {s.desc}
+                                </Text>
+                            </Box>
+                        ))}
+                    </div>
+                </Paper>
+            </Box>
+
+            {/* ── SECTION 4: 공식 파트너 · 정보 업데이트 신청 폼 (#apply-form) ── */}
+            <Box id="apply-form" maw={1120} mx="auto" px="md" pt={{ base: 44, md: 64 }}>
+                <div className="landing-form-grid">
+                    {/* 좌측 안내 요약 컬럼 */}
+                    <Stack gap={16}>
+                        <Box>
+                            <VerifiedBadge variant="pill" size="md" label="1분 간편 접수" />
+                            <Text
+                                fw={900}
+                                c="#191F28"
+                                mt={12}
+                                style={{
+                                    fontSize: 'clamp(22px, 2.5vw, 28px)',
+                                    letterSpacing: '-0.6px',
+                                    lineHeight: 1.35,
+                                }}
+                            >
+                                우리 시설의 공식 정보 관리와<br />
+                                파트너 제휴를 지금 시작하세요
+                            </Text>
+                            <Text size="sm" c="#64748B" mt={10} lh={1.65}>
+                                아직 제휴 전이라도 시설의 최신 분양가표나 사진 수정을 먼저 요청하실 수 있습니다. 담당자 정보를 남겨주시면 전담팀에서 신속히 연락드리겠습니다.
+                            </Text>
+                        </Box>
+
+                        <Paper p={20} radius="lg" bg="white" style={{ border: '1px solid #DBEAFE', backgroundColor: '#F8FAFC' }}>
+                            <Text size="xs" fw={800} c="#2563EB" mb={12}>
+                                이런 시설 관계자분들께 추천합니다
+                            </Text>
+                            <Stack gap={10}>
+                                {[
+                                    '기존에 노출된 분양가·관리비 정보를 최신 기준으로 바로잡고 싶은 시설',
+                                    '고화질 안치단·조경 실사진과 특징을 유족에게 제대로 보여주고 싶은 시설',
+                                    '우리 권역에서 장지를 비교 중인 유족의 방문 답사·상담 예약을 늘리고 싶은 시설',
+                                ].map((point) => (
+                                    <Group key={point} gap={8} align="flex-start" wrap="nowrap">
+                                        <CheckCircle2 size={16} color="#2563EB" style={{ flexShrink: 0, marginTop: 2 }} />
+                                        <Text size="xs" fw={600} c="#334155" lh={1.5}>
+                                            {point}
+                                        </Text>
+                                    </Group>
+                                ))}
                             </Stack>
                         </Paper>
                     </Stack>
 
-                    {/* 우측: 공식 파트너 인증 · 정보 관리 신청 폼 */}
+                    {/* 우측 신청 폼 카드 */}
                     <Paper
-                        p={{ base: 22, sm: 28 }}
+                        p={{ base: 22, sm: 32 }}
                         bg="white"
                         radius="lg"
                         style={{
-                            border: '1px solid #E5E8EB',
-                            boxShadow: '0 8px 30px rgba(15, 23, 42, 0.05)',
+                            border: '1px solid #DBEAFE',
+                            boxShadow: '0 12px 36px rgba(37, 99, 235, 0.07)',
                         }}
                     >
                         <Group justify="space-between" align="center" mb={6}>
-                            <VerifiedBadge variant="pill" size="sm" label="1분 간편 접수" />
-                            <Text size="11.5px" fw={600} c="#4E5968">
-                                전담팀 영업일 1일 내 안내
+                            <Text size="lg" fw={800} c="#191F28" style={{ letterSpacing: '-0.4px' }}>
+                                공식 파트너 · 정보 업데이트 신청서
+                            </Text>
+                            <Text size="11.5px" fw={700} c="#2563EB">
+                                영업일 1일 내 회신
                             </Text>
                         </Group>
-                        <Text size="xl" fw={800} c="#191F28" mb={4} style={{ letterSpacing: '-0.4px' }}>
-                            공식 파트너 인증 · 정보 업데이트 신청
-                        </Text>
                         <Text size="xs" c="#64748B" mb={22} lh={1.5}>
-                            시설 기본 정보와 담당자 연락처를 남겨주시면 인증 배지 부여 및 제휴 절차를 신속히 안내해 드립니다.
+                            필수 항목(*)을 입력해주시면 담당 매니저가 확인 후 안내드립니다.
                         </Text>
 
                         {errorMsg && (
@@ -606,8 +910,8 @@ export default function PartnershipPage() {
                                 <Text size="xs" fw={700} c="#334155" mb={8}>신청 유형 <Text span c="#EF4444">*</Text></Text>
                                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8 }}>
                                     {[
-                                        { label: '공식 인증 · 파트너 제휴', value: 'partnership' },
-                                        { label: '시설 등록 · 정보 수정', value: 'facility' },
+                                        { label: '공식 파트너 · 상담 제휴', value: 'partnership' },
+                                        { label: '시설 등록 · 분양가/사진 수정', value: 'facility' },
                                     ].map((tab) => {
                                         const active = inquiryType === tab.value;
                                         return (
@@ -618,8 +922,8 @@ export default function PartnershipPage() {
                                                 style={{
                                                     height: 44,
                                                     borderRadius: 11,
-                                                    border: active ? '1.5px solid #191F28' : '1px solid #CBD5E1',
-                                                    backgroundColor: active ? '#191F28' : '#FFFFFF',
+                                                    border: active ? '1.5px solid #2563EB' : '1px solid #CBD5E1',
+                                                    backgroundColor: active ? '#2563EB' : '#FFFFFF',
                                                     color: active ? '#FFFFFF' : '#475569',
                                                     fontSize: 13,
                                                     fontWeight: active ? 800 : 600,
@@ -639,7 +943,7 @@ export default function PartnershipPage() {
                             <Box>
                                 <Text size="xs" fw={700} c="#334155" mb={6}>시설명 / 운영법인명 <Text span c="#EF4444">*</Text></Text>
                                 <TextInput
-                                    placeholder="예) 광명메모리얼파크 / 용인 평온의숲"
+                                    placeholder="예) 분당추모공원 휴 / 용인 평온의숲"
                                     value={form.companyName}
                                     onChange={(e) => setForm({ ...form, companyName: e.currentTarget.value })}
                                     styles={inputStyles}
@@ -691,9 +995,9 @@ export default function PartnershipPage() {
                                                     height: 26,
                                                     padding: '0 10px',
                                                     borderRadius: 999,
-                                                    border: isSelected ? '1px solid #191F28' : '1px solid #E2E8F0',
-                                                    backgroundColor: isSelected ? '#F2F4F6' : '#F8FAFC',
-                                                    color: isSelected ? '#191F28' : '#64748B',
+                                                    border: isSelected ? '1px solid #2563EB' : '1px solid #E2E8F0',
+                                                    backgroundColor: isSelected ? '#EFF6FF' : '#F8FAFC',
+                                                    color: isSelected ? '#2563EB' : '#64748B',
                                                     fontSize: 11.5,
                                                     fontWeight: isSelected ? 700 : 600,
                                                     cursor: 'pointer',
@@ -710,14 +1014,14 @@ export default function PartnershipPage() {
                             <Box>
                                 <Group justify="space-between" align="center" mb={6}>
                                     <Text size="xs" fw={700} c="#334155">요청 사항 <Text span c="#EF4444">*</Text></Text>
-                                    <Text size="11px" c="#64748B" fw={600}>클릭 시 자동 입력</Text>
+                                    <Text size="11px" c="#2563EB" fw={600}>클릭 시 자동 입력</Text>
                                 </Group>
                                 <Group gap={6} mb={8} style={{ flexWrap: 'wrap' }}>
                                     {[
-                                        '공식 파트너 인증 배지 발급 신청',
+                                        '공식 파트너 등록 및 배지 발급 문의',
                                         '안치단 분양가 · 실사진 업데이트 요청',
                                         '유족 1:1 상담 · 답사 예약 연결 문의',
-                                        '지역 상단 추천 및 비교함 제휴 문의',
+                                        '권역 내 우선 추천 및 비교함 제휴 문의',
                                     ].map((preset) => (
                                         <button
                                             key={preset}
@@ -730,11 +1034,11 @@ export default function PartnershipPage() {
                                                 });
                                             }}
                                             style={{
-                                                padding: '5px 9px',
+                                                padding: '5px 10px',
                                                 borderRadius: 8,
-                                                border: '1px solid #E2E8F0',
-                                                backgroundColor: '#F8FAFC',
-                                                color: '#333D4B',
+                                                border: '1px solid #DBEAFE',
+                                                backgroundColor: '#EFF6FF',
+                                                color: '#1E40AF',
                                                 fontSize: 11.5,
                                                 fontWeight: 600,
                                                 cursor: 'pointer',
@@ -745,7 +1049,7 @@ export default function PartnershipPage() {
                                     ))}
                                 </Group>
                                 <Textarea
-                                    placeholder="시설 공식 인증 배지 발급, 분양가/사진 업데이트, 상담 연결 등 원하시는 내용을 남겨주세요."
+                                    placeholder="시설 공식 정보 업데이트, 분양가/사진 관리, 유족 상담 연결 등 원하시는 내용을 남겨주세요."
                                     value={form.content}
                                     onChange={(e) => setForm({ ...form, content: e.currentTarget.value.slice(0, 1000) })}
                                     minRows={4}
@@ -785,7 +1089,7 @@ export default function PartnershipPage() {
                                     <Group gap="xs">
                                         <Checkbox
                                             checked={form.agreeTerms}
-                                            color="dark"
+                                            color="blue"
                                             onChange={(e) => {
                                                 e.stopPropagation();
                                                 setForm({ ...form, agreeTerms: e.currentTarget.checked });
@@ -793,7 +1097,7 @@ export default function PartnershipPage() {
                                             onClick={(e) => e.stopPropagation()}
                                         />
                                         <Text size="xs" fw={700} c="#191F28">
-                                            <Text span c="#191F28">[필수] </Text>
+                                            <Text span c="#2563EB">[필수] </Text>
                                             개인정보 수집 및 이용 동의
                                         </Text>
                                     </Group>
@@ -814,7 +1118,7 @@ export default function PartnershipPage() {
                                             <br /><br />
                                             <b>1. 수집 항목:</b> 신청 유형, 시설/업체명, 담당자명, 연락처, 이메일, 요청 내용
                                             <br />
-                                            <b>2. 이용 목적:</b> 공식 인증 배지 발급 심사 및 광고/제휴 문의 응대
+                                            <b>2. 이용 목적:</b> 공식 파트너 심사 및 시설 정보 수정·제휴 문의 응대
                                             <br />
                                             <b>3. 보유 및 이용기간:</b> 상담 완료 후 6개월
                                         </Text>
@@ -832,12 +1136,13 @@ export default function PartnershipPage() {
                                 style={{
                                     height: 52,
                                     borderRadius: 12,
-                                    backgroundColor: '#191F28',
+                                    backgroundColor: '#2563EB',
                                     fontWeight: 800,
                                     fontSize: 15.5,
+                                    boxShadow: '0 8px 20px rgba(37, 99, 235, 0.25)',
                                 }}
                             >
-                                공식 인증 · 제휴 상담 신청하기
+                                공식 파트너 · 정보 관리 신청하기
                             </Button>
                         </Stack>
                     </Paper>
