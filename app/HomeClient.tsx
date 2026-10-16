@@ -1447,7 +1447,7 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
                   );
                 })}
 
-                {/* 문의제외 필터 */}
+                {/* 가격없음 제외 필터 */}
                 <button
                   type="button"
                   onClick={() => setHideInquiry(!hideInquiry)}
@@ -1466,7 +1466,7 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
                     flexShrink: 0,
                   }}
                 >
-                  문의제외
+                  가격없음 제외
                 </button>
 
                 {/* 상세 필터 버튼 */}
@@ -1626,7 +1626,7 @@ function HomeContent({ initialFacilities }: HomeClientProps) {
               onClick={() => setTempHideInquiry(!tempHideInquiry)}
             >
               <Checkbox
-                label="가격 미공개(문의) 시설 제외하고 보기"
+                label="가격 미등록(없음) 시설 제외하고 보기"
                 checked={tempHideInquiry}
                 onChange={() => setTempHideInquiry(!tempHideInquiry)}
                 size="sm"

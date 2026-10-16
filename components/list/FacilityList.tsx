@@ -154,7 +154,7 @@ export default function FacilityList({
                         </Text>
                         {setHideInquiry && (
                             <Checkbox
-                                label="가격문의 제외"
+                                label="가격없음 제외"
                                 checked={hideInquiry ?? false}
                                 onChange={() => setHideInquiry(!hideInquiry)}
                                 size="xs"

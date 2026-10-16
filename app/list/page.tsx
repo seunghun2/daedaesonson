@@ -315,7 +315,7 @@ function ListPageContent() {
                             <ChevronDown size={14} style={{ opacity: 0.6 }} />
                         </button>
 
-                        {/* 문의제외 필터 */}
+                        {/* 가격없음 제외 필터 */}
                         <button
                             onClick={() => { setVisibleCount(20); setHideInquiry(!hideInquiry); }}
                             style={{
@@ -328,7 +328,7 @@ function ListPageContent() {
                                 paddingLeft: '14px', paddingRight: '14px', whiteSpace: 'nowrap', flexShrink: 0,
                             }}
                         >
-                            문의제외
+                            가격없음 제외
                         </button>
                     </div>
 
@@ -389,7 +389,7 @@ function ListPageContent() {
                             <div style={{ height: 1, backgroundColor: '#f1f3f5', margin: '20px 0' }} />
 
                             <Checkbox
-                                label="문의 가격 시설 제외"
+                                label="가격없는 시설 제외"
                                 checked={tempHideInquiry}
                                 onChange={() => setTempHideInquiry(!tempHideInquiry)}
                                 size="md"
