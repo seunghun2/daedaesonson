@@ -1613,32 +1613,32 @@
           <tbody>
             <tr>
               <td class="ta_c"><strong>STEP 1</strong></td>
-              <td><strong>운영 조건 안내</strong></td>
-              <td class="bg_y">수수료율, 데브늄 예치금(15일분), 금요일 입금 원칙(추후 변동 가능), 정산일(답례품과 같음) 안내</td>
-              <td><code>부의금서비스운영가이드v.4.pdf</code> 전달</td>
+              <td><strong>제휴 계약서 작성 · 전달</strong></td>
+              <td class="bg_y">제휴 계약서(현재 제작 중)를 서로 작성·날인하여 전달 및 체결</td>
+              <td>제휴 계약서 (제작 중)</td>
             </tr>
             <tr>
               <td class="ta_c"><strong>STEP 2</strong></td>
-              <td><strong>계약서 날인 &amp; 서류 수취</strong></td>
-              <td class="bg_y">제휴 계약서(현재 제작 중) 완성 후 전달·날인 및 기본 서류 4종(사업자등록증·통장사본 등) 수취</td>
-              <td>계약서 제작 중</td>
+              <td><strong>운영 가이드 전달 &amp;<br/>예치금 요청 (보증보험)</strong></td>
+              <td class="bg_y">계약 후 <code>부의금서비스운영가이드v.4.pdf</code>를 전달하면서 <strong>예치금 입금 요청</strong> (필요할 때는 <strong>보증보험</strong> 진행)</td>
+              <td><code>부의금서비스운영가이드v.4.pdf</code> 전달</td>
             </tr>
             <tr>
               <td class="ta_c"><strong>STEP 3</strong></td>
-              <td><strong>예치금 확보 &amp;<br/>이노페이 가상계좌 입금 요청</strong></td>
-              <td class="bg_y">업체로부터 예치금 확보(필요할 때는 <strong>보증보험</strong> 들어줌) 후, <strong>대표님께 이노페이 가상계좌 입금 요청</strong></td>
-              <td>예치금 확보 · 보증보험</td>
+              <td><strong>어드민 세팅 &amp; 잔디 세팅<br/>(중간 준비)</strong></td>
+              <td class="bg_y">예치금 입금 대기 중(중간에) 우리 측 <strong>어드민 세팅(업체·담당자·1/2차 한도)</strong> 및 <strong>잔디(<code>H_한도알림</code>) 웹훅 세팅</strong> 진행</td>
+              <td>어드민 · 잔디 사전 세팅</td>
             </tr>
             <tr>
               <td class="ta_c"><strong>STEP 4</strong></td>
-              <td><strong>어드민 잔액 반영 &amp; 한도 세팅</strong></td>
-              <td class="bg_y">어드민 <code>[+ 입금액 추가]</code> 반영, 담당자·1/2차 한도·잔디 웹훅 설정 및 부고장 <code>[제3자 제공 동의]</code> 반영 확인</td>
-              <td>어드민 세팅 완료</td>
+              <td><strong>예치금 확보 → 이노페이 입금 요청 &amp; 잔액 반영</strong></td>
+              <td class="bg_y">예치금 입금 확인 후 <strong>대표님께 이노페이 가상계좌 입금 요청</strong> 및 어드민 <code>[+ 입금액 추가]</code>로 잔액 반영</td>
+              <td>대표님께 입금 요청 · 어드민 반영</td>
             </tr>
             <tr>
               <td class="ta_c"><strong>STEP 5</strong></td>
               <td><strong>서비스 오픈</strong></td>
-              <td class="bg_y">실서버(<code>MID 2</code>) 가동 및 송금완료 시 잔액 자동 차감·잔디 웹훅 알림 확인</td>
+              <td class="bg_y">부고장 <code>[제3자 제공 동의]</code> 약관 반영 확인 후 실서버(<code>MID 2</code>) 오픈 및 잔액 차감 확인</td>
               <td>정식 오픈</td>
             </tr>
             <tr>
@@ -1888,22 +1888,22 @@
     };
 
     const PARTNER_CHECKLIST_ITEMS = [
-      { step: 'STEP 1', title: '운영 가이드(v.4) 전달 및 조건(수수료·예치금) 확정', guide: (p) => p.feeRate },
-      { step: 'STEP 2', title: '제휴 계약서 날인 (현재 제작 중) 및 기본 서류 수취', guide: () => '사업자등록증·등기부등본·인감증명서·통장사본' },
-      { step: 'STEP 3', title: '예치금 확보(필요 시 보증보험) → 대표님께 이노페이 가상계좌 입금 요청', guide: (p) => p.reqDeposit },
-      { step: 'STEP 4', title: '어드민 [+ 입금액 추가] 반영 · 한도 · 잔디 웹훅 · 부고장 제3자 동의 설정', guide: () => '어드민 잔액·한도·잔디 웹훅 세팅 완료' },
-      { step: 'STEP 5', title: '서비스 오픈 (실서버 가동 및 잔액 자동 차감 확인)', guide: () => '송금완료 시 부의금액 차감 확인' },
-      { step: 'STEP 6', title: '주간 입금(매주 금요일 원칙) 및 정산(답례품과 같음) 등록', guide: () => '금요일 입금 원칙(추후 변동 가능) / 정산일: 답례품과 같음' }
+      { step: 'STEP 1', title: '제휴 계약서 작성 및 상호 날인·전달 (현재 계약서 제작 중)', guide: (p) => p.feeRate },
+      { step: 'STEP 2', title: '운영 가이드(v.4) 전달 및 예치금 입금 요청 (필요 시 보증보험 진행)', guide: (p) => p.reqDeposit },
+      { step: 'STEP 3', title: '[중간 준비] 어드민 세팅(업체·담당자·1/2차 한도) 및 잔디(H_한도알림) 웹훅 세팅', guide: () => '어드민 계정 · 1/2차 한도 · 잔디 웹훅 연동' },
+      { step: 'STEP 4', title: '예치금 확보 확인 → 대표님께 이노페이 가상계좌 입금 요청 & 어드민 [+ 입금액 추가]', guide: () => '대표님께 가상계좌 입금 요청 후 어드민 잔액 반영' },
+      { step: 'STEP 5', title: '부고장 [제3자 제공 동의] 반영 확인 후 서비스 오픈 (실서버 가동)', guide: () => '송금완료 시 잔액 자동 차감 확인' },
+      { step: 'STEP 6', title: '주간 입금(매주 금요일 원칙) 및 정산(답례품과 같음) 정기 운영', guide: () => '금요일 입금 원칙(추후 변동 가능) / 정산일: 답례품과 같음' }
     ];
 
     const DEFAULT_PARTNERS = [
-      { id: 'kookmin', name: '국민부고', feeRate: '수수료 3.5% (정산일: 답례품과 같음)', reqDeposit: '예치금 3,000만 (1차 1,000만 / 2차 500만)', memo: '1순위 오픈 추진 (계약서 완성 후 전달)', checks: [1,0,0,0,0,0] },
-      { id: 'samga', name: '삼가', feeRate: '수수료 4.0% (정산일: 답례품과 같음)', reqDeposit: '예치금 2,000만 (1차 600만 / 2차 300만)', memo: '도입 확정 · 계약서 대기', checks: [1,0,0,0,0,0] },
-      { id: 'uijeon', name: '의전나라', feeRate: '수수료 3.5~4.0% (정산일: 답례품과 같음)', reqDeposit: '예치금 4,500만 (1차 1,500만 / 2차 750만)', memo: '핵심 타겟 · 일정 협의 중', checks: [1,0,0,0,0,0] },
-      { id: 'cheotjang', name: '첫장', feeRate: '수수료 3.5% (정산일: 답례품과 같음)', reqDeposit: '예치금 1,500만 (1차 500만 / 2차 250만)', memo: '도입 협의 중', checks: [1,0,0,0,0,0] },
-      { id: 'bugoalim', name: '부고알림', feeRate: '수수료 3.5% (정산일: 답례품과 같음)', reqDeposit: '예치금 1,500만 (1차 500만 / 2차 250만)', memo: '런칭 확정 · 가이드 전달 예정', checks: [1,0,0,0,0,0] },
-      { id: 'hyosung', name: '효성프라콘', feeRate: '수수료 3.5% (정산일: 답례품과 같음)', reqDeposit: '예치금 2,000만 (1차 600만 / 2차 300만)', memo: '단계적 도입 추진', checks: [1,0,0,0,0,0] },
-      { id: 'saha', name: '사하구민', feeRate: '수수료 3.5% (정산일: 답례품과 같음)', reqDeposit: '예치금 1,000만 (1차 300만 / 2차 150만)', memo: '조건 협의 중', checks: [1,0,0,0,0,0] }
+      { id: 'kookmin', name: '국민부고', feeRate: '수수료 3.5% (정산일: 답례품과 같음)', reqDeposit: '예치금 3,000만 (1차 1,000만 / 2차 500만)', memo: '1순위 오픈 추진 (계약서 완성 후 전달)', checks: [0,0,0,0,0,0] },
+      { id: 'samga', name: '삼가', feeRate: '수수료 4.0% (정산일: 답례품과 같음)', reqDeposit: '예치금 2,000만 (1차 600만 / 2차 300만)', memo: '도입 확정 · 계약서 대기', checks: [0,0,0,0,0,0] },
+      { id: 'uijeon', name: '의전나라', feeRate: '수수료 3.5~4.0% (정산일: 답례품과 같음)', reqDeposit: '예치금 4,500만 (1차 1,500만 / 2차 750만)', memo: '핵심 타겟 · 일정 협의 중', checks: [0,0,0,0,0,0] },
+      { id: 'cheotjang', name: '첫장', feeRate: '수수료 3.5% (정산일: 답례품과 같음)', reqDeposit: '예치금 1,500만 (1차 500만 / 2차 250만)', memo: '도입 협의 중', checks: [0,0,0,0,0,0] },
+      { id: 'bugoalim', name: '부고알림', feeRate: '수수료 3.5% (정산일: 답례품과 같음)', reqDeposit: '예치금 1,500만 (1차 500만 / 2차 250만)', memo: '런칭 확정 · 계약서 대기', checks: [0,0,0,0,0,0] },
+      { id: 'hyosung', name: '효성프라콘', feeRate: '수수료 3.5% (정산일: 답례품과 같음)', reqDeposit: '예치금 2,000만 (1차 600만 / 2차 300만)', memo: '단계적 도입 추진', checks: [0,0,0,0,0,0] },
+      { id: 'saha', name: '사하구민', feeRate: '수수료 3.5% (정산일: 답례품과 같음)', reqDeposit: '예치금 1,000만 (1차 300만 / 2차 150만)', memo: '조건 협의 중', checks: [0,0,0,0,0,0] }
     ];
 
     let partnerList = [];
@@ -1911,7 +1911,7 @@
 
     function loadPartnerData() {
       try {
-        const raw = localStorage.getItem('devnium_buipay_partner_v10');
+        const raw = localStorage.getItem('devnium_buipay_partner_v11');
         if (raw) {
           const parsed = JSON.parse(raw);
           if (Array.isArray(parsed) && parsed.length > 0) {
@@ -1925,7 +1925,7 @@
 
     function savePartnerData() {
       try {
-        localStorage.setItem('devnium_buipay_partner_v10', JSON.stringify(partnerList));
+        localStorage.setItem('devnium_buipay_partner_v11', JSON.stringify(partnerList));
       } catch (e) {}
     }
 
