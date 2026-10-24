@@ -1345,7 +1345,7 @@
           <li id="nav-overview" class="current-menu-ancestor">
             <a onclick="showPage('overview')"><span class="menu-title-text">전체 결제·정산 구조</span></a>
             <ul class="sub-menu">
-              <li><a onclick="showPage('overview', 'sec-md-pg')"><span class="menu-title-text">MID 1(테스트용) vs MID 2(실서버용) 구분</span></a></li>
+              <li><a onclick="showPage('overview', 'sec-md-pg')"><span class="menu-title-text">고객사 입금 구조 &amp; 내부 MID 1·MID 2 개념</span></a></li>
               <li><a onclick="showPage('overview', 'sec-flow-4step')"><span class="menu-title-text">결제 · 입금 · 잔디 웹훅 · 금요일 입금 · 정산 흐름</span></a></li>
               <li><a onclick="showPage('overview', 'sec-exp-demo')"><span class="menu-title-text">실제 부의금 결제 시 자금·잔액 이동 예시</span></a></li>
             </ul>
@@ -1354,15 +1354,15 @@
             <a onclick="showPage('pdfs')"><span class="menu-title-text">1. 전달 자료실</span></a>
             <ul class="sub-menu">
               <li><a onclick="showPage('pdfs', 'sec-pdf-client')"><span class="menu-title-text">업체 전달용 필수 자료 (계약서 제작 중)</span></a></li>
-              <li><a onclick="showPage('pdfs', 'sec-pdf-internal')"><span class="menu-title-text">내부 운영 · 업체 지침 · 체크리스트 문서</span></a></li>
+              <li><a onclick="showPage('pdfs', 'sec-pdf-internal')"><span class="menu-title-text">내부 운영 · 체크리스트 문서</span></a></li>
               <li><a onclick="showPage('pdfs', 'sec-pdf-when')"><span class="menu-title-text">단계별 자료 전달 기준표</span></a></li>
             </ul>
           </li>
           <li id="nav-client">
             <a onclick="showPage('client-guide')"><span class="menu-title-text">2. 고객사 운영 가이드</span></a>
             <ul class="sub-menu">
-              <li><a onclick="showPage('client-guide', 'sec-cg-principles')"><span class="menu-title-text">고객사 안내 핵심 운영 원칙 6가지</span></a></li>
-              <li><a onclick="showPage('client-guide', 'sec-cg-deposit')"><span class="menu-title-text">예치금 입금 · 차감 · 금요일 입금 · 정산일</span></a></li>
+              <li><a onclick="showPage('client-guide', 'sec-cg-principles')"><span class="menu-title-text">고객사가 알아야 할 핵심 운영 원칙 5가지</span></a></li>
+              <li><a onclick="showPage('client-guide', 'sec-cg-deposit')"><span class="menu-title-text">예치금 입금 · 차감 · 금요일 복구 · 정산일</span></a></li>
               <li><a onclick="showPage('client-guide', 'sec-cg-contract')"><span class="menu-title-text">제휴 계약서(제작 중) &amp; 구비서류 안내</span></a></li>
               <li><a onclick="showPage('client-guide', 'sec-cg-terms')"><span class="menu-title-text">필수 약관(제3자 동의) &amp; 개인정보처리방침</span></a></li>
             </ul>
@@ -1370,7 +1370,7 @@
           <li id="nav-internal">
             <a onclick="showPage('internal-guide')"><span class="menu-title-text">3. 내부 운영 가이드</span></a>
             <ul class="sub-menu">
-              <li><a onclick="showPage('internal-guide', 'sec-ig-mid2')"><span class="menu-title-text">실서버(MID 2) 입금 · 고객사 잔액 관리</span></a></li>
+              <li><a onclick="showPage('internal-guide', 'sec-ig-mid2')"><span class="menu-title-text">내부 실서버(MID 2) 입금 · 고객사 잔액 관리</span></a></li>
               <li><a onclick="showPage('internal-guide', 'sec-ig-jandi')"><span class="menu-title-text">잔디(JANDI) 웹훅 알림 &amp; 1·2차 한도 관리</span></a></li>
               <li><a onclick="showPage('internal-guide', 'sec-ig-admin')"><span class="menu-title-text">어드민 플랫폼 관리 상세 세팅 기준</span></a></li>
               <li><a onclick="showPage('internal-guide', 'sec-ig-daily')"><span class="menu-title-text">매주 금요일 입금 · 정산(답례품 동일) · CS</span></a></li>
@@ -1386,9 +1386,8 @@
           <li id="nav-checklist">
             <a onclick="showPage('checklist')"><span class="menu-title-text">5. 체크리스트</span></a>
             <ul class="sub-menu">
-              <li><a onclick="showPage('checklist', 'sec-chk-partner')"><span class="menu-title-text">업체별(국민·삼가·의전나라 등) 전용 체크리스트</span></a></li>
-              <li><a onclick="showPage('checklist', 'sec-chk-docs')"><span class="menu-title-text">업체 전달 자료 발송 체크리스트</span></a></li>
-              <li><a onclick="showPage('checklist', 'sec-chk-ops')"><span class="menu-title-text">온보딩 &amp; 주간·월간 정기 운영 체크리스트</span></a></li>
+              <li><a onclick="showPage('checklist', 'sec-chk-partner')"><span class="menu-title-text">업체별 진행 체크리스트 (7개 항목)</span></a></li>
+              <li><a onclick="showPage('checklist', 'sec-chk-ops')"><span class="menu-title-text">내부 운영 핵심 체크리스트 (6개 항목)</span></a></li>
             </ul>
           </li>
         </ul>
@@ -1407,7 +1406,7 @@
   <div id="page-header-bg">
     <div class="container">
       <h1 id="banner-title">부의금 카드결제 서비스 — 전체 결제·정산 구조</h1>
-      <span class="subheader" id="banner-sub">MID 1(테스트용)과 MID 2(실서버용 · PG 및 입금·정산 통합)의 구분부터 부의금 입금, 잔디(JANDI) 웹훅 알림, 매주 금요일 입금 원칙(추후 변동 가능), 업체 정산(답례품과 동일)까지 부의금 카드결제 서비스만 명확하게 정리한 마스터 가이드입니다.</span>
+      <span class="subheader" id="banner-sub">고객사는 데브늄에 예치금만 입금하면 끝이며, 우리 내부에서는 실서버(MID 2)를 통해 PG 결제·부의금 입금·정산을 처리하고 잔디(JANDI) 웹훅, 매주 금요일 입금 원칙(추후 변동 가능), 업체 정산(답례품과 같음)으로 운영합니다.</span>
     </div>
   </div>
 
@@ -1415,7 +1414,7 @@
   <div class="quick-subnav-bar">
     <div class="quick-subnav-inner">
       <span class="quick-subnav-label">핵심 메뉴 바로가기 :</span>
-      <button class="quick-pill active" data-pill="overview" onclick="showPage('overview')">0. 전체 결제·정산 구조 (MID1·MID2)</button>
+      <button class="quick-pill active" data-pill="overview" onclick="showPage('overview')">0. 전체 결제·정산 구조</button>
       <button class="quick-pill" data-pill="pdfs" onclick="showPage('pdfs')">1. 전달 자료실 (계약서 제작 중)</button>
       <button class="quick-pill" data-pill="client-guide" onclick="showPage('client-guide')">2. 고객사 운영 가이드</button>
       <button class="quick-pill" data-pill="internal-guide" onclick="showPage('internal-guide')">3. 내부 운영 가이드 (잔디·금요일 입금)</button>
@@ -1436,7 +1435,7 @@
             <span class="easy-concept-badge" style="background:#0f172a; color:#ffffff; margin-bottom:10px;">가이드를 위한 가이드 · 부의금 카드결제 전용</span>
             <h1 style="font-size:30px; line-height:42px; margin-bottom:12px; color:#111111;">한눈에 보는 데브늄 『부의금 카드결제 서비스』 운영 마스터 가이드</h1>
             <p style="font-size:16px; color:#555555; padding-bottom:20px;">
-              본 문서는 오직 <strong>부의금 카드결제 서비스</strong>만을 다루는 실무 운영 매뉴얼입니다. 개발자가 알아서 처리하는 복잡한 개발 코드는 모두 제외하고, 우리 팀이 알아야 할 <strong><code>MID 1(테스트용)</code>과 <code>MID 2(실서버용)</code>의 역할</strong>, <strong>부의금 입금 및 잔디(JANDI) 웹훅 알림</strong>, <strong>매주 금요일 입금 원칙(추후 변동 가능)</strong>, 그리고 <strong>업체 정산 지급일(답례품과 같음)</strong>까지 핵심 운영 기준만 담았습니다.
+              본 문서는 오직 <strong>부의금 카드결제 서비스</strong>만을 다루는 실무 운영 매뉴얼입니다. <strong>고객사(업체)는 데브늄에 예치금만 입금하면 끝</strong>이며, 우리 내부에서는 <strong>실서버(<code>MID 2</code>)를 통해 PG 결제·부의금 입금·정산을 처리</strong>하고, <strong>잔디(JANDI) 웹훅 알림</strong>, <strong>매주 금요일 입금 원칙(추후 변동 가능)</strong>, <strong>업체 정산 지급일(답례품과 같음)</strong> 기준으로 운영합니다.
             </p>
             <div style="display:flex; gap:10px; flex-wrap:wrap;">
               <button class="page-turn-btn" style="background:#3566e0; color:#ffffff; border-color:#3566e0; font-weight:600;" onclick="showPage('pdfs')">1. 전달 자료실 보기 →</button>
@@ -1449,8 +1448,8 @@
           <div style="background:#ffffff; border:1px solid #dddddd; border-radius:10px; padding:22px 24px; min-width:320px; flex:1; max-width:400px;">
             <h4 style="margin-top:0; margin-bottom:12px; font-size:16.5px; color:#3566e0;">부의금 카드결제 핵심 운영 요약</h4>
             <ul style="margin-left:18px; margin-bottom:0;">
-              <li style="font-size:14.5px; margin-bottom:6px;"><strong><code>MID 1</code></strong> : <strong>테스트용</strong> (오픈 전 연동 검수 환경)</li>
-              <li style="font-size:14.5px; margin-bottom:6px;"><strong><code>MID 2</code></strong> : <strong>실서버용</strong> (PG 결제 · 부의금 입금 · 정산 통합)</li>
+              <li style="font-size:14.5px; margin-bottom:6px;"><strong>고객사 역할</strong> : <strong>데브늄에 예치금 입금만 하면 끝</strong></li>
+              <li style="font-size:14.5px; margin-bottom:6px;"><strong>내부 개념 (<code>MID 1 / 2</code>)</strong> : <code>MID 1</code> 테스트용 / <code>MID 2</code> 실서버용</li>
               <li style="font-size:14.5px; margin-bottom:6px;"><strong>실시간 알림</strong> : 부의금 입금 · 한도 도달 시 <strong>잔디(JANDI) 웹훅</strong></li>
               <li style="font-size:14.5px; margin-bottom:6px;"><strong>주간 입금 기준</strong> : <strong>매주 금요일 입금 원칙</strong> <span style="color:#d97706; font-weight:600;">(추후 변동 가능)</span></li>
               <li style="font-size:14.5px; margin-bottom:6px;"><strong>업체 정산 지급일</strong> : <strong>답례품과 같음</strong> (답례품 정산일과 동일)</li>
@@ -1460,68 +1459,41 @@
         </div>
       </div>
 
-      <!-- 1. MID 1 (테스트용) vs MID 2 (실서버용) 명확한 구분 -->
-      <h2 id="sec-md-pg" style="margin-top:10px;">1. 가장 먼저 알아두세요: <code>MID 1 (테스트용)</code> 과 <code>MID 2 (실서버용)</code> 의 구분</h2>
-      <p>부의금 카드결제 서비스에서는 환경에 따라 <strong><code>MID 1</code></strong>과 <strong><code>MID 2</code></strong> 두 가지만 구분합니다. 실제 서비스가 오픈되면 <strong>PG 카드결제 승인부터 상주 계좌 입금, 그리고 정산까지 모두 실서버용인 <code>MID 2</code>를 통해서 처리</strong>합니다.</p>
+      <!-- 1. 고객사 입금 구조 & 내부에서만 아는 MID 1 / MID 2 개념 -->
+      <h2 id="sec-md-pg" style="margin-top:10px;">1. 고객사 입금 구조 &amp; 우리 내부에서만 아는 <code>MID 1</code> · <code>MID 2</code> 개념</h2>
+      <p><strong>고객사(제휴 업체)는 복잡한 내부 구조를 알 필요 없이 데브늄에 예치금만 입금하면 끝</strong>입니다. <code>MID 1</code>과 <code>MID 2</code>는 우리 내부와 개발에서만 사용하는 구분 개념입니다.</p>
 
       <div class="easy-concept-grid">
-        <div class="easy-concept-card">
-          <span class="easy-concept-badge" style="background:#f1f5f9; color:#334155; border:1px solid #cbd5e1;">MID 1 = 테스트용 (Test 환경)</span>
-          <h3 style="margin-top:4px; margin-bottom:8px; font-size:21px; color:#111111;">연동 테스트 및 오픈 전 검수용</h3>
-          <p style="font-size:15px; color:#555555; padding-bottom:12px;">
-            신규 제휴 업체가 정식 오픈 전에 결제창 연결과 결과 수신이 정상적으로 이루어지는지 확인할 때 사용하는 <strong>테스트 전용 MID</strong>입니다.
-          </p>
-          <ul style="margin-left:20px; margin-bottom:0; font-size:14.5px;">
-            <li><strong>용도</strong> : 업체 개발팀의 연동 테스트 및 사전 검수 전용</li>
-            <li><strong>자금 이동</strong> : 실제 상주 계좌 입금이나 정산이 발생하지 않는 검증용 환경</li>
-            <li><strong>전환 시점</strong> : 연동 확인이 끝나고 정식 오픈할 때 <strong><code>MID 2(실서버용)</code></strong>로 전환</li>
-          </ul>
-        </div>
-
         <div class="easy-concept-card highlight-md2">
-          <span class="easy-concept-badge" style="background:#3566e0; color:#ffffff;">MID 2 = 실서버용 (Live 운영 · 입금 · 정산 핵심)</span>
-          <h3 style="margin-top:4px; margin-bottom:8px; font-size:21px; color:#3566e0;">실제 PG 결제 · 부의금 입금 · 정산 통합 운영용</h3>
+          <span class="easy-concept-badge" style="background:#3566e0; color:#ffffff;">고객사(업체)가 아는 구조 (심플)</span>
+          <h3 style="margin-top:4px; margin-bottom:8px; font-size:21px; color:#3566e0;">고객사는 데브늄에 예치금만 입금하고 끝!</h3>
           <p style="font-size:15px; color:#555555; padding-bottom:12px;">
-            실제 서비스 오픈 후 <strong>PG(신용카드·간편결제) 승인도 이 실서버용(<code>MID 2</code>)으로 태우며</strong>, 이를 통해 부의금을 입금하고 정산하는 핵심 운영 MID입니다.
+            고객사 입장에서는 데브늄 계좌로 초기 예치금만 입금하면 모든 준비가 끝납니다. 이후 차감·복구·정산은 데브늄이 알아서 처리합니다.
           </p>
           <ul style="margin-left:20px; margin-bottom:0; font-size:14.5px;">
-            <li><strong>PG 결제</strong> : 모든 조문객의 실제 부의금 카드결제(PG)를 <code>MID 2</code>로 진행</li>
-            <li><strong>입금 및 차감</strong> : 상주 계좌로 부의금 원금 100% 실시간 입금 및 업체 잔액 차감</li>
-            <li><strong>정산 처리</strong> : 매주 금요일 입금(추후 변동 가능) 및 업체 수수료 정산(답례품과 동일) 기준점</li>
+            <li><strong>예치금 입금</strong> : 데브늄 지정 계좌로 초기 예치금 입금</li>
+            <li><strong>자동 차감 및 복구</strong> : 상주 계좌 입금 시 차감 / <strong>매주 금요일 복구 원칙 (추후 변동 가능)</strong></li>
+            <li><strong>수수료 정산</strong> : 업체 정산 지급일은 <strong>답례품 정산 지급일과 같음</strong></li>
+          </ul>
+        </div>
+
+        <div class="easy-concept-card">
+          <span class="easy-concept-badge" style="background:#f1f5f9; color:#334155; border:1px solid #cbd5e1;">우리 내부 · 개발에서만 아는 개념 (MID 1 vs MID 2)</span>
+          <h3 style="margin-top:4px; margin-bottom:8px; font-size:21px; color:#111111;"><code>MID 1</code>은 테스트용, <code>MID 2</code>는 실서버용</h3>
+          <p style="font-size:15px; color:#555555; padding-bottom:12px;">
+            고객사에게 설명할 필요 없는 우리 내부 운영·개발 개념입니다. 실서버용(<code>MID 2</code>)을 통해 우리가 입금하고 정산하며 PG도 이쪽으로 태웁니다.
+          </p>
+          <ul style="margin-left:20px; margin-bottom:0; font-size:14.5px;">
+            <li><strong><code>MID 1</code> (테스트용)</strong> : 개발자가 연동 테스트할 때만 쓰는 개발 개념</li>
+            <li><strong><code>MID 2</code> (실서버용)</strong> : 실제 <strong>PG 결제도 이쪽으로 태우고, 우리가 부의금을 입금·정산하는 실서버 채널</strong></li>
+            <li><strong>잔액 조회 폐지</strong> : 기존의 '송금 MID 잔액 실시간 조회' 기능은 없어짐</li>
           </ul>
         </div>
       </div>
 
-      <div class="table_wrap">
-        <table class="my_table">
-          <thead>
-            <tr>
-              <th style="width:18%;">구분</th>
-              <th style="width:22%;">역할</th>
-              <th style="width:28%;">PG 결제 · 입금 · 정산 여부</th>
-              <th>우리 팀 실무 핵심 포인트</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td class="ta_c"><strong><code>MID 1</code></strong></td>
-              <td class="ta_c"><strong>테스트용</strong></td>
-              <td class="ta_c">테스트 검증만 수행 (실제 정산 없음)</td>
-              <td>업체 개발팀이 연동 가이드를 받아 최초 테스트할 때 사용합니다.</td>
-            </tr>
-            <tr>
-              <td class="ta_c bg_y"><strong><code>MID 2</code></strong></td>
-              <td class="ta_c bg_y"><strong>실서버용 (상용)</strong></td>
-              <td class="ta_c bg_y"><strong>PG 승인 + 부의금 실시간 입금 + 정산 일원화</strong></td>
-              <td class="bg_y"><strong>우리가 실제로 부의금을 입금하고 정산하는 실서버용 MID</strong>입니다. PG도 이쪽으로 태워서 운영합니다.</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-
-      <!-- 2. 부의금 카드결제 · 입금 · 잔디 웹훅 · 금요일 입금 · 정산 5단계 흐름 -->
+      <!-- 2. 부의금 카드결제 · 입금 · 잔디 웹훅 · 금요일 입금 · 정산 흐름 -->
       <h2 id="sec-flow-4step">2. 부의금 입금 · 잔디(JANDI) 웹훅 · 매주 금요일 입금 · 업체 정산 흐름</h2>
-      <p>실서버(<strong><code>MID 2</code></strong>)에서 부의금 카드결제가 일어났을 때, <strong>부의금 입금 → 잔디(JANDI) 웹훅 알림 → 매주 금요일 입금(추후 변동 가능) → 업체 정산(답례품과 같음)</strong>까지 이어지는 전체 운영 흐름입니다.</p>
+      <p>부의금 카드결제가 일어났을 때, <strong>부의금 입금 → 잔디(JANDI) 웹훅 알림 → 매주 금요일 입금(추후 변동 가능) → 업체 정산(답례품과 같음)</strong>까지 이어지는 전체 운영 흐름입니다.</p>
 
       <div class="step_img">
         <svg viewBox="0 0 1080 260" style="width:100%; max-width:1040px; height:auto;">
@@ -1532,9 +1504,9 @@
           </defs>
           <!-- Box 1 -->
           <rect x="12" y="22" width="235" height="122" rx="10" fill="#ffffff" stroke="#cccccc" stroke-width="1.5"/>
-          <text x="129" y="48" text-anchor="middle" font-size="13" font-weight="700" fill="#3566e0">STEP 1. 실서버(MID 2) PG 결제</text>
-          <text x="129" y="72" text-anchor="middle" font-size="15" font-weight="700" fill="#222222">부의금 카드결제 승인</text>
-          <text x="129" y="95" text-anchor="middle" font-size="12.5" fill="#666666">실서버용 MID 2로 PG 승인 진행</text>
+          <text x="129" y="48" text-anchor="middle" font-size="13" font-weight="700" fill="#3566e0">STEP 1. 부의금 카드결제 승인</text>
+          <text x="129" y="72" text-anchor="middle" font-size="15" font-weight="700" fill="#222222">조문객 카드결제 (PG)</text>
+          <text x="129" y="95" text-anchor="middle" font-size="12.5" fill="#666666">업체 예치 잔액 확인 후 결제 진행</text>
           <text x="129" y="116" text-anchor="middle" font-size="12" fill="#ff5149" font-weight="600">업체 잔액 부족 시 결제 자동 제한</text>
 
           <!-- Box 2 -->
@@ -1548,7 +1520,7 @@
           <rect x="557" y="22" width="240" height="122" rx="10" fill="#f4f8ff" stroke="#3566e0" stroke-width="2"/>
           <text x="677" y="48" text-anchor="middle" font-size="13" font-weight="700" fill="#3566e0">STEP 3. 잔디(JANDI) 웹훅 알림</text>
           <text x="677" y="72" text-anchor="middle" font-size="15" font-weight="700" fill="#222222">잔디 웹훅 실시간 통지</text>
-          <text x="677" y="95" text-anchor="middle" font-size="12.5" fill="#666666">입금 내역 및 1·2차 한도 도달 시</text>
+          <text x="677" y="95" text-anchor="middle" font-size="12.5" fill="#666666">부의금 입금 및 1·2차 한도 도달 시</text>
           <text x="677" y="116" text-anchor="middle" font-size="12" fill="#3566e0" font-weight="600">잔디 웹훅 + 담당자 알림톡 안내</text>
 
           <!-- Box 4 -->
@@ -1566,10 +1538,10 @@
           <!-- Bottom Summary Banner -->
           <rect x="12" y="166" width="1055" height="72" rx="8" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5"/>
           <text x="540" y="194" text-anchor="middle" font-size="14" font-weight="700" fill="#1e293b">
-            💡 핵심 운영 공식 : 실서버(MID 2)로 PG 결제 및 부의금 입금 → 잔디(JANDI) 웹훅으로 즉시 알림 수신
+            💡 핵심 운영 공식 : 고객사는 데브늄에 예치금 입금만 하고 끝 → 부의금 입금 및 한도 내용은 잔디(JANDI) 웹훅으로 알림
           </text>
           <text x="540" y="218" text-anchor="middle" font-size="13" fill="#475569">
-            주간 입금(차감분 복구)은 [매주 금요일 입금]을 원칙으로 하되 추후 변동될 수 있으며, 제휴 업체 정산 지급일은 [답례품 정산 지급일과 같음]으로 운영합니다.
+            우리는 [매주 금요일 입금]을 원칙으로 하되 이후 추후에 변동될 수 있으며, 업체 정산 지급일은 [답례품과 같음]으로 운영합니다.
           </text>
         </svg>
       </div>
@@ -1587,10 +1559,10 @@
           <tbody>
             <tr>
               <td class="ta_c"><strong>STEP 1</strong></td>
-              <td><strong>실서버(<code>MID 2</code>) PG 결제 및<br/>예치 잔액 확인</strong></td>
+              <td><strong>부의금 카드결제 및<br/>업체 예치 잔액 확인</strong></td>
               <td class="bg_y">
-                - 조문객이 부의금 카드결제 시 <strong>실서버용 <code>MID 2</code></strong>로 PG 승인을 태웁니다.<br/>
-                - 결제 시점에 해당 업체의 입금 잔액이 결제하려는 <code>[부의금액]</code> 이상인지 자동 확인합니다.
+                - 조문객이 부의금 카드결제 시 결제 시점에 해당 업체의 입금 잔액이 결제하려는 <code>[부의금액]</code> 이상인지 자동 확인합니다.<br/>
+                - (내부적으로는 실서버 <code>MID 2</code>를 통해 PG 승인 및 입금·정산을 태웁니다.)
               </td>
               <td>업체 잔액이 부족할 경우 결제를 진행하지 않고 안내 모달을 노출합니다.</td>
             </tr>
@@ -1610,7 +1582,7 @@
                 - 부의금 입금 내역과 업체 잔액 현황을 <strong>잔디(JANDI) 메신저 웹훅</strong>으로 즉시 알려줍니다.<br/>
                 - 업체 잔액이 <strong>1차 한도 / 2차 한도</strong>에 도달하면 잔디 웹훅(<code>H_한도알림</code>) 및 업체 담당자 알림톡이 발송됩니다.
               </td>
-              <td>별도의 송금 MID 잔액 실시간 조회 기능 없이 잔디 웹훅과 업체별 잔액 원장으로 직관적으로 관리합니다.</td>
+              <td>송금 MID 잔액 실시간 조회 기능은 없어졌으며, 잔디 웹훅과 업체별 잔액 원장으로 관리합니다.</td>
             </tr>
             <tr>
               <td class="ta_c"><strong>STEP 4</strong></td>
@@ -1633,21 +1605,21 @@
         </table>
       </div>
 
-      <!-- 3. 실제 부의금 결제 시 자금·잔액 이동 예시 (비개발자·운영자용 쉬운 시뮬레이션) -->
+      <!-- 3. 실제 부의금 결제 시 자금·잔액 이동 예시 -->
       <h2 id="sec-exp-demo">3. 실제 부의금 카드결제 시 자금 및 잔액 이동 예시</h2>
-      <p>개발 코드 없이 <strong>조문객이 50,000원 부의금을 카드로 결제했을 때</strong> 실서버(<code>MID 2</code>)에서 돈과 잔액, 그리고 잔디(JANDI) 웹훅이 어떻게 움직이는지 한눈에 확인해 보세요.</p>
+      <p><strong>조문객이 50,000원 부의금을 카드로 결제했을 때</strong> 돈과 잔액, 그리고 잔디(JANDI) 웹훅이 어떻게 움직이는지 한눈에 확인해 보세요.</p>
 
       <div class="exp-split-row">
         <div>
           <div class="easy-concept-card" style="height:100%;">
-            <span class="easy-concept-badge" style="background:#3566e0; color:#ffffff;">실서버 (MID 2) 자금 흐름 시뮬레이션</span>
+            <span class="easy-concept-badge" style="background:#3566e0; color:#ffffff;">자금 및 잔액 흐름 시뮬레이션</span>
             <h3 style="margin-top:6px; margin-bottom:14px; font-size:20px; color:#111111;">조문객이 부의금 50,000원을 결제한 경우</h3>
             <div class="table_wrap" style="margin-bottom:0;">
               <table class="my_table" style="margin-bottom:0;">
                 <tbody>
                   <tr>
-                    <th style="width:36%;">① 조문객 카드결제 (PG)</th>
-                    <td><strong>54,300원 결제</strong> (부의금 원금 50,000원 + 수수료 4,300원)<br/><span style="font-size:13px; color:#3566e0;">→ 실서버용 <code>MID 2</code>를 통해 PG 승인 진행</span></td>
+                    <th style="width:36%;">① 조문객 카드결제</th>
+                    <td><strong>54,300원 결제</strong> (부의금 원금 50,000원 + 수수료 4,300원)</td>
                   </tr>
                   <tr>
                     <th class="bg_y">② 상주 계좌 입금</th>
@@ -1659,14 +1631,14 @@
                   </tr>
                   <tr>
                     <th>④ 잔디(JANDI) 웹훅 알림</th>
-                    <td>입금 완료 내역 및 1·2차 한도 도달 시 <strong>잔디 웹훅 즉시 알림</strong></td>
+                    <td>입금 내역 및 1·2차 한도 도달 시 <strong>잔디 웹훅으로 내용 알림</strong></td>
                   </tr>
                   <tr>
                     <th>⑤ 주간 입금 (잔액 복구)</th>
-                    <td><strong>매주 금요일 입금 원칙</strong> (전주 금~금주 목 차감 합계 복구)<br/><span style="font-size:13px; color:#d97706; font-weight:600;">※ 단, 입금 기준은 이후 추후에 변동될 수 있음</span></td>
+                    <td><strong>매주 금요일마다 입금 원칙</strong> (전주 금~금주 목 차감 합계 복구)<br/><span style="font-size:13px; color:#d97706; font-weight:600;">※ 단, 이 기준은 이후 추후에 변동될 수 있음</span></td>
                   </tr>
                   <tr>
-                    <th>⑥ 업체 수수료 정산일</th>
+                    <th>⑥ 업체 정산 지급일</th>
                     <td><strong>답례품과 같음</strong> (답례품 정산 지급일과 동일하게 지급)</td>
                   </tr>
                 </tbody>
@@ -1679,7 +1651,7 @@
             <div class="mobile-statusbar"><span>09:41</span><span>LTE 100%</span></div>
             <div class="mobile-body">
               <div style="background:#3566e0; color:#fff; padding:11px 14px; border-radius:8px; font-size:13px; font-weight:600; margin-bottom:12px;">
-                부의금 카드결제 화면 (실서버 MID 2)
+                모바일 부의금 카드결제 화면
               </div>
               <div style="font-size:13px; color:#555; margin-bottom:10px;">받는 상주 : <strong>홍길동 상주님</strong></div>
               <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:12px; margin-bottom:14px; font-size:13px;">
@@ -1708,7 +1680,7 @@
          PAGE 1: 1. 전달 자료실 (#pdfs)
          ==================================================================== -->
     <section id="page-pdfs" class="guide-page">
-      <h3 class="intro-lead">부의금 카드결제 서비스 제휴 시 업체에게 전달해야 할 필수 자료(제안서·법률의견서·운영가이드·개발자 전달용 연동문서·제작 중인 계약서)와 우리 내부 팀용 문서를 정리했습니다.</h3>
+      <h3 class="intro-lead">부의금 카드결제 서비스 제휴 시 업체에게 전달해야 할 필수 자료(제작 중인 계약서 · 고객사 운영 가이드 · 개발팀 전달용 연동 가이드)와 내부 참고 문서를 정리했습니다.</h3>
 
       <div class="notice_box">
         <div class="nectar_icon_wrap">
@@ -1716,14 +1688,13 @@
         </div>
         <div class="notice_content">
           <ul>
-            <li>본 자료실은 오직 <strong>『부의금 카드결제 서비스』</strong>와 관련된 문서만 수록되어 있습니다.</li>
-            <li><strong>업체에게 전달해줘야 하는 제휴 계약서는 현재 제작 중</strong>이며, 완성되는 즉시 본 자료실에 업데이트하여 업체에 전달합니다.</li>
-            <li>개발 관련 세부 사항은 우리 운영팀이 직접 관여할 필요 없이, 아래 <strong><code>5) 부의금 서비스 연동 가이드(고객사 개발팀 전달용).docx</code></strong> 파일을 업체 개발팀에 전달하면 개발자끼리 알아서 진행합니다.</li>
+            <li><strong>업체에게 전달해줘야 하는 계약서는 현재 제작 중</strong>이며, 완성되는 즉시 업체에 전달합니다.</li>
+            <li>개발 관련 세부 사항은 우리 운영팀이 직접 관여할 필요 없이, 아래 <strong><code>3) 부의금 서비스 연동 가이드(고객사 개발팀 전달용).docx</code></strong> 파일을 업체 개발팀에 전달하면 개발자끼리 알아서 진행합니다.</li>
           </ul>
         </div>
       </div>
 
-      <h2 id="sec-pdf-client">1. 고객사(제휴 업체)에게 전달해줘야 할 필수 자료 (5종)</h2>
+      <h2 id="sec-pdf-client">1. 고객사(제휴 업체)에게 전달해줘야 할 필수 자료 (3종)</h2>
       <div class="pdf-grid">
         <!-- Client Doc 1: 계약서 (현재 제작 중 명시) -->
         <div class="pdf-card" style="border:2px dashed #f59e0b; background:#fffbeb;">
@@ -1737,38 +1708,12 @@
           </div>
         </div>
 
-        <!-- Client Doc 2: 서비스 제안서 -->
-        <div class="pdf-card">
-          <div class="pdf-card-info">
-            <span class="pdf-tag" style="background:#e8effe; color:#2451c8;">영업 제안 1순위 PDF</span>
-            <div class="pdf-title">2) 데브늄 부의금 카드결제 서비스 제안서.pdf</div>
-            <div class="pdf-desc">신규 제휴 업체 첫 미팅 및 도입 제안 시 전달하는 부의금 카드결제 공식 소개 및 수익 모델 제안서</div>
-          </div>
-          <div class="pdf-card-actions">
-            <a class="btn-pdf-download" href="/데브늄_부의금_카드결제_서비스_제안서.pdf" download>⬇ PDF 다운로드</a>
-            <a class="btn-pdf-view" href="/데브늄_부의금_카드결제_서비스_제안서.pdf" target="_blank">새창 열람</a>
-          </div>
-        </div>
-
-        <!-- Client Doc 3: 법률의견서 -->
-        <div class="pdf-card">
-          <div class="pdf-card-info">
-            <span class="pdf-tag" style="background:#dcfce7; color:#15803d;">법률 적법성 증빙 PDF</span>
-            <div class="pdf-title">3) 부의금 카드결제 법률의견서 (법무법인 영진).pdf</div>
-            <div class="pdf-desc">고객사 법무 검토 요청 시 전달하는 부의금 신용카드 결제 및 실시간 입금 서비스 적법성 법률의견서</div>
-          </div>
-          <div class="pdf-card-actions">
-            <a class="btn-pdf-download" href="/데브늄_부의금_카드결제_법률의견서_법무법인영진.pdf" download>⬇ PDF 다운로드</a>
-            <a class="btn-pdf-view" href="/데브늄_부의금_카드결제_법률의견서_법무법인영진.pdf" target="_blank">새창 열람</a>
-          </div>
-        </div>
-
-        <!-- Client Doc 4: 고객사 운영 가이드 -->
+        <!-- Client Doc 2: 고객사 운영 가이드 -->
         <div class="pdf-card">
           <div class="pdf-card-info">
             <span class="pdf-tag" style="background:#e8effe; color:#2451c8;">고객사 사업·운영팀 전달용 PDF</span>
-            <div class="pdf-title">4) 부의금 카드결제 고객사 운영 가이드.pdf</div>
-            <div class="pdf-desc">고객사 담당자가 알아야 할 예치금 입금·자동 차감·매주 금요일 입금 원칙(추후 변동 가능) 및 정산 안내서</div>
+            <div class="pdf-title">2) 부의금 카드결제 고객사 운영 가이드.pdf</div>
+            <div class="pdf-desc">고객사 담당자가 알아야 할 데브늄 예치금 입금·자동 차감·매주 금요일 복구 원칙(추후 변동 가능) 및 정산 안내서</div>
           </div>
           <div class="pdf-card-actions">
             <a class="btn-pdf-download" href="/partner-guide/eiumbugo_1_client_guide.pdf" download="데브늄_부의금카드결제_고객사_운영가이드.pdf">⬇ PDF 다운로드</a>
@@ -1776,11 +1721,11 @@
           </div>
         </div>
 
-        <!-- Client Doc 5: 개발팀 전달용 DOCX -->
+        <!-- Client Doc 3: 개발팀 전달용 DOCX -->
         <div class="pdf-card">
           <div class="pdf-card-info">
             <span class="pdf-tag" style="background:#f1f5f9; color:#334155;">업체 개발자에게 전달만 하면 되는 문서</span>
-            <div class="pdf-title">5) 부의금 서비스 연동 가이드 (고객사 개발팀 전달용).docx</div>
+            <div class="pdf-title">3) 부의금 서비스 연동 가이드 (고객사 개발팀 전달용).docx</div>
             <div class="pdf-desc">개발 관련 내용은 이 워드(DOCX) 파일 하나만 업체 개발팀에 전달하면 양사 개발자가 알아서 연동을 진행합니다.</div>
           </div>
           <div class="pdf-card-actions">
@@ -1789,7 +1734,7 @@
         </div>
       </div>
 
-      <h2 id="sec-pdf-internal">2. 우리 팀 내부 운영 · 업체별 지침 · 체크리스트 참고 자료</h2>
+      <h2 id="sec-pdf-internal">2. 우리 팀 내부 운영 · 체크리스트 참고 자료</h2>
       <div class="pdf-grid">
         <div class="pdf-card">
           <div class="pdf-card-info">
@@ -1821,47 +1766,38 @@
         <table class="my_table">
           <thead>
             <tr>
-              <th style="width:16%;">진행 단계</th>
-              <th style="width:20%;">전달 대상</th>
-              <th style="width:34%;" class="bg_y">우리가 전달해줘야 할 자료</th>
+              <th style="width:18%;">진행 단계</th>
+              <th style="width:22%;">전달 대상</th>
+              <th style="width:32%;" class="bg_y">우리가 전달해줘야 할 자료</th>
               <th>전달 목적 및 우리 팀 확인사항</th>
             </tr>
           </thead>
           <tbody>
             <tr>
-              <td class="ta_c"><strong>1단계 : 첫 제안 미팅</strong></td>
-              <td>업체 대표 / 사업담당자</td>
-              <td class="bg_y">
-                - <code>2) 부의금 카드결제 서비스 제안서.pdf</code><br/>
-                - <code>3) 부의금 카드결제 법률의견서.pdf</code>
-              </td>
-              <td>조문객 수수료 부담 / 상주 원금 100% 실시간 입금 / 업체 정산 지급일(답례품과 같음) 및 법적 적법성 안내</td>
-            </tr>
-            <tr>
-              <td class="ta_c"><strong>2단계 : 계약 및 예치금 안내</strong></td>
-              <td>업체 계약·재무 담당자</td>
+              <td class="ta_c"><strong>1단계 : 계약 및 운영 안내</strong></td>
+              <td>업체 사업·계약 담당자</td>
               <td class="bg_y">
                 - <strong><code>1) 부의금 카드결제 제휴 계약서</code> (현재 제작 중 — 완성 후 전달)</strong><br/>
-                - <code>4) 부의금 카드결제 고객사 운영 가이드.pdf</code>
+                - <code>2) 부의금 카드결제 고객사 운영 가이드.pdf</code>
               </td>
-              <td>사전 예치금 입금 안내, 매주 금요일 입금 원칙(추후 변동 가능) 설명, 업체 정산 지급일(답례품과 같음) 안내, 구비서류 수취</td>
+              <td>데브늄 계좌로 사전 예치금 입금 안내, 매주 금요일 복구 원칙(추후 변동 가능) 설명, 업체 정산 지급일(답례품과 같음) 안내</td>
             </tr>
             <tr>
-              <td class="ta_c"><strong>3단계 : 개발팀 자료 전달</strong></td>
+              <td class="ta_c"><strong>2단계 : 개발팀 자료 전달</strong></td>
               <td>업체 개발팀 (개발자 일임)</td>
               <td class="bg_y">
-                - <code>5) 부의금 서비스 연동 가이드(고객사 전달용).docx</code><br/>
+                - <code>3) 부의금 서비스 연동 가이드(고객사 전달용).docx</code><br/>
                 - 부고장 개설 화면용 <code>[개인정보 제3자 제공 동의]</code> 약관 문구
               </td>
-              <td>개발적인 내용은 양사 개발자가 알아서 진행 (`MID 1` 테스트용 검증 후 오픈 시 `MID 2` 실서버용 전환)</td>
+              <td>개발적인 내용은 양사 개발자가 알아서 진행</td>
             </tr>
             <tr>
-              <td class="ta_c"><strong>4단계 : 실서버 오픈·운영</strong></td>
+              <td class="ta_c"><strong>3단계 : 오픈 및 정산 운영</strong></td>
               <td>우리 운영·정산팀</td>
               <td class="bg_y">
                 - 본 웹 가이드 <code>3. 내부 운영 가이드</code> &amp; <code>5. 체크리스트</code>
               </td>
-              <td>실서버(`MID 2`) 전환 확인, 업체 초기 예치금 어드민 반영, 잔디(JANDI) 웹훅 알림 확인, 매주 금요일 입금 및 정산 관리</td>
+              <td>업체 초기 예치금 어드민 반영, 잔디(JANDI) 웹훅 알림 확인, 매주 금요일 입금(추후 변동 가능) 및 정산(답례품과 같음) 관리</td>
             </tr>
           </tbody>
         </table>
@@ -1875,12 +1811,13 @@
 
     <!-- ====================================================================
          PAGE 2: 2. 고객사 운영 가이드 (#client-guide)
+         [고객사 입장: 데브늄에 입금만 하고 끝! MID 1, 2 같은 개발 개념 완전 제외]
          ==================================================================== -->
     <section id="page-client-guide" class="guide-page">
-      <h3 class="intro-lead">부의금 카드결제 서비스를 도입하는 고객사(제휴 업체)에게 안내해야 할 핵심 운영 기준, 예치금 차감 및 매주 금요일 입금 원칙(추후 변동 가능), 업체 정산 지급일(답례품과 같음), 그리고 필수 약관을 정리했습니다.</h3>
+      <h3 class="intro-lead">부의금 카드결제 서비스를 도입하는 고객사(제휴 업체)에게 안내해야 할 핵심 운영 기준입니다. 고객사는 데브늄에 예치금만 입금하면 끝이며, 차감·매주 금요일 복구(추후 변동 가능)·정산(답례품과 같음) 기준과 필수 약관만 안내하시면 됩니다.</h3>
 
-      <!-- 1. 고객사에게 안내할 핵심 운영 원칙 6가지 -->
-      <h2 id="sec-cg-principles">1. 고객사가 알아야 할 부의금 카드결제 핵심 운영 원칙 6가지</h2>
+      <!-- 1. 고객사에게 안내할 핵심 운영 원칙 5가지 (MID 1, 2 제외!) -->
+      <h2 id="sec-cg-principles">1. 고객사가 알아야 할 부의금 카드결제 핵심 운영 원칙 5가지</h2>
       <div class="table_wrap">
         <table class="my_table">
           <thead>
@@ -1892,32 +1829,27 @@
           </thead>
           <tbody>
             <tr>
-              <td><strong>1) 테스트(<code>MID 1</code>) 및<br/>실서버(<code>MID 2</code>) 운영</strong></td>
-              <td class="bg_y"><strong><code>MID 1</code> = 테스트용<br/><code>MID 2</code> = 실서버용 (PG·입금·정산)</strong></td>
-              <td>사전 연동 검증 시에는 <strong><code>MID 1(테스트용)</code></strong>을 사용하며, 정식 오픈 시에는 <strong><code>MID 2(실서버용)</code></strong>를 통해 실제 PG 카드결제 승인, 상주 계좌 입금, 정산을 모두 진행합니다.</td>
-            </tr>
-            <tr>
-              <td><strong>2) 결제 수수료 및<br/>상주 입금 원금</strong></td>
+              <td><strong>1) 결제 수수료 및<br/>상주 입금 원금</strong></td>
               <td class="bg_y"><strong>결제자 수수료 부담 /<br/>상주 원금 <code>100%</code> 실시간 입금</strong></td>
               <td>결제 화면에 고지된 서비스 이용수수료는 조문객(결제자)이 부담하며, 상주 계좌로는 1원의 차감도 없이 <strong>부의금 원금 100%가 실시간 입금</strong>됩니다.</td>
             </tr>
             <tr>
-              <td><strong>3) 고객사 예치금 차감</strong></td>
-              <td class="bg_y"><strong>주문 건 <code>송금완료</code> 시<br/><code>[부의금액]</code> 자동 차감</strong></td>
-              <td>상주 계좌로 부의금 입금(<code>송금완료</code>)이 완료될 때마다 해당 주문의 <strong>부의금액(원금)</strong>만큼 고객사의 예치금 입금 잔액에서 자동 차감됩니다.</td>
+              <td><strong>2) 고객사 예치금 입금 및<br/>자동 차감</strong></td>
+              <td class="bg_y"><strong>데브늄 계좌로 예치금 입금 /<br/><code>송금완료</code> 시 <code>[부의금액]</code> 차감</strong></td>
+              <td>고객사는 데브늄 지정 계좌로 예치금을 입금하며, 상주 계좌로 부의금이 입금(<code>송금완료</code>)될 때마다 해당 주문의 <strong>부의금액(원금)</strong>만큼 고객사의 예치금 잔액에서 자동 차감됩니다.</td>
             </tr>
             <tr>
-              <td><strong>4) 주간 입금 (잔액 복구) 기준</strong></td>
-              <td class="bg_y"><strong>매주 금요일 입금 원칙<br/><span style="color:#d97706;">(※ 이후 추후 변동 가능)</span></strong></td>
-              <td>직전 주간(전주 금요일 ~ 금주 목요일) 동안 차감된 부의금액 합계는 <strong>매주 금요일마다 입금(복구)하는 것을 원칙</strong>으로 합니다. <strong>단, 이 기준은 추후 운영 상황 및 정산 일정에 따라 변동될 수 있습니다.</strong></td>
+              <td><strong>3) 주간 입금 (잔액 복구) 기준</strong></td>
+              <td class="bg_y"><strong>매주 금요일 입금(복구) 원칙<br/><span style="color:#d97706;">(※ 이후 추후 변동 가능)</span></strong></td>
+              <td>직전 주간(전주 금요일 ~ 금주 목요일) 동안 차감된 부의금액 합계는 <strong>매주 금요일마다 입금(복구)하는 것을 원칙</strong>으로 합니다. <strong>단, 이 기준은 이후 추후에 변동될 수 있습니다.</strong></td>
             </tr>
             <tr>
-              <td><strong>5) 한도 알림 및<br/>잔액 부족 시 결제 제한</strong></td>
-              <td class="bg_y"><strong>1·2차 한도 도달 알림 /<br/>잔액 부족 시 결제 제한 모달</strong></td>
-              <td>예치금 잔액이 1차/2차 한도에 도달하면 담당자 알림톡 및 내부 잔디 웹훅이 발송되며, <strong>잔액이 결제하려는 부의금액보다 부족할 경우 결제가 일시 제한</strong>됩니다.</td>
+              <td><strong>4) 한도 알림 및<br/>잔액 부족 시 결제 제한</strong></td>
+              <td class="bg_y"><strong>1·2차 한도 도달 알림톡 /<br/>잔액 부족 시 결제 제한 모달</strong></td>
+              <td>예치금 잔액이 1차/2차 한도에 도달하면 담당자에게 알림톡이 발송되며, <strong>잔액이 결제하려는 부의금액보다 부족할 경우 결제가 일시 제한</strong>됩니다.</td>
             </tr>
             <tr>
-              <td><strong>6) 업체 정산 지급일</strong></td>
+              <td><strong>5) 업체 정산 지급일</strong></td>
               <td class="bg_y"><strong>답례품과 같음<br/>(답례품 정산 지급일과 동일)</strong></td>
               <td>고객사에게 지급하는 부의금 카드결제 수수료 정산 지급일은 <strong>기존 『답례품 정산 지급일과 같음』</strong> 기준으로 동일하게 지급됩니다.</td>
             </tr>
@@ -1926,11 +1858,11 @@
       </div>
 
       <!-- 2. 예치금 입금 · 자동 차감 · 매주 금요일 입금(복구) · 업체 정산 상세 -->
-      <h2 id="sec-cg-deposit">2. 예치금 입금 · 자동 차감 · 매주 금요일 입금 원칙 · 업체 정산 가이드</h2>
+      <h2 id="sec-cg-deposit">2. 예치금 입금 · 자동 차감 · 매주 금요일 복구 원칙 · 업체 정산 가이드</h2>
       <div class="text_box">
         <ul>
           <li>
-            <h4><strong>왜 사전 예치금이 필요한가요?</strong> 카드사 결제대금은 PG사를 거쳐 며칠 뒤에 정산되지만, 상주 계좌로는 결제 즉시 부의금 원금 100%가 실시간 입금되어야 합니다. 주말·공휴일에도 중단 없이 실시간 입금이 이루어지도록 <strong>15일분 기준 안전 예치금</strong>을 운영합니다.</h4>
+            <h4><strong>고객사는 데브늄에 예치금만 입금하면 됩니다!</strong> 카드사 결제대금은 며칠 뒤에 정산되지만, 상주 계좌로는 결제 즉시 부의금 원금 100%가 실시간 입금되어야 하므로 <strong>15일분 기준 안전 예치금</strong>을 데브늄에 입금해 두고 운영합니다.</h4>
           </li>
         </ul>
       </div>
@@ -1948,27 +1880,27 @@
             <tr>
               <td class="ta_c"><strong>초기 예치금 산정 기준</strong></td>
               <td class="ta_c"><code>1일 평균 예상 거래액 × 15일분</code></td>
-              <td>업체별 예상 거래 규모에 맞춰 15일분 안전 예치금을 설정하여 입금합니다.</td>
+              <td>업체별 예상 거래 규모에 맞춰 15일분 안전 예치금을 산정하여 데브늄 계좌로 입금합니다.</td>
             </tr>
             <tr>
               <td class="ta_c"><strong>예치금 입금 계좌</strong></td>
               <td class="ta_c"><strong>IBK기업은행 <code>664-000013-97-355</code></strong></td>
-              <td>예금주 : <strong>데브늄 주식회사</strong> (입금 확인 후 어드민에서 고객사 입금 잔액에 반영)</td>
+              <td>예금주 : <strong>데브늄 주식회사</strong> (입금 확인 즉시 고객사 입금 잔액에 반영)</td>
             </tr>
             <tr>
               <td class="ta_c bg_y"><strong>부의금 입금 및 잔액 차감</strong></td>
-              <td class="ta_c bg_y">실서버(<code>MID 2</code>) <code>송금완료</code> 시<br/><code>기존 잔액 - [부의금액]</code></td>
-              <td class="bg_y">상주 계좌로 부의금이 입금 완료될 때마다 해당 부의금 원금만큼 고객사 입금 잔액에서 자동 차감되고, 우리 팀 잔디(JANDI) 웹훅으로 알림이 전송됩니다.</td>
+              <td class="ta_c bg_y">상주 계좌 <code>송금완료</code> 시<br/><code>기존 잔액 - [부의금액]</code></td>
+              <td class="bg_y">상주 계좌로 부의금이 입금 완료될 때마다 해당 부의금 원금만큼 고객사 입금 잔액에서 자동 차감됩니다.</td>
             </tr>
             <tr>
               <td class="ta_c bg_y"><strong>주간 입금 (잔액 복구)</strong></td>
-              <td class="ta_c bg_y"><strong>매주 금요일 입금 원칙</strong><br/><span style="color:#d97706; font-weight:700;">(※ 추후 변동될 수 있음)</span></td>
-              <td class="bg_y">기본적으로 <strong>매주 금요일마다 직전 주간(전주 금~금주 목) 차감분 합계를 입금(복구)하는 것을 원칙</strong>으로 운영하되, <strong>추후 운영 정책 및 거래 추이에 따라 변동될 수 있음</strong>을 안내합니다.</td>
+              <td class="ta_c bg_y"><strong>매주 금요일 입금(복구) 원칙</strong><br/><span style="color:#d97706; font-weight:700;">(※ 추후 변동될 수 있음)</span></td>
+              <td class="bg_y">기준은 <strong>매주 금요일마다 직전 주간(전주 금~금주 목) 차감분 합계를 입금(복구)하는 것을 원칙</strong>으로 하되, <strong>이후 추후에 변동될 수 있음</strong>을 안내합니다.</td>
             </tr>
             <tr>
               <td class="ta_c bg_y"><strong>업체 수수료 정산 지급일</strong></td>
               <td class="ta_c bg_y"><strong>답례품과 같음</strong></td>
-              <td class="bg_y">제휴 업체에 지급하는 수수료 정산 지급일은 <strong>답례품 정산 지급일과 동일</strong>하게 맞추어 정산·지급합니다.</td>
+              <td class="bg_y">제휴 업체에 지급하는 수수료 정산 지급일은 <strong>답례품 정산 지급일과 같음</strong>으로 맞추어 정산·지급합니다.</td>
             </tr>
             <tr>
               <td class="ta_c"><strong>잔액 부족 시 결제 제한</strong></td>
@@ -1994,12 +1926,12 @@
             <tr>
               <td class="ta_c"><strong>업체 전달용 제휴 계약서</strong></td>
               <td class="ta_c bg_y"><strong style="color:#d97706;">현재 제작 중 (완성 후 업체 전달)</strong></td>
-              <td>부의금 카드결제 서비스 전용 제휴 계약서는 현재 제작 중입니다. (실서버 <code>MID 2</code> 정산 구조, 매주 금요일 입금 원칙 및 추후 변동 가능 조항, 답례품과 동일한 정산 지급일 기준 포함)</td>
+              <td>업체에게 전달해줘야 하는 부의금 카드결제 서비스 계약서는 현재 제작 중입니다. (예치금 운영, 매주 금요일 입금 원칙 및 추후 변동 가능 조항, 답례품과 동일한 정산 지급일 기준 포함)</td>
             </tr>
             <tr>
               <td class="ta_c"><strong>업체 구비서류 (계약 시)</strong></td>
-              <td class="ta_c">기본 서류 4종 + 예치금 입금 확인</td>
-              <td>① 사업자등록증 사본, ② 법인등기부등본(또는 대표자 신분증), ③ 법인인감증명서, ④ 정산금 수취 통장사본, ⑤ 초기 예치금 입금 확인</td>
+              <td class="ta_c">기본 서류 4종 + 데브늄 예치금 입금</td>
+              <td>① 사업자등록증 사본, ② 법인등기부등본(또는 대표자 신분증), ③ 법인인감증명서, ④ 정산금 수취 통장사본, ⑤ 초기 예치금 입금</td>
             </tr>
             <tr>
               <td class="ta_c"><strong>기술 연동 진행 방식</strong></td>
@@ -2128,32 +2060,32 @@
 
     <!-- ====================================================================
          PAGE 3: 3. 내부 운영 가이드 (#internal-guide)
-         [부의금 카드결제 전용 · 개발내용 제거 · 송금MID 실시간조회 제거 · 잔디 웹훅 · 금요일 입금 · 답례품 정산일]
+         [우리 내부만 아는 구조: MID 1 테스트 / MID 2 실서버 · 잔디 웹훅 · 금요일 입금 · 답례품 정산일]
          ==================================================================== -->
     <section id="page-internal-guide" class="guide-page">
-      <h3 class="intro-lead">우리 데브늄 내부 운영·사업팀을 위한 『부의금 카드결제 서비스』 실무 운영 매뉴얼입니다. 실서버(<code>MID 2</code>) 기반 입금·정산, 고객사 입금 잔액 관리, 잔디(JANDI) 웹훅 알림, 매주 금요일 입금 원칙(추후 변동 가능), 그리고 업체 정산(답례품과 같음) 기준을 안내합니다.</h3>
+      <h3 class="intro-lead">우리 데브늄 내부 운영·사업팀만 알고 운영하는 『부의금 카드결제 서비스』 실무 매뉴얼입니다. 고객사는 데브늄에 입금만 하고 끝이며, 우리 내부에서는 실서버(<code>MID 2</code>)를 통해 입금·정산을 처리하고 잔디(JANDI) 웹훅 알림, 매주 금요일 입금 원칙(추후 변동 가능), 업체 정산(답례품과 같음)으로 관리합니다.</h3>
 
-      <!-- 1. 실서버(MID 2) 기반 부의금 입금 및 고객사 잔액 관리 -->
-      <h2 id="sec-ig-mid2">1. 실서버(<code>MID 2</code>) 운영 및 고객사별 입금 잔액 관리</h2>
+      <!-- 1. 내부 실서버(MID 2) 기반 부의금 입금 및 고객사 잔액 관리 -->
+      <h2 id="sec-ig-mid2">1. 내부 전용 개념(<code>MID 1</code> · <code>MID 2</code>) 및 고객사별 입금 잔액 관리</h2>
       <div class="table_wrap">
         <table class="my_table">
           <thead>
             <tr>
               <th style="width:22%;">운영 항목</th>
-              <th style="width:28%;" class="bg_y">우리 팀 운영 기준</th>
+              <th style="width:28%;" class="bg_y">우리 팀 내부 운영 기준</th>
               <th>상세 운영 방식</th>
             </tr>
           </thead>
           <tbody>
             <tr>
-              <td><strong>1) <code>MID 1</code> / <code>MID 2</code> 운영 구분</strong></td>
-              <td class="bg_y"><strong><code>MID 1</code> : 테스트용<br/><code>MID 2</code> : 실서버용 (PG·입금·정산)</strong></td>
-              <td>업체 연동 테스트 시에만 <code>MID 1</code>을 사용하고, 실서비스 오픈 시에는 <strong>실서버용 <code>MID 2</code>를 통해 PG 카드결제 승인과 부의금 입금, 정산을 모두 처리</strong>합니다.</td>
+              <td><strong>1) 내부 개발·운영 개념<br/>(<code>MID 1</code> / <code>MID 2</code>)</strong></td>
+              <td class="bg_y"><strong><code>MID 1</code> : 테스트용 (개발개념)<br/><code>MID 2</code> : 실서버용 (PG·입금·정산)</strong></td>
+              <td>고객사는 데브늄에 예치금만 입금하면 끝이며, 우리 내부에서는 <code>MID 1</code>을 개발 테스트용으로 쓰고, <strong>실서버용 <code>MID 2</code>를 통해 PG 결제 승인과 부의금 입금, 정산을 모두 처리</strong>합니다.</td>
             </tr>
             <tr>
               <td><strong>2) 고객사 입금 잔액 반영</strong></td>
               <td class="bg_y"><strong>어드민 <code>[+ 입금액 추가]</code> /<br/><code>[- 입금액 차감]</code> 수동·자동 관리</strong></td>
-              <td>고객사가 초기 예치금을 입금하면 어드민 플랫폼 관리 상세에서 <strong><code>[+ 입금액 추가]</code></strong>로 잔액을 반영하며, 필요 시 <strong><code>[- 입금액 차감]</code></strong>으로 조정할 수 있습니다. (※ 기존의 '송금 MID 잔액 실시간 조회' 기능은 폐지·제외되었습니다.)</td>
+              <td>고객사가 데브늄 계좌로 예치금을 입금하면 어드민 플랫폼 관리 상세에서 <strong><code>[+ 입금액 추가]</code></strong>로 잔액을 반영하며, 필요 시 <strong><code>[- 입금액 차감]</code></strong>으로 조정합니다. (※ '송금 MID 잔액 실시간 조회' 기능은 없어졌습니다.)</td>
             </tr>
             <tr>
               <td><strong>3) 부의금 입금 시 자동 차감</strong></td>
@@ -2224,13 +2156,13 @@
         </div>
       </div>
 
-      <!-- 3. 어드민 플랫폼 관리 상세 화면 세팅 기준 (송금 MID 잔액 실시간 조회 제거본) -->
+      <!-- 3. 어드민 플랫폼 관리 상세 화면 세팅 기준 -->
       <h2 id="sec-ig-admin">3. 어드민 플랫폼 관리 상세 세팅 기준 (부의금 카드결제 전용)</h2>
       <p>신규 제휴 업체를 어드민에 세팅할 때 확인·입력하는 <strong>플랫폼 관리 상세 화면</strong> 기준입니다. (※ 송금 MID 잔액 실시간 조회 영역은 없어졌으며, 아래 고객사별 입금 잔액 및 한도·잔디 웹훅 항목만 관리합니다.)</p>
 
       <div style="border:2px solid #3566e0; border-radius:10px; background:#f8fafc; padding:24px; margin-bottom:28px;">
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; flex-wrap:wrap; gap:8px;">
-          <strong style="font-size:16px; color:#1e293b;">[어드민] 플랫폼 관리 상세 (실서버 MID 2 · 고객사 입금 잔액 관리 · 한도 및 잔디 웹훅 설정)</strong>
+          <strong style="font-size:16px; color:#1e293b;">[어드민] 플랫폼 관리 상세 (고객사 입금 잔액 관리 · 한도 및 잔디 웹훅 설정)</strong>
           <span style="background:#3566e0; color:#fff; font-size:12px; font-weight:700; padding:4px 10px; border-radius:4px;">부의금 카드결제 어드민 관리 항목</span>
         </div>
         <div class="table_wrap" style="margin-bottom:0; background:#fff;">
@@ -2239,8 +2171,8 @@
               <tr>
                 <th style="width:18%;">플랫폼 ID / 업체명</th>
                 <td style="width:32%;"><code>md_kookmin</code> (예: <strong>국민부고</strong>)</td>
-                <th style="width:18%;">연동 환경 (MID)</th>
-                <td style="width:32%;">테스트: <code>MID 1</code> → <strong>실서버 오픈: <code>MID 2</code> (PG·입금·정산)</strong></td>
+                <th style="width:18%;">내부 실서버 연동</th>
+                <td style="width:32%;"><strong>실서버 <code>MID 2</code></strong> (PG 결제 · 입금 · 정산 처리)</td>
               </tr>
               <tr>
                 <th class="bg_y">고객사별 입금한 잔액</th>
@@ -2292,21 +2224,21 @@
             <tr>
               <td class="ta_c"><strong>상시 모니터링</strong></td>
               <td class="ta_c bg_y"><strong>잔디(JANDI) 웹훅 실시간 확인</strong></td>
-              <td>부의금 입금 발생 내역 및 고객사 1·2차 한도 도달 웹훅 알림을 잔디 메신저에서 실시간으로 확인합니다.</td>
+              <td>부의금 입금 내역 및 고객사 1·2차 한도 도달 웹훅 알림을 잔디 메신저에서 실시간으로 확인합니다.</td>
             </tr>
             <tr>
               <td class="ta_c"><strong>주간 입금 (잔액 복구)</strong></td>
               <td class="ta_c bg_y"><strong>매주 금요일 입금 원칙<br/><span style="color:#d97706;">(※ 추후 변동 가능)</span></strong></td>
               <td>
-                - 실서버(<code>MID 2</code>) 기준 직전 정산 대상 기간(<strong>전주 금요일 ~ 금주 목요일</strong>) 동안 차감된 부의금액 합계를 <strong>매주 금요일마다 입금(복구)하는 것을 원칙</strong>으로 처리합니다.<br/>
+                - 우리는 직전 정산 대상 기간(<strong>전주 금요일 ~ 금주 목요일</strong>) 동안 차감된 부의금액 합계를 <strong>매주 금요일마다 입금(복구)하는 것을 원칙</strong>으로 처리합니다.<br/>
                 - <strong>※ 유의사항</strong> : 현재 기준은 매주 금요일 입금을 원칙으로 하고 있으나, <strong>이후 추후에 운영 정책에 따라 변동될 수 있음</strong>을 전제로 운영합니다.
               </td>
             </tr>
             <tr>
               <td class="ta_c"><strong>업체 수수료 정산 지급</strong></td>
-              <td class="ta_c bg_y"><strong>답례품 정산 지급일과 같음</strong></td>
+              <td class="ta_c bg_y"><strong>답례품과 같음</strong></td>
               <td>
-                - 제휴 업체에 지급하는 부의금 카드결제 수수료(리베이트) 정산 지급일은 <strong>『답례품과 같음』</strong>으로 운영합니다.<br/>
+                - 제휴 업체에 지급하는 부의금 카드결제 수수료 정산 지급일은 <strong>『답례품과 같음』</strong>으로 운영합니다.<br/>
                 - 답례품 정산 일정과 동일한 날짜에 정산서 발송, 세금계산서 수취, 정산금 입금을 진행합니다.
               </td>
             </tr>
@@ -2332,11 +2264,11 @@
          PAGE 4: 4. 업체별 지침 (Step 1~6) (#step-guide)
          ==================================================================== -->
     <section id="page-step-guide" class="guide-page">
-      <h3 class="intro-lead">부의금 카드결제 서비스를 도입·추진 중인 제휴 업체(국민부고, 삼가, 의전나라, 첫장, 부고알림, 효성프라콘, 사하구민, 아이리스 등)를 클릭하면 해당 업체의 세팅 시트와 우리가 해야 할 Step 1 ~ Step 6 체크리스트가 아래에 펼쳐집니다.</h3>
+      <h3 class="intro-lead">부의금 카드결제 제휴 업체(국민부고, 삼가, 의전나라, 첫장, 부고알림, 효성프라콘, 사하구민, 아이리스 등)를 클릭하면 해당 업체의 세팅 시트와 핵심 체크리스트(7개 항목)가 바로 펼쳐집니다.</h3>
 
       <!-- 1. 우리 제휴 업체 현황판 & 업체별 세팅/체크리스트 매니저 -->
-      <h2 id="sec-partner-manager" style="margin-top:10px;">1. 부의금 카드결제 제휴 업체 현황판 &amp; 업체별 세팅 · 체크리스트 관리</h2>
-      <p>아래 <strong>업체 버튼</strong> 또는 <strong>표의 행</strong>을 클릭하면, 해당 업체의 <strong><code>MID 1(테스트용) → MID 2(실서버용)</code> 세팅, 정산 지급일(답례품과 같음), 예치금·한도·잔디 웹훅 설정 시트</strong>와 <strong>18개 실행 체크리스트</strong>가 즉시 펼쳐집니다.</p>
+      <h2 id="sec-partner-manager" style="margin-top:10px;">1. 제휴 업체 현황판 &amp; 업체별 세팅 · 체크리스트 관리</h2>
+      <p>아래 <strong>업체 버튼</strong>이나 <strong>표의 행</strong>을 클릭하면 해당 업체의 세팅 시트와 <strong>7개 핵심 체크리스트</strong>를 바로 확인·체크할 수 있습니다.</p>
 
       <!-- 업체 선택 알약 버튼 바 + 신규 업체 추가 버튼 -->
       <div class="partner-pill-bar">
@@ -2359,26 +2291,20 @@
               <tr>
                 <th style="width:16%;">업체명 (필수)</th>
                 <td style="width:34%;"><input type="text" id="new-p-name" class="partner-input" placeholder="예: 한마음부고"/></td>
-                <th style="width:16%;">추진 우선순위·상태</th>
-                <td style="width:34%;"><input type="text" id="new-p-rank" class="partner-input" placeholder="예: 신규추진 (제안단계)" value="신규추진 (협의중)"/></td>
+                <th style="width:16%;">추진 상태</th>
+                <td style="width:34%;"><input type="text" id="new-p-rank" class="partner-input" placeholder="예: 신규추진 (협의중)" value="신규추진 (협의중)"/></td>
               </tr>
               <tr>
                 <th>플랫폼 코드</th>
                 <td><input type="text" id="new-p-code" class="partner-input" placeholder="예: md_hanmaeum"/></td>
                 <th>계약서 상태</th>
-                <td><input type="text" id="new-p-type" class="partner-input" value="업체 전달용 계약서 제작 중"/></td>
-              </tr>
-              <tr>
-                <th>실서버 MID (<code>MID 2</code>)</th>
-                <td><input type="text" id="new-p-md2" class="partner-input" value="MID 2 (실서버용 — PG·입금·정산)"/></td>
-                <th>테스트 MID (<code>MID 1</code>)</th>
-                <td><input type="text" id="new-p-md1" class="partner-input" value="MID 1 (테스트용 — 연동검수)"/></td>
+                <td><input type="text" id="new-p-type" class="partner-input" value="계약서 제작 중"/></td>
               </tr>
               <tr>
                 <th>수수료율 &amp; 정산 지급일</th>
-                <td><input type="text" id="new-p-fee" class="partner-input" value="3.5% (정산 지급일: 답례품과 같음)"/></td>
-                <th>예치금 &amp; 금요일 입금</th>
-                <td><input type="text" id="new-p-reqdep" class="partner-input" value="15,000,000원 (매주 금요일 입금 원칙 / 변동가능)"/></td>
+                <td><input type="text" id="new-p-fee" class="partner-input" value="3.5% (정산일: 답례품과 같음)"/></td>
+                <th>데브늄 입금 예치금</th>
+                <td><input type="text" id="new-p-reqdep" class="partner-input" value="15,000,000원"/></td>
               </tr>
               <tr>
                 <th>1차 / 2차 한도</th>
@@ -2387,14 +2313,14 @@
                 <td><input type="text" id="new-p-manager" class="partner-input" placeholder="예: 홍길동 팀장 (010-0000-0000)"/></td>
               </tr>
               <tr>
-                <th>특이사항 / 추진 메모</th>
-                <td colspan="3"><input type="text" id="new-p-memo" class="partner-input" placeholder="예: 부의금 카드결제 도입 확정, 계약서 완성 후 전달 예정"/></td>
+                <th>메모</th>
+                <td colspan="3"><input type="text" id="new-p-memo" class="partner-input" placeholder="예: 계약서 완성 후 전달 예정"/></td>
               </tr>
             </tbody>
           </table>
         </div>
         <div style="text-align:right;">
-          <button class="btn-header-outline" style="background:#3566e0; color:#ffffff; border-color:#3566e0; padding:9px 22px; font-weight:700;" onclick="addNewPartnerCompany()">신규 업체 등록 및 체크리스트 생성하기</button>
+          <button class="btn-header-outline" style="background:#3566e0; color:#ffffff; border-color:#3566e0; padding:9px 22px; font-weight:700;" onclick="addNewPartnerCompany()">신규 업체 등록하기</button>
         </div>
       </div>
 
@@ -2403,49 +2329,49 @@
         <table class="my_table">
           <thead>
             <tr>
-              <th style="width:12%;">우선순위·상태</th>
-              <th style="width:12%;">업체명</th>
-              <th style="width:17%;">MID 운영 (<code>MID 1</code> → <code>MID 2</code>)</th>
-              <th style="width:14%;">수수료 · 정산 지급일</th>
-              <th style="width:15%;">예치금 · 한도 · 금요일 입금</th>
-              <th style="width:16%;">핵심 추진 사항</th>
-              <th style="width:14%;" class="bg_y">체크리스트 진행률</th>
+              <th style="width:12%;">상태</th>
+              <th style="width:13%;">업체명</th>
+              <th style="width:14%;">계약서</th>
+              <th style="width:16%;">수수료 · 정산일</th>
+              <th style="width:17%;">예치금 · 한도</th>
+              <th style="width:15%;">메모</th>
+              <th style="width:13%;" class="bg_y">진행률</th>
             </tr>
           </thead>
           <tbody id="partner-summary-tbody"></tbody>
         </table>
       </div>
 
-      <!-- 선택된 업체 전용 세팅 시트 + 18개 체크리스트 영역 -->
+      <!-- 선택된 업체 전용 세팅 시트 + 7개 체크리스트 영역 -->
       <div id="partner-rollout-anchor" class="partner-detail-box">
         <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:14px; padding-bottom:18px; border-bottom:1px solid #e2e8f0; margin-bottom:20px;">
           <div>
             <span id="sel-p-badge" class="easy-concept-badge" style="background:#3566e0; color:#ffffff; margin-bottom:6px;">1순위 (확정)</span>
-            <h3 id="sel-p-title" style="font-size:24px; font-weight:700; color:#111111; margin:0;">[국민부고] 부의금 카드결제 맞춤 세팅 &amp; Step 1 ~ Step 6 체크리스트</h3>
-            <p id="sel-p-desc" style="padding-bottom:0; margin-top:4px; color:#555555; font-size:15px;">해당 업체의 세팅값을 바로 수정·저장할 수 있으며, 아래 18개 체크리스트를 클릭해 업체별 진행 현황을 관리할 수 있습니다.</p>
+            <h3 id="sel-p-title" style="font-size:23px; font-weight:700; color:#111111; margin:0;">[국민부고] 세팅 정보 &amp; 진행 체크리스트</h3>
+            <p id="sel-p-desc" style="padding-bottom:0; margin-top:4px; color:#555555; font-size:14.5px;">업체 세팅값을 수정·저장하거나 아래 7개 핵심 항목을 클릭해 진행 현황을 체크하세요.</p>
           </div>
           <div style="display:flex; gap:8px; flex-wrap:wrap;">
-            <button class="btn-header-outline" style="background:#3566e0; color:#ffffff; border-color:#3566e0; font-weight:700;" onclick="saveCurrentPartnerSettings()">현재 업체 세팅 저장</button>
-            <button class="btn-header-outline" onclick="checkAllForCurrentPartner(true)">이 업체 전체 완료 체크</button>
-            <button class="btn-header-outline" onclick="checkAllForCurrentPartner(false)">이 업체 체크 초기화</button>
-            <button class="btn-header-outline" style="color:#dc2626; border-color:#fca5a5;" onclick="deleteCurrentPartner()">업체 삭제</button>
+            <button class="btn-header-outline" style="background:#3566e0; color:#ffffff; border-color:#3566e0; font-weight:700;" onclick="saveCurrentPartnerSettings()">세팅 저장</button>
+            <button class="btn-header-outline" onclick="checkAllForCurrentPartner(true)">전체 체크</button>
+            <button class="btn-header-outline" onclick="checkAllForCurrentPartner(false)">초기화</button>
+            <button class="btn-header-outline" style="color:#dc2626; border-color:#fca5a5;" onclick="deleteCurrentPartner()">삭제</button>
           </div>
         </div>
 
         <!-- 1) 선택된 업체 세팅 정보 테이블 -->
-        <h4 style="margin-bottom:10px; color:#222222;">① 선택 업체 부의금 카드결제 운영 · 예치금 · 잔디 웹훅 · 정산 세팅 시트</h4>
+        <h4 style="margin-bottom:10px; color:#222222;">① 업체 기본 세팅</h4>
         <div class="table_wrap mobile-stack-table" style="margin-bottom:24px;">
           <table class="my_table" style="margin-bottom:0;">
             <tbody>
               <tr>
-                <th style="width:16%;">업체명 / 플랫폼 코드</th>
+                <th style="width:16%;">업체명 / 코드</th>
                 <td style="width:34%;">
                   <div style="display:flex; gap:8px;">
                     <input type="text" id="edit-p-name" class="partner-input" style="font-weight:700;" />
                     <input type="text" id="edit-p-code" class="partner-input" style="font-family:monospace; max-width:150px;" />
                   </div>
                 </td>
-                <th style="width:16%;">우선순위 / 계약 상태</th>
+                <th style="width:16%;">상태 / 계약서</th>
                 <td style="width:34%;">
                   <div style="display:flex; gap:8px;">
                     <input type="text" id="edit-p-rank" class="partner-input" />
@@ -2454,53 +2380,47 @@
                 </td>
               </tr>
               <tr>
-                <th class="bg_y">실서버 환경 (<code>MID 2</code>)</th>
-                <td class="bg_y"><input type="text" id="edit-p-md2" class="partner-input" style="font-weight:600; color:#3566e0;" /></td>
-                <th>테스트 환경 (<code>MID 1</code>)</th>
-                <td><input type="text" id="edit-p-md1" class="partner-input" /></td>
-              </tr>
-              <tr>
-                <th class="bg_y">수수료율 &amp; 정산 지급일</th>
-                <td class="bg_y"><input type="text" id="edit-p-fee" class="partner-input" style="font-weight:600;" /></td>
-                <th class="bg_y">예치금 &amp; 주간 입금 기준</th>
+                <th class="bg_y">수수료 &amp; 정산일</th>
+                <td class="bg_y"><input type="text" id="edit-p-fee" class="partner-input" style="font-weight:600; color:#3566e0;" /></td>
+                <th class="bg_y">필수 예치금</th>
                 <td class="bg_y"><input type="text" id="edit-p-reqdep" class="partner-input" style="font-weight:600;" /></td>
               </tr>
               <tr>
-                <th>현재 업체 입금 잔액</th>
+                <th>현재 입금 잔액</th>
                 <td><input type="text" id="edit-p-curdep" class="partner-input" /></td>
-                <th class="bg_y">1차 한도 / 2차 한도</th>
+                <th class="bg_y">1차 / 2차 한도</th>
                 <td class="bg_y"><input type="text" id="edit-p-limits" class="partner-input" /></td>
               </tr>
               <tr>
-                <th>업체 담당자 / 연락처</th>
+                <th>담당자 / 연락처</th>
                 <td><input type="text" id="edit-p-manager" class="partner-input" /></td>
-                <th>잔디(JANDI) 웹훅 &amp; 알림톡</th>
+                <th>잔디 웹훅 &amp; 알림톡</th>
                 <td><input type="text" id="edit-p-alimtalk" class="partner-input" /></td>
               </tr>
               <tr>
-                <th>주간 입금 원칙 안내</th>
+                <th>주간 입금 기준</th>
                 <td><input type="text" id="edit-p-callback" class="partner-input" /></td>
-                <th>업체별 핵심 추진 메모</th>
+                <th>메모</th>
                 <td><input type="text" id="edit-p-memo" class="partner-input" /></td>
               </tr>
             </tbody>
           </table>
         </div>
 
-        <!-- 2) 선택된 업체에게 해야 되는 Step 1 ~ Step 6 체크리스트 (18개 항목) -->
+        <!-- 2) 선택된 업체 핵심 체크리스트 (7개 항목) -->
         <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-bottom:10px;">
-          <h4 style="margin-bottom:0; color:#222222;">② <span id="sel-p-chk-heading" style="color:#3566e0;">[국민부고]</span> 진행 시 우리가 챙겨야 할 Step 1 ~ Step 6 체크리스트 (18개 항목)</h4>
-          <strong id="sel-p-progress-text" style="font-size:16px; color:#3566e0;">진행률 : 0 / 18 완료 (0%)</strong>
+          <h4 style="margin-bottom:0; color:#222222;">② <span id="sel-p-chk-heading" style="color:#3566e0;">[국민부고]</span> 핵심 진행 체크리스트 (7개 항목)</h4>
+          <strong id="sel-p-progress-text" style="font-size:16px; color:#3566e0;">진행률 : 0 / 7 완료 (0%)</strong>
         </div>
 
         <div class="table_wrap" style="margin-bottom:0;">
           <table class="my_table" style="margin-bottom:0;">
             <thead>
               <tr>
-                <th style="width:7%;">체크</th>
-                <th style="width:13%;">단계</th>
-                <th style="width:34%;">이 업체에게 해야 할 실행 항목</th>
-                <th style="width:46%;" class="bg_y">업체 맞춤 확인 기준 및 실행 가이드</th>
+                <th style="width:8%;">체크</th>
+                <th style="width:14%;">단계</th>
+                <th style="width:38%;">핵심 진행 항목</th>
+                <th style="width:40%;" class="bg_y">비고 / 확인 내용</th>
               </tr>
             </thead>
             <tbody id="partner-checklist-tbody"></tbody>
@@ -2508,91 +2428,54 @@
         </div>
       </div>
 
-      <!-- 2. 업체 유입 시 Step 1 ~ Step 6 표준 실무 지침 -->
-      <h2 id="sec-step-1to6">2. 신규 업체 유입 시 Step 1 ~ Step 6 표준 실무 지침 (부의금 카드결제 전용)</h2>
-      <p>개발 관련 작업은 개발자에게 일임하고, 우리 사업·운영팀이 신규 제휴 업체 유입 시 순서대로 챙겨야 할 <strong>Step 1 ~ Step 6 실무 지침</strong>입니다.</p>
-
+      <!-- 2. 신규 업체 유입 시 Step 1 ~ Step 6 간단 요약 -->
+      <h2 id="sec-step-1to6">2. 신규 업체 진행 순서 요약 (Step 1 ~ Step 6)</h2>
       <div class="table_wrap">
         <table class="my_table">
           <thead>
             <tr>
               <th style="width:12%;">단계</th>
-              <th style="width:20%;">단계명</th>
-              <th style="width:38%;" class="bg_y">우리(데브늄 사업·운영팀)가 해야 할 일</th>
-              <th style="width:30%;">업체 전달 자료 / 확인 사항</th>
+              <th style="width:22%;">단계명</th>
+              <th style="width:42%;" class="bg_y">우리 팀 할 일</th>
+              <th style="width:24%;">전달 / 확인</th>
             </tr>
           </thead>
           <tbody>
             <tr>
               <td class="ta_c"><strong>STEP 1</strong></td>
-              <td><strong>서비스 제안 &amp;<br/>운영 조건 안내</strong></td>
-              <td class="bg_y">
-                1) 업체에 부의금 카드결제 서비스 제안서 및 법률의견서를 전달합니다.<br/>
-                2) 수수료율, <strong>15일분 안전 예치금 규모</strong>, <strong>매주 금요일 입금 원칙(추후 변동 가능)</strong>, 그리고 <strong>업체 정산 지급일(답례품과 같음)</strong> 기준을 안내합니다.
-              </td>
-              <td>
-                - <strong>[전달]</strong> 서비스 제안서 PDF, 법률의견서 PDF, 고객사 운영 가이드 PDF
-              </td>
+              <td><strong>운영 조건 안내</strong></td>
+              <td class="bg_y">수수료율, 데브늄 예치금 규모, 금요일 입금 원칙(추후 변동 가능), 정산일(답례품과 같음) 안내</td>
+              <td>고객사 운영 가이드 PDF</td>
             </tr>
             <tr>
               <td class="ta_c"><strong>STEP 2</strong></td>
-              <td><strong>제휴 계약서 전달<br/>(현재 제작 중) &amp; 서류 수취</strong></td>
-              <td class="bg_y">
-                1) <strong>부의금 카드결제 서비스 제휴 계약서(현재 제작 중)</strong>가 완성되면 업체에 전달하여 날인합니다.<br/>
-                2) 업체로부터 기본 구비서류(사업자등록증, 등기부등본, 인감증명서, 정산 통장사본)를 수취합니다.<br/>
-                3) 예치금 입금 계좌(IBK기업은행 <code>664-000013-97-355</code>, 데브늄(주))를 안내합니다.
-              </td>
-              <td>
-                - <strong>[계약서 상태]</strong> 현재 제작 중 (완성 후 업체 전달)<br/>
-                - <strong>[수취]</strong> 사업자등록증·등기부등본·인감증명서·정산통장 사본
-              </td>
+              <td><strong>계약서 &amp; 서류 수취</strong></td>
+              <td class="bg_y">제휴 계약서(현재 제작 중 — 완성 후 전달) 날인 및 기본 구비서류(사업자등록증·통장사본 등) 수취</td>
+              <td>계약서 · 구비서류 4종</td>
             </tr>
             <tr>
               <td class="ta_c"><strong>STEP 3</strong></td>
-              <td><strong>개발팀에 연동 가이드 전달<br/>&amp; <code>MID 1(테스트용)</code> 검수</strong></td>
-              <td class="bg_y">
-                1) 업체 개발팀에 <code>부의금 서비스 연동 가이드(고객사 전달용).docx</code> 문서와 부고장 개설 화면용 <code>[개인정보 제3자 제공 동의]</code> 약관 문구를 전달합니다.<br/>
-                2) 구체적인 연동 작업은 양사 개발자가 알아서 진행하며, 오픈 전 <strong><code>MID 1(테스트용)</code></strong> 환경에서 정상 동작 여부를 확인합니다.
-              </td>
-              <td>
-                - <strong>[전달]</strong> 고객사 개발팀 전달용 연동 가이드(.docx) 및 제3자 동의 약관 문구<br/>
-                - <strong>[테스트]</strong> <code>MID 1(테스트용)</code> 검증
-              </td>
+              <td><strong>개발 가이드 전달</strong></td>
+              <td class="bg_y">업체 개발팀에 연동 가이드(<code>.docx</code>) 및 부고장용 <code>[제3자 제공 동의]</code> 문구 전달 (개발은 개발자 간 진행)</td>
+              <td>연동 가이드(.docx)</td>
             </tr>
             <tr>
               <td class="ta_c"><strong>STEP 4</strong></td>
-              <td><strong>예치금 입금 반영 &amp;<br/>한도 · 잔디 웹훅 세팅</strong></td>
-              <td class="bg_y">
-                1) 업체가 입금한 초기 예치금을 확인한 뒤, 어드민 플랫폼 관리 상세에서 <strong><code>[+ 입금액 추가]</code></strong> 버튼으로 잔액을 반영합니다.<br/>
-                2) 어드민에 업체 <code>담당자</code>, <code>담당자 번호</code>, <code>1차 한도</code>, <code>2차 한도</code>, <code>알림톡 사용 여부(ON)</code>를 설정합니다.<br/>
-                3) <strong>잔디(JANDI) 웹훅(<code>H_한도알림</code> 등)</strong>이 정상 연결되어 있는지 확인합니다.
-              </td>
-              <td>
-                - <strong>[어드민 세팅]</strong> 초기 입금 잔액 반영, 1·2차 한도 및 담당자 연락처 입력, 잔디 웹훅 연동 확인
-              </td>
+              <td><strong>예치금 반영 &amp; 한도 세팅</strong></td>
+              <td class="bg_y">데브늄 예치금 입금 확인 후 어드민 <code>[+ 입금액 추가]</code> 반영, 담당자·1/2차 한도·잔디 웹훅 설정</td>
+              <td>어드민 잔액 · 한도 세팅</td>
             </tr>
             <tr>
               <td class="ta_c"><strong>STEP 5</strong></td>
-              <td><strong>실서버(<code>MID 2</code>) 전환 &amp;<br/>정식 오픈(Live)</strong></td>
-              <td class="bg_y">
-                1) 테스트 완료 후 <strong>실서버용 <code>MID 2</code></strong>로 전환하여 PG 카드결제와 상주 계좌 입금, 정산이 모두 실서버(<code>MID 2</code>)로 돌아가도록 오픈합니다.<br/>
-                2) 오픈 직후 첫 부의금 입금 시 고객사 입금 잔액 자동 차감과 <strong>잔디(JANDI) 웹훅 알림</strong> 수신을 확인합니다.
-              </td>
-              <td>
-                - <strong>[실서버 전환]</strong> <code>MID 2(실서버용)</code>로 PG·입금·정산 가동 시작
-              </td>
+              <td><strong>서비스 오픈</strong></td>
+              <td class="bg_y">실서버(<code>MID 2</code>) 가동 및 송금완료 시 잔액 자동 차감·잔디 웹훅 알림 확인</td>
+              <td>정상 오픈 확인</td>
             </tr>
             <tr>
               <td class="ta_c"><strong>STEP 6</strong></td>
-              <td><strong>매주 금요일 입금(복구) &amp;<br/>업체 정산(답례품과 같음)</strong></td>
-              <td class="bg_y">
-                1) <strong>주간 입금(복구)</strong> : <strong>매주 금요일마다 입금</strong>하는 것을 원칙으로 직전 주간(전주 금~금주 목) 차감된 부의금액 합계를 복구합니다. <em>(※ 추후 변동 가능)</em><br/>
-                2) <strong>월간 업체 정산</strong> : 업체 수수료 정산 지급일은 <strong>『답례품과 같음』</strong> 기준으로 답례품 정산 지급일과 동일하게 지급합니다.
-              </td>
-              <td>
-                - <strong>[주간 입금]</strong> 매주 금요일 원칙 (추후 변동 가능)<br/>
-                - <strong>[업체 정산일]</strong> 답례품 정산 지급일과 같음
-              </td>
+              <td><strong>주간 입금 &amp; 월간 정산</strong></td>
+              <td class="bg_y">주간 입금: <strong>매주 금요일 원칙</strong>(추후 변동 가능) / 업체 정산 지급일: <strong>답례품과 같음</strong></td>
+              <td>정기 입금 · 정산</td>
             </tr>
           </tbody>
         </table>
@@ -2605,40 +2488,39 @@
     </section>
 
     <!-- ====================================================================
-         PAGE 5: 5. 체크리스트 (#checklist)
+         PAGE 5: 5. 체크리스트 (#checklist) - 내부용 담백한 버전
          ==================================================================== -->
     <section id="page-checklist" class="guide-page">
-      <h3 class="intro-lead">제휴 업체(국민부고, 삼가, 의전나라, 첫장 등)를 클릭하면 그 업체에게 해야 할 부의금 카드결제 체크리스트(18개 항목)가 즉시 펼쳐지며, 아래에서는 전체 공통 체크리스트도 함께 점검·인쇄할 수 있습니다.</h3>
+      <h3 class="intro-lead">내부에서 업체별 진행 현황과 정기 운영 사항만 빠르고 담백하게 체크하기 위한 페이지입니다.</h3>
 
-      <!-- 0. 업체별 클릭 시 펼쳐지는 체크리스트 -->
-      <h2 id="sec-chk-partner">0. 부의금 카드결제 제휴 업체별 전용 체크리스트 (업체 클릭 시 즉시 세팅)</h2>
-      <p>점검할 <strong>업체 버튼을 클릭</strong>하면 해당 업체에 맞춰진 <strong>Step 1 ~ Step 6 체크리스트(18개 항목)</strong>가 바로 아래에 펼쳐집니다.</p>
+      <!-- 1. 업체별 클릭 시 펼쳐지는 체크리스트 (7개 항목) -->
+      <h2 id="sec-chk-partner" style="margin-top:10px;">1. 업체별 진행 체크리스트 (7개 항목)</h2>
+      <p>점검할 <strong>업체를 클릭</strong>해 진행 완료된 항목을 체크해 주세요.</p>
 
       <div class="partner-pill-bar">
         <div id="partner-pills-chk" style="display:flex; flex-wrap:wrap; gap:8px; flex:1;"></div>
         <div style="display:flex; gap:8px; flex-shrink:0;">
-          <button class="btn-header-outline" style="background:#3566e0; color:#ffffff; border-color:#3566e0; font-weight:700;" onclick="showPage('step-guide', 'sec-partner-manager'); setTimeout(()=>toggleAddPartnerForm(true), 120);">+ 신규 업체 추가</button>
-          <button class="btn-header-outline" onclick="checkAllForCurrentPartner(true)">이 업체 전체 체크</button>
-          <button class="btn-header-outline" onclick="checkAllForCurrentPartner(false)">이 업체 초기화</button>
+          <button class="btn-header-outline" onclick="checkAllForCurrentPartner(true)">전체 체크</button>
+          <button class="btn-header-outline" onclick="checkAllForCurrentPartner(false)">초기화</button>
         </div>
       </div>
 
-      <div class="partner-detail-box" style="margin-bottom:44px;">
+      <div class="partner-detail-box" style="margin-bottom:38px;">
         <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; margin-bottom:14px;">
           <div>
-            <strong id="chk-tab-partner-title" style="font-size:20px; color:#111111;">[국민부고] 전용 Step 1 ~ Step 6 체크리스트</strong>
+            <strong id="chk-tab-partner-title" style="font-size:20px; color:#111111;">[국민부고] 진행 체크리스트</strong>
             <div id="chk-tab-partner-meta" style="font-size:14px; color:#555555; margin-top:2px;"></div>
           </div>
-          <strong id="chk-tab-partner-prog" style="font-size:17px; color:#3566e0;">0 / 18 완료 (0%)</strong>
+          <strong id="chk-tab-partner-prog" style="font-size:17px; color:#3566e0;">0 / 7 완료 (0%)</strong>
         </div>
         <div class="table_wrap" style="margin-bottom:0;">
           <table class="my_table" style="margin-bottom:0;">
             <thead>
               <tr>
-                <th style="width:7%;">체크</th>
-                <th style="width:13%;">단계</th>
-                <th style="width:34%;">이 업체에게 해야 할 실행 항목</th>
-                <th style="width:46%;" class="bg_y">업체 맞춤 확인 기준 및 실행 가이드</th>
+                <th style="width:8%;">체크</th>
+                <th style="width:14%;">단계</th>
+                <th style="width:38%;">핵심 진행 항목</th>
+                <th style="width:40%;" class="bg_y">비고 / 확인 내용</th>
               </tr>
             </thead>
             <tbody id="partner-checklist-tbody-mirror"></tbody>
@@ -2646,156 +2528,65 @@
         </div>
       </div>
 
-      <!-- 실시간 공통 마스터 진행률 바 -->
+      <!-- 2. 내부 운영 핵심 체크리스트 (6개 항목) -->
+      <h2 id="sec-chk-ops">2. 내부 운영 핵심 체크리스트 (6개 항목)</h2>
       <div class="chk-progress-bar">
         <div>
-          <strong style="font-size:17px; color:#222222;">공통 마스터 체크리스트 점검 현황 : <span id="chk-count-text" style="color:#3566e0;">0 / 18 완료 (0%)</span></strong>
-          <div style="font-size:13.5px; color:#666666; margin-top:2px;">각 행을 클릭하면 체크(✓) 표시가 되며 브라우저에 자동 저장됩니다.</div>
+          <strong style="font-size:16.5px; color:#222222;">내부 공통 점검 현황 : <span id="chk-count-text" style="color:#3566e0;">0 / 6 완료 (0%)</span></strong>
         </div>
         <div style="display:flex; gap:8px;">
-          <button class="btn-header-outline" onclick="toggleAllChecks(true)">공통 전체 체크</button>
-          <button class="btn-header-outline" onclick="toggleAllChecks(false)">공통 체크 초기화</button>
-          <button class="btn-header-outline" style="background:#3566e0; color:#fff; border-color:#3566e0;" onclick="window.print()">체크리스트 인쇄 (PDF 저장)</button>
+          <button class="btn-header-outline" onclick="toggleAllChecks(true)">전체 체크</button>
+          <button class="btn-header-outline" onclick="toggleAllChecks(false)">초기화</button>
+          <button class="btn-header-outline" style="background:#3566e0; color:#fff; border-color:#3566e0;" onclick="window.print()">인쇄</button>
         </div>
       </div>
 
-      <!-- 체크리스트 1: 업체에게 전달해줘야 할 자료 체크리스트 -->
-      <h2 id="sec-chk-docs">1. 고객사(업체) 전달 자료 발송 체크리스트 (5개 항목)</h2>
       <div class="table_wrap">
         <table class="my_table">
           <thead>
             <tr>
               <th style="width:8%;">확인</th>
-              <th style="width:16%;">발송 시점</th>
-              <th style="width:34%;">전달 자료명</th>
-              <th>전달 내용 및 확인 포인트</th>
+              <th style="width:18%;">구분</th>
+              <th style="width:36%;">핵심 점검 항목</th>
+              <th>확인 기준</th>
             </tr>
           </thead>
           <tbody>
             <tr class="chk-row" onclick="toggleRowCheck(this)">
               <td class="ta_c"><input type="checkbox" class="chk-box" onclick="event.stopPropagation(); updateCheckProgress();"/></td>
-              <td class="ta_c">STEP 1 (제안)</td>
-              <td><strong>데브늄 부의금 카드결제 서비스 제안서.pdf</strong></td>
-              <td>조문객 수수료 부담 / 상주 원금 100% 입금 / 업체 정산 지급일(답례품과 같음) 구조 안내</td>
+              <td class="ta_c">자료 전달</td>
+              <td><strong>고객사 운영 가이드(.pdf) 및 개발 연동 가이드(.docx) 전달</strong></td>
+              <td>업체 담당자에게 운영 가이드 전달, 개발팀에 연동 문서 및 제3자 동의 문구 전달</td>
             </tr>
             <tr class="chk-row" onclick="toggleRowCheck(this)">
               <td class="ta_c"><input type="checkbox" class="chk-box" onclick="event.stopPropagation(); updateCheckProgress();"/></td>
-              <td class="ta_c">STEP 1 (법무)</td>
-              <td><strong>부의금 카드결제 법률의견서 (법무법인 영진).pdf</strong></td>
-              <td>부의금 신용카드 결제 및 실시간 입금 서비스의 적법성 검토 자료 전달</td>
+              <td class="ta_c">계약 · 서류</td>
+              <td><strong>제휴 계약서 날인 (현재 제작 중) 및 구비서류 수취</strong></td>
+              <td>계약서 완성 후 전달·날인 및 사업자등록증·통장사본 등 기본 서류 수취</td>
             </tr>
             <tr class="chk-row" onclick="toggleRowCheck(this)">
               <td class="ta_c"><input type="checkbox" class="chk-box" onclick="event.stopPropagation(); updateCheckProgress();"/></td>
-              <td class="ta_c">STEP 2 (계약)</td>
-              <td><strong>부의금 카드결제 제휴 계약서 <span style="color:#d97706;">(현재 제작 중 — 완성 후 전달)</span></strong></td>
-              <td>계약서 제작 완료 시 업체에 전달하여 날인 (매주 금요일 입금 원칙·변동 가능성 및 답례품 정산일 기준 반영)</td>
+              <td class="ta_c">예치금 반영</td>
+              <td><strong>데브늄 예치금 입금 확인 및 어드민 <code>[+ 입금액 추가]</code></strong></td>
+              <td>데브늄 계좌 입금 확인 후 어드민에서 해당 고객사 잔액 추가</td>
             </tr>
             <tr class="chk-row" onclick="toggleRowCheck(this)">
               <td class="ta_c"><input type="checkbox" class="chk-box" onclick="event.stopPropagation(); updateCheckProgress();"/></td>
-              <td class="ta_c">STEP 2 (운영)</td>
-              <td><strong>고객사 운영 가이드 및 예치금 입금 계좌 안내</strong></td>
-              <td>IBK기업은행 <code>664-000013-97-355</code> (예금주: 데브늄(주)) 안내 및 초기 예치금 입금 확인</td>
+              <td class="ta_c">한도 · 웹훅</td>
+              <td><strong>어드민 1·2차 한도 설정 및 잔디(JANDI) 웹훅 확인</strong></td>
+              <td>담당자 연락처, 1·2차 한도, 알림톡(ON) 및 잔디 웹훅 알림 연동 확인</td>
             </tr>
             <tr class="chk-row" onclick="toggleRowCheck(this)">
               <td class="ta_c"><input type="checkbox" class="chk-box" onclick="event.stopPropagation(); updateCheckProgress();"/></td>
-              <td class="ta_c">STEP 3 (개발팀)</td>
-              <td><strong>부의금 서비스 연동 가이드(고객사 개발팀 전달용).docx &amp; 필수 약관</strong></td>
-              <td>업체 개발팀에 연동 문서 및 부고장 <code>[개인정보 제3자 제공 동의]</code> 문구 전달 (개발은 양사 개발자가 진행)</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-
-      <!-- 체크리스트 2: 신규 업체 온보딩 및 실서버(MID 2) 세팅 체크리스트 -->
-      <h2 id="sec-chk-ops">2. 신규 업체 온보딩 · 실서버(<code>MID 2</code>) 전환 · 정기 운영 체크리스트 (13개 항목)</h2>
-      <div class="table_wrap">
-        <table class="my_table">
-          <thead>
-            <tr>
-              <th style="width:8%;">확인</th>
-              <th style="width:16%;">단계 / 주기</th>
-              <th style="width:34%;">점검 항목</th>
-              <th>상세 완료 기준</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr class="chk-row" onclick="toggleRowCheck(this)">
-              <td class="ta_c"><input type="checkbox" class="chk-box" onclick="event.stopPropagation(); updateCheckProgress();"/></td>
-              <td class="ta_c">STEP 1</td>
-              <td><strong>15일분 안전 예치금 규모 및 수수료율 확정</strong></td>
-              <td>일평균 예상 거래액 × 15일분 기준 예치금 규모 및 약정 수수료율 확정</td>
-            </tr>
-            <tr class="chk-row" onclick="toggleRowCheck(this)">
-              <td class="ta_c"><input type="checkbox" class="chk-box" onclick="event.stopPropagation(); updateCheckProgress();"/></td>
-              <td class="ta_c">STEP 2</td>
-              <td><strong>구비서류 수취 및 제휴 계약서(제작 중) 체결</strong></td>
-              <td>사업자등록증, 등기부등본, 인감증명서, 정산 통장사본 수취 및 계약서(제작 완료 후) 날인</td>
-            </tr>
-            <tr class="chk-row" onclick="toggleRowCheck(this)">
-              <td class="ta_c"><input type="checkbox" class="chk-box" onclick="event.stopPropagation(); updateCheckProgress();"/></td>
-              <td class="ta_c">STEP 3</td>
-              <td><strong><code>MID 1(테스트용)</code> 환경에서 개발팀 연동 검수 완료</strong></td>
-              <td>양사 개발팀 간 테스트용 <code>MID 1</code> 연동 검증 완료 확인</td>
-            </tr>
-            <tr class="chk-row" onclick="toggleRowCheck(this)">
-              <td class="ta_c"><input type="checkbox" class="chk-box" onclick="event.stopPropagation(); updateCheckProgress();"/></td>
-              <td class="ta_c">STEP 3</td>
-              <td><strong>고객사 부고장 내 <code>[개인정보 제3자 제공 동의]</code> 노출 확인</strong></td>
-              <td>부고장 개설 화면에 데브늄 주식회사 / 주식회사 인피니소프트 제3자 제공 동의 체크박스 반영 확인</td>
-            </tr>
-            <tr class="chk-row" onclick="toggleRowCheck(this)">
-              <td class="ta_c"><input type="checkbox" class="chk-box" onclick="event.stopPropagation(); updateCheckProgress();"/></td>
-              <td class="ta_c">STEP 4</td>
-              <td><strong>어드민 <code>[+ 입금액 추가]</code>로 업체 초기 예치금 반영</strong></td>
-              <td>업체 예치금 입금 확인 후 플랫폼 관리 상세에서 입금 잔액 반영 완료</td>
-            </tr>
-            <tr class="chk-row" onclick="toggleRowCheck(this)">
-              <td class="ta_c"><input type="checkbox" class="chk-box" onclick="event.stopPropagation(); updateCheckProgress();"/></td>
-              <td class="ta_c">STEP 4</td>
-              <td><strong>담당자 · 번호 · 1차 한도 · 2차 한도 · 알림톡(ON) 설정</strong></td>
-              <td>플랫폼 관리 상세에 5개 한도 알림 정보 입력 완료</td>
-            </tr>
-            <tr class="chk-row" onclick="toggleRowCheck(this)">
-              <td class="ta_c"><input type="checkbox" class="chk-box" onclick="event.stopPropagation(); updateCheckProgress();"/></td>
-              <td class="ta_c">STEP 4</td>
-              <td><strong>잔디(JANDI) 웹훅 (<code>H_한도알림</code> 등) 실시간 알림 연동 확인</strong></td>
-              <td>부의금 입금 및 1·2차 한도 도달 시 사내 잔디 메신저로 웹훅이 정상 수신되는지 확인</td>
-            </tr>
-            <tr class="chk-row" onclick="toggleRowCheck(this)">
-              <td class="ta_c"><input type="checkbox" class="chk-box" onclick="event.stopPropagation(); updateCheckProgress();"/></td>
-              <td class="ta_c">STEP 5</td>
-              <td><strong><code>MID 2(실서버용)</code> 전환 및 PG·입금·정산 실서버 가동</strong></td>
-              <td>테스트용(<code>MID 1</code>)에서 실서버용(<code>MID 2</code>)으로 전환하여 실제 PG 승인 및 입금 가동</td>
-            </tr>
-            <tr class="chk-row" onclick="toggleRowCheck(this)">
-              <td class="ta_c"><input type="checkbox" class="chk-box" onclick="event.stopPropagation(); updateCheckProgress();"/></td>
-              <td class="ta_c">STEP 5</td>
-              <td><strong><code>송금완료</code> 시 고객사 입금 잔액 자동 차감 및 제한 모달 확인</strong></td>
-              <td>부의금 입금 완료 시 잔액 자동 차감 &amp; 잔액 부족 시 결제 제한 모달 정상 노출 확인</td>
-            </tr>
-            <tr class="chk-row" onclick="toggleRowCheck(this)">
-              <td class="ta_c"><input type="checkbox" class="chk-box" onclick="event.stopPropagation(); updateCheckProgress();"/></td>
-              <td class="ta_c">상시 (잔디)</td>
-              <td><strong>잔디(JANDI) 웹훅 알림을 통한 입금 및 잔여 한도 모니터링</strong></td>
-              <td>잔디 웹훅으로 들어오는 부의금 입금 내역과 업체별 1·2차 한도 도달 알림 상시 확인</td>
-            </tr>
-            <tr class="chk-row" onclick="toggleRowCheck(this)">
-              <td class="ta_c"><input type="checkbox" class="chk-box" onclick="event.stopPropagation(); updateCheckProgress();"/></td>
-              <td class="ta_c">매주 금요일</td>
-              <td><strong>주간 입금 (전주 금 ~ 금주 목 차감분 복구) — 매주 금요일 원칙</strong></td>
-              <td>매주 금요일 입금 원칙에 따라 고객사 예치 잔액 복구/입금 확인 (※ 추후 기준 변동 가능)</td>
+              <td class="ta_c">주간 입금</td>
+              <td><strong>매주 금요일 입금(복구) 처리 <span style="color:#d97706;">(※ 추후 변동 가능)</span></strong></td>
+              <td>전주 금~금주 목 차감된 부의금액 합계를 매주 금요일 원칙으로 입금(복구)</td>
             </tr>
             <tr class="chk-row" onclick="toggleRowCheck(this)">
               <td class="ta_c"><input type="checkbox" class="chk-box" onclick="event.stopPropagation(); updateCheckProgress();"/></td>
               <td class="ta_c">월간 정산</td>
-              <td><strong>전월 부의금 정산서 발송 및 세금계산서 수취</strong></td>
-              <td>실서버(<code>MID 2</code>) 입금 완료 원금 기준 약정 수수료 산출 및 세금계산서 수취</td>
-            </tr>
-            <tr class="chk-row" onclick="toggleRowCheck(this)">
-              <td class="ta_c"><input type="checkbox" class="chk-box" onclick="event.stopPropagation(); updateCheckProgress();"/></td>
-              <td class="ta_c">답례품과 동일</td>
-              <td><strong>업체 정산금 지급 (지급일: 답례품 정산 지급일과 같음)</strong></td>
-              <td>답례품 정산 지급일과 동일한 일정으로 업체 정산 수수료 지급 완료 처리</td>
+              <td><strong>업체 수수료 정산 지급 (지급일: 답례품과 같음)</strong></td>
+              <td>답례품 정산 지급일과 동일한 일정으로 정산서 발송 및 수수료 지급</td>
             </tr>
           </tbody>
         </table>
@@ -2832,58 +2623,47 @@
     const PAGE_META = {
       'overview': {
         title: '부의금 카드결제 서비스 — 전체 결제·정산 구조',
-        sub: 'MID 1(테스트용)과 MID 2(실서버용 · PG 및 입금·정산 통합)의 구분부터 부의금 입금, 잔디(JANDI) 웹훅 알림, 매주 금요일 입금 원칙(추후 변동 가능), 업체 정산(답례품과 동일)까지 한눈에 안내합니다.',
+        sub: '고객사는 데브늄에 예치금만 입금하면 끝이며, 우리 내부에서는 실서버(MID 2)를 통해 PG 결제·부의금 입금·정산을 처리하고 잔디(JANDI) 웹훅, 매주 금요일 입금 원칙(추후 변동 가능), 업체 정산(답례품과 같음)으로 운영합니다.',
         nav: 'nav-overview'
       },
       'pdfs': {
         title: '1. 전달 자료실 (부의금 카드결제 전용)',
-        sub: '제휴 업체에 전달할 제안서·법률의견서·운영가이드·개발팀 전달용 연동문서 및 현재 제작 중인 제휴 계약서 현황을 안내합니다.',
+        sub: '제휴 업체에 전달할 고객사 운영 가이드·개발팀 전달용 연동문서 및 현재 제작 중인 제휴 계약서 현황을 안내합니다.',
         nav: 'nav-pdfs'
       },
       'client-guide': {
         title: '2. 고객사 운영 가이드 (부의금 카드결제)',
-        sub: '고객사가 알아야 할 예치금 차감, 매주 금요일 입금 원칙(추후 변동 가능), 업체 정산 지급일(답례품과 같음), 그리고 필수 약관을 안내합니다.',
+        sub: '고객사는 데브늄에 예치금만 입금하면 끝이며, 송금완료 시 차감·매주 금요일 복구 원칙(추후 변동 가능)·업체 정산 지급일(답례품과 같음) 및 필수 약관을 안내합니다.',
         nav: 'nav-client'
       },
       'internal-guide': {
-        title: '3. 내부 운영 가이드 (실서버 MID 2 · 잔디 웹훅 · 금요일 입금)',
-        sub: '실서버(MID 2) 입금·정산, 고객사 입금 잔액 관리, 잔디(JANDI) 웹훅 알림, 매주 금요일 입금 원칙(변동 가능), 답례품과 동일한 정산 기준을 안내합니다.',
+        title: '3. 내부 운영 가이드 (내부 MID 2 · 잔디 웹훅 · 금요일 입금)',
+        sub: '우리 내부에서만 아는 실서버(MID 2) 입금·정산 구조, 고객사 입금 잔액 관리, 잔디(JANDI) 웹훅 알림, 매주 금요일 입금 원칙(변동 가능), 답례품과 동일한 정산 기준을 안내합니다.',
         nav: 'nav-internal'
       },
       'step-guide': {
         title: '4. 업체별 지침 가이드 (제휴 업체 세팅 & Step 1~6)',
-        sub: '국민부고·삼가·의전나라·첫장 등 제휴 업체를 클릭하면 업체별 세팅 시트와 Step 1~6 체크리스트(18개 항목)가 즉시 펼쳐집니다.',
+        sub: '국민부고·삼가·의전나라·첫장 등 제휴 업체를 클릭하면 업체별 세팅 시트와 핵심 체크리스트(7개 항목)가 바로 펼쳐집니다.',
         nav: 'nav-step'
       },
       'checklist': {
-        title: '5. 부의금 카드결제 업체별 & 공통 마스터 체크리스트',
-        sub: '제휴 업체별 전용 체크리스트와 공통 운영 체크리스트를 클릭하며 실시간으로 점검할 수 있습니다.',
+        title: '5. 부의금 카드결제 체크리스트 (담백한 내부 점검용)',
+        sub: '업체별 7개 핵심 진행 항목과 내부 운영 6개 핵심 항목을 간편하게 체크할 수 있습니다.',
         nav: 'nav-checklist'
       }
     };
 
     /* ======================================================================
-       업체별 18개 표준 체크리스트 템플릿 (부의금 카드결제 전용 · 개발내용 및 송금MID 조회 제외)
+       업체별 7개 핵심 체크리스트 템플릿 (내부용 담백한 구성)
        ====================================================================== */
     const PARTNER_CHECKLIST_ITEMS = [
-      { step: 'STEP 1 (제안)', title: '1) 부의금 카드결제 서비스 제안서 및 법률의견서(법무법인 영진) 전달', guide: (p) => `[${p.name}] 담당자(${p.manager})에게 제안서 및 적법성 법률의견서 전달 완료` },
-      { step: 'STEP 1 (조건)', title: '2) 약정 수수료율 · 15일분 예치금 · 정산 지급일(답례품과 같음) 안내', guide: (p) => `수수료 및 정산일: ${p.feeRate} / 필수 예치금: ${p.reqDeposit}` },
-      { step: 'STEP 1 (운영)', title: '3) 고객사 운영 가이드 (매주 금요일 입금 원칙 및 추후 변동 가능) 안내', guide: (p) => `매주 금요일 입금 원칙(추후 변동 가능) 및 잔액 부족 시 결제 제한 기준 안내 완료` },
-      { step: 'STEP 2 (계약서)', title: '4) 업체 전달용 부의금 카드결제 제휴 계약서 전달 및 날인 (현재 제작 중)', guide: (p) => `계약서 상태: [${p.type}] — 제작 완료 즉시 [${p.name}] 측에 전달하여 날인 진행` },
-      { step: 'STEP 2 (서류)', title: '5) 업체 구비서류 4종 수취 및 사내 보관', guide: (p) => `사업자등록증, 법인등기부등본, 법인인감증명서, 정산 통장사본 수취 완료` },
-      { step: 'STEP 2 (예치금)', title: '6) 15일분 안전 예치금 입금 계좌 안내 및 입금 확인', guide: (p) => `IBK기업은행 664-000013-97-355 (데브늄(주)) 계좌로 [${p.reqDeposit}] 입금 확인` },
-      { step: 'STEP 3 (개발팀)', title: '7) 업체 개발팀에 연동 가이드(.docx) 전달 (개발은 개발자 일임)', guide: (p) => `[${p.name}] 개발팀에 고객사 전달용 연동 가이드 문서 전달 (양사 개발자 간 진행)` },
-      { step: 'STEP 3 (약관)', title: '8) 업체 부고장 내 [개인정보 제3자 제공 동의] 필수 약관 문구 반영 확인', guide: (p) => `데브늄 주식회사 · 주식회사 인피니소프트 제3자 제공 동의 문구 반영 확인` },
-      { step: 'STEP 3 (MID 1)', title: '9) 테스트용 MID 1 환경에서 오픈 전 연동 검수 완료 확인', guide: (p) => `테스트 환경(${p.md1})에서 결제 및 결과 통지 정상 여부 개발팀 확인 완료` },
-      { step: 'STEP 4 (어드민)', title: '10) 어드민 [플랫폼 등록/수정]에 업체 등록 (플랫폼코드 매핑)', guide: (p) => `플랫폼 코드 [${p.code}] 등록 완료` },
-      { step: 'STEP 4 (잔액반영)', title: '11) 어드민 플랫폼 관리 상세에서 [+ 입금액 추가]로 초기 예치금 반영', guide: (p) => `[${p.name}] 초기 입금액(${p.curDeposit})을 [+ 입금액 추가] 버튼으로 반영` },
-      { step: 'STEP 4 (한도설정)', title: '12) 플랫폼 관리 상세에 담당자 · 번호 · 1차 한도 · 2차 한도 · 알림톡(ON) 입력', guide: (p) => `담당자: ${p.manager} / 한도: ${p.limits} / 알림톡 ON 설정 완료` },
-      { step: 'STEP 4 (잔디웹훅)', title: '13) 잔디(JANDI) 웹훅 실시간 알림 (입금 알림 & H_한도알림) 연동 확인', guide: (p) => `설정: ${p.alimtalk} — 부의금 입금 및 1·2차 한도 도달 시 잔디 웹훅 수신 확인` },
-      { step: 'STEP 5 (MID 2)', title: '14) 실서버용 MID 2 전환 (PG 결제 · 부의금 입금 · 정산 일원화 가동)', guide: (p) => `실서버 환경(${p.md2})으로 전환하여 PG 및 실시간 입금 가동` },
-      { step: 'STEP 5 (차감확인)', title: '15) 실서버 부의금 송금완료 시 업체 입금 잔액 자동 차감 & 잔디 웹훅 확인', guide: (p) => `상주 계좌 원금 100% 입금 즉시 [${p.name}] 잔액에서 부의금액 차감 및 잔디 알림 확인` },
-      { step: 'STEP 5 (제한모달)', title: '16) 업체 예치 잔액 부족 시 결제 진행 제한 안내 모달 동작 확인', guide: (p) => `잔액 < 부의금액 시 "일시적인 문제로 부의금 결제를 진행할 수 없습니다..." 모달 노출 확인` },
-      { step: 'STEP 6 (금요일입금)', title: '17) 주간 입금 스케줄 등록 (매주 금요일 입금 원칙 / 추후 변동 가능)', guide: (p) => `전주 금~금주 목 차감 합계액 매주 금요일 입금(복구) 원칙 적용 (${p.callbackUrl})` },
-      { step: 'STEP 6 (업체정산)', title: '18) 월간 업체 수수료 정산 지급일 등록 (답례품 정산 지급일과 같음)', guide: (p) => `정산 기준(${p.feeRate}) — 답례품 정산 지급일과 동일한 일정으로 정산·지급 진행` }
+      { step: 'STEP 1 (안내)', title: '1) 운영 가이드 전달 및 조건(수수료·예치금) 확정', guide: (p) => `수수료: ${p.feeRate} / 예치금: ${p.reqDeposit}` },
+      { step: 'STEP 2 (계약)', title: '2) 제휴 계약서 날인 (현재 제작 중) 및 구비서류 수취', guide: (p) => `${p.type} / 사업자등록증·통장사본 등 수취` },
+      { step: 'STEP 3 (개발전달)', title: '3) 개발팀에 연동 가이드(.docx) 및 제3자 동의 문구 전달', guide: (p) => `양사 개발자 간 연동 진행` },
+      { step: 'STEP 4 (예치금)', title: '4) 데브늄 예치금 입금 확인 및 어드민 [+ 입금액 추가]', guide: (p) => `${p.reqDeposit} 입금 확인 후 어드민 잔액 반영` },
+      { step: 'STEP 4 (세팅)', title: '5) 어드민 담당자 · 1/2차 한도 입력 및 잔디 웹훅 확인', guide: (p) => `한도(${p.limits}) 설정 및 잔디 알림 연동 확인` },
+      { step: 'STEP 5 (오픈)', title: '6) 서비스 정식 오픈', guide: (p) => `실서버 가동 및 송금완료 시 잔액 자동 차감 확인` },
+      { step: 'STEP 6 (정산)', title: '7) 주간 입금(매주 금요일 원칙) 및 정산(답례품과 같음) 등록', guide: (p) => `${p.callbackUrl} / 정산 지급일: 답례품과 같음` }
     ];
 
     /* ======================================================================
@@ -2892,147 +2672,131 @@
     const DEFAULT_PARTNERS = [
       {
         id: 'kookmin',
-        rankBadge: '1순위 (확정·최우선)',
+        rankBadge: '1순위 (확정)',
         name: '국민부고',
-        type: '업체 전달용 계약서 제작 중',
+        type: '계약서 제작 중',
         code: 'md_kookmin',
-        md2: 'MID 2 (실서버용 — PG 결제·부의금 입금·정산)',
-        md1: 'MID 1 (테스트용 — 오픈 전 연동 검수)',
-        feeRate: '3.5% (정산 지급일: 답례품과 같음)',
-        reqDeposit: '30,000,000원 (15일분 기준)',
+        feeRate: '3.5% (정산일: 답례품과 같음)',
+        reqDeposit: '30,000,000원 (데브늄 입금)',
         curDeposit: '입금 확인 후 [+입금액 추가] 대기',
         limits: '1차 1,000만 / 2차 500만',
-        manager: '국민부고 제휴담당자 (연락처 입력)',
-        alimtalk: '잔디(JANDI) 웹훅 + 1·2차 한도 알림톡(ON)',
+        manager: '국민부고 담당자 (연락처 입력)',
+        alimtalk: '잔디 웹훅 + 한도 알림톡(ON)',
         callbackUrl: '매주 금요일 입금 원칙 (추후 변동 가능)',
-        memo: '부의금 카드결제 최우선 오픈 제휴처. 계약서 제작 완료 즉시 전달 및 실서버(MID 2) 오픈 추진',
-        checks: [1,1,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0]
+        memo: '최우선 오픈처. 계약서 완성 후 전달 및 예치금 입금 후 오픈',
+        checks: [1,0,1,0,0,0,0]
       },
       {
         id: 'samga',
-        rankBadge: '2순위 (확정·계약대기)',
+        rankBadge: '2순위 (확정)',
         name: '삼가 (Samga)',
-        type: '업체 전달용 계약서 제작 중',
+        type: '계약서 제작 중',
         code: 'md_samga',
-        md2: 'MID 2 (실서버용 — PG 결제·부의금 입금·정산)',
-        md1: 'MID 1 (테스트용 — 오픈 전 연동 검수)',
-        feeRate: '4.0% 상향 약정 (정산 지급일: 답례품과 같음)',
-        reqDeposit: '20,000,000원 (15일분 기준)',
-        curDeposit: '계약서 전달·날인 후 입금 예정',
+        feeRate: '4.0% (정산일: 답례품과 같음)',
+        reqDeposit: '20,000,000원 (데브늄 입금)',
+        curDeposit: '계약서 날인 후 입금 예정',
         limits: '1차 600만 / 2차 300만',
-        manager: '삼가 운영담당자 (연락처 입력)',
-        alimtalk: '잔디(JANDI) 웹훅 + 1·2차 한도 알림톡(ON)',
+        manager: '삼가 담당자 (연락처 입력)',
+        alimtalk: '잔디 웹훅 + 한도 알림톡(ON)',
         callbackUrl: '매주 금요일 입금 원칙 (추후 변동 가능)',
-        memo: '무빈소 부고장 내 부의금 카드결제 도입 확정 (수수료 4.0% 약정). 제작 중인 계약서 완료 시 전달',
-        checks: [1,1,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0]
+        memo: '수수료 4.0% 약정 완료. 제작 중인 계약서 완료 시 전달',
+        checks: [1,0,1,0,0,0,0]
       },
       {
         id: 'uijeon',
-        rankBadge: '3순위 (핵심 타겟)',
+        rankBadge: '3순위 (핵심)',
         name: '의전나라',
-        type: '업체 전달용 계약서 제작 중',
+        type: '계약서 제작 중',
         code: 'md_uijeon',
-        md2: 'MID 2 (실서버용 — PG 결제·부의금 입금·정산)',
-        md1: 'MID 1 (테스트용 — 오픈 전 연동 검수)',
-        feeRate: '3.5% ~ 4.0% 협의 (정산 지급일: 답례품과 같음)',
-        reqDeposit: '45,000,000원 (15일분 기준)',
-        curDeposit: '일정 확정 후 예치금 세팅 예정',
+        feeRate: '3.5~4.0% (정산일: 답례품과 같음)',
+        reqDeposit: '45,000,000원 (데브늄 입금)',
+        curDeposit: '일정 확정 후 세팅 예정',
         limits: '1차 1,500만 / 2차 750만',
-        manager: '의전나라 사업·운영팀 (연락처 입력)',
-        alimtalk: '잔디(JANDI) 웹훅 + 1·2차 한도 알림톡(ON)',
+        manager: '의전나라 담당자 (연락처 입력)',
+        alimtalk: '잔디 웹훅 + 한도 알림톡(ON)',
         callbackUrl: '매주 금요일 입금 원칙 (추후 변동 가능)',
-        memo: '거래 규모가 큰 핵심 제휴처. 부의금 카드결제 실서버(MID 2) 도입 및 예치금 운영 협의 중',
-        checks: [1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+        memo: '대형 제휴처. 도입 및 예치금 일정 협의 중',
+        checks: [1,0,0,0,0,0,0]
       },
       {
         id: 'cheotjang',
-        rankBadge: '4순위 (도입 추진)',
+        rankBadge: '4순위 (추진)',
         name: '첫장',
-        type: '업체 전달용 계약서 제작 중',
+        type: '계약서 제작 중',
         code: 'md_cheotjang',
-        md2: 'MID 2 (실서버용 — PG 결제·부의금 입금·정산)',
-        md1: 'MID 1 (테스트용 — 오픈 전 연동 검수)',
-        feeRate: '3.5% (정산 지급일: 답례품과 같음)',
-        reqDeposit: '15,000,000원 (15일분 기준)',
-        curDeposit: '제안 및 연동 일정 협의 단계',
+        feeRate: '3.5% (정산일: 답례품과 같음)',
+        reqDeposit: '15,000,000원 (데브늄 입금)',
+        curDeposit: '일정 협의 중',
         limits: '1차 500만 / 2차 250만',
-        manager: '첫장 플랫폼 사업팀 (연락처 입력)',
-        alimtalk: '잔디(JANDI) 웹훅 + 1·2차 한도 알림톡(ON)',
+        manager: '첫장 담당자 (연락처 입력)',
+        alimtalk: '잔디 웹훅 + 한도 알림톡(ON)',
         callbackUrl: '매주 금요일 입금 원칙 (추후 변동 가능)',
-        memo: '모바일 부고장 내 부의금 카드결제 모듈 탑재 추진 중',
-        checks: [1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+        memo: '부의금 카드결제 도입 추진 중',
+        checks: [1,0,0,0,0,0,0]
       },
       {
         id: 'bugoalim',
-        rankBadge: '5순위 (런칭 확정)',
+        rankBadge: '5순위 (확정)',
         name: '부고알림',
-        type: '업체 전달용 계약서 제작 중',
+        type: '계약서 제작 중',
         code: 'md_bugoalim',
-        md2: 'MID 2 (실서버용 — PG 결제·부의금 입금·정산)',
-        md1: 'MID 1 (테스트용 — 오픈 전 연동 검수)',
-        feeRate: '3.5% (정산 지급일: 답례품과 같음)',
-        reqDeposit: '15,000,000원 (15일분 기준)',
-        curDeposit: '1차 미팅 완료 · 런칭 확정',
+        feeRate: '3.5% (정산일: 답례품과 같음)',
+        reqDeposit: '15,000,000원 (데브늄 입금)',
+        curDeposit: '런칭 확정',
         limits: '1차 500만 / 2차 250만',
-        manager: '부고알림 대표/담당자 (연락처 입력)',
-        alimtalk: '잔디(JANDI) 웹훅 + 1·2차 한도 알림톡(ON)',
+        manager: '부고알림 담당자 (연락처 입력)',
+        alimtalk: '잔디 웹훅 + 한도 알림톡(ON)',
         callbackUrl: '매주 금요일 입금 원칙 (추후 변동 가능)',
-        memo: '부의금 카드결제 1차 미팅 및 런칭 확정. 개발팀 연동 가이드 전달 및 제작 중인 계약서 전달 예정',
-        checks: [1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+        memo: '런칭 확정. 개발 가이드 및 제작 중인 계약서 전달 예정',
+        checks: [1,0,0,0,0,0,0]
       },
       {
         id: 'hyosung',
-        rankBadge: '6순위 (단계적 도입)',
+        rankBadge: '6순위 (추진)',
         name: '효성프라콘',
-        type: '업체 전달용 계약서 제작 중',
+        type: '계약서 제작 중',
         code: 'md_hyosung',
-        md2: 'MID 2 (실서버용 — PG 결제·부의금 입금·정산)',
-        md1: 'MID 1 (테스트용 — 오픈 전 연동 검수)',
-        feeRate: '3.5% (정산 지급일: 답례품과 같음)',
-        reqDeposit: '20,000,000원 (15일분 기준)',
-        curDeposit: '도입 협의 진행 중',
+        feeRate: '3.5% (정산일: 답례품과 같음)',
+        reqDeposit: '20,000,000원 (데브늄 입금)',
+        curDeposit: '협의 진행 중',
         limits: '1차 600만 / 2차 300만',
         manager: '효성프라콘 담당자 (연락처 입력)',
-        alimtalk: '잔디(JANDI) 웹훅 + 1·2차 한도 알림톡(ON)',
+        alimtalk: '잔디 웹훅 + 한도 알림톡(ON)',
         callbackUrl: '매주 금요일 입금 원칙 (추후 변동 가능)',
-        memo: '부의금 카드결제 서비스 단계적 도입 추진',
-        checks: [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+        memo: '단계적 도입 추진',
+        checks: [1,0,0,0,0,0,0]
       },
       {
         id: 'saha',
-        rankBadge: '7순위 (제안 진행)',
+        rankBadge: '7순위 (협의)',
         name: '사하구민장례식장',
-        type: '업체 전달용 계약서 제작 중',
+        type: '계약서 제작 중',
         code: 'md_saha',
-        md2: 'MID 2 (실서버용 — PG 결제·부의금 입금·정산)',
-        md1: 'MID 1 (테스트용 — 오픈 전 연동 검수)',
-        feeRate: '3.5% (정산 지급일: 답례품과 같음)',
-        reqDeposit: '10,000,000원 (15일분 기준)',
-        curDeposit: '제안 및 조건 협의 단계',
+        feeRate: '3.5% (정산일: 답례품과 같음)',
+        reqDeposit: '10,000,000원 (데브늄 입금)',
+        curDeposit: '조건 협의 단계',
         limits: '1차 300만 / 2차 150만',
-        manager: '사하구민 실무담당자 (연락처 입력)',
-        alimtalk: '잔디(JANDI) 웹훅 + 1·2차 한도 알림톡(ON)',
+        manager: '사하구민 담당자 (연락처 입력)',
+        alimtalk: '잔디 웹훅 + 한도 알림톡(ON)',
         callbackUrl: '매주 금요일 입금 원칙 (추후 변동 가능)',
-        memo: '부의금 카드결제 서비스 도입 제안 진행 중',
-        checks: [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+        memo: '도입 협의 진행 중',
+        checks: [1,0,0,0,0,0,0]
       },
       {
         id: 'iris',
-        rankBadge: '8순위 (협의 진행)',
+        rankBadge: '8순위 (협의)',
         name: '아이리스',
-        type: '업체 전달용 계약서 제작 중',
+        type: '계약서 제작 중',
         code: 'md_iris',
-        md2: 'MID 2 (실서버용 — PG 결제·부의금 입금·정산)',
-        md1: 'MID 1 (테스트용 — 오픈 전 연동 검수)',
-        feeRate: '3.0% ~ 3.5% (정산 지급일: 답례품과 같음)',
-        reqDeposit: '별도 협의 (매주 금요일 입금 원칙)',
-        curDeposit: '가이드 전달 완료 · 계약서 제작 대기',
+        feeRate: '3.0~3.5% (정산일: 답례품과 같음)',
+        reqDeposit: '별도 협의 (데브늄 입금)',
+        curDeposit: '가이드 전달 완료',
         limits: '1차 500만 / 2차 200만',
         manager: '아이리스 담당자 (연락처 입력)',
-        alimtalk: '잔디(JANDI) 웹훅 + 1·2차 한도 알림톡(ON)',
+        alimtalk: '잔디 웹훅 + 한도 알림톡(ON)',
         callbackUrl: '매주 금요일 입금 원칙 (추후 변동 가능)',
-        memo: '부의금 카드결제 운영 가이드 안내 완료, 계약서 제작 완료 후 날인 예정',
-        checks: [1,1,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0]
+        memo: '가이드 안내 완료, 계약서 완성 후 날인 예정',
+        checks: [1,0,1,0,0,0,0]
       }
     ];
 
@@ -3041,7 +2805,7 @@
 
     function loadPartnerData() {
       try {
-        const raw = localStorage.getItem('devnium_buipay_partner_v5');
+        const raw = localStorage.getItem('devnium_buipay_partner_v7');
         if (raw) {
           const parsed = JSON.parse(raw);
           if (Array.isArray(parsed) && parsed.length > 0) {
@@ -3055,7 +2819,7 @@
 
     function savePartnerData() {
       try {
-        localStorage.setItem('devnium_buipay_partner_v5', JSON.stringify(partnerList));
+        localStorage.setItem('devnium_buipay_partner_v7', JSON.stringify(partnerList));
       } catch (e) {}
     }
 
@@ -3084,7 +2848,7 @@
           const activeCls = p.id === currentPartnerId ? ' active' : '';
           return `<button type="button" class="partner-pill-btn${activeCls}" onclick="selectPartnerCompany('${p.id}')">
             <span>${p.name}</span>
-            <span class="partner-pill-pct">${prog.done}/${prog.total} (${prog.pct}%)</span>
+            <span class="partner-pill-pct">${prog.done}/${prog.total}</span>
           </button>`;
         }).join('');
       });
@@ -3098,15 +2862,14 @@
           const rowStyle = isSel ? 'background:#f0f6ff; cursor:pointer;' : 'cursor:pointer;';
           return `<tr style="${rowStyle}" onclick="selectPartnerCompany('${p.id}', true)">
             <td class="ta_c"><span style="font-size:13px; font-weight:700; color:${isSel ? '#3566e0' : '#475569'};">${p.rankBadge}</span></td>
-            <td class="ta_c"><strong style="font-size:15.5px; color:#111111;">${p.name}</strong><br/><code style="font-size:12px;">${p.code}</code></td>
-            <td><strong style="color:#3566e0;">${p.md2}</strong><br/><span style="font-size:13px; color:#666666;">${p.md1}</span></td>
+            <td class="ta_c"><strong style="font-size:15.5px; color:#111111;">${p.name}</strong></td>
+            <td class="ta_c"><span style="color:#d97706; font-weight:700; font-size:13.5px;">${p.type}</span></td>
             <td class="ta_c"><strong>${p.feeRate}</strong></td>
-            <td><strong>${p.reqDeposit}</strong><br/><span style="font-size:13px; color:#666666;">${p.limits} · ${p.callbackUrl}</span></td>
+            <td><strong>${p.reqDeposit}</strong><br/><span style="font-size:13px; color:#666666;">${p.limits}</span></td>
             <td style="font-size:14px;">${p.memo}</td>
             <td class="ta_c bg_y">
-              <strong style="color:#3566e0; font-size:14.5px;">${prog.done} / ${prog.total} 완료 (${prog.pct}%)</strong>
+              <strong style="color:#3566e0; font-size:14.5px;">${prog.done} / ${prog.total} (${prog.pct}%)</strong>
               <div class="progress-mini-wrap"><div class="progress-mini-bar" style="width:${prog.pct}%;"></div></div>
-              <div style="margin-top:6px;"><span style="font-size:12.5px; font-weight:700; color:#3566e0; text-decoration:underline;">${isSel ? '▼ 현재 펼쳐짐' : '클릭하여 체크리스트 열기'}</span></div>
             </td>
           </tr>`;
         }).join('');
@@ -3120,7 +2883,7 @@
       const progTxtEl = document.getElementById('sel-p-progress-text');
 
       if (badgeEl) badgeEl.textContent = curr.rankBadge + ' · ' + curr.type;
-      if (titleEl) titleEl.textContent = `[${curr.name}] 부의금 카드결제 맞춤 세팅 & Step 1 ~ Step 6 체크리스트`;
+      if (titleEl) titleEl.textContent = `[${curr.name}] 세팅 정보 & 진행 체크리스트`;
       if (chkHeadEl) chkHeadEl.textContent = `[${curr.name}]`;
       if (progTxtEl) progTxtEl.textContent = `진행률 : ${currProg.done} / ${currProg.total} 완료 (${currProg.pct}%)`;
 
@@ -3129,8 +2892,6 @@
       setVal('edit-p-code', curr.code);
       setVal('edit-p-rank', curr.rankBadge);
       setVal('edit-p-type', curr.type);
-      setVal('edit-p-md2', curr.md2);
-      setVal('edit-p-md1', curr.md1);
       setVal('edit-p-fee', curr.feeRate);
       setVal('edit-p-reqdep', curr.reqDeposit);
       setVal('edit-p-curdep', curr.curDeposit);
@@ -3140,7 +2901,7 @@
       setVal('edit-p-callback', curr.callbackUrl);
       setVal('edit-p-memo', curr.memo);
 
-      // 4) Render 18-Item Per-Company Checklist in both #page-step-guide and #page-checklist
+      // 4) Render 7-Item Per-Company Checklist in both #page-step-guide and #page-checklist
       const rowsHtml = PARTNER_CHECKLIST_ITEMS.map((item, idx) => {
         const isChecked = Boolean(curr.checks && curr.checks[idx]);
         const rowCls = isChecked ? 'chk-row checked' : 'chk-row';
@@ -3161,8 +2922,8 @@
       const mirrorTitle = document.getElementById('chk-tab-partner-title');
       const mirrorMeta = document.getElementById('chk-tab-partner-meta');
       const mirrorProg = document.getElementById('chk-tab-partner-prog');
-      if (mirrorTitle) mirrorTitle.textContent = `[${curr.name}] 전용 Step 1 ~ Step 6 실행 체크리스트 (${curr.rankBadge})`;
-      if (mirrorMeta) mirrorMeta.innerHTML = `플랫폼코드: <code>${curr.code}</code> &nbsp;|&nbsp; 운영환경: <strong>${curr.md2}</strong> &nbsp;|&nbsp; 정산: <strong>${curr.feeRate}</strong> &nbsp;|&nbsp; 예치금: <strong>${curr.reqDeposit}</strong>`;
+      if (mirrorTitle) mirrorTitle.textContent = `[${curr.name}] 진행 체크리스트 (${curr.rankBadge})`;
+      if (mirrorMeta) mirrorMeta.innerHTML = `정산: <strong>${curr.feeRate}</strong> &nbsp;|&nbsp; 예치금: <strong>${curr.reqDeposit}</strong> &nbsp;|&nbsp; 계약서: <strong>${curr.type}</strong>`;
       if (mirrorProg) mirrorProg.textContent = `${currProg.done} / ${currProg.total} 완료 (${currProg.pct}%)`;
     }
 
@@ -3204,8 +2965,6 @@
       p.code = getVal('edit-p-code') || p.code;
       p.rankBadge = getVal('edit-p-rank') || p.rankBadge;
       p.type = getVal('edit-p-type') || p.type;
-      p.md2 = getVal('edit-p-md2') || p.md2;
-      p.md1 = getVal('edit-p-md1') || p.md1;
       p.feeRate = getVal('edit-p-fee') || p.feeRate;
       p.reqDeposit = getVal('edit-p-reqdep') || p.reqDeposit;
       p.curDeposit = getVal('edit-p-curdep') || p.curDeposit;
@@ -3216,7 +2975,7 @@
       p.memo = getVal('edit-p-memo') || p.memo;
       savePartnerData();
       renderPartnerManager();
-      alert(`[${p.name}] 세팅 정보와 맞춤 체크리스트 기준이 저장되었습니다.`);
+      alert(`[${p.name}] 세팅 정보가 저장되었습니다.`);
     }
 
     function toggleAddPartnerForm(forceOpen = null) {
@@ -3241,20 +3000,18 @@
       const code = getVal('new-p-code') || ('md_' + name.replace(/\s+/g, '').toLowerCase());
       const newObj = {
         id: newId,
-        rankBadge: getVal('new-p-rank') || '신규추가 (검토중)',
+        rankBadge: getVal('new-p-rank') || '신규추가',
         name: name,
-        type: getVal('new-p-type') || '업체 전달용 계약서 제작 중',
+        type: getVal('new-p-type') || '계약서 제작 중',
         code: code,
-        md2: getVal('new-p-md2') || 'MID 2 (실서버용 — PG 결제·부의금 입금·정산)',
-        md1: getVal('new-p-md1') || 'MID 1 (테스트용 — 오픈 전 연동 검수)',
-        feeRate: getVal('new-p-fee') || '3.5% (정산 지급일: 답례품과 같음)',
-        reqDeposit: getVal('new-p-reqdep') || '15,000,000원 (15일분)',
+        feeRate: getVal('new-p-fee') || '3.5% (정산일: 답례품과 같음)',
+        reqDeposit: getVal('new-p-reqdep') || '15,000,000원 (데브늄 입금)',
         curDeposit: '입금 확인 후 [+입금액 추가] 대기',
         limits: getVal('new-p-limits') || '1차 500만 / 2차 200만',
-        manager: getVal('new-p-manager') || '담당자 미정 (연락처 입력)',
-        alimtalk: '잔디(JANDI) 웹훅 + 1·2차 한도 알림톡(ON)',
+        manager: getVal('new-p-manager') || '담당자 미정',
+        alimtalk: '잔디 웹훅 + 한도 알림톡(ON)',
         callbackUrl: '매주 금요일 입금 원칙 (추후 변동 가능)',
-        memo: getVal('new-p-memo') || '부의금 카드결제 신규 제휴 추진 업체',
+        memo: getVal('new-p-memo') || '신규 추진 업체',
         checks: new Array(PARTNER_CHECKLIST_ITEMS.length).fill(0)
       };
       partnerList.push(newObj);
@@ -3286,7 +3043,7 @@
     }
 
     function resetPartnerDataToDefault() {
-      if (!confirm('제휴 업체 목록과 업체별 체크 상태를 초기 기본 세팅(8개 업체)으로 복원하시겠습니까?')) return;
+      if (!confirm('제휴 업체 목록과 체크 상태를 초기 세팅으로 복원하시겠습니까?')) return;
       partnerList = JSON.parse(JSON.stringify(DEFAULT_PARTNERS));
       currentPartnerId = 'kookmin';
       savePartnerData();
@@ -3373,13 +3130,13 @@
         txtEl.textContent = checked + ' / ' + total + ' 완료 (' + pct + '%)';
       }
       try {
-        localStorage.setItem('devnium_buipay_chk_v5', JSON.stringify(states));
+        localStorage.setItem('devnium_buipay_chk_v7', JSON.stringify(states));
       } catch (e) {}
     }
 
     function loadSavedChecks() {
       try {
-        const raw = localStorage.getItem('devnium_buipay_chk_v5');
+        const raw = localStorage.getItem('devnium_buipay_chk_v7');
         if (!raw) return;
         const states = JSON.parse(raw);
         const boxes = Array.from(document.querySelectorAll('#page-checklist > .table_wrap .chk-box'));
