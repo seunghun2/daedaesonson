@@ -1898,8 +1898,7 @@
       { id: 'cheotjang', name: '첫장', feeRate: '수수료 3.5% (정산일: 답례품과 같음)', reqDeposit: '예치금 1,500만 (1차 500만 / 2차 250만)', memo: '도입 협의 중', checks: [1,0,0,0,0,0] },
       { id: 'bugoalim', name: '부고알림', feeRate: '수수료 3.5% (정산일: 답례품과 같음)', reqDeposit: '예치금 1,500만 (1차 500만 / 2차 250만)', memo: '런칭 확정 · 가이드 전달 예정', checks: [1,0,0,0,0,0] },
       { id: 'hyosung', name: '효성프라콘', feeRate: '수수료 3.5% (정산일: 답례품과 같음)', reqDeposit: '예치금 2,000만 (1차 600만 / 2차 300만)', memo: '단계적 도입 추진', checks: [1,0,0,0,0,0] },
-      { id: 'saha', name: '사하구민', feeRate: '수수료 3.5% (정산일: 답례품과 같음)', reqDeposit: '예치금 1,000만 (1차 300만 / 2차 150만)', memo: '조건 협의 중', checks: [1,0,0,0,0,0] },
-      { id: 'iris', name: '아이리스', feeRate: '수수료 3.0~3.5% (정산일: 답례품과 같음)', reqDeposit: '예치금 별도 협의 (1차 500만 / 2차 200만)', memo: '가이드 전달 완료', checks: [1,0,1,0,0,0] }
+      { id: 'saha', name: '사하구민', feeRate: '수수료 3.5% (정산일: 답례품과 같음)', reqDeposit: '예치금 1,000만 (1차 300만 / 2차 150만)', memo: '조건 협의 중', checks: [1,0,0,0,0,0] }
     ];
 
     let partnerList = [];
@@ -1907,7 +1906,7 @@
 
     function loadPartnerData() {
       try {
-        const raw = localStorage.getItem('devnium_buipay_partner_v8');
+        const raw = localStorage.getItem('devnium_buipay_partner_v9');
         if (raw) {
           const parsed = JSON.parse(raw);
           if (Array.isArray(parsed) && parsed.length > 0) {
@@ -1921,7 +1920,7 @@
 
     function savePartnerData() {
       try {
-        localStorage.setItem('devnium_buipay_partner_v8', JSON.stringify(partnerList));
+        localStorage.setItem('devnium_buipay_partner_v9', JSON.stringify(partnerList));
       } catch (e) {}
     }
 
