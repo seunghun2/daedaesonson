@@ -1456,9 +1456,9 @@
               <td>결제 수수료는 조문객이 부담하며, 상주 계좌로는 부의금 원금 100%가 실시간 입금됩니다.</td>
             </tr>
             <tr>
-              <td class="ta_c"><strong>예치금 입금</strong></td>
-              <td class="ta_c bg_y"><strong>데브늄 계좌로 입금</strong><br/>(15일분 기준)</td>
-              <td><strong>IBK기업은행 <code>664-000013-97-355</code> (데브늄 주식회사)</strong> 계좌로 초기 예치금을 입금합니다.</td>
+              <td class="ta_c"><strong>예치금 입금 (보증보험)</strong></td>
+              <td class="ta_c bg_y"><strong>데브늄 계좌로 예치금 입금<br/>(필요 시 보증보험 진행)</strong></td>
+              <td><strong>IBK기업은행 <code>664-000013-97-355</code> (데브늄 주식회사)</strong> 계좌로 초기 예치금(15일분 기준)을 입금합니다. (※ 필요 시 당사에서 <strong>보증보험</strong>을 들어드리기도 합니다.)</td>
             </tr>
             <tr>
               <td class="ta_c"><strong>예치금 자동 차감</strong></td>
@@ -1529,9 +1529,14 @@
               <td><code>MID 1</code>은 개발 테스트용이며, <strong>실서버용 <code>MID 2</code>를 통해 PG 결제·부의금 입금·정산을 모두 태웁니다.</strong> (고객사는 몰라도 되는 내부 개념)</td>
             </tr>
             <tr>
+              <td class="ta_c"><strong>예치금 확보 &amp;<br/>이노페이 가상계좌 입금 요청</strong></td>
+              <td class="ta_c bg_y"><strong>업체 예치금 확보 (보증보험)<br/>→ 대표님께 이노페이 가상계좌 입금 요청</strong></td>
+              <td>업체로부터 예치금을 확보하며(필요할 때는 <strong>보증보험</strong>을 들어주기도 함), 예치금을 받으면 <strong>대표님께 이노페이 가상계좌 입금을 요청</strong>하여 송금 재원을 충전합니다.</td>
+            </tr>
+            <tr>
               <td class="ta_c"><strong>어드민 잔액 관리</strong></td>
               <td class="ta_c bg_y"><strong><code>[+ 입금액 추가]</code> /<br/><code>[- 입금액 차감]</code></strong></td>
-              <td>고객사가 데브늄에 예치금을 입금하면 어드민 플랫폼 관리 상세에서 <code>[+ 입금액 추가]</code>로 반영하며, <code>송금완료</code> 시 부의금액이 자동 차감됩니다.</td>
+              <td>예치금 입금이 확인되면 어드민 플랫폼 관리 상세에서 <code>[+ 입금액 추가]</code>로 반영하며, <code>송금완료</code> 시 부의금액이 자동 차감됩니다.</td>
             </tr>
             <tr>
               <td class="ta_c"><strong>한도 설정 &amp; 잔디 웹훅</strong></td>
@@ -1620,14 +1625,14 @@
             </tr>
             <tr>
               <td class="ta_c"><strong>STEP 3</strong></td>
-              <td><strong>약관 반영 &amp; 연동 진행</strong></td>
-              <td class="bg_y">부고장용 <code>[제3자 제공 동의]</code> 문구 전달 및 개발자 간 연동 진행</td>
-              <td>개발은 개발자 간 진행</td>
+              <td><strong>예치금 확보 &amp;<br/>이노페이 가상계좌 입금 요청</strong></td>
+              <td class="bg_y">업체로부터 예치금 확보(필요할 때는 <strong>보증보험</strong> 들어줌) 후, <strong>대표님께 이노페이 가상계좌 입금 요청</strong></td>
+              <td>예치금 확보 · 보증보험</td>
             </tr>
             <tr>
               <td class="ta_c"><strong>STEP 4</strong></td>
-              <td><strong>예치금 반영 &amp; 한도 세팅</strong></td>
-              <td class="bg_y">데브늄 예치금 입금 확인 후 어드민 <code>[+ 입금액 추가]</code> 반영, 담당자·1/2차 한도·잔디 웹훅 설정</td>
+              <td><strong>어드민 잔액 반영 &amp; 한도 세팅</strong></td>
+              <td class="bg_y">어드민 <code>[+ 입금액 추가]</code> 반영, 담당자·1/2차 한도·잔디 웹훅 설정 및 부고장 <code>[제3자 제공 동의]</code> 반영 확인</td>
               <td>어드민 세팅 완료</td>
             </tr>
             <tr>
@@ -1885,15 +1890,15 @@
     const PARTNER_CHECKLIST_ITEMS = [
       { step: 'STEP 1', title: '운영 가이드(v.4) 전달 및 조건(수수료·예치금) 확정', guide: (p) => p.feeRate },
       { step: 'STEP 2', title: '제휴 계약서 날인 (현재 제작 중) 및 기본 서류 수취', guide: () => '사업자등록증·등기부등본·인감증명서·통장사본' },
-      { step: 'STEP 3', title: '부고장용 [제3자 제공 동의] 약관 전달 및 연동 진행', guide: () => '개발자 간 연동 진행' },
-      { step: 'STEP 4', title: '데브늄 예치금 입금 확인 및 어드민 [+ 입금액 추가] · 한도 · 잔디 웹훅 설정', guide: (p) => p.reqDeposit },
+      { step: 'STEP 3', title: '예치금 확보(필요 시 보증보험) → 대표님께 이노페이 가상계좌 입금 요청', guide: (p) => p.reqDeposit },
+      { step: 'STEP 4', title: '어드민 [+ 입금액 추가] 반영 · 한도 · 잔디 웹훅 · 부고장 제3자 동의 설정', guide: () => '어드민 잔액·한도·잔디 웹훅 세팅 완료' },
       { step: 'STEP 5', title: '서비스 오픈 (실서버 가동 및 잔액 자동 차감 확인)', guide: () => '송금완료 시 부의금액 차감 확인' },
       { step: 'STEP 6', title: '주간 입금(매주 금요일 원칙) 및 정산(답례품과 같음) 등록', guide: () => '금요일 입금 원칙(추후 변동 가능) / 정산일: 답례품과 같음' }
     ];
 
     const DEFAULT_PARTNERS = [
-      { id: 'kookmin', name: '국민부고', feeRate: '수수료 3.5% (정산일: 답례품과 같음)', reqDeposit: '예치금 3,000만 (1차 1,000만 / 2차 500만)', memo: '1순위 오픈 추진 (계약서 완성 후 전달)', checks: [1,0,1,0,0,0] },
-      { id: 'samga', name: '삼가', feeRate: '수수료 4.0% (정산일: 답례품과 같음)', reqDeposit: '예치금 2,000만 (1차 600만 / 2차 300만)', memo: '도입 확정 · 계약서 대기', checks: [1,0,1,0,0,0] },
+      { id: 'kookmin', name: '국민부고', feeRate: '수수료 3.5% (정산일: 답례품과 같음)', reqDeposit: '예치금 3,000만 (1차 1,000만 / 2차 500만)', memo: '1순위 오픈 추진 (계약서 완성 후 전달)', checks: [1,0,0,0,0,0] },
+      { id: 'samga', name: '삼가', feeRate: '수수료 4.0% (정산일: 답례품과 같음)', reqDeposit: '예치금 2,000만 (1차 600만 / 2차 300만)', memo: '도입 확정 · 계약서 대기', checks: [1,0,0,0,0,0] },
       { id: 'uijeon', name: '의전나라', feeRate: '수수료 3.5~4.0% (정산일: 답례품과 같음)', reqDeposit: '예치금 4,500만 (1차 1,500만 / 2차 750만)', memo: '핵심 타겟 · 일정 협의 중', checks: [1,0,0,0,0,0] },
       { id: 'cheotjang', name: '첫장', feeRate: '수수료 3.5% (정산일: 답례품과 같음)', reqDeposit: '예치금 1,500만 (1차 500만 / 2차 250만)', memo: '도입 협의 중', checks: [1,0,0,0,0,0] },
       { id: 'bugoalim', name: '부고알림', feeRate: '수수료 3.5% (정산일: 답례품과 같음)', reqDeposit: '예치금 1,500만 (1차 500만 / 2차 250만)', memo: '런칭 확정 · 가이드 전달 예정', checks: [1,0,0,0,0,0] },
@@ -1906,7 +1911,7 @@
 
     function loadPartnerData() {
       try {
-        const raw = localStorage.getItem('devnium_buipay_partner_v9');
+        const raw = localStorage.getItem('devnium_buipay_partner_v10');
         if (raw) {
           const parsed = JSON.parse(raw);
           if (Array.isArray(parsed) && parsed.length > 0) {
@@ -1920,7 +1925,7 @@
 
     function savePartnerData() {
       try {
-        localStorage.setItem('devnium_buipay_partner_v9', JSON.stringify(partnerList));
+        localStorage.setItem('devnium_buipay_partner_v10', JSON.stringify(partnerList));
       } catch (e) {}
     }
 
