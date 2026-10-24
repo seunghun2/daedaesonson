@@ -1413,9 +1413,9 @@
         <!-- 2. 부의금 서비스 운영 가이드 v.4 -->
         <div class="pdf-card">
           <div class="pdf-card-info">
-            <span class="pdf-tag" style="background:#e8effe; color:#2451c8;">업체 전달용 공식 가이드 (v.4)</span>
+            <span class="pdf-tag" style="background:#e8effe; color:#2451c8;">계약 체결 후 전달 (v.4)</span>
             <div class="pdf-title">2) 261006_부의금서비스운영가이드v.4.pdf</div>
-            <div class="pdf-desc">데브늄 부의금 카드결제 서비스 운영 가이드 (v.4) 원본 PDF 파일입니다.</div>
+            <div class="pdf-desc">계약 체결 완료 후 업체에 전달하는 데브늄 부의금 카드결제 서비스 운영 가이드 (v.4) PDF 파일입니다.</div>
           </div>
           <div class="pdf-card-actions">
             <a class="btn-pdf-download" href="/261006_부의금서비스운영가이드v.4_백승훈.pdf" download="261006_부의금서비스운영가이드v.4.pdf">⬇ PDF 다운로드</a>
@@ -1607,7 +1607,7 @@
               <td class="ta_c"><strong>STEP 1</strong></td>
               <td><strong>운영 조건 안내</strong></td>
               <td class="bg_y">수수료율, 데브늄 예치금(15일분), 금요일 입금 원칙(추후 변동 가능), 정산일(답례품과 같음) 안내</td>
-              <td><code>부의금서비스운영가이드v.4.pdf</code> 전달</td>
+              <td>사전 조건 협의</td>
             </tr>
             <tr>
               <td class="ta_c"><strong>STEP 2</strong></td>
@@ -1617,9 +1617,9 @@
             </tr>
             <tr>
               <td class="ta_c"><strong>STEP 3</strong></td>
-              <td><strong>약관 반영 &amp; 연동 진행</strong></td>
-              <td class="bg_y">부고장용 <code>[제3자 제공 동의]</code> 문구 전달 및 개발자 간 연동 진행</td>
-              <td>개발은 개발자 간 진행</td>
+              <td><strong>가이드 전달 &amp; 연동 진행</strong></td>
+              <td class="bg_y">계약 완료 후 <code>부의금서비스운영가이드v.4.pdf</code> 및 부고장용 <code>[제3자 제공 동의]</code> 문구 전달, 개발자 간 연동 진행</td>
+              <td>계약 후 <code>부의금서비스운영가이드v.4.pdf</code> 전달</td>
             </tr>
             <tr>
               <td class="ta_c"><strong>STEP 4</strong></td>
@@ -1797,9 +1797,9 @@
     };
 
     const PARTNER_CHECKLIST_ITEMS = [
-      { step: 'STEP 1', title: '운영 가이드(v.4) 전달 및 조건(수수료·예치금) 확정', guide: (p) => p.feeRate },
-      { step: 'STEP 2', title: '제휴 계약서 날인 (현재 제작 중) 및 기본 서류 수취', guide: () => '사업자등록증·등기부등본·인감증명서·통장사본' },
-      { step: 'STEP 3', title: '부고장용 [제3자 제공 동의] 약관 전달 및 연동 진행', guide: () => '개발자 간 연동 진행' },
+      { step: 'STEP 1', title: '운영 조건(수수료율·예치금·금요일 입금·정산일) 안내 및 확정', guide: (p) => p.feeRate },
+      { step: 'STEP 2', title: '제휴 계약서 날인 (현재 제작 중) 및 기본 서류 4종 수취', guide: () => '사업자등록증·등기부등본·인감증명서·통장사본' },
+      { step: 'STEP 3', title: '계약 후 운영 가이드(v.4) · [제3자 제공 동의] 약관 전달 및 연동 진행', guide: () => '계약 완료 후 부의금서비스운영가이드v.4.pdf 전달 / 개발자 간 연동' },
       { step: 'STEP 4', title: '데브늄 예치금 입금 확인 및 어드민 [+ 입금액 추가] · 한도 · 잔디 웹훅 설정', guide: (p) => p.reqDeposit },
       { step: 'STEP 5', title: '서비스 오픈 (실서버 가동 및 잔액 자동 차감 확인)', guide: () => '송금완료 시 부의금액 차감 확인' },
       { step: 'STEP 6', title: '주간 입금(매주 금요일 원칙) 및 정산(답례품과 같음) 등록', guide: () => '금요일 입금 원칙(추후 변동 가능) / 정산일: 답례품과 같음' }
@@ -1821,7 +1821,7 @@
 
     function loadPartnerData() {
       try {
-        const raw = localStorage.getItem('devnium_buipay_partner_v8');
+        const raw = localStorage.getItem('devnium_buipay_partner_v9');
         if (raw) {
           const parsed = JSON.parse(raw);
           if (Array.isArray(parsed) && parsed.length > 0) {
@@ -1835,7 +1835,7 @@
 
     function savePartnerData() {
       try {
-        localStorage.setItem('devnium_buipay_partner_v8', JSON.stringify(partnerList));
+        localStorage.setItem('devnium_buipay_partner_v9', JSON.stringify(partnerList));
       } catch (e) {}
     }
 
