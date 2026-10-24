@@ -1327,8 +1327,22 @@
       }
     }
   </style>
-</head>
+<meta name="robots" content="noindex,nofollow"></head>
 <body>
+
+  <div id="pw-gate" style="position:fixed;inset:0;z-index:99999;background:#f8fafc;display:flex;align-items:center;justify-content:center;">
+    <form onsubmit="return checkPw(event)" style="background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:32px 28px;text-align:center;width:300px;">
+      <div style="font-size:18px;font-weight:700;margin-bottom:6px;">부카결 | 내부운영가이드</div>
+      <div style="font-size:13px;color:#64748b;margin-bottom:16px;">비밀번호를 입력하세요</div>
+      <input id="pw-input" type="password" inputmode="numeric" autocomplete="off" style="width:100%;padding:10px;border:1px solid #cbd5e1;border-radius:8px;font-size:16px;text-align:center;box-sizing:border-box;" autofocus/>
+      <div id="pw-err" style="color:#dc2626;font-size:12px;height:16px;margin:6px 0;"></div>
+      <button type="submit" style="width:100%;padding:10px;background:#3566e0;color:#fff;border:0;border-radius:8px;font-weight:700;cursor:pointer;">확인</button>
+    </form>
+  </div>
+  <script>
+    (function(){ if (sessionStorage.getItem('buipay_ok')==='1') { var g=document.getElementById('pw-gate'); if(g) g.style.display='none'; } })();
+    function checkPw(e){ e.preventDefault(); if(document.getElementById('pw-input').value==='112233'){ sessionStorage.setItem('buipay_ok','1'); document.getElementById('pw-gate').style.display='none'; } else { document.getElementById('pw-err').textContent='비밀번호가 올바르지 않습니다.'; } return false; }
+  </script>
 
   <!-- ========================================================================
        TOP GNB HEADER (#header-outer)
@@ -1457,8 +1471,8 @@
             </tr>
             <tr>
               <td class="ta_c"><strong>예치금 입금 (보증보험)</strong></td>
-              <td class="ta_c bg_y"><strong>데브늄 계좌로 예치금 입금<br/>(필요 시 보증보험 진행)</strong></td>
-              <td><strong>IBK기업은행 <code>664-000013-97-355</code> (데브늄 주식회사)</strong> 계좌로 초기 예치금(15일분 기준)을 입금합니다. (※ 필요 시 당사에서 <strong>보증보험</strong>을 들어드리기도 합니다.)</td>
+              <td class="ta_c bg_y"><strong>데브늄 계좌로 예치금 입금<br/>(필요 시 보증보험 가입 지원)</strong></td>
+              <td><strong>IBK기업은행 <code>664-000013-97-355</code> (데브늄 주식회사)</strong> 계좌로 초기 예치금(15일분 기준)을 입금합니다. (※ 필요 시 당사에서 <strong>보증보험</strong> 가입을 지원합니다.)</td>
             </tr>
             <tr>
               <td class="ta_c"><strong>예치금 자동 차감</strong></td>
@@ -1497,7 +1511,8 @@
 1. 제공받는 자 : 데브늄 주식회사, 주식회사 인피니소프트
 2. 제공 항목 : 부고 정보, 상주 정보(성명, 연락처), 부의금 수취 및 정산 관련 정보
 3. 이용 목적 : 모바일 부고장 내 부의금 결제 연동, 상주 측 부의금 전달 및 정산, 안내 메시지 발송
-4. 보유 기간 : 정산 완료 후 관련 법령에 따라 5년간 보관 후 파기</pre>
+4. 보유 기간 : 정산 완료 후 관련 법령에 따라 5년간 보관 후 파기
+5. 동의 거부 권리 : 위 동의를 거부할 수 있으며, 거부 시 부의금 카드결제 서비스 이용이 제한됩니다.</pre>
       </div>
 
       <div class="page-Turn-nav">
@@ -1531,7 +1546,7 @@
             <tr>
               <td class="ta_c"><strong>예치금 확보 &amp;<br/>이노페이 가상계좌 입금 요청</strong></td>
               <td class="ta_c bg_y"><strong>업체 예치금 확보 (보증보험)<br/>→ 대표님께 이노페이 가상계좌 입금 요청</strong></td>
-              <td>업체로부터 예치금을 확보하며(필요할 때는 <strong>보증보험</strong>을 들어주기도 함), 예치금을 받으면 <strong>대표님께 이노페이 가상계좌 입금을 요청</strong>하여 송금 재원을 충전합니다.</td>
+              <td>업체로부터 예치금을 확보하며(필요 시 <strong>보증보험</strong> 가입 지원), 예치금을 받으면 <strong>대표님께 이노페이 가상계좌 입금을 요청</strong>하여 송금 재원을 충전합니다.</td>
             </tr>
             <tr>
               <td class="ta_c"><strong>어드민 잔액 관리</strong></td>
@@ -1549,9 +1564,9 @@
               <td>결제 시점에 고객사 잔액이 부족하면 결제를 차단하고 안내 모달을 띄웁니다.</td>
             </tr>
             <tr>
-              <td class="ta_c"><strong>주간 입금 (복구)</strong></td>
-              <td class="ta_c bg_y"><strong>매주 금요일 입금 원칙</strong><br/><span style="color:#d97706;">(※ 추후 변동 가능)</span></td>
-              <td>전주 금요일 ~ 금주 목요일 차감된 부의금액 합계를 <strong>매주 금요일마다 입금(복구)</strong>합니다. (추후 변동 가능)</td>
+              <td class="ta_c"><strong>주간 복구 입금</strong></td>
+              <td class="ta_c bg_y"><strong>매주 금요일 복구 입금</strong><br/><span style="color:#d97706;">(※ 추후 변동 가능)</span></td>
+              <td>전주 금요일 ~ 금주 목요일 차감된 부의금액 합계를 <strong>매주 금요일마다 복구 입금</strong>합니다.</td>
             </tr>
             <tr>
               <td class="ta_c"><strong>업체 정산 지급일</strong></td>
@@ -1614,13 +1629,13 @@
             <tr>
               <td class="ta_c"><strong>STEP 1</strong></td>
               <td><strong>제휴 계약서 작성 · 전달</strong></td>
-              <td class="bg_y">제휴 계약서(현재 제작 중)를 서로 작성·날인하여 전달 및 체결</td>
+              <td class="bg_y">제휴 계약서(제작 중) 작성·날인 및 기본 서류 4종(사업자등록증·등기부등본·인감증명서·통장사본) 수취</td>
               <td>제휴 계약서 (제작 중)</td>
             </tr>
             <tr>
               <td class="ta_c"><strong>STEP 2</strong></td>
               <td><strong>운영 가이드 전달 &amp;<br/>예치금 요청 (보증보험)</strong></td>
-              <td class="bg_y">계약 후 <code>부의금서비스운영가이드v.4.pdf</code>를 전달하면서 <strong>예치금 입금 요청</strong> (필요할 때는 <strong>보증보험</strong> 진행)</td>
+              <td class="bg_y">계약 후 <code>부의금서비스운영가이드v.4.pdf</code>를 전달하면서 <strong>예치금 입금 요청</strong> (필요 시 <strong>보증보험</strong> 가입 지원)</td>
               <td><code>부의금서비스운영가이드v.4.pdf</code> 전달</td>
             </tr>
             <tr>
@@ -1644,7 +1659,7 @@
             <tr>
               <td class="ta_c"><strong>STEP 6</strong></td>
               <td><strong>주간 입금 &amp; 월간 정산</strong></td>
-              <td class="bg_y">주간 입금: <strong>매주 금요일 원칙</strong>(추후 변동 가능) / 업체 정산 지급일: <strong>답례품과 같음</strong></td>
+              <td class="bg_y">매주 금요일 입금 / 정산일은 답례품과 동일</td>
               <td>정기 운영</td>
             </tr>
           </tbody>
@@ -1677,7 +1692,7 @@
       <div id="add-partner-form-box" style="display:none; background:#f8fafc; border:2px solid #3566e0; border-radius:10px; padding:18px 20px; margin-bottom:20px;">
         <div style="display:flex; gap:10px; flex-wrap:wrap; align-items:center;">
           <input type="text" id="new-p-name" class="partner-input" placeholder="업체명 (예: 한마음부고)" style="max-width:180px;"/>
-          <input type="text" id="new-p-fee" class="partner-input" value="수수료 3.5% (정산일: 답례품과 같음)" style="max-width:240px;"/>
+          <input type="text" id="new-p-fee" class="partner-input" value="수수료 3.5%" style="max-width:240px;"/>
           <input type="text" id="new-p-reqdep" class="partner-input" value="예치금 1,500만원 (1차 500만/2차 200만)" style="max-width:260px;"/>
           <input type="text" id="new-p-memo" class="partner-input" placeholder="메모 입력" style="flex:1; min-width:180px;"/>
           <button class="btn-header-outline" style="background:#3566e0; color:#fff; border-color:#3566e0; font-weight:700;" onclick="addNewPartnerCompany()">등록</button>
@@ -1888,22 +1903,22 @@
     };
 
     const PARTNER_CHECKLIST_ITEMS = [
-      { step: 'STEP 1', title: '제휴 계약서 작성 및 상호 날인·전달 (현재 계약서 제작 중)', guide: (p) => p.feeRate },
-      { step: 'STEP 2', title: '운영 가이드(v.4) 전달 및 예치금 입금 요청 (필요 시 보증보험 진행)', guide: (p) => p.reqDeposit },
+      { step: 'STEP 1', title: '제휴 계약서 작성·날인 및 기본 서류 4종 수취', guide: () => '계약서 제작 중 / 서류: 사업자등록증·등기부등본·인감증명서·통장사본' },
+      { step: 'STEP 2', title: '운영 가이드(v.4) 전달 및 예치금 입금 요청 (필요 시 보증보험 가입 지원)', guide: (p) => p.feeRate + ' · ' + p.reqDeposit },
       { step: 'STEP 3', title: '[중간 준비] 어드민 세팅(업체·담당자·1/2차 한도) 및 잔디(H_한도알림) 웹훅 세팅', guide: () => '어드민 계정 · 1/2차 한도 · 잔디 웹훅 연동' },
       { step: 'STEP 4', title: '예치금 확보 확인 → 대표님께 이노페이 가상계좌 입금 요청 & 어드민 [+ 입금액 추가]', guide: () => '대표님께 가상계좌 입금 요청 후 어드민 잔액 반영' },
       { step: 'STEP 5', title: '부고장 [제3자 제공 동의] 반영 확인 후 서비스 오픈 (실서버 가동)', guide: () => '송금완료 시 잔액 자동 차감 확인' },
-      { step: 'STEP 6', title: '주간 입금(매주 금요일 원칙) 및 정산(답례품과 같음) 정기 운영', guide: () => '금요일 입금 원칙(추후 변동 가능) / 정산일: 답례품과 같음' }
+      { step: 'STEP 6', title: '주간 입금 및 정산 정기 운영', guide: () => '매주 금요일 입금 / 정산일은 답례품과 동일' }
     ];
 
     const DEFAULT_PARTNERS = [
-      { id: 'kookmin', name: '국민부고', feeRate: '수수료 3.5% (정산일: 답례품과 같음)', reqDeposit: '예치금 3,000만 (1차 1,000만 / 2차 500만)', memo: '1순위 오픈 추진 (계약서 완성 후 전달)', checks: [0,0,0,0,0,0] },
-      { id: 'samga', name: '삼가', feeRate: '수수료 4.0% (정산일: 답례품과 같음)', reqDeposit: '예치금 2,000만 (1차 600만 / 2차 300만)', memo: '도입 확정 · 계약서 대기', checks: [0,0,0,0,0,0] },
-      { id: 'uijeon', name: '의전나라', feeRate: '수수료 3.5~4.0% (정산일: 답례품과 같음)', reqDeposit: '예치금 4,500만 (1차 1,500만 / 2차 750만)', memo: '핵심 타겟 · 일정 협의 중', checks: [0,0,0,0,0,0] },
-      { id: 'cheotjang', name: '첫장', feeRate: '수수료 3.5% (정산일: 답례품과 같음)', reqDeposit: '예치금 1,500만 (1차 500만 / 2차 250만)', memo: '도입 협의 중', checks: [0,0,0,0,0,0] },
-      { id: 'bugoalim', name: '부고알림', feeRate: '수수료 3.5% (정산일: 답례품과 같음)', reqDeposit: '예치금 1,500만 (1차 500만 / 2차 250만)', memo: '런칭 확정 · 계약서 대기', checks: [0,0,0,0,0,0] },
-      { id: 'hyosung', name: '효성프라콘', feeRate: '수수료 3.5% (정산일: 답례품과 같음)', reqDeposit: '예치금 2,000만 (1차 600만 / 2차 300만)', memo: '단계적 도입 추진', checks: [0,0,0,0,0,0] },
-      { id: 'saha', name: '사하구민', feeRate: '수수료 3.5% (정산일: 답례품과 같음)', reqDeposit: '예치금 1,000만 (1차 300만 / 2차 150만)', memo: '조건 협의 중', checks: [0,0,0,0,0,0] }
+      { id: 'kookmin', name: '국민부고', feeRate: '수수료 3.5%', reqDeposit: '예치금 3,000만 (1차 1,000만 / 2차 500만)', memo: '1순위 오픈 추진 (계약서 완성 후 전달)', checks: [0,0,0,0,0,0] },
+      { id: 'samga', name: '삼가', feeRate: '수수료 4.0%', reqDeposit: '예치금 2,000만 (1차 600만 / 2차 300만)', memo: '도입 확정 · 계약서 대기', checks: [0,0,0,0,0,0] },
+      { id: 'uijeon', name: '의전나라', feeRate: '수수료 3.5~4.0%', reqDeposit: '예치금 4,500만 (1차 1,500만 / 2차 750만)', memo: '핵심 타겟 · 일정 협의 중', checks: [0,0,0,0,0,0] },
+      { id: 'cheotjang', name: '첫장', feeRate: '수수료 3.5%', reqDeposit: '예치금 1,500만 (1차 500만 / 2차 250만)', memo: '도입 협의 중', checks: [0,0,0,0,0,0] },
+      { id: 'bugoalim', name: '부고알림', feeRate: '수수료 3.5%', reqDeposit: '예치금 1,500만 (1차 500만 / 2차 250만)', memo: '런칭 확정 · 계약서 대기', checks: [0,0,0,0,0,0] },
+      { id: 'hyosung', name: '효성프라콘', feeRate: '수수료 3.5%', reqDeposit: '예치금 2,000만 (1차 600만 / 2차 300만)', memo: '단계적 도입 추진', checks: [0,0,0,0,0,0] },
+      { id: 'saha', name: '사하구민', feeRate: '수수료 3.5%', reqDeposit: '예치금 1,000만 (1차 300만 / 2차 150만)', memo: '조건 협의 중', checks: [0,0,0,0,0,0] }
     ];
 
     let partnerList = [];
@@ -1911,7 +1926,7 @@
 
     function loadPartnerData() {
       try {
-        const raw = localStorage.getItem('devnium_buipay_partner_v11');
+        const raw = localStorage.getItem('devnium_buipay_partner_v12');
         if (raw) {
           const parsed = JSON.parse(raw);
           if (Array.isArray(parsed) && parsed.length > 0) {
@@ -1925,7 +1940,7 @@
 
     function savePartnerData() {
       try {
-        localStorage.setItem('devnium_buipay_partner_v11', JSON.stringify(partnerList));
+        localStorage.setItem('devnium_buipay_partner_v12', JSON.stringify(partnerList));
       } catch (e) {}
     }
 
@@ -2051,7 +2066,7 @@
       partnerList.push({
         id: newId,
         name: name,
-        feeRate: getVal('new-p-fee') || '수수료 3.5% (정산일: 답례품과 같음)',
+        feeRate: getVal('new-p-fee') || '수수료 3.5%',
         reqDeposit: getVal('new-p-reqdep') || '예치금 1,500만 (1차 500만 / 2차 200만)',
         memo: getVal('new-p-memo') || '신규 추가 업체',
         checks: [0,0,0,0,0,0]
