@@ -68,7 +68,8 @@ interface AIChatbotProps {
 }
 
 const NAVY = '#191F28';
-const MAX_TURNS = 10;
+const PRIMARY = '#2563EB';
+const MAX_TURNS = 15;
 
 export default function AIChatbot({ isOpen, onClose, facilityContext, onOpenConsultForm }: AIChatbotProps) {
     const { user } = useAuth();
@@ -101,6 +102,7 @@ export default function AIChatbot({ isOpen, onClose, facilityContext, onOpenCons
     });
     const [showLoginModal, setShowLoginModal] = useState(false);
     const messagesEndRef = useRef<HTMLDivElement>(null);
+    const contactFormRef = useRef<HTMLDivElement>(null);
     const chatScrollRef = useRef<HTMLDivElement>(null);
     const inputRef = useRef<HTMLInputElement>(null);
     const router = useRouter();
@@ -196,8 +198,12 @@ export default function AIChatbot({ isOpen, onClose, facilityContext, onOpenCons
     useEffect(() => {
         if (isOpen) {
             const timer = setTimeout(() => {
-                scrollToBottom(showContactForm ? 'smooth' : 'instant');
-            }, 30);
+                if (showContactForm && contactFormRef.current) {
+                    contactFormRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                } else {
+                    scrollToBottom('instant');
+                }
+            }, 40);
             return () => clearTimeout(timer);
         }
     }, [messages, isLoading, isOpen, streamingText, showContactForm, scrollToBottom]);
@@ -211,8 +217,6 @@ export default function AIChatbot({ isOpen, onClose, facilityContext, onOpenCons
     const sendMessage = useCallback(async (overrideText?: string) => {
         const textToSend = (typeof overrideText === 'string' ? overrideText : input).trim();
         if ((!textToSend && !pendingImage) || isLoading || streamingText !== null) return;
-        // 상담 신청 완료 후 추가 메시지 차단
-        if (contactSubmitted) return;
         // 대화가 6턴 이상 진행되고 아직 상담 신청 안 한 경우 부드럽게 상담 폼 안내
         if (!contactSubmitted && messageCount >= 6 && !showContactForm) {
             setShowContactForm(true);
@@ -358,20 +362,21 @@ export default function AIChatbot({ isOpen, onClose, facilityContext, onOpenCons
                             onClick={(e) => { e.preventDefault(); router.push(`/facility/${facilityMatch[1]}`); onClose(); }}
                             style={{
                                 display: 'inline-flex', alignItems: 'center', gap: 4,
-                                background: '#F2F4F6', color: NAVY,
+                                background: '#EFF6FF', color: PRIMARY,
+                                border: '1px solid #BFDBFE',
                                 borderRadius: 20, padding: '6px 14px',
                                 fontSize: 13, fontWeight: 600,
                                 textDecoration: 'none', cursor: 'pointer',
                                 margin: '4px 0',
                             }}>
-                            바로가기
+                            시설 상세보기
                         </a>
                     );
                 }
                 // 일반 URL
                 return (
                     <a key={i} href={part} target="_blank" rel="noopener noreferrer"
-                        style={{ color: NAVY, textDecoration: 'underline' }}>
+                        style={{ color: PRIMARY, textDecoration: 'underline' }}>
                         {part}
                     </a>
                 );
@@ -388,19 +393,20 @@ export default function AIChatbot({ isOpen, onClose, facilityContext, onOpenCons
                                 onClick={(e) => { e.preventDefault(); router.push(`/facility/${facilityMatch2[1]}`); onClose(); }}
                                 style={{
                                     display: 'inline-flex', alignItems: 'center', gap: 4,
-                                    background: '#F2F4F6', color: NAVY,
+                                    background: '#EFF6FF', color: PRIMARY,
+                                    border: '1px solid #BFDBFE',
                                     borderRadius: 20, padding: '6px 14px',
                                     fontSize: 13, fontWeight: 600,
                                     textDecoration: 'none', cursor: 'pointer',
                                     margin: '4px 0',
                                 }}>
-                                {mdMatch[1] || '바로가기'}
+                                {mdMatch[1] || '시설 상세보기'}
                             </a>
                         );
                     }
                     return (
                         <a key={`${i}-${j}`} href={mdMatch[2]} target="_blank" rel="noopener noreferrer"
-                            style={{ color: NAVY, textDecoration: 'underline', fontWeight: 600 }}>
+                            style={{ color: PRIMARY, textDecoration: 'underline', fontWeight: 600 }}>
                             {mdMatch[1]}
                         </a>
                     );
@@ -466,8 +472,8 @@ export default function AIChatbot({ isOpen, onClose, facilityContext, onOpenCons
 
                 {/* ── 상단 실시간 상담 전환 바 ── */}
                 <div style={{
-                    background: '#F8FAFC',
-                    borderBottom: '1px solid #E5E8EB',
+                    background: '#EFF6FF',
+                    borderBottom: '1px solid #DBEAFE',
                     color: '#191F28',
                     padding: '8px 16px',
                     display: 'flex',
@@ -477,15 +483,15 @@ export default function AIChatbot({ isOpen, onClose, facilityContext, onOpenCons
                     flexShrink: 0,
                 }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: 6, overflow: 'hidden' }}>
-                        <Sparkles size={14} color="#191F28" style={{ flexShrink: 0 }} />
-                        <span style={{ fontWeight: 600, color: '#191F28', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                        <Sparkles size={14} color={PRIMARY} style={{ flexShrink: 0 }} />
+                        <span style={{ fontWeight: 600, color: '#1E3A8A', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
                             실시간 공실·비공개 할인 1:1 맞춤 안내
                         </span>
                     </div>
                     <button
                         onClick={() => setShowContactForm(true)}
                         style={{
-                            backgroundColor: '#191F28',
+                            backgroundColor: PRIMARY,
                             color: '#FFFFFF',
                             border: 'none',
                             borderRadius: 12,
@@ -577,7 +583,7 @@ export default function AIChatbot({ isOpen, onClose, facilityContext, onOpenCons
                                     maxWidth: msg.role === 'user' ? '100%' : '85%',
                                     padding: '12px 16px',
                                     borderRadius: msg.role === 'user' ? '18px 18px 4px 18px' : '18px 18px 18px 4px',
-                                    background: msg.role === 'user' ? '#191F28' : '#F2F4F6',
+                                    background: msg.role === 'user' ? PRIMARY : '#F2F4F6',
                                     color: msg.role === 'user' ? '#FFFFFF' : '#191F28',
                                     fontSize: 15, lineHeight: 1.55, letterSpacing: '-0.2px',
                                     whiteSpace: 'pre-wrap', wordBreak: 'break-word',
@@ -620,7 +626,7 @@ export default function AIChatbot({ isOpen, onClose, facilityContext, onOpenCons
                                                 <div style={{ display: 'flex', gap: 5, marginBottom: 8, flexWrap: 'wrap' }}>
                                                     <span style={{
                                                         fontSize: 11, fontWeight: 600, padding: '2px 8px', borderRadius: 10,
-                                                        background: '#F2F4F6', color: NAVY,
+                                                        background: '#EFF6FF', color: PRIMARY,
                                                     }}>{card.category}</span>
                                                     {card.isPublic !== null && (
                                                         <span style={{
@@ -643,12 +649,12 @@ export default function AIChatbot({ isOpen, onClose, facilityContext, onOpenCons
                                                     {card.distanceKm !== undefined && (
                                                         <span style={{
                                                             fontSize: 11, fontWeight: 600, padding: '1px 6px', borderRadius: 8,
-                                                            background: NAVY, color: '#fff', whiteSpace: 'nowrap',
+                                                            background: PRIMARY, color: '#fff', whiteSpace: 'nowrap',
                                                         }}>{card.distanceKm}km</span>
                                                     )}
                                                 </div>
                                                 {/* 가격 */}
-                                                <div style={{ fontSize: 13, fontWeight: 600, color: NAVY, marginBottom: 10 }}>
+                                                <div style={{ fontSize: 13, fontWeight: 700, color: PRIMARY, marginBottom: 10 }}>
                                                     {card.matchedPrice ? (
                                                         <><span style={{ fontSize: 11, color: '#6B7684', fontWeight: 400 }}>매칭 </span>{card.matchedPrice}만원</>
                                                     ) : card.minPrice ? (
@@ -662,12 +668,12 @@ export default function AIChatbot({ isOpen, onClose, facilityContext, onOpenCons
                                                     onClick={() => { router.push(`/facility/${card.id}`); onClose(); }}
                                                     style={{
                                                         width: '100%', padding: '8px 0', borderRadius: 8,
-                                                        border: `1px solid ${NAVY}`, background: 'transparent',
-                                                        color: NAVY, fontSize: 13, fontWeight: 600, cursor: 'pointer',
+                                                        border: `1px solid ${PRIMARY}`, background: 'transparent',
+                                                        color: PRIMARY, fontSize: 13, fontWeight: 600, cursor: 'pointer',
                                                         transition: 'all 0.15s',
                                                     }}
-                                                    onMouseEnter={e => { e.currentTarget.style.background = NAVY; e.currentTarget.style.color = '#fff'; }}
-                                                    onMouseLeave={e => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = NAVY; }}
+                                                    onMouseEnter={e => { e.currentTarget.style.background = PRIMARY; e.currentTarget.style.color = '#fff'; }}
+                                                    onMouseLeave={e => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = PRIMARY; }}
                                                 >
                                                     자세히 보기
                                                 </button>
@@ -683,7 +689,7 @@ export default function AIChatbot({ isOpen, onClose, facilityContext, onOpenCons
                                     }}>
                                         {/* 헤더 */}
                                         <div style={{
-                                            background: NAVY, color: '#fff', padding: '10px 14px',
+                                            background: PRIMARY, color: '#fff', padding: '10px 14px',
                                             display: 'flex', alignItems: 'center', justifyContent: 'space-between',
                                         }}>
                                             <div style={{ fontSize: 14, fontWeight: 700, display: 'flex', alignItems: 'center', gap: 6 }}>
@@ -720,7 +726,7 @@ export default function AIChatbot({ isOpen, onClose, facilityContext, onOpenCons
                                                                 }}>{row.grade}</span>
                                                             )}
                                                         </div>
-                                                        <div style={{ fontWeight: 600, color: NAVY, whiteSpace: 'nowrap' }}>
+                                                        <div style={{ fontWeight: 600, color: PRIMARY, whiteSpace: 'nowrap' }}>
                                                             {row.price}
                                                         </div>
                                                     </div>
@@ -738,7 +744,7 @@ export default function AIChatbot({ isOpen, onClose, facilityContext, onOpenCons
                                             onClick={() => { router.push(`/facility/${msg.pricingTable!.facilityId}`); onClose(); }}
                                             style={{
                                                 width: '100%', padding: '10px 0', border: 'none',
-                                                background: '#F8FAFC', color: NAVY, fontSize: 13, fontWeight: 600,
+                                                background: '#F8FAFC', color: PRIMARY, fontSize: 13, fontWeight: 600,
                                                 cursor: 'pointer', transition: 'background 0.15s',
                                                 display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 4,
                                             }}
@@ -752,8 +758,8 @@ export default function AIChatbot({ isOpen, onClose, facilityContext, onOpenCons
                                 )}
                             </div>
                         </div>
-                        {/* 빠른 응답 버튼 (마지막 AI 메시지에서만, 상담 신청 전) */}
-                        {isLastAssistant && quickReplies.length > 0 && !isLoading && !contactSubmitted && (
+                        {/* 빠른 응답 버튼 (마지막 AI 메시지에서만) */}
+                        {isLastAssistant && quickReplies.length > 0 && !isLoading && (
                             <div style={{
                                 display: 'flex', flexWrap: 'wrap', gap: 8,
                                 justifyContent: 'flex-end',
@@ -763,30 +769,30 @@ export default function AIChatbot({ isOpen, onClose, facilityContext, onOpenCons
                                     <button key={qi}
                                         onClick={() => {
                                             if (isLoading || streamingText !== null) return;
-                                            if (!user && messageCount >= MAX_TURNS) {
-                                                setShowLoginModal(true);
+                                            // 상담 예약/연락처/견적서 문자로 받기 선택 시 바로 인라인 상담 폼 표시
+                                            if (qr.includes('연락처') || qr.includes('상담 예약') || qr.includes('맞춤 상담') || qr.includes('견적서 문자로')) {
+                                                setMessages(prev => [...prev, { role: 'user', content: qr, timestamp: new Date().toISOString() }]);
+                                                setTimeout(() => setShowContactForm(true), 200);
                                                 return;
                                             }
-                                            // "연락처 남기기" 선택 시 바로 폼 표시 (API 호출 불필요)
-                                            if (qr.includes('연락처')) {
-                                                setMessages(prev => [...prev, { role: 'user', content: qr, timestamp: new Date().toISOString() }]);
-                                                setTimeout(() => setShowContactForm(true), 300);
+                                            if (!user && messageCount >= MAX_TURNS) {
+                                                setShowLoginModal(true);
                                                 return;
                                             }
                                             sendMessage(qr);
                                         }}
                                         style={{
                                             background: '#fff',
-                                            border: '1px solid #E2E8F0',
+                                            border: '1px solid #DBEAFE',
                                             borderRadius: 20,
                                             padding: '8px 16px',
-                                            fontSize: 14, fontWeight: 500,
-                                            color: '#191F28',
+                                            fontSize: 14, fontWeight: 600,
+                                            color: PRIMARY,
                                             cursor: 'pointer',
                                             transition: 'all 0.15s',
                                         }}
-                                        onMouseEnter={e => { e.currentTarget.style.borderColor = NAVY; e.currentTarget.style.color = NAVY; }}
-                                        onMouseLeave={e => { e.currentTarget.style.borderColor = '#E2E8F0'; e.currentTarget.style.color = '#191F28'; }}
+                                        onMouseEnter={e => { e.currentTarget.style.background = '#EFF6FF'; e.currentTarget.style.borderColor = PRIMARY; }}
+                                        onMouseLeave={e => { e.currentTarget.style.background = '#fff'; e.currentTarget.style.borderColor = '#DBEAFE'; }}
                                     >
                                         {qr}
                                     </button>
@@ -800,16 +806,16 @@ export default function AIChatbot({ isOpen, onClose, facilityContext, onOpenCons
                                 marginTop: 12,
                                 marginBottom: 14,
                                 background: '#F8FAFC',
-                                border: '1.5px solid #E5E8EB',
+                                border: '1.5px solid #DBEAFE',
                                 borderRadius: 16,
                                 padding: '14px 16px',
-                                boxShadow: '0 4px 14px rgba(25, 31, 40, 0.06)',
+                                boxShadow: '0 4px 14px rgba(37, 99, 235, 0.08)',
                                 position: 'relative',
                             }}>
                                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 8 }}>
                                     <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
                                         <span style={{
-                                            background: '#191F28', color: '#fff', fontSize: 10,
+                                            background: PRIMARY, color: '#fff', fontSize: 10,
                                             fontWeight: 700, padding: '2px 7px', borderRadius: 6,
                                             display: 'flex', alignItems: 'center', gap: 3
                                         }}>
@@ -817,7 +823,7 @@ export default function AIChatbot({ isOpen, onClose, facilityContext, onOpenCons
                                             <span>대대손손 직영</span>
                                         </span>
                                         <span style={{ fontSize: 13, fontWeight: 700, color: '#191F28' }}>
-                                            수석 장지 상담사(대표) 1:1 무료 상담
+                                            수석 장지 상담사 1:1 무료 상담
                                         </span>
                                     </div>
                                     <button
@@ -835,7 +841,7 @@ export default function AIChatbot({ isOpen, onClose, facilityContext, onOpenCons
                                     onClick={() => setShowContactForm(true)}
                                     style={{
                                         width: '100%',
-                                        background: '#191F28',
+                                        background: PRIMARY,
                                         color: '#fff',
                                         border: 'none',
                                         borderRadius: 10,
@@ -847,7 +853,7 @@ export default function AIChatbot({ isOpen, onClose, facilityContext, onOpenCons
                                         alignItems: 'center',
                                         justifyContent: 'center',
                                         gap: 6,
-                                        boxShadow: '0 2px 6px rgba(25, 31, 40, 0.15)',
+                                        boxShadow: '0 2px 6px rgba(37, 99, 235, 0.2)',
                                     }}
                                 >
                                     <Calendar size={14} />
@@ -898,24 +904,25 @@ export default function AIChatbot({ isOpen, onClose, facilityContext, onOpenCons
 
                     {/* ── 프리미엄 상담 신청 폼 ── */}
                     {showContactForm && !contactSubmitted && (
-                        <div style={{
+                        <div ref={contactFormRef} style={{
                             background: '#ffffff',
                             borderRadius: 16,
-                            padding: '18px',
-                            marginTop: 10,
-                            marginBottom: 10,
-                            border: '1.5px solid #191F28',
-                            boxShadow: '0 8px 24px rgba(25, 31, 40, 0.12)',
-                            animation: 'contactFormSlide 0.35s ease-out',
+                            padding: '14px 16px',
+                            marginTop: 8,
+                            marginBottom: 8,
+                            border: `1.5px solid ${PRIMARY}`,
+                            boxShadow: '0 8px 24px rgba(37, 99, 235, 0.12)',
+                            animation: 'contactFormSlide 0.25s ease-out',
+                            scrollMarginTop: 8,
                         }}>
-                            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 12 }}>
+                            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 10 }}>
                                 <div>
-                                    <div style={{ fontSize: 15, fontWeight: 700, color: '#191F28', display: 'flex', alignItems: 'center', gap: 6 }}>
-                                        <FileText size={16} color="#191F28" />
-                                        <span>수석 상담사(대표) 1:1 맞춤 견적 신청</span>
+                                    <div style={{ fontSize: 14, fontWeight: 700, color: '#191F28', display: 'flex', alignItems: 'center', gap: 6 }}>
+                                        <FileText size={15} color={PRIMARY} />
+                                        <span>수석 상담사 1:1 맞춤 견적 신청</span>
                                     </div>
-                                    <div style={{ fontSize: 12, color: '#4E5968', marginTop: 4, lineHeight: 1.4 }}>
-                                        모르는 번호로 불쑥 전화드리지 않습니다. 원하시는 시간대에 맞춰 맞춤 자료를 먼저 보내드립니다.
+                                    <div style={{ fontSize: 11.5, color: '#4E5968', marginTop: 3, lineHeight: 1.35 }}>
+                                        원하시는 시간대에 맞춰 맞춤 비교자료를 먼저 보내드립니다.
                                     </div>
                                 </div>
                                 <button
@@ -939,8 +946,8 @@ export default function AIChatbot({ isOpen, onClose, facilityContext, onOpenCons
                                         fontSize: 12,
                                         fontWeight: 600,
                                         cursor: 'pointer',
-                                        border: contactMethod === 'kakao' ? '1.5px solid #191F28' : '1px solid #E2E8F0',
-                                        background: contactMethod === 'kakao' ? '#191F28' : '#F8FAFC',
+                                        border: contactMethod === 'kakao' ? `1.5px solid ${PRIMARY}` : '1px solid #E2E8F0',
+                                        background: contactMethod === 'kakao' ? PRIMARY : '#F8FAFC',
                                         color: contactMethod === 'kakao' ? '#FFFFFF' : '#6B7684',
                                         transition: 'all 0.15s ease',
                                         display: 'flex',
@@ -962,8 +969,8 @@ export default function AIChatbot({ isOpen, onClose, facilityContext, onOpenCons
                                         fontSize: 12,
                                         fontWeight: 600,
                                         cursor: 'pointer',
-                                        border: contactMethod === 'call' ? '1.5px solid #191F28' : '1px solid #E2E8F0',
-                                        background: contactMethod === 'call' ? '#191F28' : '#F8FAFC',
+                                        border: contactMethod === 'call' ? `1.5px solid ${PRIMARY}` : '1px solid #E2E8F0',
+                                        background: contactMethod === 'call' ? PRIMARY : '#F8FAFC',
                                         color: contactMethod === 'call' ? '#FFFFFF' : '#6B7684',
                                         transition: 'all 0.15s ease',
                                         display: 'flex',
@@ -1000,8 +1007,8 @@ export default function AIChatbot({ isOpen, onClose, facilityContext, onOpenCons
                                                 fontSize: 11,
                                                 fontWeight: 500,
                                                 cursor: 'pointer',
-                                                border: contactPreferredTime === time ? '1.5px solid #191F28' : '1px solid #E2E8F0',
-                                                background: contactPreferredTime === time ? '#191F28' : '#fff',
+                                                border: contactPreferredTime === time ? `1.5px solid ${PRIMARY}` : '1px solid #E2E8F0',
+                                                background: contactPreferredTime === time ? PRIMARY : '#fff',
                                                 color: contactPreferredTime === time ? '#fff' : '#4E5968',
                                                 transition: 'all 0.15s ease',
                                             }}
@@ -1062,13 +1069,13 @@ export default function AIChatbot({ isOpen, onClose, facilityContext, onOpenCons
                                     width: '100%',
                                     padding: '12px',
                                     borderRadius: 10,
-                                    background: (!contactName.trim() || contactPhone.replace(/\D/g, '').length < 10 || isSubmittingContact) ? '#CBD5E1' : '#191F28',
+                                    background: (!contactName.trim() || contactPhone.replace(/\D/g, '').length < 10 || isSubmittingContact) ? '#CBD5E1' : PRIMARY,
                                     color: '#ffffff',
                                     border: 'none',
                                     fontSize: 14,
                                     fontWeight: 700,
                                     cursor: (!contactName.trim() || contactPhone.replace(/\D/g, '').length < 10 || isSubmittingContact) ? 'not-allowed' : 'pointer',
-                                    boxShadow: '0 2px 8px rgba(25, 31, 40, 0.15)',
+                                    boxShadow: '0 2px 8px rgba(37, 99, 235, 0.2)',
                                     display: 'flex',
                                     alignItems: 'center',
                                     justifyContent: 'center',
@@ -1089,7 +1096,7 @@ export default function AIChatbot({ isOpen, onClose, facilityContext, onOpenCons
                 </div>
 
                 {/* ── 퀵 리플라이 ── */}
-                {messages.length <= 1 && (
+                {messages.length <= 1 && !showContactForm && (
                     <div style={{
                         display: 'flex', flexWrap: 'wrap', gap: 6,
                         padding: '0 16px 12px',
@@ -1100,12 +1107,12 @@ export default function AIChatbot({ isOpen, onClose, facilityContext, onOpenCons
                         ).map(q => (
                             <button key={q} onClick={() => sendMessage(q)} style={{
                                 padding: '8px 14px', borderRadius: 20,
-                                border: '1px solid #E2E8F0', background: '#fff',
-                                color: '#4E5968', fontSize: 13, fontWeight: 500,
+                                border: '1px solid #DBEAFE', background: '#fff',
+                                color: PRIMARY, fontSize: 13, fontWeight: 600,
                                 cursor: 'pointer', transition: 'all 0.15s',
                             }}
-                            onMouseEnter={e => { e.currentTarget.style.background = '#F2F4F6'; e.currentTarget.style.borderColor = '#191F28'; e.currentTarget.style.color = '#191F28'; }}
-                            onMouseLeave={e => { e.currentTarget.style.background = '#fff'; e.currentTarget.style.borderColor = '#E2E8F0'; e.currentTarget.style.color = '#4E5968'; }}
+                            onMouseEnter={e => { e.currentTarget.style.background = '#EFF6FF'; e.currentTarget.style.borderColor = PRIMARY; }}
+                            onMouseLeave={e => { e.currentTarget.style.background = '#fff'; e.currentTarget.style.borderColor = '#DBEAFE'; }}
                             >
                                 {q}
                             </button>
@@ -1120,21 +1127,23 @@ export default function AIChatbot({ isOpen, onClose, facilityContext, onOpenCons
                     paddingBottom: 'env(safe-area-inset-bottom, 0px)',
                     flexShrink: 0,
                 }}>
-                    {/* 상담 신청 완료 상태 */}
-                    {contactSubmitted ? (
+                    {/* 상담 신청 완료 배너 (대화는 계속 가능!) */}
+                    {contactSubmitted && (
                         <div style={{
-                            padding: '20px 16px', textAlign: 'center',
-                            background: '#F8FAFC', borderTop: '1px solid #E5E8EB',
+                            padding: '8px 14px',
+                            background: '#EFF6FF',
+                            borderBottom: '1px solid #DBEAFE',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'space-between',
+                            gap: 8,
                         }}>
                             <div style={{
-                                fontSize: 15, fontWeight: 700, color: '#191F28', marginBottom: 6,
-                                display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6,
+                                fontSize: 12, fontWeight: 600, color: '#1E3A8A',
+                                display: 'flex', alignItems: 'center', gap: 6,
                             }}>
-                                <CheckCircle2 size={17} color="#191F28" />
-                                <span>상담 신청이 완료되었습니다</span>
-                            </div>
-                            <div style={{ fontSize: 13, color: '#4E5968', marginBottom: 14 }}>
-                                전문 상담사가 빠르게 연락드릴게요.
+                                <CheckCircle2 size={14} color={PRIMARY} style={{ flexShrink: 0 }} />
+                                <span>상담 예약 접수 완료 · 이어서 편하게 질문하세요</span>
                             </div>
                             <button onClick={() => {
                                 setContactSubmitted(false);
@@ -1147,14 +1156,15 @@ export default function AIChatbot({ isOpen, onClose, facilityContext, onOpenCons
                                 sessionStorage.setItem('chat_msg_count', '0');
                                 sessionStorage.removeItem('chat_messages');
                             }} style={{
-                                padding: '10px 24px', borderRadius: 10,
-                                background: '#fff', color: NAVY, border: `1px solid ${NAVY}`,
-                                fontSize: 13, fontWeight: 600, cursor: 'pointer',
+                                padding: '4px 10px', borderRadius: 8,
+                                background: '#fff', color: PRIMARY, border: '1px solid #BFDBFE',
+                                fontSize: 11, fontWeight: 600, cursor: 'pointer', flexShrink: 0,
                             }}>
-                                새 대화 시작
+                                새 대화
                             </button>
                         </div>
-                    ) : !user && messageCount >= MAX_TURNS ? (
+                    )}
+                    {!user && !contactSubmitted && messageCount >= MAX_TURNS ? (
                         <div style={{
                             padding: '16px', textAlign: 'center',
                             background: '#F8FAFC', borderTop: '1px solid #F1F5F9',
@@ -1163,20 +1173,18 @@ export default function AIChatbot({ isOpen, onClose, facilityContext, onOpenCons
                                 무료 상담 {MAX_TURNS}회를 모두 사용했어요
                             </div>
                             <div style={{ fontSize: 12, color: '#6B7684', marginBottom: 12 }}>
-                                더 자세한 상담은 아래 방법을 이용해 주세요.
+                                연락처를 남겨주시면 전문 상담사가 안내해 드리며 대화도 계속하실 수 있어요.
                             </div>
                             <div style={{ display: 'flex', gap: 8, justifyContent: 'center' }}>
-                                {onOpenConsultForm && (
-                                    <button onClick={() => { onClose(); onOpenConsultForm(); }} style={{
-                                        padding: '10px 20px', borderRadius: 10,
-                                        background: NAVY, color: '#fff', border: 'none',
-                                        fontSize: 13, fontWeight: 600, cursor: 'pointer',
-                                        display: 'inline-flex', alignItems: 'center', gap: 6,
-                                    }}>
-                                        <Calendar size={13} />
-                                        <span>직접 상담 신청</span>
-                                    </button>
-                                )}
+                                <button onClick={() => setShowContactForm(true)} style={{
+                                    padding: '10px 20px', borderRadius: 10,
+                                    background: PRIMARY, color: '#fff', border: 'none',
+                                    fontSize: 13, fontWeight: 600, cursor: 'pointer',
+                                    display: 'inline-flex', alignItems: 'center', gap: 6,
+                                }}>
+                                    <Calendar size={13} />
+                                    <span>무료 상담 예약하기</span>
+                                </button>
                                 <button onClick={() => {
                                     if (user) {
                                         setMessageCount(0);
@@ -1190,7 +1198,7 @@ export default function AIChatbot({ isOpen, onClose, facilityContext, onOpenCons
                                     }
                                 }} style={{
                                     padding: '10px 20px', borderRadius: 10,
-                                    background: '#fff', color: NAVY, border: `1px solid ${NAVY}`,
+                                    background: '#fff', color: PRIMARY, border: `1px solid ${PRIMARY}`,
                                     fontSize: 13, fontWeight: 600, cursor: 'pointer',
                                 }}>
                                     {user ? '새 상담 시작' : '로그인 후 계속하기'}
@@ -1267,7 +1275,7 @@ export default function AIChatbot({ isOpen, onClose, facilityContext, onOpenCons
                                 disabled={(!input.trim() && !pendingImage) || isLoading}
                                 style={{
                                     width: 34, height: 34, borderRadius: '50%',
-                                    background: (input.trim() || pendingImage) ? '#191F28' : '#CBD5E1',
+                                    background: (input.trim() || pendingImage) ? PRIMARY : '#CBD5E1',
                                     border: 'none', cursor: (input.trim() || pendingImage) ? 'pointer' : 'default',
                                     display: 'flex', alignItems: 'center', justifyContent: 'center',
                                     flexShrink: 0, transition: 'background 0.2s',

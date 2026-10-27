@@ -48,23 +48,43 @@ export async function POST(request: NextRequest) {
             );
         }
 
-        // OTP 생성 (암호학적으로 안전한 난수)
-        const otp = generateOtp();
-        const expiresAt = new Date(Date.now() + 5 * 60 * 1000).toISOString(); // 5분 후 만료
-
-        // Supabase에 OTP 저장
+        // Supabase에 OTP 저장 (10분 유효, 미인증 유효 코드가 이미 있으면 동일 코드 재사용하여 재발송 시 불일치 방지)
         const supabaseAdmin = createClient(
             process.env.NEXT_PUBLIC_SUPABASE_URL!,
             process.env.SUPABASE_SERVICE_KEY!
         );
 
+        let otp = generateOtp();
+        const { data: existingOtp } = await supabaseAdmin
+            .from('otp_codes')
+            .select('code, expires_at, verified')
+            .eq('phone', cleanPhone)
+            .single();
+
+        if (
+            existingOtp &&
+            !existingOtp.verified &&
+            existingOtp.code &&
+            /^\d{6}$/.test(existingOtp.code) &&
+            new Date(existingOtp.expires_at) > new Date()
+        ) {
+            otp = existingOtp.code;
+        }
+
+        const expiresAt = new Date(Date.now() + 10 * 60 * 1000).toISOString(); // 10분 후 만료
+
         // otp_codes 테이블에 저장 (upsert)
-        await supabaseAdmin.from('otp_codes').upsert({
+        const { error: upsertError } = await supabaseAdmin.from('otp_codes').upsert({
             phone: cleanPhone,
             code: otp,
             expires_at: expiresAt,
             verified: false,
         }, { onConflict: 'phone' });
+
+        if (upsertError) {
+            console.error('OTP upsert error:', upsertError);
+            return NextResponse.json({ error: '인증번호 생성 중 오류가 발생했습니다' }, { status: 500 });
+        }
 
         // 솔라피 API로 SMS 발송
         const apiKey = process.env.SOLAPI_API_KEY!;

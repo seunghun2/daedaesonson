@@ -19,12 +19,27 @@ export default function LoginModal({ isOpen, onClose, reason }: LoginModalProps)
     const [phone, setPhone] = useState('');
     const [otp, setOtp] = useState('');
     const [error, setError] = useState<string | null>(null);
+    const [notice, setNotice] = useState<string | null>(null);
     const [loading, setLoading] = useState(false);
     const [kakaoLoading, setKakaoLoading] = useState(false);
     const [sessionIds, setSessionIds] = useState<string[]>([]);
 
     useEffect(() => {
         if (!isOpen || typeof window === 'undefined') return;
+        try {
+            const rawPending = sessionStorage.getItem('daedaesonson_otp_pending');
+            if (rawPending) {
+                const parsed = JSON.parse(rawPending);
+                if (parsed?.phone && parsed?.ts && Date.now() - parsed.ts < 10 * 60 * 1000) {
+                    setPhone(parsed.phone);
+                    setStep('phone-verify');
+                } else {
+                    sessionStorage.removeItem('daedaesonson_otp_pending');
+                }
+            }
+        } catch {
+            // ignore
+        }
         try {
             const ids = new Set<string>();
             const rawCompare = sessionStorage.getItem('compare_facilities_v1');
@@ -58,8 +73,10 @@ export default function LoginModal({ isOpen, onClose, reason }: LoginModalProps)
         setPhone('');
         setOtp('');
         setError(null);
+        setNotice(null);
         setLoading(false);
         setKakaoLoading(false);
+        try { sessionStorage.removeItem('daedaesonson_otp_pending'); } catch { /* ignore */ }
         onClose();
     };
 
@@ -96,14 +113,24 @@ export default function LoginModal({ isOpen, onClose, reason }: LoginModalProps)
         if (sessionIds.length > 0) {
             queuePendingFavorites(sessionIds);
         }
+        const isResend = step === 'phone-verify';
         setLoading(true);
         setError(null);
+        setNotice(null);
         const result = await signInWithPhone(phone);
         setLoading(false);
         if (result.error) {
             setError(result.error);
         } else {
-            setStep('phone-verify');
+            try {
+                sessionStorage.setItem('daedaesonson_otp_pending', JSON.stringify({ phone, ts: Date.now() }));
+            } catch { /* ignore */ }
+            if (isResend) {
+                setOtp('');
+                setNotice('인증번호 문자를 다시 발송했습니다. 도착한 6자리 번호를 입력해주세요.');
+            } else {
+                setStep('phone-verify');
+            }
         }
     };
 
@@ -116,11 +143,13 @@ export default function LoginModal({ isOpen, onClose, reason }: LoginModalProps)
         }
         setLoading(true);
         setError(null);
+        setNotice(null);
         const result = await verifyOtp(phone, targetOtp);
         setLoading(false);
         if (result.error) {
             setError(result.error);
         } else {
+            try { sessionStorage.removeItem('daedaesonson_otp_pending'); } catch { /* ignore */ }
             handleClose();
         }
     };
@@ -129,9 +158,9 @@ export default function LoginModal({ isOpen, onClose, reason }: LoginModalProps)
 
     return createPortal(
         <>
-            {/* 오버레이 */}
+            {/* 오버레이 (문자 인증 중 화면 전환 시 실수로 닫히지 않도록 main 단계에서만 배경 클릭 닫기 허용) */}
             <div
-                onClick={handleClose}
+                onClick={step === 'main' ? handleClose : undefined}
                 style={{
                     position: 'fixed',
                     inset: 0,
@@ -540,7 +569,13 @@ export default function LoginModal({ isOpen, onClose, reason }: LoginModalProps)
                     <>
                         <button
                             type="button"
-                            onClick={() => { setStep('phone-input'); setOtp(''); setError(null); }}
+                            onClick={() => {
+                                try { sessionStorage.removeItem('daedaesonson_otp_pending'); } catch { /* ignore */ }
+                                setStep('phone-input');
+                                setOtp('');
+                                setError(null);
+                                setNotice(null);
+                            }}
                             style={{
                                 background: 'none',
                                 border: 'none',
@@ -590,6 +625,7 @@ export default function LoginModal({ isOpen, onClose, reason }: LoginModalProps)
                                 const nextOtp = e.target.value.replace(/\D/g, '').slice(0, 6);
                                 setOtp(nextOtp);
                                 if (error) setError(null);
+                                if (notice) setNotice(null);
                                 if (nextOtp.length === 6 && !loading) {
                                     handleVerifyOtp(nextOtp);
                                 }
@@ -634,6 +670,11 @@ export default function LoginModal({ isOpen, onClose, reason }: LoginModalProps)
                         {error && (
                             <p style={{ color: '#EF4444', fontSize: 13, margin: '8px 0 0', fontWeight: 600 }}>
                                 {error}
+                            </p>
+                        )}
+                        {notice && !error && (
+                            <p style={{ color: '#2563EB', fontSize: 13, margin: '8px 0 0', fontWeight: 600 }}>
+                                {notice}
                             </p>
                         )}
 

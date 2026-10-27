@@ -16,7 +16,8 @@ export async function POST(request: NextRequest) {
             return NextResponse.json({ error: '전화번호와 인증번호를 입력해주세요' }, { status: 400 });
         }
 
-        const cleanPhone = phone.replace(/-/g, '');
+        const cleanPhone = String(phone || '').replace(/[^0-9]/g, '');
+        const cleanCode = String(code || '').replace(/[^0-9]/g, '');
         const serviceKey = process.env.SUPABASE_SERVICE_KEY!;
         const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
         const anonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
@@ -46,7 +47,7 @@ export async function POST(request: NextRequest) {
             return NextResponse.json({ error: '이미 사용된 인증번호입니다. 다시 요청해주세요' }, { status: 400 });
         }
 
-        if (otpData.code !== code) {
+        if (String(otpData.code).trim() !== cleanCode) {
             const { success: attemptSuccess } = rateLimit({ key: `otp-verify:${cleanPhone}`, limit: 5, windowMs: 5 * 60 * 1000 });
             if (!attemptSuccess) {
                 await supabaseAdmin

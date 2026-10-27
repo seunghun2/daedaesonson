@@ -8,12 +8,15 @@ import path from 'path';
 
 const supabase = getSupabaseServer();
 
-// 시설 데이터 모듈 레벨 캐싱 (cold start마다 1회 로드)
+// 시설 데이터 모듈 레벨 캐싱 (cold start마다 1회 로드, 비활성·장례식장 제외)
 let _cachedFacilities: any[] = [];
 function getFacilities(): any[] {
     if (_cachedFacilities.length === 0) {
         const filePath = path.join(process.cwd(), 'data', 'facilities.json');
-        _cachedFacilities = JSON.parse(fs.readFileSync(filePath, 'utf-8'));
+        const raw = JSON.parse(fs.readFileSync(filePath, 'utf-8'));
+        _cachedFacilities = Array.isArray(raw)
+            ? raw.filter((f: any) => f.isActive !== false && f.category !== 'FUNERAL_HOME')
+            : [];
     }
     return _cachedFacilities;
 }
@@ -179,16 +182,16 @@ IF 위 어디에도 안 걸림 (완전 새로운 대화)
 - 코드를 임의로 생성하지 마세요! 데이터에 있는 코드만 사용.
 - 코드는 URL 안에서만! 답변에 "park-XXXX", "(ID: ~)" 등 절대 노출 금지!
 
-## 가이드 셀링 (막연한 고객 전용)
+## 가이드 셀링 (막연한 고객 전용 — 빠른 추천 원칙!)
 고객이 "알아보려고요", "추천해주세요"처럼 막연할 때만 사용. 구체적 질문이 오면 건너뛰세요!
 한 번에 하나만 묻되, 고객이 이미 밝힌 조건은 다시 묻지 않습니다:
 
 STEP 1 - 시설 유형: "어떤 시설을 찾고 계세요?" {{봉안당|수목장|묘지|잘 모르겠어요}}
 STEP 2 - 지역: "어느 지역이 편하세요? 자주 찾아뵈려면 가까운 곳이 좋거든요." {{서울|경기|부산|제주|기타 지역}}
-STEP 3 - 예산: "예산은 어느 정도 생각하세요?" {{200만원 이하|200~500만원|500만원 이상|잘 모르겠어요}}
-STEP 4 - 공립/민간: "공립은 저렴하고, 민간은 시설이 고급이에요." {{공립(가성비)|민간(고급시설)|상관없어요}}
-STEP 5 - 인원: "몇 분을 모실 건가요?" {{1인(개인)|2인(부부)|3인 이상(가족)}}
-이 5가지가 확인되면 정확하게 추천 가능합니다. 한 번에 다 묻지 말고, 대화 흐름에 따라 자연스럽게 1개씩!
+★ 핵심 원칙: **시설 유형 + 지역** 2가지만 확인되면(또는 지역만 말했어도 대표 시설이 검색되면), 질문을 계속 이어가지 말고 **[검색된 시설 목록]에서 대표 시설 2~3곳(공립·민간 비교)을 먼저 즉시 추천**한 뒤, 마지막 줄에 예산이나 공립/민간 선호를 물어보세요!
+- 후속 확인 질문 예시:
+  - 예산 미확인 시: "예산은 어느 정도 생각하고 계세요?" {{200만원 이하|200~500만원|500만원 이상|잘 모르겠어요}}
+  - 예산이 '잘 모르겠어요'이거나 이미 확인된 경우: "공립(가성비)과 민간(고급시설) 중 어느 쪽을 더 선호하세요?" {{공립(가성비)|민간(고급시설)|1:1 맞춤 상담 예약}}
 
 ## 이장/전환 고객 대응 (매우 실전적!)
 "기존 산소를 옮기고 싶어요", "매장을 화장으로 바꾸려면?" 같은 이장/전환 고객:
@@ -224,9 +227,20 @@ STEP 5 - 인원: "몇 분을 모실 건가요?" {{1인(개인)|2인(부부)|3인
 - 부담스러운 강요는 금지하되, 고객에게 실질적인 '시간 절약과 할인 혜택'의 가치를 제공하는 톤으로 부드럽게 권유하세요.
 
 
+## 대대손손 사이트 이용 · 인증번호 · 고객센터 문의 대응 (필수!)
+고객이 로그인, 휴대폰 인증번호 오류, 고객센터 연락처, 상담원 직접 통화 등을 문의하면 절대 거절하지 말고 친절하게 해결 방법을 안내하세요:
+1. **인증번호/로그인 오류 문의 ("인증번호 완료했는데 왜 안 되나요?", "휴대폰 정지가 아닙니다" 등)**:
+   - 휴대폰 문제나 정지가 아니니 안심하시라고 먼저 말씀드립니다.
+   - 인증번호 문자를 여러 번 요청하신 경우 **가장 마지막에 도착한 6자리 번호**를 입력해야 정상 인증됩니다.
+   - 카카오톡 화면 등에서는 문자 확인 후 돌아올 때 창이 초기화될 수 있으니 **'카카오톡으로 3초 만에 시작하기'**를 이용하시거나, 별도 로그인 없이 바로 이 채팅창에서 **성함과 연락처를 남겨주시면 전문 상담사가 직접 연락드려 안내해 드린다**고 안내하세요.
+   - 마지막에 {{1:1 맞춤 상담 예약|근처 봉안당 추천해주세요|수목장이 뭔가요?}} 버튼을 제공하세요.
+2. **고객센터 연락처 / 상담원 통화 문의 ("고객센터 번호 알려주세요", "전화로 물어보고 싶어요" 등)**:
+   - 대대손손은 전문 장지 상담사가 1:1 전담으로 안내해 드리고 있어서, 채팅창 아래의 **'상담 예약하기'** 또는 **'직접 문의 신청'**에 성함과 연락처만 남겨주시면 확인 즉시 빠르게 전화를 드린다고 안내하세요.
+   - 마지막에 {{1:1 맞춤 상담 예약|견적서 문자로 받기}} 버튼을 제공하세요.
+
 ## 주제 벗어난 질문 대응
-장지/장례 관련 없는 질문:
-"저는 장지 전문 상담사 대손이라서 그 부분은 답변드리기 어려워요. 장지 관련 궁금한 점 있으시면 편하게 물어봐 주세요!"
+장지/장례 및 대대손손 서비스 이용과 전혀 무관한 질문(날씨, 요리, 코딩, 연예인 등):
+"저는 장지 전문 상담사 대손이라서 그 부분은 답변드리기 어려워요. 장지 관련 궁금한 점 있으시면 편하게 물어봐 주세요."
 - 1~2줄로만 거절. 긴 답변 금지.
 - "ㅋㅋㅋ", "ㅎㅎ" 등 의미없는 입력 → "어떤 장지를 찾고 계세요? 편하게 말씀해 주세요."
 - 욕설/비속어도 침착하게 같은 방식으로 거절.
@@ -390,7 +404,7 @@ export async function POST(request: NextRequest) {
             await sendSlack('chatbot', `🚨 *[대손이 챗봇 1:1 맞춤 견적 신청 접수!]*\n• 고객명: *${escapeSlack(safeName)}*\n• 연락처: \`${escapeSlack(safePhone)}\`\n• 희망 방식: *${methodText}*\n${timeText}${facilityText}${noteText}${summaryText}• 세션 ID: \`${escapeSlack(sid)}\`\n• 접수 시각: ${new Date().toLocaleString('ko-KR', { timeZone: 'Asia/Seoul' })}\n👉 *안내: 불쑥 전화하지 마시고, 고객이 선택한 [${safePrefTime || '카톡/문자'}]에 맞춰 맞춤 자료를 먼저 발송해 주세요!*`);
 
             return NextResponse.json({
-                response: `✨ **${safeName}님, 맞춤 상담 신청이 정상 접수되었습니다.**\n\n불쑥 전화를 드리지 않으니 안심하세요! 대대손손 수석 상담사(대표)가 선택해주신 **[${customerInfo.preferredTime || '카톡/문자로 먼저 받기'}]**에 맞춰, 남겨주신 연락처(${safePhone})로 **${customerInfo.contactMethod === 'kakao' ? '카카오톡/문자' : '전화'} 맞춤 비교자료 및 비공개 견적**을 먼저 정성껏 보내드리겠습니다.\n\n그동안 대손이에게 궁금하신 점이 있으시면 편하게 계속 물어보세요! 😊`,
+                response: `**${safeName}님, 맞춤 상담 신청이 정상 접수되었습니다.**\n\n불쑥 전화를 드리지 않으니 안심하세요. 대대손손 수석 상담사가 선택해주신 **[${customerInfo.preferredTime || '카톡/문자로 먼저 받기'}]**에 맞춰, 남겨주신 연락처(${safePhone})로 **${customerInfo.contactMethod === 'kakao' ? '카카오톡/문자' : '전화'} 맞춤 비교자료 및 견적 안내**를 먼저 정성껏 보내드리겠습니다.\n\n그동안 대손이에게 궁금하신 점이 있으시면 편하게 계속 물어보세요.`,
                 sessionId: sid,
             });
         }
@@ -413,14 +427,37 @@ export async function POST(request: NextRequest) {
         if (facilityContext?.id) {
             const found = allFacilitiesForContext.find((f: any) => String(f.id) === String(facilityContext.id));
             if (found) {
+                const rawSp = found.standardizedPrices || found.priceInfo?.standardizedPrices || [];
+                const flatPrices = Array.isArray(rawSp)
+                    ? rawSp.flatMap((pg: any) => {
+                        if (Array.isArray(pg?.rows)) {
+                            const groupTitle = [pg.subType || pg.serviceType, pg.groupType].filter(Boolean).join(' ');
+                            return pg.rows
+                                .filter((r: any) => r?.price && r.price > 0)
+                                .map((r: any) => ({
+                                    type: groupTitle,
+                                    subType: [r.groupType, r.name].filter(Boolean).join(' '),
+                                    price: r.price,
+                                    notes: r.grade || r.description || '',
+                                }));
+                        }
+                        if (pg?.price) return [pg];
+                        return [];
+                    })
+                    : [];
                 verifiedContext = {
                     id: found.id, name: found.name, category: found.category,
                     address: found.address, phone: found.phone,
                     representativePrice: found.representativePrice,
-                    institutionType: found.institutionType,
+                    institutionType: found.operatorType || found.institutionType || (found.isPublic ? '공립' : '민간'),
                     description: found.description,
-                    standardizedPrices: found.standardizedPrices || found.priceInfo?.standardizedPrices,
-                    amenities: found.amenities,
+                    standardizedPrices: flatPrices,
+                    amenities: {
+                        parking: !!(found.hasParking || found.amenities?.parking),
+                        restaurant: !!(found.hasRestaurant || found.amenities?.restaurant),
+                        convenienceStore: !!(found.hasStore || found.amenities?.convenienceStore),
+                        accessibility: !!(found.hasAccessibility || found.amenities?.accessibility),
+                    },
                 };
             } else {
                 verifiedContext = null; // DB에 없는 ID면 무시
@@ -454,6 +491,7 @@ export async function POST(request: NextRequest) {
             if (verifiedContext.standardizedPrices && verifiedContext.standardizedPrices.length > 0) {
                 facilityData += `\n\n[가격 상세]`;
                 verifiedContext.standardizedPrices.forEach((p: any) => {
+                    if (!p.price) return;
                     const priceStr = p.price >= 10000
                         ? `${Math.round(p.price / 10000)}만원`
                         : `${p.price?.toLocaleString()}원`;
@@ -469,7 +507,7 @@ export async function POST(request: NextRequest) {
                     accessibility: '장애인 편의', shuttle: '셔틀버스',
                 };
                 Object.entries(verifiedContext.amenities).forEach(([key, val]) => {
-                    if (val) facilityData += `\n- ${amenityLabels[key] || key}: ✅`;
+                    if (val) facilityData += `\n- ${amenityLabels[key] || key}: 있음`;
                 });
             }
         }
@@ -517,12 +555,12 @@ export async function POST(request: NextRequest) {
             '서귀포',
         ];
         const categoryKeywords: Record<string, string> = {
-            '봉안당': 'CHARNEL_HOUSE', '봉안': 'CHARNEL_HOUSE', '납골당': 'CHARNEL_HOUSE',
-            '추모관': 'CHARNEL_HOUSE', '추모공원': 'CHARNEL_HOUSE', '납골': 'CHARNEL_HOUSE',
-            '수목장': 'NATURAL_BURIAL', '자연장': 'NATURAL_BURIAL', '자연장림': 'NATURAL_BURIAL', '수목': 'NATURAL_BURIAL',
+            '봉안당': 'CHARNEL_HOUSE', '봉인당': 'CHARNEL_HOUSE', '봉안': 'CHARNEL_HOUSE', '납골당': 'CHARNEL_HOUSE',
+            '추모관': 'CHARNEL_HOUSE', '추모공원': 'CHARNEL_HOUSE', '납골': 'CHARNEL_HOUSE', '봉안담': 'CHARNEL_HOUSE',
+            '수목장': 'NATURAL_BURIAL', '자연장': 'NATURAL_BURIAL', '자연장림': 'NATURAL_BURIAL', '수목장림': 'NATURAL_BURIAL', '잔디장': 'NATURAL_BURIAL', '수목': 'NATURAL_BURIAL',
             '화장': 'CREMATORIUM', '화장시설': 'CREMATORIUM', '화장장': 'CREMATORIUM', '화장터': 'CREMATORIUM',
             '장례식장': 'FUNERAL_HOME', '장례': 'FUNERAL_HOME',
-            '공원묘지': 'FAMILY_GRAVE', '가족묘': 'FAMILY_GRAVE', '묘지': 'FAMILY_GRAVE',
+            '공원묘지': 'FAMILY_GRAVE', '공원묘원': 'FAMILY_GRAVE', '가족묘': 'FAMILY_GRAVE', '봉안묘': 'FAMILY_GRAVE', '납골묘': 'FAMILY_GRAVE', '묘지': 'FAMILY_GRAVE',
             '매장': 'FAMILY_GRAVE', '매장묘지': 'FAMILY_GRAVE',
         };
         // ── 가격 파싱 (버그 #13: 한글 숫자 + 범위 지원) ──
@@ -588,7 +626,25 @@ export async function POST(request: NextRequest) {
             }
         }
 
-        const foundCategory = Object.entries(categoryKeywords).find(([k]) => userText.includes(k));
+        // 카테고리 매칭: 현재 메시지 우선 (복수 카테고리 허용), 없으면 이전 사용자 메시지(최신순)에서 탐색
+        const matchedCategories = new Set<string>();
+        for (const [k, cat] of Object.entries(categoryKeywords)) {
+            if (cat === 'FUNERAL_HOME') continue;
+            if (message.includes(k)) matchedCategories.add(cat);
+        }
+        if (matchedCategories.size === 0) {
+            const userHistory = history.filter((m: ChatMessage) => m.role === 'user').reverse();
+            for (const msg of userHistory) {
+                for (const [k, cat] of Object.entries(categoryKeywords)) {
+                    if (cat === 'FUNERAL_HOME') continue;
+                    if (msg.content.includes(k)) matchedCategories.add(cat);
+                }
+                if (matchedCategories.size > 0) break;
+            }
+        }
+        const foundCategory = matchedCategories.size > 0
+            ? ['', Array.from(matchedCategories)[0]] as [string, string]
+            : undefined;
 
         // 공립/민간 감지
         const publicKeywords = ['공립', '공설', '국립', '시립', '군립'];
@@ -608,9 +664,9 @@ export async function POST(request: NextRequest) {
 
         let results = [...allFacilitiesData];
 
-        // 카테고리 필터
-        if (foundCategory) {
-            results = results.filter((f: any) => f.category === foundCategory[1]);
+        // 카테고리 필터 (단일 또는 복수 카테고리 지원)
+        if (matchedCategories.size > 0) {
+            results = results.filter((f: any) => matchedCategories.has(f.category));
         }
         // 공립/민간 필터 (명시적 요청 시)
         if (wantsPublic && !wantsPrivate) {
@@ -953,7 +1009,7 @@ export async function POST(request: NextRequest) {
             }
         }
 
-        const facilityCards = cardCandidates.map((f: any) => {
+        const toFacilityCard = (f: any) => {
             const allUsagePrices = getAllPrices(f);
             const minP = allUsagePrices.length > 0 ? Math.min(...allUsagePrices) : null;
             let matchedPrice: number | null = null;
@@ -988,7 +1044,7 @@ export async function POST(request: NextRequest) {
                 matchedItem: matchedItem,
                 distanceKm: f._distKm ? Math.round(f._distKm * 10) / 10 : undefined,
             };
-        });
+        };
 
         // ── 가격표 인라인 데이터 생성 (가격 질문 시) ──
         const priceQueryKeywords = ['가격', '얼마', '비용', '요금', '가격표', '얼마야', '얼마에요', '얼마인가요', '얼마인가', '얼마예요'];
@@ -1023,7 +1079,7 @@ export async function POST(request: NextRequest) {
                     // groupType별로 묶기
                     const groups = new Map<string, any[]>();
                     for (const row of usageRows) {
-                        const key = row.groupType || '_default';
+                        const key = row.groupType || pg.groupType || '_default';
                         if (!groups.has(key)) groups.set(key, []);
                         groups.get(key)!.push(row);
                     }
@@ -1033,7 +1089,8 @@ export async function POST(request: NextRequest) {
                         if (rows.length <= 3) {
                             // 행이 적으면 그대로
                             rows.forEach(r => tableRows.push({
-                                name: r.name, grade: groupName !== '_default' ? groupName : undefined,
+                                name: r.name,
+                                grade: r.grade || (groupName !== '_default' ? groupName : undefined),
                                 price: fmtPrice(r.price),
                             }));
                         } else {
@@ -1049,7 +1106,7 @@ export async function POST(request: NextRequest) {
                     }
 
                     sections.push({
-                        title: pg.subType || pg.serviceType || '기타',
+                        title: [pg.subType || pg.serviceType, pg.groupType].filter(Boolean).join(' · ') || '기타',
                         rows: tableRows.slice(0, 10),
                         maintenance: maintRows.length > 0
                             ? maintRows.map((m: any) => `${m.name}: ${fmtPrice(m.price)}${m.grade ? ` (${m.grade})` : ''}`).join(', ')
@@ -1114,6 +1171,40 @@ export async function POST(request: NextRequest) {
         if (!response) {
             response = '죄송합니다. 일시적으로 상담 요청이 몰려 연결이 지연되고 있습니다. 잠시 후 다시 질문해 주시거나, 직접 상담을 신청해 주시면 친절히 안내해 드릴게요.';
         }
+
+        // AI 응답 본문에서 실제 추천/언급된 시설 추출하여 카드와 100% 동기화
+        const mentionedFacilities: any[] = [];
+        const mentionedIds = new Set<string>();
+        const excludeSelfId = verifiedContext?.id ? String(verifiedContext.id) : null;
+
+        // 1) 응답 내 URL (/facility/park-XXXX) 순서대로 추출
+        const urlIdMatches = Array.from(response.matchAll(/facility\/(park-[a-zA-Z0-9_-]+)/g));
+        for (const m of urlIdMatches) {
+            const fid = m[1];
+            if (fid === excludeSelfId || mentionedIds.has(fid)) continue;
+            const found = cardCandidates.find((f: any) => String(f.id) === fid)
+                || uniqueFacilities.find((f: any) => String(f.id) === fid)
+                || allFacilitiesData.find((f: any) => String(f.id) === fid);
+            if (found) {
+                mentionedIds.add(fid);
+                mentionedFacilities.push(found);
+            }
+        }
+
+        // 2) 응답 본문에 시설명이 직접 언급된 후보 추가
+        for (const f of [...cardCandidates, ...uniqueFacilities]) {
+            const fid = String(f.id);
+            if (fid === excludeSelfId || mentionedIds.has(fid)) continue;
+            if (f.name && f.name.length >= 3 && response.includes(f.name)) {
+                mentionedIds.add(fid);
+                mentionedFacilities.push(f);
+            }
+        }
+
+        const finalCardSource = mentionedFacilities.length > 0
+            ? mentionedFacilities.slice(0, 4)
+            : (wantsNearby && verifiedContext?.id ? cardCandidates.slice(0, 3) : []);
+        const facilityCards = finalCardSource.map(toFacilityCard);
 
         // 📊 실시간 대화 내용 슬랙 전송 (fire-and-forget)
         const msgCount = history.length + 1;
