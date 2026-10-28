@@ -616,6 +616,7 @@
       padding: 8px 14px;
       background: var(--innopay-blue);
       color: #ffffff !important;
+      border: 1px solid var(--innopay-blue);
       border-radius: 6px;
       font-size: 13.5px;
       font-weight: 600;
@@ -1326,6 +1327,155 @@
         padding: 20px !important;
       }
     }
+
+    /* ========================================================================
+       예치금 자동 계산기 & 외부용 URL 안내 배너 스타일
+       ======================================================================== */
+    .ext-url-banner {
+      background: linear-gradient(135deg, #eff6ff 0%, #f8fafc 100%);
+      border: 2px solid #3566e0;
+      border-radius: 12px;
+      padding: 20px 24px;
+      margin-bottom: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .ext-url-banner-left {
+      flex: 1;
+      min-width: 260px;
+    }
+    .ext-url-badge {
+      display: inline-block;
+      background: #3566e0;
+      color: #ffffff;
+      font-size: 12px;
+      font-weight: 700;
+      padding: 3px 10px;
+      border-radius: 999px;
+      margin-bottom: 6px;
+    }
+    .ext-url-title {
+      font-size: 18px;
+      font-weight: 800;
+      color: #111827;
+      margin-bottom: 4px;
+    }
+    .ext-url-desc {
+      font-size: 14px;
+      color: #475569;
+      margin: 0;
+    }
+    .ext-url-actions {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .calc-box {
+      background: #ffffff;
+      border: 2px solid #2451c8;
+      border-radius: 14px;
+      padding: 26px 28px;
+      margin: 20px 0 32px 0;
+      box-shadow: 0 8px 24px rgba(36, 81, 200, 0.07);
+    }
+    .calc-top-row {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 18px;
+      flex-wrap: wrap;
+      padding-bottom: 20px;
+      border-bottom: 1px solid #e2e8f0;
+      margin-bottom: 20px;
+    }
+    .calc-input-group {
+      flex: 1;
+      min-width: 240px;
+    }
+    .calc-label {
+      display: block;
+      font-size: 14px;
+      font-weight: 700;
+      color: #1e293b;
+      margin-bottom: 8px;
+    }
+    .calc-input-wrap {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .calc-num-input {
+      width: 180px;
+      padding: 11px 14px;
+      font-size: 20px;
+      font-weight: 800;
+      color: #1e3a8a;
+      border: 2px solid #3566e0;
+      border-radius: 8px;
+      text-align: right;
+      outline: none;
+    }
+    .calc-preset-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 10px;
+    }
+    .calc-preset-btn {
+      padding: 6px 12px;
+      border-radius: 6px;
+      border: 1px solid #cbd5e1;
+      background: #f8fafc;
+      color: #334155;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    .calc-preset-btn:hover, .calc-preset-btn.active {
+      background: #3566e0;
+      color: #ffffff;
+      border-color: #3566e0;
+    }
+    .calc-result-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 14px;
+    }
+    .calc-stat-card {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 10px;
+      padding: 16px 18px;
+    }
+    .calc-stat-card.highlight {
+      background: #eff6ff;
+      border: 2px solid #3566e0;
+    }
+    .calc-stat-title {
+      font-size: 13px;
+      font-weight: 600;
+      color: #64748b;
+      margin-bottom: 6px;
+    }
+    .calc-stat-val {
+      font-size: 22px;
+      font-weight: 800;
+      color: #0f172a;
+      line-height: 1.25;
+    }
+    .calc-stat-card.highlight .calc-stat-val {
+      color: #1d4ed8;
+      font-size: 25px;
+    }
+    .calc-stat-sub {
+      font-size: 12px;
+      color: #64748b;
+      margin-top: 5px;
+    }
   </style>
 <meta name="robots" content="noindex,nofollow"></head>
 <body>
@@ -1357,7 +1507,7 @@
       <nav>
         <ul class="sf-menu">
           <li id="nav-pdfs" class="current-menu-ancestor">
-            <a onclick="showPage('pdfs')"><span class="menu-title-text">1. 전달 자료</span></a>
+            <a onclick="showPage('pdfs')"><span class="menu-title-text">1. 표준계약서</span></a>
           </li>
           <li id="nav-client">
             <a onclick="showPage('client-guide')"><span class="menu-title-text">2. 고객사 가이드</span></a>
@@ -1372,12 +1522,13 @@
             <a onclick="showPage('checklist')"><span class="menu-title-text">5. 업체별 체크리스트</span></a>
           </li>
           <li id="nav-cs">
-            <a onclick="showPage('cs-guide')"><span class="menu-title-text">6. CS 가이드</span></a>
+            <a onclick="showPage('cs-guide')"><span class="menu-title-text">6. 운영 가이드</span></a>
           </li>
         </ul>
       </nav>
 
       <div class="header-right-tools">
+        <a class="btn-header-outline" href="/buipay-partner.html" target="_blank" style="background:#3566e0; color:#ffffff; border-color:#3566e0; font-weight:700; text-decoration:none;">고객사용 가이드 열기</a>
         <button class="btn-header-outline" onclick="window.print()">인쇄</button>
       </div>
     </header>
@@ -1388,55 +1539,98 @@
        ======================================================================== -->
   <div id="page-header-bg">
     <div class="container">
-      <h1 id="banner-title">① 전달해줘야 할 자료들</h1>
-      <span class="subheader" id="banner-sub">업체에 전달해야 하는 파일은 제휴 계약서(현재 제작 중)와 부의금 서비스 운영 가이드 v.4 딱 2가지입니다.</span>
+      <h1 id="banner-title">① 표준계약서</h1>
+      <span class="subheader" id="banner-sub">업체에 전달해야 하는 필수 자료 4종(표준계약서 · 운영 가이드 v.4 · 푸터 약관 가이드 · 고객사 API 문서) 및 고객사 전달용 공식 URL입니다.</span>
     </div>
   </div>
 
   <!-- Quick 1-Click Navigation Bar -->
   <div class="quick-subnav-bar">
     <div class="quick-subnav-inner">
-      <button class="quick-pill active" data-pill="pdfs" onclick="showPage('pdfs')">① 전달 자료</button>
+      <button class="quick-pill active" data-pill="pdfs" onclick="showPage('pdfs')">① 표준계약서</button>
       <button class="quick-pill" data-pill="client-guide" onclick="showPage('client-guide')">② 고객사 운영 가이드</button>
       <button class="quick-pill" data-pill="internal-guide" onclick="showPage('internal-guide')">③ 내부 운영 가이드</button>
       <button class="quick-pill" data-pill="step-guide" onclick="showPage('step-guide')">④ 업체별 지침 (Step 1~6)</button>
       <button class="quick-pill" data-pill="checklist" onclick="showPage('checklist')">⑤ 업체별 체크리스트</button>
-      <button class="quick-pill" data-pill="cs-guide" onclick="showPage('cs-guide')">⑥ CS 가이드</button>
+      <button class="quick-pill" data-pill="cs-guide" onclick="showPage('cs-guide')">⑥ 운영 가이드</button>
     </div>
   </div>
 
   <main class="main-content">
 
     <!-- ====================================================================
-         ① 전달해줘야 할 자료들 (#pdfs)
+         ① 표준계약서 (#pdfs)
          ==================================================================== -->
     <section id="page-pdfs" class="guide-page active">
-      <h2 style="margin-top:0;">업체에 전달할 파일 2종 (계약서 · 운영 가이드 v.4)</h2>
-      <p>제휴 진행 시 업체에게 전달해야 하는 파일은 <strong>제휴 계약서</strong>와 <strong>부의금 서비스 운영 가이드 v.4</strong> 두 가지입니다.</p>
+
+      <!-- 고객사 전달용 외부 URL 분리 안내 배너 -->
+      <div class="ext-url-banner">
+        <div class="ext-url-banner-left">
+          <span class="ext-url-badge">공식 분리 운영 · 외부 전달 전용</span>
+          <div class="ext-url-title">고객사(제휴사) 대표님·담당자 전달용 공식 웹 가이드 URL</div>
+          <p class="ext-url-desc">
+            내부 전용 탭(내부 운영 가이드 · 업체별 지침 · 업체별 체크리스트 메모장)을 모두 제외하고,
+            <strong>① 도입 절차 &amp; 예치금 자동 계산기 + ② 표준계약서 + ③ 운영 가이드</strong>만 담은 고객사 전달용 전용 페이지입니다.
+          </p>
+        </div>
+        <div class="ext-url-actions">
+          <a class="btn-pdf-download" href="/buipay-partner.html" target="_blank">고객사용 페이지 새창 열기</a>
+        </div>
+      </div>
+
+      <h2 style="margin-top:0;">표준계약서 및 필수 자료 4종 (표준계약서 · 운영 가이드 · 푸터 약관 · 고객사 API 문서)</h2>
+      <p>제휴 진행 시 업체에게 전달해야 하는 자료는 아래 <strong>4가지</strong>이며, 계약 체결 시 거래처로부터 <strong>사업자등록증 사본 + 거래처 통장사본(정산용)</strong>을 수취합니다.</p>
 
       <div class="pdf-grid" style="margin-bottom:28px;">
-        <!-- 1. 계약서 -->
-        <div class="pdf-card" style="border:2px dashed #f59e0b; background:#fffbeb;">
+        <!-- 1. 표준계약서 -->
+        <div class="pdf-card">
           <div class="pdf-card-info">
-            <span class="pdf-tag" style="background:#fef3c7; color:#b45309; font-weight:700;">⏳ 현재 제작 중</span>
-            <div class="pdf-title">1) 부의금 카드결제 서비스 제휴 계약서</div>
-            <div class="pdf-desc">업체에게 전달해야 하는 계약서입니다. 현재 제작 중이며 완성 후 업체에 전달합니다.</div>
+            <span class="pdf-tag" style="background:#e8effe; color:#2451c8; font-weight:700;">1. 표준계약서</span>
+            <div class="pdf-title">1) 부의금 카드결제 서비스 표준계약서</div>
+            <div class="pdf-desc">
+              제휴사 날인용 표준계약서입니다. 계약 시 <strong>거래처로부터 사업자등록증 사본 1부 + 거래처 통장사본(정산용) 1부</strong>를 전달받습니다.
+            </div>
           </div>
           <div class="pdf-card-actions">
-            <span class="btn-pdf-view" style="background:#f59e0b; color:#ffffff; border-color:#f59e0b; cursor:default; font-weight:700;">현재 계약서 제작 중</span>
+            <span class="btn-pdf-download" style="opacity:0.65; cursor:default;">PDF 다운로드 (현재 제작 중)</span>
           </div>
         </div>
 
         <!-- 2. 부의금 서비스 운영 가이드 v.4 -->
         <div class="pdf-card">
           <div class="pdf-card-info">
-            <span class="pdf-tag" style="background:#e8effe; color:#2451c8;">업체 전달용 공식 가이드 (v.4)</span>
-            <div class="pdf-title">2) 261006_부의금서비스운영가이드v.4.pdf</div>
-            <div class="pdf-desc">부의금 카드결제 서비스 운영 가이드 (v.4) 원본 PDF 파일입니다.</div>
+            <span class="pdf-tag" style="background:#e8effe; color:#2451c8; font-weight:700;">2. 운영 가이드 (v.4)</span>
+            <div class="pdf-title">2) 부의금 서비스 운영가이드 v.4</div>
+            <div class="pdf-desc">부의금 카드결제 서비스 프로세스, 예치금 운영 구조, 정산 기준을 정리한 고객사 전달용 공식 운영 가이드(v.4) 원본 PDF입니다.</div>
           </div>
           <div class="pdf-card-actions">
-            <a class="btn-pdf-download" href="/261006_부의금서비스운영가이드v.4_백승훈.pdf" download="261006_부의금서비스운영가이드v.4.pdf">⬇ PDF 다운로드</a>
-            <a class="btn-pdf-view" href="/261006_부의금서비스운영가이드v.4_백승훈.pdf" target="_blank">새창 열람</a>
+            <a class="btn-pdf-download" href="/부의금_서비스_운영가이드_v.4.pdf" download="부의금 서비스 운영가이드 v.4.pdf">PDF 다운로드</a>
+            <a class="btn-pdf-view" href="/부의금_서비스_운영가이드_v.4.pdf" target="_blank">새창 열람</a>
+          </div>
+        </div>
+
+        <!-- 3. 부고장 푸터 제3자 제공 동의 약관 가이드 -->
+        <div class="pdf-card">
+          <div class="pdf-card-info">
+            <span class="pdf-tag" style="background:#e8effe; color:#2451c8; font-weight:700;">3. 부고장 푸터 필수 약관</span>
+            <div class="pdf-title">3) 부고장 푸터 제3자 제공 동의 약관 가이드</div>
+            <div class="pdf-desc">부고장 푸터의 <strong>[개인정보처리방침] · [이용약관]</strong>에 추가해야 하는 문구 안내 PDF 파일입니다.</div>
+          </div>
+          <div class="pdf-card-actions">
+            <a class="btn-pdf-download" href="/부고장_푸터_제3자제공동의_약관가이드_v1.pdf" download="부고장 푸터 제3자 제공 동의 약관 가이드 v.1.pdf">PDF 다운로드</a>
+            <a class="btn-pdf-view" href="/부고장_푸터_제3자제공동의_약관가이드_v1.pdf" target="_blank">새창 열람</a>
+          </div>
+        </div>
+
+        <!-- 4. 고객사 API 문서 (구글 문서) -->
+        <div class="pdf-card">
+          <div class="pdf-card-info">
+            <span class="pdf-tag" style="background:#e8effe; color:#2451c8; font-weight:700;">4. 고객사 API 문서</span>
+            <div class="pdf-title">4) 고객사 API 문서 (구글 문서)</div>
+            <div class="pdf-desc">제휴사 개발팀에 전달하는 부의금 결제 웹뷰 호출 및 송금 완료 웹훅(Webhook) 연동 고객사 API 문서 구글 문서 링크입니다.</div>
+          </div>
+          <div class="pdf-card-actions">
+            <span class="btn-pdf-download" style="opacity:0.65; cursor:default;">구글 문서 링크 (준비 중)</span>
           </div>
         </div>
       </div>
@@ -1470,9 +1664,12 @@
               <td>결제 수수료는 조문객이 부담하며, 상주 계좌로는 부의금 원금 100%가 실시간 입금됩니다.</td>
             </tr>
             <tr>
-              <td class="ta_c"><strong>예치금 입금 (보증보험)</strong></td>
-              <td class="ta_c bg_y"><strong>데브늄 계좌로 예치금 입금<br/>(필요 시 보증보험 가입 지원)</strong></td>
-              <td><strong>IBK기업은행 <code>664-000013-97-355</code> (데브늄 주식회사)</strong> 계좌로 초기 예치금(15일분 기준)을 입금합니다. (※ 필요 시 당사에서 <strong>보증보험</strong> 가입을 지원합니다.)</td>
+              <td class="ta_c"><strong>예치금 입금</strong></td>
+              <td class="ta_c bg_y"><strong>KB국민은행 <code>868201-00-059645</code><br/>(예금주: 데브늄(주))</strong></td>
+              <td>
+                <strong>KB국민은행 <code>868201-00-059645</code> (예금주: 데브늄(주))</strong> 계좌로 초기 예치금(15일분 기준)을 입금합니다.
+                <a href="/devnium-bankbook-kb.jpg" target="_blank" style="display:inline-block; margin-left:6px; font-size:12.5px; font-weight:700; color:#2451c8; text-decoration:underline;">[데브늄 통장사본 보기]</a>
+              </td>
             </tr>
             <tr>
               <td class="ta_c"><strong>예치금 자동 차감</strong></td>
@@ -1490,33 +1687,67 @@
               <td>부의금 카드결제 수수료의 업체 정산 지급일은 <strong>답례품 정산 지급일과 동일</strong>합니다.</td>
             </tr>
             <tr>
-              <td class="ta_c"><strong>계약 시 필요 서류</strong></td>
-              <td class="ta_c"><strong>기본 서류 4종</strong></td>
-              <td>사업자등록증, 법인등기부등본, 법인인감증명서, 정산 통장사본 (계약서는 현재 제작 중)</td>
+              <td class="ta_c"><strong>계약 시 구비서류</strong></td>
+              <td class="ta_c bg_y"><strong>제휴 계약서 +<br/>거래처 사업자등록증 · 통장사본 수취</strong></td>
+              <td>
+                제휴 계약서 체결 시 <strong>거래처(제휴사)로부터 ① 사업자등록증 사본 1부 + ② 거래처 통장사본(수수료 정산 입금용) 1부</strong>를 전달받습니다.<br/>
+                <span style="color:#64748b; font-size:13.5px;">(※ 데브늄 통장사본은 업체에 별도로 전달할 필요 없음)</span>
+              </td>
             </tr>
           </tbody>
         </table>
       </div>
 
-      <h2>2. 고객사 부고장 추가 필수 약관 (1종)</h2>
-      <p>고객사 부고장 개설 화면에 아래 <strong>제3자 제공 동의 문구 1개</strong>만 추가하도록 전달합니다.</p>
+      <h2>2. 부고장 건수 기반 — 15일분 안전 예치금 자동 계산기</h2>
+      <p>제휴사의 <strong>월 평균 부고장 발행 건수</strong>를 입력하면 카드사 정산 주기(D+5 영업일)와 주말·공휴일 집중 조문을 방어하기 위한 <strong>15일분 권장 예치금</strong>과 <strong>일평균 거래액</strong>이 즉시 산출됩니다.</p>
 
-      <div class="code-block-pro">
-        <div class="code-block-header">
-          <span>[복사용] 고객사 부고장 개설 화면 추가용 — 개인정보 제3자 제공 동의</span>
-          <button class="code-copy-btn" onclick="copyCode(this)">복사</button>
+      <div class="calc-box">
+        <div class="calc-top-row">
+          <div class="calc-input-group">
+            <label class="calc-label" for="calc-bugo-count">월 평균 부고장 발행 건수 입력 (건/월)</label>
+            <div class="calc-input-wrap">
+              <input type="number" id="calc-bugo-count" class="calc-num-input" value="1000" min="50" step="100" oninput="updateDepositCalc()" />
+              <span style="font-size:16px; font-weight:700; color:#334155;">건 / 월</span>
+              <select id="calc-per-bugo" class="partner-input" style="max-width:230px; font-weight:700;" onchange="updateDepositCalc()">
+                <option value="60000" selected>부고 1건당 평균 60,000원 (표준)</option>
+                <option value="55000">부고 1건당 평균 55,000원 (보수적)</option>
+              </select>
+            </div>
+            <div class="calc-preset-bar">
+              <button type="button" class="calc-preset-btn" onclick="setBugoPreset(500)">월 500건</button>
+              <button type="button" class="calc-preset-btn active" onclick="setBugoPreset(1000)">월 1,000건</button>
+              <button type="button" class="calc-preset-btn" onclick="setBugoPreset(2000)">월 2,000건</button>
+              <button type="button" class="calc-preset-btn" onclick="setBugoPreset(3000)">월 3,000건</button>
+              <button type="button" class="calc-preset-btn" onclick="setBugoPreset(5000)">월 5,000건</button>
+              <button type="button" class="calc-preset-btn" onclick="setBugoPreset(10000)">월 10,000건</button>
+            </div>
+          </div>
+          <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:10px; padding:12px 16px; font-size:13px; color:#475569; max-width:360px;">
+            <strong style="color:#1e293b; display:block; margin-bottom:4px;">왜 15일분 예치금이 필요한가요?</strong>
+            조문객 카드결제 시 상주 계좌로 <strong>1초 내 현금이 선(先)송금</strong>되고, 카드사 정산금은 약 5영업일(주말·연휴 포함 시 최대 10~15일) 뒤에 입금되므로 무중단 송금을 위한 안전 회전 자금입니다.
+          </div>
         </div>
-        <pre>[필수] 부의금 결제 및 전달 서비스를 위한 개인정보 제3자 제공 동의
 
-1. 제공받는 자 : 데브늄 주식회사, 주식회사 인피니소프트
-2. 제공 항목 : 부고 정보, 상주 정보(성명, 연락처), 부의금 수취 및 정산 관련 정보
-3. 이용 목적 : 모바일 부고장 내 부의금 결제 연동, 상주 측 부의금 전달 및 정산, 안내 메시지 발송
-4. 보유 기간 : 정산 완료 후 관련 법령에 따라 5년간 보관 후 파기
-5. 동의 거부 권리 : 위 동의를 거부할 수 있으며, 거부 시 부의금 카드결제 서비스 이용이 제한됩니다.</pre>
+        <div class="calc-result-grid">
+          <div class="calc-stat-card highlight">
+            <div class="calc-stat-title">권장 안전 예치금 (15일분 기준)</div>
+            <div class="calc-stat-val" id="calc-res-deposit">3,000만 원</div>
+          </div>
+          <div class="calc-stat-card">
+            <div class="calc-stat-title">예상 월 부의금 총 거래액 (30일)</div>
+            <div class="calc-stat-val" id="calc-res-monthly">6,000만 원</div>
+            <div class="calc-stat-sub" id="calc-res-monthly-sub">월 1,000건 × 평균 6만 원 기준</div>
+          </div>
+          <div class="calc-stat-card">
+            <div class="calc-stat-title">일평균 부의금 송금액 (1일분)</div>
+            <div class="calc-stat-val" id="calc-res-daily">200만 원 / 일</div>
+            <div class="calc-stat-sub">분할 납부 시 일평균 기준선 (15일 누적 시 완납)</div>
+          </div>
+        </div>
       </div>
 
       <div class="page-Turn-nav">
-        <button class="page-turn-btn" onclick="showPage('pdfs')">← 이전: ① 전달 자료</button>
+        <button class="page-turn-btn" onclick="showPage('pdfs')">← 이전: ① 표준계약서</button>
         <button class="page-turn-btn" onclick="showPage('internal-guide')">다음: ③ 내부 운영 가이드 →</button>
       </div>
     </section>
@@ -1545,8 +1776,10 @@
             </tr>
             <tr>
               <td class="ta_c"><strong>예치금 확보 &amp;<br/>이노페이 가상계좌 입금 요청</strong></td>
-              <td class="ta_c bg_y"><strong>업체 예치금 확보 (보증보험)<br/>→ 대표님께 이노페이 가상계좌 입금 요청</strong></td>
-              <td>업체로부터 예치금을 확보하며(필요 시 <strong>보증보험</strong> 가입 지원), 예치금을 받으면 <strong>대표님께 이노페이 가상계좌 입금을 요청</strong>하여 송금 재원을 충전합니다.</td>
+              <td class="ta_c bg_y"><strong>업체 예치금 확보<br/>→ 대표님께 이노페이 입금 요청</strong></td>
+              <td>
+                업체로부터 예치금을 확보하며, 예치금이 입금되면 <strong>대표님께 이노페이 가상계좌 입금을 요청</strong>하여 송금 재원을 충전합니다.
+              </td>
             </tr>
             <tr>
               <td class="ta_c"><strong>어드민 잔액 관리</strong></td>
@@ -1554,14 +1787,14 @@
               <td>예치금 입금이 확인되면 어드민 플랫폼 관리 상세에서 <code>[+ 입금액 추가]</code>로 반영하며, <code>송금완료</code> 시 부의금액이 자동 차감됩니다.</td>
             </tr>
             <tr>
-              <td class="ta_c"><strong>한도 설정 &amp; 잔디 웹훅</strong></td>
-              <td class="ta_c bg_y"><strong>1·2차 한도 설정 및<br/>잔디(JANDI) 웹훅 알림</strong></td>
-              <td>어드민에 <code>담당자</code>, <code>연락처</code>, <code>1차 한도</code>, <code>2차 한도</code>, <code>알림톡(ON/OFF)</code>을 설정합니다. 부의금 입금 및 한도 도달 시 <strong>잔디 웹훅(<code>H_한도알림</code>)</strong>으로 알려줍니다.</td>
+              <td class="ta_c"><strong>한도 설정 &amp; 잔디 알림</strong></td>
+              <td class="ta_c bg_y"><strong>한도는 우리가 설정<br/>잔디 웹훅은 개발팀 확인</strong></td>
+              <td><strong>한도 설정</strong>은 우리가 어드민에서 직접 합니다. (<code>담당자</code>, <code>연락처</code>, <code>1차 한도</code>, <code>2차 한도</code>, <code>알림톡 ON/OFF</code>)<br/><strong>잔디 웹훅(<code>H_한도알림</code>)</strong> 연동은 개발팀에 문의해서 정상 작동하는지 확인만 합니다.</td>
             </tr>
             <tr>
               <td class="ta_c"><strong>잔액 부족 시 결제 제한</strong></td>
               <td class="ta_c bg_y"><strong><code>잔액 &lt; 부의금액</code> 시 차단</strong></td>
-              <td>결제 시점에 고객사 잔액이 부족하면 결제를 차단하고 안내 모달을 띄웁니다.</td>
+              <td>결제 시점에 고객사 잔액이 부족하면 결제를 차단하고, 잔디 웹훅(<code>H_한도알림</code>)으로 잔액 부족 안내를 발송합니다.</td>
             </tr>
             <tr>
               <td class="ta_c"><strong>주간 복구 입금</strong></td>
@@ -1577,11 +1810,11 @@
         </table>
       </div>
 
-      <h2>2. 잔디(JANDI) 웹훅 &amp; 결제 제한 모달 문구</h2>
+      <h2>2. 잔디(JANDI) 웹훅 문구 (한도 안내 / 잔액 부족 안내)</h2>
       <div class="grid-2-tables">
         <div class="code-block-pro" style="margin:0;">
           <div class="code-block-header">
-            <span>[잔디 웹훅] 'H_한도알림' 방 발송 문구</span>
+            <span>[잔디 웹훅] {N}차 한도 안내 ('H_한도알림' 방)</span>
             <button class="code-copy-btn" onclick="copyCode(this)">복사</button>
           </div>
           <pre>제목 : {N}차 한도 안내
@@ -1594,11 +1827,16 @@
 
         <div class="code-block-pro" style="margin:0;">
           <div class="code-block-header">
-            <span>[안내 모달] 고객사 잔액 부족 시 노출 문구</span>
+            <span>[잔디 웹훅] 잔액 부족 안내 ('H_한도알림' 방)</span>
             <button class="code-copy-btn" onclick="copyCode(this)">복사</button>
           </div>
-          <pre>일시적인 문제로 부의금 결제를 진행할 수 없습니다.
-잠시 후 다시 시도해 주시기 바랍니다.</pre>
+          <pre>제목 : 잔액 부족 안내
+
+내용
+[{플랫폼명}] 잔액 부족 안내
+
+▶ 현재 잔여한도 : {현재 잔액}원
+※ 부의금 결제가 일시 제한되었습니다.</pre>
         </div>
       </div>
 
@@ -1622,27 +1860,27 @@
               <th style="width:12%;">단계</th>
               <th style="width:22%;">단계명</th>
               <th style="width:42%;" class="bg_y">우리가 해야 할 일</th>
-              <th style="width:24%;">전달 자료 / 비고</th>
+              <th style="width:24%;">전달 자료 / 구비서류</th>
             </tr>
           </thead>
           <tbody>
             <tr>
               <td class="ta_c"><strong>STEP 1</strong></td>
-              <td><strong>제휴 계약서 작성 · 전달</strong></td>
-              <td class="bg_y">제휴 계약서(제작 중) 작성·날인 및 기본 서류 4종(사업자등록증·등기부등본·인감증명서·통장사본) 수취</td>
-              <td>제휴 계약서 (제작 중)</td>
+              <td><strong>제휴 계약 체결 &amp;<br/>거래처 구비서류 2종 수취</strong></td>
+              <td class="bg_y">제휴 계약서(제작 중)를 작성·날인하고, <strong>거래처(제휴사)로부터 ① 사업자등록증 사본 + ② 거래처 통장사본(정산용)을 수취</strong>합니다. (※ 데브늄 통장사본은 전달 불필요)</td>
+              <td>계약서 날인<br/><strong>거래처 사업자등록증 + 거래처 통장사본 수취</strong></td>
             </tr>
             <tr>
               <td class="ta_c"><strong>STEP 2</strong></td>
-              <td><strong>운영 가이드 전달 &amp;<br/>예치금 요청 (보증보험)</strong></td>
-              <td class="bg_y">계약 후 <code>부의금서비스운영가이드v.4.pdf</code>를 전달하면서 <strong>예치금 입금 요청</strong> (필요 시 <strong>보증보험</strong> 가입 지원)</td>
-              <td><code>부의금서비스운영가이드v.4.pdf</code> 전달</td>
+              <td><strong>전달 자료 4종(고객사용 URL) 전달<br/>&amp; 예치금 입금 요청</strong></td>
+              <td class="bg_y">계약 후 <strong>고객사용 가이드 URL(<code>/buipay-partner.html</code>) 및 전달 자료 4종(표준계약서·운영 가이드 v.4·푸터 약관·고객사 API 문서)</strong>을 전달하고 <strong>예치금 입금</strong>을 요청합니다.</td>
+              <td>고객사용 URL · 전달 자료 4종</td>
             </tr>
             <tr>
               <td class="ta_c"><strong>STEP 3</strong></td>
-              <td><strong>어드민 세팅 &amp; 잔디 세팅<br/>(중간 준비)</strong></td>
-              <td class="bg_y">예치금 입금 대기 중(중간에) 우리 측 <strong>어드민 세팅(업체·담당자·1/2차 한도)</strong> 및 <strong>잔디(<code>H_한도알림</code>) 웹훅 세팅</strong> 진행</td>
-              <td>어드민 · 잔디 사전 세팅</td>
+              <td><strong>어드민 한도 세팅 &amp;<br/>잔디 웹훅 개발팀 확인</strong></td>
+              <td class="bg_y">예치금 입금을 기다리는 동안 <strong>어드민에 업체·담당자·1/2차 한도를 우리가 직접 세팅</strong>하고, <strong>잔디(<code>H_한도알림</code>) 웹훅은 개발팀에 문의해 정상 작동만 확인</strong>합니다.</td>
+              <td>한도 세팅(우리) · 잔디(개발팀 확인)</td>
             </tr>
             <tr>
               <td class="ta_c"><strong>STEP 4</strong></td>
@@ -1653,13 +1891,13 @@
             <tr>
               <td class="ta_c"><strong>STEP 5</strong></td>
               <td><strong>서비스 오픈</strong></td>
-              <td class="bg_y">부고장 <code>[제3자 제공 동의]</code> 약관 반영 확인 후 실서버(<code>MID 2</code>) 오픈 및 잔액 차감 확인</td>
+              <td class="bg_y">고객사 부고장에 <strong>제3자 제공 동의 내용이 들어갔는지 확인</strong>한 뒤 실서버(<code>MID 2</code>)를 오픈하고, 첫 결제 후 잔액이 차감되는지 확인합니다.</td>
               <td>정식 오픈</td>
             </tr>
             <tr>
               <td class="ta_c"><strong>STEP 6</strong></td>
               <td><strong>주간 입금 &amp; 월간 정산</strong></td>
-              <td class="bg_y">매주 금요일 입금 / 정산일은 답례품과 동일</td>
+              <td class="bg_y">매주 금요일 입금 (일평균 거래액 대비 15일분 예치금 상시 점검) / 정산일은 답례품과 동일</td>
               <td>정기 운영</td>
             </tr>
           </tbody>
@@ -1765,12 +2003,12 @@
 
       <div class="page-Turn-nav">
         <button class="page-turn-btn" onclick="showPage('step-guide')">← 이전: ④ 업체별 지침 (Step 1~6)</button>
-        <button class="page-turn-btn" onclick="showPage('cs-guide')">다음: ⑥ CS 가이드 →</button>
+        <button class="page-turn-btn" onclick="showPage('cs-guide')">다음: ⑥ 운영 가이드 →</button>
       </div>
     </section>
 
     <!-- ====================================================================
-         ⑥ CS 가이드 (#cs-guide)
+         ⑥ 운영 가이드 (#cs-guide)
          ==================================================================== -->
     <section id="page-cs-guide" class="guide-page">
       <h2 style="margin-top:0;">1. 부의금 카드결제 CS 처리 기준</h2>
@@ -1788,29 +2026,28 @@
           <tbody>
             <tr>
               <td class="ta_c"><strong>1) 단순 변심 · 금액 오입력<br/>결제 취소 요청</strong></td>
-              <td class="ta_c bg_y"><strong style="color:#dc2626;">송금완료 후 임의 취소 불가</strong><br/>(상주 직접 협의 안내)</td>
-              <td>결제와 동시에 상주 계좌로 현금이 실시간 입금 완료되므로 당사에서 임의로 회수·취소할 수 없습니다. 조문객이 상주 측과 직접 연락해 반환받도록 안내합니다.</td>
+              <td class="ta_c bg_y"><strong style="color:#dc2626;">원금 반환 입금 확인 후 취소</strong><br/>(송금완료 후 임의 취소 불가)</td>
+              <td>
+                결제와 동시에 상주 계좌로 현금이 입금되므로 당사에서 임의로 회수·취소할 수 없습니다.<br/>
+                - 결제자에게 <strong>부의금 원금을 데브늄 계좌로 입금</strong>해 달라고 안내합니다.<br/>
+                - <strong>입금이 확인되면 카드 승인 취소</strong>를 진행합니다. (데브늄 계좌: <strong>KB국민은행 868201-00-059645 / 예금주 데브늄(주)</strong>)
+              </td>
             </tr>
             <tr>
-              <td class="ta_c"><strong>2) 예외적 결제 취소가<br/>가능한 3가지 경우</strong></td>
-              <td class="ta_c bg_y"><strong>① 미입금(송금 실패) 건<br/>② 시스템 중복 결제 건<br/>③ 유족 선(先)반환 동의 건</strong></td>
+              <td class="ta_c"><strong>2) 예외적으로 즉시 취소가<br/>가능한 경우</strong></td>
+              <td class="ta_c bg_y"><strong>① 미입금(송금 실패) 건<br/>② 시스템 중복 결제 건</strong></td>
               <td>
-                - 은행 점검·계좌 오류로 상주에게 입금되지 않은 건은 확인 즉시 취소 처리<br/>
-                - 이미 입금된 건을 취소하려면 <strong>상주 측이 부의금 원금을 데브늄 계좌로 먼저 반환 입금</strong>한 뒤 카드 승인 취소 처리
+                - 은행 점검·시스템 오류로 상주에게 입금되지 않은 건은 확인 즉시 카드 승인 취소 처리<br/>
+                - 중복 결제 건은 CS팀에서 확인 후 처리합니다.
               </td>
             </tr>
             <tr>
               <td class="ta_c"><strong>3) 상주 측 미입금 문의</strong></td>
               <td class="ta_c bg_y"><strong>어드민 송금 상태 및<br/>입금자명 확인 안내</strong></td>
-              <td>어드민에서 해당 건이 <code>송금완료</code>인지 확인하고, 상주 통장에 찍힌 <strong>입금자명(조문객 성명)</strong>을 안내합니다. (23:50~00:30 은행 점검 시간에는 점검 종료 후 순차 입금)</td>
+              <td>어드민에서 해당 건이 <code>송금완료</code>인지 확인하고, 상주 통장에 찍힌 <strong>입금자명(조문객 성명)</strong>을 안내합니다.<br/>(은행 점검 시간 <strong>23:50~00:30</strong> 결제 건은 점검 종료 후 순차 입금되므로, 점검 이후 입금될 예정임을 고지합니다.)</td>
             </tr>
             <tr>
-              <td class="ta_c"><strong>4) 계좌 오류로 결제가<br/>안 된다는 문의</strong></td>
-              <td class="ta_c bg_y"><strong>예금주 성명 일치 여부 확인</strong></td>
-              <td>오송금 방지를 위해 부고장에 등록된 상주명과 실제 계좌 예금주명이 다르면 결제가 차단됩니다. 평생계좌(휴대폰번호)가 아닌지, 예금주명이 정확한지 확인 안내합니다.</td>
-            </tr>
-            <tr>
-              <td class="ta_c"><strong>5) 카드 명세서 가맹점명 문의</strong></td>
+              <td class="ta_c"><strong>4) 카드 명세서 가맹점명 문의</strong></td>
               <td class="ta_c"><strong>데브늄(주) / 인피니소프트</strong></td>
               <td>카드 승인 문자 및 명세서에는 <strong>데브늄(주)</strong> 또는 결제대행사 <strong>주식회사 인피니소프트</strong>로 표기됨을 안내합니다.</td>
             </tr>
@@ -1822,12 +2059,19 @@
       <div class="grid-2-tables">
         <div class="code-block-pro" style="margin:0;">
           <div class="code-block-header">
-            <span>① 금액 오입력 · 단순 변심 취소 요청 시</span>
+            <span>① 금액 오입력 · 단순 변심 취소 요청 시 (입금 안내)</span>
             <button class="code-copy-btn" onclick="copyCode(this)">복사</button>
           </div>
-          <pre>고객님, 본 부의금 카드결제 서비스는 결제 완료와 동시에 상주님의 은행 계좌로 부의금이 실시간 입금되는 시스템입니다.
-이미 상주님 계좌로 입금이 완료된 이후에는 당사에서 임의로 출금하거나 결제를 취소할 수 없습니다.
-번거로우시겠지만 상주(유족)분께 직접 연락하시어 반환을 요청하시거나, 유족분께서 수취하신 부의금 원금을 당사로 선(先)반환해 주시면 카드 승인 취소를 도와드릴 수 있습니다.</pre>
+          <pre style="white-space:pre-wrap; word-break:keep-all;">안녕하세요, 고객님.
+부의금은 결제와 동시에 상주님 계좌로 바로 전달되는 서비스라, 저희가 임의로 취소하기가 어렵습니다.
+
+아래 계좌로 부의금 원금을 입금해 주시면, 확인 후 카드 결제를 바로 취소해 드리겠습니다.
+
+▶ KB국민은행 868201-00-059645
+▶ 예금주 : 데브늄(주)
+▶ 입금액 : 결제하신 부의금 원금 (수수료 제외)
+
+※ 카드 취소 후 환급 시점은 카드사에 따라 다를 수 있습니다.</pre>
         </div>
 
         <div class="code-block-pro" style="margin:0;">
@@ -1835,15 +2079,17 @@
             <span>② 상주 측 "입금이 안 들어왔다" 문의 시</span>
             <button class="code-copy-btn" onclick="copyCode(this)">복사</button>
           </div>
-          <pre>상주님, 삼가 고인의 명복을 빕니다.
+          <pre style="white-space:pre-wrap; word-break:keep-all;">상주님, 삼가 고인의 명복을 빕니다.
 확인 결과 [조문객 성명]님께서 [결제 시각]에 결제하신 [금액]원이 상주님의 계좌로 정상 입금 완료되었습니다.
-통장 거래내역에서 입금자명 '[조문객 성명]'으로 입금된 내역을 한 번 더 확인 부탁드립니다. (은행 점검 시간인 23:50~00:30 결제 건은 점검 종료 직후 입금됩니다.)</pre>
+통장 거래내역에서 입금자명 '[조문객 성명]'으로 입금된 내역을 한 번 더 확인 부탁드립니다.
+
+※ 은행 점검 시간(23:50~00:30)에 결제된 건은 점검 종료 이후 순차적으로 입금될 예정입니다.</pre>
         </div>
       </div>
 
       <div class="page-Turn-nav">
         <button class="page-turn-btn" onclick="showPage('checklist')">← 이전: ⑤ 업체별 체크리스트</button>
-        <button class="page-turn-btn" onclick="showPage('pdfs')">처음으로: ① 전달 자료 →</button>
+        <button class="page-turn-btn" onclick="showPage('pdfs')">처음으로: ① 표준계약서 →</button>
       </div>
     </section>
 
@@ -1855,12 +2101,12 @@
   <footer class="before-footer">
     <div class="container">
       <div class="footer-links" style="margin-bottom:0;">
-        <a onclick="showPage('pdfs')">1. 전달 자료</a>
+        <a onclick="showPage('pdfs')">1. 표준계약서</a>
         <a onclick="showPage('client-guide')">2. 고객사 가이드</a>
         <a onclick="showPage('internal-guide')">3. 내부 운영 가이드</a>
         <a onclick="showPage('step-guide')">4. 업체별 지침 (Step 1~6)</a>
         <a onclick="showPage('checklist')">5. 업체별 체크리스트</a>
-        <a onclick="showPage('cs-guide')">6. CS 가이드</a>
+        <a onclick="showPage('cs-guide')">6. 운영 가이드</a>
       </div>
     </div>
   </footer>
@@ -1871,13 +2117,13 @@
   <script>
     const PAGE_META = {
       'pdfs': {
-        title: '① 전달해줘야 할 자료들',
-        sub: '업체에 전달해야 하는 파일은 제휴 계약서(현재 제작 중)와 부의금 서비스 운영 가이드 v.4 딱 2가지입니다.',
+        title: '① 표준계약서',
+        sub: '업체에 전달해야 하는 필수 자료 4종(표준계약서 · 운영 가이드 v.4 · 푸터 약관 가이드 · 고객사 API 문서) 및 고객사 전달용 공식 URL입니다.',
         nav: 'nav-pdfs'
       },
       'client-guide': {
-        title: '② 고객사 운영 가이드',
-        sub: '고객사가 알아야 할 예치금 입금·자동 차감·매주 금요일 복구(변동 가능)·정산일(답례품과 같음) 및 필수 약관입니다.',
+        title: '② 고객사 운영 가이드 & 예치금 계산기',
+        sub: '고객사가 알아야 할 예치금 입금·자동 차감·매주 금요일 복구·계약 구비서류(사업자등록증+통장사본 수취) 및 15일분 예치금 자동 계산기입니다.',
         nav: 'nav-client'
       },
       'internal-guide': {
@@ -1887,7 +2133,7 @@
       },
       'step-guide': {
         title: '④ 업체별 지침 가이드 (Step 1~6)',
-        sub: '신규 업체가 들어왔을 때 Step 1부터 Step 6까지 우리가 해야 할 일입니다.',
+        sub: '신규 업체가 들어왔을 때 Step 1(계약서 날인 및 거래처 사업자등록증·통장사본 수취)부터 Step 6까지 우리가 해야 할 일입니다.',
         nav: 'nav-step'
       },
       'checklist': {
@@ -1896,19 +2142,19 @@
         nav: 'nav-checklist'
       },
       'cs-guide': {
-        title: '⑥ CS 가이드',
-        sub: '결제 취소·환불 요청, 상주 미입금 문의, 계좌 오류 등 상황별 CS 처리 원칙과 표준 응대 멘트입니다.',
+        title: '⑥ 운영 가이드',
+        sub: '결제 취소·환불 요청, 상주 미입금 문의, 계좌 오류 등 상황별 운영 처리 원칙과 표준 응대 멘트입니다.',
         nav: 'nav-cs'
       }
     };
 
     const PARTNER_CHECKLIST_ITEMS = [
-      { step: 'STEP 1', title: '제휴 계약서 작성·날인 및 기본 서류 4종 수취', guide: () => '계약서 제작 중 / 서류: 사업자등록증·등기부등본·인감증명서·통장사본' },
-      { step: 'STEP 2', title: '운영 가이드(v.4) 전달 및 예치금 입금 요청 (필요 시 보증보험 가입 지원)', guide: (p) => p.feeRate + ' · ' + p.reqDeposit },
-      { step: 'STEP 3', title: '[중간 준비] 어드민 세팅(업체·담당자·1/2차 한도) 및 잔디(H_한도알림) 웹훅 세팅', guide: () => '어드민 계정 · 1/2차 한도 · 잔디 웹훅 연동' },
+      { step: 'STEP 1', title: '표준계약서 작성·날인 및 거래처 구비서류(사업자등록증 사본 + 거래처 통장사본) 수취', guide: () => '거래처 사업자등록증 사본 + 정산용 통장사본 수취 (데브늄 통장사본 전달 불필요)' },
+      { step: 'STEP 2', title: '전달 자료 4종(고객사용 URL) 전달 및 예치금 입금 요청', guide: (p) => p.feeRate + ' · ' + p.reqDeposit },
+      { step: 'STEP 3', title: '[중간 준비] 어드민 업체·한도 세팅(우리) / 잔디 웹훅 개발팀 확인', guide: () => '한도는 우리가 세팅 · 잔디 웹훅은 개발팀에 문의 후 확인' },
       { step: 'STEP 4', title: '예치금 확보 확인 → 대표님께 이노페이 가상계좌 입금 요청 & 어드민 [+ 입금액 추가]', guide: () => '대표님께 가상계좌 입금 요청 후 어드민 잔액 반영' },
-      { step: 'STEP 5', title: '부고장 [제3자 제공 동의] 반영 확인 후 서비스 오픈 (실서버 가동)', guide: () => '송금완료 시 잔액 자동 차감 확인' },
-      { step: 'STEP 6', title: '주간 입금 및 정산 정기 운영', guide: () => '매주 금요일 입금 / 정산일은 답례품과 동일' }
+      { step: 'STEP 5', title: '부고장 제3자 제공 동의 내용 확인 후 서비스 오픈', guide: () => '송금완료 시 잔액 자동 차감 확인' },
+      { step: 'STEP 6', title: '주간 입금 및 정산 정기 운영 (일평균 거래액 대비 15일분 점검)', guide: () => '매주 금요일 입금 / 정산일은 답례품과 동일' }
     ];
 
     const DEFAULT_PARTNERS = [
@@ -2126,9 +2372,60 @@
       });
     }
 
+    function copyPartnerUrl(btn) {
+      const url = window.location.origin + '/buipay-partner.html';
+      navigator.clipboard.writeText(url).then(() => {
+        const orig = btn.textContent;
+        btn.textContent = '고객사용 URL 복사완료';
+        setTimeout(() => { btn.textContent = orig; }, 1800);
+      });
+    }
+
+    function formatKoreanMoney(won) {
+      if (!won || won <= 0) return '0원';
+      const man = Math.round(won / 10000);
+      if (man >= 10000) {
+        const eok = Math.floor(man / 10000);
+        const remMan = man % 10000;
+        return remMan > 0 ? `${eok}억 ${remMan.toLocaleString('ko-KR')}만 원` : `${eok}억 원`;
+      }
+      return `${man.toLocaleString('ko-KR')}만 원`;
+    }
+
+    function setBugoPreset(cnt) {
+      const inp = document.getElementById('calc-bugo-count');
+      if (inp) inp.value = cnt;
+      document.querySelectorAll('.calc-preset-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.textContent.replace(/[^0-9]/g, '') === String(cnt));
+      });
+      updateDepositCalc();
+    }
+
+    function updateDepositCalc() {
+      const cntEl = document.getElementById('calc-bugo-count');
+      const perEl = document.getElementById('calc-per-bugo');
+      if (!cntEl || !perEl) return;
+      const cnt = Math.max(0, parseInt(cntEl.value, 10) || 0);
+      const perBugo = parseInt(perEl.value, 10) || 60000;
+      const monthly = cnt * perBugo;
+      const daily = Math.round(monthly / 30);
+      const deposit15d = Math.round(monthly / 2); // 15일분 = 월 거래액의 50% (일평균 × 15일)
+
+      const depEl = document.getElementById('calc-res-deposit');
+      const monEl = document.getElementById('calc-res-monthly');
+      const monSubEl = document.getElementById('calc-res-monthly-sub');
+      const dayEl = document.getElementById('calc-res-daily');
+
+      if (depEl) depEl.textContent = formatKoreanMoney(deposit15d);
+      if (monEl) monEl.textContent = formatKoreanMoney(monthly);
+      if (monSubEl) monSubEl.textContent = `월 ${cnt.toLocaleString('ko-KR')}건 × 평균 ${(perBugo / 10000).toFixed(1).replace('.0', '')}만 원 기준`;
+      if (dayEl) dayEl.textContent = `${formatKoreanMoney(daily)} / 일`;
+    }
+
     window.addEventListener('DOMContentLoaded', () => {
       loadPartnerData();
       renderPartnerManager();
+      updateDepositCalc();
       const hash = (window.location.hash || '').replace('#', '').trim();
       if (hash && PAGE_META[hash]) {
         showPage(hash, false);
