@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import Script from 'next/script';
 import { AuthProviderWrapper } from '@/components/auth/AuthProviderWrapper';
+import AccessLogger from '@/components/AccessLogger';
 import './globals.css';
 import '@mantine/core/styles.css';
 import { ColorSchemeScript, MantineProvider, createTheme } from '@mantine/core';
@@ -101,6 +102,7 @@ export default function RootLayout({
         <MantineProvider theme={theme}>
           <Notifications position="top-right" />
           <AuthProviderWrapper>
+            <AccessLogger />
             {children}
           </AuthProviderWrapper>
         </MantineProvider>

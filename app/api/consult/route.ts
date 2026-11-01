@@ -110,6 +110,17 @@ export async function POST(request: NextRequest) {
             message,
         }).catch(err => console.error('Notification error:', err));
 
+        // 상담 전환 로그 적재 (유입 IP 및 경로 매칭용)
+        supabase
+            .from('access_logs')
+            .insert({
+                ip_address: ip,
+                path: `/conversion/consult/${facilityId}`.substring(0, 500),
+                user_agent: (request.headers.get('user-agent') || '').substring(0, 500),
+                referer: `${facilityName || facilityId} (${trimName})`.substring(0, 1000),
+            })
+            .then(() => {}, () => {});
+
         return NextResponse.json({ success: true, consult: data });
 
     } catch (error) {
